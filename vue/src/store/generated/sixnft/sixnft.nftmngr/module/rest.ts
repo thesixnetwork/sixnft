@@ -26,6 +26,7 @@ export interface NftmngrAction {
 export interface NftmngrAttributeDefinition {
   name?: string;
   data_type?: string;
+  required?: boolean;
   display_value_field?: string;
   display_option?: NftmngrDisplayOption;
   default_mint_value?: string;
@@ -61,6 +62,12 @@ export interface NftmngrOnChainData {
   nft_attributes?: NftmngrAttributeDefinition[];
   token_attributes?: NftmngrAttributeDefinition[];
   actions?: NftmngrAction[];
+  status?: SixnftnftmngrStatus;
+  on_off_switch?: NftmngrOnOffSwitch;
+}
+
+export interface NftmngrOnOffSwitch {
+  active?: boolean;
 }
 
 export interface NftmngrOpenseaDisplayOption {
@@ -114,6 +121,10 @@ export interface NftmngrQueryParamsResponse {
 
 export interface ProtobufAny {
   "@type"?: string;
+}
+
+export interface SixnftnftmngrStatus {
+  first_mint_complete?: boolean;
 }
 
 /**

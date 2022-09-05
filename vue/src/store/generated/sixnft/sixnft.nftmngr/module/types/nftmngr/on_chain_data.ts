@@ -1,6 +1,8 @@
 /* eslint-disable */
 import { AttributeDefinition } from "../nftmngr/attribute_definition";
 import { Action } from "../nftmngr/action";
+import { Status } from "../nftmngr/status";
+import { OnOffSwitch } from "../nftmngr/on_off_switch";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
@@ -11,6 +13,8 @@ export interface OnChainData {
   nft_attributes: AttributeDefinition[];
   token_attributes: AttributeDefinition[];
   actions: Action[];
+  status: Status | undefined;
+  on_off_switch: OnOffSwitch | undefined;
 }
 
 const baseOnChainData: object = { reveal_required: false };
@@ -31,6 +35,15 @@ export const OnChainData = {
     }
     for (const v of message.actions) {
       Action.encode(v!, writer.uint32(42).fork()).ldelim();
+    }
+    if (message.status !== undefined) {
+      Status.encode(message.status, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.on_off_switch !== undefined) {
+      OnOffSwitch.encode(
+        message.on_off_switch,
+        writer.uint32(58).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -63,6 +76,12 @@ export const OnChainData = {
           break;
         case 5:
           message.actions.push(Action.decode(reader, reader.uint32()));
+          break;
+        case 6:
+          message.status = Status.decode(reader, reader.uint32());
+          break;
+        case 7:
+          message.on_off_switch = OnOffSwitch.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -106,6 +125,16 @@ export const OnChainData = {
         message.actions.push(Action.fromJSON(e));
       }
     }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = Status.fromJSON(object.status);
+    } else {
+      message.status = undefined;
+    }
+    if (object.on_off_switch !== undefined && object.on_off_switch !== null) {
+      message.on_off_switch = OnOffSwitch.fromJSON(object.on_off_switch);
+    } else {
+      message.on_off_switch = undefined;
+    }
     return message;
   },
 
@@ -140,6 +169,12 @@ export const OnChainData = {
     } else {
       obj.actions = [];
     }
+    message.status !== undefined &&
+      (obj.status = message.status ? Status.toJSON(message.status) : undefined);
+    message.on_off_switch !== undefined &&
+      (obj.on_off_switch = message.on_off_switch
+        ? OnOffSwitch.toJSON(message.on_off_switch)
+        : undefined);
     return obj;
   },
 
@@ -178,6 +213,16 @@ export const OnChainData = {
       for (const e of object.actions) {
         message.actions.push(Action.fromPartial(e));
       }
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = Status.fromPartial(object.status);
+    } else {
+      message.status = undefined;
+    }
+    if (object.on_off_switch !== undefined && object.on_off_switch !== null) {
+      message.on_off_switch = OnOffSwitch.fromPartial(object.on_off_switch);
+    } else {
+      message.on_off_switch = undefined;
     }
     return message;
   },

@@ -4,15 +4,15 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "sixnft.nftmngr";
 
 export interface Status {
-  firstMintComplete: string;
+  first_mint_complete: boolean;
 }
 
-const baseStatus: object = { firstMintComplete: "" };
+const baseStatus: object = { first_mint_complete: false };
 
 export const Status = {
   encode(message: Status, writer: Writer = Writer.create()): Writer {
-    if (message.firstMintComplete !== "") {
-      writer.uint32(10).string(message.firstMintComplete);
+    if (message.first_mint_complete === true) {
+      writer.uint32(8).bool(message.first_mint_complete);
     }
     return writer;
   },
@@ -25,7 +25,7 @@ export const Status = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.firstMintComplete = reader.string();
+          message.first_mint_complete = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -38,32 +38,32 @@ export const Status = {
   fromJSON(object: any): Status {
     const message = { ...baseStatus } as Status;
     if (
-      object.firstMintComplete !== undefined &&
-      object.firstMintComplete !== null
+      object.first_mint_complete !== undefined &&
+      object.first_mint_complete !== null
     ) {
-      message.firstMintComplete = String(object.firstMintComplete);
+      message.first_mint_complete = Boolean(object.first_mint_complete);
     } else {
-      message.firstMintComplete = "";
+      message.first_mint_complete = false;
     }
     return message;
   },
 
   toJSON(message: Status): unknown {
     const obj: any = {};
-    message.firstMintComplete !== undefined &&
-      (obj.firstMintComplete = message.firstMintComplete);
+    message.first_mint_complete !== undefined &&
+      (obj.first_mint_complete = message.first_mint_complete);
     return obj;
   },
 
   fromPartial(object: DeepPartial<Status>): Status {
     const message = { ...baseStatus } as Status;
     if (
-      object.firstMintComplete !== undefined &&
-      object.firstMintComplete !== null
+      object.first_mint_complete !== undefined &&
+      object.first_mint_complete !== null
     ) {
-      message.firstMintComplete = object.firstMintComplete;
+      message.first_mint_complete = object.first_mint_complete;
     } else {
-      message.firstMintComplete = "";
+      message.first_mint_complete = false;
     }
     return message;
   },

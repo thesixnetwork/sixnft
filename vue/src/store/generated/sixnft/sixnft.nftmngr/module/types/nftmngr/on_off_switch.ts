@@ -4,15 +4,15 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "sixnft.nftmngr";
 
 export interface OnOffSwitch {
-  active: string;
+  active: boolean;
 }
 
-const baseOnOffSwitch: object = { active: "" };
+const baseOnOffSwitch: object = { active: false };
 
 export const OnOffSwitch = {
   encode(message: OnOffSwitch, writer: Writer = Writer.create()): Writer {
-    if (message.active !== "") {
-      writer.uint32(10).string(message.active);
+    if (message.active === true) {
+      writer.uint32(8).bool(message.active);
     }
     return writer;
   },
@@ -25,7 +25,7 @@ export const OnOffSwitch = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.active = reader.string();
+          message.active = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -38,9 +38,9 @@ export const OnOffSwitch = {
   fromJSON(object: any): OnOffSwitch {
     const message = { ...baseOnOffSwitch } as OnOffSwitch;
     if (object.active !== undefined && object.active !== null) {
-      message.active = String(object.active);
+      message.active = Boolean(object.active);
     } else {
-      message.active = "";
+      message.active = false;
     }
     return message;
   },
@@ -56,7 +56,7 @@ export const OnOffSwitch = {
     if (object.active !== undefined && object.active !== null) {
       message.active = object.active;
     } else {
-      message.active = "";
+      message.active = false;
     }
     return message;
   },

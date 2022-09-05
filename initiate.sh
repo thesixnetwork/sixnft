@@ -179,4 +179,16 @@ ignite scaffold type OnOffSwitch active \
     --module nftmngr
 
 
-# Create NFT Token type
+# Create NFT Attributes Value
+ignite scaffold type NftAttributeValue name value \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
+# Create NFT Data
+ignite scaffold map NftData token_owner origin_image origin_attributes onchain_attributes \
+    --index nft_schema_code,token_id \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+

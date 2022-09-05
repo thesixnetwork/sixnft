@@ -30223,6 +30223,8 @@ paths:
                                 type: string
                               data_type:
                                 type: string
+                              required:
+                                type: boolean
                               display_value_field:
                                 type: string
                               display_option:
@@ -30259,6 +30261,8 @@ paths:
                                 type: string
                               data_type:
                                 type: string
+                              required:
+                                type: boolean
                               display_value_field:
                                 type: string
                               display_option:
@@ -30287,6 +30291,8 @@ paths:
                                 type: string
                               data_type:
                                 type: string
+                              required:
+                                type: boolean
                               display_value_field:
                                 type: string
                               display_option:
@@ -30321,6 +30327,16 @@ paths:
                                 type: array
                                 items:
                                   type: string
+                        status:
+                          type: object
+                          properties:
+                            first_mint_complete:
+                              type: boolean
+                        on_off_switch:
+                          type: object
+                          properties:
+                            active:
+                              type: boolean
               pagination:
                 type: object
                 properties:
@@ -30413,6 +30429,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -30460,6 +30486,8 @@ paths:
                               type: string
                             data_type:
                               type: string
+                            required:
+                              type: boolean
                             display_value_field:
                               type: string
                             display_option:
@@ -30496,6 +30524,8 @@ paths:
                               type: string
                             data_type:
                               type: string
+                            required:
+                              type: boolean
                             display_value_field:
                               type: string
                             display_option:
@@ -30524,6 +30554,8 @@ paths:
                               type: string
                             data_type:
                               type: string
+                            required:
+                              type: boolean
                             display_value_field:
                               type: string
                             display_option:
@@ -30558,6 +30590,16 @@ paths:
                               type: array
                               items:
                                 type: string
+                      status:
+                        type: object
+                        properties:
+                          first_mint_complete:
+                            type: boolean
+                      on_off_switch:
+                        type: object
+                        properties:
+                          active:
+                            type: boolean
         default:
           description: An unexpected error response.
           schema:
@@ -52021,6 +52063,8 @@ definitions:
         type: string
       data_type:
         type: string
+      required:
+        type: boolean
       display_value_field:
         type: string
       display_option:
@@ -52099,6 +52143,8 @@ definitions:
                   type: string
                 data_type:
                   type: string
+                required:
+                  type: boolean
                 display_value_field:
                   type: string
                 display_option:
@@ -52135,6 +52181,8 @@ definitions:
                   type: string
                 data_type:
                   type: string
+                required:
+                  type: boolean
                 display_value_field:
                   type: string
                 display_option:
@@ -52163,6 +52211,8 @@ definitions:
                   type: string
                 data_type:
                   type: string
+                required:
+                  type: boolean
                 display_value_field:
                   type: string
                 display_option:
@@ -52197,6 +52247,16 @@ definitions:
                   type: array
                   items:
                     type: string
+          status:
+            type: object
+            properties:
+              first_mint_complete:
+                type: boolean
+          on_off_switch:
+            type: object
+            properties:
+              active:
+                type: boolean
   sixnft.nftmngr.OnChainData:
     type: object
     properties:
@@ -52214,6 +52274,8 @@ definitions:
               type: string
             data_type:
               type: string
+            required:
+              type: boolean
             display_value_field:
               type: string
             display_option:
@@ -52242,6 +52304,8 @@ definitions:
               type: string
             data_type:
               type: string
+            required:
+              type: boolean
             display_value_field:
               type: string
             display_option:
@@ -52276,6 +52340,21 @@ definitions:
               type: array
               items:
                 type: string
+      status:
+        type: object
+        properties:
+          first_mint_complete:
+            type: boolean
+      on_off_switch:
+        type: object
+        properties:
+          active:
+            type: boolean
+  sixnft.nftmngr.OnOffSwitch:
+    type: object
+    properties:
+      active:
+        type: boolean
   sixnft.nftmngr.OpenseaDisplayOption:
     type: object
     properties:
@@ -52312,6 +52391,8 @@ definitions:
               type: string
             data_type:
               type: string
+            required:
+              type: boolean
             display_value_field:
               type: string
             display_option:
@@ -52374,6 +52455,8 @@ definitions:
                         type: string
                       data_type:
                         type: string
+                      required:
+                        type: boolean
                       display_value_field:
                         type: string
                       display_option:
@@ -52410,6 +52493,8 @@ definitions:
                         type: string
                       data_type:
                         type: string
+                      required:
+                        type: boolean
                       display_value_field:
                         type: string
                       display_option:
@@ -52438,6 +52523,8 @@ definitions:
                         type: string
                       data_type:
                         type: string
+                      required:
+                        type: boolean
                       display_value_field:
                         type: string
                       display_option:
@@ -52472,6 +52559,16 @@ definitions:
                         type: array
                         items:
                           type: string
+                status:
+                  type: object
+                  properties:
+                    first_mint_complete:
+                      type: boolean
+                on_off_switch:
+                  type: object
+                  properties:
+                    active:
+                      type: boolean
       pagination:
         type: object
         properties:
@@ -52535,6 +52632,8 @@ definitions:
                       type: string
                     data_type:
                       type: string
+                    required:
+                      type: boolean
                     display_value_field:
                       type: string
                     display_option:
@@ -52571,6 +52670,8 @@ definitions:
                       type: string
                     data_type:
                       type: string
+                    required:
+                      type: boolean
                     display_value_field:
                       type: string
                     display_option:
@@ -52599,6 +52700,8 @@ definitions:
                       type: string
                     data_type:
                       type: string
+                    required:
+                      type: boolean
                     display_value_field:
                       type: string
                     display_option:
@@ -52633,6 +52736,16 @@ definitions:
                       type: array
                       items:
                         type: string
+              status:
+                type: object
+                properties:
+                  first_mint_complete:
+                    type: boolean
+              on_off_switch:
+                type: object
+                properties:
+                  active:
+                    type: boolean
   sixnft.nftmngr.QueryParamsResponse:
     type: object
     properties:
@@ -52640,6 +52753,11 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftmngr.Status:
+    type: object
+    properties:
+      first_mint_complete:
+        type: boolean
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

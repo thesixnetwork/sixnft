@@ -7,6 +7,7 @@ export const protobufPackage = "sixnft.nftmngr";
 export interface AttributeDefinition {
   name: string;
   data_type: string;
+  required: boolean;
   display_value_field: string;
   display_option: DisplayOption | undefined;
   default_mint_value: string;
@@ -16,6 +17,7 @@ export interface AttributeDefinition {
 const baseAttributeDefinition: object = {
   name: "",
   data_type: "",
+  required: false,
   display_value_field: "",
   default_mint_value: "",
   hidden_to_marketplace: false,
@@ -32,20 +34,23 @@ export const AttributeDefinition = {
     if (message.data_type !== "") {
       writer.uint32(18).string(message.data_type);
     }
+    if (message.required === true) {
+      writer.uint32(24).bool(message.required);
+    }
     if (message.display_value_field !== "") {
-      writer.uint32(26).string(message.display_value_field);
+      writer.uint32(34).string(message.display_value_field);
     }
     if (message.display_option !== undefined) {
       DisplayOption.encode(
         message.display_option,
-        writer.uint32(34).fork()
+        writer.uint32(42).fork()
       ).ldelim();
     }
     if (message.default_mint_value !== "") {
-      writer.uint32(42).string(message.default_mint_value);
+      writer.uint32(50).string(message.default_mint_value);
     }
     if (message.hidden_to_marketplace === true) {
-      writer.uint32(48).bool(message.hidden_to_marketplace);
+      writer.uint32(56).bool(message.hidden_to_marketplace);
     }
     return writer;
   },
@@ -64,18 +69,21 @@ export const AttributeDefinition = {
           message.data_type = reader.string();
           break;
         case 3:
-          message.display_value_field = reader.string();
+          message.required = reader.bool();
           break;
         case 4:
+          message.display_value_field = reader.string();
+          break;
+        case 5:
           message.display_option = DisplayOption.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 5:
+        case 6:
           message.default_mint_value = reader.string();
           break;
-        case 6:
+        case 7:
           message.hidden_to_marketplace = reader.bool();
           break;
         default:
@@ -97,6 +105,11 @@ export const AttributeDefinition = {
       message.data_type = String(object.data_type);
     } else {
       message.data_type = "";
+    }
+    if (object.required !== undefined && object.required !== null) {
+      message.required = Boolean(object.required);
+    } else {
+      message.required = false;
     }
     if (
       object.display_value_field !== undefined &&
@@ -134,6 +147,7 @@ export const AttributeDefinition = {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.data_type !== undefined && (obj.data_type = message.data_type);
+    message.required !== undefined && (obj.required = message.required);
     message.display_value_field !== undefined &&
       (obj.display_value_field = message.display_value_field);
     message.display_option !== undefined &&
@@ -158,6 +172,11 @@ export const AttributeDefinition = {
       message.data_type = object.data_type;
     } else {
       message.data_type = "";
+    }
+    if (object.required !== undefined && object.required !== null) {
+      message.required = object.required;
+    } else {
+      message.required = false;
     }
     if (
       object.display_value_field !== undefined &&
