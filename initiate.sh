@@ -191,4 +191,23 @@ ignite scaffold map NftData token_owner origin_image origin_attributes onchain_a
     --no-message \
     --no-simulation \
     --module nftmngr
+# Modify proto file
+# syntax = "proto3";
+# package sixnft.nftmngr;
 
+# import "nftmngr/nft_attribute_value.proto";
+# option go_package = "sixnft/x/nftmngr/types";
+
+# message NftData {
+#   string nftSchemaCode = 1; 
+#   uint64 tokenId = 2; 
+#   string tokenOwner = 3; 
+#   string originImage = 4; 
+#   repeated NftAttributeValue originAttributes = 5; 
+#   repeated NftAttributeValue onchainAttributes = 6; 
+  
+# }
+
+ignite scaffold message mintNFT  \
+    --no-simulation \
+    --module nftmngr
