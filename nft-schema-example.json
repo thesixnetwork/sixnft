@@ -170,7 +170,7 @@
                 "display_option": {
                     "opensea": {
                         "display_type": "date",
-                        "trait_type": "birthday"
+                        "trait_type": "Expire Date"
                     }
                 }
             }
