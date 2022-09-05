@@ -9,6 +9,13 @@
  * ---------------------------------------------------------------
  */
 
+export interface GooglerpcStatus {
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  details?: ProtobufAny[];
+}
+
 export interface NftmngrAction {
   name?: string;
   desc?: string;
@@ -47,6 +54,10 @@ export interface NftmngrNFTSchema {
 }
 
 export interface NftmngrOnChainData {
+  reveal_required?: boolean;
+
+  /** @format byte */
+  reveal_secret?: string;
   nft_attributes?: NftmngrAttributeDefinition[];
   token_attributes?: NftmngrAttributeDefinition[];
   actions?: NftmngrAction[];
@@ -103,13 +114,6 @@ export interface NftmngrQueryParamsResponse {
 
 export interface ProtobufAny {
   "@type"?: string;
-}
-
-export interface RpcStatus {
-  /** @format int32 */
-  code?: number;
-  message?: string;
-  details?: ProtobufAny[];
 }
 
 /**
@@ -389,7 +393,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     },
     params: RequestParams = {},
   ) =>
-    this.request<NftmngrQueryAllNFTSchemaResponse, RpcStatus>({
+    this.request<NftmngrQueryAllNFTSchemaResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/nft_schema`,
       method: "GET",
       query: query,
@@ -406,7 +410,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @request GET:/sixnft/nftmngr/nft_schema/{code}
    */
   queryNftSchema = (code: string, params: RequestParams = {}) =>
-    this.request<NftmngrQueryGetNFTSchemaResponse, RpcStatus>({
+    this.request<NftmngrQueryGetNFTSchemaResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/nft_schema/${code}`,
       method: "GET",
       format: "json",
@@ -422,7 +426,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @request GET:/sixnft/nftmngr/params
    */
   queryParams = (params: RequestParams = {}) =>
-    this.request<NftmngrQueryParamsResponse, RpcStatus>({
+    this.request<NftmngrQueryParamsResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/params`,
       method: "GET",
       format: "json",

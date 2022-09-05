@@ -6,23 +6,31 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "sixnft.nftmngr";
 
 export interface OnChainData {
+  reveal_required: boolean;
+  reveal_secret: Uint8Array;
   nft_attributes: AttributeDefinition[];
   token_attributes: AttributeDefinition[];
   actions: Action[];
 }
 
-const baseOnChainData: object = {};
+const baseOnChainData: object = { reveal_required: false };
 
 export const OnChainData = {
   encode(message: OnChainData, writer: Writer = Writer.create()): Writer {
+    if (message.reveal_required === true) {
+      writer.uint32(8).bool(message.reveal_required);
+    }
+    if (message.reveal_secret.length !== 0) {
+      writer.uint32(18).bytes(message.reveal_secret);
+    }
     for (const v of message.nft_attributes) {
-      AttributeDefinition.encode(v!, writer.uint32(10).fork()).ldelim();
+      AttributeDefinition.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     for (const v of message.token_attributes) {
-      AttributeDefinition.encode(v!, writer.uint32(18).fork()).ldelim();
+      AttributeDefinition.encode(v!, writer.uint32(34).fork()).ldelim();
     }
     for (const v of message.actions) {
-      Action.encode(v!, writer.uint32(26).fork()).ldelim();
+      Action.encode(v!, writer.uint32(42).fork()).ldelim();
     }
     return writer;
   },
@@ -38,16 +46,22 @@ export const OnChainData = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
+          message.reveal_required = reader.bool();
+          break;
+        case 2:
+          message.reveal_secret = reader.bytes();
+          break;
+        case 3:
           message.nft_attributes.push(
             AttributeDefinition.decode(reader, reader.uint32())
           );
           break;
-        case 2:
+        case 4:
           message.token_attributes.push(
             AttributeDefinition.decode(reader, reader.uint32())
           );
           break;
-        case 3:
+        case 5:
           message.actions.push(Action.decode(reader, reader.uint32()));
           break;
         default:
@@ -63,6 +77,17 @@ export const OnChainData = {
     message.nft_attributes = [];
     message.token_attributes = [];
     message.actions = [];
+    if (
+      object.reveal_required !== undefined &&
+      object.reveal_required !== null
+    ) {
+      message.reveal_required = Boolean(object.reveal_required);
+    } else {
+      message.reveal_required = false;
+    }
+    if (object.reveal_secret !== undefined && object.reveal_secret !== null) {
+      message.reveal_secret = bytesFromBase64(object.reveal_secret);
+    }
     if (object.nft_attributes !== undefined && object.nft_attributes !== null) {
       for (const e of object.nft_attributes) {
         message.nft_attributes.push(AttributeDefinition.fromJSON(e));
@@ -86,6 +111,14 @@ export const OnChainData = {
 
   toJSON(message: OnChainData): unknown {
     const obj: any = {};
+    message.reveal_required !== undefined &&
+      (obj.reveal_required = message.reveal_required);
+    message.reveal_secret !== undefined &&
+      (obj.reveal_secret = base64FromBytes(
+        message.reveal_secret !== undefined
+          ? message.reveal_secret
+          : new Uint8Array()
+      ));
     if (message.nft_attributes) {
       obj.nft_attributes = message.nft_attributes.map((e) =>
         e ? AttributeDefinition.toJSON(e) : undefined
@@ -115,6 +148,19 @@ export const OnChainData = {
     message.nft_attributes = [];
     message.token_attributes = [];
     message.actions = [];
+    if (
+      object.reveal_required !== undefined &&
+      object.reveal_required !== null
+    ) {
+      message.reveal_required = object.reveal_required;
+    } else {
+      message.reveal_required = false;
+    }
+    if (object.reveal_secret !== undefined && object.reveal_secret !== null) {
+      message.reveal_secret = object.reveal_secret;
+    } else {
+      message.reveal_secret = new Uint8Array();
+    }
     if (object.nft_attributes !== undefined && object.nft_attributes !== null) {
       for (const e of object.nft_attributes) {
         message.nft_attributes.push(AttributeDefinition.fromPartial(e));
@@ -136,6 +182,39 @@ export const OnChainData = {
     return message;
   },
 };
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
+
+const atob: (b64: string) => string =
+  globalThis.atob ||
+  ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
+function bytesFromBase64(b64: string): Uint8Array {
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; ++i) {
+    arr[i] = bin.charCodeAt(i);
+  }
+  return arr;
+}
+
+const btoa: (bin: string) => string =
+  globalThis.btoa ||
+  ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
+function base64FromBytes(arr: Uint8Array): string {
+  const bin: string[] = [];
+  for (let i = 0; i < arr.byteLength; ++i) {
+    bin.push(String.fromCharCode(arr[i]));
+  }
+  return btoa(bin.join(""));
+}
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin

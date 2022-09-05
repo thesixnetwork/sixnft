@@ -237,6 +237,12 @@
                     "meta.Random(x,y)"
                 ]
             }
-        ]
+        ],
+        "on_off_switch": {
+            "active": true
+        },
+        "status": {
+            "first_mint_complete": false
+        }
     }
 }

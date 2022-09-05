@@ -5,12 +5,14 @@ import { AttributeDefinition } from "./module/types/nftmngr/attribute_definition
 import { DisplayOption } from "./module/types/nftmngr/display_option"
 import { NFTSchema } from "./module/types/nftmngr/nft_schema"
 import { OnChainData } from "./module/types/nftmngr/on_chain_data"
+import { OnOffSwitch } from "./module/types/nftmngr/on_off_switch"
 import { OpenseaDisplayOption } from "./module/types/nftmngr/opensea_display_option"
 import { OriginData } from "./module/types/nftmngr/origin_data"
 import { Params } from "./module/types/nftmngr/params"
+import { Status } from "./module/types/nftmngr/status"
 
 
-export { Action, AttributeDefinition, DisplayOption, NFTSchema, OnChainData, OpenseaDisplayOption, OriginData, Params };
+export { Action, AttributeDefinition, DisplayOption, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -58,9 +60,11 @@ const getDefaultState = () => {
 						DisplayOption: getStructure(DisplayOption.fromPartial({})),
 						NFTSchema: getStructure(NFTSchema.fromPartial({})),
 						OnChainData: getStructure(OnChainData.fromPartial({})),
+						OnOffSwitch: getStructure(OnOffSwitch.fromPartial({})),
 						OpenseaDisplayOption: getStructure(OpenseaDisplayOption.fromPartial({})),
 						OriginData: getStructure(OriginData.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						Status: getStructure(Status.fromPartial({})),
 						
 		},
 		_Registry: registry,
