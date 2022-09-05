@@ -177,3 +177,6 @@ ignite scaffold type OnOffSwitch active \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+
+# Create NFT Token type

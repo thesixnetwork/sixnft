@@ -181,17 +181,20 @@
             {
                 "name": "exclusive_party_access",
                 "data_type": "boolean",
+                "required": true,
                 "hidden_to_marketplace": true
             },
             {
                 "name": "first_discount_used",
                 "data_type": "boolean",
+                "required": true,
                 "hidden_to_marketplace": true
             },
             {
                 "name": "percent_discount_10",
                 "default_mint_value": "10",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
@@ -205,6 +208,7 @@
                 "name": "discount_percentage",
                 "default_mint_value": "0",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
@@ -217,6 +221,7 @@
                 "name": "discount_amount",
                 "default_mint_value": "0",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
