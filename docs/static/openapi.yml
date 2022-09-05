@@ -30057,15 +30057,15 @@ paths:
                 items:
                   type: object
                   properties:
-                    nftSchemaCode:
+                    nft_schema_code:
                       type: string
-                    tokenId:
+                    token_id:
                       type: string
-                    tokenOwner:
+                    token_owner:
                       type: string
-                    originImage:
+                    origin_image:
                       type: string
-                    originAttributes:
+                    origin_attributes:
                       type: array
                       items:
                         type: object
@@ -30094,7 +30094,7 @@ paths:
                               value:
                                 type: number
                                 format: float
-                    onchainAttributes:
+                    onchain_attributes:
                       type: array
                       items:
                         type: object
@@ -30397,15 +30397,15 @@ paths:
               nftData:
                 type: object
                 properties:
-                  nftSchemaCode:
+                  nft_schema_code:
                     type: string
-                  tokenId:
+                  token_id:
                     type: string
-                  tokenOwner:
+                  token_owner:
                     type: string
-                  originImage:
+                  origin_image:
                     type: string
-                  originAttributes:
+                  origin_attributes:
                     type: array
                     items:
                       type: object
@@ -30434,7 +30434,7 @@ paths:
                             value:
                               type: number
                               format: float
-                  onchainAttributes:
+                  onchain_attributes:
                     type: array
                     items:
                       type: object
@@ -53220,15 +53220,15 @@ definitions:
   sixnft.nftmngr.NftData:
     type: object
     properties:
-      nftSchemaCode:
+      nft_schema_code:
         type: string
-      tokenId:
+      token_id:
         type: string
-      tokenOwner:
+      token_owner:
         type: string
-      originImage:
+      origin_image:
         type: string
-      originAttributes:
+      origin_attributes:
         type: array
         items:
           type: object
@@ -53257,7 +53257,7 @@ definitions:
                 value:
                   type: number
                   format: float
-      onchainAttributes:
+      onchain_attributes:
         type: array
         items:
           type: object
@@ -53631,15 +53631,15 @@ definitions:
         items:
           type: object
           properties:
-            nftSchemaCode:
+            nft_schema_code:
               type: string
-            tokenId:
+            token_id:
               type: string
-            tokenOwner:
+            token_owner:
               type: string
-            originImage:
+            origin_image:
               type: string
-            originAttributes:
+            origin_attributes:
               type: array
               items:
                 type: object
@@ -53668,7 +53668,7 @@ definitions:
                       value:
                         type: number
                         format: float
-            onchainAttributes:
+            onchain_attributes:
               type: array
               items:
                 type: object
@@ -53880,15 +53880,15 @@ definitions:
       nftData:
         type: object
         properties:
-          nftSchemaCode:
+          nft_schema_code:
             type: string
-          tokenId:
+          token_id:
             type: string
-          tokenOwner:
+          token_owner:
             type: string
-          originImage:
+          origin_image:
             type: string
-          originAttributes:
+          origin_attributes:
             type: array
             items:
               type: object
@@ -53917,7 +53917,7 @@ definitions:
                     value:
                       type: number
                       format: float
-          onchainAttributes:
+          onchain_attributes:
             type: array
             items:
               type: object

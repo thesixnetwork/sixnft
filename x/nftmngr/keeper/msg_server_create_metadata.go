@@ -22,15 +22,15 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	data := types.NftData{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(metadata, &data)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
+		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	fmt.Println("####################### ", data.NftSchemaCode)
+	fmt.Println("#######################", data.NftSchemaCode)
 
 	// Check if the data already exists
 	_, found := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
 	if found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaAlreadyExists, data.NftSchemaCode)
+		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, data.NftSchemaCode)
 	}
 	// Add the data to the store
 	k.Keeper.SetNftData(ctx, data)

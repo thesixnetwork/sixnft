@@ -12,4 +12,3 @@ message NftData {
   repeated NftAttributeValue origin_attributes = 5; 
   repeated NftAttributeValue onchain_attributes = 6;
 }
-

@@ -13,19 +13,18 @@ message NftAttributeValue {
     BooleanAttributeValue boolean_attribute_value = 4;
     FloatAttributeValue float_attribute_value = 5;
   }
-
   message NumberAttributeValue {
     uint64 value = 1;
   }
-
+  
   message StringAttributeValue {
     string value = 1;
   }
-
+  
   message BooleanAttributeValue {
     bool value = 1;
   }
-
+  
   message FloatAttributeValue {
     float value = 1;
   }
