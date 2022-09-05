@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { NftAttributeValue } from "../nftmngr/nft_attribute_value";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
@@ -8,8 +9,8 @@ export interface NftData {
   tokenId: string;
   tokenOwner: string;
   originImage: string;
-  originAttributes: string;
-  onchainAttributes: string;
+  originAttributes: NftAttributeValue[];
+  onchainAttributes: NftAttributeValue[];
 }
 
 const baseNftData: object = {
@@ -17,8 +18,6 @@ const baseNftData: object = {
   tokenId: "",
   tokenOwner: "",
   originImage: "",
-  originAttributes: "",
-  onchainAttributes: "",
 };
 
 export const NftData = {
@@ -35,11 +34,11 @@ export const NftData = {
     if (message.originImage !== "") {
       writer.uint32(34).string(message.originImage);
     }
-    if (message.originAttributes !== "") {
-      writer.uint32(42).string(message.originAttributes);
+    for (const v of message.originAttributes) {
+      NftAttributeValue.encode(v!, writer.uint32(42).fork()).ldelim();
     }
-    if (message.onchainAttributes !== "") {
-      writer.uint32(50).string(message.onchainAttributes);
+    for (const v of message.onchainAttributes) {
+      NftAttributeValue.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
   },
@@ -48,6 +47,8 @@ export const NftData = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseNftData } as NftData;
+    message.originAttributes = [];
+    message.onchainAttributes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -64,10 +65,14 @@ export const NftData = {
           message.originImage = reader.string();
           break;
         case 5:
-          message.originAttributes = reader.string();
+          message.originAttributes.push(
+            NftAttributeValue.decode(reader, reader.uint32())
+          );
           break;
         case 6:
-          message.onchainAttributes = reader.string();
+          message.onchainAttributes.push(
+            NftAttributeValue.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -79,6 +84,8 @@ export const NftData = {
 
   fromJSON(object: any): NftData {
     const message = { ...baseNftData } as NftData;
+    message.originAttributes = [];
+    message.onchainAttributes = [];
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
@@ -103,17 +110,17 @@ export const NftData = {
       object.originAttributes !== undefined &&
       object.originAttributes !== null
     ) {
-      message.originAttributes = String(object.originAttributes);
-    } else {
-      message.originAttributes = "";
+      for (const e of object.originAttributes) {
+        message.originAttributes.push(NftAttributeValue.fromJSON(e));
+      }
     }
     if (
       object.onchainAttributes !== undefined &&
       object.onchainAttributes !== null
     ) {
-      message.onchainAttributes = String(object.onchainAttributes);
-    } else {
-      message.onchainAttributes = "";
+      for (const e of object.onchainAttributes) {
+        message.onchainAttributes.push(NftAttributeValue.fromJSON(e));
+      }
     }
     return message;
   },
@@ -126,15 +133,27 @@ export const NftData = {
     message.tokenOwner !== undefined && (obj.tokenOwner = message.tokenOwner);
     message.originImage !== undefined &&
       (obj.originImage = message.originImage);
-    message.originAttributes !== undefined &&
-      (obj.originAttributes = message.originAttributes);
-    message.onchainAttributes !== undefined &&
-      (obj.onchainAttributes = message.onchainAttributes);
+    if (message.originAttributes) {
+      obj.originAttributes = message.originAttributes.map((e) =>
+        e ? NftAttributeValue.toJSON(e) : undefined
+      );
+    } else {
+      obj.originAttributes = [];
+    }
+    if (message.onchainAttributes) {
+      obj.onchainAttributes = message.onchainAttributes.map((e) =>
+        e ? NftAttributeValue.toJSON(e) : undefined
+      );
+    } else {
+      obj.onchainAttributes = [];
+    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<NftData>): NftData {
     const message = { ...baseNftData } as NftData;
+    message.originAttributes = [];
+    message.onchainAttributes = [];
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = object.nftSchemaCode;
     } else {
@@ -159,17 +178,17 @@ export const NftData = {
       object.originAttributes !== undefined &&
       object.originAttributes !== null
     ) {
-      message.originAttributes = object.originAttributes;
-    } else {
-      message.originAttributes = "";
+      for (const e of object.originAttributes) {
+        message.originAttributes.push(NftAttributeValue.fromPartial(e));
+      }
     }
     if (
       object.onchainAttributes !== undefined &&
       object.onchainAttributes !== null
     ) {
-      message.onchainAttributes = object.onchainAttributes;
-    } else {
-      message.onchainAttributes = "";
+      for (const e of object.onchainAttributes) {
+        message.onchainAttributes.push(NftAttributeValue.fromPartial(e));
+      }
     }
     return message;
   },

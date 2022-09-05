@@ -12,6 +12,18 @@ export interface MsgCreateNFTSchemaResponse {
   code: string;
 }
 
+export interface MsgCreateMetadata {
+  creator: string;
+  nftSchemaCode: string;
+  tokenId: string;
+  base64NFTData: string;
+}
+
+export interface MsgCreateMetadataResponse {
+  nftSchemaCode: string;
+  tokenId: string;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -163,12 +175,218 @@ export const MsgCreateNFTSchemaResponse = {
   },
 };
 
+const baseMsgCreateMetadata: object = {
+  creator: "",
+  nftSchemaCode: "",
+  tokenId: "",
+  base64NFTData: "",
+};
+
+export const MsgCreateMetadata = {
+  encode(message: MsgCreateMetadata, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.tokenId !== "") {
+      writer.uint32(26).string(message.tokenId);
+    }
+    if (message.base64NFTData !== "") {
+      writer.uint32(34).string(message.base64NFTData);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateMetadata {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateMetadata } as MsgCreateMetadata;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.tokenId = reader.string();
+          break;
+        case 4:
+          message.base64NFTData = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateMetadata {
+    const message = { ...baseMsgCreateMetadata } as MsgCreateMetadata;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = String(object.tokenId);
+    } else {
+      message.tokenId = "";
+    }
+    if (object.base64NFTData !== undefined && object.base64NFTData !== null) {
+      message.base64NFTData = String(object.base64NFTData);
+    } else {
+      message.base64NFTData = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateMetadata): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
+    message.base64NFTData !== undefined &&
+      (obj.base64NFTData = message.base64NFTData);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreateMetadata>): MsgCreateMetadata {
+    const message = { ...baseMsgCreateMetadata } as MsgCreateMetadata;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = object.tokenId;
+    } else {
+      message.tokenId = "";
+    }
+    if (object.base64NFTData !== undefined && object.base64NFTData !== null) {
+      message.base64NFTData = object.base64NFTData;
+    } else {
+      message.base64NFTData = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateMetadataResponse: object = {
+  nftSchemaCode: "",
+  tokenId: "",
+};
+
+export const MsgCreateMetadataResponse = {
+  encode(
+    message: MsgCreateMetadataResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(10).string(message.nftSchemaCode);
+    }
+    if (message.tokenId !== "") {
+      writer.uint32(18).string(message.tokenId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateMetadataResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateMetadataResponse,
+    } as MsgCreateMetadataResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 2:
+          message.tokenId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateMetadataResponse {
+    const message = {
+      ...baseMsgCreateMetadataResponse,
+    } as MsgCreateMetadataResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = String(object.tokenId);
+    } else {
+      message.tokenId = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateMetadataResponse): unknown {
+    const obj: any = {};
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateMetadataResponse>
+  ): MsgCreateMetadataResponse {
+    const message = {
+      ...baseMsgCreateMetadataResponse,
+    } as MsgCreateMetadataResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = object.tokenId;
+    } else {
+      message.tokenId = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateNFTSchema(
     request: MsgCreateNFTSchema
   ): Promise<MsgCreateNFTSchemaResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  CreateMetadata(
+    request: MsgCreateMetadata
+  ): Promise<MsgCreateMetadataResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -187,6 +405,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgCreateNFTSchemaResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateMetadata(
+    request: MsgCreateMetadata
+  ): Promise<MsgCreateMetadataResponse> {
+    const data = MsgCreateMetadata.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Msg",
+      "CreateMetadata",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateMetadataResponse.decode(new Reader(data))
     );
   }
 }

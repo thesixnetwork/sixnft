@@ -208,6 +208,8 @@ ignite scaffold map NftData token_owner origin_image origin_attributes onchain_a
   
 # }
 
-ignite scaffold message mintNFT  \
+ignite scaffold message createMetadata nft_schema_code token_id base64NFTData \
+    --desc "To create NFT Metadata from Base64" \
+    --response nft_schema_code,token_id \
     --no-simulation \
     --module nftmngr

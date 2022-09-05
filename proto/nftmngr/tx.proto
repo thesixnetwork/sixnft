@@ -8,6 +8,7 @@ option go_package = "sixnft/x/nftmngr/types";
 // Msg defines the Msg service.
 service Msg {
       rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
+  rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -18,6 +19,18 @@ message MsgCreateNFTSchema {
 
 message MsgCreateNFTSchemaResponse {
   string code = 1;
+}
+
+message MsgCreateMetadata {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+  string base64NFTData = 4;
+}
+
+message MsgCreateMetadataResponse {
+  string nftSchemaCode = 1;
+  string tokenId = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -9,6 +9,24 @@
  * ---------------------------------------------------------------
  */
 
+export interface NftAttributeValueBooleanAttributeValue {
+  value?: boolean;
+}
+
+export interface NftAttributeValueFloatAttributeValue {
+  /** @format float */
+  value?: number;
+}
+
+export interface NftAttributeValueNumberAttributeValue {
+  /** @format uint64 */
+  value?: string;
+}
+
+export interface NftAttributeValueStringAttributeValue {
+  value?: string;
+}
+
 export interface GooglerpcStatus {
   /** @format int32 */
   code?: number;
@@ -42,6 +60,11 @@ export interface NftmngrDisplayOption {
   opensea?: NftmngrOpenseaDisplayOption;
 }
 
+export interface NftmngrMsgCreateMetadataResponse {
+  nftSchemaCode?: string;
+  tokenId?: string;
+}
+
 export interface NftmngrMsgCreateNFTSchemaResponse {
   code?: string;
 }
@@ -54,13 +77,21 @@ export interface NftmngrNFTSchema {
   onchain_data?: NftmngrOnChainData;
 }
 
+export interface NftmngrNftAttributeValue {
+  name?: string;
+  number_attribute_value?: NftAttributeValueNumberAttributeValue;
+  string_attribute_value?: NftAttributeValueStringAttributeValue;
+  boolean_attribute_value?: NftAttributeValueBooleanAttributeValue;
+  float_attribute_value?: NftAttributeValueFloatAttributeValue;
+}
+
 export interface NftmngrNftData {
   nftSchemaCode?: string;
   tokenId?: string;
   tokenOwner?: string;
   originImage?: string;
-  originAttributes?: string;
-  onchainAttributes?: string;
+  originAttributes?: NftmngrNftAttributeValue[];
+  onchainAttributes?: NftmngrNftAttributeValue[];
 }
 
 export interface NftmngrOnChainData {

@@ -30200,9 +30200,63 @@ paths:
                     originImage:
                       type: string
                     originAttributes:
-                      type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: float
                     onchainAttributes:
-                      type: string
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: float
               pagination:
                 type: object
                 properties:
@@ -30496,9 +30550,63 @@ paths:
                   originImage:
                     type: string
                   originAttributes:
-                    type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: float
                   onchainAttributes:
-                    type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: float
         default:
           description: An unexpected error response.
           schema:
@@ -53123,6 +53231,13 @@ definitions:
           max_value:
             type: string
             format: uint64
+  sixnft.nftmngr.MsgCreateMetadataResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      tokenId:
+        type: string
   sixnft.nftmngr.MsgCreateNFTSchemaResponse:
     type: object
     properties:
@@ -53277,6 +53392,55 @@ definitions:
             properties:
               active:
                 type: boolean
+  sixnft.nftmngr.NftAttributeValue:
+    type: object
+    properties:
+      name:
+        type: string
+      number_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+            format: uint64
+      string_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+      boolean_attribute_value:
+        type: object
+        properties:
+          value:
+            type: boolean
+      float_attribute_value:
+        type: object
+        properties:
+          value:
+            type: number
+            format: float
+  sixnft.nftmngr.NftAttributeValue.BooleanAttributeValue:
+    type: object
+    properties:
+      value:
+        type: boolean
+  sixnft.nftmngr.NftAttributeValue.FloatAttributeValue:
+    type: object
+    properties:
+      value:
+        type: number
+        format: float
+  sixnft.nftmngr.NftAttributeValue.NumberAttributeValue:
+    type: object
+    properties:
+      value:
+        type: string
+        format: uint64
+  sixnft.nftmngr.NftAttributeValue.StringAttributeValue:
+    type: object
+    properties:
+      value:
+        type: string
   sixnft.nftmngr.NftData:
     type: object
     properties:
@@ -53289,9 +53453,63 @@ definitions:
       originImage:
         type: string
       originAttributes:
-        type: string
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            number_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uint64
+            string_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+            boolean_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: boolean
+            float_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: number
+                  format: float
       onchainAttributes:
-        type: string
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            number_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uint64
+            string_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+            boolean_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: boolean
+            float_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: number
+                  format: float
   sixnft.nftmngr.OnChainData:
     type: object
     properties:
@@ -53646,9 +53864,63 @@ definitions:
             originImage:
               type: string
             originAttributes:
-              type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  number_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: uint64
+                  string_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                  boolean_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: boolean
+                  float_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        format: float
             onchainAttributes:
-              type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  number_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: uint64
+                  string_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                  boolean_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: boolean
+                  float_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        format: float
       pagination:
         type: object
         properties:
@@ -53841,9 +54113,63 @@ definitions:
           originImage:
             type: string
           originAttributes:
-            type: string
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: float
           onchainAttributes:
-            type: string
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: float
   sixnft.nftmngr.QueryParamsResponse:
     type: object
     properties:
