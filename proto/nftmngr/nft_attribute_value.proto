@@ -6,6 +6,5 @@ option go_package = "sixnft/x/nftmngr/types";
 
 message NftAttributeValue {
   string name = 1; 
-  google.protobuf.Any value = 2
-  
+  google.protobuf.Any value = 2;
 }
