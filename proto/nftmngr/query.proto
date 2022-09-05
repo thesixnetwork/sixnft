@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "nftmngr/params.proto";
 import "nftmngr/nft_schema.proto";
+import "nftmngr/nft_data.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "sixnft/x/nftmngr/types";
@@ -24,6 +25,16 @@ service Query {
 	// Queries a list of NFTSchema items.
 	rpc NFTSchemaAll(QueryAllNFTSchemaRequest) returns (QueryAllNFTSchemaResponse) {
 		option (google.api.http).get = "/sixnft/nftmngr/nft_schema";
+	}
+
+// Queries a NftData by index.
+	rpc NftData(QueryGetNftDataRequest) returns (QueryGetNftDataResponse) {
+		option (google.api.http).get = "/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}";
+	}
+
+	// Queries a list of NftData items.
+	rpc NftDataAll(QueryAllNftDataRequest) returns (QueryAllNftDataResponse) {
+		option (google.api.http).get = "/sixnft/nftmngr/nft_data";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -53,6 +64,25 @@ message QueryAllNFTSchemaRequest {
 
 message QueryAllNFTSchemaResponse {
 	repeated NFTSchema nFTSchema = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetNftDataRequest {
+	  string nftSchemaCode = 1;
+  string tokenId = 2;
+
+}
+
+message QueryGetNftDataResponse {
+	NftData nftData = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllNftDataRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllNftDataResponse {
+	repeated NftData nftData = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

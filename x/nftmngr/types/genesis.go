@@ -11,6 +11,7 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		NFTSchemaList: []NFTSchema{},
+		NftDataList:   []NftData{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -28,6 +29,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for nFTSchema")
 		}
 		nFTSchemaIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in nftData
+	nftDataIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.NftDataList {
+		index := string(NftDataKey(elem.NftSchemaCode, elem.TokenId))
+		if _, ok := nftDataIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for nftData")
+		}
+		nftDataIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 
