@@ -1,0 +1,14 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+import "nftmngr/display_option.proto";
+option go_package = "sixnft/x/nftmngr/types";
+
+message AttributeDefinition {
+  
+  string name = 1; 
+  string data_type = 2; 
+  string display_value_field = 3; 
+  DisplayOption display_option = 4; 
+  string default_mint_value = 5; 
+  bool hidden_to_marketplace = 6;
+}

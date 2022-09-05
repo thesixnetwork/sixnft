@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+option go_package = "sixnft/x/nftmngr/types";
+
+message Action {
+  
+  string name = 1; 
+  string desc = 2; 
+  string when = 3; 
+  repeated string then = 4; 
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+
+import "nftmngr/on_chain_data.proto";
+import "nftmngr/origin_data.proto";
+
+option go_package = "sixnft/x/nftmngr/types";
+
+message NFTSchema {
+  string code = 1; 
+  string name = 2; 
+  string owner = 3; 
+  OriginData origin_data = 4; 
+  OnChainData onchain_data = 5; 
+  
+}
+

@@ -1,0 +1,23 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "sixnft/x/nftmngr/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgCreateNFTSchema {
+  string creator = 1;
+  string nftSchemaBase64 = 2;
+}
+
+message MsgCreateNFTSchemaResponse {
+  string code = 1;
+}
+
+// this line is used by starport scaffolding # proto/tx/message

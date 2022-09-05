@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+import "nftmngr/attribute_definition.proto";
+import "nftmngr/action.proto";
+option go_package = "sixnft/x/nftmngr/types";
+
+message OnChainData {
+  
+  repeated AttributeDefinition nft_attributes = 1; 
+  repeated AttributeDefinition token_attributes = 2; 
+  repeated Action actions = 3; 
+}
