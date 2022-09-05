@@ -30073,27 +30073,15 @@ paths:
                           name:
                             type: string
                           number_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: string
-                                format: uint64
+                            type: string
+                            format: uint64
                           string_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: string
+                            type: string
                           boolean_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: boolean
+                            type: boolean
                           float_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: number
-                                format: float
+                            type: number
+                            format: float
                     onchain_attributes:
                       type: array
                       items:
@@ -30102,27 +30090,15 @@ paths:
                           name:
                             type: string
                           number_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: string
-                                format: uint64
+                            type: string
+                            format: uint64
                           string_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: string
+                            type: string
                           boolean_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: boolean
+                            type: boolean
                           float_attribute_value:
-                            type: object
-                            properties:
-                              value:
-                                type: number
-                                format: float
+                            type: number
+                            format: float
               pagination:
                 type: object
                 properties:
@@ -30382,6 +30358,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -30413,27 +30399,15 @@ paths:
                         name:
                           type: string
                         number_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              format: uint64
+                          type: string
+                          format: uint64
                         string_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
+                          type: string
                         boolean_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: boolean
+                          type: boolean
                         float_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: number
-                              format: float
+                          type: number
+                          format: float
                   onchain_attributes:
                     type: array
                     items:
@@ -30442,27 +30416,15 @@ paths:
                         name:
                           type: string
                         number_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              format: uint64
+                          type: string
+                          format: uint64
                         string_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
+                          type: string
                         boolean_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: boolean
+                          type: boolean
                         float_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: number
-                              format: float
+                          type: number
+                          format: float
         default:
           description: An unexpected error response.
           schema:
@@ -31076,6 +31038,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -53174,49 +53146,15 @@ definitions:
       name:
         type: string
       number_attribute_value:
-        type: object
-        properties:
-          value:
-            type: string
-            format: uint64
-      string_attribute_value:
-        type: object
-        properties:
-          value:
-            type: string
-      boolean_attribute_value:
-        type: object
-        properties:
-          value:
-            type: boolean
-      float_attribute_value:
-        type: object
-        properties:
-          value:
-            type: number
-            format: float
-  sixnft.nftmngr.NftAttributeValue.BooleanAttributeValue:
-    type: object
-    properties:
-      value:
-        type: boolean
-  sixnft.nftmngr.NftAttributeValue.FloatAttributeValue:
-    type: object
-    properties:
-      value:
-        type: number
-        format: float
-  sixnft.nftmngr.NftAttributeValue.NumberAttributeValue:
-    type: object
-    properties:
-      value:
         type: string
         format: uint64
-  sixnft.nftmngr.NftAttributeValue.StringAttributeValue:
-    type: object
-    properties:
-      value:
+      string_attribute_value:
         type: string
+      boolean_attribute_value:
+        type: boolean
+      float_attribute_value:
+        type: number
+        format: float
   sixnft.nftmngr.NftData:
     type: object
     properties:
@@ -53236,27 +53174,15 @@ definitions:
             name:
               type: string
             number_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-                  format: uint64
+              type: string
+              format: uint64
             string_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
+              type: string
             boolean_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: boolean
+              type: boolean
             float_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: number
-                  format: float
+              type: number
+              format: float
       onchain_attributes:
         type: array
         items:
@@ -53265,27 +53191,15 @@ definitions:
             name:
               type: string
             number_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-                  format: uint64
+              type: string
+              format: uint64
             string_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
+              type: string
             boolean_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: boolean
+              type: boolean
             float_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: number
-                  format: float
+              type: number
+              format: float
   sixnft.nftmngr.OnChainData:
     type: object
     properties:
@@ -53647,27 +53561,15 @@ definitions:
                   name:
                     type: string
                   number_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                        format: uint64
+                    type: string
+                    format: uint64
                   string_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
+                    type: string
                   boolean_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: boolean
+                    type: boolean
                   float_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: number
-                        format: float
+                    type: number
+                    format: float
             onchain_attributes:
               type: array
               items:
@@ -53676,27 +53578,15 @@ definitions:
                   name:
                     type: string
                   number_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                        format: uint64
+                    type: string
+                    format: uint64
                   string_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
+                    type: string
                   boolean_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: boolean
+                    type: boolean
                   float_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: number
-                        format: float
+                    type: number
+                    format: float
       pagination:
         type: object
         properties:
@@ -53896,27 +53786,15 @@ definitions:
                 name:
                   type: string
                 number_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                      format: uint64
+                  type: string
+                  format: uint64
                 string_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
+                  type: string
                 boolean_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: boolean
+                  type: boolean
                 float_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: number
-                      format: float
+                  type: number
+                  format: float
           onchain_attributes:
             type: array
             items:
@@ -53925,27 +53803,15 @@ definitions:
                 name:
                   type: string
                 number_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                      format: uint64
+                  type: string
+                  format: uint64
                 string_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
+                  type: string
                 boolean_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: boolean
+                  type: boolean
                 float_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: number
-                      format: float
+                  type: number
+                  format: float
   sixnft.nftmngr.QueryParamsResponse:
     type: object
     properties:

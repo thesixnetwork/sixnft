@@ -9,24 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface NftAttributeValueBooleanAttributeValue {
-  value?: boolean;
-}
-
-export interface NftAttributeValueFloatAttributeValue {
-  /** @format float */
-  value?: number;
-}
-
-export interface NftAttributeValueNumberAttributeValue {
-  /** @format uint64 */
-  value?: string;
-}
-
-export interface NftAttributeValueStringAttributeValue {
-  value?: string;
-}
-
 export interface GooglerpcStatus {
   /** @format int32 */
   code?: number;
@@ -79,10 +61,14 @@ export interface NftmngrNFTSchema {
 
 export interface NftmngrNftAttributeValue {
   name?: string;
-  number_attribute_value?: NftAttributeValueNumberAttributeValue;
-  string_attribute_value?: NftAttributeValueStringAttributeValue;
-  boolean_attribute_value?: NftAttributeValueBooleanAttributeValue;
-  float_attribute_value?: NftAttributeValueFloatAttributeValue;
+
+  /** @format uint64 */
+  number_attribute_value?: string;
+  string_attribute_value?: string;
+  boolean_attribute_value?: boolean;
+
+  /** @format float */
+  float_attribute_value?: number;
 }
 
 export interface NftmngrNftData {
