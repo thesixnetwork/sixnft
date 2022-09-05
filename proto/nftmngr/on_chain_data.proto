@@ -5,8 +5,9 @@ import "nftmngr/action.proto";
 option go_package = "sixnft/x/nftmngr/types";
 
 message OnChainData {
-  
-  repeated AttributeDefinition nft_attributes = 1; 
-  repeated AttributeDefinition token_attributes = 2; 
-  repeated Action actions = 3; 
+  bool reveal_required = 1;
+  bytes reveal_secret = 2;
+  repeated AttributeDefinition nft_attributes = 3; 
+  repeated AttributeDefinition token_attributes = 4; 
+  repeated Action actions = 5; 
 }

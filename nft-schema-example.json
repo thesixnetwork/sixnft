@@ -162,6 +162,8 @@
         ]
     },
     "onchain_data": {
+        "reveal_required": true,
+        "reveal_secret": "",
         "nft_attributes": [
             {
                 "name": "expire_date",
