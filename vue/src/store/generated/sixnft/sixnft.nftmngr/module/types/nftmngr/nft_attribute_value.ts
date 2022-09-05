@@ -1,15 +1,12 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import { Any } from "../google/protobuf/any";
+import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
 
 export interface NftAttributeValue {
   name: string;
-  number_attribute_value: number | undefined;
-  string_attribute_value: string | undefined;
-  boolean_attribute_value: boolean | undefined;
-  float_attribute_value: number | undefined;
+  value: Any | undefined;
 }
 
 const baseNftAttributeValue: object = { name: "" };
@@ -19,17 +16,8 @@ export const NftAttributeValue = {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    if (message.number_attribute_value !== undefined) {
-      writer.uint32(16).uint64(message.number_attribute_value);
-    }
-    if (message.string_attribute_value !== undefined) {
-      writer.uint32(26).string(message.string_attribute_value);
-    }
-    if (message.boolean_attribute_value !== undefined) {
-      writer.uint32(32).bool(message.boolean_attribute_value);
-    }
-    if (message.float_attribute_value !== undefined) {
-      writer.uint32(45).float(message.float_attribute_value);
+    if (message.value !== undefined) {
+      Any.encode(message.value, writer.uint32(18).fork()).ldelim();
     }
     return writer;
   },
@@ -45,18 +33,7 @@ export const NftAttributeValue = {
           message.name = reader.string();
           break;
         case 2:
-          message.number_attribute_value = longToNumber(
-            reader.uint64() as Long
-          );
-          break;
-        case 3:
-          message.string_attribute_value = reader.string();
-          break;
-        case 4:
-          message.boolean_attribute_value = reader.bool();
-          break;
-        case 5:
-          message.float_attribute_value = reader.float();
+          message.value = Any.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -73,37 +50,10 @@ export const NftAttributeValue = {
     } else {
       message.name = "";
     }
-    if (
-      object.number_attribute_value !== undefined &&
-      object.number_attribute_value !== null
-    ) {
-      message.number_attribute_value = Number(object.number_attribute_value);
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Any.fromJSON(object.value);
     } else {
-      message.number_attribute_value = undefined;
-    }
-    if (
-      object.string_attribute_value !== undefined &&
-      object.string_attribute_value !== null
-    ) {
-      message.string_attribute_value = String(object.string_attribute_value);
-    } else {
-      message.string_attribute_value = undefined;
-    }
-    if (
-      object.boolean_attribute_value !== undefined &&
-      object.boolean_attribute_value !== null
-    ) {
-      message.boolean_attribute_value = Boolean(object.boolean_attribute_value);
-    } else {
-      message.boolean_attribute_value = undefined;
-    }
-    if (
-      object.float_attribute_value !== undefined &&
-      object.float_attribute_value !== null
-    ) {
-      message.float_attribute_value = Number(object.float_attribute_value);
-    } else {
-      message.float_attribute_value = undefined;
+      message.value = undefined;
     }
     return message;
   },
@@ -111,14 +61,8 @@ export const NftAttributeValue = {
   toJSON(message: NftAttributeValue): unknown {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
-    message.number_attribute_value !== undefined &&
-      (obj.number_attribute_value = message.number_attribute_value);
-    message.string_attribute_value !== undefined &&
-      (obj.string_attribute_value = message.string_attribute_value);
-    message.boolean_attribute_value !== undefined &&
-      (obj.boolean_attribute_value = message.boolean_attribute_value);
-    message.float_attribute_value !== undefined &&
-      (obj.float_attribute_value = message.float_attribute_value);
+    message.value !== undefined &&
+      (obj.value = message.value ? Any.toJSON(message.value) : undefined);
     return obj;
   },
 
@@ -129,51 +73,14 @@ export const NftAttributeValue = {
     } else {
       message.name = "";
     }
-    if (
-      object.number_attribute_value !== undefined &&
-      object.number_attribute_value !== null
-    ) {
-      message.number_attribute_value = object.number_attribute_value;
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Any.fromPartial(object.value);
     } else {
-      message.number_attribute_value = undefined;
-    }
-    if (
-      object.string_attribute_value !== undefined &&
-      object.string_attribute_value !== null
-    ) {
-      message.string_attribute_value = object.string_attribute_value;
-    } else {
-      message.string_attribute_value = undefined;
-    }
-    if (
-      object.boolean_attribute_value !== undefined &&
-      object.boolean_attribute_value !== null
-    ) {
-      message.boolean_attribute_value = object.boolean_attribute_value;
-    } else {
-      message.boolean_attribute_value = undefined;
-    }
-    if (
-      object.float_attribute_value !== undefined &&
-      object.float_attribute_value !== null
-    ) {
-      message.float_attribute_value = object.float_attribute_value;
-    } else {
-      message.float_attribute_value = undefined;
+      message.value = undefined;
     }
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -185,15 +92,3 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  return long.toNumber();
-}
-
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}
