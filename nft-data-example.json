@@ -64,19 +64,5 @@
                 "value": "Teerawat Yioyim"
             }
         }
-    ],
-    "onchain_attributes": [
-        {
-            "name": "exclusive_party_access",
-            "boolean_attribute_value": {
-                "value": false
-            }
-        },
-        {
-            "name": "first_discount_used",
-            "boolean_attribute_value": {
-                "value": false
-            }
-        }
     ]
 }
