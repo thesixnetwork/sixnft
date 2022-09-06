@@ -4,6 +4,10 @@ import { Action } from "./module/types/nftmngr/action"
 import { AttributeDefinition } from "./module/types/nftmngr/attribute_definition"
 import { DisplayOption } from "./module/types/nftmngr/display_option"
 import { NftAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { NftAttributeValue_NumberAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { NftAttributeValue_StringAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { NftAttributeValue_BooleanAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { NftAttributeValue_FloatAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
 import { NftData } from "./module/types/nftmngr/nft_data"
 import { NFTSchema } from "./module/types/nftmngr/nft_schema"
 import { OnChainData } from "./module/types/nftmngr/on_chain_data"
@@ -14,7 +18,7 @@ import { Params } from "./module/types/nftmngr/params"
 import { Status } from "./module/types/nftmngr/status"
 
 
-export { Action, AttributeDefinition, DisplayOption, NftAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status };
+export { Action, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -63,6 +67,10 @@ const getDefaultState = () => {
 						AttributeDefinition: getStructure(AttributeDefinition.fromPartial({})),
 						DisplayOption: getStructure(DisplayOption.fromPartial({})),
 						NftAttributeValue: getStructure(NftAttributeValue.fromPartial({})),
+						NftAttributeValue_NumberAttributeValue: getStructure(NftAttributeValue_NumberAttributeValue.fromPartial({})),
+						NftAttributeValue_StringAttributeValue: getStructure(NftAttributeValue_StringAttributeValue.fromPartial({})),
+						NftAttributeValue_BooleanAttributeValue: getStructure(NftAttributeValue_BooleanAttributeValue.fromPartial({})),
+						NftAttributeValue_FloatAttributeValue: getStructure(NftAttributeValue_FloatAttributeValue.fromPartial({})),
 						NftData: getStructure(NftData.fromPartial({})),
 						NFTSchema: getStructure(NFTSchema.fromPartial({})),
 						OnChainData: getStructure(OnChainData.fromPartial({})),

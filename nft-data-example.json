@@ -6,53 +6,63 @@
     "origin_attributes": [
         {
             "name": "background_l",
-            "value": "L BG Ringside Golden"
+            "string_attribute_value": {
+                "value": "L BG Ringside Golden"
+            }
         },
         {
             "name": "background_r",
-            "value": "R Tiger"
+            "string_attribute_value": {
+                "value": "R Tiger"
+            }
         },
         {
             "name": "plate_l",
-            "value": "L Banchamek Black"
+            "string_attribute_value": {
+                "value": "L Banchamek Black"
+            }
         },
         {
             "name": "plate_r",
-            "value": "R Banchamek Golden"
+            "string_attribute_value": {
+                "value": "R Banchamek Golden"
+            }
         },
         {
             "name": "body_l",
-            "value": "L Body Normal Gentleman"
+            "string_attribute_value": {
+                "value": "L Body Normal Gentleman"
+            }
         },
         {
             "name": "head_l",
-            "value": "L NON HEAD"
+            "string_attribute_value": {
+                "value": "L NON HEAD"
+            }
         },
         {
             "name": "clothes_l",
-            "value": "L Robe Golden"
+            "string_attribute_value": {
+                "value": "L Robe Golden"
+            }
         },
         {
             "name": "extra_l",
-            "value": "L NO EXTRA"
+            "string_attribute_value": {
+                "value": "L NO EXTRA"
+            }
         },
         {
             "name": "hand_l",
-            "value": "L Glove Black BV"
+            "string_attribute_value": {
+                "value": "L Glove Black BV"
+            }
         },
         {
             "name": "influencer",
-            "value": "Teerawat Yioyim"
-        }
-    ],
-    "onchain_attributes": [
-        {
-            "name": "exclusive_party_access",
-            "value": false
-        },
-        {
-            "name": "first_discount_used",
-            "value": false
+            "string_attribute_value": {
+                "value": "Teerawat Yioyim"
+            }
         }
     ]
 }

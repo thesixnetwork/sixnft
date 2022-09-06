@@ -14,25 +14,31 @@ import (
 
 func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMetadata) (*types.MsgCreateMetadataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	fmt.Println("#######################CreateMetadata 1")
 	metadata, err := base64.StdEncoding.DecodeString(msg.Base64NFTData)
-	fmt.Println("#######################CreateMetadata 2", metadata)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 	data := types.NftData{}
-	fmt.Println("#######################CreateMetadata 3", data)
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(metadata, &data)
-	fmt.Println("#######################CreateMetadata 4", data)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	fmt.Println("#######################", data.NftSchemaCode)
+	// Get nft schema from store
+	// Check if the schema already exists
+	schema, schemaFound := k.Keeper.GetNFTSchema(ctx, data.NftSchemaCode)
+	_ = schema
+	if !schemaFound {
+		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
+	}
+
+	data.OnchainAttributes = append(schema.OnchainData.NftAttributeValues)
+
+	fmt.Println("data: ", data)
 
 	// Check if the data already exists
-	_, found := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
-	if found {
+	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
+	if dataFound {
 		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, data.NftSchemaCode)
 	}
 	// Add the data to the store
