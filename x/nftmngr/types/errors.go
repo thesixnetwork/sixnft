@@ -14,4 +14,7 @@ var (
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 5, "Error parsing metadata")
 	ErrMetadataAlreadyExists  = sdkerrors.Register(ModuleName, 6, "Metadata already exists")
 	ErrSchemaDoesNotExists    = sdkerrors.Register(ModuleName, 7, "Schema does not exists")
+	ErrDuplicateAttributes    = sdkerrors.Register(ModuleName, 8, "Duplicate attributes")
+	ErrValidatingNFTSchema    = sdkerrors.Register(ModuleName, 9, "Error validating NFT schema")
+	ErrValidatingMetadata     = sdkerrors.Register(ModuleName, 10, "Error validating metadata")
 )

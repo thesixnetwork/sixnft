@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 
 	"sixnft/x/nftmngr/types"
 
@@ -24,9 +23,12 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
-
-	fmt.Println("####################### ", schema.Code)
-
+	// Validate Schema Message and return error if not valid
+	valid, err := k.ValidateNFTSchema(&schema)
+	_ = valid
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrValidatingNFTSchema, err.Error())
+	}
 	// Check if the schema already exists
 	_, found := k.Keeper.GetNFTSchema(ctx, schema.Code)
 	if found {
@@ -38,4 +40,29 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	return &types.MsgCreateNFTSchemaResponse{
 		Code: schema.Code,
 	}, nil
+}
+
+// Validate NFT Schema
+func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
+	// Validate Origin Attributes
+	_, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Onchain NFT Attributes
+	_, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Onchain Token Attributes
+	_, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate NFT Attributes Value
+	_, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }

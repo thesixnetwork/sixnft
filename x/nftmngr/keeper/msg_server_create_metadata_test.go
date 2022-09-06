@@ -99,7 +99,10 @@ func TestCreateData(t *testing.T) {
 		fmt.Println(err.Error())
 		return
 	}
-	fmt.Println("DataOutput", data)
+	valid, err := ValidateNFTData(&data)
+	fmt.Println("Valid: ", valid)
+	fmt.Println("Valid Err: ", err)
+	// fmt.Println("DataOutput", data)
 
 	// data := types.NftData{}
 	// attribute := types.NftAttributeValue{
@@ -111,4 +114,31 @@ func TestCreateData(t *testing.T) {
 	// m := jsonpb.Marshaler{}
 	// str, _ := m.MarshalToString(&attribute)
 	// fmt.Println(str)
+}
+
+// Validate NFT Data
+func ValidateNFTData(data *types.NftData) (bool, error) {
+	// Validate Onchain Attributes Value
+	_, err := NFTDataHasDuplicateNftAttributesValue(data.OnchainAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Origin Attributes Value
+	_, err = NFTDataHasDuplicateNftAttributesValue(data.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func NFTDataHasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, error) {
+	attributesLen := len(attributes)
+	for i := 0; i < attributesLen; i++ {
+		for j := i + 1; j < attributesLen; j++ {
+			if attributes[i].Name == attributes[j].Name {
+				return false, fmt.Errorf("Duplicate attribute value name: %s", attributes[i].Name)
+			}
+		}
+	}
+	return true, nil
 }

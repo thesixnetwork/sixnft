@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 
 	"sixnft/x/nftmngr/types"
 
@@ -23,21 +22,22 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
-
+	// Validate Schema Message and return error if not valid
+	valid, err := k.ValidateNFTData(&data)
+	_ = valid
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
 	// Get nft schema from store
-	// Check if the schema already exists
 	schema, schemaFound := k.Keeper.GetNFTSchema(ctx, data.NftSchemaCode)
-	_ = schema
+	// Check if the schema already exists
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
 	}
-
-	// data.OnchainAttributes = append(data.OnchainAttributes, schema.OnchainData.NftAttributesValue)
+	// Add attributes from schema to metadata onchain attributes
 	for _, attribute := range schema.OnchainData.NftAttributesValue {
 		data.OnchainAttributes = append(data.OnchainAttributes, attribute)
 	}
-
-	fmt.Println("data: ", data)
 
 	// Check if the data already exists
 	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
@@ -51,4 +51,19 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		NftSchemaCode: data.NftSchemaCode,
 		TokenId:       data.TokenId,
 	}, nil
+}
+
+// Validate NFT Data
+func (k msgServer) ValidateNFTData(data *types.NftData) (bool, error) {
+	// Validate Onchain Attributes Value
+	_, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Origin Attributes Value
+	_, err = HasDuplicateNftAttributesValue(data.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
