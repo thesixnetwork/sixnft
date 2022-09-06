@@ -32,7 +32,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
 	}
 
-	data.OnchainAttributes = append(schema.OnchainData.NftAttributeValues)
+	data.OnchainAttributes = append(schema.OnchainData.NftAttributesValue)
 
 	fmt.Println("data: ", data)
 

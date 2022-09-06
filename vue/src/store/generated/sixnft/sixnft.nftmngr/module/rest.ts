@@ -104,7 +104,7 @@ export interface NftmngrOnChainData {
   actions?: NftmngrAction[];
   status?: SixnftnftmngrStatus;
   on_off_switch?: NftmngrOnOffSwitch;
-  nft_attribute_values?: NftmngrNftAttributeValue[];
+  nft_attributes_value?: NftmngrNftAttributeValue[];
 }
 
 export interface NftmngrOnOffSwitch {

@@ -13,5 +13,5 @@ var (
 	ErrSchemaAlreadyExists    = sdkerrors.Register(ModuleName, 4, "Schema already exists")
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 5, "Error parsing metadata")
 	ErrMetadataAlreadyExists  = sdkerrors.Register(ModuleName, 6, "Metadata already exists")
-	ErrSchemaDoesNotExists    = sdkerrors.Register(ModuleName, 4, "Schema does not exists")
+	ErrSchemaDoesNotExists    = sdkerrors.Register(ModuleName, 7, "Schema does not exists")
 )

@@ -15,5 +15,5 @@ message OnChainData {
   repeated Action actions = 5; 
   Status status = 6;
   OnOffSwitch on_off_switch = 7;
-  repeated NftAttributeValue nft_attribute_values = 8;
+  repeated NftAttributeValue nft_attributes_value = 8;
 }

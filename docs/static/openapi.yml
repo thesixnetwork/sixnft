@@ -30820,7 +30820,7 @@ paths:
                           properties:
                             active:
                               type: boolean
-                        nft_attribute_values:
+                        nft_attributes_value:
                           type: array
                           items:
                             type: object
@@ -31269,7 +31269,7 @@ paths:
                         properties:
                           active:
                             type: boolean
-                      nft_attribute_values:
+                      nft_attributes_value:
                         type: array
                         items:
                           type: object
@@ -53226,7 +53226,7 @@ definitions:
             properties:
               active:
                 type: boolean
-          nft_attribute_values:
+          nft_attributes_value:
             type: array
             items:
               type: object
@@ -53466,7 +53466,7 @@ definitions:
         properties:
           active:
             type: boolean
-      nft_attribute_values:
+      nft_attributes_value:
         type: array
         items:
           type: object
@@ -53714,7 +53714,7 @@ definitions:
                   properties:
                     active:
                       type: boolean
-                nft_attribute_values:
+                nft_attributes_value:
                   type: array
                   items:
                     type: object
@@ -54019,7 +54019,7 @@ definitions:
                 properties:
                   active:
                     type: boolean
-              nft_attribute_values:
+              nft_attributes_value:
                 type: array
                 items:
                   type: object
