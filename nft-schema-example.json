@@ -251,15 +251,9 @@
         },
         "nft_attributes_value": [
             {
-                "name": "exclusive_party_access",
-                "boolean_attribute_value": {
-                    "value": false
-                }
-            },
-            {
-                "name": "first_discount_used",
-                "boolean_attribute_value": {
-                    "value": false
+                "name": "expire_date",
+                "number_attribute_value": {
+                    "value": 1665009678
                 }
             }
         ]
