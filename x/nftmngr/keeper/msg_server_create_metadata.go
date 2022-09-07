@@ -38,11 +38,15 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	for _, attribute := range schema.OnchainData.NftAttributesValue {
 		data.OnchainAttributes = append(data.OnchainAttributes, attribute)
 	}
-
 	// Check if the data already exists
 	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
 	if dataFound {
 		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, data.NftSchemaCode)
+	}
+	// Set first mint complete as true
+	if schema.OnchainData.Status.FirstMintComplete == false {
+		schema.OnchainData.Status.FirstMintComplete = true
+		k.Keeper.SetNFTSchema(ctx, schema)
 	}
 	// Add the data to the store
 	k.Keeper.SetNftData(ctx, data)
