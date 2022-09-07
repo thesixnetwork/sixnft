@@ -64,5 +64,15 @@ func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	// Validate if attributes have the same type for NFT Attributes
+	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate if attributes have the same type for Token Attributes
+	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	if err != nil {
+		return false, err
+	}
 	return true, nil
 }

@@ -30,3 +30,18 @@ func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool
 	}
 	return true, nil
 }
+
+func HasSameType(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.AttributeDefinition) (bool, error) {
+	// If attributes have same name, then they must have same type
+	for i := 0; i < len(attributes_1); i++ {
+		for j := i + 1; j < len(attributes_2); j++ {
+			if attributes_1[i].Name == attributes_2[j].Name {
+				if attributes_1[i].DataType != attributes_2[j].DataType {
+					return false, fmt.Errorf("Attribute %s has different type", attributes_1[i].Name)
+				}
+				return true, nil
+			}
+		}
+	}
+	return true, nil
+}

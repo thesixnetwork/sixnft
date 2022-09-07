@@ -27,6 +27,270 @@ func TestCreateData(t *testing.T) {
 	// 	fmt.Println(err.Error())
 	// 	return
 	// }
+	schema := `
+	{
+		"code": "buakaw1",
+		"name": "Buakaw1",
+		"owner": "6nft19p5yvwxtc2qngnwdqlhfzdcd0ssncwwumrx2ja",
+		"origin_data": {
+			"origin_base_uri": "https://bk1nft.sixnetwork.io/ipfs/QmcovEcZxiM1M9gf3535jUCpbqFZSjc2hHuYnZEbWNmt5a",
+			"origin_chain": "ethereum",
+			"origin_contract_address": "0x9F1CC70b11f4129d042d0037c2066d12E16d9a52",
+			"attribute_overriding": "ORIGIN",
+			"metadata_format": "opensea",
+			"origin_attributes": [
+				{
+					"name": "background_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Background L"
+						}
+					}
+				},
+				{
+					"name": "background_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Background R"
+						}
+					}
+				},
+				{
+					"name": "plate_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Plate L"
+						}
+					}
+				},
+				{
+					"name": "plate_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Plate R"
+						}
+					}
+				},
+				{
+					"name": "body_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Body L"
+						}
+					}
+				},
+				{
+					"name": "body_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Body R"
+						}
+					}
+				},
+				{
+					"name": "head_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Head L"
+						}
+					}
+				},
+				{
+					"name": "head_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Head R"
+						}
+					}
+				},
+				{
+					"name": "clothes_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Clothes L"
+						}
+					}
+				},
+				{
+					"name": "clothes_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Clothes R"
+						}
+					}
+				},
+				{
+					"name": "extra_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Extra L"
+						}
+					}
+				},
+				{
+					"name": "extra_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Extra R"
+						}
+					}
+				},
+				{
+					"name": "hand_l",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Hand L"
+						}
+					}
+				},
+				{
+					"name": "hand_r",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Hand R"
+						}
+					}
+				},
+				{
+					"name": "influencer",
+					"data_type": "string",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Influencer"
+						}
+					}
+				}
+			]
+		},
+		"onchain_data": {
+			"reveal_required": true,
+			"reveal_secret": "",
+			"nft_attributes": [
+				{
+					"name": "expire_date",
+					"data_type": "long",
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"display_type": "date",
+							"trait_type": "Expire Date"
+						}
+					}
+				}
+			],
+			"token_attributes": [
+				{
+					"name": "exclusive_party_access",
+					"data_type": "boolean",
+					"required": true,
+					"hidden_to_marketplace": true
+				},
+				{
+					"name": "first_discount_used",
+					"data_type": "boolean",
+					"required": true,
+					"hidden_to_marketplace": true
+				},
+				{
+					"name": "percent_discount_10",
+					"default_mint_value": "10",
+					"data_type": "interger",
+					"required": true,
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Available 10 Percent Discount",
+							"max_value": 5,
+							"display_type": "number"
+						}
+					}
+				},
+				{
+					"name": "discount_percentage",
+					"default_mint_value": "0",
+					"data_type": "interger",
+					"required": true,
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Discount",
+							"display_type": "boost_percentage"
+						}
+					}
+				},
+				{
+					"name": "discount_amount",
+					"default_mint_value": "0",
+					"data_type": "interger",
+					"required": true,
+					"display_value_field": "value",
+					"display_option": {
+						"opensea": {
+							"trait_type": "Discount",
+							"display_type": "boost_number"
+						}
+					}
+				}
+			],
+			"actions": [
+				{
+					"name": "use10percentdiscount",
+					"desc": "Use 10% discount on purchase",
+					"when": "meta.GetNumber('percent_discount_10') > 0",
+					"then": [
+						"meta.SetNumber(meta.GetNumber('percent_discount_10') - 1)",
+						"meta.SetBoolean('first_discount_used', true)",
+						"meta.Random(x,y)"
+					]
+				}
+			],
+			"on_off_switch": {
+				"active": true
+			},
+			"status": {
+				"first_mint_complete": false
+			},
+			"nft_attributes_value": [
+				{
+					"name": "expire_date",
+					"number_attribute_value": {
+						"value": 1665009678
+					}
+				}
+			]
+		}
+	}
+	
+	`
 	metadata := `
 	{
 		"nft_schema_code": "buakaw1",
@@ -99,7 +363,15 @@ func TestCreateData(t *testing.T) {
 		fmt.Println(err.Error())
 		return
 	}
-	valid, err := ValidateNFTData(&data)
+	_schema := types.NFTSchema{}
+	// err := k.GetCodec().(*codec.ProtoCodec).UnmarshalJSON([]byte(metadata), &data)
+	err = jsonpb.UnmarshalString(schema, &_schema)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	valid, err := ValidateNFTData(&data, &_schema)
 	fmt.Println("Valid: ", valid)
 	fmt.Println("Valid Err: ", err)
 	// fmt.Println("DataOutput", data)
@@ -117,7 +389,7 @@ func TestCreateData(t *testing.T) {
 }
 
 // Validate NFT Data
-func ValidateNFTData(data *types.NftData) (bool, error) {
+func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Validate Onchain Attributes Value
 	_, err := NFTDataHasDuplicateNftAttributesValue(data.OnchainAttributes)
 	if err != nil {
@@ -125,6 +397,16 @@ func ValidateNFTData(data *types.NftData) (bool, error) {
 	}
 	// Validate Origin Attributes Value
 	_, err = NFTDataHasDuplicateNftAttributesValue(data.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Origin Attributes Exist in Schema
+	_, err = DataAttributesExistInSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Onchain Attributes Exist in Schema
+	_, err = DataAttributesExistInSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
 	if err != nil {
 		return false, err
 	}
@@ -137,6 +419,17 @@ func NFTDataHasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue
 		for j := i + 1; j < attributesLen; j++ {
 			if attributes[i].Name == attributes[j].Name {
 				return false, fmt.Errorf("Duplicate attribute value name: %s", attributes[i].Name)
+			}
+		}
+	}
+	return true, nil
+}
+
+func DataAttributesExistInSchema(schemaAttributes []*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, error) {
+	for _, dataAttribute := range dataAttributes {
+		for _, schemaAttribute := range schemaAttributes {
+			if dataAttribute.Name != schemaAttribute.Name {
+				return false, fmt.Errorf("Attribute %s does not exist in schema", dataAttribute.Name)
 			}
 		}
 	}
