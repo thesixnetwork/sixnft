@@ -9,6 +9,7 @@ option go_package = "sixnft/x/nftmngr/types";
 service Msg {
       rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
+  rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -29,6 +30,18 @@ message MsgCreateMetadata {
 }
 
 message MsgCreateMetadataResponse {
+  string nftSchemaCode = 1;
+  string tokenId = 2;
+}
+
+message MsgPerformActionByAdmin {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+  string action = 4;
+}
+
+message MsgPerformActionByAdminResponse {
   string nftSchemaCode = 1;
   string tokenId = 2;
 }

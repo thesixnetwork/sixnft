@@ -450,7 +450,7 @@ export const NftAttributeValue_FloatAttributeValue = {
     writer: Writer = Writer.create()
   ): Writer {
     if (message.value !== 0) {
-      writer.uint32(13).float(message.value);
+      writer.uint32(9).double(message.value);
     }
     return writer;
   },
@@ -468,7 +468,7 @@ export const NftAttributeValue_FloatAttributeValue = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.value = reader.float();
+          message.value = reader.double();
           break;
         default:
           reader.skipType(tag & 7);

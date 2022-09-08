@@ -167,6 +167,9 @@ ignite scaffold message createNFTSchema nft_schema_base64 \
 sixnftd tx nftmngr create-nft-schema --from alice \
     <BASE64 schema>
 
+sixnftd query nftmngr show-nft-schema \
+    <NFT schema code>
+
 
 ignite scaffold type Status first_mint_complete \
     --no-message \
@@ -217,3 +220,16 @@ ignite scaffold message createMetadata nft_schema_code token_id base64NFTData \
 #Test create metadata
 sixnftd tx nftmngr create-metadata buakaw1 1 --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake \
     <BASE64 NFT Data>
+
+
+# Create Action
+ignite scaffold message performActionByAdmin nft_schema_code token_id action \
+    --desc "To do action" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftmngr
+
+
+# Test create action
+sixnftd tx nftmngr perform-action-by-admin buakaw1 1 use10percentdiscount --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake
+

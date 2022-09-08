@@ -14,7 +14,7 @@ export interface NftAttributeValueBooleanAttributeValue {
 }
 
 export interface NftAttributeValueFloatAttributeValue {
-  /** @format float */
+  /** @format double */
   value?: number;
 }
 
@@ -69,6 +69,11 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
   code?: string;
 }
 
+export interface NftmngrMsgPerformActionByAdminResponse {
+  nftSchemaCode?: string;
+  tokenId?: string;
+}
+
 export interface NftmngrNFTSchema {
   code?: string;
   name?: string;
@@ -90,6 +95,7 @@ export interface NftmngrNftData {
   token_id?: string;
   token_owner?: string;
   origin_image?: string;
+  onchain_image?: string;
   origin_attributes?: NftmngrNftAttributeValue[];
   onchain_attributes?: NftmngrNftAttributeValue[];
 }
@@ -102,13 +108,9 @@ export interface NftmngrOnChainData {
   nft_attributes?: NftmngrAttributeDefinition[];
   token_attributes?: NftmngrAttributeDefinition[];
   actions?: NftmngrAction[];
-  status?: SixnftnftmngrStatus;
-  on_off_switch?: NftmngrOnOffSwitch;
+  status?: Record<string, boolean>;
+  on_off_switch?: Record<string, boolean>;
   nft_attributes_value?: NftmngrNftAttributeValue[];
-}
-
-export interface NftmngrOnOffSwitch {
-  active?: boolean;
 }
 
 export interface NftmngrOpenseaDisplayOption {
@@ -294,10 +296,6 @@ export interface ProtobufAny {
    * used with implementation specific semantics.
    */
   "@type"?: string;
-}
-
-export interface SixnftnftmngrStatus {
-  first_mint_complete?: boolean;
 }
 
 /**

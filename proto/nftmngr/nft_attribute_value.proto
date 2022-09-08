@@ -27,6 +27,6 @@ message NftAttributeValue {
   }
 
   message FloatAttributeValue {
-    float value = 1;
+    double value = 1;
   }
 }

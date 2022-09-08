@@ -14,4 +14,9 @@ var (
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 5, "Error parsing metadata")
 	ErrMetadataAlreadyExists  = sdkerrors.Register(ModuleName, 6, "Metadata already exists")
 	ErrSchemaDoesNotExists    = sdkerrors.Register(ModuleName, 7, "Schema does not exists")
+	ErrCreatorDoesNotMatch    = sdkerrors.Register(ModuleName, 8, "Only creator can run this action")
+	ErrMetadataDoesNotExists  = sdkerrors.Register(ModuleName, 9, "Metadata of the toekn does not exists")
+
+	ErrAttributeOverriding   = sdkerrors.Register(ModuleName, 100, "Attribute overriding is not allowed")
+	ErrAttributeTypeNotMatch = sdkerrors.Register(ModuleName, 101, "Attribute type does not match")
 )

@@ -9,6 +9,7 @@ message NftData {
   string token_id = 2; 
   string token_owner = 3; 
   string origin_image = 4; 
-  repeated NftAttributeValue origin_attributes = 5; 
-  repeated NftAttributeValue onchain_attributes = 6;
+  string onchain_image = 5; 
+  repeated NftAttributeValue origin_attributes = 6; 
+  repeated NftAttributeValue onchain_attributes = 7;
 }
