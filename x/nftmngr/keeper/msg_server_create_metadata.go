@@ -75,8 +75,10 @@ func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s ", err))
 	}
-	// Validate if onchain token attributes have the same type as the schema
-	hasSameType, err = HasSameTypeAsSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
+	// Merge Origin Attributes and Onchain Attributes together
+	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	// Validate Onchain Attributes Exist in Schema
+	hasSameType, err = HasSameTypeAsSchema(mergedAttributes, data.OnchainAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s ", err))
 	}

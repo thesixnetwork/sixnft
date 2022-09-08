@@ -4,6 +4,17 @@ import (
 	"sixnft/x/nftmngr/types"
 )
 
+func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) []*types.AttributeDefinition {
+	mergedAttributes := make([]*types.AttributeDefinition, 0)
+	for _, originAttribute := range originAttributes {
+		mergedAttributes = append(mergedAttributes, originAttribute)
+	}
+	for _, onchainAttribute := range onchainAttributes {
+		mergedAttributes = append(mergedAttributes, onchainAttribute)
+	}
+	return mergedAttributes
+}
+
 // Check Duplicate Attributes in array
 func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
 	mapAttributes := map[string]*types.AttributeDefinition{}
