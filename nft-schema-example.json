@@ -1,12 +1,12 @@
 {
     "code": "buakaw1",
     "name": "Buakaw1",
-    "owner": "6nft19p5yvwxtc2qngnwdqlhfzdcd0ssncwwumrx2ja",
+    "owner": "0xNFTOWNER",
     "origin_data": {
         "origin_base_uri": "https://bk1nft.sixnetwork.io/ipfs/QmcovEcZxiM1M9gf3535jUCpbqFZSjc2hHuYnZEbWNmt5a",
         "origin_chain": "ethereum",
         "origin_contract_address": "0x9F1CC70b11f4129d042d0037c2066d12E16d9a52",
-        "attribute_overriding": "ORIGIN",
+        "attribute_overriding": "CHAIN",
         "metadata_format": "opensea",
         "origin_attributes": [
             {
@@ -237,9 +237,8 @@
                 "desc": "Use 10% discount on purchase",
                 "when": "meta.GetNumber('percent_discount_10') > 0",
                 "then": [
-                    "meta.SetNumber(meta.GetNumber('percent_discount_10') - 1)",
-                    "meta.SetBoolean('first_discount_used', true)",
-                    "meta.Random(x,y)"
+                    "meta.SetNumber('percent_discount_10',meta.GetNumber('percent_discount_10') - 1)",
+                    "meta.SetBoolean('first_discount_used', true)"
                 ]
             }
         ],
