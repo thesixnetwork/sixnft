@@ -10,6 +10,7 @@ import (
 	"sixnft/x/nftmngr/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/jsonpb"
 )
 
@@ -288,9 +289,7 @@ func TestCreateData(t *testing.T) {
 				}
 			]
 		}
-	}
-	
-	`
+	}`
 	metadata := `
 	{
 		"nft_schema_code": "buakaw1",
@@ -300,43 +299,63 @@ func TestCreateData(t *testing.T) {
 		"origin_attributes": [
 			{
 				"name": "background_l",
-				"string_attribute_value" : {"value": "L BG Ringside Golden"}
+				"string_attribute_value": {
+					"value": "L BG Ringside Golden"
+				}
 			},
 			{
 				"name": "background_r",
-				"string_attribute_value" : {"value": "R Tiger"}
+				"string_attribute_value": {
+					"value": "R Tiger"
+				}
 			},
 			{
 				"name": "plate_l",
-				"string_attribute_value" : {"value": "L Banchamek Black"}
+				"string_attribute_value": {
+					"value": "L Banchamek Black"
+				}
 			},
 			{
 				"name": "plate_r",
-				"string_attribute_value" : {"value": "R Banchamek Golden"}
+				"string_attribute_value": {
+					"value": "R Banchamek Golden"
+				}
 			},
 			{
 				"name": "body_l",
-				"string_attribute_value" : {"value": "L Body Normal Gentleman"}
+				"string_attribute_value": {
+					"value": "L Body Normal Gentleman"
+				}
 			},
 			{
 				"name": "head_l",
-				"string_attribute_value" : {"value": "L NON HEAD"}
+				"string_attribute_value": {
+					"value": "L NON HEAD"
+				}
 			},
 			{
 				"name": "clothes_l",
-				"string_attribute_value" : {"value": "L Robe Golden"}
+				"string_attribute_value": {
+					"value": "L Robe Golden"
+				}
 			},
 			{
 				"name": "extra_l",
-				"string_attribute_value" : {"value": "L NO EXTRA"}
+				"string_attribute_value": {
+					"value": "L NO EXTRA"
+				}
 			},
 			{
 				"name": "hand_l",
-				"string_attribute_value" : {"value": "L Glove Black BV"}
+				"string_attribute_value": {
+					"value": "L Glove Black BV"
+				}
 			},
 			{
 				"name": "influencer",
-				"string_attribute_value" : {"value": "Teerawat Yioyim"}
+				"string_attribute_value": {
+					"value": "Teerawat Yioyim"
+				}
 			}
 		],
 		"onchain_attributes": [
@@ -392,83 +411,78 @@ func TestCreateData(t *testing.T) {
 func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	fmt.Println("1 NFTDataHasDuplicateNftAttributesValue")
 	// Validate Onchain Attributes Value
-	_, err := NFTDataHasDuplicateNftAttributesValue(data.OnchainAttributes)
-	if err != nil {
-		return false, err
+	duplicated, err := NFTDataHasDuplicateNftAttributesValue(data.OnchainAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	fmt.Println("2 NFTDataHasDuplicateNftAttributesValue")
 	// Validate Origin Attributes Value
-	_, err = NFTDataHasDuplicateNftAttributesValue(data.OriginAttributes)
-	if err != nil {
-		return false, err
+	duplicated, err = NFTDataHasDuplicateNftAttributesValue(data.OriginAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// fmt.Println("1 DataAttributesExistInSchema")
-	// // Validate Origin Attributes Exist in Schema
-	// _, err = DataAttributesExistInSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
-	// if err != nil {
-	// 	return false, err
-	// }
-	// fmt.Println("2 DataAttributesExistInSchema")
-	// // Validate Onchain Attributes Exist in Schema
-	// _, err = DataAttributesExistInSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
-	// if err != nil {
-	// 	return false, err
-	// }
-	fmt.Println("1 HasSameTypeAsSchema")
+	fmt.Println("3 HasSameTypeAsSchema")
+	// Validate Origin Attributes Exist in Schema
+	hasSameType, err := HasSameTypeAsSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Duplicate attribute name: %s", err))
+	}
+	fmt.Println("4 HasSameTypeAsSchema")
 	// Validate Onchain Attributes Exist in Schema
-	_, err = HasSameTypeAsSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
-	if err != nil {
-		return false, err
+	hasSameType, err = HasSameTypeAsSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	return true, nil
 }
 
-func NFTDataHasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, error) {
-	attributesLen := len(attributes)
-	for i := 0; i < attributesLen; i++ {
-		for j := i + 1; j < attributesLen; j++ {
-			if attributes[i].Name == attributes[j].Name {
-				return false, fmt.Errorf("Duplicate attribute value name: %s", attributes[i].Name)
-			}
-		}
+func NFTDataHasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, string) {
+	mapAttributes := map[string]*types.NftAttributeValue{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
 	}
-	return true, nil
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
 }
 
-func DataAttributesExistInSchema(schemaAttributes []*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, error) {
-	for _, dataAttribute := range dataAttributes {
-		for _, schemaAttribute := range schemaAttributes {
-			if dataAttribute.Name != schemaAttribute.Name {
-				return false, fmt.Errorf("Attribute %s does not exist in schema", dataAttribute.Name)
-			}
-		}
-	}
-	return true, nil
-}
-func HasSameTypeAsSchema(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.NftAttributeValue) (bool, error) {
+func HasSameTypeAsSchema(schemaAttributes []*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
 	// If attributes have same name, then they must have same type
-	for i := 0; i < len(attributes_1); i++ {
-		for j := 0; j < len(attributes_2); j++ {
-			if attributes_1[i].Name == attributes_2[j].Name {
-				if attributes_1[i].DataType != GetTypeFromAttributeValue(attributes_2[j]) {
-					return false, fmt.Errorf("Attribute %s does not match schema attribute type", attributes_1[i].Name)
-				}
-			}
+	mapSchemaAttributes := map[string]*types.AttributeDefinition{}
+
+	for _, attriDef := range schemaAttributes {
+		mapSchemaAttributes[attriDef.Name] = attriDef
+	}
+
+	for _, attriVal := range dataAttributes {
+		attDef := mapSchemaAttributes[attriVal.Name]
+		if attDef.DataType != GetTypeFromAttributeValue(attriVal) {
+			return false, attriVal.Name
 		}
 	}
-	return true, nil
+	return true, ""
 }
 
 func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
-	if attribute.GetStringAttributeValue() != nil {
-		return "string"
-	} else if attribute.GetBooleanAttributeValue() != nil {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue_); ok {
 		return "boolean"
-	} else if attribute.GetNumberAttributeValue() != nil {
-		return "number"
-	} else if attribute.GetFloatAttributeValue() != nil {
-		return "float"
-	} else {
-		return ""
 	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue_); ok {
+		return "string"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue_); ok {
+		return "number"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue_); ok {
+		return "float"
+	}
+	return "default"
 }

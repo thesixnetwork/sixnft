@@ -1,75 +1,93 @@
 package keeper
 
 import (
-	"fmt"
-
 	"sixnft/x/nftmngr/types"
 )
 
 // Check Duplicate Attributes in array
-func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, error) {
-	attributesLen := len(attributes)
-	for i := 0; i < attributesLen; i++ {
-		for j := i + 1; j < attributesLen; j++ {
-			if attributes[i].Name == attributes[j].Name {
-				return false, fmt.Errorf("Duplicate attribute name: %s", attributes[i].Name)
-			}
-		}
+func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
+	mapAttributes := map[string]*types.AttributeDefinition{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
 	}
-	return true, nil
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
 }
 
-func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, error) {
-	attributesLen := len(attributes)
-	for i := 0; i < attributesLen; i++ {
-		for j := i + 1; j < attributesLen; j++ {
-			if attributes[i].Name == attributes[j].Name {
-				return false, fmt.Errorf("Duplicate attribute value name: %s", attributes[i].Name)
-			}
-		}
+func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, string) {
+	mapAttributes := map[string]*types.NftAttributeValue{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
 	}
-	return true, nil
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
 }
 
-func HasSameType(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.AttributeDefinition) (bool, error) {
+func HasSameType(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) (bool, string) {
+	mapOriginAttributes := map[string]*types.AttributeDefinition{}
+
+	for _, attriDef := range originAttributes {
+		mapOriginAttributes[attriDef.Name] = attriDef
+	}
+	for _, attriVal := range onchainAttributes {
+		attrDef := mapOriginAttributes[attriVal.Name]
+		if attrDef == nil {
+			continue
+		}
+		if attrDef.DataType != attriVal.DataType {
+			return false, attrDef.Name
+		}
+	}
+	return true, ""
+}
+
+func HasSameTypeAsSchema(schemaAttributes []*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
 	// If attributes have same name, then they must have same type
-	for i := 0; i < len(attributes_1); i++ {
-		for j := i + 1; j < len(attributes_2); j++ {
-			if attributes_1[i].Name == attributes_2[j].Name {
-				if attributes_1[i].DataType != attributes_2[j].DataType {
-					return false, fmt.Errorf("Attribute %s has different type", attributes_1[i].Name)
-				}
-				return true, nil
-			}
-		}
-	}
-	return true, nil
-}
+	mapSchemaAttributes := map[string]*types.AttributeDefinition{}
 
-func HasSameTypeAsSchema(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.NftAttributeValue) (bool, error) {
-	// If attributes have same name, then they must have same type
-	for i := 0; i < len(attributes_1); i++ {
-		for j := 0; j < len(attributes_2); j++ {
-			if attributes_1[i].Name == attributes_2[j].Name {
-				if attributes_1[i].DataType != GetTypeFromAttributeValue(attributes_2[j]) {
-					return false, fmt.Errorf("Attribute %s does not match schema attribute type", attributes_1[i].Name)
-				}
-			}
+	for _, attriDef := range schemaAttributes {
+		mapSchemaAttributes[attriDef.Name] = attriDef
+	}
+
+	for _, attriVal := range dataAttributes {
+		attDef := mapSchemaAttributes[attriVal.Name]
+		if attDef.DataType != GetTypeFromAttributeValue(attriVal) {
+			return false, attriVal.Name
 		}
 	}
-	return true, nil
+	return true, ""
 }
 
 func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
-	if attribute.GetStringAttributeValue() != nil {
-		return "string"
-	} else if attribute.GetBooleanAttributeValue() != nil {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue_); ok {
 		return "boolean"
-	} else if attribute.GetNumberAttributeValue() != nil {
-		return "number"
-	} else if attribute.GetFloatAttributeValue() != nil {
-		return "float"
-	} else {
-		return ""
 	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue_); ok {
+		return "string"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue_); ok {
+		return "number"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue_); ok {
+		return "float"
+	}
+	return "default"
 }

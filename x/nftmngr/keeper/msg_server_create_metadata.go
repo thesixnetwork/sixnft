@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 
 	"sixnft/x/nftmngr/types"
 
@@ -60,39 +61,24 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 // Validate NFT Data
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Validate Onchain Attributes Value
-	_, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
-	if err != nil {
-		return false, err
+	duplicated, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainAttributesValue, fmt.Sprintf("Duplicate attribute name: %s ", err))
 	}
 	// Validate Origin Attributes Value
-	_, err = HasDuplicateNftAttributesValue(data.OriginAttributes)
-	if err != nil {
-		return false, err
-	}
-	// Validate if attributes have the same type for NFT Attributes
-	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
-	if err != nil {
-		return false, err
-	}
-	// Validate if attributes have the same type for Token Attributes
-	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	if err != nil {
-		return false, err
+	duplicated, err = HasDuplicateNftAttributesValue(data.OriginAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributesValue, fmt.Sprintf("Duplicate attribute name: %s ", err))
 	}
 	// Validate if origin attributes have the same type as the schema
-	_, err = HasSameTypeAsSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
-	if err != nil {
-		return false, err
+	hasSameType, err := HasSameTypeAsSchema(schema.OriginData.OriginAttributes, data.OriginAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s ", err))
 	}
 	// Validate if onchain token attributes have the same type as the schema
-	_, err = HasSameTypeAsSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
-	if err != nil {
-		return false, err
-	}
-	// Validate if onchain nft attributes have the same type as the schema
-	_, err = HasSameTypeAsSchema(schema.OnchainData.NftAttributes, data.OnchainAttributes)
-	if err != nil {
-		return false, err
+	hasSameType, err = HasSameTypeAsSchema(schema.OnchainData.TokenAttributes, data.OnchainAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s ", err))
 	}
 	return true, nil
 }

@@ -10,6 +10,7 @@ import (
 	"sixnft/x/nftmngr/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/jsonpb"
 )
 
@@ -318,71 +319,108 @@ func TestCreateData(t *testing.T) {
 // Validate NFT Schema
 func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	// Check for duplicate attributes
-	_, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
-	if err != nil {
-		return false, err
+	duplicated, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
+	fmt.Println("1 HasDuplicateAttributes")
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	// Validate Onchain NFT Attributes
-	_, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
-	if err != nil {
-		return false, err
+	fmt.Println("2 HasDuplicateAttributes")
+	duplicated, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	// Validate Onchain Token Attributes
-	_, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
-	if err != nil {
-		return false, err
+	fmt.Println("3 HasDuplicateAttributes")
+	duplicated, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainTokenAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	_, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
-	if err != nil {
-		return false, err
+	fmt.Println("4 HasDuplicateNftAttributesValue")
+	duplicated, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
+	if duplicated {
+		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	// Validate if attributes have the same type
-	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
-	if err != nil {
-		return false, err
+	fmt.Println("5 HasSameType")
+	hasSameType, err := HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
-	_, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
-}
-
-func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, error) {
-	attributesLen := len(attributes)
-	for i := 0; i < attributesLen; i++ {
-		for j := i + 1; j < attributesLen; j++ {
-			if attributes[i].Name == attributes[j].Name {
-				return false, fmt.Errorf("Duplicate attribute name: %s", attributes[i].Name)
-			}
-		}
+	fmt.Println("6 HasSameType")
+	hasSameType, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
 	return true, nil
 }
 
-func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, error) {
-	attributesLen := len(attributes)
-	for i := 0; i < attributesLen; i++ {
-		for j := i + 1; j < attributesLen; j++ {
-			if attributes[i].Name == attributes[j].Name {
-				return false, fmt.Errorf("Duplicate attribute value name: %s", attributes[i].Name)
-			}
-		}
+func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
+	mapAttributes := map[string]*types.AttributeDefinition{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
 	}
-	return true, nil
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
 }
 
-func HasSameType(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.AttributeDefinition) (bool, error) {
-	// If attributes have same name, then they must have same type
-	for i := 0; i < len(attributes_1); i++ {
-		for j := i + 1; j < len(attributes_2); j++ {
-			if attributes_1[i].Name == attributes_2[j].Name {
-				if attributes_1[i].DataType != attributes_2[j].DataType {
-					return false, fmt.Errorf("Attribute %s has different type", attributes_1[i].Name)
-				}
-				return true, nil
-			}
+func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, string) {
+	mapAttributes := map[string]*types.NftAttributeValue{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
+	}
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
+}
+
+// func HasSameType(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.AttributeDefinition) (bool, error) {
+// 	// If attributes have same name, then they must have same type
+// 	for i := 0; i < len(attributes_1); i++ {
+// 		for j := i + 1; j < len(attributes_2); j++ {
+// 			if attributes_1[i].Name == attributes_2[j].Name {
+// 				if attributes_1[i].DataType != attributes_2[j].DataType {
+// 					return false, fmt.Errorf("Attribute %s has different type", attributes_1[i].Name)
+// 				}
+// 				return true, nil
+// 			}
+// 		}
+// 	}
+// 	return true, nil
+// }
+
+func HasSameType(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) (bool, string) {
+	mapOriginAttributes := map[string]*types.AttributeDefinition{}
+
+	for _, attriDef := range originAttributes {
+		mapOriginAttributes[attriDef.Name] = attriDef
+	}
+	for _, attriVal := range onchainAttributes {
+		attrDef := mapOriginAttributes[attriVal.Name]
+		if attrDef == nil {
+			continue
+		}
+		if attrDef.DataType != attriVal.DataType {
+			fmt.Println("attrDef.DataType: ", attrDef.DataType)
+			return false, attrDef.Name
 		}
 	}
-	return true, nil
+	return true, ""
 }
