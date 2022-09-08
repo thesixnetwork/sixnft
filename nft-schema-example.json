@@ -193,7 +193,7 @@
             {
                 "name": "percent_discount_10",
                 "default_mint_value": "10",
-                "data_type": "interger",
+                "data_type": "number",
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
