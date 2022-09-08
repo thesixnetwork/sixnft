@@ -23,9 +23,14 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type OnChainData struct {
-	NftAttributes   []*AttributeDefinition `protobuf:"bytes,1,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
-	TokenAttributes []*AttributeDefinition `protobuf:"bytes,2,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions         []*Action              `protobuf:"bytes,3,rep,name=actions,proto3" json:"actions,omitempty"`
+	RevealRequired     bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
+	RevealSecret       []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
+	NftAttributes      []*AttributeDefinition `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
+	TokenAttributes    []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions            []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status             map[string]bool        `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	OnOffSwitch        map[string]bool        `protobuf:"bytes,7,rep,name=on_off_switch,json=onOffSwitch,proto3" json:"on_off_switch,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	NftAttributesValue []*NftAttributeValue   `protobuf:"bytes,8,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
 }
 
 func (m *OnChainData) Reset()         { *m = OnChainData{} }
@@ -61,6 +66,20 @@ func (m *OnChainData) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_OnChainData proto.InternalMessageInfo
 
+func (m *OnChainData) GetRevealRequired() bool {
+	if m != nil {
+		return m.RevealRequired
+	}
+	return false
+}
+
+func (m *OnChainData) GetRevealSecret() []byte {
+	if m != nil {
+		return m.RevealSecret
+	}
+	return nil
+}
+
 func (m *OnChainData) GetNftAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.NftAttributes
@@ -82,29 +101,65 @@ func (m *OnChainData) GetActions() []*Action {
 	return nil
 }
 
+func (m *OnChainData) GetStatus() map[string]bool {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
+func (m *OnChainData) GetOnOffSwitch() map[string]bool {
+	if m != nil {
+		return m.OnOffSwitch
+	}
+	return nil
+}
+
+func (m *OnChainData) GetNftAttributesValue() []*NftAttributeValue {
+	if m != nil {
+		return m.NftAttributesValue
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*OnChainData)(nil), "sixnft.nftmngr.OnChainData")
+	proto.RegisterMapType((map[string]bool)(nil), "sixnft.nftmngr.OnChainData.OnOffSwitchEntry")
+	proto.RegisterMapType((map[string]bool)(nil), "sixnft.nftmngr.OnChainData.StatusEntry")
 }
 
 func init() { proto.RegisterFile("nftmngr/on_chain_data.proto", fileDescriptor_35d167410338c830) }
 
 var fileDescriptor_35d167410338c830 = []byte{
-	// 234 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xce, 0x4b, 0x2b, 0xc9,
-	0xcd, 0x4b, 0x2f, 0xd2, 0xcf, 0xcf, 0x8b, 0x4f, 0xce, 0x48, 0xcc, 0xcc, 0x8b, 0x4f, 0x49, 0x2c,
-	0x49, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x2b, 0xce, 0xac, 0xc8, 0x4b, 0x2b, 0xd1,
-	0x83, 0xaa, 0x91, 0x52, 0x82, 0x29, 0x4e, 0x2c, 0x29, 0x29, 0xca, 0x4c, 0x2a, 0x2d, 0x49, 0x8d,
-	0x4f, 0x49, 0x4d, 0xcb, 0xcc, 0xcb, 0x2c, 0xc9, 0xcc, 0xcf, 0x83, 0xe8, 0x91, 0x12, 0x81, 0xab,
-	0x49, 0x46, 0x88, 0x2a, 0xdd, 0x66, 0xe4, 0xe2, 0xf6, 0xcf, 0x73, 0x06, 0x59, 0xe0, 0x92, 0x58,
-	0x92, 0x28, 0xe4, 0xc5, 0xc5, 0x97, 0x97, 0x56, 0x12, 0x0f, 0x37, 0xa7, 0x58, 0x82, 0x51, 0x81,
-	0x59, 0x83, 0xdb, 0x48, 0x59, 0x0f, 0xd5, 0x4a, 0x3d, 0x47, 0x98, 0x0a, 0x17, 0xb8, 0x45, 0x41,
-	0xbc, 0x79, 0x69, 0x25, 0x70, 0xf1, 0x62, 0x21, 0x3f, 0x2e, 0x81, 0x92, 0xfc, 0xec, 0xd4, 0x3c,
-	0x64, 0xd3, 0x98, 0x88, 0x37, 0x8d, 0x1f, 0xac, 0x19, 0xc9, 0x3c, 0x03, 0x2e, 0x76, 0x88, 0xdb,
-	0x8b, 0x25, 0x98, 0xc1, 0xc6, 0x88, 0x61, 0x18, 0x03, 0x96, 0x0e, 0x82, 0x29, 0x73, 0x32, 0x38,
-	0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63,
-	0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x31, 0x88, 0x4e, 0xfd, 0x0a, 0x7d,
-	0x58, 0xb0, 0x94, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x83, 0xc5, 0x18, 0x10, 0x00, 0x00,
-	0xff, 0xff, 0x1b, 0x3d, 0x4a, 0x09, 0x7f, 0x01, 0x00, 0x00,
+	// 442 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x52, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0x8d, 0x13, 0x92, 0x96, 0x75, 0x93, 0x46, 0xab, 0xa8, 0xb2, 0x8c, 0x64, 0xa5, 0xed, 0xa1,
+	0x39, 0x20, 0xa7, 0x82, 0x0b, 0x70, 0x00, 0x01, 0xe5, 0xc2, 0xa1, 0x41, 0x6b, 0x89, 0x03, 0x17,
+	0x6b, 0xeb, 0xec, 0xd2, 0x55, 0xc3, 0x3a, 0xec, 0x8e, 0x43, 0xf2, 0x0f, 0x1c, 0xf8, 0x2c, 0x8e,
+	0x39, 0x72, 0x44, 0xc9, 0x8f, 0xa0, 0xec, 0xda, 0x89, 0x1d, 0x10, 0x82, 0x9b, 0xfd, 0xe6, 0xbd,
+	0x37, 0xb3, 0x6f, 0x06, 0x3d, 0x90, 0x1c, 0x3e, 0xc9, 0x8f, 0x6a, 0x98, 0xca, 0x38, 0xb9, 0xa5,
+	0x42, 0xc6, 0x63, 0x0a, 0x34, 0x9c, 0xaa, 0x14, 0x52, 0xdc, 0xd1, 0x62, 0x2e, 0x39, 0x84, 0x39,
+	0xc7, 0x3f, 0x2b, 0xc8, 0x14, 0x40, 0x89, 0x9b, 0x0c, 0x58, 0x3c, 0x66, 0x5c, 0x48, 0x01, 0x22,
+	0x95, 0x56, 0xe3, 0xf7, 0xb6, 0x9c, 0xe4, 0x4f, 0xa8, 0x06, 0x0a, 0x99, 0xce, 0xd1, 0x72, 0xf3,
+	0x94, 0xf3, 0x58, 0x7f, 0x11, 0x90, 0xdc, 0xe6, 0xc5, 0xd3, 0xa2, 0x28, 0x39, 0xc4, 0xbb, 0x86,
+	0x33, 0x3a, 0xc9, 0x98, 0xa5, 0x9c, 0x7d, 0x6d, 0x22, 0x77, 0x24, 0x5f, 0x6f, 0xc6, 0xbe, 0xa2,
+	0x40, 0xf1, 0x05, 0x3a, 0x56, 0x6c, 0xc6, 0xe8, 0x24, 0x56, 0xec, 0x73, 0x26, 0x14, 0x1b, 0x7b,
+	0x4e, 0xdf, 0x19, 0x1c, 0x92, 0x8e, 0x85, 0x49, 0x8e, 0xe2, 0x73, 0xd4, 0xce, 0x89, 0x9a, 0x25,
+	0x8a, 0x81, 0x57, 0xef, 0x3b, 0x83, 0x23, 0x72, 0x64, 0xc1, 0xc8, 0x60, 0xf8, 0x2d, 0xea, 0x54,
+	0x5a, 0x6b, 0xaf, 0xd1, 0x6f, 0x0c, 0xdc, 0x47, 0xe7, 0x61, 0x35, 0x96, 0xf0, 0x65, 0xc1, 0xb8,
+	0xda, 0x86, 0x41, 0xda, 0x92, 0xc3, 0x16, 0xd7, 0xf8, 0x1a, 0x75, 0x21, 0xbd, 0x63, 0xb2, 0xec,
+	0x76, 0xef, 0xdf, 0xdd, 0x8e, 0x8d, 0xb8, 0xe4, 0x77, 0x89, 0x0e, 0x6c, 0xbe, 0xda, 0x6b, 0x1a,
+	0x9b, 0x93, 0xdf, 0x6c, 0x4c, 0x99, 0x14, 0x34, 0xfc, 0x02, 0xb5, 0x6c, 0xf6, 0x5e, 0xcb, 0x08,
+	0x2e, 0xf6, 0x05, 0xa5, 0x20, 0xc3, 0xc8, 0x30, 0xdf, 0x48, 0x50, 0x0b, 0x92, 0xcb, 0xf0, 0x3b,
+	0xd4, 0xae, 0xac, 0xc9, 0x3b, 0x30, 0x3e, 0x0f, 0xff, 0xe6, 0x33, 0x92, 0x23, 0xce, 0x23, 0x43,
+	0xb7, 0x66, 0x6e, 0xba, 0x43, 0x70, 0x84, 0x7a, 0xd5, 0x80, 0xed, 0x72, 0xbd, 0x43, 0x63, 0x7c,
+	0xba, 0x6f, 0x7c, 0x5d, 0x4a, 0xf4, 0xfd, 0x86, 0x48, 0x70, 0x25, 0x64, 0x83, 0xf9, 0x4f, 0x91,
+	0x5b, 0x9a, 0x1e, 0x77, 0x51, 0xe3, 0x8e, 0x2d, 0xcc, 0x19, 0xdc, 0x27, 0x9b, 0x4f, 0xdc, 0x43,
+	0x4d, 0xdb, 0xa6, 0x6e, 0x4e, 0xc3, 0xfe, 0x3c, 0xab, 0x3f, 0x71, 0xfc, 0xe7, 0xa8, 0xbb, 0x3f,
+	0xf0, 0xff, 0xe8, 0x5f, 0x5d, 0x7e, 0x5f, 0x05, 0xce, 0x72, 0x15, 0x38, 0x3f, 0x57, 0x81, 0xf3,
+	0x6d, 0x1d, 0xd4, 0x96, 0xeb, 0xa0, 0xf6, 0x63, 0x1d, 0xd4, 0x3e, 0x9c, 0xd8, 0xa7, 0x0c, 0xe7,
+	0xc3, 0xe2, 0xa8, 0x61, 0x31, 0x65, 0xfa, 0xa6, 0x65, 0xee, 0xf8, 0xf1, 0xaf, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x61, 0xb6, 0x98, 0x24, 0x86, 0x03, 0x00, 0x00,
 }
 
 func (m *OnChainData) Marshal() (dAtA []byte, err error) {
@@ -127,6 +182,64 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.NftAttributesValue) > 0 {
+		for iNdEx := len(m.NftAttributesValue) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NftAttributesValue[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x42
+		}
+	}
+	if len(m.OnOffSwitch) > 0 {
+		for k := range m.OnOffSwitch {
+			v := m.OnOffSwitch[k]
+			baseI := i
+			i--
+			if v {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i--
+			dAtA[i] = 0x10
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintOnChainData(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintOnChainData(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
+	if len(m.Status) > 0 {
+		for k := range m.Status {
+			v := m.Status[k]
+			baseI := i
+			i--
+			if v {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i--
+			dAtA[i] = 0x10
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintOnChainData(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintOnChainData(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x32
+		}
+	}
 	if len(m.Actions) > 0 {
 		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -138,7 +251,7 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x1a
+			dAtA[i] = 0x2a
 		}
 	}
 	if len(m.TokenAttributes) > 0 {
@@ -152,7 +265,7 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x12
+			dAtA[i] = 0x22
 		}
 	}
 	if len(m.NftAttributes) > 0 {
@@ -166,8 +279,25 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0xa
+			dAtA[i] = 0x1a
 		}
+	}
+	if len(m.RevealSecret) > 0 {
+		i -= len(m.RevealSecret)
+		copy(dAtA[i:], m.RevealSecret)
+		i = encodeVarintOnChainData(dAtA, i, uint64(len(m.RevealSecret)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.RevealRequired {
+		i--
+		if m.RevealRequired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -189,6 +319,13 @@ func (m *OnChainData) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.RevealRequired {
+		n += 2
+	}
+	l = len(m.RevealSecret)
+	if l > 0 {
+		n += 1 + l + sovOnChainData(uint64(l))
+	}
 	if len(m.NftAttributes) > 0 {
 		for _, e := range m.NftAttributes {
 			l = e.Size()
@@ -203,6 +340,28 @@ func (m *OnChainData) Size() (n int) {
 	}
 	if len(m.Actions) > 0 {
 		for _, e := range m.Actions {
+			l = e.Size()
+			n += 1 + l + sovOnChainData(uint64(l))
+		}
+	}
+	if len(m.Status) > 0 {
+		for k, v := range m.Status {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovOnChainData(uint64(len(k))) + 1 + 1
+			n += mapEntrySize + 1 + sovOnChainData(uint64(mapEntrySize))
+		}
+	}
+	if len(m.OnOffSwitch) > 0 {
+		for k, v := range m.OnOffSwitch {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovOnChainData(uint64(len(k))) + 1 + 1
+			n += mapEntrySize + 1 + sovOnChainData(uint64(mapEntrySize))
+		}
+	}
+	if len(m.NftAttributesValue) > 0 {
+		for _, e := range m.NftAttributesValue {
 			l = e.Size()
 			n += 1 + l + sovOnChainData(uint64(l))
 		}
@@ -246,6 +405,60 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.RevealRequired = bool(v != 0)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealSecret", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RevealSecret = append(m.RevealSecret[:0], dAtA[iNdEx:postIndex]...)
+			if m.RevealSecret == nil {
+				m.RevealSecret = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributes", wireType)
 			}
@@ -279,7 +492,7 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 2:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
 			}
@@ -313,7 +526,7 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
 			}
@@ -344,6 +557,270 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 			}
 			m.Actions = append(m.Actions, &Action{})
 			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = make(map[string]bool)
+			}
+			var mapkey string
+			var mapvalue bool
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowOnChainData
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var mapvaluetemp int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvaluetemp |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					mapvalue = bool(mapvaluetemp != 0)
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipOnChainData(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Status[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OnOffSwitch", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OnOffSwitch == nil {
+				m.OnOffSwitch = make(map[string]bool)
+			}
+			var mapkey string
+			var mapvalue bool
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowOnChainData
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var mapvaluetemp int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvaluetemp |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					mapvalue = bool(mapvaluetemp != 0)
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipOnChainData(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.OnOffSwitch[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributesValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftAttributesValue = append(m.NftAttributesValue, &NftAttributeValue{})
+			if err := m.NftAttributesValue[len(m.NftAttributesValue)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

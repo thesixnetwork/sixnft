@@ -7,8 +7,9 @@ message AttributeDefinition {
   
   string name = 1; 
   string data_type = 2; 
-  string display_value_field = 3; 
-  DisplayOption display_option = 4; 
-  string default_mint_value = 5; 
-  bool hidden_to_marketplace = 6;
+  bool required = 3;
+  string display_value_field = 4; 
+  DisplayOption display_option = 5; 
+  string default_mint_value = 6; 
+  bool hidden_to_marketplace = 7;
 }

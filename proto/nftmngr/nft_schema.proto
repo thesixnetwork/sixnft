@@ -11,8 +11,8 @@ message NFTSchema {
   string code = 1; 
   string name = 2; 
   string owner = 3; 
-  OriginData origin_data = 4; 
-  OnChainData onchain_data = 5; 
+  OriginData origin_data = 4;
+  OnChainData onchain_data = 5;
   
 }
 

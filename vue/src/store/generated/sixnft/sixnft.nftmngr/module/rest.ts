@@ -9,6 +9,31 @@
  * ---------------------------------------------------------------
  */
 
+export interface NftAttributeValueBooleanAttributeValue {
+  value?: boolean;
+}
+
+export interface NftAttributeValueFloatAttributeValue {
+  /** @format double */
+  value?: number;
+}
+
+export interface NftAttributeValueNumberAttributeValue {
+  /** @format uint64 */
+  value?: string;
+}
+
+export interface NftAttributeValueStringAttributeValue {
+  value?: string;
+}
+
+export interface GooglerpcStatus {
+  /** @format int32 */
+  code?: number;
+  message?: string;
+  details?: ProtobufAny[];
+}
+
 export interface NftmngrAction {
   name?: string;
   desc?: string;
@@ -19,6 +44,7 @@ export interface NftmngrAction {
 export interface NftmngrAttributeDefinition {
   name?: string;
   data_type?: string;
+  required?: boolean;
   display_value_field?: string;
   display_option?: NftmngrDisplayOption;
   default_mint_value?: string;
@@ -34,8 +60,18 @@ export interface NftmngrDisplayOption {
   opensea?: NftmngrOpenseaDisplayOption;
 }
 
+export interface NftmngrMsgCreateMetadataResponse {
+  nftSchemaCode?: string;
+  tokenId?: string;
+}
+
 export interface NftmngrMsgCreateNFTSchemaResponse {
   code?: string;
+}
+
+export interface NftmngrMsgPerformActionByAdminResponse {
+  nftSchemaCode?: string;
+  tokenId?: string;
 }
 
 export interface NftmngrNFTSchema {
@@ -46,10 +82,35 @@ export interface NftmngrNFTSchema {
   onchain_data?: NftmngrOnChainData;
 }
 
+export interface NftmngrNftAttributeValue {
+  name?: string;
+  number_attribute_value?: NftAttributeValueNumberAttributeValue;
+  string_attribute_value?: NftAttributeValueStringAttributeValue;
+  boolean_attribute_value?: NftAttributeValueBooleanAttributeValue;
+  float_attribute_value?: NftAttributeValueFloatAttributeValue;
+}
+
+export interface NftmngrNftData {
+  nft_schema_code?: string;
+  token_id?: string;
+  token_owner?: string;
+  origin_image?: string;
+  onchain_image?: string;
+  origin_attributes?: NftmngrNftAttributeValue[];
+  onchain_attributes?: NftmngrNftAttributeValue[];
+}
+
 export interface NftmngrOnChainData {
+  reveal_required?: boolean;
+
+  /** @format byte */
+  reveal_secret?: string;
   nft_attributes?: NftmngrAttributeDefinition[];
   token_attributes?: NftmngrAttributeDefinition[];
   actions?: NftmngrAction[];
+  status?: Record<string, boolean>;
+  on_off_switch?: Record<string, boolean>;
+  nft_attributes_value?: NftmngrNftAttributeValue[];
 }
 
 export interface NftmngrOpenseaDisplayOption {
@@ -89,8 +150,27 @@ export interface NftmngrQueryAllNFTSchemaResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface NftmngrQueryAllNftDataResponse {
+  nftData?: NftmngrNftData[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface NftmngrQueryGetNFTSchemaResponse {
   nFTSchema?: NftmngrNFTSchema;
+}
+
+export interface NftmngrQueryGetNftDataResponse {
+  nftData?: NftmngrNftData;
 }
 
 /**
@@ -101,15 +181,121 @@ export interface NftmngrQueryParamsResponse {
   params?: NftmngrParams;
 }
 
-export interface ProtobufAny {
-  "@type"?: string;
-}
+/**
+* `Any` contains an arbitrary serialized protocol buffer message along with a
+URL that describes the type of the serialized message.
 
-export interface RpcStatus {
-  /** @format int32 */
-  code?: number;
-  message?: string;
-  details?: ProtobufAny[];
+Protobuf library provides support to pack/unpack Any values in the form
+of utility functions or additional generated methods of the Any type.
+
+Example 1: Pack and unpack a message in C++.
+
+    Foo foo = ...;
+    Any any;
+    any.PackFrom(foo);
+    ...
+    if (any.UnpackTo(&foo)) {
+      ...
+    }
+
+Example 2: Pack and unpack a message in Java.
+
+    Foo foo = ...;
+    Any any = Any.pack(foo);
+    ...
+    if (any.is(Foo.class)) {
+      foo = any.unpack(Foo.class);
+    }
+
+ Example 3: Pack and unpack a message in Python.
+
+    foo = Foo(...)
+    any = Any()
+    any.Pack(foo)
+    ...
+    if any.Is(Foo.DESCRIPTOR):
+      any.Unpack(foo)
+      ...
+
+ Example 4: Pack and unpack a message in Go
+
+     foo := &pb.Foo{...}
+     any, err := anypb.New(foo)
+     if err != nil {
+       ...
+     }
+     ...
+     foo := &pb.Foo{}
+     if err := any.UnmarshalTo(foo); err != nil {
+       ...
+     }
+
+The pack methods provided by protobuf library will by default use
+'type.googleapis.com/full.type.name' as the type URL and the unpack
+methods only use the fully qualified type name after the last '/'
+in the type URL, for example "foo.bar.com/x/y.z" will yield type
+name "y.z".
+
+
+JSON
+====
+The JSON representation of an `Any` value uses the regular
+representation of the deserialized, embedded message, with an
+additional field `@type` which contains the type URL. Example:
+
+    package google.profile;
+    message Person {
+      string first_name = 1;
+      string last_name = 2;
+    }
+
+    {
+      "@type": "type.googleapis.com/google.profile.Person",
+      "firstName": <string>,
+      "lastName": <string>
+    }
+
+If the embedded message type is well-known and has a custom JSON
+representation, that representation will be embedded adding a field
+`value` which holds the custom JSON in addition to the `@type`
+field. Example (for message [google.protobuf.Duration][]):
+
+    {
+      "@type": "type.googleapis.com/google.protobuf.Duration",
+      "value": "1.212s"
+    }
+*/
+export interface ProtobufAny {
+  /**
+   * A URL/resource name that uniquely identifies the type of the serialized
+   * protocol buffer message. This string must contain at least
+   * one "/" character. The last segment of the URL's path must represent
+   * the fully qualified name of the type (as in
+   * `path/google.protobuf.Duration`). The name should be in a canonical form
+   * (e.g., leading "." is not accepted).
+   *
+   * In practice, teams usually precompile into the binary all types that they
+   * expect it to use in the context of Any. However, for URLs which use the
+   * scheme `http`, `https`, or no scheme, one can optionally set up a type
+   * server that maps type URLs to message definitions as follows:
+   *
+   * * If no scheme is provided, `https` is assumed.
+   * * An HTTP GET on the URL must yield a [google.protobuf.Type][]
+   *   value in binary format, or produce an error.
+   * * Applications are allowed to cache lookup results based on the
+   *   URL, or have them precompiled into a binary to avoid any
+   *   lookup. Therefore, binary compatibility needs to be preserved
+   *   on changes to types. (Use versioned type names to manage
+   *   breaking changes.)
+   *
+   * Note: this functionality is not currently available in the official
+   * protobuf release, and it is not used for type URLs beginning with
+   * type.googleapis.com.
+   *
+   * Schemes other than `http`, `https` (or the empty scheme) might be
+   * used with implementation specific semantics.
+   */
+  "@type"?: string;
 }
 
 /**
@@ -375,6 +561,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryNftDataAll
+   * @summary Queries a list of NftData items.
+   * @request GET:/sixnft/nftmngr/nft_data
+   */
+  queryNftDataAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftmngrQueryAllNftDataResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/nft_data`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNftData
+   * @summary Queries a NftData by index.
+   * @request GET:/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}
+   */
+  queryNftData = (nftSchemaCode: string, tokenId: string, params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetNftDataResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/nft_data/${nftSchemaCode}/${tokenId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryNftSchemaAll
    * @summary Queries a list of NFTSchema items.
    * @request GET:/sixnft/nftmngr/nft_schema
@@ -389,7 +617,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     },
     params: RequestParams = {},
   ) =>
-    this.request<NftmngrQueryAllNFTSchemaResponse, RpcStatus>({
+    this.request<NftmngrQueryAllNFTSchemaResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/nft_schema`,
       method: "GET",
       query: query,
@@ -406,7 +634,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @request GET:/sixnft/nftmngr/nft_schema/{code}
    */
   queryNftSchema = (code: string, params: RequestParams = {}) =>
-    this.request<NftmngrQueryGetNFTSchemaResponse, RpcStatus>({
+    this.request<NftmngrQueryGetNFTSchemaResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/nft_schema/${code}`,
       method: "GET",
       format: "json",
@@ -422,7 +650,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @request GET:/sixnft/nftmngr/params
    */
   queryParams = (params: RequestParams = {}) =>
-    this.request<NftmngrQueryParamsResponse, RpcStatus>({
+    this.request<NftmngrQueryParamsResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/params`,
       method: "GET",
       format: "json",

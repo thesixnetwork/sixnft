@@ -1,0 +1,9 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+option go_package = "sixnft/x/nftmngr/types";
+
+message OnOffSwitch {
+  
+  bool active = 1; 
+}

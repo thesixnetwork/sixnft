@@ -1,12 +1,12 @@
 {
     "code": "buakaw1",
     "name": "Buakaw1",
-    "owner": "6nft15s8yev2cv2ve7lzem5yufjynnfe0u2t9slpwvn",
+    "owner": "0xNFTOWNER",
     "origin_data": {
         "origin_base_uri": "https://bk1nft.sixnetwork.io/ipfs/QmcovEcZxiM1M9gf3535jUCpbqFZSjc2hHuYnZEbWNmt5a",
         "origin_chain": "ethereum",
         "origin_contract_address": "0x9F1CC70b11f4129d042d0037c2066d12E16d9a52",
-        "attribute_overriding": "ORIGIN",
+        "attribute_overriding": "CHAIN",
         "metadata_format": "opensea",
         "origin_attributes": [
             {
@@ -162,6 +162,8 @@
         ]
     },
     "onchain_data": {
+        "reveal_required": true,
+        "reveal_secret": "",
         "nft_attributes": [
             {
                 "name": "expire_date",
@@ -179,17 +181,20 @@
             {
                 "name": "exclusive_party_access",
                 "data_type": "boolean",
+                "required": true,
                 "hidden_to_marketplace": true
             },
             {
                 "name": "first_discount_used",
                 "data_type": "boolean",
+                "required": true,
                 "hidden_to_marketplace": true
             },
             {
                 "name": "percent_discount_10",
                 "default_mint_value": "10",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
@@ -203,6 +208,7 @@
                 "name": "discount_percentage",
                 "default_mint_value": "0",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
@@ -215,6 +221,7 @@
                 "name": "discount_amount",
                 "default_mint_value": "0",
                 "data_type": "interger",
+                "required": true,
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {
@@ -230,10 +237,23 @@
                 "desc": "Use 10% discount on purchase",
                 "when": "meta.GetNumber('percent_discount_10') > 0",
                 "then": [
-                    "meta.SetNumber(meta.GetNumber('percent_discount_10') - 1)",
-                    "meta.SetBoolean('first_discount_used', true)",
-                    "meta.Random(x,y)"
+                    "meta.SetNumber('percent_discount_10',meta.GetNumber('percent_discount_10') - 1)",
+                    "meta.SetBoolean('first_discount_used', true)"
                 ]
+            }
+        ],
+        "on_off_switch": {
+            "active": true
+        },
+        "status": {
+            "first_mint_complete": false
+        },
+        "nft_attributes_value": [
+            {
+                "name": "expire_date",
+                "number_attribute_value": {
+                    "value": 1665009678
+                }
             }
         ]
     }

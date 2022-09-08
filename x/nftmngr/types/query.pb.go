@@ -297,6 +297,198 @@ func (m *QueryAllNFTSchemaResponse) GetPagination() *query.PageResponse {
 	return nil
 }
 
+type QueryGetNftDataRequest struct {
+	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,2,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+}
+
+func (m *QueryGetNftDataRequest) Reset()         { *m = QueryGetNftDataRequest{} }
+func (m *QueryGetNftDataRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetNftDataRequest) ProtoMessage()    {}
+func (*QueryGetNftDataRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{6}
+}
+func (m *QueryGetNftDataRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetNftDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetNftDataRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetNftDataRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetNftDataRequest.Merge(m, src)
+}
+func (m *QueryGetNftDataRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetNftDataRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetNftDataRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetNftDataRequest proto.InternalMessageInfo
+
+func (m *QueryGetNftDataRequest) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *QueryGetNftDataRequest) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
+type QueryGetNftDataResponse struct {
+	NftData NftData `protobuf:"bytes,1,opt,name=nftData,proto3" json:"nftData"`
+}
+
+func (m *QueryGetNftDataResponse) Reset()         { *m = QueryGetNftDataResponse{} }
+func (m *QueryGetNftDataResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetNftDataResponse) ProtoMessage()    {}
+func (*QueryGetNftDataResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{7}
+}
+func (m *QueryGetNftDataResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetNftDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetNftDataResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetNftDataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetNftDataResponse.Merge(m, src)
+}
+func (m *QueryGetNftDataResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetNftDataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetNftDataResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetNftDataResponse proto.InternalMessageInfo
+
+func (m *QueryGetNftDataResponse) GetNftData() NftData {
+	if m != nil {
+		return m.NftData
+	}
+	return NftData{}
+}
+
+type QueryAllNftDataRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllNftDataRequest) Reset()         { *m = QueryAllNftDataRequest{} }
+func (m *QueryAllNftDataRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllNftDataRequest) ProtoMessage()    {}
+func (*QueryAllNftDataRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{8}
+}
+func (m *QueryAllNftDataRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllNftDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllNftDataRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllNftDataRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllNftDataRequest.Merge(m, src)
+}
+func (m *QueryAllNftDataRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllNftDataRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllNftDataRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllNftDataRequest proto.InternalMessageInfo
+
+func (m *QueryAllNftDataRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllNftDataResponse struct {
+	NftData    []NftData           `protobuf:"bytes,1,rep,name=nftData,proto3" json:"nftData"`
+	Pagination *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllNftDataResponse) Reset()         { *m = QueryAllNftDataResponse{} }
+func (m *QueryAllNftDataResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllNftDataResponse) ProtoMessage()    {}
+func (*QueryAllNftDataResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{9}
+}
+func (m *QueryAllNftDataResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllNftDataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllNftDataResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllNftDataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllNftDataResponse.Merge(m, src)
+}
+func (m *QueryAllNftDataResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllNftDataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllNftDataResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllNftDataResponse proto.InternalMessageInfo
+
+func (m *QueryAllNftDataResponse) GetNftData() []NftData {
+	if m != nil {
+		return m.NftData
+	}
+	return nil
+}
+
+func (m *QueryAllNftDataResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "sixnft.nftmngr.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "sixnft.nftmngr.QueryParamsResponse")
@@ -304,43 +496,57 @@ func init() {
 	proto.RegisterType((*QueryGetNFTSchemaResponse)(nil), "sixnft.nftmngr.QueryGetNFTSchemaResponse")
 	proto.RegisterType((*QueryAllNFTSchemaRequest)(nil), "sixnft.nftmngr.QueryAllNFTSchemaRequest")
 	proto.RegisterType((*QueryAllNFTSchemaResponse)(nil), "sixnft.nftmngr.QueryAllNFTSchemaResponse")
+	proto.RegisterType((*QueryGetNftDataRequest)(nil), "sixnft.nftmngr.QueryGetNftDataRequest")
+	proto.RegisterType((*QueryGetNftDataResponse)(nil), "sixnft.nftmngr.QueryGetNftDataResponse")
+	proto.RegisterType((*QueryAllNftDataRequest)(nil), "sixnft.nftmngr.QueryAllNftDataRequest")
+	proto.RegisterType((*QueryAllNftDataResponse)(nil), "sixnft.nftmngr.QueryAllNftDataResponse")
 }
 
 func init() { proto.RegisterFile("nftmngr/query.proto", fileDescriptor_1406c74dd8ff3e6a) }
 
 var fileDescriptor_1406c74dd8ff3e6a = []byte{
-	// 485 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xbf, 0x6f, 0xd4, 0x30,
-	0x14, 0xc7, 0xcf, 0x6d, 0x39, 0xe9, 0x0c, 0x62, 0x70, 0x4f, 0xa7, 0x34, 0xaa, 0x02, 0xb8, 0x12,
-	0xb4, 0x0c, 0x36, 0x2d, 0xac, 0x0c, 0xed, 0xd0, 0x0e, 0x48, 0xa8, 0x04, 0xa6, 0x2e, 0xc8, 0x39,
-	0x7c, 0x21, 0x52, 0x62, 0xe7, 0x62, 0x17, 0xb5, 0x42, 0x2c, 0x2c, 0x0c, 0x2c, 0x08, 0xfe, 0x04,
-	0xfe, 0x99, 0x8e, 0x95, 0x58, 0x98, 0x10, 0xba, 0xe3, 0x0f, 0x41, 0xb1, 0x9d, 0x5c, 0x73, 0x97,
-	0xe3, 0xc7, 0x66, 0xf9, 0x7d, 0xdf, 0xf7, 0x7d, 0xde, 0xf3, 0x33, 0x5c, 0x17, 0x23, 0x9d, 0x89,
-	0xb8, 0xa0, 0xe3, 0x53, 0x5e, 0x9c, 0x93, 0xbc, 0x90, 0x5a, 0xa2, 0x9b, 0x2a, 0x39, 0x13, 0x23,
-	0x4d, 0x5c, 0xcc, 0xef, 0xc7, 0x32, 0x96, 0x26, 0x44, 0xcb, 0x93, 0x55, 0xf9, 0x9b, 0xb1, 0x94,
-	0x71, 0xca, 0x29, 0xcb, 0x13, 0xca, 0x84, 0x90, 0x9a, 0xe9, 0x44, 0x0a, 0xe5, 0xa2, 0xf7, 0x87,
-	0x52, 0x65, 0x52, 0xd1, 0x88, 0x29, 0x6e, 0xcd, 0xe9, 0x9b, 0xdd, 0x88, 0x6b, 0xb6, 0x4b, 0x73,
-	0x16, 0x27, 0xc2, 0x88, 0x9d, 0xb6, 0x5f, 0x41, 0xe4, 0xac, 0x60, 0x59, 0xe5, 0xe0, 0x55, 0xb7,
-	0x62, 0xa4, 0x5f, 0xaa, 0xe1, 0x6b, 0x9e, 0x31, 0x1b, 0xc1, 0x7d, 0x88, 0x9e, 0x95, 0x8e, 0xc7,
-	0x46, 0x1e, 0xf2, 0xf1, 0x29, 0x57, 0x1a, 0x3f, 0x81, 0xeb, 0x8d, 0x5b, 0x95, 0x4b, 0xa1, 0x38,
-	0x7a, 0x04, 0xbb, 0xd6, 0xd6, 0x03, 0xb7, 0xc1, 0xf6, 0xf5, 0xbd, 0x01, 0x69, 0x76, 0x47, 0xac,
-	0xfe, 0x60, 0xed, 0xe2, 0xc7, 0xad, 0x4e, 0xe8, 0xb4, 0x98, 0x40, 0xcf, 0x98, 0x1d, 0x71, 0xfd,
-	0xf4, 0xf0, 0xc5, 0x73, 0x53, 0xdd, 0x15, 0x42, 0x08, 0xae, 0x0d, 0xe5, 0x2b, 0x6e, 0xfc, 0x7a,
-	0xa1, 0x39, 0xe3, 0x13, 0xb8, 0xd1, 0xa2, 0x77, 0x08, 0x8f, 0x61, 0x4f, 0x54, 0x97, 0x8e, 0x62,
-	0x63, 0x9e, 0xa2, 0xce, 0x72, 0x20, 0xb3, 0x0c, 0x1c, 0x39, 0x96, 0xfd, 0x34, 0x5d, 0x60, 0x39,
-	0x84, 0x70, 0x36, 0x4e, 0xe7, 0x7d, 0x97, 0xd8, 0xd9, 0x93, 0x72, 0xf6, 0xc4, 0x3e, 0xac, 0x9b,
-	0x3d, 0x39, 0x66, 0x31, 0x77, 0xb9, 0xe1, 0x95, 0x4c, 0xfc, 0x15, 0xb8, 0x06, 0x9a, 0x45, 0xda,
-	0x1b, 0x58, 0xfd, 0xbf, 0x06, 0xd0, 0x51, 0x03, 0x72, 0xc5, 0x40, 0xde, 0xfb, 0x2b, 0xa4, 0xad,
-	0x7d, 0x95, 0x72, 0xef, 0xf3, 0x2a, 0xbc, 0x66, 0x28, 0xd1, 0x18, 0x76, 0xed, 0xbb, 0x21, 0x3c,
-	0x0f, 0xb2, 0xb8, 0x1a, 0xfe, 0xd6, 0x1f, 0x35, 0xb6, 0x10, 0x0e, 0xde, 0x7f, 0xfb, 0xf5, 0x65,
-	0xc5, 0x43, 0x03, 0x6a, 0xc5, 0xb4, 0xb9, 0x95, 0xe8, 0x23, 0x80, 0xbd, 0xba, 0x49, 0xb4, 0xdd,
-	0x6a, 0xd9, 0xb2, 0x2e, 0xfe, 0xce, 0x3f, 0x28, 0x1d, 0xc2, 0x8e, 0x41, 0xd8, 0x42, 0x77, 0xe6,
-	0x11, 0x66, 0x5f, 0x80, 0xbe, 0x2d, 0xf7, 0xed, 0x1d, 0xfa, 0x00, 0xe0, 0x8d, 0xda, 0x60, 0x3f,
-	0x4d, 0x97, 0x00, 0xb5, 0xec, 0xcc, 0x12, 0xa0, 0xb6, 0x87, 0xc7, 0xd8, 0x00, 0x6d, 0x22, 0x7f,
-	0x39, 0xd0, 0xc1, 0x83, 0x8b, 0x49, 0x00, 0x2e, 0x27, 0x01, 0xf8, 0x39, 0x09, 0xc0, 0xa7, 0x69,
-	0xd0, 0xb9, 0x9c, 0x06, 0x9d, 0xef, 0xd3, 0xa0, 0x73, 0x32, 0x70, 0x49, 0x67, 0x75, 0x9a, 0x3e,
-	0xcf, 0xb9, 0x8a, 0xba, 0xe6, 0x1b, 0x3f, 0xfc, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x91, 0x8e, 0x96,
-	0x9b, 0x7d, 0x04, 0x00, 0x00,
+	// 648 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x95, 0x4d, 0x6b, 0x14, 0x4d,
+	0x10, 0xc7, 0x77, 0xf2, 0xca, 0xf6, 0xf3, 0xe8, 0xa1, 0x13, 0x36, 0x93, 0x21, 0x8c, 0xb1, 0x23,
+	0x79, 0xf1, 0x30, 0x6d, 0x62, 0x40, 0x10, 0x3c, 0x24, 0x4a, 0x82, 0x08, 0x12, 0x47, 0x0f, 0x92,
+	0x8b, 0xf6, 0x26, 0xbd, 0xe3, 0xe2, 0x6e, 0xf7, 0x64, 0xa7, 0x23, 0x09, 0x21, 0x08, 0x5e, 0x3c,
+	0x78, 0x11, 0x04, 0x2f, 0x1e, 0xbd, 0xfa, 0x41, 0x72, 0x0c, 0x78, 0xf1, 0x24, 0xb2, 0xeb, 0x07,
+	0x91, 0xe9, 0xae, 0x99, 0xdd, 0xd9, 0x9d, 0x31, 0x2b, 0xe4, 0xb6, 0xa9, 0xfa, 0x57, 0xd5, 0xaf,
+	0xaa, 0xa6, 0x3a, 0x68, 0x4a, 0xd4, 0x54, 0x53, 0x04, 0x2d, 0x7a, 0x70, 0xc8, 0x5b, 0xc7, 0x5e,
+	0xd8, 0x92, 0x4a, 0xe2, 0xab, 0x51, 0xfd, 0x48, 0xd4, 0x94, 0x07, 0x3e, 0x67, 0x3a, 0x90, 0x81,
+	0xd4, 0x2e, 0x1a, 0xff, 0x32, 0x2a, 0x67, 0x2e, 0x90, 0x32, 0x68, 0x70, 0xca, 0xc2, 0x3a, 0x65,
+	0x42, 0x48, 0xc5, 0x54, 0x5d, 0x8a, 0x08, 0xbc, 0x37, 0xf7, 0x64, 0xd4, 0x94, 0x11, 0xad, 0xb2,
+	0x88, 0x9b, 0xe4, 0xf4, 0xcd, 0x6a, 0x95, 0x2b, 0xb6, 0x4a, 0x43, 0x16, 0xd4, 0x85, 0x16, 0x83,
+	0x76, 0x3a, 0x81, 0x08, 0x59, 0x8b, 0x35, 0x93, 0x0c, 0x76, 0x62, 0x15, 0x35, 0xf5, 0x22, 0xda,
+	0x7b, 0xc5, 0x9b, 0x0c, 0x3c, 0x95, 0x5e, 0xcf, 0x3e, 0x53, 0x60, 0x27, 0xd3, 0x08, 0x3f, 0x89,
+	0x2b, 0xed, 0xe8, 0x34, 0x3e, 0x3f, 0x38, 0xe4, 0x91, 0x22, 0x8f, 0xd0, 0x54, 0xc6, 0x1a, 0x85,
+	0x52, 0x44, 0x1c, 0xaf, 0xa3, 0x09, 0x53, 0xce, 0xb6, 0xe6, 0xad, 0xe5, 0xff, 0xd6, 0x2a, 0x5e,
+	0xb6, 0x6b, 0xcf, 0xe8, 0x37, 0xc7, 0xce, 0x7e, 0x5e, 0x2b, 0xf9, 0xa0, 0x25, 0x1e, 0xb2, 0x75,
+	0xb2, 0x6d, 0xae, 0x1e, 0x6f, 0x3d, 0x7b, 0xaa, 0xa9, 0xa0, 0x10, 0xc6, 0x68, 0x6c, 0x4f, 0xee,
+	0x73, 0x9d, 0xaf, 0xec, 0xeb, 0xdf, 0x64, 0x17, 0xcd, 0xe6, 0xe8, 0x01, 0xe1, 0x1e, 0x2a, 0x8b,
+	0xc4, 0x08, 0x14, 0xb3, 0xfd, 0x14, 0x69, 0x14, 0x80, 0x74, 0x23, 0x48, 0x15, 0x58, 0x36, 0x1a,
+	0x8d, 0x01, 0x96, 0x2d, 0x84, 0xba, 0x63, 0x86, 0xdc, 0x8b, 0x9e, 0xd9, 0x89, 0x17, 0xef, 0xc4,
+	0x33, 0x0b, 0x87, 0x9d, 0x78, 0x3b, 0x2c, 0xe0, 0x10, 0xeb, 0xf7, 0x44, 0x92, 0xaf, 0x16, 0x34,
+	0x90, 0x2d, 0x92, 0xdf, 0xc0, 0xe8, 0xbf, 0x35, 0x80, 0xb7, 0x33, 0x90, 0x23, 0x1a, 0x72, 0xe9,
+	0x42, 0x48, 0x53, 0x3b, 0x43, 0xf9, 0x1c, 0x55, 0xd2, 0x29, 0xd7, 0xd4, 0x03, 0xa6, 0xd2, 0x39,
+	0xdc, 0x40, 0x57, 0x44, 0x4d, 0x99, 0x7a, 0xf7, 0xbb, 0xcb, 0xc9, 0x1a, 0xb1, 0x8d, 0x26, 0x95,
+	0x7c, 0xcd, 0xc5, 0xc3, 0x7d, 0x4d, 0x51, 0xf6, 0x93, 0x3f, 0x89, 0x8f, 0x66, 0x06, 0x32, 0x43,
+	0xf3, 0x77, 0xd0, 0xa4, 0x30, 0x26, 0x98, 0xef, 0xcc, 0x40, 0xeb, 0xc6, 0x0d, 0x8d, 0x27, 0x6a,
+	0xf2, 0x12, 0x68, 0xe3, 0x91, 0x66, 0x69, 0x2f, 0x6b, 0x6b, 0x5f, 0x2c, 0xc0, 0xee, 0x2d, 0x91,
+	0x87, 0x3d, 0x3a, 0x3c, 0xf6, 0xa5, 0x6d, 0x6b, 0xed, 0xdb, 0x38, 0x1a, 0xd7, 0x74, 0xf8, 0x00,
+	0x4d, 0x98, 0x2b, 0xc3, 0xa4, 0x1f, 0x62, 0xf0, 0x90, 0x9d, 0x85, 0xbf, 0x6a, 0x4c, 0x21, 0xe2,
+	0xbe, 0xfb, 0xfe, 0xfb, 0xd3, 0x88, 0x8d, 0x2b, 0xd4, 0x88, 0x69, 0xf6, 0x6d, 0xc1, 0x1f, 0x2c,
+	0x54, 0x4e, 0x3f, 0x49, 0xbc, 0x9c, 0x9b, 0x32, 0xe7, 0xb8, 0x9d, 0x95, 0x21, 0x94, 0x80, 0xb0,
+	0xa2, 0x11, 0x16, 0xf0, 0xf5, 0x7e, 0x84, 0xee, 0x43, 0x46, 0x4f, 0xe2, 0xd7, 0xe1, 0x14, 0xbf,
+	0xb7, 0xd0, 0xff, 0x69, 0x82, 0x8d, 0x46, 0xa3, 0x00, 0x28, 0xe7, 0xc2, 0x0b, 0x80, 0xf2, 0xce,
+	0x94, 0x10, 0x0d, 0x34, 0x87, 0x9d, 0x62, 0x20, 0xfc, 0xd9, 0x42, 0x93, 0xb0, 0x78, 0xbc, 0x58,
+	0xd8, 0x6b, 0xe6, 0x73, 0x75, 0x96, 0x2e, 0xd4, 0x01, 0xc0, 0x5d, 0x0d, 0xb0, 0x8e, 0xd7, 0xf2,
+	0x00, 0xe2, 0x07, 0x9c, 0x9e, 0x64, 0x0e, 0xf2, 0x94, 0x9e, 0xc0, 0x01, 0x9e, 0xe2, 0xb7, 0x08,
+	0x41, 0xba, 0x78, 0x3e, 0x8b, 0x85, 0x5d, 0x0f, 0x83, 0x36, 0x78, 0x0e, 0x64, 0x5e, 0xa3, 0x39,
+	0xd8, 0x2e, 0x42, 0xdb, 0xbc, 0x75, 0xd6, 0x76, 0xad, 0xf3, 0xb6, 0x6b, 0xfd, 0x6a, 0xbb, 0xd6,
+	0xc7, 0x8e, 0x5b, 0x3a, 0xef, 0xb8, 0xa5, 0x1f, 0x1d, 0xb7, 0xb4, 0x5b, 0x81, 0x90, 0xa3, 0x34,
+	0x48, 0x1d, 0x87, 0x3c, 0xaa, 0x4e, 0xe8, 0x7f, 0x47, 0xb7, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff,
+	0x41, 0xf1, 0x9b, 0x8a, 0x5d, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -361,6 +567,10 @@ type QueryClient interface {
 	NFTSchema(ctx context.Context, in *QueryGetNFTSchemaRequest, opts ...grpc.CallOption) (*QueryGetNFTSchemaResponse, error)
 	// Queries a list of NFTSchema items.
 	NFTSchemaAll(ctx context.Context, in *QueryAllNFTSchemaRequest, opts ...grpc.CallOption) (*QueryAllNFTSchemaResponse, error)
+	// Queries a NftData by index.
+	NftData(ctx context.Context, in *QueryGetNftDataRequest, opts ...grpc.CallOption) (*QueryGetNftDataResponse, error)
+	// Queries a list of NftData items.
+	NftDataAll(ctx context.Context, in *QueryAllNftDataRequest, opts ...grpc.CallOption) (*QueryAllNftDataResponse, error)
 }
 
 type queryClient struct {
@@ -398,6 +608,24 @@ func (c *queryClient) NFTSchemaAll(ctx context.Context, in *QueryAllNFTSchemaReq
 	return out, nil
 }
 
+func (c *queryClient) NftData(ctx context.Context, in *QueryGetNftDataRequest, opts ...grpc.CallOption) (*QueryGetNftDataResponse, error) {
+	out := new(QueryGetNftDataResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Query/NftData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) NftDataAll(ctx context.Context, in *QueryAllNftDataRequest, opts ...grpc.CallOption) (*QueryAllNftDataResponse, error) {
+	out := new(QueryAllNftDataResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Query/NftDataAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
@@ -406,6 +634,10 @@ type QueryServer interface {
 	NFTSchema(context.Context, *QueryGetNFTSchemaRequest) (*QueryGetNFTSchemaResponse, error)
 	// Queries a list of NFTSchema items.
 	NFTSchemaAll(context.Context, *QueryAllNFTSchemaRequest) (*QueryAllNFTSchemaResponse, error)
+	// Queries a NftData by index.
+	NftData(context.Context, *QueryGetNftDataRequest) (*QueryGetNftDataResponse, error)
+	// Queries a list of NftData items.
+	NftDataAll(context.Context, *QueryAllNftDataRequest) (*QueryAllNftDataResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -420,6 +652,12 @@ func (*UnimplementedQueryServer) NFTSchema(ctx context.Context, req *QueryGetNFT
 }
 func (*UnimplementedQueryServer) NFTSchemaAll(ctx context.Context, req *QueryAllNFTSchemaRequest) (*QueryAllNFTSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NFTSchemaAll not implemented")
+}
+func (*UnimplementedQueryServer) NftData(ctx context.Context, req *QueryGetNftDataRequest) (*QueryGetNftDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NftData not implemented")
+}
+func (*UnimplementedQueryServer) NftDataAll(ctx context.Context, req *QueryAllNftDataRequest) (*QueryAllNftDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NftDataAll not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -480,6 +718,42 @@ func _Query_NFTSchemaAll_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_NftData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetNftDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).NftData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.nftmngr.Query/NftData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).NftData(ctx, req.(*QueryGetNftDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_NftDataAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllNftDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).NftDataAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.nftmngr.Query/NftDataAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).NftDataAll(ctx, req.(*QueryAllNftDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "sixnft.nftmngr.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -495,6 +769,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "NFTSchemaAll",
 			Handler:    _Query_NFTSchemaAll_Handler,
+		},
+		{
+			MethodName: "NftData",
+			Handler:    _Query_NftData_Handler,
+		},
+		{
+			MethodName: "NftDataAll",
+			Handler:    _Query_NftDataAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -704,6 +986,160 @@ func (m *QueryAllNFTSchemaResponse) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetNftDataRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetNftDataRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetNftDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetNftDataResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetNftDataResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetNftDataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.NftData.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllNftDataRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllNftDataRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllNftDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllNftDataResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllNftDataResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllNftDataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftData) > 0 {
+		for iNdEx := len(m.NftData) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NftData[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -780,6 +1216,66 @@ func (m *QueryAllNFTSchemaResponse) Size() (n int) {
 	_ = l
 	if len(m.NFTSchema) > 0 {
 		for _, e := range m.NFTSchema {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetNftDataRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	l = len(m.TokenId)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetNftDataResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.NftData.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryAllNftDataRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllNftDataResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.NftData) > 0 {
+		for _, e := range m.NftData {
 			l = e.Size()
 			n += 1 + l + sovQuery(uint64(l))
 		}
@@ -1241,6 +1737,409 @@ func (m *QueryAllNFTSchemaResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.NFTSchema = append(m.NFTSchema, NFTSchema{})
 			if err := m.NFTSchema[len(m.NFTSchema)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetNftDataRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetNftDataRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetNftDataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetNftDataResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetNftDataResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetNftDataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftData", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.NftData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllNftDataRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllNftDataRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllNftDataRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllNftDataResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllNftDataResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllNftDataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftData", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftData = append(m.NftData, NftData{})
+			if err := m.NftData[len(m.NftData)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

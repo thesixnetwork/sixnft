@@ -123,15 +123,259 @@ func (m *MsgCreateNFTSchemaResponse) GetCode() string {
 	return ""
 }
 
+type MsgCreateMetadata struct {
+	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NftSchemaCode string `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,3,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+	Base64NFTData string `protobuf:"bytes,4,opt,name=base64NFTData,proto3" json:"base64NFTData,omitempty"`
+}
+
+func (m *MsgCreateMetadata) Reset()         { *m = MsgCreateMetadata{} }
+func (m *MsgCreateMetadata) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateMetadata) ProtoMessage()    {}
+func (*MsgCreateMetadata) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{2}
+}
+func (m *MsgCreateMetadata) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateMetadata) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateMetadata.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateMetadata) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateMetadata.Merge(m, src)
+}
+func (m *MsgCreateMetadata) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateMetadata) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateMetadata.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateMetadata proto.InternalMessageInfo
+
+func (m *MsgCreateMetadata) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateMetadata) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgCreateMetadata) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
+func (m *MsgCreateMetadata) GetBase64NFTData() string {
+	if m != nil {
+		return m.Base64NFTData
+	}
+	return ""
+}
+
+type MsgCreateMetadataResponse struct {
+	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,2,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+}
+
+func (m *MsgCreateMetadataResponse) Reset()         { *m = MsgCreateMetadataResponse{} }
+func (m *MsgCreateMetadataResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateMetadataResponse) ProtoMessage()    {}
+func (*MsgCreateMetadataResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{3}
+}
+func (m *MsgCreateMetadataResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateMetadataResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateMetadataResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateMetadataResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateMetadataResponse.Merge(m, src)
+}
+func (m *MsgCreateMetadataResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateMetadataResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateMetadataResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateMetadataResponse proto.InternalMessageInfo
+
+func (m *MsgCreateMetadataResponse) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgCreateMetadataResponse) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
+type MsgPerformActionByAdmin struct {
+	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NftSchemaCode string `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,3,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+	Action        string `protobuf:"bytes,4,opt,name=action,proto3" json:"action,omitempty"`
+}
+
+func (m *MsgPerformActionByAdmin) Reset()         { *m = MsgPerformActionByAdmin{} }
+func (m *MsgPerformActionByAdmin) String() string { return proto.CompactTextString(m) }
+func (*MsgPerformActionByAdmin) ProtoMessage()    {}
+func (*MsgPerformActionByAdmin) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{4}
+}
+func (m *MsgPerformActionByAdmin) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgPerformActionByAdmin) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgPerformActionByAdmin.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgPerformActionByAdmin) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgPerformActionByAdmin.Merge(m, src)
+}
+func (m *MsgPerformActionByAdmin) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgPerformActionByAdmin) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgPerformActionByAdmin.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgPerformActionByAdmin proto.InternalMessageInfo
+
+func (m *MsgPerformActionByAdmin) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgPerformActionByAdmin) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgPerformActionByAdmin) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
+func (m *MsgPerformActionByAdmin) GetAction() string {
+	if m != nil {
+		return m.Action
+	}
+	return ""
+}
+
+type MsgPerformActionByAdminResponse struct {
+	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,2,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+}
+
+func (m *MsgPerformActionByAdminResponse) Reset()         { *m = MsgPerformActionByAdminResponse{} }
+func (m *MsgPerformActionByAdminResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgPerformActionByAdminResponse) ProtoMessage()    {}
+func (*MsgPerformActionByAdminResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{5}
+}
+func (m *MsgPerformActionByAdminResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgPerformActionByAdminResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgPerformActionByAdminResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgPerformActionByAdminResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgPerformActionByAdminResponse.Merge(m, src)
+}
+func (m *MsgPerformActionByAdminResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgPerformActionByAdminResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgPerformActionByAdminResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgPerformActionByAdminResponse proto.InternalMessageInfo
+
+func (m *MsgPerformActionByAdminResponse) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgPerformActionByAdminResponse) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgCreateNFTSchema)(nil), "sixnft.nftmngr.MsgCreateNFTSchema")
 	proto.RegisterType((*MsgCreateNFTSchemaResponse)(nil), "sixnft.nftmngr.MsgCreateNFTSchemaResponse")
+	proto.RegisterType((*MsgCreateMetadata)(nil), "sixnft.nftmngr.MsgCreateMetadata")
+	proto.RegisterType((*MsgCreateMetadataResponse)(nil), "sixnft.nftmngr.MsgCreateMetadataResponse")
+	proto.RegisterType((*MsgPerformActionByAdmin)(nil), "sixnft.nftmngr.MsgPerformActionByAdmin")
+	proto.RegisterType((*MsgPerformActionByAdminResponse)(nil), "sixnft.nftmngr.MsgPerformActionByAdminResponse")
 }
 
 func init() { proto.RegisterFile("nftmngr/tx.proto", fileDescriptor_17e298b08d1e9780) }
 
 var fileDescriptor_17e298b08d1e9780 = []byte{
-	// 213 bytes of a gzipped FileDescriptorProto
+	// 381 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xc8, 0x4b, 0x2b, 0xc9,
 	0xcd, 0x4b, 0x2f, 0xd2, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x2b, 0xce,
 	0xac, 0xc8, 0x4b, 0x2b, 0xd1, 0x83, 0x4a, 0x28, 0x45, 0x70, 0x09, 0xf9, 0x16, 0xa7, 0x3b, 0x17,
@@ -139,13 +383,23 @@ var fileDescriptor_17e298b08d1e9780 = []byte{
 	0xb1, 0x27, 0x83, 0x84, 0xf2, 0x8b, 0x24, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0x60, 0x5c, 0x21,
 	0x0d, 0x2e, 0xfe, 0xbc, 0xb4, 0x12, 0x88, 0x32, 0xa7, 0xc4, 0xe2, 0x54, 0x33, 0x13, 0x09, 0x26,
 	0xb0, 0x0a, 0x74, 0x61, 0x25, 0x03, 0x2e, 0x29, 0x4c, 0x93, 0x83, 0x52, 0x8b, 0x0b, 0xf2, 0xf3,
-	0x8a, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x92, 0xf3, 0x53, 0x52, 0xa1, 0xc6, 0x83, 0xd9, 0x46, 0x19,
-	0x5c, 0xcc, 0xbe, 0xc5, 0xe9, 0x42, 0x89, 0x5c, 0xfc, 0xe8, 0xee, 0x51, 0xd2, 0x43, 0x75, 0xb6,
-	0x1e, 0xa6, 0xc9, 0x52, 0x5a, 0x84, 0xd5, 0xc0, 0x6c, 0x77, 0x32, 0x38, 0xf1, 0x48, 0x8e, 0xf1,
-	0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e,
-	0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x31, 0x88, 0x21, 0xfa, 0x15, 0xfa, 0xf0, 0xa0, 0xab, 0x2c,
-	0x48, 0x2d, 0x4e, 0x62, 0x03, 0x07, 0x9f, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x8b, 0x8c, 0xb4,
-	0x71, 0x52, 0x01, 0x00, 0x00,
+	0x8a, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x92, 0xf3, 0x53, 0x52, 0xa1, 0xc6, 0x83, 0xd9, 0x4a, 0x93,
+	0x19, 0xb9, 0x04, 0xe1, 0x5a, 0x7c, 0x53, 0x4b, 0x12, 0x53, 0x12, 0x4b, 0xf0, 0xb9, 0x45, 0x85,
+	0x8b, 0x17, 0x6e, 0xa9, 0x33, 0xc8, 0x30, 0x88, 0x4b, 0x50, 0x05, 0x41, 0xfa, 0x4b, 0xf2, 0xb3,
+	0x53, 0xf3, 0x3c, 0x53, 0x24, 0x98, 0x21, 0xfa, 0xa1, 0x5c, 0x90, 0xfe, 0x24, 0xb0, 0x5b, 0xfd,
+	0xdc, 0x42, 0x5c, 0x12, 0x4b, 0x12, 0x25, 0x58, 0x20, 0xfa, 0x51, 0x04, 0x95, 0xa2, 0xb9, 0x24,
+	0x31, 0x1c, 0x05, 0xf7, 0x06, 0x86, 0x13, 0x18, 0x09, 0x38, 0x81, 0x09, 0xc5, 0x09, 0x4a, 0xdd,
+	0x8c, 0x5c, 0xe2, 0xbe, 0xc5, 0xe9, 0x01, 0xa9, 0x45, 0x69, 0xf9, 0x45, 0xb9, 0x8e, 0xc9, 0x25,
+	0x99, 0xf9, 0x79, 0x4e, 0x95, 0x8e, 0x29, 0xb9, 0x99, 0x79, 0x34, 0xf4, 0xb8, 0x18, 0x17, 0x5b,
+	0x22, 0xd8, 0x2a, 0xa8, 0x8f, 0xa1, 0x3c, 0xa5, 0x44, 0x2e, 0x79, 0x1c, 0x8e, 0xa1, 0x96, 0x87,
+	0x8d, 0x76, 0x31, 0x71, 0x31, 0xfb, 0x16, 0xa7, 0x0b, 0x25, 0x72, 0xf1, 0xa3, 0x27, 0x3a, 0x25,
+	0x3d, 0xd4, 0xb4, 0xa9, 0x87, 0x99, 0x7c, 0xa4, 0xb4, 0x08, 0xab, 0x81, 0x3b, 0x35, 0x8e, 0x8b,
+	0x0f, 0x2d, 0x29, 0x29, 0xe2, 0xd4, 0x0d, 0x53, 0x22, 0xa5, 0x49, 0x50, 0x09, 0xdc, 0xfc, 0x02,
+	0x2e, 0x11, 0xac, 0xf1, 0xa6, 0x8e, 0xc5, 0x08, 0x6c, 0x0a, 0xa5, 0xf4, 0x89, 0x54, 0x08, 0xb3,
+	0xd1, 0xc9, 0xe0, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c,
+	0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xc4, 0x20, 0x26,
+	0xe9, 0x57, 0xe8, 0xc3, 0x73, 0x7c, 0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0x38, 0xd7, 0x1b, 0x03,
+	0x02, 0x00, 0x00, 0xff, 0xff, 0x87, 0x95, 0x16, 0x90, 0x09, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -161,6 +415,8 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	CreateNFTSchema(ctx context.Context, in *MsgCreateNFTSchema, opts ...grpc.CallOption) (*MsgCreateNFTSchemaResponse, error)
+	CreateMetadata(ctx context.Context, in *MsgCreateMetadata, opts ...grpc.CallOption) (*MsgCreateMetadataResponse, error)
+	PerformActionByAdmin(ctx context.Context, in *MsgPerformActionByAdmin, opts ...grpc.CallOption) (*MsgPerformActionByAdminResponse, error)
 }
 
 type msgClient struct {
@@ -180,9 +436,29 @@ func (c *msgClient) CreateNFTSchema(ctx context.Context, in *MsgCreateNFTSchema,
 	return out, nil
 }
 
+func (c *msgClient) CreateMetadata(ctx context.Context, in *MsgCreateMetadata, opts ...grpc.CallOption) (*MsgCreateMetadataResponse, error) {
+	out := new(MsgCreateMetadataResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/CreateMetadata", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) PerformActionByAdmin(ctx context.Context, in *MsgPerformActionByAdmin, opts ...grpc.CallOption) (*MsgPerformActionByAdminResponse, error) {
+	out := new(MsgPerformActionByAdminResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/PerformActionByAdmin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	CreateNFTSchema(context.Context, *MsgCreateNFTSchema) (*MsgCreateNFTSchemaResponse, error)
+	CreateMetadata(context.Context, *MsgCreateMetadata) (*MsgCreateMetadataResponse, error)
+	PerformActionByAdmin(context.Context, *MsgPerformActionByAdmin) (*MsgPerformActionByAdminResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -191,6 +467,12 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) CreateNFTSchema(ctx context.Context, req *MsgCreateNFTSchema) (*MsgCreateNFTSchemaResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNFTSchema not implemented")
+}
+func (*UnimplementedMsgServer) CreateMetadata(ctx context.Context, req *MsgCreateMetadata) (*MsgCreateMetadataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMetadata not implemented")
+}
+func (*UnimplementedMsgServer) PerformActionByAdmin(ctx context.Context, req *MsgPerformActionByAdmin) (*MsgPerformActionByAdminResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PerformActionByAdmin not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -215,6 +497,42 @@ func _Msg_CreateNFTSchema_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateMetadata)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateMetadata(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.nftmngr.Msg/CreateMetadata",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateMetadata(ctx, req.(*MsgCreateMetadata))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_PerformActionByAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgPerformActionByAdmin)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).PerformActionByAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.nftmngr.Msg/PerformActionByAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).PerformActionByAdmin(ctx, req.(*MsgPerformActionByAdmin))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "sixnft.nftmngr.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -222,6 +540,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateNFTSchema",
 			Handler:    _Msg_CreateNFTSchema_Handler,
+		},
+		{
+			MethodName: "CreateMetadata",
+			Handler:    _Msg_CreateMetadata_Handler,
+		},
+		{
+			MethodName: "PerformActionByAdmin",
+			Handler:    _Msg_PerformActionByAdmin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -295,6 +621,182 @@ func (m *MsgCreateNFTSchemaResponse) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCreateMetadata) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateMetadata) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateMetadata) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Base64NFTData) > 0 {
+		i -= len(m.Base64NFTData)
+		copy(dAtA[i:], m.Base64NFTData)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64NFTData)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCreateMetadataResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateMetadataResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateMetadataResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgPerformActionByAdmin) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgPerformActionByAdmin) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgPerformActionByAdmin) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Action) > 0 {
+		i -= len(m.Action)
+		copy(dAtA[i:], m.Action)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Action)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgPerformActionByAdminResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgPerformActionByAdminResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgPerformActionByAdminResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -330,6 +832,90 @@ func (m *MsgCreateNFTSchemaResponse) Size() (n int) {
 	var l int
 	_ = l
 	l = len(m.Code)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCreateMetadata) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TokenId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Base64NFTData)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCreateMetadataResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TokenId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgPerformActionByAdmin) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TokenId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Action)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgPerformActionByAdminResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TokenId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -516,6 +1102,590 @@ func (m *MsgCreateNFTSchemaResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Code = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateMetadata) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateMetadata: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateMetadata: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Base64NFTData", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Base64NFTData = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateMetadataResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateMetadataResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateMetadataResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgPerformActionByAdmin) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgPerformActionByAdmin: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgPerformActionByAdmin: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Action", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Action = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgPerformActionByAdminResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgPerformActionByAdminResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgPerformActionByAdminResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

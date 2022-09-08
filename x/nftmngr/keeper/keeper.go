@@ -5,10 +5,11 @@ import (
 
 	"github.com/tendermint/tendermint/libs/log"
 
+	"sixnft/x/nftmngr/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"sixnft/x/nftmngr/types"
 )
 
 type (
@@ -39,6 +40,10 @@ func NewKeeper(
 		memKey:     memKey,
 		paramstore: ps,
 	}
+}
+
+func (k Keeper) GetCodec() codec.BinaryCodec {
+	return k.cdc
 }
 
 func (k Keeper) Logger(ctx sdk.Context) log.Logger {

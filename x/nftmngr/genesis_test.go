@@ -22,6 +22,16 @@ func TestGenesis(t *testing.T) {
 				Code: "1",
 			},
 		},
+		NftDataList: []types.NftData{
+			{
+				NftSchemaCode: "0",
+				TokenId:       "0",
+			},
+			{
+				NftSchemaCode: "1",
+				TokenId:       "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -34,5 +44,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.NFTSchemaList, got.NFTSchemaList)
+	require.ElementsMatch(t, genesisState.NftDataList, got.NftDataList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
