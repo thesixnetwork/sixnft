@@ -5,39 +5,39 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "sixnft.nftmngr";
 
 export interface NftData {
-  nftSchemaCode: string;
-  tokenId: string;
-  tokenOwner: string;
-  originImage: string;
-  originAttributes: NftAttributeValue[];
-  onchainAttributes: NftAttributeValue[];
+  nft_schema_code: string;
+  token_id: string;
+  token_owner: string;
+  origin_image: string;
+  origin_attributes: NftAttributeValue[];
+  onchain_attributes: NftAttributeValue[];
 }
 
 const baseNftData: object = {
-  nftSchemaCode: "",
-  tokenId: "",
-  tokenOwner: "",
-  originImage: "",
+  nft_schema_code: "",
+  token_id: "",
+  token_owner: "",
+  origin_image: "",
 };
 
 export const NftData = {
   encode(message: NftData, writer: Writer = Writer.create()): Writer {
-    if (message.nftSchemaCode !== "") {
-      writer.uint32(10).string(message.nftSchemaCode);
+    if (message.nft_schema_code !== "") {
+      writer.uint32(10).string(message.nft_schema_code);
     }
-    if (message.tokenId !== "") {
-      writer.uint32(18).string(message.tokenId);
+    if (message.token_id !== "") {
+      writer.uint32(18).string(message.token_id);
     }
-    if (message.tokenOwner !== "") {
-      writer.uint32(26).string(message.tokenOwner);
+    if (message.token_owner !== "") {
+      writer.uint32(26).string(message.token_owner);
     }
-    if (message.originImage !== "") {
-      writer.uint32(34).string(message.originImage);
+    if (message.origin_image !== "") {
+      writer.uint32(34).string(message.origin_image);
     }
-    for (const v of message.originAttributes) {
+    for (const v of message.origin_attributes) {
       NftAttributeValue.encode(v!, writer.uint32(42).fork()).ldelim();
     }
-    for (const v of message.onchainAttributes) {
+    for (const v of message.onchain_attributes) {
       NftAttributeValue.encode(v!, writer.uint32(50).fork()).ldelim();
     }
     return writer;
@@ -47,30 +47,30 @@ export const NftData = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseNftData } as NftData;
-    message.originAttributes = [];
-    message.onchainAttributes = [];
+    message.origin_attributes = [];
+    message.onchain_attributes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nftSchemaCode = reader.string();
+          message.nft_schema_code = reader.string();
           break;
         case 2:
-          message.tokenId = reader.string();
+          message.token_id = reader.string();
           break;
         case 3:
-          message.tokenOwner = reader.string();
+          message.token_owner = reader.string();
           break;
         case 4:
-          message.originImage = reader.string();
+          message.origin_image = reader.string();
           break;
         case 5:
-          message.originAttributes.push(
+          message.origin_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
           break;
         case 6:
-          message.onchainAttributes.push(
+          message.onchain_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
           break;
@@ -84,42 +84,45 @@ export const NftData = {
 
   fromJSON(object: any): NftData {
     const message = { ...baseNftData } as NftData;
-    message.originAttributes = [];
-    message.onchainAttributes = [];
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = String(object.nftSchemaCode);
+    message.origin_attributes = [];
+    message.onchain_attributes = [];
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = String(object.tokenId);
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = String(object.token_id);
     } else {
-      message.tokenId = "";
+      message.token_id = "";
     }
-    if (object.tokenOwner !== undefined && object.tokenOwner !== null) {
-      message.tokenOwner = String(object.tokenOwner);
+    if (object.token_owner !== undefined && object.token_owner !== null) {
+      message.token_owner = String(object.token_owner);
     } else {
-      message.tokenOwner = "";
+      message.token_owner = "";
     }
-    if (object.originImage !== undefined && object.originImage !== null) {
-      message.originImage = String(object.originImage);
+    if (object.origin_image !== undefined && object.origin_image !== null) {
+      message.origin_image = String(object.origin_image);
     } else {
-      message.originImage = "";
+      message.origin_image = "";
     }
     if (
-      object.originAttributes !== undefined &&
-      object.originAttributes !== null
+      object.origin_attributes !== undefined &&
+      object.origin_attributes !== null
     ) {
-      for (const e of object.originAttributes) {
-        message.originAttributes.push(NftAttributeValue.fromJSON(e));
+      for (const e of object.origin_attributes) {
+        message.origin_attributes.push(NftAttributeValue.fromJSON(e));
       }
     }
     if (
-      object.onchainAttributes !== undefined &&
-      object.onchainAttributes !== null
+      object.onchain_attributes !== undefined &&
+      object.onchain_attributes !== null
     ) {
-      for (const e of object.onchainAttributes) {
-        message.onchainAttributes.push(NftAttributeValue.fromJSON(e));
+      for (const e of object.onchain_attributes) {
+        message.onchain_attributes.push(NftAttributeValue.fromJSON(e));
       }
     }
     return message;
@@ -127,67 +130,71 @@ export const NftData = {
 
   toJSON(message: NftData): unknown {
     const obj: any = {};
-    message.nftSchemaCode !== undefined &&
-      (obj.nftSchemaCode = message.nftSchemaCode);
-    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
-    message.tokenOwner !== undefined && (obj.tokenOwner = message.tokenOwner);
-    message.originImage !== undefined &&
-      (obj.originImage = message.originImage);
-    if (message.originAttributes) {
-      obj.originAttributes = message.originAttributes.map((e) =>
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.token_id !== undefined && (obj.token_id = message.token_id);
+    message.token_owner !== undefined &&
+      (obj.token_owner = message.token_owner);
+    message.origin_image !== undefined &&
+      (obj.origin_image = message.origin_image);
+    if (message.origin_attributes) {
+      obj.origin_attributes = message.origin_attributes.map((e) =>
         e ? NftAttributeValue.toJSON(e) : undefined
       );
     } else {
-      obj.originAttributes = [];
+      obj.origin_attributes = [];
     }
-    if (message.onchainAttributes) {
-      obj.onchainAttributes = message.onchainAttributes.map((e) =>
+    if (message.onchain_attributes) {
+      obj.onchain_attributes = message.onchain_attributes.map((e) =>
         e ? NftAttributeValue.toJSON(e) : undefined
       );
     } else {
-      obj.onchainAttributes = [];
+      obj.onchain_attributes = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<NftData>): NftData {
     const message = { ...baseNftData } as NftData;
-    message.originAttributes = [];
-    message.onchainAttributes = [];
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = object.nftSchemaCode;
+    message.origin_attributes = [];
+    message.onchain_attributes = [];
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = object.tokenId;
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = object.token_id;
     } else {
-      message.tokenId = "";
+      message.token_id = "";
     }
-    if (object.tokenOwner !== undefined && object.tokenOwner !== null) {
-      message.tokenOwner = object.tokenOwner;
+    if (object.token_owner !== undefined && object.token_owner !== null) {
+      message.token_owner = object.token_owner;
     } else {
-      message.tokenOwner = "";
+      message.token_owner = "";
     }
-    if (object.originImage !== undefined && object.originImage !== null) {
-      message.originImage = object.originImage;
+    if (object.origin_image !== undefined && object.origin_image !== null) {
+      message.origin_image = object.origin_image;
     } else {
-      message.originImage = "";
+      message.origin_image = "";
     }
     if (
-      object.originAttributes !== undefined &&
-      object.originAttributes !== null
+      object.origin_attributes !== undefined &&
+      object.origin_attributes !== null
     ) {
-      for (const e of object.originAttributes) {
-        message.originAttributes.push(NftAttributeValue.fromPartial(e));
+      for (const e of object.origin_attributes) {
+        message.origin_attributes.push(NftAttributeValue.fromPartial(e));
       }
     }
     if (
-      object.onchainAttributes !== undefined &&
-      object.onchainAttributes !== null
+      object.onchain_attributes !== undefined &&
+      object.onchain_attributes !== null
     ) {
-      for (const e of object.onchainAttributes) {
-        message.onchainAttributes.push(NftAttributeValue.fromPartial(e));
+      for (const e of object.onchain_attributes) {
+        message.onchain_attributes.push(NftAttributeValue.fromPartial(e));
       }
     }
     return message;

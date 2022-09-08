@@ -5,12 +5,10 @@ import "nftmngr/nft_attribute_value.proto";
 option go_package = "sixnft/x/nftmngr/types";
 
 message NftData {
-  string nftSchemaCode = 1; 
-  string tokenId = 2; 
-  string tokenOwner = 3; 
-  string originImage = 4; 
-  repeated NftAttributeValue originAttributes = 5; 
-  repeated NftAttributeValue onchainAttributes = 6; 
-  
+  string nft_schema_code = 1; 
+  string token_id = 2; 
+  string token_owner = 3; 
+  string origin_image = 4; 
+  repeated NftAttributeValue origin_attributes = 5; 
+  repeated NftAttributeValue onchain_attributes = 6;
 }
-

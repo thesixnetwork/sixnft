@@ -3,6 +3,7 @@ import { AttributeDefinition } from "../nftmngr/attribute_definition";
 import { Action } from "../nftmngr/action";
 import { Status } from "../nftmngr/status";
 import { OnOffSwitch } from "../nftmngr/on_off_switch";
+import { NftAttributeValue } from "../nftmngr/nft_attribute_value";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
@@ -15,6 +16,7 @@ export interface OnChainData {
   actions: Action[];
   status: Status | undefined;
   on_off_switch: OnOffSwitch | undefined;
+  nft_attributes_value: NftAttributeValue[];
 }
 
 const baseOnChainData: object = { reveal_required: false };
@@ -45,6 +47,9 @@ export const OnChainData = {
         writer.uint32(58).fork()
       ).ldelim();
     }
+    for (const v of message.nft_attributes_value) {
+      NftAttributeValue.encode(v!, writer.uint32(66).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -55,6 +60,7 @@ export const OnChainData = {
     message.nft_attributes = [];
     message.token_attributes = [];
     message.actions = [];
+    message.nft_attributes_value = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -83,6 +89,11 @@ export const OnChainData = {
         case 7:
           message.on_off_switch = OnOffSwitch.decode(reader, reader.uint32());
           break;
+        case 8:
+          message.nft_attributes_value.push(
+            NftAttributeValue.decode(reader, reader.uint32())
+          );
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -96,6 +107,7 @@ export const OnChainData = {
     message.nft_attributes = [];
     message.token_attributes = [];
     message.actions = [];
+    message.nft_attributes_value = [];
     if (
       object.reveal_required !== undefined &&
       object.reveal_required !== null
@@ -134,6 +146,14 @@ export const OnChainData = {
       message.on_off_switch = OnOffSwitch.fromJSON(object.on_off_switch);
     } else {
       message.on_off_switch = undefined;
+    }
+    if (
+      object.nft_attributes_value !== undefined &&
+      object.nft_attributes_value !== null
+    ) {
+      for (const e of object.nft_attributes_value) {
+        message.nft_attributes_value.push(NftAttributeValue.fromJSON(e));
+      }
     }
     return message;
   },
@@ -175,6 +195,13 @@ export const OnChainData = {
       (obj.on_off_switch = message.on_off_switch
         ? OnOffSwitch.toJSON(message.on_off_switch)
         : undefined);
+    if (message.nft_attributes_value) {
+      obj.nft_attributes_value = message.nft_attributes_value.map((e) =>
+        e ? NftAttributeValue.toJSON(e) : undefined
+      );
+    } else {
+      obj.nft_attributes_value = [];
+    }
     return obj;
   },
 
@@ -183,6 +210,7 @@ export const OnChainData = {
     message.nft_attributes = [];
     message.token_attributes = [];
     message.actions = [];
+    message.nft_attributes_value = [];
     if (
       object.reveal_required !== undefined &&
       object.reveal_required !== null
@@ -223,6 +251,14 @@ export const OnChainData = {
       message.on_off_switch = OnOffSwitch.fromPartial(object.on_off_switch);
     } else {
       message.on_off_switch = undefined;
+    }
+    if (
+      object.nft_attributes_value !== undefined &&
+      object.nft_attributes_value !== null
+    ) {
+      for (const e of object.nft_attributes_value) {
+        message.nft_attributes_value.push(NftAttributeValue.fromPartial(e));
+      }
     }
     return message;
   },
