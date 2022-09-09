@@ -249,3 +249,8 @@ ignite scaffold message bindAddress eth_address:string signature:string signed_m
     --no-simulation \
     --module evm_support
 
+ignite scaffold message removeBinding eth_address:string signature:string signed_message:string \
+    --desc "To remove binding address" \
+    --response eth_address \
+    --no-simulation \
+    --module evm_support

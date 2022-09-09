@@ -8,6 +8,7 @@ option go_package = "sixnft/x/evmsupport/types";
 // Msg defines the Msg service.
 service Msg {
       rpc BindAddress(MsgBindAddress) returns (MsgBindAddressResponse);
+  rpc RemoveBinding(MsgRemoveBinding) returns (MsgRemoveBindingResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -19,6 +20,18 @@ message MsgBindAddress {
 }
 
 message MsgBindAddressResponse {
+  string ethAddress = 1;
+  string nativeAddress = 2;
+}
+
+message MsgRemoveBinding {
+  string creator = 1;
+  string ethAddress = 2;
+  string signature = 3;
+  string signedMessage = 4;
+}
+
+message MsgRemoveBindingResponse {
   string ethAddress = 1;
   string nativeAddress = 2;
 }

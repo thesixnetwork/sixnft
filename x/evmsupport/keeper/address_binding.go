@@ -39,7 +39,6 @@ func (k Keeper) GetAddressBinding(
 func (k Keeper) RemoveAddressBinding(
 	ctx sdk.Context,
 	ethAddress string,
-	nativeAddress string,
 
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AddressBindingKeyPrefix))

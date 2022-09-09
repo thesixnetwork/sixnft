@@ -30287,6 +30287,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -53437,6 +53447,11 @@ definitions:
       ethAddress:
         type: string
       nativeAddress:
+        type: string
+  sixnft.evmsupport.MsgRemoveBindingResponse:
+    type: object
+    properties:
+      ethAddress:
         type: string
   sixnft.evmsupport.Params:
     type: object

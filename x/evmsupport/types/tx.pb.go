@@ -147,15 +147,137 @@ func (m *MsgBindAddressResponse) GetNativeAddress() string {
 	return ""
 }
 
+type MsgRemoveBinding struct {
+	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	EthAddress    string `protobuf:"bytes,2,opt,name=ethAddress,proto3" json:"ethAddress,omitempty"`
+	Signature     string `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
+	SignedMessage string `protobuf:"bytes,4,opt,name=signedMessage,proto3" json:"signedMessage,omitempty"`
+}
+
+func (m *MsgRemoveBinding) Reset()         { *m = MsgRemoveBinding{} }
+func (m *MsgRemoveBinding) String() string { return proto.CompactTextString(m) }
+func (*MsgRemoveBinding) ProtoMessage()    {}
+func (*MsgRemoveBinding) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4c158637930fb260, []int{2}
+}
+func (m *MsgRemoveBinding) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRemoveBinding) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRemoveBinding.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRemoveBinding) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRemoveBinding.Merge(m, src)
+}
+func (m *MsgRemoveBinding) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRemoveBinding) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRemoveBinding.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRemoveBinding proto.InternalMessageInfo
+
+func (m *MsgRemoveBinding) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgRemoveBinding) GetEthAddress() string {
+	if m != nil {
+		return m.EthAddress
+	}
+	return ""
+}
+
+func (m *MsgRemoveBinding) GetSignature() string {
+	if m != nil {
+		return m.Signature
+	}
+	return ""
+}
+
+func (m *MsgRemoveBinding) GetSignedMessage() string {
+	if m != nil {
+		return m.SignedMessage
+	}
+	return ""
+}
+
+type MsgRemoveBindingResponse struct {
+	EthAddress    string `protobuf:"bytes,1,opt,name=ethAddress,proto3" json:"ethAddress,omitempty"`
+	NativeAddress string `protobuf:"bytes,2,opt,name=nativeAddress,proto3" json:"nativeAddress,omitempty"`
+}
+
+func (m *MsgRemoveBindingResponse) Reset()         { *m = MsgRemoveBindingResponse{} }
+func (m *MsgRemoveBindingResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgRemoveBindingResponse) ProtoMessage()    {}
+func (*MsgRemoveBindingResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4c158637930fb260, []int{3}
+}
+func (m *MsgRemoveBindingResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgRemoveBindingResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgRemoveBindingResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgRemoveBindingResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgRemoveBindingResponse.Merge(m, src)
+}
+func (m *MsgRemoveBindingResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgRemoveBindingResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgRemoveBindingResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgRemoveBindingResponse proto.InternalMessageInfo
+
+func (m *MsgRemoveBindingResponse) GetEthAddress() string {
+	if m != nil {
+		return m.EthAddress
+	}
+	return ""
+}
+
+func (m *MsgRemoveBindingResponse) GetNativeAddress() string {
+	if m != nil {
+		return m.NativeAddress
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgBindAddress)(nil), "sixnft.evmsupport.MsgBindAddress")
 	proto.RegisterType((*MsgBindAddressResponse)(nil), "sixnft.evmsupport.MsgBindAddressResponse")
+	proto.RegisterType((*MsgRemoveBinding)(nil), "sixnft.evmsupport.MsgRemoveBinding")
+	proto.RegisterType((*MsgRemoveBindingResponse)(nil), "sixnft.evmsupport.MsgRemoveBindingResponse")
 }
 
 func init() { proto.RegisterFile("evmsupport/tx.proto", fileDescriptor_4c158637930fb260) }
 
 var fileDescriptor_4c158637930fb260 = []byte{
-	// 257 bytes of a gzipped FileDescriptorProto
+	// 306 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4e, 0x2d, 0xcb, 0x2d,
 	0x2e, 0x2d, 0x28, 0xc8, 0x2f, 0x2a, 0xd1, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17,
 	0x12, 0x2c, 0xce, 0xac, 0xc8, 0x4b, 0x2b, 0xd1, 0x43, 0xc8, 0x29, 0xf5, 0x31, 0x72, 0xf1, 0xf9,
@@ -166,13 +288,16 @@ var fileDescriptor_4c158637930fb260 = []byte{
 	0x34, 0x42, 0x40, 0x48, 0x85, 0x8b, 0x17, 0xc4, 0x49, 0x4d, 0xf1, 0x4d, 0x2d, 0x2e, 0x4e, 0x4c,
 	0x4f, 0x95, 0x60, 0x01, 0xab, 0x40, 0x15, 0x54, 0x8a, 0xe3, 0x12, 0x43, 0x75, 0x4f, 0x50, 0x6a,
 	0x71, 0x41, 0x7e, 0x5e, 0x71, 0x2a, 0x9a, 0xed, 0x8c, 0x18, 0xb6, 0xab, 0x70, 0xf1, 0xe6, 0x25,
-	0x96, 0x64, 0x96, 0xa5, 0xa2, 0x3a, 0x10, 0x55, 0xd0, 0x28, 0x89, 0x8b, 0xd9, 0xb7, 0x38, 0x5d,
-	0x28, 0x9a, 0x8b, 0x1b, 0xd9, 0xcf, 0x8a, 0x7a, 0x18, 0x41, 0xa3, 0x87, 0xea, 0x0c, 0x29, 0x4d,
-	0x82, 0x4a, 0x60, 0x2e, 0x75, 0x32, 0x3e, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07,
-	0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86,
-	0x28, 0x49, 0x88, 0x19, 0xfa, 0x15, 0xfa, 0xc8, 0xf1, 0x53, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06,
-	0x8e, 0x23, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0xac, 0xf7, 0x0f, 0xbd, 0xba, 0x01, 0x00,
-	0x00,
+	0x96, 0x64, 0x96, 0xa5, 0xa2, 0x3a, 0x10, 0x55, 0x50, 0x69, 0x02, 0x23, 0x97, 0x80, 0x6f, 0x71,
+	0x7a, 0x50, 0x6a, 0x6e, 0x7e, 0x59, 0x2a, 0xc8, 0x9a, 0xcc, 0xbc, 0xf4, 0x01, 0xf6, 0x72, 0x02,
+	0x97, 0x04, 0xba, 0x8b, 0xa8, 0xeb, 0x69, 0xa3, 0xa3, 0x8c, 0x5c, 0xcc, 0xbe, 0xc5, 0xe9, 0x42,
+	0xd1, 0x5c, 0xdc, 0xc8, 0x31, 0xad, 0xa8, 0x87, 0x91, 0x20, 0xf4, 0x50, 0x03, 0x5f, 0x4a, 0x93,
+	0xa0, 0x12, 0xb8, 0x53, 0x13, 0xb9, 0x78, 0x51, 0x43, 0x55, 0x19, 0xbb, 0x5e, 0x14, 0x45, 0x52,
+	0xda, 0x44, 0x28, 0x82, 0x59, 0xe1, 0x64, 0x7c, 0xe2, 0x91, 0x1c, 0xe3, 0x85, 0x47, 0x72, 0x8c,
+	0x0f, 0x1e, 0xc9, 0x31, 0x4e, 0x78, 0x2c, 0xc7, 0x70, 0xe1, 0xb1, 0x1c, 0xc3, 0x8d, 0xc7, 0x72,
+	0x0c, 0x51, 0x92, 0x10, 0x53, 0xf4, 0x2b, 0xf4, 0x91, 0x13, 0x7e, 0x65, 0x41, 0x6a, 0x71, 0x12,
+	0x1b, 0x38, 0xf1, 0x1b, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x63, 0xeb, 0x98, 0xbb, 0x13, 0x03,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -188,6 +313,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	BindAddress(ctx context.Context, in *MsgBindAddress, opts ...grpc.CallOption) (*MsgBindAddressResponse, error)
+	RemoveBinding(ctx context.Context, in *MsgRemoveBinding, opts ...grpc.CallOption) (*MsgRemoveBindingResponse, error)
 }
 
 type msgClient struct {
@@ -207,9 +333,19 @@ func (c *msgClient) BindAddress(ctx context.Context, in *MsgBindAddress, opts ..
 	return out, nil
 }
 
+func (c *msgClient) RemoveBinding(ctx context.Context, in *MsgRemoveBinding, opts ...grpc.CallOption) (*MsgRemoveBindingResponse, error) {
+	out := new(MsgRemoveBindingResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.evmsupport.Msg/RemoveBinding", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	BindAddress(context.Context, *MsgBindAddress) (*MsgBindAddressResponse, error)
+	RemoveBinding(context.Context, *MsgRemoveBinding) (*MsgRemoveBindingResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -218,6 +354,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) BindAddress(ctx context.Context, req *MsgBindAddress) (*MsgBindAddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BindAddress not implemented")
+}
+func (*UnimplementedMsgServer) RemoveBinding(ctx context.Context, req *MsgRemoveBinding) (*MsgRemoveBindingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveBinding not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -242,6 +381,24 @@ func _Msg_BindAddress_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_RemoveBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgRemoveBinding)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).RemoveBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.evmsupport.Msg/RemoveBinding",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).RemoveBinding(ctx, req.(*MsgRemoveBinding))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "sixnft.evmsupport.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -249,6 +406,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BindAddress",
 			Handler:    _Msg_BindAddress_Handler,
+		},
+		{
+			MethodName: "RemoveBinding",
+			Handler:    _Msg_RemoveBinding_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -343,6 +504,94 @@ func (m *MsgBindAddressResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgRemoveBinding) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRemoveBinding) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRemoveBinding) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.SignedMessage) > 0 {
+		i -= len(m.SignedMessage)
+		copy(dAtA[i:], m.SignedMessage)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.SignedMessage)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Signature) > 0 {
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Signature)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.EthAddress) > 0 {
+		i -= len(m.EthAddress)
+		copy(dAtA[i:], m.EthAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.EthAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgRemoveBindingResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgRemoveBindingResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgRemoveBindingResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NativeAddress) > 0 {
+		i -= len(m.NativeAddress)
+		copy(dAtA[i:], m.NativeAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NativeAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.EthAddress) > 0 {
+		i -= len(m.EthAddress)
+		copy(dAtA[i:], m.EthAddress)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.EthAddress)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -380,6 +629,48 @@ func (m *MsgBindAddress) Size() (n int) {
 }
 
 func (m *MsgBindAddressResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.EthAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NativeAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgRemoveBinding) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.EthAddress)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Signature)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.SignedMessage)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgRemoveBindingResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -607,6 +898,298 @@ func (m *MsgBindAddressResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgBindAddressResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EthAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EthAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NativeAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NativeAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRemoveBinding) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRemoveBinding: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRemoveBinding: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field EthAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.EthAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Signature", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Signature = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SignedMessage", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SignedMessage = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgRemoveBindingResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgRemoveBindingResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgRemoveBindingResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

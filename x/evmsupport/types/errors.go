@@ -11,4 +11,5 @@ var (
 	ErrAddressAlreadyBound = sdkerrors.Register(ModuleName, 1, "Address Already Bound")
 	ErrVerifyingSignature  = sdkerrors.Register(ModuleName, 2, "Verifying Signature")
 	ErrInvalidSignature    = sdkerrors.Register(ModuleName, 3, "Invalid Signature")
+	ErrAddressNotBound     = sdkerrors.Register(ModuleName, 4, "Binding Not Found")
 )
