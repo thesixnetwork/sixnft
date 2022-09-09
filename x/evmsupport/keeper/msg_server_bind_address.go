@@ -31,7 +31,5 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 		NativeAddress: msg.GetCreator(),
 	})
 
-	_ = ctx
-
 	return &types.MsgBindAddressResponse{}, nil
 }
