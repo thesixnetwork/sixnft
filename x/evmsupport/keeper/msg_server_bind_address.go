@@ -31,6 +31,17 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 		NativeAddress: msg.GetCreator(),
 	})
 
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.EventTypeCreateBinding),
+			sdk.NewAttribute(types.AttributeValueBinder, msg.GetCreator()),
+			sdk.NewAttribute(types.AttributeValueEthAddress, msg.GetEthAddress()),
+			sdk.NewAttribute(types.AttributeKeyCreateBindingResult, "success"),
+		),
+	)
+
 	return &types.MsgBindAddressResponse{
 		EthAddress:    msg.GetEthAddress(),
 		NativeAddress: msg.GetCreator(),

@@ -28,6 +28,16 @@ func (k msgServer) RemoveBinding(goCtx context.Context, msg *types.MsgRemoveBind
 
 	k.Keeper.RemoveAddressBinding(ctx, msg.EthAddress)
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(sdk.AttributeKeyModule, types.EventTypeDeleteBinding),
+			sdk.NewAttribute(types.AttributeValueBinder, msg.GetCreator()),
+			sdk.NewAttribute(types.AttributeValueEthAddress, msg.GetEthAddress()),
+			sdk.NewAttribute(types.AttributeKeyDeleteBindingResult, "success"),
+		),
+	)
+
 	return &types.MsgRemoveBindingResponse{
 		EthAddress:    msg.EthAddress,
 		NativeAddress: binding.NativeAddress,

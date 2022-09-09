@@ -21,6 +21,7 @@ export interface EvmsupportMsgBindAddressResponse {
 
 export interface EvmsupportMsgRemoveBindingResponse {
   ethAddress?: string;
+  nativeAddress?: string;
 }
 
 /**

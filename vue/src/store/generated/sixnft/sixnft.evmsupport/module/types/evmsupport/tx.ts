@@ -24,6 +24,7 @@ export interface MsgRemoveBinding {
 
 export interface MsgRemoveBindingResponse {
   ethAddress: string;
+  nativeAddress: string;
 }
 
 const baseMsgBindAddress: object = {
@@ -331,7 +332,10 @@ export const MsgRemoveBinding = {
   },
 };
 
-const baseMsgRemoveBindingResponse: object = { ethAddress: "" };
+const baseMsgRemoveBindingResponse: object = {
+  ethAddress: "",
+  nativeAddress: "",
+};
 
 export const MsgRemoveBindingResponse = {
   encode(
@@ -340,6 +344,9 @@ export const MsgRemoveBindingResponse = {
   ): Writer {
     if (message.ethAddress !== "") {
       writer.uint32(10).string(message.ethAddress);
+    }
+    if (message.nativeAddress !== "") {
+      writer.uint32(18).string(message.nativeAddress);
     }
     return writer;
   },
@@ -359,6 +366,9 @@ export const MsgRemoveBindingResponse = {
         case 1:
           message.ethAddress = reader.string();
           break;
+        case 2:
+          message.nativeAddress = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -376,12 +386,19 @@ export const MsgRemoveBindingResponse = {
     } else {
       message.ethAddress = "";
     }
+    if (object.nativeAddress !== undefined && object.nativeAddress !== null) {
+      message.nativeAddress = String(object.nativeAddress);
+    } else {
+      message.nativeAddress = "";
+    }
     return message;
   },
 
   toJSON(message: MsgRemoveBindingResponse): unknown {
     const obj: any = {};
     message.ethAddress !== undefined && (obj.ethAddress = message.ethAddress);
+    message.nativeAddress !== undefined &&
+      (obj.nativeAddress = message.nativeAddress);
     return obj;
   },
 
@@ -395,6 +412,11 @@ export const MsgRemoveBindingResponse = {
       message.ethAddress = object.ethAddress;
     } else {
       message.ethAddress = "";
+    }
+    if (object.nativeAddress !== undefined && object.nativeAddress !== null) {
+      message.nativeAddress = object.nativeAddress;
+    } else {
+      message.nativeAddress = "";
     }
     return message;
   },
