@@ -233,3 +233,24 @@ ignite scaffold message performActionByAdmin nft_schema_code token_id action \
 # Test create action
 sixnftd tx nftmngr perform-action-by-admin buakaw1 1 use10percentdiscount --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake
 
+# Create evm_support module
+
+ignite scaffold module evm_support 
+
+ignite scaffold map AddressBinding \
+    --index eth_address:string,native_address:string \
+    --no-message \
+    --no-simulation \
+    --module evm_support
+
+ignite scaffold message bindAddress eth_address:string signature:string signed_message:string \
+    --desc "To bind EVM address with native address" \
+    --response eth_address,native_address \
+    --no-simulation \
+    --module evm_support
+
+ignite scaffold message removeBinding eth_address:string signature:string signed_message:string \
+    --desc "To remove binding address" \
+    --response eth_address \
+    --no-simulation \
+    --module evm_support

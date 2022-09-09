@@ -1,0 +1,11 @@
+syntax = "proto3";
+package sixnft.evmsupport;
+
+option go_package = "sixnft/x/evmsupport/types";
+
+message AddressBinding {
+  string ethAddress = 1; 
+  string nativeAddress = 2; 
+  
+}
+
