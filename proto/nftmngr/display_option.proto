@@ -3,7 +3,13 @@ package sixnft.nftmngr;
 import "nftmngr/opensea_display_option.proto";
 option go_package = "sixnft/x/nftmngr/types";
 
+enum BoolDisplayType {
+  PRESENT_ABSENT = 0;
+  YES_NO = 1;
+  TRUE_FALSE = 2;
+}
+
 message DisplayOption {
-  
-  OpenseaDisplayOption opensea = 1; 
+  BoolDisplayType bool_display_type = 1;
+  OpenseaDisplayOption opensea = 2; 
 }
