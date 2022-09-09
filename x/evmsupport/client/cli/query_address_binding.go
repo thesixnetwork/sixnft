@@ -46,18 +46,18 @@ func CmdShowAddressBinding() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show-address-binding [eth-address] [native-address]",
 		Short: "shows a AddressBinding",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
 			argEthAddress := args[0]
-			argNativeAddress := args[1]
+			// argNativeAddress := args[1]
 
 			params := &types.QueryGetAddressBindingRequest{
 				EthAddress:    argEthAddress,
-				NativeAddress: argNativeAddress,
+				// NativeAddress: argNativeAddress,
 			}
 
 			res, err := queryClient.AddressBinding(context.Background(), params)

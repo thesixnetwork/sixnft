@@ -2,6 +2,7 @@ package types
 
 // Governance module event types
 const (
+	EventMessage = "evmsupport_action"
 	EventTypeCreateBinding          = "create_binding"
 	EventTypeDeleteBinding          = "delete_binding"
 	AttributeKeyCreateBindingResult = "craete_binding_result"

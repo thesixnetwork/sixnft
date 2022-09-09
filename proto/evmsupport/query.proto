@@ -39,8 +39,8 @@ message QueryParamsResponse {
 }
 
 message QueryGetAddressBindingRequest {
-	  string ethAddress = 1;
-  string nativeAddress = 2;
+	string ethAddress = 1;
+  	string nativeAddress = 2;
 
 }
 

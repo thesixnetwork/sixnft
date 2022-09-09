@@ -31,7 +31,7 @@ func (k msgServer) RemoveBinding(goCtx context.Context, msg *types.MsgRemoveBind
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
-			sdk.NewAttribute(sdk.AttributeKeyModule, types.EventTypeDeleteBinding),
+			sdk.NewAttribute(types.EventMessage, types.EventTypeDeleteBinding),
 			sdk.NewAttribute(types.AttributeValueBinder, msg.GetCreator()),
 			sdk.NewAttribute(types.AttributeValueEthAddress, msg.GetEthAddress()),
 			sdk.NewAttribute(types.AttributeKeyDeleteBindingResult, "success"),
