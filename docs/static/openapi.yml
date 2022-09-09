@@ -30727,6 +30727,13 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_display_type:
+                                    type: string
+                                    enum:
+                                      - PRESENT_ABSENT
+                                      - YES_NO
+                                      - TRUE_FALSE
+                                    default: PRESENT_ABSENT
                                   opensea:
                                     type: object
                                     properties:
@@ -30765,6 +30772,13 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_display_type:
+                                    type: string
+                                    enum:
+                                      - PRESENT_ABSENT
+                                      - YES_NO
+                                      - TRUE_FALSE
+                                    default: PRESENT_ABSENT
                                   opensea:
                                     type: object
                                     properties:
@@ -30795,6 +30809,13 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_display_type:
+                                    type: string
+                                    enum:
+                                      - PRESENT_ABSENT
+                                      - YES_NO
+                                      - TRUE_FALSE
+                                    default: PRESENT_ABSENT
                                   opensea:
                                     type: object
                                     properties:
@@ -31184,6 +31205,13 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_display_type:
+                                  type: string
+                                  enum:
+                                    - PRESENT_ABSENT
+                                    - YES_NO
+                                    - TRUE_FALSE
+                                  default: PRESENT_ABSENT
                                 opensea:
                                   type: object
                                   properties:
@@ -31222,6 +31250,13 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_display_type:
+                                  type: string
+                                  enum:
+                                    - PRESENT_ABSENT
+                                    - YES_NO
+                                    - TRUE_FALSE
+                                  default: PRESENT_ABSENT
                                 opensea:
                                   type: object
                                   properties:
@@ -31252,6 +31287,13 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_display_type:
+                                  type: string
+                                  enum:
+                                    - PRESENT_ABSENT
+                                    - YES_NO
+                                    - TRUE_FALSE
+                                  default: PRESENT_ABSENT
                                 opensea:
                                   type: object
                                   properties:
@@ -53052,6 +53094,13 @@ definitions:
       display_option:
         type: object
         properties:
+          bool_display_type:
+            type: string
+            enum:
+              - PRESENT_ABSENT
+              - YES_NO
+              - TRUE_FALSE
+            default: PRESENT_ABSENT
           opensea:
             type: object
             properties:
@@ -53072,9 +53121,23 @@ definitions:
       - ORIGIN
       - CHAIN
     default: ORIGIN
+  sixnft.nftmngr.BoolDisplayType:
+    type: string
+    enum:
+      - PRESENT_ABSENT
+      - YES_NO
+      - TRUE_FALSE
+    default: PRESENT_ABSENT
   sixnft.nftmngr.DisplayOption:
     type: object
     properties:
+      bool_display_type:
+        type: string
+        enum:
+          - PRESENT_ABSENT
+          - YES_NO
+          - TRUE_FALSE
+        default: PRESENT_ABSENT
       opensea:
         type: object
         properties:
@@ -53146,6 +53209,13 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_display_type:
+                      type: string
+                      enum:
+                        - PRESENT_ABSENT
+                        - YES_NO
+                        - TRUE_FALSE
+                      default: PRESENT_ABSENT
                     opensea:
                       type: object
                       properties:
@@ -53184,6 +53254,13 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_display_type:
+                      type: string
+                      enum:
+                        - PRESENT_ABSENT
+                        - YES_NO
+                        - TRUE_FALSE
+                      default: PRESENT_ABSENT
                     opensea:
                       type: object
                       properties:
@@ -53214,6 +53291,13 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_display_type:
+                      type: string
+                      enum:
+                        - PRESENT_ABSENT
+                        - YES_NO
+                        - TRUE_FALSE
+                      default: PRESENT_ABSENT
                     opensea:
                       type: object
                       properties:
@@ -53424,6 +53508,13 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_display_type:
+                  type: string
+                  enum:
+                    - PRESENT_ABSENT
+                    - YES_NO
+                    - TRUE_FALSE
+                  default: PRESENT_ABSENT
                 opensea:
                   type: object
                   properties:
@@ -53454,6 +53545,13 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_display_type:
+                  type: string
+                  enum:
+                    - PRESENT_ABSENT
+                    - YES_NO
+                    - TRUE_FALSE
+                  default: PRESENT_ABSENT
                 opensea:
                   type: object
                   properties:
@@ -53563,6 +53661,13 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_display_type:
+                  type: string
+                  enum:
+                    - PRESENT_ABSENT
+                    - YES_NO
+                    - TRUE_FALSE
+                  default: PRESENT_ABSENT
                 opensea:
                   type: object
                   properties:
@@ -53627,6 +53732,13 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_display_type:
+                            type: string
+                            enum:
+                              - PRESENT_ABSENT
+                              - YES_NO
+                              - TRUE_FALSE
+                            default: PRESENT_ABSENT
                           opensea:
                             type: object
                             properties:
@@ -53665,6 +53777,13 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_display_type:
+                            type: string
+                            enum:
+                              - PRESENT_ABSENT
+                              - YES_NO
+                              - TRUE_FALSE
+                            default: PRESENT_ABSENT
                           opensea:
                             type: object
                             properties:
@@ -53695,6 +53814,13 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_display_type:
+                            type: string
+                            enum:
+                              - PRESENT_ABSENT
+                              - YES_NO
+                              - TRUE_FALSE
+                            default: PRESENT_ABSENT
                           opensea:
                             type: object
                             properties:
@@ -53932,6 +54058,13 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_display_type:
+                          type: string
+                          enum:
+                            - PRESENT_ABSENT
+                            - YES_NO
+                            - TRUE_FALSE
+                          default: PRESENT_ABSENT
                         opensea:
                           type: object
                           properties:
@@ -53970,6 +54103,13 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_display_type:
+                          type: string
+                          enum:
+                            - PRESENT_ABSENT
+                            - YES_NO
+                            - TRUE_FALSE
+                          default: PRESENT_ABSENT
                         opensea:
                           type: object
                           properties:
@@ -54000,6 +54140,13 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_display_type:
+                          type: string
+                          enum:
+                            - PRESENT_ABSENT
+                            - YES_NO
+                            - TRUE_FALSE
+                          default: PRESENT_ABSENT
                         opensea:
                           type: object
                           properties:

@@ -45,35 +45,38 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 
 // Validate NFT Schema
 func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
-	// Validate Origin Attributes
+	// Origin Data Origin Attributes Map
+	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	for _, attriDef := range mapAttributeDefinition {
+		mapAttributeDefinition[attriDef.Name] = attriDef
+	}
+	// Check for duplicate origin attributes
 	duplicated, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate Onchain NFT Attributes
+	// Validate for duplicate onchain nft attributes
 	duplicated, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate Onchain Token Attributes
+	// Validate for duplicate onchain token attributes
 	duplicated, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainTokenAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate NFT Attributes Value
 	duplicated, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
 	if duplicated {
-		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute value: %s", err))
+		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate if attributes have the same type for NFT Attributes
-	hasSameType, err := HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
+	// Validate if attributes have the same type
+	hasSameType, err := HasSameType(mapAttributeDefinition, schema.OnchainData.NftAttributes)
 	if !hasSameType {
-		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("NFT Attributes and Origin Attributes have different types: %s", err))
+		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
-	// Validate if attributes have the same type for Token Attributes
-	hasSameType, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	hasSameType, err = HasSameType(mapAttributeDefinition, schema.OnchainData.TokenAttributes)
 	if !hasSameType {
-		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Token Attributes and Origin Attributes have different types: %s", err))
+		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
 	return true, nil
 }
