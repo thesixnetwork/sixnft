@@ -47,7 +47,6 @@ func TestAddressBindingRemove(t *testing.T) {
 	for _, item := range items {
 		keeper.RemoveAddressBinding(ctx,
 			item.EthAddress,
-			item.NativeAddress,
 		)
 		_, found := keeper.GetAddressBinding(ctx,
 			item.EthAddress,
