@@ -171,7 +171,7 @@
                 "data_type": "long",
                 "display_value_field": "value",
                 "display_option": {
-                    "boolean_display_type": "present_absent",
+                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "display_type": "date",
                         "trait_type": "Expire Date"
@@ -199,7 +199,7 @@
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "boolean_display_type": "present_absent",
+                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "trait_type": "Available 10 Percent Discount",
                         "max_value": 5,
@@ -214,7 +214,7 @@
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "boolean_display_type": "present_absent",
+                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "trait_type": "Discount",
                         "display_type": "boost_percentage"
@@ -228,7 +228,7 @@
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "boolean_display_type": "present_absent",
+                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "trait_type": "Discount",
                         "display_type": "boost_number"
