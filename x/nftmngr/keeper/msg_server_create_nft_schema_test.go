@@ -316,98 +316,125 @@ func TestCreateData(t *testing.T) {
 	// fmt.Println(str)
 }
 
+func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.AttributeDefinition {
+	attrDefMap := make(map[string]*types.AttributeDefinition)
+	for _, attrDef := range attrDefs {
+		attrDefMap[attrDef.Name] = attrDef
+	}
+	return attrDefMap
+}
+
+func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]*types.NftAttributeValue {
+	nftAttrValueMap := make(map[string]*types.NftAttributeValue)
+	for _, nftAttrValue := range nftAttrValues {
+		nftAttrValueMap[nftAttrValue.Name] = nftAttrValue
+	}
+	return nftAttrValueMap
+}
+
 // Validate NFT Schema
 func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
-	// Check for duplicate attributes
-	duplicated, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
+	// Origin Data Origin Attributes Map
+	mapSchemaOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	// Onchain Data Nft Attributes map
+	mapSchemaOnchainNftAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
+
+	// Onchain Data Nft Attributes map
+	mapSchemaOnchainTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
+
+	// Onchain Data Nft Attributes Value map
+	mapSchemaNftAttributesValue := CreateNftAttrValueMap(schema.OnchainData.NftAttributesValue)
+
+	// Crate function for above loops ^^^^
+	// func PopulateAttrDefMap
+
+	// Check for duplicate origin attributes
+	duplicated, err := HasDuplicateAttributes(mapSchemaOriginAttributes, schema.OriginData.OriginAttributes)
 	fmt.Println("1 HasDuplicateAttributes")
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate Onchain NFT Attributes
+	// Validate for duplicate onchain nft attributes
 	fmt.Println("2 HasDuplicateAttributes")
-	duplicated, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
+	duplicated, err = HasDuplicateAttributes(mapSchemaOnchainNftAttributes, schema.OnchainData.NftAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	// Validate Onchain Token Attributes
+	// Validate for duplicate onchain token attributes
 	fmt.Println("3 HasDuplicateAttributes")
-	duplicated, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
+	duplicated, err = HasDuplicateAttributes(mapSchemaOnchainTokenAttributes, schema.OnchainData.TokenAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainTokenAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	fmt.Println("4 HasDuplicateNftAttributesValue")
-	duplicated, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
+	duplicated, err = HasDuplicateNftAttributesValue(mapSchemaNftAttributesValue, schema.OnchainData.NftAttributesValue)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	// Validate if attributes have the same type
 	fmt.Println("5 HasSameType")
-	hasSameType, err := HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
+	hasSameType, err := HasSameType(mapSchemaOriginAttributes, schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
 	fmt.Println("6 HasSameType")
-	hasSameType, err = HasSameType(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	hasSameType, err = HasSameType(mapSchemaOriginAttributes, schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
 	return true, nil
 }
 
-func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
-	mapAttributes := map[string]*types.AttributeDefinition{}
-	mapCount := map[string]int{}
-	for _, attriDef := range attributes {
-		mapAttributes[attriDef.Name] = attriDef
-	}
-	for _, attriDef := range attributes {
-		if mapCount[attriDef.Name] > 1 {
-			return true, attriDef.Name
-		}
-		if _, ok := mapCount[attriDef.Name]; ok {
-			return true, attriDef.Name
-		}
-		mapCount[attriDef.Name] = 1
-	}
-	return false, ""
-}
-
-func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool, string) {
-	mapAttributes := map[string]*types.NftAttributeValue{}
-	mapCount := map[string]int{}
-	for _, attriDef := range attributes {
-		mapAttributes[attriDef.Name] = attriDef
-	}
-	for _, attriDef := range attributes {
-		if mapCount[attriDef.Name] > 1 {
-			return true, attriDef.Name
-		}
-		if _, ok := mapCount[attriDef.Name]; ok {
-			return true, attriDef.Name
-		}
-		mapCount[attriDef.Name] = 1
-	}
-	return false, ""
-}
-
-// func HasSameType(attributes_1 []*types.AttributeDefinition, attributes_2 []*types.AttributeDefinition) (bool, error) {
-// 	// If attributes have same name, then they must have same type
-// 	for i := 0; i < len(attributes_1); i++ {
-// 		for j := i + 1; j < len(attributes_2); j++ {
-// 			if attributes_1[i].Name == attributes_2[j].Name {
-// 				if attributes_1[i].DataType != attributes_2[j].DataType {
-// 					return false, fmt.Errorf("Attribute %s has different type", attributes_1[i].Name)
-// 				}
-// 				return true, nil
-// 			}
-// 		}
+// func HasDuplicateAttributes(mapAttributes map[string]*types.AttributeDefinition, attributes []*types.AttributeDefinition) (bool, string) {
+// 	// mapAttributes := map[string]*types.AttributeDefinition{}
+// 	mapCount := map[string]int{}
+// 	for _, attriDef := range attributes {
+// 		mapAttributes[attriDef.Name] = attriDef
 // 	}
-// 	return true, nil
+// 	for _, attriDef := range attributes {
+// 		if mapCount[attriDef.Name] > 1 {
+// 			return true, attriDef.Name
+// 		}
+// 		if _, ok := mapCount[attriDef.Name]; ok {
+// 			return true, attriDef.Name
+// 		}
+// 		mapCount[attriDef.Name] = 1
+// 	}
+// 	return false, ""
 // }
 
-func HasSameType(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) (bool, string) {
-	mapOriginAttributes := map[string]*types.AttributeDefinition{}
+func HasDuplicateAttributes(mapAttributes map[string]*types.AttributeDefinition, attributes []*types.AttributeDefinition) (bool, string) {
+	// mapAttributes := map[string]*types.AttributeDefinition{}
+
+	for _, attriDef := range attributes {
+		if _, ok := mapAttributes[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapAttributes[attriDef.Name] = attriDef
+	}
+	return false, ""
+}
+
+func HasDuplicateNftAttributesValue(mapAttributes map[string]*types.NftAttributeValue, attributes []*types.NftAttributeValue) (bool, string) {
+	// mapAttributes := map[string]*types.NftAttributeValue{}
+	mapCount := map[string]int{}
+	for _, attriDef := range attributes {
+		mapAttributes[attriDef.Name] = attriDef
+	}
+	for _, attriDef := range attributes {
+		if mapCount[attriDef.Name] > 1 {
+			return true, attriDef.Name
+		}
+		if _, ok := mapCount[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapCount[attriDef.Name] = 1
+	}
+	return false, ""
+}
+
+func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) (bool, string) {
+	// mapOriginAttributes := map[string]*types.AttributeDefinition{}
 
 	for _, attriDef := range originAttributes {
 		mapOriginAttributes[attriDef.Name] = attriDef
