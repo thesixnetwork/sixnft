@@ -3,12 +3,13 @@ package keeper
 import (
 	"context"
 
+	"sixnft/x/evmsupport/types"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"sixnft/x/evmsupport/types"
 )
 
 func (k Keeper) AddressBindingAll(c context.Context, req *types.QueryAllAddressBindingRequest) (*types.QueryAllAddressBindingResponse, error) {
@@ -48,7 +49,6 @@ func (k Keeper) AddressBinding(c context.Context, req *types.QueryGetAddressBind
 	val, found := k.GetAddressBinding(
 		ctx,
 		req.EthAddress,
-		req.NativeAddress,
 	)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")

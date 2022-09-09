@@ -1,9 +1,10 @@
 package keeper
 
 import (
+	"sixnft/x/evmsupport/types"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/evmsupport/types"
 )
 
 // SetAddressBinding set a specific addressBinding in the store from its index
@@ -12,7 +13,6 @@ func (k Keeper) SetAddressBinding(ctx sdk.Context, addressBinding types.AddressB
 	b := k.cdc.MustMarshal(&addressBinding)
 	store.Set(types.AddressBindingKey(
 		addressBinding.EthAddress,
-		addressBinding.NativeAddress,
 	), b)
 }
 
@@ -20,14 +20,12 @@ func (k Keeper) SetAddressBinding(ctx sdk.Context, addressBinding types.AddressB
 func (k Keeper) GetAddressBinding(
 	ctx sdk.Context,
 	ethAddress string,
-	nativeAddress string,
 
 ) (val types.AddressBinding, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AddressBindingKeyPrefix))
 
 	b := store.Get(types.AddressBindingKey(
 		ethAddress,
-		nativeAddress,
 	))
 	if b == nil {
 		return val, false
@@ -47,7 +45,6 @@ func (k Keeper) RemoveAddressBinding(
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AddressBindingKeyPrefix))
 	store.Delete(types.AddressBindingKey(
 		ethAddress,
-		nativeAddress,
 	))
 }
 

@@ -23,7 +23,7 @@ func (gs GenesisState) Validate() error {
 	addressBindingIndexMap := make(map[string]struct{})
 
 	for _, elem := range gs.AddressBindingList {
-		index := string(AddressBindingKey(elem.EthAddress, elem.NativeAddress))
+		index := string(AddressBindingKey(elem.EthAddress))
 		if _, ok := addressBindingIndexMap[index]; ok {
 			return fmt.Errorf("duplicated index for addressBinding")
 		}

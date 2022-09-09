@@ -4,12 +4,13 @@ import (
 	"strconv"
 	"testing"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/stretchr/testify/require"
 	keepertest "sixnft/testutil/keeper"
 	"sixnft/testutil/nullify"
 	"sixnft/x/evmsupport/keeper"
 	"sixnft/x/evmsupport/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/stretchr/testify/require"
 )
 
 // Prevent strconv unused error
@@ -32,7 +33,6 @@ func TestAddressBindingGet(t *testing.T) {
 	for _, item := range items {
 		rst, found := keeper.GetAddressBinding(ctx,
 			item.EthAddress,
-			item.NativeAddress,
 		)
 		require.True(t, found)
 		require.Equal(t,
@@ -51,7 +51,6 @@ func TestAddressBindingRemove(t *testing.T) {
 		)
 		_, found := keeper.GetAddressBinding(ctx,
 			item.EthAddress,
-			item.NativeAddress,
 		)
 		require.False(t, found)
 	}

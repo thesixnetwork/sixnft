@@ -10,7 +10,7 @@ const (
 )
 
 // AddressBindingKey returns the store key to retrieve a AddressBinding from the index fields
-func AddressBindingKey(
+func EthAddressBindingKey(
 	ethAddress string,
 	nativeAddress string,
 ) []byte {
@@ -20,9 +20,22 @@ func AddressBindingKey(
 	key = append(key, ethAddressBytes...)
 	key = append(key, []byte("/")...)
 
-	nativeAddressBytes := []byte(nativeAddress)
-	key = append(key, nativeAddressBytes...)
+	return key
+}
+
+// AddressBindingKey returns the store key to retrieve a AddressBinding from the index fields
+func AddressBindingKey(
+	ethAddress string,
+) []byte {
+	var key []byte
+
+	ethAddressBytes := []byte(ethAddress)
+	key = append(key, ethAddressBytes...)
 	key = append(key, []byte("/")...)
+
+	// nativeAddressBytes := []byte(nativeAddress)
+	// key = append(key, nativeAddressBytes...)
+	// key = append(key, []byte("/")...)
 
 	return key
 }

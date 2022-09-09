@@ -21,7 +21,7 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 		return nil, sdkerrors.Wrap(types.ErrInvalidSignature, "Invalid Signature")
 	}
 
-	_, found := k.Keeper.GetAddressBinding(ctx, msg.GetEthAddress(), msg.GetCreator())
+	_, found := k.Keeper.GetAddressBinding(ctx, msg.GetEthAddress())
 	if found {
 		return nil, sdkerrors.Wrap(types.ErrAddressAlreadyBound, msg.GetEthAddress()+"|"+msg.GetCreator())
 	}
@@ -30,6 +30,8 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 		EthAddress:    msg.GetEthAddress(),
 		NativeAddress: msg.GetCreator(),
 	})
+
+	_ = ctx
 
 	return &types.MsgBindAddressResponse{}, nil
 }
