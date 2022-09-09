@@ -1,0 +1,26 @@
+syntax = "proto3";
+package sixnft.evmsupport;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "sixnft/x/evmsupport/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc BindAddress(MsgBindAddress) returns (MsgBindAddressResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgBindAddress {
+  string creator = 1;
+  string ethAddress = 2;
+  string signature = 3;
+  string signedMessage = 4;
+}
+
+message MsgBindAddressResponse {
+  string ethAddress = 1;
+  string nativeAddress = 2;
+}
+
+// this line is used by starport scaffolding # proto/tx/message
