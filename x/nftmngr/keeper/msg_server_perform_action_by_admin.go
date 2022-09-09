@@ -40,8 +40,15 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	k.Keeper.SetNftData(ctx, tokenData)
 
-	// TODO: Handling the message
-	_ = ctx
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(types.EventMessage, types.EventTypeRunAction),
+			sdk.NewAttribute(types.AttributeKeyRunActionResult, "success"),
+			sdk.NewAttribute(types.AttributeKeyOldValue, ""),
+			sdk.NewAttribute(types.AttributeKeyNewValue, ""),
+		),
+	)
 
 	return &types.MsgPerformActionByAdminResponse{
 		NftSchemaCode: msg.NftSchemaCode,
