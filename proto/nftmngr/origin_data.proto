@@ -8,6 +8,11 @@ enum AttributeOverriding {
   CHAIN = 1;
 }
 
+enum URIRetrievalMethod {
+  BASE = 0;
+  TOKEN = 1;
+}
+
 message OriginData {
   
   string origin_chain = 1; 
@@ -16,4 +21,5 @@ message OriginData {
   AttributeOverriding  attribute_overriding = 4; 
   string metadata_format = 5; 
   repeated AttributeDefinition origin_attributes = 6; 
+  URIRetrievalMethod  uri_retrieval_method = 7;
 }
