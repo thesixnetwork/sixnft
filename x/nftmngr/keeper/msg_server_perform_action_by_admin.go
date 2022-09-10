@@ -40,6 +40,8 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	k.Keeper.SetNftData(ctx, tokenData)
 
+	// Compare the new metadata with the old one and get the difference
+
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
