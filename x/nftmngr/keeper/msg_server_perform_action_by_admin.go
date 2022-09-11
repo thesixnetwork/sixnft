@@ -25,6 +25,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	if msg.Creator != schema.Owner {
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
+
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
 		if action.Name == msg.Action {
@@ -40,8 +41,22 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	k.Keeper.SetNftData(ctx, tokenData)
 
-	// TODO: Handling the message
-	_ = ctx
+	// Check action with reference exists
+	if msg.RefId != "" {
+
+		_, found := k.Keeper.GetActionByRefId(ctx, msg.RefId)
+		if found {
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, msg.RefId)
+		}
+
+		k.Keeper.SetActionByRefId(ctx, types.ActionByRefId{
+			RefId:         msg.RefId,
+			Creator:       msg.Creator,
+			NftSchemaCode: msg.NftSchemaCode,
+			TokenId:       msg.TokenId,
+			Action:        mapAction.Name,
+		})
+	}
 
 	return &types.MsgPerformActionByAdminResponse{
 		NftSchemaCode: msg.NftSchemaCode,

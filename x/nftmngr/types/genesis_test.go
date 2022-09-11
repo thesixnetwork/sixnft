@@ -40,6 +40,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						TokenId:       "1",
 					},
 				},
+				ActionByRefIdList: []types.ActionByRefId{
+					{
+						RefId: "0",
+					},
+					{
+						RefId: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -69,6 +77,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						NftSchemaCode: "0",
 						TokenId:       "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionByRefId",
+			genState: &types.GenesisState{
+				ActionByRefIdList: []types.ActionByRefId{
+					{
+						RefId: "0",
+					},
+					{
+						RefId: "0",
 					},
 				},
 			},

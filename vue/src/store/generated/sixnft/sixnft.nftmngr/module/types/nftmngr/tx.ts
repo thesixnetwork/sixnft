@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { Reader, Writer } from "protobufjs/minimal";
+import { Any } from "../google/protobuf/any";
 
 export const protobufPackage = "sixnft.nftmngr";
 
@@ -24,11 +25,28 @@ export interface MsgCreateMetadataResponse {
   tokenId: string;
 }
 
+export interface OpenseaAttribute {
+  trait_type: string;
+  value: Any | undefined;
+}
+
+export interface UpdatedOpenseaAttributes {
+  attributes: OpenseaAttribute[];
+}
+
+export interface UpdatedOriginData {
+  opensea: UpdatedOpenseaAttributes | undefined;
+}
+
 export interface MsgPerformActionByAdmin {
   creator: string;
   nftSchemaCode: string;
   tokenId: string;
   action: string;
+  newOriginOwner: string;
+  newNativeOwner: string;
+  base64UpdatedOriginData: string;
+  refId: string;
 }
 
 export interface MsgPerformActionByAdminResponse {
@@ -390,11 +408,232 @@ export const MsgCreateMetadataResponse = {
   },
 };
 
+const baseOpenseaAttribute: object = { trait_type: "" };
+
+export const OpenseaAttribute = {
+  encode(message: OpenseaAttribute, writer: Writer = Writer.create()): Writer {
+    if (message.trait_type !== "") {
+      writer.uint32(10).string(message.trait_type);
+    }
+    if (message.value !== undefined) {
+      Any.encode(message.value, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): OpenseaAttribute {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseOpenseaAttribute } as OpenseaAttribute;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.trait_type = reader.string();
+          break;
+        case 2:
+          message.value = Any.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OpenseaAttribute {
+    const message = { ...baseOpenseaAttribute } as OpenseaAttribute;
+    if (object.trait_type !== undefined && object.trait_type !== null) {
+      message.trait_type = String(object.trait_type);
+    } else {
+      message.trait_type = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Any.fromJSON(object.value);
+    } else {
+      message.value = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: OpenseaAttribute): unknown {
+    const obj: any = {};
+    message.trait_type !== undefined && (obj.trait_type = message.trait_type);
+    message.value !== undefined &&
+      (obj.value = message.value ? Any.toJSON(message.value) : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<OpenseaAttribute>): OpenseaAttribute {
+    const message = { ...baseOpenseaAttribute } as OpenseaAttribute;
+    if (object.trait_type !== undefined && object.trait_type !== null) {
+      message.trait_type = object.trait_type;
+    } else {
+      message.trait_type = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Any.fromPartial(object.value);
+    } else {
+      message.value = undefined;
+    }
+    return message;
+  },
+};
+
+const baseUpdatedOpenseaAttributes: object = {};
+
+export const UpdatedOpenseaAttributes = {
+  encode(
+    message: UpdatedOpenseaAttributes,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.attributes) {
+      OpenseaAttribute.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): UpdatedOpenseaAttributes {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseUpdatedOpenseaAttributes,
+    } as UpdatedOpenseaAttributes;
+    message.attributes = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.attributes.push(
+            OpenseaAttribute.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdatedOpenseaAttributes {
+    const message = {
+      ...baseUpdatedOpenseaAttributes,
+    } as UpdatedOpenseaAttributes;
+    message.attributes = [];
+    if (object.attributes !== undefined && object.attributes !== null) {
+      for (const e of object.attributes) {
+        message.attributes.push(OpenseaAttribute.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: UpdatedOpenseaAttributes): unknown {
+    const obj: any = {};
+    if (message.attributes) {
+      obj.attributes = message.attributes.map((e) =>
+        e ? OpenseaAttribute.toJSON(e) : undefined
+      );
+    } else {
+      obj.attributes = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<UpdatedOpenseaAttributes>
+  ): UpdatedOpenseaAttributes {
+    const message = {
+      ...baseUpdatedOpenseaAttributes,
+    } as UpdatedOpenseaAttributes;
+    message.attributes = [];
+    if (object.attributes !== undefined && object.attributes !== null) {
+      for (const e of object.attributes) {
+        message.attributes.push(OpenseaAttribute.fromPartial(e));
+      }
+    }
+    return message;
+  },
+};
+
+const baseUpdatedOriginData: object = {};
+
+export const UpdatedOriginData = {
+  encode(message: UpdatedOriginData, writer: Writer = Writer.create()): Writer {
+    if (message.opensea !== undefined) {
+      UpdatedOpenseaAttributes.encode(
+        message.opensea,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): UpdatedOriginData {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseUpdatedOriginData } as UpdatedOriginData;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.opensea = UpdatedOpenseaAttributes.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdatedOriginData {
+    const message = { ...baseUpdatedOriginData } as UpdatedOriginData;
+    if (object.opensea !== undefined && object.opensea !== null) {
+      message.opensea = UpdatedOpenseaAttributes.fromJSON(object.opensea);
+    } else {
+      message.opensea = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: UpdatedOriginData): unknown {
+    const obj: any = {};
+    message.opensea !== undefined &&
+      (obj.opensea = message.opensea
+        ? UpdatedOpenseaAttributes.toJSON(message.opensea)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<UpdatedOriginData>): UpdatedOriginData {
+    const message = { ...baseUpdatedOriginData } as UpdatedOriginData;
+    if (object.opensea !== undefined && object.opensea !== null) {
+      message.opensea = UpdatedOpenseaAttributes.fromPartial(object.opensea);
+    } else {
+      message.opensea = undefined;
+    }
+    return message;
+  },
+};
+
 const baseMsgPerformActionByAdmin: object = {
   creator: "",
   nftSchemaCode: "",
   tokenId: "",
   action: "",
+  newOriginOwner: "",
+  newNativeOwner: "",
+  base64UpdatedOriginData: "",
+  refId: "",
 };
 
 export const MsgPerformActionByAdmin = {
@@ -413,6 +652,18 @@ export const MsgPerformActionByAdmin = {
     }
     if (message.action !== "") {
       writer.uint32(34).string(message.action);
+    }
+    if (message.newOriginOwner !== "") {
+      writer.uint32(42).string(message.newOriginOwner);
+    }
+    if (message.newNativeOwner !== "") {
+      writer.uint32(50).string(message.newNativeOwner);
+    }
+    if (message.base64UpdatedOriginData !== "") {
+      writer.uint32(58).string(message.base64UpdatedOriginData);
+    }
+    if (message.refId !== "") {
+      writer.uint32(66).string(message.refId);
     }
     return writer;
   },
@@ -437,6 +688,18 @@ export const MsgPerformActionByAdmin = {
           break;
         case 4:
           message.action = reader.string();
+          break;
+        case 5:
+          message.newOriginOwner = reader.string();
+          break;
+        case 6:
+          message.newNativeOwner = reader.string();
+          break;
+        case 7:
+          message.base64UpdatedOriginData = reader.string();
+          break;
+        case 8:
+          message.refId = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -470,6 +733,29 @@ export const MsgPerformActionByAdmin = {
     } else {
       message.action = "";
     }
+    if (object.newOriginOwner !== undefined && object.newOriginOwner !== null) {
+      message.newOriginOwner = String(object.newOriginOwner);
+    } else {
+      message.newOriginOwner = "";
+    }
+    if (object.newNativeOwner !== undefined && object.newNativeOwner !== null) {
+      message.newNativeOwner = String(object.newNativeOwner);
+    } else {
+      message.newNativeOwner = "";
+    }
+    if (
+      object.base64UpdatedOriginData !== undefined &&
+      object.base64UpdatedOriginData !== null
+    ) {
+      message.base64UpdatedOriginData = String(object.base64UpdatedOriginData);
+    } else {
+      message.base64UpdatedOriginData = "";
+    }
+    if (object.refId !== undefined && object.refId !== null) {
+      message.refId = String(object.refId);
+    } else {
+      message.refId = "";
+    }
     return message;
   },
 
@@ -480,6 +766,13 @@ export const MsgPerformActionByAdmin = {
       (obj.nftSchemaCode = message.nftSchemaCode);
     message.tokenId !== undefined && (obj.tokenId = message.tokenId);
     message.action !== undefined && (obj.action = message.action);
+    message.newOriginOwner !== undefined &&
+      (obj.newOriginOwner = message.newOriginOwner);
+    message.newNativeOwner !== undefined &&
+      (obj.newNativeOwner = message.newNativeOwner);
+    message.base64UpdatedOriginData !== undefined &&
+      (obj.base64UpdatedOriginData = message.base64UpdatedOriginData);
+    message.refId !== undefined && (obj.refId = message.refId);
     return obj;
   },
 
@@ -508,6 +801,29 @@ export const MsgPerformActionByAdmin = {
       message.action = object.action;
     } else {
       message.action = "";
+    }
+    if (object.newOriginOwner !== undefined && object.newOriginOwner !== null) {
+      message.newOriginOwner = object.newOriginOwner;
+    } else {
+      message.newOriginOwner = "";
+    }
+    if (object.newNativeOwner !== undefined && object.newNativeOwner !== null) {
+      message.newNativeOwner = object.newNativeOwner;
+    } else {
+      message.newNativeOwner = "";
+    }
+    if (
+      object.base64UpdatedOriginData !== undefined &&
+      object.base64UpdatedOriginData !== null
+    ) {
+      message.base64UpdatedOriginData = object.base64UpdatedOriginData;
+    } else {
+      message.base64UpdatedOriginData = "";
+    }
+    if (object.refId !== undefined && object.refId !== null) {
+      message.refId = object.refId;
+    } else {
+      message.refId = "";
     }
     return message;
   },

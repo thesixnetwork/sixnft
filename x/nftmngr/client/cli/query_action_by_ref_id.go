@@ -6,13 +6,13 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"sixnft/x/evmsupport/types"
+	"sixnft/x/nftmngr/types"
 )
 
-func CmdListAddressBinding() *cobra.Command {
+func CmdListActionByRefId() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-address-binding",
-		Short: "list all AddressBinding",
+		Use:   "list-action-by-ref-id",
+		Short: "list all ActionByRefId",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -23,11 +23,11 @@ func CmdListAddressBinding() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllAddressBindingRequest{
+			params := &types.QueryAllActionByRefIdRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.AddressBindingAll(context.Background(), params)
+			res, err := queryClient.ActionByRefIdAll(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -42,25 +42,23 @@ func CmdListAddressBinding() *cobra.Command {
 	return cmd
 }
 
-func CmdShowAddressBinding() *cobra.Command {
+func CmdShowActionByRefId() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-address-binding [eth-address] [native-address]",
-		Short: "shows a AddressBinding",
+		Use:   "show-action-by-ref-id [ref-id]",
+		Short: "shows a ActionByRefId",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			argEthAddress := args[0]
-			// argNativeAddress := args[1]
+			argRefId := args[0]
 
-			params := &types.QueryGetAddressBindingRequest{
-				EthAddress: argEthAddress,
-				// NativeAddress: argNativeAddress,
+			params := &types.QueryGetActionByRefIdRequest{
+				RefId: argRefId,
 			}
 
-			res, err := queryClient.AddressBinding(context.Background(), params)
+			res, err := queryClient.ActionByRefId(context.Background(), params)
 			if err != nil {
 				return err
 			}

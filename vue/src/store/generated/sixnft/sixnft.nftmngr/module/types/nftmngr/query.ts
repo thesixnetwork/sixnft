@@ -7,6 +7,7 @@ import {
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
 import { NftData } from "../nftmngr/nft_data";
+import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 
 export const protobufPackage = "sixnft.nftmngr";
 
@@ -51,6 +52,23 @@ export interface QueryAllNftDataRequest {
 
 export interface QueryAllNftDataResponse {
   nftData: NftData[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetActionByRefIdRequest {
+  refId: string;
+}
+
+export interface QueryGetActionByRefIdResponse {
+  actionByRefId: ActionByRefId | undefined;
+}
+
+export interface QueryAllActionByRefIdRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllActionByRefIdResponse {
+  actionByRefId: ActionByRefId[];
   pagination: PageResponse | undefined;
 }
 
@@ -773,6 +791,325 @@ export const QueryAllNftDataResponse = {
   },
 };
 
+const baseQueryGetActionByRefIdRequest: object = { refId: "" };
+
+export const QueryGetActionByRefIdRequest = {
+  encode(
+    message: QueryGetActionByRefIdRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.refId !== "") {
+      writer.uint32(10).string(message.refId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetActionByRefIdRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetActionByRefIdRequest,
+    } as QueryGetActionByRefIdRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.refId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetActionByRefIdRequest {
+    const message = {
+      ...baseQueryGetActionByRefIdRequest,
+    } as QueryGetActionByRefIdRequest;
+    if (object.refId !== undefined && object.refId !== null) {
+      message.refId = String(object.refId);
+    } else {
+      message.refId = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetActionByRefIdRequest): unknown {
+    const obj: any = {};
+    message.refId !== undefined && (obj.refId = message.refId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetActionByRefIdRequest>
+  ): QueryGetActionByRefIdRequest {
+    const message = {
+      ...baseQueryGetActionByRefIdRequest,
+    } as QueryGetActionByRefIdRequest;
+    if (object.refId !== undefined && object.refId !== null) {
+      message.refId = object.refId;
+    } else {
+      message.refId = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetActionByRefIdResponse: object = {};
+
+export const QueryGetActionByRefIdResponse = {
+  encode(
+    message: QueryGetActionByRefIdResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.actionByRefId !== undefined) {
+      ActionByRefId.encode(
+        message.actionByRefId,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetActionByRefIdResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetActionByRefIdResponse,
+    } as QueryGetActionByRefIdResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.actionByRefId = ActionByRefId.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetActionByRefIdResponse {
+    const message = {
+      ...baseQueryGetActionByRefIdResponse,
+    } as QueryGetActionByRefIdResponse;
+    if (object.actionByRefId !== undefined && object.actionByRefId !== null) {
+      message.actionByRefId = ActionByRefId.fromJSON(object.actionByRefId);
+    } else {
+      message.actionByRefId = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetActionByRefIdResponse): unknown {
+    const obj: any = {};
+    message.actionByRefId !== undefined &&
+      (obj.actionByRefId = message.actionByRefId
+        ? ActionByRefId.toJSON(message.actionByRefId)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetActionByRefIdResponse>
+  ): QueryGetActionByRefIdResponse {
+    const message = {
+      ...baseQueryGetActionByRefIdResponse,
+    } as QueryGetActionByRefIdResponse;
+    if (object.actionByRefId !== undefined && object.actionByRefId !== null) {
+      message.actionByRefId = ActionByRefId.fromPartial(object.actionByRefId);
+    } else {
+      message.actionByRefId = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllActionByRefIdRequest: object = {};
+
+export const QueryAllActionByRefIdRequest = {
+  encode(
+    message: QueryAllActionByRefIdRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllActionByRefIdRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllActionByRefIdRequest,
+    } as QueryAllActionByRefIdRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllActionByRefIdRequest {
+    const message = {
+      ...baseQueryAllActionByRefIdRequest,
+    } as QueryAllActionByRefIdRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllActionByRefIdRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllActionByRefIdRequest>
+  ): QueryAllActionByRefIdRequest {
+    const message = {
+      ...baseQueryAllActionByRefIdRequest,
+    } as QueryAllActionByRefIdRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllActionByRefIdResponse: object = {};
+
+export const QueryAllActionByRefIdResponse = {
+  encode(
+    message: QueryAllActionByRefIdResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.actionByRefId) {
+      ActionByRefId.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllActionByRefIdResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllActionByRefIdResponse,
+    } as QueryAllActionByRefIdResponse;
+    message.actionByRefId = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.actionByRefId.push(
+            ActionByRefId.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllActionByRefIdResponse {
+    const message = {
+      ...baseQueryAllActionByRefIdResponse,
+    } as QueryAllActionByRefIdResponse;
+    message.actionByRefId = [];
+    if (object.actionByRefId !== undefined && object.actionByRefId !== null) {
+      for (const e of object.actionByRefId) {
+        message.actionByRefId.push(ActionByRefId.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllActionByRefIdResponse): unknown {
+    const obj: any = {};
+    if (message.actionByRefId) {
+      obj.actionByRefId = message.actionByRefId.map((e) =>
+        e ? ActionByRefId.toJSON(e) : undefined
+      );
+    } else {
+      obj.actionByRefId = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllActionByRefIdResponse>
+  ): QueryAllActionByRefIdResponse {
+    const message = {
+      ...baseQueryAllActionByRefIdResponse,
+    } as QueryAllActionByRefIdResponse;
+    message.actionByRefId = [];
+    if (object.actionByRefId !== undefined && object.actionByRefId !== null) {
+      for (const e of object.actionByRefId) {
+        message.actionByRefId.push(ActionByRefId.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -789,6 +1126,14 @@ export interface Query {
   NftData(request: QueryGetNftDataRequest): Promise<QueryGetNftDataResponse>;
   /** Queries a list of NftData items. */
   NftDataAll(request: QueryAllNftDataRequest): Promise<QueryAllNftDataResponse>;
+  /** Queries a ActionByRefId by index. */
+  ActionByRefId(
+    request: QueryGetActionByRefIdRequest
+  ): Promise<QueryGetActionByRefIdResponse>;
+  /** Queries a list of ActionByRefId items. */
+  ActionByRefIdAll(
+    request: QueryAllActionByRefIdRequest
+  ): Promise<QueryAllActionByRefIdResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -845,6 +1190,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllNftDataResponse.decode(new Reader(data))
+    );
+  }
+
+  ActionByRefId(
+    request: QueryGetActionByRefIdRequest
+  ): Promise<QueryGetActionByRefIdResponse> {
+    const data = QueryGetActionByRefIdRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Query",
+      "ActionByRefId",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetActionByRefIdResponse.decode(new Reader(data))
+    );
+  }
+
+  ActionByRefIdAll(
+    request: QueryAllActionByRefIdRequest
+  ): Promise<QueryAllActionByRefIdResponse> {
+    const data = QueryAllActionByRefIdRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Query",
+      "ActionByRefIdAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllActionByRefIdResponse.decode(new Reader(data))
     );
   }
 }

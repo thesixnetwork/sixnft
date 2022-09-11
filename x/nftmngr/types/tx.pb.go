@@ -6,6 +6,7 @@ package types
 import (
 	context "context"
 	fmt "fmt"
+	types "github.com/cosmos/cosmos-sdk/codec/types"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"
 	grpc "google.golang.org/grpc"
@@ -243,18 +244,187 @@ func (m *MsgCreateMetadataResponse) GetTokenId() string {
 	return ""
 }
 
+type OpenseaAttribute struct {
+	TraitType string     `protobuf:"bytes,1,opt,name=trait_type,json=traitType,proto3" json:"trait_type,omitempty"`
+	Value     *types.Any `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (m *OpenseaAttribute) Reset()         { *m = OpenseaAttribute{} }
+func (m *OpenseaAttribute) String() string { return proto.CompactTextString(m) }
+func (*OpenseaAttribute) ProtoMessage()    {}
+func (*OpenseaAttribute) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{4}
+}
+func (m *OpenseaAttribute) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *OpenseaAttribute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_OpenseaAttribute.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *OpenseaAttribute) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OpenseaAttribute.Merge(m, src)
+}
+func (m *OpenseaAttribute) XXX_Size() int {
+	return m.Size()
+}
+func (m *OpenseaAttribute) XXX_DiscardUnknown() {
+	xxx_messageInfo_OpenseaAttribute.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OpenseaAttribute proto.InternalMessageInfo
+
+func (m *OpenseaAttribute) GetTraitType() string {
+	if m != nil {
+		return m.TraitType
+	}
+	return ""
+}
+
+func (m *OpenseaAttribute) GetValue() *types.Any {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+type UpdatedOpenseaAttributes struct {
+	Attributes []*OpenseaAttribute `protobuf:"bytes,1,rep,name=attributes,proto3" json:"attributes,omitempty"`
+}
+
+func (m *UpdatedOpenseaAttributes) Reset()         { *m = UpdatedOpenseaAttributes{} }
+func (m *UpdatedOpenseaAttributes) String() string { return proto.CompactTextString(m) }
+func (*UpdatedOpenseaAttributes) ProtoMessage()    {}
+func (*UpdatedOpenseaAttributes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{5}
+}
+func (m *UpdatedOpenseaAttributes) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdatedOpenseaAttributes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdatedOpenseaAttributes.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdatedOpenseaAttributes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdatedOpenseaAttributes.Merge(m, src)
+}
+func (m *UpdatedOpenseaAttributes) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdatedOpenseaAttributes) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdatedOpenseaAttributes.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdatedOpenseaAttributes proto.InternalMessageInfo
+
+func (m *UpdatedOpenseaAttributes) GetAttributes() []*OpenseaAttribute {
+	if m != nil {
+		return m.Attributes
+	}
+	return nil
+}
+
+type UpdatedOriginData struct {
+	// Types that are valid to be assigned to UpdatedOriginData:
+	//	*UpdatedOriginData_Opensea
+	UpdatedOriginData isUpdatedOriginData_UpdatedOriginData `protobuf_oneof:"updated_origin_data"`
+}
+
+func (m *UpdatedOriginData) Reset()         { *m = UpdatedOriginData{} }
+func (m *UpdatedOriginData) String() string { return proto.CompactTextString(m) }
+func (*UpdatedOriginData) ProtoMessage()    {}
+func (*UpdatedOriginData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{6}
+}
+func (m *UpdatedOriginData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpdatedOriginData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpdatedOriginData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpdatedOriginData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdatedOriginData.Merge(m, src)
+}
+func (m *UpdatedOriginData) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpdatedOriginData) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdatedOriginData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdatedOriginData proto.InternalMessageInfo
+
+type isUpdatedOriginData_UpdatedOriginData interface {
+	isUpdatedOriginData_UpdatedOriginData()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type UpdatedOriginData_Opensea struct {
+	Opensea *UpdatedOpenseaAttributes `protobuf:"bytes,1,opt,name=opensea,proto3,oneof" json:"opensea,omitempty"`
+}
+
+func (*UpdatedOriginData_Opensea) isUpdatedOriginData_UpdatedOriginData() {}
+
+func (m *UpdatedOriginData) GetUpdatedOriginData() isUpdatedOriginData_UpdatedOriginData {
+	if m != nil {
+		return m.UpdatedOriginData
+	}
+	return nil
+}
+
+func (m *UpdatedOriginData) GetOpensea() *UpdatedOpenseaAttributes {
+	if x, ok := m.GetUpdatedOriginData().(*UpdatedOriginData_Opensea); ok {
+		return x.Opensea
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*UpdatedOriginData) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*UpdatedOriginData_Opensea)(nil),
+	}
+}
+
 type MsgPerformActionByAdmin struct {
 	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	NftSchemaCode string `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	NftSchemaCode string `protobuf:"bytes,2,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
 	TokenId       string `protobuf:"bytes,3,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
 	Action        string `protobuf:"bytes,4,opt,name=action,proto3" json:"action,omitempty"`
+	RefId         string `protobuf:"bytes,5,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
 }
 
 func (m *MsgPerformActionByAdmin) Reset()         { *m = MsgPerformActionByAdmin{} }
 func (m *MsgPerformActionByAdmin) String() string { return proto.CompactTextString(m) }
 func (*MsgPerformActionByAdmin) ProtoMessage()    {}
 func (*MsgPerformActionByAdmin) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{4}
+	return fileDescriptor_17e298b08d1e9780, []int{7}
 }
 func (m *MsgPerformActionByAdmin) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -311,16 +481,23 @@ func (m *MsgPerformActionByAdmin) GetAction() string {
 	return ""
 }
 
+func (m *MsgPerformActionByAdmin) GetRefId() string {
+	if m != nil {
+		return m.RefId
+	}
+	return ""
+}
+
 type MsgPerformActionByAdminResponse struct {
-	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
-	TokenId       string `protobuf:"bytes,2,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+	NftSchemaCode string `protobuf:"bytes,1,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
+	TokenId       string `protobuf:"bytes,2,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
 }
 
 func (m *MsgPerformActionByAdminResponse) Reset()         { *m = MsgPerformActionByAdminResponse{} }
 func (m *MsgPerformActionByAdminResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgPerformActionByAdminResponse) ProtoMessage()    {}
 func (*MsgPerformActionByAdminResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{5}
+	return fileDescriptor_17e298b08d1e9780, []int{8}
 }
 func (m *MsgPerformActionByAdminResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -368,6 +545,9 @@ func init() {
 	proto.RegisterType((*MsgCreateNFTSchemaResponse)(nil), "sixnft.nftmngr.MsgCreateNFTSchemaResponse")
 	proto.RegisterType((*MsgCreateMetadata)(nil), "sixnft.nftmngr.MsgCreateMetadata")
 	proto.RegisterType((*MsgCreateMetadataResponse)(nil), "sixnft.nftmngr.MsgCreateMetadataResponse")
+	proto.RegisterType((*OpenseaAttribute)(nil), "sixnft.nftmngr.OpenseaAttribute")
+	proto.RegisterType((*UpdatedOpenseaAttributes)(nil), "sixnft.nftmngr.UpdatedOpenseaAttributes")
+	proto.RegisterType((*UpdatedOriginData)(nil), "sixnft.nftmngr.UpdatedOriginData")
 	proto.RegisterType((*MsgPerformActionByAdmin)(nil), "sixnft.nftmngr.MsgPerformActionByAdmin")
 	proto.RegisterType((*MsgPerformActionByAdminResponse)(nil), "sixnft.nftmngr.MsgPerformActionByAdminResponse")
 }
@@ -375,31 +555,43 @@ func init() {
 func init() { proto.RegisterFile("nftmngr/tx.proto", fileDescriptor_17e298b08d1e9780) }
 
 var fileDescriptor_17e298b08d1e9780 = []byte{
-	// 381 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xc8, 0x4b, 0x2b, 0xc9,
-	0xcd, 0x4b, 0x2f, 0xd2, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x2b, 0xce,
-	0xac, 0xc8, 0x4b, 0x2b, 0xd1, 0x83, 0x4a, 0x28, 0x45, 0x70, 0x09, 0xf9, 0x16, 0xa7, 0x3b, 0x17,
-	0xa5, 0x26, 0x96, 0xa4, 0xfa, 0xb9, 0x85, 0x04, 0x27, 0x67, 0xa4, 0xe6, 0x26, 0x0a, 0x49, 0x70,
-	0xb1, 0x27, 0x83, 0x84, 0xf2, 0x8b, 0x24, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0x60, 0x5c, 0x21,
-	0x0d, 0x2e, 0xfe, 0xbc, 0xb4, 0x12, 0x88, 0x32, 0xa7, 0xc4, 0xe2, 0x54, 0x33, 0x13, 0x09, 0x26,
-	0xb0, 0x0a, 0x74, 0x61, 0x25, 0x03, 0x2e, 0x29, 0x4c, 0x93, 0x83, 0x52, 0x8b, 0x0b, 0xf2, 0xf3,
-	0x8a, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x92, 0xf3, 0x53, 0x52, 0xa1, 0xc6, 0x83, 0xd9, 0x4a, 0x93,
-	0x19, 0xb9, 0x04, 0xe1, 0x5a, 0x7c, 0x53, 0x4b, 0x12, 0x53, 0x12, 0x4b, 0xf0, 0xb9, 0x45, 0x85,
-	0x8b, 0x17, 0x6e, 0xa9, 0x33, 0xc8, 0x30, 0x88, 0x4b, 0x50, 0x05, 0x41, 0xfa, 0x4b, 0xf2, 0xb3,
-	0x53, 0xf3, 0x3c, 0x53, 0x24, 0x98, 0x21, 0xfa, 0xa1, 0x5c, 0x90, 0xfe, 0x24, 0xb0, 0x5b, 0xfd,
-	0xdc, 0x42, 0x5c, 0x12, 0x4b, 0x12, 0x25, 0x58, 0x20, 0xfa, 0x51, 0x04, 0x95, 0xa2, 0xb9, 0x24,
-	0x31, 0x1c, 0x05, 0xf7, 0x06, 0x86, 0x13, 0x18, 0x09, 0x38, 0x81, 0x09, 0xc5, 0x09, 0x4a, 0xdd,
-	0x8c, 0x5c, 0xe2, 0xbe, 0xc5, 0xe9, 0x01, 0xa9, 0x45, 0x69, 0xf9, 0x45, 0xb9, 0x8e, 0xc9, 0x25,
-	0x99, 0xf9, 0x79, 0x4e, 0x95, 0x8e, 0x29, 0xb9, 0x99, 0x79, 0x34, 0xf4, 0xb8, 0x18, 0x17, 0x5b,
-	0x22, 0xd8, 0x2a, 0xa8, 0x8f, 0xa1, 0x3c, 0xa5, 0x44, 0x2e, 0x79, 0x1c, 0x8e, 0xa1, 0x96, 0x87,
-	0x8d, 0x76, 0x31, 0x71, 0x31, 0xfb, 0x16, 0xa7, 0x0b, 0x25, 0x72, 0xf1, 0xa3, 0x27, 0x3a, 0x25,
-	0x3d, 0xd4, 0xb4, 0xa9, 0x87, 0x99, 0x7c, 0xa4, 0xb4, 0x08, 0xab, 0x81, 0x3b, 0x35, 0x8e, 0x8b,
-	0x0f, 0x2d, 0x29, 0x29, 0xe2, 0xd4, 0x0d, 0x53, 0x22, 0xa5, 0x49, 0x50, 0x09, 0xdc, 0xfc, 0x02,
-	0x2e, 0x11, 0xac, 0xf1, 0xa6, 0x8e, 0xc5, 0x08, 0x6c, 0x0a, 0xa5, 0xf4, 0x89, 0x54, 0x08, 0xb3,
-	0xd1, 0xc9, 0xe0, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c,
-	0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xc4, 0x20, 0x26,
-	0xe9, 0x57, 0xe8, 0xc3, 0x73, 0x7c, 0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0x38, 0xd7, 0x1b, 0x03,
-	0x02, 0x00, 0x00, 0xff, 0xff, 0x87, 0x95, 0x16, 0x90, 0x09, 0x04, 0x00, 0x00,
+	// 574 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x54, 0xcb, 0x6e, 0xd3, 0x40,
+	0x14, 0x8d, 0xdb, 0x26, 0xa5, 0x37, 0xa2, 0x8f, 0xa1, 0x2d, 0x4e, 0x24, 0x4c, 0xb0, 0x10, 0x84,
+	0x2e, 0xec, 0x2a, 0x20, 0xd6, 0x24, 0xad, 0x2a, 0xba, 0x48, 0x41, 0x21, 0x48, 0x88, 0x97, 0x35,
+	0x89, 0xc7, 0xc6, 0xa2, 0x99, 0xb1, 0x3c, 0x13, 0x14, 0xff, 0x05, 0x12, 0xbf, 0xc0, 0x57, 0xf0,
+	0x05, 0x2c, 0xbb, 0x64, 0x89, 0x92, 0x1f, 0x41, 0x9e, 0x89, 0x2d, 0xe2, 0x24, 0x0d, 0x62, 0x97,
+	0xb9, 0x3e, 0xe7, 0xdc, 0x33, 0x73, 0xcf, 0x0d, 0xec, 0x52, 0x4f, 0x0c, 0xa8, 0x1f, 0xd9, 0x62,
+	0x64, 0x85, 0x11, 0x13, 0x0c, 0x6d, 0xf3, 0x60, 0x44, 0x3d, 0x61, 0x4d, 0x3f, 0x54, 0x2b, 0x3e,
+	0x63, 0xfe, 0x25, 0xb1, 0xe5, 0xd7, 0xde, 0xd0, 0xb3, 0x31, 0x8d, 0x15, 0xd4, 0x7c, 0x03, 0xa8,
+	0xcd, 0xfd, 0x93, 0x88, 0x60, 0x41, 0x2e, 0xce, 0xba, 0xaf, 0xfa, 0x9f, 0xc8, 0x00, 0x23, 0x1d,
+	0x36, 0xfb, 0x49, 0x89, 0x45, 0xba, 0x56, 0xd3, 0xea, 0x5b, 0x9d, 0xf4, 0x88, 0xea, 0xb0, 0x43,
+	0x3d, 0xa1, 0x60, 0x2d, 0xcc, 0xc9, 0xd3, 0x27, 0xfa, 0x9a, 0x44, 0xe4, 0xcb, 0xe6, 0x31, 0x54,
+	0xe7, 0x95, 0x3b, 0x84, 0x87, 0x8c, 0x72, 0x82, 0x10, 0x6c, 0xf4, 0x99, 0x4b, 0xa6, 0xf2, 0xf2,
+	0xb7, 0xf9, 0x4d, 0x83, 0xbd, 0x8c, 0xd2, 0x26, 0x02, 0xbb, 0x58, 0x5c, 0xe7, 0xe5, 0x3e, 0xdc,
+	0xcc, 0x9a, 0x9e, 0x24, 0x62, 0xca, 0xc9, 0x6c, 0x31, 0xe1, 0x0b, 0xf6, 0x99, 0xd0, 0x73, 0x57,
+	0x5f, 0x57, 0xfc, 0xe9, 0x31, 0xe1, 0xf7, 0xa4, 0xd7, 0x8b, 0xb3, 0xee, 0x29, 0x16, 0x58, 0xdf,
+	0x50, 0xfc, 0x99, 0xa2, 0xf9, 0x0e, 0x2a, 0x73, 0xa6, 0xb2, 0x6b, 0xcc, 0x59, 0xd0, 0x56, 0x58,
+	0x58, 0x9b, 0xb1, 0x60, 0x7e, 0x80, 0xdd, 0x17, 0x21, 0xa1, 0x9c, 0xe0, 0xa6, 0x10, 0x51, 0xd0,
+	0x1b, 0x0a, 0x82, 0xee, 0x00, 0x88, 0x08, 0x07, 0xc2, 0x11, 0x71, 0x98, 0x0a, 0x6e, 0xc9, 0x4a,
+	0x37, 0x0e, 0x09, 0x3a, 0x82, 0xe2, 0x17, 0x7c, 0x39, 0x54, 0xb7, 0x2d, 0x37, 0xf6, 0x2d, 0x35,
+	0x5c, 0x2b, 0x1d, 0xae, 0xd5, 0xa4, 0x71, 0x47, 0x41, 0xcc, 0xf7, 0xa0, 0xbf, 0x0e, 0x5d, 0x2c,
+	0x88, 0x9b, 0xef, 0xc2, 0xd1, 0x33, 0x00, 0x9c, 0x9d, 0x74, 0xad, 0xb6, 0x5e, 0x2f, 0x37, 0x6a,
+	0xd6, 0x6c, 0x72, 0xac, 0x3c, 0xad, 0xf3, 0x17, 0xc7, 0x0c, 0x61, 0x2f, 0x55, 0x8f, 0x02, 0x3f,
+	0xa0, 0xc9, 0x73, 0xa1, 0x53, 0xd8, 0x64, 0x8a, 0x24, 0xad, 0x97, 0x1b, 0xf5, 0xbc, 0xe6, 0x32,
+	0x47, 0xcf, 0x0b, 0x9d, 0x94, 0xda, 0x3a, 0x80, 0x5b, 0x43, 0x05, 0x73, 0x98, 0xd4, 0x76, 0x92,
+	0x67, 0x37, 0xbf, 0x6b, 0x70, 0xbb, 0xcd, 0xfd, 0x97, 0x24, 0xf2, 0x58, 0x34, 0x68, 0xf6, 0x45,
+	0xc0, 0x68, 0x2b, 0x6e, 0xba, 0x83, 0x80, 0x5e, 0x93, 0x93, 0x07, 0x32, 0xb3, 0x0e, 0x97, 0x03,
+	0x71, 0xfa, 0xff, 0x91, 0x94, 0x43, 0x28, 0x61, 0xd9, 0x6c, 0x1a, 0x91, 0xe9, 0x09, 0x1d, 0x40,
+	0x29, 0x22, 0x9e, 0x13, 0xb8, 0x7a, 0x51, 0xd6, 0x8b, 0x11, 0xf1, 0xce, 0x5d, 0xd3, 0x85, 0xbb,
+	0x4b, 0x5c, 0x66, 0xc1, 0x59, 0xe0, 0x69, 0x61, 0x74, 0x2a, 0x70, 0x43, 0x9a, 0x48, 0x7a, 0xcc,
+	0x66, 0xa7, 0xf1, 0x63, 0x0d, 0xd6, 0xdb, 0xdc, 0x47, 0x18, 0x76, 0xf2, 0xfb, 0x6b, 0xe6, 0xdf,
+	0x7c, 0x7e, 0x13, 0xab, 0x47, 0xab, 0x31, 0x99, 0xdb, 0x8f, 0xb0, 0x9d, 0xdb, 0xca, 0x7b, 0x4b,
+	0xd9, 0x29, 0xa4, 0xfa, 0x68, 0x25, 0x24, 0xd3, 0x0f, 0x61, 0x7f, 0xe1, 0x4c, 0x1f, 0x2e, 0x90,
+	0x58, 0x04, 0xac, 0xda, 0xff, 0x08, 0x4c, 0x3b, 0xb6, 0x8e, 0x7f, 0x8e, 0x0d, 0xed, 0x6a, 0x6c,
+	0x68, 0xbf, 0xc7, 0x86, 0xf6, 0x75, 0x62, 0x14, 0xae, 0x26, 0x46, 0xe1, 0xd7, 0xc4, 0x28, 0xbc,
+	0x3d, 0x54, 0x4a, 0xf6, 0xc8, 0xce, 0xfe, 0x57, 0xe3, 0x90, 0xf0, 0x5e, 0x49, 0x2e, 0xd8, 0xe3,
+	0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xe4, 0xe9, 0x7c, 0x26, 0x6f, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -709,6 +901,138 @@ func (m *MsgCreateMetadataResponse) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 
+func (m *OpenseaAttribute) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *OpenseaAttribute) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OpenseaAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Value != nil {
+		{
+			size, err := m.Value.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTx(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.TraitType) > 0 {
+		i -= len(m.TraitType)
+		copy(dAtA[i:], m.TraitType)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TraitType)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdatedOpenseaAttributes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdatedOpenseaAttributes) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdatedOpenseaAttributes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Attributes) > 0 {
+		for iNdEx := len(m.Attributes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Attributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintTx(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdatedOriginData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpdatedOriginData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdatedOriginData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.UpdatedOriginData != nil {
+		{
+			size := m.UpdatedOriginData.Size()
+			i -= size
+			if _, err := m.UpdatedOriginData.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpdatedOriginData_Opensea) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpdatedOriginData_Opensea) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.Opensea != nil {
+		{
+			size, err := m.Opensea.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintTx(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
 func (m *MsgPerformActionByAdmin) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -729,6 +1053,13 @@ func (m *MsgPerformActionByAdmin) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	_ = i
 	var l int
 	_ = l
+	if len(m.RefId) > 0 {
+		i -= len(m.RefId)
+		copy(dAtA[i:], m.RefId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.RefId)))
+		i--
+		dAtA[i] = 0x2a
+	}
 	if len(m.Action) > 0 {
 		i -= len(m.Action)
 		copy(dAtA[i:], m.Action)
@@ -880,6 +1211,62 @@ func (m *MsgCreateMetadataResponse) Size() (n int) {
 	return n
 }
 
+func (m *OpenseaAttribute) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.TraitType)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Value != nil {
+		l = m.Value.Size()
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *UpdatedOpenseaAttributes) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Attributes) > 0 {
+		for _, e := range m.Attributes {
+			l = e.Size()
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *UpdatedOriginData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.UpdatedOriginData != nil {
+		n += m.UpdatedOriginData.Size()
+	}
+	return n
+}
+
+func (m *UpdatedOriginData_Opensea) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Opensea != nil {
+		l = m.Opensea.Size()
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
 func (m *MsgPerformActionByAdmin) Size() (n int) {
 	if m == nil {
 		return 0
@@ -899,6 +1286,10 @@ func (m *MsgPerformActionByAdmin) Size() (n int) {
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = len(m.Action)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.RefId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1416,6 +1807,293 @@ func (m *MsgCreateMetadataResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *OpenseaAttribute) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OpenseaAttribute: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OpenseaAttribute: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TraitType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TraitType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Value == nil {
+				m.Value = &types.Any{}
+			}
+			if err := m.Value.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdatedOpenseaAttributes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdatedOpenseaAttributes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdatedOpenseaAttributes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Attributes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Attributes = append(m.Attributes, &OpenseaAttribute{})
+			if err := m.Attributes[len(m.Attributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpdatedOriginData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpdatedOriginData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpdatedOriginData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Opensea", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &UpdatedOpenseaAttributes{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.UpdatedOriginData = &UpdatedOriginData_Opensea{v}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *MsgPerformActionByAdmin) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1572,6 +2250,38 @@ func (m *MsgPerformActionByAdmin) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Action = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RefId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RefId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

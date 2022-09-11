@@ -31,7 +31,6 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 		NativeAddress: msg.GetCreator(),
 	})
 
-
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
