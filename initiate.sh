@@ -265,3 +265,8 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+
+# Create module nftoracle
+ignite scaffold module nftoracle
+
