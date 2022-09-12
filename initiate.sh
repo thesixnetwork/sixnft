@@ -267,4 +267,10 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
     --module nftmngr
 
 
-ignite scaffold module tokenadmin
+# To create token module
+ignite scaffold module admin
+
+ignite scaffold single authorization root_admin:string \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
