@@ -8,5 +8,6 @@ import (
 
 // x/nftoracle module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrNFTSchemaNotFound     = sdkerrors.Register(ModuleName, 1, "NFTSchema not found")
+	ErrMetadataAlreadyExists = sdkerrors.Register(ModuleName, 2, "Metadata already exists")
 )

@@ -424,6 +424,7 @@ func New(
 		keys[nftoraclemoduletypes.StoreKey],
 		keys[nftoraclemoduletypes.MemStoreKey],
 		app.GetSubspace(nftoraclemoduletypes.ModuleName),
+		app.NftmngrKeeper,
 	)
 	nftoracleModule := nftoraclemodule.NewAppModule(appCodec, app.NftoracleKeeper, app.AccountKeeper, app.BankKeeper)
 
