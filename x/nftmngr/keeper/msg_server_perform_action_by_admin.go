@@ -40,8 +40,24 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	k.Keeper.SetNftData(ctx, tokenData)
 
-	// Compare the new metadata with the old one and get the difference
+	// Check action with reference exists
+	if msg.RefId != "" {
 
+		_, found := k.Keeper.GetActionByRefId(ctx, msg.RefId)
+		if found {
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, msg.RefId)
+		}
+
+		k.Keeper.SetActionByRefId(ctx, types.ActionByRefId{
+			RefId:         msg.RefId,
+			Creator:       msg.Creator,
+			NftSchemaCode: msg.NftSchemaCode,
+			TokenId:       msg.TokenId,
+			Action:        mapAction.Name,
+		})
+	}
+
+	// Compare the new metadata with the old one and get the difference
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			sdk.EventTypeMessage,

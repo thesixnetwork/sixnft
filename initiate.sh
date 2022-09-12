@@ -254,3 +254,14 @@ ignite scaffold message removeBinding eth_address:string signature:string signed
     --response eth_address \
     --no-simulation \
     --module evm_support
+
+# string creator = 1;
+#   string nftSchemaCode = 2;
+#   string tokenId = 3;
+#   string action = 4;
+
+ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
+    --index ref_id \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
