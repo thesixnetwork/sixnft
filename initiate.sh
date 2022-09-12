@@ -273,4 +273,4 @@ ignite scaffold module admin
 ignite scaffold single authorization root_admin:string \
     --no-message \
     --no-simulation \
-    --module nftmngr
+    --module admin
