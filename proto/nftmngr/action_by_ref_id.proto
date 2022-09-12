@@ -1,0 +1,14 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+option go_package = "sixnft/x/nftmngr/types";
+
+message ActionByRefId {
+  string refId = 1; 
+  string creator = 2; 
+  string nftSchemaCode = 3; 
+  string tokenId = 4; 
+  string action = 5; 
+  
+}
+

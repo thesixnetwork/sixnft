@@ -36,4 +36,7 @@ var (
 	ErrDuplicateAttributesValue        = sdkerrors.Register(ModuleName, 205, "Duplicate attributes value")
 	ErrSameTypeNFTAttributes           = sdkerrors.Register(ModuleName, 206, "Same type NFT attributes")
 	ErrSameTypeTokenAttributes         = sdkerrors.Register(ModuleName, 207, "Same type token attributes")
+
+	// Action (300-399)
+	ErrRefIdAlreadyExists = sdkerrors.Register(ModuleName, 300, "RefId already exists")
 )

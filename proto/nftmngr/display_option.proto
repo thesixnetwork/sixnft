@@ -6,7 +6,6 @@ option go_package = "sixnft/x/nftmngr/types";
 enum BoolDisplayType {
   PRESENT_ABSENT = 0;
   YES_NO = 1;
-  TRUE_FALSE = 2;
 }
 
 message DisplayOption {

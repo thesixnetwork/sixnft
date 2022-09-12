@@ -3,11 +3,12 @@ package cli
 import (
 	"strconv"
 
+	"sixnft/x/nftmngr/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
-	"sixnft/x/nftmngr/types"
 )
 
 var _ = strconv.Itoa(0)
@@ -33,13 +34,13 @@ func CmdPerformActionByAdmin() *cobra.Command {
 				argTokenId,
 				argAction,
 			)
+
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
-
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd

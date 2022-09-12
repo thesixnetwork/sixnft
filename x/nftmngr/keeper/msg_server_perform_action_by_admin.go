@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"encoding/json"
 
 	"sixnft/x/nftmngr/types"
 
@@ -40,8 +41,33 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	k.Keeper.SetNftData(ctx, tokenData)
 
-	// TODO: Handling the message
-	_ = ctx
+	// Check action with reference exists
+	if msg.RefId != "" {
+
+		_, found := k.Keeper.GetActionByRefId(ctx, msg.RefId)
+		if found {
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, msg.RefId)
+		}
+
+		k.Keeper.SetActionByRefId(ctx, types.ActionByRefId{
+			RefId:         msg.RefId,
+			Creator:       msg.Creator,
+			NftSchemaCode: msg.NftSchemaCode,
+			TokenId:       msg.TokenId,
+			Action:        mapAction.Name,
+		})
+	}
+	// Emit events on metadata change
+	changeList, _ := json.Marshal(meta.ChangeList)
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(types.EventMessage, types.EventTypeRunAction),
+			sdk.NewAttribute(types.AttributeKeyRunActionResult, "success"),
+			// Emit change list attributes
+			sdk.NewAttribute(types.AttributeKeyRunActionChangeList, string(changeList)),
+		),
+	)
 
 	return &types.MsgPerformActionByAdminResponse{
 		NftSchemaCode: msg.NftSchemaCode,

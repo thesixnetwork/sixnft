@@ -1,6 +1,7 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
 import { Action } from "./module/types/nftmngr/action"
+import { ActionByRefId } from "./module/types/nftmngr/action_by_ref_id"
 import { AttributeDefinition } from "./module/types/nftmngr/attribute_definition"
 import { DisplayOption } from "./module/types/nftmngr/display_option"
 import { NftAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
@@ -16,9 +17,12 @@ import { OpenseaDisplayOption } from "./module/types/nftmngr/opensea_display_opt
 import { OriginData } from "./module/types/nftmngr/origin_data"
 import { Params } from "./module/types/nftmngr/params"
 import { Status } from "./module/types/nftmngr/status"
+import { OpenseaAttribute } from "./module/types/nftmngr/tx"
+import { UpdatedOpenseaAttributes } from "./module/types/nftmngr/tx"
+import { UpdatedOriginData } from "./module/types/nftmngr/tx"
 
 
-export { Action, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status };
+export { Action, ActionByRefId, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status, OpenseaAttribute, UpdatedOpenseaAttributes, UpdatedOriginData };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -61,9 +65,12 @@ const getDefaultState = () => {
 				NFTSchemaAll: {},
 				NftData: {},
 				NftDataAll: {},
+				ActionByRefId: {},
+				ActionByRefIdAll: {},
 				
 				_Structure: {
 						Action: getStructure(Action.fromPartial({})),
+						ActionByRefId: getStructure(ActionByRefId.fromPartial({})),
 						AttributeDefinition: getStructure(AttributeDefinition.fromPartial({})),
 						DisplayOption: getStructure(DisplayOption.fromPartial({})),
 						NftAttributeValue: getStructure(NftAttributeValue.fromPartial({})),
@@ -79,6 +86,9 @@ const getDefaultState = () => {
 						OriginData: getStructure(OriginData.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						Status: getStructure(Status.fromPartial({})),
+						OpenseaAttribute: getStructure(OpenseaAttribute.fromPartial({})),
+						UpdatedOpenseaAttributes: getStructure(UpdatedOpenseaAttributes.fromPartial({})),
+						UpdatedOriginData: getStructure(UpdatedOriginData.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -136,6 +146,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.NftDataAll[JSON.stringify(params)] ?? {}
+		},
+				getActionByRefId: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.ActionByRefId[JSON.stringify(params)] ?? {}
+		},
+				getActionByRefIdAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.ActionByRefIdAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -289,36 +311,54 @@ export default {
 		},
 		
 		
-		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryActionByRefId({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMetadata(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryActionByRefId( key.refId)).data
+				
+					
+				commit('QUERY', { query: 'ActionByRefId', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryActionByRefId', payload: { options: { all }, params: {...key},query }})
+				return getters['getActionByRefId']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
-				}
+				throw new Error('QueryClient:QueryActionByRefId API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
-		async sendMsgPerformActionByAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryActionByRefIdAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgPerformActionByAdmin(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryActionByRefIdAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryActionByRefIdAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
 				}
+				commit('QUERY', { query: 'ActionByRefIdAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryActionByRefIdAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getActionByRefIdAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryActionByRefIdAll API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
 		async sendMsgPerformActionByAdmin({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -334,43 +374,73 @@ export default {
 				}
 			}
 		},
+		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMetadata(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgCreateNFTSchema({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateNFTSchema(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
+		async MsgPerformActionByAdmin({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgPerformActionByAdmin(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgPerformActionByAdmin:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgCreateMetadata({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgPerformActionByAdmin(value)
+				const msg = await txClient.msgCreateMetadata(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgPerformActionByAdmin:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateMetadata:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		async MsgPerformActionByAdmin({ rootGetters }, { value }) {
+		async MsgCreateNFTSchema({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgPerformActionByAdmin(value)
+				const msg = await txClient.msgCreateNFTSchema(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgPerformActionByAdmin:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgPerformActionByAdmin({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgPerformActionByAdmin(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgPerformActionByAdmin:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateNFTSchema:Create Could not create message: ' + e.message)
 				}
 			}
 		},

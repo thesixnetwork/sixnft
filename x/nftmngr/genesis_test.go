@@ -32,6 +32,14 @@ func TestGenesis(t *testing.T) {
 				TokenId:       "1",
 			},
 		},
+		ActionByRefIdList: []types.ActionByRefId{
+			{
+				RefId: "0",
+			},
+			{
+				RefId: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -45,5 +53,6 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.NFTSchemaList, got.NFTSchemaList)
 	require.ElementsMatch(t, genesisState.NftDataList, got.NftDataList)
+	require.ElementsMatch(t, genesisState.ActionByRefIdList, got.ActionByRefIdList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

@@ -395,14 +395,6 @@ func New(
 	)
 	monitoringModule := monitoringp.NewAppModule(appCodec, app.MonitoringKeeper)
 
-	app.NftmngrKeeper = *nftmngrmodulekeeper.NewKeeper(
-		appCodec,
-		keys[nftmngrmoduletypes.StoreKey],
-		keys[nftmngrmoduletypes.MemStoreKey],
-		app.GetSubspace(nftmngrmoduletypes.ModuleName),
-	)
-	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper)
-
 	app.EvmsupportKeeper = *evmsupportmodulekeeper.NewKeeper(
 		appCodec,
 		keys[evmsupportmoduletypes.StoreKey],
@@ -410,6 +402,15 @@ func New(
 		app.GetSubspace(evmsupportmoduletypes.ModuleName),
 	)
 	evmsupportModule := evmsupportmodule.NewAppModule(appCodec, app.EvmsupportKeeper, app.AccountKeeper, app.BankKeeper)
+
+	app.NftmngrKeeper = *nftmngrmodulekeeper.NewKeeper(
+		appCodec,
+		keys[nftmngrmoduletypes.StoreKey],
+		keys[nftmngrmoduletypes.MemStoreKey],
+		app.GetSubspace(nftmngrmoduletypes.ModuleName),
+		app.EvmsupportKeeper,
+	)
+	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper, app.EvmsupportKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 

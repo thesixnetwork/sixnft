@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "nftmngr/params.proto";
 import "nftmngr/nft_schema.proto";
 import "nftmngr/nft_data.proto";
+import "nftmngr/action_by_ref_id.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "sixnft/x/nftmngr/types";
@@ -35,6 +36,16 @@ service Query {
 	// Queries a list of NftData items.
 	rpc NftDataAll(QueryAllNftDataRequest) returns (QueryAllNftDataResponse) {
 		option (google.api.http).get = "/sixnft/nftmngr/nft_data";
+	}
+
+// Queries a ActionByRefId by index.
+	rpc ActionByRefId(QueryGetActionByRefIdRequest) returns (QueryGetActionByRefIdResponse) {
+		option (google.api.http).get = "/sixnft/nftmngr/action_by_ref_id/{refId}";
+	}
+
+	// Queries a list of ActionByRefId items.
+	rpc ActionByRefIdAll(QueryAllActionByRefIdRequest) returns (QueryAllActionByRefIdResponse) {
+		option (google.api.http).get = "/sixnft/nftmngr/action_by_ref_id";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -83,6 +94,24 @@ message QueryAllNftDataRequest {
 
 message QueryAllNftDataResponse {
 	repeated NftData nftData = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetActionByRefIdRequest {
+	  string refId = 1;
+
+}
+
+message QueryGetActionByRefIdResponse {
+	ActionByRefId actionByRefId = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllActionByRefIdRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllActionByRefIdResponse {
+	repeated ActionByRefId actionByRefId = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

@@ -2,6 +2,7 @@
 import { Params } from "../nftmngr/params";
 import { NFTSchema } from "../nftmngr/nft_schema";
 import { NftData } from "../nftmngr/nft_data";
+import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
@@ -10,8 +11,9 @@ export const protobufPackage = "sixnft.nftmngr";
 export interface GenesisState {
   params: Params | undefined;
   nFTSchemaList: NFTSchema[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   nftDataList: NftData[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  actionByRefIdList: ActionByRefId[];
 }
 
 const baseGenesisState: object = {};
@@ -27,6 +29,9 @@ export const GenesisState = {
     for (const v of message.nftDataList) {
       NftData.encode(v!, writer.uint32(26).fork()).ldelim();
     }
+    for (const v of message.actionByRefIdList) {
+      ActionByRefId.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -36,6 +41,7 @@ export const GenesisState = {
     const message = { ...baseGenesisState } as GenesisState;
     message.nFTSchemaList = [];
     message.nftDataList = [];
+    message.actionByRefIdList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -47,6 +53,11 @@ export const GenesisState = {
           break;
         case 3:
           message.nftDataList.push(NftData.decode(reader, reader.uint32()));
+          break;
+        case 4:
+          message.actionByRefIdList.push(
+            ActionByRefId.decode(reader, reader.uint32())
+          );
           break;
         default:
           reader.skipType(tag & 7);
@@ -60,6 +71,7 @@ export const GenesisState = {
     const message = { ...baseGenesisState } as GenesisState;
     message.nFTSchemaList = [];
     message.nftDataList = [];
+    message.actionByRefIdList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -73,6 +85,14 @@ export const GenesisState = {
     if (object.nftDataList !== undefined && object.nftDataList !== null) {
       for (const e of object.nftDataList) {
         message.nftDataList.push(NftData.fromJSON(e));
+      }
+    }
+    if (
+      object.actionByRefIdList !== undefined &&
+      object.actionByRefIdList !== null
+    ) {
+      for (const e of object.actionByRefIdList) {
+        message.actionByRefIdList.push(ActionByRefId.fromJSON(e));
       }
     }
     return message;
@@ -96,6 +116,13 @@ export const GenesisState = {
     } else {
       obj.nftDataList = [];
     }
+    if (message.actionByRefIdList) {
+      obj.actionByRefIdList = message.actionByRefIdList.map((e) =>
+        e ? ActionByRefId.toJSON(e) : undefined
+      );
+    } else {
+      obj.actionByRefIdList = [];
+    }
     return obj;
   },
 
@@ -103,6 +130,7 @@ export const GenesisState = {
     const message = { ...baseGenesisState } as GenesisState;
     message.nFTSchemaList = [];
     message.nftDataList = [];
+    message.actionByRefIdList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -116,6 +144,14 @@ export const GenesisState = {
     if (object.nftDataList !== undefined && object.nftDataList !== null) {
       for (const e of object.nftDataList) {
         message.nftDataList.push(NftData.fromPartial(e));
+      }
+    }
+    if (
+      object.actionByRefIdList !== undefined &&
+      object.actionByRefIdList !== null
+    ) {
+      for (const e of object.actionByRefIdList) {
+        message.actionByRefIdList.push(ActionByRefId.fromPartial(e));
       }
     }
     return message;

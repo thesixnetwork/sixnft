@@ -1,12 +1,21 @@
 package types
 
 import (
+	"strconv"
+
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
+
+type MetadataChange struct {
+	Key           string
+	PreviousValue string
+	NewValue      string
+}
 
 type Metadata struct {
 	nftData           *NftData
 	attributeOverring AttributeOverriding
+	ChangeList        []*MetadataChange
 }
 
 type MetadataAttribute struct {
@@ -21,6 +30,7 @@ func NewMetadata(tokenData *NftData, attributeOverring AttributeOverriding) *Met
 	meta := &Metadata{
 		nftData:           tokenData,
 		attributeOverring: attributeOverring,
+		ChangeList:        []*MetadataChange{},
 	}
 
 	mapAllKey = map[string]*MetadataAttribute{}
@@ -96,6 +106,11 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatUint(attri.attributeValue.GetNumberAttributeValue().Value, 10),
+				NewValue:      strconv.FormatUint(uint64(value), 10),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
@@ -137,6 +152,11 @@ func (m *Metadata) SetString(key string, value string) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: attri.attributeValue.GetStringAttributeValue().Value,
+				NewValue:      value,
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
@@ -180,6 +200,11 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatFloat(attri.attributeValue.GetFloatAttributeValue().Value, 'f', -1, 64),
+				NewValue:      strconv.FormatFloat(value, 'f', -1, 64),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
@@ -223,6 +248,11 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatBool(attri.attributeValue.GetBooleanAttributeValue().Value),
+				NewValue:      strconv.FormatBool(value),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {

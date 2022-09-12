@@ -41,6 +41,14 @@ export interface NftmngrAction {
   then?: string[];
 }
 
+export interface NftmngrActionByRefId {
+  refId?: string;
+  creator?: string;
+  nftSchemaCode?: string;
+  tokenId?: string;
+  action?: string;
+}
+
 export interface NftmngrAttributeDefinition {
   name?: string;
   data_type?: string;
@@ -59,7 +67,6 @@ export enum NftmngrAttributeOverriding {
 export enum NftmngrBoolDisplayType {
   PRESENT_ABSENT = "PRESENT_ABSENT",
   YES_NO = "YES_NO",
-  TRUE_FALSE = "TRUE_FALSE",
 }
 
 export interface NftmngrDisplayOption {
@@ -77,8 +84,8 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
 }
 
 export interface NftmngrMsgPerformActionByAdminResponse {
-  nftSchemaCode?: string;
-  tokenId?: string;
+  nft_schema_code?: string;
+  token_id?: string;
 }
 
 export interface NftmngrNFTSchema {
@@ -135,12 +142,28 @@ export interface NftmngrOriginData {
   attribute_overriding?: NftmngrAttributeOverriding;
   metadata_format?: string;
   origin_attributes?: NftmngrAttributeDefinition[];
+  uri_retrieval_method?: NftmngrURIRetrievalMethod;
 }
 
 /**
  * Params defines the parameters for the module.
  */
 export type NftmngrParams = object;
+
+export interface NftmngrQueryAllActionByRefIdResponse {
+  actionByRefId?: NftmngrActionByRefId[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
 
 export interface NftmngrQueryAllNFTSchemaResponse {
   nFTSchema?: NftmngrNFTSchema[];
@@ -172,6 +195,10 @@ export interface NftmngrQueryAllNftDataResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface NftmngrQueryGetActionByRefIdResponse {
+  actionByRefId?: NftmngrActionByRefId;
+}
+
 export interface NftmngrQueryGetNFTSchemaResponse {
   nFTSchema?: NftmngrNFTSchema;
 }
@@ -186,6 +213,11 @@ export interface NftmngrQueryGetNftDataResponse {
 export interface NftmngrQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: NftmngrParams;
+}
+
+export enum NftmngrURIRetrievalMethod {
+  BASE = "BASE",
+  TOKEN = "TOKEN",
 }
 
 /**
@@ -342,13 +374,6 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
 }
 
 /**
@@ -568,6 +593,47 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags Query
+   * @name QueryActionByRefIdAll
+   * @summary Queries a list of ActionByRefId items.
+   * @request GET:/sixnft/nftmngr/action_by_ref_id
+   */
+  queryActionByRefIdAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftmngrQueryAllActionByRefIdResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/action_by_ref_id`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryActionByRefId
+   * @summary Queries a ActionByRefId by index.
+   * @request GET:/sixnft/nftmngr/action_by_ref_id/{refId}
+   */
+  queryActionByRefId = (refId: string, params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetActionByRefIdResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/action_by_ref_id/${refId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
    * @name QueryNftDataAll
    * @summary Queries a list of NftData items.
    * @request GET:/sixnft/nftmngr/nft_data
@@ -578,7 +644,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -620,7 +685,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
