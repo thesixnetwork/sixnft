@@ -32605,6 +32605,42 @@ paths:
                         }
       tags:
         - Query
+  /sixnft/nftoracle/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: SixnftNftoracleParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /tendermint/spn/monitoringp/connection_channel_id:
     get:
       summary: Queries a ConnectionChannelID by index.
@@ -54174,9 +54210,9 @@ definitions:
   sixnft.nftmngr.MsgPerformActionByAdminResponse:
     type: object
     properties:
-      nftSchemaCode:
+      nft_schema_code:
         type: string
-      tokenId:
+      token_id:
         type: string
   sixnft.nftmngr.NFTSchema:
     type: object
@@ -55358,6 +55394,16 @@ definitions:
                       type: number
                       format: double
   sixnft.nftmngr.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftoracle.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  sixnft.nftoracle.QueryParamsResponse:
     type: object
     properties:
       params:
