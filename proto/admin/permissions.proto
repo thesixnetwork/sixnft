@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.admin;
+
+option go_package = "sixnft/x/admin/types";
+
+message AddressList {
+    repeated string addresses = 1;
+}
+
+message Permissions {
+  map<string, AddressList> map_name = 1;
+}

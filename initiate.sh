@@ -270,7 +270,18 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
 # To create token module
 ignite scaffold module admin
 
-ignite scaffold single authorization root_admin:string \
+ignite scaffold type permissions \
     --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold single authorization root_admin:string permissions:Permissions \
+    --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message grantPermission name grantee \
+    --desc "To grant permission" \
+    --response grantee \
     --no-simulation \
     --module admin

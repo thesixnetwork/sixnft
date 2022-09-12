@@ -1,0 +1,11 @@
+syntax = "proto3";
+package sixnft.admin;
+
+option go_package = "sixnft/x/admin/types";
+import "admin/permissions.proto"; 
+
+message Authorization {
+  string root_admin = 1; 
+  Permissions permissions = 2; 
+  
+}
