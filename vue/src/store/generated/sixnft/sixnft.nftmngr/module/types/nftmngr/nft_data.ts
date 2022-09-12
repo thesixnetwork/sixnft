@@ -4,10 +4,43 @@ import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
 
+export enum OwnerAddressType {
+  ORIGIN_ADDRESS = 0,
+  INTERNAL_ADDRESS = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function ownerAddressTypeFromJSON(object: any): OwnerAddressType {
+  switch (object) {
+    case 0:
+    case "ORIGIN_ADDRESS":
+      return OwnerAddressType.ORIGIN_ADDRESS;
+    case 1:
+    case "INTERNAL_ADDRESS":
+      return OwnerAddressType.INTERNAL_ADDRESS;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return OwnerAddressType.UNRECOGNIZED;
+  }
+}
+
+export function ownerAddressTypeToJSON(object: OwnerAddressType): string {
+  switch (object) {
+    case OwnerAddressType.ORIGIN_ADDRESS:
+      return "ORIGIN_ADDRESS";
+    case OwnerAddressType.INTERNAL_ADDRESS:
+      return "INTERNAL_ADDRESS";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface NftData {
   nft_schema_code: string;
   token_id: string;
   token_owner: string;
+  owner_address_type: OwnerAddressType;
   origin_image: string;
   onchain_image: string;
   origin_attributes: NftAttributeValue[];
@@ -18,6 +51,7 @@ const baseNftData: object = {
   nft_schema_code: "",
   token_id: "",
   token_owner: "",
+  owner_address_type: 0,
   origin_image: "",
   onchain_image: "",
 };
@@ -33,17 +67,20 @@ export const NftData = {
     if (message.token_owner !== "") {
       writer.uint32(26).string(message.token_owner);
     }
+    if (message.owner_address_type !== 0) {
+      writer.uint32(32).int32(message.owner_address_type);
+    }
     if (message.origin_image !== "") {
-      writer.uint32(34).string(message.origin_image);
+      writer.uint32(42).string(message.origin_image);
     }
     if (message.onchain_image !== "") {
-      writer.uint32(42).string(message.onchain_image);
+      writer.uint32(50).string(message.onchain_image);
     }
     for (const v of message.origin_attributes) {
-      NftAttributeValue.encode(v!, writer.uint32(50).fork()).ldelim();
+      NftAttributeValue.encode(v!, writer.uint32(58).fork()).ldelim();
     }
     for (const v of message.onchain_attributes) {
-      NftAttributeValue.encode(v!, writer.uint32(58).fork()).ldelim();
+      NftAttributeValue.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -67,17 +104,20 @@ export const NftData = {
           message.token_owner = reader.string();
           break;
         case 4:
-          message.origin_image = reader.string();
+          message.owner_address_type = reader.int32() as any;
           break;
         case 5:
-          message.onchain_image = reader.string();
+          message.origin_image = reader.string();
           break;
         case 6:
+          message.onchain_image = reader.string();
+          break;
+        case 7:
           message.origin_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
           break;
-        case 7:
+        case 8:
           message.onchain_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
@@ -111,6 +151,16 @@ export const NftData = {
       message.token_owner = String(object.token_owner);
     } else {
       message.token_owner = "";
+    }
+    if (
+      object.owner_address_type !== undefined &&
+      object.owner_address_type !== null
+    ) {
+      message.owner_address_type = ownerAddressTypeFromJSON(
+        object.owner_address_type
+      );
+    } else {
+      message.owner_address_type = 0;
     }
     if (object.origin_image !== undefined && object.origin_image !== null) {
       message.origin_image = String(object.origin_image);
@@ -148,6 +198,10 @@ export const NftData = {
     message.token_id !== undefined && (obj.token_id = message.token_id);
     message.token_owner !== undefined &&
       (obj.token_owner = message.token_owner);
+    message.owner_address_type !== undefined &&
+      (obj.owner_address_type = ownerAddressTypeToJSON(
+        message.owner_address_type
+      ));
     message.origin_image !== undefined &&
       (obj.origin_image = message.origin_image);
     message.onchain_image !== undefined &&
@@ -190,6 +244,14 @@ export const NftData = {
       message.token_owner = object.token_owner;
     } else {
       message.token_owner = "";
+    }
+    if (
+      object.owner_address_type !== undefined &&
+      object.owner_address_type !== null
+    ) {
+      message.owner_address_type = object.owner_address_type;
+    } else {
+      message.owner_address_type = 0;
     }
     if (object.origin_image !== undefined && object.origin_image !== null) {
       message.origin_image = object.origin_image;

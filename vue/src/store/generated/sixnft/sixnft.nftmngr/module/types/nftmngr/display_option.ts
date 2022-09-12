@@ -7,7 +7,6 @@ export const protobufPackage = "sixnft.nftmngr";
 export enum BoolDisplayType {
   PRESENT_ABSENT = 0,
   YES_NO = 1,
-  TRUE_FALSE = 2,
   UNRECOGNIZED = -1,
 }
 
@@ -19,9 +18,6 @@ export function boolDisplayTypeFromJSON(object: any): BoolDisplayType {
     case 1:
     case "YES_NO":
       return BoolDisplayType.YES_NO;
-    case 2:
-    case "TRUE_FALSE":
-      return BoolDisplayType.TRUE_FALSE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -35,8 +31,6 @@ export function boolDisplayTypeToJSON(object: BoolDisplayType): string {
       return "PRESENT_ABSENT";
     case BoolDisplayType.YES_NO:
       return "YES_NO";
-    case BoolDisplayType.TRUE_FALSE:
-      return "TRUE_FALSE";
     default:
       return "UNKNOWN";
   }

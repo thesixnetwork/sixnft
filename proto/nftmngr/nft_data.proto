@@ -4,12 +4,18 @@ package sixnft.nftmngr;
 import "nftmngr/nft_attribute_value.proto";
 option go_package = "sixnft/x/nftmngr/types";
 
+enum OwnerAddressType {
+  ORIGIN_ADDRESS = 0;
+  INTERNAL_ADDRESS = 1;
+}
+
 message NftData {
   string nft_schema_code = 1; 
   string token_id = 2; 
   string token_owner = 3; 
-  string origin_image = 4; 
-  string onchain_image = 5; 
-  repeated NftAttributeValue origin_attributes = 6; 
-  repeated NftAttributeValue onchain_attributes = 7;
+  OwnerAddressType owner_address_type = 4;
+  string origin_image = 5; 
+  string onchain_image = 6; 
+  repeated NftAttributeValue origin_attributes = 7; 
+  repeated NftAttributeValue onchain_attributes = 8;
 }

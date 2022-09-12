@@ -40,18 +40,15 @@ export interface UpdatedOriginData {
 
 export interface MsgPerformActionByAdmin {
   creator: string;
-  nftSchemaCode: string;
+  nft_schema_code: string;
   tokenId: string;
   action: string;
-  newOriginOwner: string;
-  newNativeOwner: string;
-  base64UpdatedOriginData: string;
-  refId: string;
+  ref_id: string;
 }
 
 export interface MsgPerformActionByAdminResponse {
-  nftSchemaCode: string;
-  tokenId: string;
+  nft_schema_code: string;
+  token_id: string;
 }
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
@@ -627,13 +624,10 @@ export const UpdatedOriginData = {
 
 const baseMsgPerformActionByAdmin: object = {
   creator: "",
-  nftSchemaCode: "",
+  nft_schema_code: "",
   tokenId: "",
   action: "",
-  newOriginOwner: "",
-  newNativeOwner: "",
-  base64UpdatedOriginData: "",
-  refId: "",
+  ref_id: "",
 };
 
 export const MsgPerformActionByAdmin = {
@@ -644,8 +638,8 @@ export const MsgPerformActionByAdmin = {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
-    if (message.nftSchemaCode !== "") {
-      writer.uint32(18).string(message.nftSchemaCode);
+    if (message.nft_schema_code !== "") {
+      writer.uint32(18).string(message.nft_schema_code);
     }
     if (message.tokenId !== "") {
       writer.uint32(26).string(message.tokenId);
@@ -653,17 +647,8 @@ export const MsgPerformActionByAdmin = {
     if (message.action !== "") {
       writer.uint32(34).string(message.action);
     }
-    if (message.newOriginOwner !== "") {
-      writer.uint32(42).string(message.newOriginOwner);
-    }
-    if (message.newNativeOwner !== "") {
-      writer.uint32(50).string(message.newNativeOwner);
-    }
-    if (message.base64UpdatedOriginData !== "") {
-      writer.uint32(58).string(message.base64UpdatedOriginData);
-    }
-    if (message.refId !== "") {
-      writer.uint32(66).string(message.refId);
+    if (message.ref_id !== "") {
+      writer.uint32(42).string(message.ref_id);
     }
     return writer;
   },
@@ -681,7 +666,7 @@ export const MsgPerformActionByAdmin = {
           message.creator = reader.string();
           break;
         case 2:
-          message.nftSchemaCode = reader.string();
+          message.nft_schema_code = reader.string();
           break;
         case 3:
           message.tokenId = reader.string();
@@ -690,16 +675,7 @@ export const MsgPerformActionByAdmin = {
           message.action = reader.string();
           break;
         case 5:
-          message.newOriginOwner = reader.string();
-          break;
-        case 6:
-          message.newNativeOwner = reader.string();
-          break;
-        case 7:
-          message.base64UpdatedOriginData = reader.string();
-          break;
-        case 8:
-          message.refId = reader.string();
+          message.ref_id = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -718,10 +694,13 @@ export const MsgPerformActionByAdmin = {
     } else {
       message.creator = "";
     }
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = String(object.nftSchemaCode);
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
     if (object.tokenId !== undefined && object.tokenId !== null) {
       message.tokenId = String(object.tokenId);
@@ -733,28 +712,10 @@ export const MsgPerformActionByAdmin = {
     } else {
       message.action = "";
     }
-    if (object.newOriginOwner !== undefined && object.newOriginOwner !== null) {
-      message.newOriginOwner = String(object.newOriginOwner);
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = String(object.ref_id);
     } else {
-      message.newOriginOwner = "";
-    }
-    if (object.newNativeOwner !== undefined && object.newNativeOwner !== null) {
-      message.newNativeOwner = String(object.newNativeOwner);
-    } else {
-      message.newNativeOwner = "";
-    }
-    if (
-      object.base64UpdatedOriginData !== undefined &&
-      object.base64UpdatedOriginData !== null
-    ) {
-      message.base64UpdatedOriginData = String(object.base64UpdatedOriginData);
-    } else {
-      message.base64UpdatedOriginData = "";
-    }
-    if (object.refId !== undefined && object.refId !== null) {
-      message.refId = String(object.refId);
-    } else {
-      message.refId = "";
+      message.ref_id = "";
     }
     return message;
   },
@@ -762,17 +723,11 @@ export const MsgPerformActionByAdmin = {
   toJSON(message: MsgPerformActionByAdmin): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.nftSchemaCode !== undefined &&
-      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
     message.tokenId !== undefined && (obj.tokenId = message.tokenId);
     message.action !== undefined && (obj.action = message.action);
-    message.newOriginOwner !== undefined &&
-      (obj.newOriginOwner = message.newOriginOwner);
-    message.newNativeOwner !== undefined &&
-      (obj.newNativeOwner = message.newNativeOwner);
-    message.base64UpdatedOriginData !== undefined &&
-      (obj.base64UpdatedOriginData = message.base64UpdatedOriginData);
-    message.refId !== undefined && (obj.refId = message.refId);
+    message.ref_id !== undefined && (obj.ref_id = message.ref_id);
     return obj;
   },
 
@@ -787,10 +742,13 @@ export const MsgPerformActionByAdmin = {
     } else {
       message.creator = "";
     }
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = object.nftSchemaCode;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
     if (object.tokenId !== undefined && object.tokenId !== null) {
       message.tokenId = object.tokenId;
@@ -802,36 +760,18 @@ export const MsgPerformActionByAdmin = {
     } else {
       message.action = "";
     }
-    if (object.newOriginOwner !== undefined && object.newOriginOwner !== null) {
-      message.newOriginOwner = object.newOriginOwner;
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = object.ref_id;
     } else {
-      message.newOriginOwner = "";
-    }
-    if (object.newNativeOwner !== undefined && object.newNativeOwner !== null) {
-      message.newNativeOwner = object.newNativeOwner;
-    } else {
-      message.newNativeOwner = "";
-    }
-    if (
-      object.base64UpdatedOriginData !== undefined &&
-      object.base64UpdatedOriginData !== null
-    ) {
-      message.base64UpdatedOriginData = object.base64UpdatedOriginData;
-    } else {
-      message.base64UpdatedOriginData = "";
-    }
-    if (object.refId !== undefined && object.refId !== null) {
-      message.refId = object.refId;
-    } else {
-      message.refId = "";
+      message.ref_id = "";
     }
     return message;
   },
 };
 
 const baseMsgPerformActionByAdminResponse: object = {
-  nftSchemaCode: "",
-  tokenId: "",
+  nft_schema_code: "",
+  token_id: "",
 };
 
 export const MsgPerformActionByAdminResponse = {
@@ -839,11 +779,11 @@ export const MsgPerformActionByAdminResponse = {
     message: MsgPerformActionByAdminResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.nftSchemaCode !== "") {
-      writer.uint32(10).string(message.nftSchemaCode);
+    if (message.nft_schema_code !== "") {
+      writer.uint32(10).string(message.nft_schema_code);
     }
-    if (message.tokenId !== "") {
-      writer.uint32(18).string(message.tokenId);
+    if (message.token_id !== "") {
+      writer.uint32(18).string(message.token_id);
     }
     return writer;
   },
@@ -861,10 +801,10 @@ export const MsgPerformActionByAdminResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nftSchemaCode = reader.string();
+          message.nft_schema_code = reader.string();
           break;
         case 2:
-          message.tokenId = reader.string();
+          message.token_id = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -878,24 +818,27 @@ export const MsgPerformActionByAdminResponse = {
     const message = {
       ...baseMsgPerformActionByAdminResponse,
     } as MsgPerformActionByAdminResponse;
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = String(object.nftSchemaCode);
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = String(object.tokenId);
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = String(object.token_id);
     } else {
-      message.tokenId = "";
+      message.token_id = "";
     }
     return message;
   },
 
   toJSON(message: MsgPerformActionByAdminResponse): unknown {
     const obj: any = {};
-    message.nftSchemaCode !== undefined &&
-      (obj.nftSchemaCode = message.nftSchemaCode);
-    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.token_id !== undefined && (obj.token_id = message.token_id);
     return obj;
   },
 
@@ -905,15 +848,18 @@ export const MsgPerformActionByAdminResponse = {
     const message = {
       ...baseMsgPerformActionByAdminResponse,
     } as MsgPerformActionByAdminResponse;
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = object.nftSchemaCode;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = object.tokenId;
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = object.token_id;
     } else {
-      message.tokenId = "";
+      message.token_id = "";
     }
     return message;
   },

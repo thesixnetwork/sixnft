@@ -67,7 +67,6 @@ export enum NftmngrAttributeOverriding {
 export enum NftmngrBoolDisplayType {
   PRESENT_ABSENT = "PRESENT_ABSENT",
   YES_NO = "YES_NO",
-  TRUE_FALSE = "TRUE_FALSE",
 }
 
 export interface NftmngrDisplayOption {
@@ -85,8 +84,8 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
 }
 
 export interface NftmngrMsgPerformActionByAdminResponse {
-  nftSchemaCode?: string;
-  tokenId?: string;
+  nft_schema_code?: string;
+  token_id?: string;
 }
 
 export interface NftmngrNFTSchema {
@@ -109,6 +108,7 @@ export interface NftmngrNftData {
   nft_schema_code?: string;
   token_id?: string;
   token_owner?: string;
+  owner_address_type?: NftmngrOwnerAddressType;
   origin_image?: string;
   onchain_image?: string;
   origin_attributes?: NftmngrNftAttributeValue[];
@@ -143,6 +143,12 @@ export interface NftmngrOriginData {
   attribute_overriding?: NftmngrAttributeOverriding;
   metadata_format?: string;
   origin_attributes?: NftmngrAttributeDefinition[];
+  uri_retrieval_method?: NftmngrURIRetrievalMethod;
+}
+
+export enum NftmngrOwnerAddressType {
+  ORIGIN_ADDRESS = "ORIGIN_ADDRESS",
+  INTERNAL_ADDRESS = "INTERNAL_ADDRESS",
 }
 
 /**
@@ -213,6 +219,11 @@ export interface NftmngrQueryGetNftDataResponse {
 export interface NftmngrQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: NftmngrParams;
+}
+
+export enum NftmngrURIRetrievalMethod {
+  BASE = "BASE",
+  TOKEN = "TOKEN",
 }
 
 /**
@@ -369,6 +380,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -598,6 +616,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -639,6 +658,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -680,6 +700,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
