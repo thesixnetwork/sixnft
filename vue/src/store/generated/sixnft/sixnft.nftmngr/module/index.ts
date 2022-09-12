@@ -4,14 +4,12 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateMetadata } from "./types/nftmngr/tx";
 import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 import { MsgCreateMetadata } from "./types/nftmngr/tx";
 import { MsgPerformActionByAdmin } from "./types/nftmngr/tx";
 
 
 const types = [
-  ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
   ["/sixnft.nftmngr.MsgCreateNFTSchema", MsgCreateNFTSchema],
   ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
   ["/sixnft.nftmngr.MsgPerformActionByAdmin", MsgPerformActionByAdmin],
@@ -47,12 +45,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateMetadata: (data: MsgCreateMetadata): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgCreateMetadata", value: MsgCreateMetadata.fromPartial( data ) }),
     msgCreateNFTSchema: (data: MsgCreateNFTSchema): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgCreateNFTSchema", value: MsgCreateNFTSchema.fromPartial( data ) }),
-<<<<<<< HEAD
-=======
     msgCreateMetadata: (data: MsgCreateMetadata): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgCreateMetadata", value: MsgCreateMetadata.fromPartial( data ) }),
->>>>>>> bc99c9b54edcaa5b87ed343ea88a37999b984c44
     msgPerformActionByAdmin: (data: MsgPerformActionByAdmin): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgPerformActionByAdmin", value: MsgPerformActionByAdmin.fromPartial( data ) }),
     
   };

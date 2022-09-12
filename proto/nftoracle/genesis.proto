@@ -3,6 +3,7 @@ package sixnft.nftoracle;
 
 import "gogoproto/gogo.proto";
 import "nftoracle/params.proto";
+import "nftoracle/mint_request.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "sixnft/x/nftoracle/types";
@@ -10,5 +11,7 @@ option go_package = "sixnft/x/nftoracle/types";
 // GenesisState defines the nftoracle module's genesis state.
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
+  repeated MintRequest mintRequestList = 2 [(gogoproto.nullable) = false];
+  uint64 mintRequestCount = 3;
   // this line is used by starport scaffolding # genesis/proto/state
 }

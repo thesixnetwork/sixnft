@@ -270,3 +270,14 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
 # Create module nftoracle
 ignite scaffold module nftoracle
 
+ignite scaffold list MintRequest nft_schema_code token_id required_confirm \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message createMintRequest nft_schema_code token_id required_confirm \
+    --desc "To create Mint Request" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftoracle

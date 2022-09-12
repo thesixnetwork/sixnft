@@ -14,6 +14,15 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
+		MintRequestList: []types.MintRequest{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		MintRequestCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -25,5 +34,7 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
+	require.ElementsMatch(t, genesisState.MintRequestList, got.MintRequestList)
+	require.Equal(t, genesisState.MintRequestCount, got.MintRequestCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

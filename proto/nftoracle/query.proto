@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "nftoracle/params.proto";
+import "nftoracle/mint_request.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "sixnft/x/nftoracle/types";
@@ -15,7 +16,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/sixnft/nftoracle/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a MintRequest by id.
+	rpc MintRequest(QueryGetMintRequestRequest) returns (QueryGetMintRequestResponse) {
+		option (google.api.http).get = "/sixnft/nftoracle/mint_request/{id}";
+	}
+
+	// Queries a list of MintRequest items.
+	rpc MintRequestAll(QueryAllMintRequestRequest) returns (QueryAllMintRequestResponse) {
+		option (google.api.http).get = "/sixnft/nftoracle/mint_request";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +36,23 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetMintRequestRequest {
+	uint64 id = 1;
+}
+
+message QueryGetMintRequestResponse {
+	MintRequest MintRequest = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllMintRequestRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllMintRequestResponse {
+	repeated MintRequest MintRequest = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
