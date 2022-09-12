@@ -1,12 +1,21 @@
 package types
 
 import (
+	"strconv"
+
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
+
+type MetadataChange struct {
+	Key           string
+	PreviousValue string
+	NewValue      string
+}
 
 type Metadata struct {
 	nftData           *NftData
 	attributeOverring AttributeOverriding
+	ChangeList        []*MetadataChange
 }
 
 type MetadataAttribute struct {
@@ -21,6 +30,7 @@ func NewMetadata(tokenData *NftData, attributeOverring AttributeOverriding) *Met
 	meta := &Metadata{
 		nftData:           tokenData,
 		attributeOverring: attributeOverring,
+		ChangeList:        []*MetadataChange{},
 	}
 
 	mapAllKey = map[string]*MetadataAttribute{}
@@ -96,6 +106,11 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatUint(attri.attributeValue.GetNumberAttributeValue().Value, 10),
+				NewValue:      strconv.FormatUint(uint64(value), 10),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
