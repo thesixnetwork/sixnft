@@ -34,7 +34,15 @@ func (k msgServer) GrantPermission(goCtx context.Context, msg *types.MsgGrantPer
 				Addresses: []string{msg.Grantee},
 			}
 		} else {
-			auth.Permissions.MapName[msg.Name].Addresses = append(auth.Permissions.MapName[msg.Name].Addresses, msg.Grantee)
+			mapAll := make(map[string]string)
+			for _, addr := range auth.Permissions.MapName[msg.Name].Addresses {
+				mapAll[addr] = addr
+			}
+			if _, found := mapAll[msg.Grantee]; !found {
+				auth.Permissions.MapName[msg.Name].Addresses = append(auth.Permissions.MapName[msg.Name].Addresses, msg.Grantee)
+			} else {
+				return nil, types.ErrGranteeExists
+			}
 		}
 	}
 

@@ -285,3 +285,9 @@ ignite scaffold message grantPermission name grantee \
     --response grantee \
     --no-simulation \
     --module admin
+
+ignite scaffold message revokePermission name revokee \
+    --desc "To revoke permission" \
+    --response revokee \
+    --no-simulation \
+    --module admin

@@ -22,6 +22,10 @@ export interface AdminMsgGrantPermissionResponse {
   grantee?: string;
 }
 
+export interface AdminMsgRevokePermissionResponse {
+  revokee?: string;
+}
+
 /**
  * Params defines the parameters for the module.
  */

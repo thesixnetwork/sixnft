@@ -54117,6 +54117,11 @@ definitions:
     properties:
       grantee:
         type: string
+  sixnft.admin.MsgRevokePermissionResponse:
+    type: object
+    properties:
+      revokee:
+        type: string
   sixnft.admin.Params:
     type: object
     description: Params defines the parameters for the module.

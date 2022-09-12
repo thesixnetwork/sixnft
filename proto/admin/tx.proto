@@ -8,6 +8,7 @@ option go_package = "sixnft/x/admin/types";
 // Msg defines the Msg service.
 service Msg {
       rpc GrantPermission(MsgGrantPermission) returns (MsgGrantPermissionResponse);
+  rpc RevokePermission(MsgRevokePermission) returns (MsgRevokePermissionResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -19,6 +20,16 @@ message MsgGrantPermission {
 
 message MsgGrantPermissionResponse {
   string grantee = 1;
+}
+
+message MsgRevokePermission {
+  string creator = 1;
+  string name = 2;
+  string revokee = 3;
+}
+
+message MsgRevokePermissionResponse {
+  string revokee = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
