@@ -265,3 +265,6 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+
+ignite scaffold module tokenadmin
