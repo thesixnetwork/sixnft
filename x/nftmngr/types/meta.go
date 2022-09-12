@@ -152,6 +152,11 @@ func (m *Metadata) SetString(key string, value string) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: attri.attributeValue.GetStringAttributeValue().Value,
+				NewValue:      value,
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
@@ -195,6 +200,11 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatFloat(attri.attributeValue.GetFloatAttributeValue().Value, 'f', -1, 64),
+				NewValue:      strconv.FormatFloat(value, 'f', -1, 64),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
@@ -238,6 +248,11 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 			},
 		}
 		if attri.from == "chain" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatBool(attri.attributeValue.GetBooleanAttributeValue().Value),
+				NewValue:      strconv.FormatBool(value),
+			})
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
