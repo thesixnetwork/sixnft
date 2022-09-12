@@ -54112,6 +54112,11 @@ definitions:
                   type: array
                   items:
                     type: string
+  sixnft.admin.MsgGrantPermissionResponse:
+    type: object
+    properties:
+      grantee:
+        type: string
   sixnft.admin.Params:
     type: object
     description: Params defines the parameters for the module.

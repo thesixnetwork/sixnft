@@ -8,5 +8,6 @@ import (
 
 // x/admin module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrAuthorizationNotFound = sdkerrors.Register(ModuleName, 1, "authorization not found")
+	ErrUnauthorized          = sdkerrors.Register(ModuleName, 2, "unauthorized")
 )

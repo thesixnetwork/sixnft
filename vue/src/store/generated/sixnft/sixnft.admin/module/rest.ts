@@ -18,6 +18,10 @@ export interface AdminAuthorization {
   permissions?: AdminPermissions;
 }
 
+export interface AdminMsgGrantPermissionResponse {
+  grantee?: string;
+}
+
 /**
  * Params defines the parameters for the module.
  */
