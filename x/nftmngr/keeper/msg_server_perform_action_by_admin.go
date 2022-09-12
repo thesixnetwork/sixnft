@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"encoding/json"
 
 	"sixnft/x/nftmngr/types"
 
@@ -25,7 +26,6 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	if msg.Creator != schema.Owner {
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
-
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
 		if action.Name == msg.Action {
@@ -57,6 +57,17 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			Action:        mapAction.Name,
 		})
 	}
+	// Emit events on metadata change
+	changeList, _ := json.Marshal(meta.ChangeList)
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			sdk.EventTypeMessage,
+			sdk.NewAttribute(types.EventMessage, types.EventTypeRunAction),
+			sdk.NewAttribute(types.AttributeKeyRunActionResult, "success"),
+			// Emit change list attributes
+			sdk.NewAttribute(types.AttributeKeyRunActionChangeList, string(changeList)),
+		),
+	)
 
 	return &types.MsgPerformActionByAdminResponse{
 		NftSchemaCode: msg.NftSchemaCode,

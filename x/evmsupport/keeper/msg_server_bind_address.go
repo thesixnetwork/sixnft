@@ -34,7 +34,7 @@ func (k msgServer) BindAddress(goCtx context.Context, msg *types.MsgBindAddress)
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
-			sdk.NewAttribute(types.EventMessage, types.EventTypeDeleteBinding),
+			sdk.NewAttribute(types.EventMessage, types.EventTypeCreateBinding),
 			sdk.NewAttribute(types.AttributeValueBinder, msg.GetCreator()),
 			sdk.NewAttribute(types.AttributeValueEthAddress, msg.GetEthAddress()),
 			sdk.NewAttribute(types.AttributeKeyCreateBindingResult, "success"),

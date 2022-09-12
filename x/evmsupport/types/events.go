@@ -5,7 +5,7 @@ const (
 	EventMessage                    = "evmsupport_action"
 	EventTypeCreateBinding          = "create_binding"
 	EventTypeDeleteBinding          = "delete_binding"
-	AttributeKeyCreateBindingResult = "craete_binding_result"
+	AttributeKeyCreateBindingResult = "create_binding_result"
 	AttributeKeyDeleteBindingResult = "delete_binding_result"
 	AttributeValueBinder            = "native_address"
 	AttributeValueEthAddress        = "eth_address"

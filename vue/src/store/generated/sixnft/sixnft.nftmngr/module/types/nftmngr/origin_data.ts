@@ -36,6 +36,38 @@ export function attributeOverridingToJSON(object: AttributeOverriding): string {
   }
 }
 
+export enum URIRetrievalMethod {
+  BASE = 0,
+  TOKEN = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function uRIRetrievalMethodFromJSON(object: any): URIRetrievalMethod {
+  switch (object) {
+    case 0:
+    case "BASE":
+      return URIRetrievalMethod.BASE;
+    case 1:
+    case "TOKEN":
+      return URIRetrievalMethod.TOKEN;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return URIRetrievalMethod.UNRECOGNIZED;
+  }
+}
+
+export function uRIRetrievalMethodToJSON(object: URIRetrievalMethod): string {
+  switch (object) {
+    case URIRetrievalMethod.BASE:
+      return "BASE";
+    case URIRetrievalMethod.TOKEN:
+      return "TOKEN";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface OriginData {
   origin_chain: string;
   origin_contract_address: string;
@@ -43,6 +75,7 @@ export interface OriginData {
   attribute_overriding: AttributeOverriding;
   metadata_format: string;
   origin_attributes: AttributeDefinition[];
+  uri_retrieval_method: URIRetrievalMethod;
 }
 
 const baseOriginData: object = {
@@ -51,6 +84,7 @@ const baseOriginData: object = {
   origin_base_uri: "",
   attribute_overriding: 0,
   metadata_format: "",
+  uri_retrieval_method: 0,
 };
 
 export const OriginData = {
@@ -72,6 +106,9 @@ export const OriginData = {
     }
     for (const v of message.origin_attributes) {
       AttributeDefinition.encode(v!, writer.uint32(50).fork()).ldelim();
+    }
+    if (message.uri_retrieval_method !== 0) {
+      writer.uint32(56).int32(message.uri_retrieval_method);
     }
     return writer;
   },
@@ -103,6 +140,9 @@ export const OriginData = {
           message.origin_attributes.push(
             AttributeDefinition.decode(reader, reader.uint32())
           );
+          break;
+        case 7:
+          message.uri_retrieval_method = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -162,6 +202,16 @@ export const OriginData = {
         message.origin_attributes.push(AttributeDefinition.fromJSON(e));
       }
     }
+    if (
+      object.uri_retrieval_method !== undefined &&
+      object.uri_retrieval_method !== null
+    ) {
+      message.uri_retrieval_method = uRIRetrievalMethodFromJSON(
+        object.uri_retrieval_method
+      );
+    } else {
+      message.uri_retrieval_method = 0;
+    }
     return message;
   },
 
@@ -186,6 +236,10 @@ export const OriginData = {
     } else {
       obj.origin_attributes = [];
     }
+    message.uri_retrieval_method !== undefined &&
+      (obj.uri_retrieval_method = uRIRetrievalMethodToJSON(
+        message.uri_retrieval_method
+      ));
     return obj;
   },
 
@@ -236,6 +290,14 @@ export const OriginData = {
       for (const e of object.origin_attributes) {
         message.origin_attributes.push(AttributeDefinition.fromPartial(e));
       }
+    }
+    if (
+      object.uri_retrieval_method !== undefined &&
+      object.uri_retrieval_method !== null
+    ) {
+      message.uri_retrieval_method = object.uri_retrieval_method;
+    } else {
+      message.uri_retrieval_method = 0;
     }
     return message;
   },
