@@ -67,7 +67,6 @@ export enum NftmngrAttributeOverriding {
 export enum NftmngrBoolDisplayType {
   PRESENT_ABSENT = "PRESENT_ABSENT",
   YES_NO = "YES_NO",
-  TRUE_FALSE = "TRUE_FALSE",
 }
 
 export interface NftmngrDisplayOption {
@@ -85,8 +84,8 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
 }
 
 export interface NftmngrMsgPerformActionByAdminResponse {
-  nftSchemaCode?: string;
-  tokenId?: string;
+  nft_schema_code?: string;
+  token_id?: string;
 }
 
 export interface NftmngrNFTSchema {
@@ -143,6 +142,7 @@ export interface NftmngrOriginData {
   attribute_overriding?: NftmngrAttributeOverriding;
   metadata_format?: string;
   origin_attributes?: NftmngrAttributeDefinition[];
+  uri_retrieval_method?: NftmngrURIRetrievalMethod;
 }
 
 /**
@@ -213,6 +213,11 @@ export interface NftmngrQueryGetNftDataResponse {
 export interface NftmngrQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: NftmngrParams;
+}
+
+export enum NftmngrURIRetrievalMethod {
+  BASE = "BASE",
+  TOKEN = "TOKEN",
 }
 
 /**
