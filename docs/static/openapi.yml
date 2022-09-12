@@ -30531,6 +30531,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -30769,6 +30779,12 @@ paths:
                       type: string
                     token_owner:
                       type: string
+                    owner_address_type:
+                      type: string
+                      enum:
+                        - ORIGIN_ADDRESS
+                        - INTERNAL_ADDRESS
+                      default: ORIGIN_ADDRESS
                     origin_image:
                       type: string
                     onchain_image:
@@ -31090,6 +31106,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -31111,6 +31137,12 @@ paths:
                     type: string
                   token_owner:
                     type: string
+                  owner_address_type:
+                    type: string
+                    enum:
+                      - ORIGIN_ADDRESS
+                      - INTERNAL_ADDRESS
+                    default: ORIGIN_ADDRESS
                   origin_image:
                     type: string
                   onchain_image:
@@ -31837,6 +31869,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -54205,6 +54247,12 @@ definitions:
         type: string
       token_owner:
         type: string
+      owner_address_type:
+        type: string
+        enum:
+          - ORIGIN_ADDRESS
+          - INTERNAL_ADDRESS
+        default: ORIGIN_ADDRESS
       origin_image:
         type: string
       onchain_image:
@@ -54468,6 +54516,12 @@ definitions:
           - BASE
           - TOKEN
         default: BASE
+  sixnft.nftmngr.OwnerAddressType:
+    type: string
+    enum:
+      - ORIGIN_ADDRESS
+      - INTERNAL_ADDRESS
+    default: ORIGIN_ADDRESS
   sixnft.nftmngr.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -54758,6 +54812,12 @@ definitions:
               type: string
             token_owner:
               type: string
+            owner_address_type:
+              type: string
+              enum:
+                - ORIGIN_ADDRESS
+                - INTERNAL_ADDRESS
+              default: ORIGIN_ADDRESS
             origin_image:
               type: string
             onchain_image:
@@ -55076,6 +55136,12 @@ definitions:
             type: string
           token_owner:
             type: string
+          owner_address_type:
+            type: string
+            enum:
+              - ORIGIN_ADDRESS
+              - INTERNAL_ADDRESS
+            default: ORIGIN_ADDRESS
           origin_image:
             type: string
           onchain_image:

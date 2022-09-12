@@ -7,15 +7,15 @@ import (
 )
 
 type MetadataChange struct {
-	Key           string
-	PreviousValue string
-	NewValue      string
+	Key           string `json:"key,omitempty"`
+	PreviousValue string `json:"previous_value,omitempty"`
+	NewValue      string `json:"new_value,omitempty"`
 }
 
 type Metadata struct {
 	nftData           *NftData
 	attributeOverring AttributeOverriding
-	ChangeList        []*MetadataChange
+	ChangeList        []*MetadataChange `json:"change_list,omitempty"`
 }
 
 type MetadataAttribute struct {
