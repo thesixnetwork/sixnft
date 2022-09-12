@@ -274,7 +274,7 @@ ignite scaffold list MintRequest nft_schema_code:string token_id:string required
     --module nftoracle
 
 
-ignite scaffold message createMintRequest nft_schema_code token_id required_confirm \
+ignite scaffold message createMintRequest nft_schema_code:string token_id:string required_confirm:uint \
     --desc "To create Mint Request" \
     --response nft_schema_code,token_id \
     --no-simulation \

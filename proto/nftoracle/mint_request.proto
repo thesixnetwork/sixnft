@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.nftoracle;
+
+option go_package = "sixnft/x/nftoracle/types";
+
+message MintRequest {
+  uint64 id = 1;
+  string nftSchemaCode = 2; 
+  string tokenId = 3; 
+  uint64 requiredConfirm = 4; 
+  
+}

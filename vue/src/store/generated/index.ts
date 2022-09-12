@@ -22,6 +22,7 @@ import CosmosIbcGoIbcCoreConnectionV1 from './cosmos/ibc-go/ibc.core.connection.
 import CosmosIbcGoIbcCorePortV1 from './cosmos/ibc-go/ibc.core.port.v1'
 import SixnftSixnftEvmsupport from './sixnft/sixnft.evmsupport'
 import SixnftSixnftNftmngr from './sixnft/sixnft.nftmngr'
+import SixnftSixnftNftoracle from './sixnft/sixnft.nftoracle'
 
 
 export default { 
@@ -47,6 +48,7 @@ export default {
   CosmosIbcGoIbcCorePortV1: load(CosmosIbcGoIbcCorePortV1, 'ibc.core.port.v1'),
   SixnftSixnftEvmsupport: load(SixnftSixnftEvmsupport, 'sixnft.evmsupport'),
   SixnftSixnftNftmngr: load(SixnftSixnftNftmngr, 'sixnft.nftmngr'),
+  SixnftSixnftNftoracle: load(SixnftSixnftNftoracle, 'sixnft.nftoracle'),
   
 }
 
