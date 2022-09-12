@@ -3,10 +3,19 @@ package sixnft.nftoracle;
 
 option go_package = "sixnft/x/nftoracle/types";
 
+enum RequestStatus {
+  PENDING = 0;
+  SUCCESS_WITH_CONSENSUS = 1;
+  FAILED_WITHOUT_CONCENSUS = 2;
+}
+
 message MintRequest {
   uint64 id = 1;
   string nftSchemaCode = 2; 
   string tokenId = 3; 
   uint64 requiredConfirm = 4; 
-  
+  RequestStatus status = 4;
+  // Current Confirmed
+  // Nft Origin Data
+  // Hash of NFT Origin Data
 }
