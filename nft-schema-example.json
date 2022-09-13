@@ -232,7 +232,6 @@
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "bool_display_type": "YES_NO",
                     "opensea": {
                         "trait_type": "Discount",
                         "display_type": "boost_number"
