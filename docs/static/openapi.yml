@@ -54117,6 +54117,13 @@ definitions:
     properties:
       grantee:
         type: string
+  sixnft.admin.MsgMintResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
   sixnft.admin.MsgRevokePermissionResponse:
     type: object
     properties:

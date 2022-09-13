@@ -15,6 +15,8 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_admin"
+
+	KeyPermissionMinter = "minter"
 )
 
 func KeyPrefix(p string) []byte {

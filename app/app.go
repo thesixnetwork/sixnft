@@ -21,6 +21,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/ante"
+
+	admintypes "sixnft/x/admin/types"
+
 	authrest "github.com/cosmos/cosmos-sdk/x/auth/client/rest"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 	authsims "github.com/cosmos/cosmos-sdk/x/auth/simulation"
@@ -177,6 +180,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		admintypes.ModuleName:          {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -424,6 +428,8 @@ func New(
 		keys[adminmoduletypes.StoreKey],
 		keys[adminmoduletypes.MemStoreKey],
 		app.GetSubspace(adminmoduletypes.ModuleName),
+
+		app.BankKeeper,
 	)
 	adminModule := adminmodule.NewAppModule(appCodec, app.AdminKeeper, app.AccountKeeper, app.BankKeeper)
 

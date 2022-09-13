@@ -1,1 +1,1 @@
-ignite chain serve --config ./config.yml -r -f
+ignite chain serve --config ./config.yml -r -f -v

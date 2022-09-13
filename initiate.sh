@@ -291,3 +291,9 @@ ignite scaffold message revokePermission name revokee \
     --response revokee \
     --no-simulation \
     --module admin
+
+ignite scaffold message mint amount:uint token:string \
+    --desc "To mint token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin

@@ -22,6 +22,11 @@ export interface AdminMsgGrantPermissionResponse {
   grantee?: string;
 }
 
+export interface AdminMsgMintResponse {
+  amount?: string;
+  token?: string;
+}
+
 export interface AdminMsgRevokePermissionResponse {
   revokee?: string;
 }
