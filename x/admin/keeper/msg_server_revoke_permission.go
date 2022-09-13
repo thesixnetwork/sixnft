@@ -10,7 +10,7 @@ import (
 )
 
 // revoke permission
-// sixnftd tx revoke-permission minter 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq --from alice
+// sixnftd tx admin revoke-permission minter 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq --from alice
 func (k msgServer) RevokePermission(goCtx context.Context, msg *types.MsgRevokePermission) (*types.MsgRevokePermissionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
