@@ -3,6 +3,7 @@ package keeper
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"sixnft/x/nftmngr/types"
 
 	"github.com/hyperjumptech/grule-rule-engine/ast"
@@ -19,9 +20,21 @@ type RuleAction struct {
 	Then     []string `json:"then"`
 }
 
-func ProcessAction(meta *types.Metadata, action *types.Action) error {
+func ProcessAction(meta *types.Metadata, action *types.Action) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			switch x := r.(type) {
+			case string:
+				err = errors.New(x)
+			case error:
+				err = x
+			default:
+				err = errors.New("Unknown panic")
+			}
+		}
+	}()
 	dataContext := ast.NewDataContext()
-	err := dataContext.Add("meta", meta)
+	err = dataContext.Add("meta", meta)
 	if err != nil {
 		return err
 	}
