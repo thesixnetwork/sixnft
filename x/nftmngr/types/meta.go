@@ -1,6 +1,7 @@
 package types
 
 import (
+	"regexp"
 	"strconv"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -286,4 +287,9 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 		return sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.attributeValue.Name)
 	}
 	return nil
+}
+
+func (m *Metadata) ReplaceAllString(intput string, regexpStr string, replaceStr string) string {
+	reg := regexp.MustCompile(regexpStr)
+	return reg.ReplaceAllString(intput, replaceStr)
 }
