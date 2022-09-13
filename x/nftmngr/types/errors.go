@@ -26,6 +26,7 @@ var (
 	ErrOnchainNFTAttributesNotSameTypeAsSchema   = sdkerrors.Register(ModuleName, 107, "Onchain NFT attributes not same type as schema")
 	ErrAttributeOverriding                       = sdkerrors.Register(ModuleName, 108, "Attribute overriding is not allowed")
 	ErrAttributeTypeNotMatch                     = sdkerrors.Register(ModuleName, 109, "Attribute type does not match")
+	ErrAttributeNotFoundForAction                = sdkerrors.Register(ModuleName, 110, "Attribute not found for action")
 
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")

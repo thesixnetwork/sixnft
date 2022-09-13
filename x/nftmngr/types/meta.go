@@ -78,13 +78,16 @@ func (m *Metadata) SetImage(image string) {
 func (m *Metadata) GetNumber(key string) int64 {
 	v, err := m.MustGetNumber(key)
 	if err != nil {
-		return 0
+		panic(err)
 	}
 	return v
 }
 
 func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	attri := mapAllKey[key]
+	if attri == nil {
+		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue_); ok {
 		// Number
 		return int64(attri.attributeValue.GetNumberAttributeValue().Value), nil
@@ -95,6 +98,9 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 func (m *Metadata) SetNumber(key string, value int64) error {
 	// m.mapNumber[key] = value
 	attri := mapAllKey[key]
+	if attri == nil {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue_); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
@@ -124,13 +130,16 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 func (m *Metadata) GetString(key string) string {
 	v, err := m.MustGetString(key)
 	if err != nil {
-		return ""
+		panic(err)
 	}
 	return v
 }
 
 func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := mapAllKey[key]
+	if attri == nil {
+		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue_); ok {
 		// Number
 		return attri.attributeValue.GetStringAttributeValue().Value, nil
@@ -141,6 +150,9 @@ func (m *Metadata) MustGetString(key string) (string, error) {
 func (m *Metadata) SetString(key string, value string) error {
 	// m.mapString[key] = value
 	attri := mapAllKey[key]
+	if attri == nil {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue_); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
@@ -171,7 +183,7 @@ func (m *Metadata) SetString(key string, value string) error {
 func (m *Metadata) GetFloat(key string) float64 {
 	v, err := m.MustGetFloat(key)
 	if err != nil {
-		return 0
+		panic(err)
 	}
 	return v
 }
@@ -179,6 +191,9 @@ func (m *Metadata) GetFloat(key string) float64 {
 func (m *Metadata) MustGetFloat(key string) (float64, error) {
 	// return m.mapFloat[key]
 	attri := mapAllKey[key]
+	if attri == nil {
+		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue_); ok {
 		// Number
 		return attri.attributeValue.GetFloatAttributeValue().Value, nil
@@ -189,6 +204,9 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 func (m *Metadata) SetFloat(key string, value float64) error {
 	// m.mapFloat[key] = value
 	attri := mapAllKey[key]
+	if attri == nil {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue_); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
@@ -219,7 +237,7 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 func (m *Metadata) GetBoolean(key string) bool {
 	v, err := m.MustGetBool(key)
 	if err != nil {
-		return false
+		panic(err)
 	}
 	return v
 }
@@ -227,6 +245,9 @@ func (m *Metadata) GetBoolean(key string) bool {
 func (m *Metadata) MustGetBool(key string) (bool, error) {
 	// return m.mapBool[key]
 	attri := mapAllKey[key]
+	if attri == nil {
+		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue_); ok {
 		// Number
 		return attri.attributeValue.GetBooleanAttributeValue().Value, nil
@@ -237,6 +258,9 @@ func (m *Metadata) MustGetBool(key string) (bool, error) {
 func (m *Metadata) SetBoolean(key string, value bool) error {
 	// m.mapBool[key] = value
 	attri := mapAllKey[key]
+	if attri == nil {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
 	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue_); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
