@@ -18,6 +18,11 @@ export interface AdminAuthorization {
   permissions?: AdminPermissions;
 }
 
+export interface AdminMsgBurnResponse {
+  amount?: string;
+  token?: string;
+}
+
 export interface AdminMsgGrantPermissionResponse {
   grantee?: string;
 }

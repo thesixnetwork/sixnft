@@ -11,6 +11,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgGrantPermission{}, "admin/GrantPermission", nil)
 	cdc.RegisterConcrete(&MsgRevokePermission{}, "admin/RevokePermission", nil)
 	cdc.RegisterConcrete(&MsgMint{}, "admin/Mint", nil)
+	cdc.RegisterConcrete(&MsgBurn{}, "admin/Burn", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -23,6 +24,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgMint{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgBurn{},
 	)
 	// this line is used by starport scaffolding # 3
 

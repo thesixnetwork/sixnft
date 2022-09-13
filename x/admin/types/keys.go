@@ -17,6 +17,7 @@ const (
 	MemStoreKey = "mem_admin"
 
 	KeyPermissionMinter = "minter"
+	KeyPermissionBurner = "burner"
 )
 
 func KeyPrefix(p string) []byte {

@@ -54112,6 +54112,13 @@ definitions:
                   type: array
                   items:
                     type: string
+  sixnft.admin.MsgBurnResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
   sixnft.admin.MsgGrantPermissionResponse:
     type: object
     properties:

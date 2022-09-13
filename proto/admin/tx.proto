@@ -10,6 +10,7 @@ service Msg {
       rpc GrantPermission(MsgGrantPermission) returns (MsgGrantPermissionResponse);
   rpc RevokePermission(MsgRevokePermission) returns (MsgRevokePermissionResponse);
   rpc Mint(MsgMint) returns (MsgMintResponse);
+  rpc Burn(MsgBurn) returns (MsgBurnResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -40,6 +41,17 @@ message MsgMint {
 }
 
 message MsgMintResponse {
+  string amount = 1;
+  string token = 2;
+}
+
+message MsgBurn {
+  string creator = 1;
+  uint64 amount = 2;
+  string token = 3;
+}
+
+message MsgBurnResponse {
   string amount = 1;
   string token = 2;
 }

@@ -297,3 +297,9 @@ ignite scaffold message mint amount:uint token:string \
     --response amount,token \
     --no-simulation \
     --module admin
+
+ignite scaffold message burn amount:uint token:string \
+    --desc "To burn token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin
