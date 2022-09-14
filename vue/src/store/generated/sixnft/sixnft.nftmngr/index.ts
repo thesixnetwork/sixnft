@@ -14,6 +14,7 @@ import { NFTSchema } from "./module/types/nftmngr/nft_schema"
 import { OnChainData } from "./module/types/nftmngr/on_chain_data"
 import { OnOffSwitch } from "./module/types/nftmngr/on_off_switch"
 import { OpenseaDisplayOption } from "./module/types/nftmngr/opensea_display_option"
+import { Organization } from "./module/types/nftmngr/organization"
 import { OriginData } from "./module/types/nftmngr/origin_data"
 import { Params } from "./module/types/nftmngr/params"
 import { Status } from "./module/types/nftmngr/status"
@@ -22,7 +23,7 @@ import { UpdatedOpenseaAttributes } from "./module/types/nftmngr/tx"
 import { UpdatedOriginData } from "./module/types/nftmngr/tx"
 
 
-export { Action, ActionByRefId, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status, OpenseaAttribute, UpdatedOpenseaAttributes, UpdatedOriginData };
+export { Action, ActionByRefId, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, Organization, OriginData, Params, Status, OpenseaAttribute, UpdatedOpenseaAttributes, UpdatedOriginData };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -67,6 +68,8 @@ const getDefaultState = () => {
 				NftDataAll: {},
 				ActionByRefId: {},
 				ActionByRefIdAll: {},
+				Organization: {},
+				OrganizationAll: {},
 				
 				_Structure: {
 						Action: getStructure(Action.fromPartial({})),
@@ -83,6 +86,7 @@ const getDefaultState = () => {
 						OnChainData: getStructure(OnChainData.fromPartial({})),
 						OnOffSwitch: getStructure(OnOffSwitch.fromPartial({})),
 						OpenseaDisplayOption: getStructure(OpenseaDisplayOption.fromPartial({})),
+						Organization: getStructure(Organization.fromPartial({})),
 						OriginData: getStructure(OriginData.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						Status: getStructure(Status.fromPartial({})),
@@ -158,6 +162,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.ActionByRefIdAll[JSON.stringify(params)] ?? {}
+		},
+				getOrganization: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.Organization[JSON.stringify(params)] ?? {}
+		},
+				getOrganizationAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.OrganizationAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -359,6 +375,54 @@ export default {
 		},
 		
 		
+		
+		
+		 		
+		
+		
+		async QueryOrganization({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryOrganization( key.name)).data
+				
+					
+				commit('QUERY', { query: 'Organization', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryOrganization', payload: { options: { all }, params: {...key},query }})
+				return getters['getOrganization']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryOrganization API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryOrganizationAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryOrganizationAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryOrganizationAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'OrganizationAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryOrganizationAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getOrganizationAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryOrganizationAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgCreateNFTSchema({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -371,21 +435,6 @@ export default {
 					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMetadata(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -404,6 +453,21 @@ export default {
 				}
 			}
 		},
+		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMetadata(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
 		async MsgCreateNFTSchema({ rootGetters }, { value }) {
 			try {
@@ -418,19 +482,6 @@ export default {
 				}
 			}
 		},
-		async MsgCreateMetadata({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMetadata(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateMetadata:Create Could not create message: ' + e.message)
-				}
-			}
-		},
 		async MsgPerformActionByAdmin({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -441,6 +492,19 @@ export default {
 					throw new Error('TxClient:MsgPerformActionByAdmin:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgPerformActionByAdmin:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateMetadata({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMetadata(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateMetadata:Create Could not create message: ' + e.message)
 				}
 			}
 		},

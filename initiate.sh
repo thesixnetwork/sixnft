@@ -303,3 +303,10 @@ ignite scaffold message burn amount:uint token:string \
     --response amount,token \
     --no-simulation \
     --module admin
+
+
+ignite scaffold map Organization owner \
+    --index name \
+    --no-message \
+    --no-simulation \
+    --module nftmngr

@@ -132,6 +132,11 @@ export interface NftmngrOpenseaDisplayOption {
   max_value?: string;
 }
 
+export interface NftmngrOrganization {
+  name?: string;
+  owner?: string;
+}
+
 export interface NftmngrOriginData {
   origin_chain?: string;
   origin_contract_address?: string;
@@ -197,6 +202,21 @@ export interface NftmngrQueryAllNftDataResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface NftmngrQueryAllOrganizationResponse {
+  organization?: NftmngrOrganization[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface NftmngrQueryGetActionByRefIdResponse {
   actionByRefId?: NftmngrActionByRefId;
 }
@@ -207,6 +227,10 @@ export interface NftmngrQueryGetNFTSchemaResponse {
 
 export interface NftmngrQueryGetNftDataResponse {
   nftData?: NftmngrNftData;
+}
+
+export interface NftmngrQueryGetOrganizationResponse {
+  organization?: NftmngrOrganization;
 }
 
 /**
@@ -719,6 +743,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryNftSchema = (code: string, params: RequestParams = {}) =>
     this.request<NftmngrQueryGetNFTSchemaResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/nft_schema/${code}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryOrganizationAll
+   * @summary Queries a list of Organization items.
+   * @request GET:/sixnft/nftmngr/organization
+   */
+  queryOrganizationAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftmngrQueryAllOrganizationResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/organization`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryOrganization
+   * @summary Queries a Organization by index.
+   * @request GET:/sixnft/nftmngr/organization/{name}
+   */
+  queryOrganization = (name: string, params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetOrganizationResponse, GooglerpcStatus>({
+      path: `/sixnft/nftmngr/organization/${name}`,
       method: "GET",
       format: "json",
       ...params,
