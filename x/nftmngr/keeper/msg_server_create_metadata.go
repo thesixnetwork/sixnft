@@ -62,6 +62,11 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	// Validate required attributes
+	validated, requiredAttributeName := ValidateRequiredAttributes(schema.OnchainData.TokenAttributes, CreateNftAttrValueMap(data.OnchainAttributes))
+	if !validated {
+		return false, sdkerrors.Wrap(types.ErrRequiredAttributeMissing, requiredAttributeName)
+	}
 	// Validate Onchain Attributes Value
 	duplicated, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
 	if duplicated {
