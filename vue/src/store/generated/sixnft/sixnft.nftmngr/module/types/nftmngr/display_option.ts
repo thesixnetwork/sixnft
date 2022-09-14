@@ -4,54 +4,26 @@ import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
 
-export enum BoolDisplayType {
-  PRESENT_ABSENT = 0,
-  YES_NO = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function boolDisplayTypeFromJSON(object: any): BoolDisplayType {
-  switch (object) {
-    case 0:
-    case "PRESENT_ABSENT":
-      return BoolDisplayType.PRESENT_ABSENT;
-    case 1:
-    case "YES_NO":
-      return BoolDisplayType.YES_NO;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return BoolDisplayType.UNRECOGNIZED;
-  }
-}
-
-export function boolDisplayTypeToJSON(object: BoolDisplayType): string {
-  switch (object) {
-    case BoolDisplayType.PRESENT_ABSENT:
-      return "PRESENT_ABSENT";
-    case BoolDisplayType.YES_NO:
-      return "YES_NO";
-    default:
-      return "UNKNOWN";
-  }
-}
-
 export interface DisplayOption {
-  bool_display_type: BoolDisplayType;
+  bool_true_value: string;
+  bool_false_value: string;
   opensea: OpenseaDisplayOption | undefined;
 }
 
-const baseDisplayOption: object = { bool_display_type: 0 };
+const baseDisplayOption: object = { bool_true_value: "", bool_false_value: "" };
 
 export const DisplayOption = {
   encode(message: DisplayOption, writer: Writer = Writer.create()): Writer {
-    if (message.bool_display_type !== 0) {
-      writer.uint32(8).int32(message.bool_display_type);
+    if (message.bool_true_value !== "") {
+      writer.uint32(10).string(message.bool_true_value);
+    }
+    if (message.bool_false_value !== "") {
+      writer.uint32(18).string(message.bool_false_value);
     }
     if (message.opensea !== undefined) {
       OpenseaDisplayOption.encode(
         message.opensea,
-        writer.uint32(18).fork()
+        writer.uint32(26).fork()
       ).ldelim();
     }
     return writer;
@@ -65,9 +37,12 @@ export const DisplayOption = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.bool_display_type = reader.int32() as any;
+          message.bool_true_value = reader.string();
           break;
         case 2:
+          message.bool_false_value = reader.string();
+          break;
+        case 3:
           message.opensea = OpenseaDisplayOption.decode(
             reader,
             reader.uint32()
@@ -84,14 +59,20 @@ export const DisplayOption = {
   fromJSON(object: any): DisplayOption {
     const message = { ...baseDisplayOption } as DisplayOption;
     if (
-      object.bool_display_type !== undefined &&
-      object.bool_display_type !== null
+      object.bool_true_value !== undefined &&
+      object.bool_true_value !== null
     ) {
-      message.bool_display_type = boolDisplayTypeFromJSON(
-        object.bool_display_type
-      );
+      message.bool_true_value = String(object.bool_true_value);
     } else {
-      message.bool_display_type = 0;
+      message.bool_true_value = "";
+    }
+    if (
+      object.bool_false_value !== undefined &&
+      object.bool_false_value !== null
+    ) {
+      message.bool_false_value = String(object.bool_false_value);
+    } else {
+      message.bool_false_value = "";
     }
     if (object.opensea !== undefined && object.opensea !== null) {
       message.opensea = OpenseaDisplayOption.fromJSON(object.opensea);
@@ -103,10 +84,10 @@ export const DisplayOption = {
 
   toJSON(message: DisplayOption): unknown {
     const obj: any = {};
-    message.bool_display_type !== undefined &&
-      (obj.bool_display_type = boolDisplayTypeToJSON(
-        message.bool_display_type
-      ));
+    message.bool_true_value !== undefined &&
+      (obj.bool_true_value = message.bool_true_value);
+    message.bool_false_value !== undefined &&
+      (obj.bool_false_value = message.bool_false_value);
     message.opensea !== undefined &&
       (obj.opensea = message.opensea
         ? OpenseaDisplayOption.toJSON(message.opensea)
@@ -117,12 +98,20 @@ export const DisplayOption = {
   fromPartial(object: DeepPartial<DisplayOption>): DisplayOption {
     const message = { ...baseDisplayOption } as DisplayOption;
     if (
-      object.bool_display_type !== undefined &&
-      object.bool_display_type !== null
+      object.bool_true_value !== undefined &&
+      object.bool_true_value !== null
     ) {
-      message.bool_display_type = object.bool_display_type;
+      message.bool_true_value = object.bool_true_value;
     } else {
-      message.bool_display_type = 0;
+      message.bool_true_value = "";
+    }
+    if (
+      object.bool_false_value !== undefined &&
+      object.bool_false_value !== null
+    ) {
+      message.bool_false_value = object.bool_false_value;
+    } else {
+      message.bool_false_value = "";
     }
     if (object.opensea !== undefined && object.opensea !== null) {
       message.opensea = OpenseaDisplayOption.fromPartial(object.opensea);
