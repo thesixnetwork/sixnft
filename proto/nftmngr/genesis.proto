@@ -6,6 +6,7 @@ import "nftmngr/params.proto";
 import "nftmngr/nft_schema.proto";
 import "nftmngr/nft_data.proto";
 import "nftmngr/action_by_ref_id.proto";
+import "nftmngr/organization.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "sixnft/x/nftmngr/types";
@@ -16,5 +17,6 @@ message GenesisState {
   repeated NFTSchema nFTSchemaList = 2 [(gogoproto.nullable) = false];
   repeated NftData nftDataList = 3 [(gogoproto.nullable) = false];
   repeated ActionByRefId actionByRefIdList = 4 [(gogoproto.nullable) = false];
+  repeated Organization organizationList = 5 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

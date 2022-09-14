@@ -1,0 +1,11 @@
+syntax = "proto3";
+package sixnft.nftmngr;
+
+option go_package = "sixnft/x/nftmngr/types";
+
+message Organization {
+  string name = 1; 
+  string owner = 2; 
+  
+}
+

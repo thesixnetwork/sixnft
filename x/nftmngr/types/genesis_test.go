@@ -48,6 +48,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						RefId: "1",
 					},
 				},
+				OrganizationList: []types.Organization{
+					{
+						Name: "0",
+					},
+					{
+						Name: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -91,6 +99,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						RefId: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated organization",
+			genState: &types.GenesisState{
+				OrganizationList: []types.Organization{
+					{
+						Name: "0",
+					},
+					{
+						Name: "0",
 					},
 				},
 			},
