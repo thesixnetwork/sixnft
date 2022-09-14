@@ -34,6 +34,10 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		}
 	}
 	meta := types.NewMetadata(&tokenData, schema.OriginData.AttributeOverriding)
+	// Check if ChangeList is empty, error if empty
+	if len(meta.ChangeList) == 0 {
+		return nil, sdkerrors.Wrap(types.ErrEmptyChangeList, msg.Action)
+	}
 	err := ProcessAction(meta, &mapAction)
 	if err != nil {
 		return nil, err

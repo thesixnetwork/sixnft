@@ -64,13 +64,9 @@ export enum NftmngrAttributeOverriding {
   CHAIN = "CHAIN",
 }
 
-export enum NftmngrBoolDisplayType {
-  PRESENT_ABSENT = "PRESENT_ABSENT",
-  YES_NO = "YES_NO",
-}
-
 export interface NftmngrDisplayOption {
-  bool_display_type?: NftmngrBoolDisplayType;
+  bool_true_value?: string;
+  bool_false_value?: string;
   opensea?: NftmngrOpenseaDisplayOption;
 }
 

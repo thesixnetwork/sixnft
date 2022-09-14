@@ -22,34 +22,10 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type BoolDisplayType int32
-
-const (
-	BoolDisplayType_PRESENT_ABSENT BoolDisplayType = 0
-	BoolDisplayType_YES_NO         BoolDisplayType = 1
-)
-
-var BoolDisplayType_name = map[int32]string{
-	0: "PRESENT_ABSENT",
-	1: "YES_NO",
-}
-
-var BoolDisplayType_value = map[string]int32{
-	"PRESENT_ABSENT": 0,
-	"YES_NO":         1,
-}
-
-func (x BoolDisplayType) String() string {
-	return proto.EnumName(BoolDisplayType_name, int32(x))
-}
-
-func (BoolDisplayType) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_38983a60548f9882, []int{0}
-}
-
 type DisplayOption struct {
-	BoolDisplayType BoolDisplayType       `protobuf:"varint,1,opt,name=bool_display_type,json=boolDisplayType,proto3,enum=sixnft.nftmngr.BoolDisplayType" json:"bool_display_type,omitempty"`
-	Opensea         *OpenseaDisplayOption `protobuf:"bytes,2,opt,name=opensea,proto3" json:"opensea,omitempty"`
+	BoolTrueValue  string                `protobuf:"bytes,1,opt,name=bool_true_value,json=boolTrueValue,proto3" json:"bool_true_value,omitempty"`
+	BoolFalseValue string                `protobuf:"bytes,2,opt,name=bool_false_value,json=boolFalseValue,proto3" json:"bool_false_value,omitempty"`
+	Opensea        *OpenseaDisplayOption `protobuf:"bytes,3,opt,name=opensea,proto3" json:"opensea,omitempty"`
 }
 
 func (m *DisplayOption) Reset()         { *m = DisplayOption{} }
@@ -85,11 +61,18 @@ func (m *DisplayOption) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DisplayOption proto.InternalMessageInfo
 
-func (m *DisplayOption) GetBoolDisplayType() BoolDisplayType {
+func (m *DisplayOption) GetBoolTrueValue() string {
 	if m != nil {
-		return m.BoolDisplayType
+		return m.BoolTrueValue
 	}
-	return BoolDisplayType_PRESENT_ABSENT
+	return ""
+}
+
+func (m *DisplayOption) GetBoolFalseValue() string {
+	if m != nil {
+		return m.BoolFalseValue
+	}
+	return ""
 }
 
 func (m *DisplayOption) GetOpensea() *OpenseaDisplayOption {
@@ -100,29 +83,27 @@ func (m *DisplayOption) GetOpensea() *OpenseaDisplayOption {
 }
 
 func init() {
-	proto.RegisterEnum("sixnft.nftmngr.BoolDisplayType", BoolDisplayType_name, BoolDisplayType_value)
 	proto.RegisterType((*DisplayOption)(nil), "sixnft.nftmngr.DisplayOption")
 }
 
 func init() { proto.RegisterFile("nftmngr/display_option.proto", fileDescriptor_38983a60548f9882) }
 
 var fileDescriptor_38983a60548f9882 = []byte{
-	// 238 bytes of a gzipped FileDescriptorProto
+	// 222 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc9, 0x4b, 0x2b, 0xc9,
 	0xcd, 0x4b, 0x2f, 0xd2, 0x4f, 0xc9, 0x2c, 0x2e, 0xc8, 0x49, 0xac, 0x8c, 0xcf, 0x2f, 0x28, 0xc9,
 	0xcc, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x2b, 0xce, 0xac, 0xc8, 0x4b, 0x2b,
 	0xd1, 0x83, 0x2a, 0x92, 0x52, 0x81, 0xa9, 0xce, 0x2f, 0x48, 0xcd, 0x2b, 0x4e, 0x4d, 0x8c, 0xc7,
-	0xa6, 0x4b, 0x69, 0x0e, 0x23, 0x17, 0xaf, 0x0b, 0x44, 0xc2, 0x1f, 0x2c, 0x2e, 0xe4, 0xcd, 0x25,
-	0x98, 0x94, 0x9f, 0x9f, 0x03, 0x57, 0x5e, 0x52, 0x59, 0x90, 0x2a, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1,
-	0x67, 0x24, 0xaf, 0x87, 0x6a, 0x87, 0x9e, 0x53, 0x7e, 0x7e, 0x0e, 0x54, 0x77, 0x48, 0x65, 0x41,
-	0x6a, 0x10, 0x7f, 0x12, 0xaa, 0x80, 0x90, 0x1d, 0x17, 0x3b, 0xd4, 0x7a, 0x09, 0x26, 0x05, 0x46,
-	0x0d, 0x6e, 0x23, 0x15, 0x74, 0x23, 0xfc, 0x21, 0xd2, 0x28, 0x6e, 0x08, 0x82, 0x69, 0xd2, 0x32,
-	0xe4, 0xe2, 0x47, 0xb3, 0x43, 0x48, 0x88, 0x8b, 0x2f, 0x20, 0xc8, 0x35, 0xd8, 0xd5, 0x2f, 0x24,
-	0xde, 0xd1, 0x09, 0x44, 0x09, 0x30, 0x08, 0x71, 0x71, 0xb1, 0x45, 0xba, 0x06, 0xc7, 0xfb, 0xf9,
-	0x0b, 0x30, 0x3a, 0x19, 0x9c, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c, 0xe3, 0x83, 0x47, 0x72,
-	0x8c, 0x13, 0x1e, 0xcb, 0x31, 0x5c, 0x78, 0x2c, 0xc7, 0x70, 0xe3, 0xb1, 0x1c, 0x43, 0x94, 0x18,
-	0xc4, 0x6a, 0xfd, 0x0a, 0x7d, 0x58, 0xd0, 0x80, 0xfc, 0x56, 0x9c, 0xc4, 0x06, 0x0e, 0x0a, 0x63,
-	0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd0, 0x1f, 0x12, 0x66, 0x60, 0x01, 0x00, 0x00,
+	0xa6, 0x4b, 0x69, 0x21, 0x23, 0x17, 0xaf, 0x0b, 0x44, 0xc2, 0x1f, 0x2c, 0x2e, 0xa4, 0xc6, 0xc5,
+	0x9f, 0x94, 0x9f, 0x9f, 0x13, 0x5f, 0x52, 0x54, 0x9a, 0x1a, 0x5f, 0x96, 0x98, 0x53, 0x9a, 0x2a,
+	0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x19, 0xc4, 0x0b, 0x12, 0x0e, 0x29, 0x2a, 0x4d, 0x0d, 0x03, 0x09,
+	0x0a, 0x69, 0x70, 0x09, 0x80, 0xd5, 0xa5, 0x25, 0xe6, 0x14, 0xc3, 0x14, 0x32, 0x81, 0x15, 0xf2,
+	0x81, 0xc4, 0xdd, 0x40, 0xc2, 0x10, 0x95, 0x76, 0x5c, 0xec, 0x50, 0x37, 0x48, 0x30, 0x2b, 0x30,
+	0x6a, 0x70, 0x1b, 0xa9, 0xe8, 0xa1, 0xba, 0x55, 0xcf, 0x1f, 0x22, 0x8d, 0xe2, 0x90, 0x20, 0x98,
+	0x26, 0x27, 0x83, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71,
+	0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x12, 0x83, 0x98,
+	0xa3, 0x5f, 0xa1, 0x0f, 0xf3, 0x6c, 0x49, 0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0xd8, 0x73, 0xc6,
+	0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x79, 0x84, 0xc8, 0x8d, 0x32, 0x01, 0x00, 0x00,
 }
 
 func (m *DisplayOption) Marshal() (dAtA []byte, err error) {
@@ -155,12 +136,21 @@ func (m *DisplayOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			i = encodeVarintDisplayOption(dAtA, i, uint64(size))
 		}
 		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.BoolFalseValue) > 0 {
+		i -= len(m.BoolFalseValue)
+		copy(dAtA[i:], m.BoolFalseValue)
+		i = encodeVarintDisplayOption(dAtA, i, uint64(len(m.BoolFalseValue)))
+		i--
 		dAtA[i] = 0x12
 	}
-	if m.BoolDisplayType != 0 {
-		i = encodeVarintDisplayOption(dAtA, i, uint64(m.BoolDisplayType))
+	if len(m.BoolTrueValue) > 0 {
+		i -= len(m.BoolTrueValue)
+		copy(dAtA[i:], m.BoolTrueValue)
+		i = encodeVarintDisplayOption(dAtA, i, uint64(len(m.BoolTrueValue)))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -182,8 +172,13 @@ func (m *DisplayOption) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.BoolDisplayType != 0 {
-		n += 1 + sovDisplayOption(uint64(m.BoolDisplayType))
+	l = len(m.BoolTrueValue)
+	if l > 0 {
+		n += 1 + l + sovDisplayOption(uint64(l))
+	}
+	l = len(m.BoolFalseValue)
+	if l > 0 {
+		n += 1 + l + sovDisplayOption(uint64(l))
 	}
 	if m.Opensea != nil {
 		l = m.Opensea.Size()
@@ -228,10 +223,10 @@ func (m *DisplayOption) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BoolDisplayType", wireType)
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoolTrueValue", wireType)
 			}
-			m.BoolDisplayType = 0
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowDisplayOption
@@ -241,12 +236,57 @@ func (m *DisplayOption) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.BoolDisplayType |= BoolDisplayType(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDisplayOption
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisplayOption
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BoolTrueValue = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoolFalseValue", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowDisplayOption
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthDisplayOption
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthDisplayOption
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.BoolFalseValue = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Opensea", wireType)
 			}

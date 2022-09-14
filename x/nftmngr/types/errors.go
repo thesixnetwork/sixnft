@@ -40,4 +40,5 @@ var (
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists = sdkerrors.Register(ModuleName, 300, "RefId already exists")
+	ErrEmptyChangeList    = sdkerrors.Register(ModuleName, 301, "No changes were updated")
 )
