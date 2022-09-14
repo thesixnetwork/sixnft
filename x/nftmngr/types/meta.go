@@ -73,6 +73,15 @@ func (m *Metadata) GetImage() string {
 }
 
 func (m *Metadata) SetImage(image string) {
+	currentImage := m.nftData.OnchainImage
+	if currentImage == "" {
+		currentImage = m.nftData.OriginImage
+	}
+	m.ChangeList = append(m.ChangeList, &MetadataChange{
+		Key:           "image",
+		PreviousValue: currentImage,
+		NewValue:      image,
+	})
 	m.nftData.OnchainImage = image
 }
 
