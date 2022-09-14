@@ -191,7 +191,8 @@
                 "required": true,
                 "hidden_to_marketplace": true,
                 "display_option": {
-                    "bool_display_type": "PRESENT_ABSENT",
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "_HIDDEN_",
                     "opensea": {
                         "display_type": "boolean",
                         "trait_type": "First Discount Used"
