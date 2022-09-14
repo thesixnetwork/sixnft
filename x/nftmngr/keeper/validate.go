@@ -21,6 +21,17 @@ func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]
 	return nftAttrValueMap
 }
 
+func ValidateRequiredAttributes(schemaAttributes []*types.AttributeDefinition, mapAttributeValues map[string]*types.NftAttributeValue) (bool, string) {
+	for _, schemaAttribute := range schemaAttributes {
+		if schemaAttribute.Required {
+			if _, ok := mapAttributeValues[schemaAttribute.Name]; !ok {
+				return false, schemaAttribute.Name
+			}
+		}
+	}
+	return true, ""
+}
+
 func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
 	mapAttributes := map[string]*types.AttributeDefinition{}
 	for _, attriDef := range attributes {
