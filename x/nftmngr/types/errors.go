@@ -14,6 +14,7 @@ var (
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 3, "Error parsing metadata")
 	ErrCreatorDoesNotMatch    = sdkerrors.Register(ModuleName, 4, "Only creator can run this action")
 	ErrMetadataDoesNotExists  = sdkerrors.Register(ModuleName, 5, "Metadata of the toekn does not exists")
+	ErrParsingAttributeValue  = sdkerrors.Register(ModuleName, 6, "Error parsing attribute value")
 
 	// Metadata (100-199)
 	ErrMetadataAlreadyExists                     = sdkerrors.Register(ModuleName, 100, "Metadata already exists")
@@ -38,6 +39,7 @@ var (
 	ErrDuplicateAttributesValue        = sdkerrors.Register(ModuleName, 205, "Duplicate attributes value")
 	ErrSameTypeNFTAttributes           = sdkerrors.Register(ModuleName, 206, "Same type NFT attributes")
 	ErrSameTypeTokenAttributes         = sdkerrors.Register(ModuleName, 207, "Same type token attributes")
+	ErrAttributeDoesNotExists          = sdkerrors.Register(ModuleName, 208, "Attribute does not exists")
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists = sdkerrors.Register(ModuleName, 300, "RefId already exists")

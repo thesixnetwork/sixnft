@@ -310,3 +310,9 @@ ignite scaffold map Organization owner \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold message setNFTAttribute nft_schema_code attribute_value:NftAttributeValue \
+    --desc "To set NFT attribute" \
+    --response nft_schema_code,attribute_name,attribute_value \
+    --no-simulation \
+    --module nftmngr

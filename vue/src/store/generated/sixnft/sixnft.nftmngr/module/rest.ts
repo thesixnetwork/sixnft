@@ -84,6 +84,12 @@ export interface NftmngrMsgPerformActionByAdminResponse {
   token_id?: string;
 }
 
+export interface NftmngrMsgSetNFTAttributeResponse {
+  nft_schema_code?: string;
+  attribute_name?: string;
+  nft_attribute_value?: string;
+}
+
 export interface NftmngrNFTSchema {
   code?: string;
   name?: string;
