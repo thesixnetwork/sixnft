@@ -1,16 +1,23 @@
 accounts:
-  - name: alice
-    coins: ["20000token", "200000000stake"]
-  - name: bob
-    coins: ["10000token", "100000000stake"]
+    - name: alice
+      coins: ["20000token", "200000000stake"]
+      mnemonic: glimpse black injury curtain switch immune flip remove bag company speed title they can tennis round fine duck sibling crucial top uncover approve donor
+    - name: bob
+      coins: ["10000token", "100000000stake"]
+      mnemonic: total guard shrimp clip cruel broccoli cart frown awesome behind sick accident add rival token second prize result love eyebrow sort balcony model poet
 validator:
-  name: alice
-  staked: "100000000stake"
+    name: alice
+    staked: "100000000stake"
 client:
-  openapi:
-    path: "docs/static/openapi.yml"
-  vuex:
-    path: "vue/src/store"
+    openapi:
+        path: "docs/static/openapi.yml"
+    vuex:
+        path: "vue/src/store"
 faucet:
-  name: bob
-  coins: ["5token", "100000stake"]
+    name: bob
+    coins: ["5token", "100000stake"]
+genesis:
+    app_state:
+        admin:
+            authorization:
+                root_admin: 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq

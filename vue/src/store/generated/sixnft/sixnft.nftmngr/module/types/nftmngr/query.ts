@@ -8,6 +8,7 @@ import {
 } from "../cosmos/base/query/v1beta1/pagination";
 import { NftData } from "../nftmngr/nft_data";
 import { ActionByRefId } from "../nftmngr/action_by_ref_id";
+import { Organization } from "../nftmngr/organization";
 
 export const protobufPackage = "sixnft.nftmngr";
 
@@ -69,6 +70,23 @@ export interface QueryAllActionByRefIdRequest {
 
 export interface QueryAllActionByRefIdResponse {
   actionByRefId: ActionByRefId[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetOrganizationRequest {
+  name: string;
+}
+
+export interface QueryGetOrganizationResponse {
+  organization: Organization | undefined;
+}
+
+export interface QueryAllOrganizationRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllOrganizationResponse {
+  organization: Organization[];
   pagination: PageResponse | undefined;
 }
 
@@ -1110,6 +1128,325 @@ export const QueryAllActionByRefIdResponse = {
   },
 };
 
+const baseQueryGetOrganizationRequest: object = { name: "" };
+
+export const QueryGetOrganizationRequest = {
+  encode(
+    message: QueryGetOrganizationRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetOrganizationRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetOrganizationRequest,
+    } as QueryGetOrganizationRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetOrganizationRequest {
+    const message = {
+      ...baseQueryGetOrganizationRequest,
+    } as QueryGetOrganizationRequest;
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetOrganizationRequest): unknown {
+    const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetOrganizationRequest>
+  ): QueryGetOrganizationRequest {
+    const message = {
+      ...baseQueryGetOrganizationRequest,
+    } as QueryGetOrganizationRequest;
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    return message;
+  },
+};
+
+const baseQueryGetOrganizationResponse: object = {};
+
+export const QueryGetOrganizationResponse = {
+  encode(
+    message: QueryGetOrganizationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.organization !== undefined) {
+      Organization.encode(
+        message.organization,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetOrganizationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetOrganizationResponse,
+    } as QueryGetOrganizationResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.organization = Organization.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetOrganizationResponse {
+    const message = {
+      ...baseQueryGetOrganizationResponse,
+    } as QueryGetOrganizationResponse;
+    if (object.organization !== undefined && object.organization !== null) {
+      message.organization = Organization.fromJSON(object.organization);
+    } else {
+      message.organization = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetOrganizationResponse): unknown {
+    const obj: any = {};
+    message.organization !== undefined &&
+      (obj.organization = message.organization
+        ? Organization.toJSON(message.organization)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetOrganizationResponse>
+  ): QueryGetOrganizationResponse {
+    const message = {
+      ...baseQueryGetOrganizationResponse,
+    } as QueryGetOrganizationResponse;
+    if (object.organization !== undefined && object.organization !== null) {
+      message.organization = Organization.fromPartial(object.organization);
+    } else {
+      message.organization = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllOrganizationRequest: object = {};
+
+export const QueryAllOrganizationRequest = {
+  encode(
+    message: QueryAllOrganizationRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllOrganizationRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllOrganizationRequest,
+    } as QueryAllOrganizationRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllOrganizationRequest {
+    const message = {
+      ...baseQueryAllOrganizationRequest,
+    } as QueryAllOrganizationRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllOrganizationRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllOrganizationRequest>
+  ): QueryAllOrganizationRequest {
+    const message = {
+      ...baseQueryAllOrganizationRequest,
+    } as QueryAllOrganizationRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllOrganizationResponse: object = {};
+
+export const QueryAllOrganizationResponse = {
+  encode(
+    message: QueryAllOrganizationResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.organization) {
+      Organization.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllOrganizationResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllOrganizationResponse,
+    } as QueryAllOrganizationResponse;
+    message.organization = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.organization.push(
+            Organization.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllOrganizationResponse {
+    const message = {
+      ...baseQueryAllOrganizationResponse,
+    } as QueryAllOrganizationResponse;
+    message.organization = [];
+    if (object.organization !== undefined && object.organization !== null) {
+      for (const e of object.organization) {
+        message.organization.push(Organization.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllOrganizationResponse): unknown {
+    const obj: any = {};
+    if (message.organization) {
+      obj.organization = message.organization.map((e) =>
+        e ? Organization.toJSON(e) : undefined
+      );
+    } else {
+      obj.organization = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllOrganizationResponse>
+  ): QueryAllOrganizationResponse {
+    const message = {
+      ...baseQueryAllOrganizationResponse,
+    } as QueryAllOrganizationResponse;
+    message.organization = [];
+    if (object.organization !== undefined && object.organization !== null) {
+      for (const e of object.organization) {
+        message.organization.push(Organization.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1134,6 +1471,14 @@ export interface Query {
   ActionByRefIdAll(
     request: QueryAllActionByRefIdRequest
   ): Promise<QueryAllActionByRefIdResponse>;
+  /** Queries a Organization by index. */
+  Organization(
+    request: QueryGetOrganizationRequest
+  ): Promise<QueryGetOrganizationResponse>;
+  /** Queries a list of Organization items. */
+  OrganizationAll(
+    request: QueryAllOrganizationRequest
+  ): Promise<QueryAllOrganizationResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1218,6 +1563,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllActionByRefIdResponse.decode(new Reader(data))
+    );
+  }
+
+  Organization(
+    request: QueryGetOrganizationRequest
+  ): Promise<QueryGetOrganizationResponse> {
+    const data = QueryGetOrganizationRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Query",
+      "Organization",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetOrganizationResponse.decode(new Reader(data))
+    );
+  }
+
+  OrganizationAll(
+    request: QueryAllOrganizationRequest
+  ): Promise<QueryAllOrganizationResponse> {
+    const data = QueryAllOrganizationRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Query",
+      "OrganizationAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllOrganizationResponse.decode(new Reader(data))
     );
   }
 }

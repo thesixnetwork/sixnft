@@ -40,6 +40,14 @@ func TestGenesis(t *testing.T) {
 				RefId: "1",
 			},
 		},
+		OrganizationList: []types.Organization{
+			{
+				Name: "0",
+			},
+			{
+				Name: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -54,5 +62,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.NFTSchemaList, got.NFTSchemaList)
 	require.ElementsMatch(t, genesisState.NftDataList, got.NftDataList)
 	require.ElementsMatch(t, genesisState.ActionByRefIdList, got.ActionByRefIdList)
+	require.ElementsMatch(t, genesisState.OrganizationList, got.OrganizationList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

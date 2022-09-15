@@ -279,3 +279,47 @@ ignite scaffold message createMintRequest nft_schema_code:string token_id:string
     --response nft_schema_code,token_id \
     --no-simulation \
     --module nftoracle
+
+# To create token module
+ignite scaffold module admin
+
+ignite scaffold type permissions \
+    --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold single authorization root_admin:string permissions:Permissions \
+    --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message grantPermission name grantee \
+    --desc "To grant permission" \
+    --response grantee \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message revokePermission name revokee \
+    --desc "To revoke permission" \
+    --response revokee \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message mint amount:uint token:string \
+    --desc "To mint token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message burn amount:uint token:string \
+    --desc "To burn token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin
+
+
+ignite scaffold map Organization owner \
+    --index name \
+    --no-message \
+    --no-simulation \
+    --module nftmngr

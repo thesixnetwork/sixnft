@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		NFTSchemaList:     []NFTSchema{},
 		NftDataList:       []NftData{},
 		ActionByRefIdList: []ActionByRefId{},
+		OrganizationList:  []Organization{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -50,6 +51,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for actionByRefId")
 		}
 		actionByRefIdIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in organization
+	organizationIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.OrganizationList {
+		index := string(OrganizationKey(elem.Name))
+		if _, ok := organizationIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for organization")
+		}
+		organizationIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.admin;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "sixnft/x/admin/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}

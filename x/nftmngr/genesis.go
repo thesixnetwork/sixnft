@@ -21,6 +21,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.ActionByRefIdList {
 		k.SetActionByRefId(ctx, elem)
 	}
+	// Set all the organization
+	for _, elem := range genState.OrganizationList {
+		k.SetOrganization(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -33,6 +37,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.NFTSchemaList = k.GetAllNFTSchema(ctx)
 	genesis.NftDataList = k.GetAllNftData(ctx)
 	genesis.ActionByRefIdList = k.GetAllActionByRefId(ctx)
+	genesis.OrganizationList = k.GetAllOrganization(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

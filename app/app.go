@@ -21,6 +21,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/ante"
+
+	admintypes "sixnft/x/admin/types"
+
 	authrest "github.com/cosmos/cosmos-sdk/x/auth/client/rest"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
 	authsims "github.com/cosmos/cosmos-sdk/x/auth/simulation"
@@ -99,6 +102,9 @@ import (
 	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
 
 	"sixnft/docs"
+	adminmodule "sixnft/x/admin"
+	adminmodulekeeper "sixnft/x/admin/keeper"
+	adminmoduletypes "sixnft/x/admin/types"
 	evmsupportmodule "sixnft/x/evmsupport"
 	evmsupportmodulekeeper "sixnft/x/evmsupport/keeper"
 	evmsupportmoduletypes "sixnft/x/evmsupport/types"
@@ -165,6 +171,7 @@ var (
 		nftmngrmodule.AppModuleBasic{},
 		evmsupportmodule.AppModuleBasic{},
 		nftoraclemodule.AppModuleBasic{},
+		adminmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -177,6 +184,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		admintypes.ModuleName:          {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -242,6 +250,7 @@ type App struct {
 	EvmsupportKeeper evmsupportmodulekeeper.Keeper
 
 	NftoracleKeeper nftoraclemodulekeeper.Keeper
+	AdminKeeper     adminmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -281,6 +290,7 @@ func New(
 		nftmngrmoduletypes.StoreKey,
 		evmsupportmoduletypes.StoreKey,
 		nftoraclemoduletypes.StoreKey,
+		adminmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -427,6 +437,15 @@ func New(
 		app.NftmngrKeeper,
 	)
 	nftoracleModule := nftoraclemodule.NewAppModule(appCodec, app.NftoracleKeeper, app.AccountKeeper, app.BankKeeper)
+	app.AdminKeeper = *adminmodulekeeper.NewKeeper(
+		appCodec,
+		keys[adminmoduletypes.StoreKey],
+		keys[adminmoduletypes.MemStoreKey],
+		app.GetSubspace(adminmoduletypes.ModuleName),
+
+		app.BankKeeper,
+	)
+	adminModule := adminmodule.NewAppModule(appCodec, app.AdminKeeper, app.AccountKeeper, app.BankKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
@@ -472,6 +491,7 @@ func New(
 		nftmngrModule,
 		evmsupportModule,
 		nftoracleModule,
+		adminModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -502,6 +522,7 @@ func New(
 		nftmngrmoduletypes.ModuleName,
 		evmsupportmoduletypes.ModuleName,
 		nftoraclemoduletypes.ModuleName,
+		adminmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -528,6 +549,7 @@ func New(
 		nftmngrmoduletypes.ModuleName,
 		evmsupportmoduletypes.ModuleName,
 		nftoraclemoduletypes.ModuleName,
+		adminmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -559,6 +581,7 @@ func New(
 		nftmngrmoduletypes.ModuleName,
 		evmsupportmoduletypes.ModuleName,
 		nftoraclemoduletypes.ModuleName,
+		adminmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -586,6 +609,7 @@ func New(
 		nftmngrModule,
 		evmsupportModule,
 		nftoracleModule,
+		adminModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -778,6 +802,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(nftmngrmoduletypes.ModuleName)
 	paramsKeeper.Subspace(evmsupportmoduletypes.ModuleName)
 	paramsKeeper.Subspace(nftoraclemoduletypes.ModuleName)
+	paramsKeeper.Subspace(adminmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper

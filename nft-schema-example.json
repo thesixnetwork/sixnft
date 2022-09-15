@@ -168,10 +168,9 @@
         "nft_attributes": [
             {
                 "name": "expire_date",
-                "data_type": "long",
+                "data_type": "number",
                 "display_value_field": "value",
                 "display_option": {
-                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "display_type": "date",
                         "trait_type": "Expire Date"
@@ -190,7 +189,15 @@
                 "name": "first_discount_used",
                 "data_type": "boolean",
                 "required": true,
-                "hidden_to_marketplace": true
+                "hidden_to_marketplace": true,
+                "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "_HIDDEN_",
+                    "opensea": {
+                        "display_type": "boolean",
+                        "trait_type": "First Discount Used"
+                    }
+                }
             },
             {
                 "name": "percent_discount_10",
@@ -199,36 +206,33 @@
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "trait_type": "Available 10 Percent Discount",
-                        "max_value": 5,
+                        "max_value": 10,
                         "display_type": "number"
                     }
                 }
             },
             {
                 "name": "discount_percentage",
-                "default_mint_value": "0",
-                "data_type": "interger",
+                "default_mint_value": "10",
+                "data_type": "number",
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
-                        "trait_type": "Discount",
+                        "trait_type": "Discount Percentage",
                         "display_type": "boost_percentage"
                     }
                 }
             },
             {
                 "name": "discount_amount",
-                "default_mint_value": "0",
-                "data_type": "interger",
+                "default_mint_value": "100",
+                "data_type": "number",
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
-                    "bool_display_type": "PRESENT_ABSENT",
                     "opensea": {
                         "trait_type": "Discount",
                         "display_type": "boost_number"
