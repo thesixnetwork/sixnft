@@ -16,6 +16,7 @@ service Msg {
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
   rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
+  rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -87,6 +88,18 @@ message MsgAddTokenAttribute {
 }
 
 message MsgAddTokenAttributeResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainData = 3;
+}
+
+message MsgAddAction {
+  string creator = 1;
+  string code = 2;
+  string base64NewAction = 3;
+}
+
+message MsgAddActionResponse {
   string code = 1;
   string name = 2;
   OnChainData onchainData = 3;

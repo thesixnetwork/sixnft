@@ -13,6 +13,15 @@ func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.A
 	return attrDefMap
 }
 
+// create ActionMap
+func CreateActionMap(actions []*types.Action) map[string]*types.Action {
+	actionMap := make(map[string]*types.Action)
+	for _, action := range actions {
+		actionMap[action.Name] = action
+	}
+	return actionMap
+}
+
 func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]*types.NftAttributeValue {
 	nftAttrValueMap := make(map[string]*types.NftAttributeValue)
 	for _, nftAttrValue := range nftAttrValues {

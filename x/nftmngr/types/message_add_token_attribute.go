@@ -11,8 +11,8 @@ var _ sdk.Msg = &MsgAddTokenAttribute{}
 
 func NewMsgAddTokenAttribute(creator string, code string, base64NewTokenAttriute string) *MsgAddTokenAttribute {
 	return &MsgAddTokenAttribute{
-		Creator:                     creator,
-		Code:                        code,
+		Creator:                creator,
+		Code:                   code,
 		Base64NewTokenAttriute: base64NewTokenAttriute,
 	}
 }

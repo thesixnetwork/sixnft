@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"sixnft/x/nftmngr/types"
-	
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -48,7 +48,6 @@ func (k msgServer) AddTokenAttribute(goCtx context.Context, msg *types.MsgAddTok
 		OnchainData: schema.OnchainData,
 	}, nil
 }
-
 
 //validate AttributeDefinition data
 func (k Keeper) ValidateTokenAttribute(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
