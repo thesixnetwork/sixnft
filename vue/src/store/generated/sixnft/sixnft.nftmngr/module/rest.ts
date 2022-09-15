@@ -73,7 +73,7 @@ export interface NftmngrDisplayOption {
 export interface NftmngrMsgAddActionResponse {
   code?: string;
   name?: string;
-  onchainDataAction?: NftmngrOnChainData;
+  onchainData?: NftmngrOnChainData;
 }
 
 export interface NftmngrMsgAddAttributeResponse {

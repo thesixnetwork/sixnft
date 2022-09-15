@@ -85,7 +85,7 @@ export interface MsgAddAction {
 export interface MsgAddActionResponse {
   code: string;
   name: string;
-  onchainDataAction: OnChainData | undefined;
+  onchainData: OnChainData | undefined;
 }
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
@@ -1431,9 +1431,9 @@ export const MsgAddActionResponse = {
     if (message.name !== "") {
       writer.uint32(18).string(message.name);
     }
-    if (message.onchainDataAction !== undefined) {
+    if (message.onchainData !== undefined) {
       OnChainData.encode(
-        message.onchainDataAction,
+        message.onchainData,
         writer.uint32(26).fork()
       ).ldelim();
     }
@@ -1454,10 +1454,7 @@ export const MsgAddActionResponse = {
           message.name = reader.string();
           break;
         case 3:
-          message.onchainDataAction = OnChainData.decode(
-            reader,
-            reader.uint32()
-          );
+          message.onchainData = OnChainData.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -1479,15 +1476,10 @@ export const MsgAddActionResponse = {
     } else {
       message.name = "";
     }
-    if (
-      object.onchainDataAction !== undefined &&
-      object.onchainDataAction !== null
-    ) {
-      message.onchainDataAction = OnChainData.fromJSON(
-        object.onchainDataAction
-      );
+    if (object.onchainData !== undefined && object.onchainData !== null) {
+      message.onchainData = OnChainData.fromJSON(object.onchainData);
     } else {
-      message.onchainDataAction = undefined;
+      message.onchainData = undefined;
     }
     return message;
   },
@@ -1496,9 +1488,9 @@ export const MsgAddActionResponse = {
     const obj: any = {};
     message.code !== undefined && (obj.code = message.code);
     message.name !== undefined && (obj.name = message.name);
-    message.onchainDataAction !== undefined &&
-      (obj.onchainDataAction = message.onchainDataAction
-        ? OnChainData.toJSON(message.onchainDataAction)
+    message.onchainData !== undefined &&
+      (obj.onchainData = message.onchainData
+        ? OnChainData.toJSON(message.onchainData)
         : undefined);
     return obj;
   },
@@ -1515,15 +1507,10 @@ export const MsgAddActionResponse = {
     } else {
       message.name = "";
     }
-    if (
-      object.onchainDataAction !== undefined &&
-      object.onchainDataAction !== null
-    ) {
-      message.onchainDataAction = OnChainData.fromPartial(
-        object.onchainDataAction
-      );
+    if (object.onchainData !== undefined && object.onchainData !== null) {
+      message.onchainData = OnChainData.fromPartial(object.onchainData);
     } else {
-      message.onchainDataAction = undefined;
+      message.onchainData = undefined;
     }
     return message;
   },

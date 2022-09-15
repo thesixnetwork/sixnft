@@ -41,6 +41,12 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
+	// append new action
+	schema.OnchainData.Actions = append(schema.OnchainData.Actions, &new_action)
+
+	// save schema
+	k.Keeper.SetNFTSchema(ctx, schema)
+
 
 	return &types.MsgAddActionResponse{
 		Code:        msg.GetCode(),
