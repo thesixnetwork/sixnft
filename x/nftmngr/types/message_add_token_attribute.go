@@ -9,11 +9,11 @@ const TypeMsgAddTokenAttribute = "add_token_attribute"
 
 var _ sdk.Msg = &MsgAddTokenAttribute{}
 
-func NewMsgAddTokenAttribute(creator string, code string, base64NewAttriuteDefenition string) *MsgAddTokenAttribute {
+func NewMsgAddTokenAttribute(creator string, code string, base64NewTokenAttriute string) *MsgAddTokenAttribute {
 	return &MsgAddTokenAttribute{
 		Creator:                     creator,
 		Code:                        code,
-		Base64NewAttriuteDefenition: base64NewAttriuteDefenition,
+		Base64NewTokenAttriute: base64NewTokenAttriute,
 	}
 }
 

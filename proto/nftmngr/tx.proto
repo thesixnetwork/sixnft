@@ -83,7 +83,7 @@ message MsgAddAttributeResponse {
 message MsgAddTokenAttribute {
   string creator = 1;
   string code = 2;
-  string base64NewAttriuteDefenition = 3;
+  string base64NewTokenAttriute = 3;
 }
 
 message MsgAddTokenAttributeResponse {

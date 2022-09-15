@@ -16,7 +16,7 @@ func (k msgServer) AddTokenAttribute(goCtx context.Context, msg *types.MsgAddTok
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var new_add_token_attribute types.AttributeDefinition
-	input_token_addribute, err := base64.StdEncoding.DecodeString(msg.Base64NewAttriuteDefenition)
+	input_token_addribute, err := base64.StdEncoding.DecodeString(msg.Base64NewTokenAttriute)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
