@@ -35,6 +35,22 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
+
+	// Append Attribute with default value to NFT Data if not exist in NFT Data yet
+	mapOfTokenAttributeValues := map[string]*types.NftAttributeValue{}
+	for _, attr := range data.OnchainAttributes {
+		mapOfTokenAttributeValues[attr.Name] = attr
+	}
+	for _, attr := range schema.OnchainData.TokenAttributes {
+		if attr.Required {
+			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
+				if attr.DefaultMintValue != nil {
+					data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+				}
+			}
+		}
+	}
+
 	// Add attributes from schema to metadata onchain attributes
 	for _, attribute := range schema.OnchainData.NftAttributesValue {
 		data.OnchainAttributes = append(data.OnchainAttributes, attribute)
@@ -86,4 +102,23 @@ func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema)
 		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s", err))
 	}
 	return true, nil
+}
+
+func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.DefaultMintValue) *types.NftAttributeValue {
+	nftAttributeValue := &types.NftAttributeValue{
+		Name: name,
+	}
+	switch defaultValue.Value.(type) {
+	case *types.DefaultMintValue_NumberAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: defaultValue.GetNumberAttributeValue()}
+	case *types.DefaultMintValue_StringAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{StringAttributeValue: defaultValue.GetStringAttributeValue()}
+	case *types.DefaultMintValue_BooleanAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{BooleanAttributeValue: defaultValue.GetBooleanAttributeValue()}
+	case *types.DefaultMintValue_FloatAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{FloatAttributeValue: defaultValue.GetFloatAttributeValue()}
+	default:
+		return nil
+	}
+	return nftAttributeValue
 }

@@ -30614,16 +30614,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31189,16 +31179,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -31553,7 +31533,30 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
                         uri_retrieval_method:
@@ -31601,7 +31604,30 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
                         token_attributes:
@@ -31635,7 +31661,30 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
                         actions:
@@ -31949,16 +31998,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -32028,7 +32067,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       uri_retrieval_method:
@@ -32076,7 +32138,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       token_attributes:
@@ -32110,7 +32195,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       actions:
@@ -54095,7 +54203,30 @@ definitions:
                 type: string
                 format: uint64
       default_mint_value:
-        type: string
+        type: object
+        properties:
+          number_attribute_value:
+            type: object
+            properties:
+              value:
+                type: string
+                format: uint64
+          string_attribute_value:
+            type: object
+            properties:
+              value:
+                type: string
+          boolean_attribute_value:
+            type: object
+            properties:
+              value:
+                type: boolean
+          float_attribute_value:
+            type: object
+            properties:
+              value:
+                type: number
+                format: double
       hidden_to_marketplace:
         type: boolean
   sixnft.nftmngr.AttributeOverriding:
@@ -54104,6 +54235,36 @@ definitions:
       - ORIGIN
       - CHAIN
     default: ORIGIN
+  sixnft.nftmngr.BooleanAttributeValue:
+    type: object
+    properties:
+      value:
+        type: boolean
+  sixnft.nftmngr.DefaultMintValue:
+    type: object
+    properties:
+      number_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+            format: uint64
+      string_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+      boolean_attribute_value:
+        type: object
+        properties:
+          value:
+            type: boolean
+      float_attribute_value:
+        type: object
+        properties:
+          value:
+            type: number
+            format: double
   sixnft.nftmngr.DisplayOption:
     type: object
     properties:
@@ -54121,6 +54282,12 @@ definitions:
           max_value:
             type: string
             format: uint64
+  sixnft.nftmngr.FloatAttributeValue:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
   sixnft.nftmngr.MsgCreateMetadataResponse:
     type: object
     properties:
@@ -54197,7 +54364,30 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
           uri_retrieval_method:
@@ -54245,7 +54435,30 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
           token_attributes:
@@ -54279,7 +54492,30 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
           actions:
@@ -54361,28 +54597,6 @@ definitions:
           value:
             type: number
             format: double
-  sixnft.nftmngr.NftAttributeValue.BooleanAttributeValue:
-    type: object
-    properties:
-      value:
-        type: boolean
-  sixnft.nftmngr.NftAttributeValue.FloatAttributeValue:
-    type: object
-    properties:
-      value:
-        type: number
-        format: double
-  sixnft.nftmngr.NftAttributeValue.NumberAttributeValue:
-    type: object
-    properties:
-      value:
-        type: string
-        format: uint64
-  sixnft.nftmngr.NftAttributeValue.StringAttributeValue:
-    type: object
-    properties:
-      value:
-        type: string
   sixnft.nftmngr.NftData:
     type: object
     properties:
@@ -54460,6 +54674,12 @@ definitions:
                 value:
                   type: number
                   format: double
+  sixnft.nftmngr.NumberAttributeValue:
+    type: object
+    properties:
+      value:
+        type: string
+        format: uint64
   sixnft.nftmngr.OnChainData:
     type: object
     properties:
@@ -54499,7 +54719,30 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
       token_attributes:
@@ -54533,7 +54776,30 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
       actions:
@@ -54646,7 +54912,30 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
       uri_retrieval_method:
@@ -54769,7 +55058,30 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
                 uri_retrieval_method:
@@ -54817,7 +55129,30 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
                 token_attributes:
@@ -54851,7 +55186,30 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
                 actions:
@@ -55114,7 +55472,30 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
               uri_retrieval_method:
@@ -55162,7 +55543,30 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
               token_attributes:
@@ -55196,7 +55600,30 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
               actions:
@@ -55338,6 +55765,11 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftmngr.StringAttributeValue:
+    type: object
+    properties:
+      value:
+        type: string
   sixnft.nftmngr.URIRetrievalMethod:
     type: string
     enum:
