@@ -70,6 +70,12 @@ export interface NftmngrDisplayOption {
   opensea?: NftmngrOpenseaDisplayOption;
 }
 
+export interface NftmngrMsgAddAttributeResponse {
+  code?: string;
+  name?: string;
+  onchainData?: NftmngrOnChainData;
+}
+
 export interface NftmngrMsgCreateMetadataResponse {
   nftSchemaCode?: string;
   tokenId?: string;

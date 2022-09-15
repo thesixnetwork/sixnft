@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Reader, Writer } from "protobufjs/minimal";
 import { Any } from "../google/protobuf/any";
+import { OnChainData } from "../nftmngr/on_chain_data";
 
 export const protobufPackage = "sixnft.nftmngr";
 
@@ -49,6 +50,18 @@ export interface MsgPerformActionByAdmin {
 export interface MsgPerformActionByAdminResponse {
   nft_schema_code: string;
   token_id: string;
+}
+
+export interface MsgAddAttribute {
+  creator: string;
+  code: string;
+  base64NewAttriuteDefenition: string;
+}
+
+export interface MsgAddAttributeResponse {
+  code: string;
+  name: string;
+  onchainData: OnChainData | undefined;
 }
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
@@ -865,6 +878,214 @@ export const MsgPerformActionByAdminResponse = {
   },
 };
 
+const baseMsgAddAttribute: object = {
+  creator: "",
+  code: "",
+  base64NewAttriuteDefenition: "",
+};
+
+export const MsgAddAttribute = {
+  encode(message: MsgAddAttribute, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.code !== "") {
+      writer.uint32(18).string(message.code);
+    }
+    if (message.base64NewAttriuteDefenition !== "") {
+      writer.uint32(26).string(message.base64NewAttriuteDefenition);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgAddAttribute {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgAddAttribute } as MsgAddAttribute;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.code = reader.string();
+          break;
+        case 3:
+          message.base64NewAttriuteDefenition = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgAddAttribute {
+    const message = { ...baseMsgAddAttribute } as MsgAddAttribute;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (
+      object.base64NewAttriuteDefenition !== undefined &&
+      object.base64NewAttriuteDefenition !== null
+    ) {
+      message.base64NewAttriuteDefenition = String(
+        object.base64NewAttriuteDefenition
+      );
+    } else {
+      message.base64NewAttriuteDefenition = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgAddAttribute): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.code !== undefined && (obj.code = message.code);
+    message.base64NewAttriuteDefenition !== undefined &&
+      (obj.base64NewAttriuteDefenition = message.base64NewAttriuteDefenition);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgAddAttribute>): MsgAddAttribute {
+    const message = { ...baseMsgAddAttribute } as MsgAddAttribute;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (
+      object.base64NewAttriuteDefenition !== undefined &&
+      object.base64NewAttriuteDefenition !== null
+    ) {
+      message.base64NewAttriuteDefenition = object.base64NewAttriuteDefenition;
+    } else {
+      message.base64NewAttriuteDefenition = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgAddAttributeResponse: object = { code: "", name: "" };
+
+export const MsgAddAttributeResponse = {
+  encode(
+    message: MsgAddAttributeResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.code !== "") {
+      writer.uint32(10).string(message.code);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.onchainData !== undefined) {
+      OnChainData.encode(
+        message.onchainData,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgAddAttributeResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgAddAttributeResponse,
+    } as MsgAddAttributeResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.code = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        case 3:
+          message.onchainData = OnChainData.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgAddAttributeResponse {
+    const message = {
+      ...baseMsgAddAttributeResponse,
+    } as MsgAddAttributeResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (object.onchainData !== undefined && object.onchainData !== null) {
+      message.onchainData = OnChainData.fromJSON(object.onchainData);
+    } else {
+      message.onchainData = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgAddAttributeResponse): unknown {
+    const obj: any = {};
+    message.code !== undefined && (obj.code = message.code);
+    message.name !== undefined && (obj.name = message.name);
+    message.onchainData !== undefined &&
+      (obj.onchainData = message.onchainData
+        ? OnChainData.toJSON(message.onchainData)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgAddAttributeResponse>
+  ): MsgAddAttributeResponse {
+    const message = {
+      ...baseMsgAddAttributeResponse,
+    } as MsgAddAttributeResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (object.onchainData !== undefined && object.onchainData !== null) {
+      message.onchainData = OnChainData.fromPartial(object.onchainData);
+    } else {
+      message.onchainData = undefined;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -873,10 +1094,11 @@ export interface Msg {
   CreateMetadata(
     request: MsgCreateMetadata
   ): Promise<MsgCreateMetadataResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   PerformActionByAdmin(
     request: MsgPerformActionByAdmin
   ): Promise<MsgPerformActionByAdminResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  AddAttribute(request: MsgAddAttribute): Promise<MsgAddAttributeResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -923,6 +1145,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgPerformActionByAdminResponse.decode(new Reader(data))
+    );
+  }
+
+  AddAttribute(request: MsgAddAttribute): Promise<MsgAddAttributeResponse> {
+    const data = MsgAddAttribute.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Msg",
+      "AddAttribute",
+      data
+    );
+    return promise.then((data) =>
+      MsgAddAttributeResponse.decode(new Reader(data))
     );
   }
 }

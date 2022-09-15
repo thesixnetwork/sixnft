@@ -30370,16 +30370,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -54325,6 +54315,141 @@ definitions:
           max_value:
             type: string
             format: uint64
+  sixnft.nftmngr.MsgAddAttributeResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      onchainData:
+        type: object
+        properties:
+          reveal_required:
+            type: boolean
+          reveal_secret:
+            type: string
+            format: byte
+          nft_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: string
+                hidden_to_marketplace:
+                  type: boolean
+          token_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: string
+                hidden_to_marketplace:
+                  type: boolean
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                when:
+                  type: string
+                then:
+                  type: array
+                  items:
+                    type: string
+          status:
+            type: object
+            additionalProperties:
+              type: boolean
+          on_off_switch:
+            type: object
+            additionalProperties:
+              type: boolean
+          nft_attributes_value:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
   sixnft.nftmngr.MsgCreateMetadataResponse:
     type: object
     properties:
