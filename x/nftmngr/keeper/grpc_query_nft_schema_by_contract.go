@@ -48,7 +48,6 @@ func (k Keeper) NFTSchemaByContract(c context.Context, req *types.QueryGetNFTSch
 	val, found := k.GetNFTSchemaByContract(
 		ctx,
 		req.OriginContractAddress,
-		req.Chain,
 	)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")

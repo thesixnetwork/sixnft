@@ -527,17 +527,6 @@ func request_Query_NFTSchemaByContract_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "originContractAddress", err)
 	}
 
-	val, ok = pathParams["chain"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "chain")
-	}
-
-	protoReq.Chain, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "chain", err)
-	}
-
 	msg, err := client.NFTSchemaByContract(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -563,17 +552,6 @@ func local_request_Query_NFTSchemaByContract_0(ctx context.Context, marshaler ru
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "originContractAddress", err)
-	}
-
-	val, ok = pathParams["chain"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "chain")
-	}
-
-	protoReq.Chain, err = runtime.String(val)
-
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "chain", err)
 	}
 
 	msg, err := server.NFTSchemaByContract(ctx, &protoReq)
@@ -1502,7 +1480,7 @@ var (
 
 	pattern_Query_NftCollection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_collection", "nftSchemaCode"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NFTSchemaByContract_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_schema_by_contract", "originContractAddress", "chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NFTSchemaByContract_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_schema_by_contract", "originContractAddress"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Query_NFTSchemaByContractAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_schema_by_contract"}, "", runtime.AssumeColonVerbOpt(true)))
 
