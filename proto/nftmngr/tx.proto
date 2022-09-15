@@ -2,8 +2,8 @@ syntax = "proto3";
 package sixnft.nftmngr;
 
 // this line is used by starport scaffolding # proto/tx/import
-import "nftmngr/nft_attribute_value.proto";
 import "nftmngr/on_chain_data.proto";
+import "nftmngr/nft_attribute_value.proto";
 import "nftmngr/attribute_definition.proto";
 
 import "google/protobuf/any.proto";
@@ -15,6 +15,7 @@ service Msg {
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
+  rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -74,6 +75,18 @@ message MsgAddAttribute {
 }
 
 message MsgAddAttributeResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainData = 3;
+}
+
+message MsgAddTokenAttribute {
+  string creator = 1;
+  string code = 2;
+  string base64NewAttriuteDefenition = 3;
+}
+
+message MsgAddTokenAttributeResponse {
   string code = 1;
   string name = 2;
   OnChainData onchainData = 3;

@@ -6,21 +6,21 @@ import (
 	"strconv"
 
 	"sixnft/x/nftmngr/types"
-
+	
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
+func (k msgServer) AddTokenAttribute(goCtx context.Context, msg *types.MsgAddTokenAttribute) (*types.MsgAddTokenAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	var new_add_attribute types.AttributeDefinition
-	input_addribute, err := base64.StdEncoding.DecodeString(msg.Base64NewAttriuteDefenition)
+	var new_add_token_attribute types.AttributeDefinition
+	input_token_addribute, err := base64.StdEncoding.DecodeString(msg.Base64NewAttriuteDefenition)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(input_addribute, &new_add_attribute)
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(input_token_addribute, &new_add_token_attribute)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
@@ -29,32 +29,33 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.GetCode())
 	}
+
 	//validate AttributeDefinition data
-	err = k.ValidateAttributeDefinition(&new_add_attribute, &schema)
+	err = k.ValidateTokenAttribute(&new_add_token_attribute, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
-	// append new nft_attributes to array of OnchainData.NftAttributes
-	schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
+	// append new nft_attributes to array of OnchainData.TokenAttributes
+	schema.OnchainData.TokenAttributes = append(schema.OnchainData.TokenAttributes, &new_add_token_attribute)
 
 	// set schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-	return &types.MsgAddAttributeResponse{
+	return &types.MsgAddTokenAttributeResponse{
 		Code:        msg.GetCode(),
 		Name:        schema.Name,
 		OnchainData: schema.OnchainData,
 	}, nil
-
 }
 
+
 //validate AttributeDefinition data
-func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+func (k Keeper) ValidateTokenAttribute(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
 	// Onchain Data Nft Attributes Map
-	mapNftAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
+	mapNftTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
 	// check if attribute name is unique
-	if _, found := mapNftAttributes[attribute.Name]; found {
+	if _, found := mapNftTokenAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
 

@@ -27,9 +27,9 @@ var (
 	ErrAttributeOverriding                       = sdkerrors.Register(ModuleName, 108, "Attribute overriding is not allowed")
 	ErrAttributeTypeNotMatch                     = sdkerrors.Register(ModuleName, 109, "Attribute type does not match")
 	ErrAttributeNotFoundForAction                = sdkerrors.Register(ModuleName, 110, "Attribute not found for action")
-	ErrAttributeDefinitionTypesMismatch			 = sdkerrors.Register(ModuleName, 111, "Attribute definition type is mismatch")
-	ErrAttributeAlreadyExists					 = sdkerrors.Register(ModuleName, 112, "Attribute already exists")
-	ErrInvalidAttribute							 = sdkerrors.Register(ModuleName, 113, "Invalid attribute")
+	ErrAttributeDefinitionTypesMismatch          = sdkerrors.Register(ModuleName, 111, "Attribute definition type is mismatch")
+	ErrAttributeAlreadyExists                    = sdkerrors.Register(ModuleName, 112, "Attribute already exists")
+	ErrInvalidAttribute                          = sdkerrors.Register(ModuleName, 113, "Invalid attribute")
 
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
