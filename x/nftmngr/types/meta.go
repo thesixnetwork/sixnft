@@ -3,6 +3,7 @@ package types
 import (
 	"regexp"
 	"strconv"
+	"time"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -70,6 +71,10 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 
 	}
 	return meta
+}
+
+func (m *Metadata) CurrentTimestamp() int64 {
+	return time.Now().Unix()
 }
 
 func (m *Metadata) GetImage() string {
