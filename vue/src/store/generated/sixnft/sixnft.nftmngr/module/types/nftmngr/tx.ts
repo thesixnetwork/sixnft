@@ -51,6 +51,18 @@ export interface MsgPerformActionByAdminResponse {
   token_id: string;
 }
 
+export interface MsgSetNFTAttribute {
+  creator: string;
+  nft_schema_code: string;
+  base64_nft_attribute_value: string;
+}
+
+export interface MsgSetNFTAttributeResponse {
+  nft_schema_code: string;
+  attribute_name: string;
+  nft_attribute_value: string;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -865,6 +877,240 @@ export const MsgPerformActionByAdminResponse = {
   },
 };
 
+const baseMsgSetNFTAttribute: object = {
+  creator: "",
+  nft_schema_code: "",
+  base64_nft_attribute_value: "",
+};
+
+export const MsgSetNFTAttribute = {
+  encode(
+    message: MsgSetNFTAttribute,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nft_schema_code !== "") {
+      writer.uint32(18).string(message.nft_schema_code);
+    }
+    if (message.base64_nft_attribute_value !== "") {
+      writer.uint32(26).string(message.base64_nft_attribute_value);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetNFTAttribute {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetNFTAttribute } as MsgSetNFTAttribute;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nft_schema_code = reader.string();
+          break;
+        case 3:
+          message.base64_nft_attribute_value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetNFTAttribute {
+    const message = { ...baseMsgSetNFTAttribute } as MsgSetNFTAttribute;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (
+      object.base64_nft_attribute_value !== undefined &&
+      object.base64_nft_attribute_value !== null
+    ) {
+      message.base64_nft_attribute_value = String(
+        object.base64_nft_attribute_value
+      );
+    } else {
+      message.base64_nft_attribute_value = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetNFTAttribute): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.base64_nft_attribute_value !== undefined &&
+      (obj.base64_nft_attribute_value = message.base64_nft_attribute_value);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSetNFTAttribute>): MsgSetNFTAttribute {
+    const message = { ...baseMsgSetNFTAttribute } as MsgSetNFTAttribute;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (
+      object.base64_nft_attribute_value !== undefined &&
+      object.base64_nft_attribute_value !== null
+    ) {
+      message.base64_nft_attribute_value = object.base64_nft_attribute_value;
+    } else {
+      message.base64_nft_attribute_value = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSetNFTAttributeResponse: object = {
+  nft_schema_code: "",
+  attribute_name: "",
+  nft_attribute_value: "",
+};
+
+export const MsgSetNFTAttributeResponse = {
+  encode(
+    message: MsgSetNFTAttributeResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nft_schema_code !== "") {
+      writer.uint32(10).string(message.nft_schema_code);
+    }
+    if (message.attribute_name !== "") {
+      writer.uint32(18).string(message.attribute_name);
+    }
+    if (message.nft_attribute_value !== "") {
+      writer.uint32(26).string(message.nft_attribute_value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSetNFTAttributeResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSetNFTAttributeResponse,
+    } as MsgSetNFTAttributeResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nft_schema_code = reader.string();
+          break;
+        case 2:
+          message.attribute_name = reader.string();
+          break;
+        case 3:
+          message.nft_attribute_value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetNFTAttributeResponse {
+    const message = {
+      ...baseMsgSetNFTAttributeResponse,
+    } as MsgSetNFTAttributeResponse;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (object.attribute_name !== undefined && object.attribute_name !== null) {
+      message.attribute_name = String(object.attribute_name);
+    } else {
+      message.attribute_name = "";
+    }
+    if (
+      object.nft_attribute_value !== undefined &&
+      object.nft_attribute_value !== null
+    ) {
+      message.nft_attribute_value = String(object.nft_attribute_value);
+    } else {
+      message.nft_attribute_value = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetNFTAttributeResponse): unknown {
+    const obj: any = {};
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.attribute_name !== undefined &&
+      (obj.attribute_name = message.attribute_name);
+    message.nft_attribute_value !== undefined &&
+      (obj.nft_attribute_value = message.nft_attribute_value);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSetNFTAttributeResponse>
+  ): MsgSetNFTAttributeResponse {
+    const message = {
+      ...baseMsgSetNFTAttributeResponse,
+    } as MsgSetNFTAttributeResponse;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (object.attribute_name !== undefined && object.attribute_name !== null) {
+      message.attribute_name = object.attribute_name;
+    } else {
+      message.attribute_name = "";
+    }
+    if (
+      object.nft_attribute_value !== undefined &&
+      object.nft_attribute_value !== null
+    ) {
+      message.nft_attribute_value = object.nft_attribute_value;
+    } else {
+      message.nft_attribute_value = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -873,10 +1119,13 @@ export interface Msg {
   CreateMetadata(
     request: MsgCreateMetadata
   ): Promise<MsgCreateMetadataResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   PerformActionByAdmin(
     request: MsgPerformActionByAdmin
   ): Promise<MsgPerformActionByAdminResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SetNFTAttribute(
+    request: MsgSetNFTAttribute
+  ): Promise<MsgSetNFTAttributeResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -923,6 +1172,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgPerformActionByAdminResponse.decode(new Reader(data))
+    );
+  }
+
+  SetNFTAttribute(
+    request: MsgSetNFTAttribute
+  ): Promise<MsgSetNFTAttributeResponse> {
+    const data = MsgSetNFTAttribute.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Msg",
+      "SetNFTAttribute",
+      data
+    );
+    return promise.then((data) =>
+      MsgSetNFTAttributeResponse.decode(new Reader(data))
     );
   }
 }

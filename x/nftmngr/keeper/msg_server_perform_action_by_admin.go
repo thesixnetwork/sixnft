@@ -33,7 +33,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			break
 		}
 	}
-	meta := types.NewMetadata(&tokenData, schema.OriginData.AttributeOverriding)
+	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 
 	err := ProcessAction(meta, &mapAction)
 	if err != nil {

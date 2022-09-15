@@ -2,6 +2,7 @@ syntax = "proto3";
 package sixnft.nftmngr;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "nftmngr/nft_attribute_value.proto";
 
 import "google/protobuf/any.proto";
 option go_package = "sixnft/x/nftmngr/types";
@@ -11,6 +12,7 @@ service Msg {
       rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
+  rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -61,6 +63,18 @@ message MsgPerformActionByAdmin {
 message MsgPerformActionByAdminResponse {
   string nft_schema_code = 1;
   string token_id = 2;
+}
+
+message MsgSetNFTAttribute {
+  string creator = 1;
+  string nft_schema_code = 2;
+  string base64_nft_attribute_value = 3;
+}
+
+message MsgSetNFTAttributeResponse {
+  string nft_schema_code = 1;
+  string attribute_name = 2;
+  string nft_attribute_value = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

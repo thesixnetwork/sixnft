@@ -27,7 +27,7 @@ type MetadataAttribute struct {
 
 var mapAllKey = map[string]*MetadataAttribute{}
 
-func NewMetadata(tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
+func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
 	meta := &Metadata{
 		nftData:           tokenData,
 		attributeOverring: attributeOverring,
@@ -37,6 +37,13 @@ func NewMetadata(tokenData *NftData, attributeOverring AttributeOverriding) *Met
 	mapAllKey = map[string]*MetadataAttribute{}
 
 	// Parse the metadata
+	for i, attri := range schema.GetOnchainData().NftAttributesValue {
+		mapAllKey[attri.Name] = &MetadataAttribute{
+			attributeValue: attri,
+			from:           "nft",
+			index:          i,
+		}
+	}
 	for i, attri := range tokenData.OriginAttributes {
 		mapAllKey[attri.Name] = &MetadataAttribute{
 			attributeValue: attri,
@@ -130,7 +137,7 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			mapAllKey[key].attributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.index] = newAttributeValue
 		} else {
-			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
+			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute or nft attribute")
 		}
 	} else {
 		return sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.attributeValue.Name)
