@@ -20,6 +20,7 @@ type (
 		paramstore paramtypes.Subspace
 
 		nftmngrKeeper types.NftmngrKeep
+		adminKeeper   types.AdminKeeper
 	}
 )
 
@@ -29,6 +30,7 @@ func NewKeeper(
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
 	nftmngrKeeper types.NftmngrKeep,
+	adminKeeper types.AdminKeeper,
 ) *Keeper {
 	// set KeyTable if it has not already been set
 	if !ps.HasKeyTable() {
@@ -42,6 +44,7 @@ func NewKeeper(
 		memKey:        memKey,
 		paramstore:    ps,
 		nftmngrKeeper: nftmngrKeeper,
+		adminKeeper:   adminKeeper,
 	}
 }
 

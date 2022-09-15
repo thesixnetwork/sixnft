@@ -428,15 +428,6 @@ func New(
 		app.EvmsupportKeeper,
 	)
 	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper, app.EvmsupportKeeper)
-
-	app.NftoracleKeeper = *nftoraclemodulekeeper.NewKeeper(
-		appCodec,
-		keys[nftoraclemoduletypes.StoreKey],
-		keys[nftoraclemoduletypes.MemStoreKey],
-		app.GetSubspace(nftoraclemoduletypes.ModuleName),
-		app.NftmngrKeeper,
-	)
-	nftoracleModule := nftoraclemodule.NewAppModule(appCodec, app.NftoracleKeeper, app.AccountKeeper, app.BankKeeper)
 	app.AdminKeeper = *adminmodulekeeper.NewKeeper(
 		appCodec,
 		keys[adminmoduletypes.StoreKey],
@@ -446,6 +437,15 @@ func New(
 		app.BankKeeper,
 	)
 	adminModule := adminmodule.NewAppModule(appCodec, app.AdminKeeper, app.AccountKeeper, app.BankKeeper)
+	app.NftoracleKeeper = *nftoraclemodulekeeper.NewKeeper(
+		appCodec,
+		keys[nftoraclemoduletypes.StoreKey],
+		keys[nftoraclemoduletypes.MemStoreKey],
+		app.GetSubspace(nftoraclemoduletypes.ModuleName),
+		app.NftmngrKeeper,
+		app.AdminKeeper,
+	)
+	nftoracleModule := nftoraclemodule.NewAppModule(appCodec, app.NftoracleKeeper, app.AccountKeeper, app.BankKeeper)
 
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
