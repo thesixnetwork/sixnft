@@ -81,7 +81,7 @@ func (gs GenesisState) Validate() error {
 	nFTSchemaByContractIndexMap := make(map[string]struct{})
 
 	for _, elem := range gs.NFTSchemaByContractList {
-		index := string(NFTSchemaByContractKey(elem.OriginContractAddress, elem.Chain))
+		index := string(NFTSchemaByContractKey(elem.OriginContractAddress))
 		if _, ok := nFTSchemaByContractIndexMap[index]; ok {
 			return fmt.Errorf("duplicated index for nFTSchemaByContract")
 		}
