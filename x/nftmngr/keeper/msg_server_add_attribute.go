@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
+	"strconv"
 
 	"sixnft/x/nftmngr/types"
 
@@ -28,6 +29,11 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.GetCode())
 	}
+	//validate AttributeDefinition data
+	err = k.ValidateAttributeDefinition(&mew_add_attribute, &schema)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
 
 	// append new nft_attributes to array of OnchainData.NftAttributes
 	schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &mew_add_attribute)
@@ -41,4 +47,49 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 		Name: schema.Name,
 		OnchainData: schema.OnchainData,
 	}, nil
+
+
+}
+
+//validate AttributeDefinition data
+func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+	// Onchain Data Nft Attributes Map
+	mapNftAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
+	// check if attribute name is unique
+	if _, found := mapNftAttributes[attribute.Name]; found {
+		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
+	}
+
+	// validate struct data
+	if attribute.Name == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute name is empty")
+	}
+	if attribute.DataType == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute type is empty")
+	}
+	if strconv.FormatBool(attribute.Required) == ""{
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute required is false")
+	}
+	if attribute.DisplayOption.BoolFalseValue == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute BoolFalseValue is empty")
+	}
+	if attribute.DisplayOption.BoolTrueValue == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute BoolTrueValue is empty")
+	}
+	if attribute.DisplayOption.Opensea.DisplayType == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute DisplayType is empty")
+	}
+	if attribute.DisplayOption.Opensea.TraitType == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute TraitType is empty")
+	}
+	if strconv.FormatUint(attribute.DisplayOption.Opensea.MaxValue,10) == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute MaxValue is empty")
+	}
+	if attribute.DefaultMintValue == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute DefaultMintValue is empty")
+	}
+	if strconv.FormatBool(attribute.HiddenToMarketplace) == "" {
+		return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute HiddenToMarketplace is false")
+	}
+	return nil
 }
