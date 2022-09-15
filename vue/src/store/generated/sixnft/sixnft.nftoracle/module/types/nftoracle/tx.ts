@@ -12,6 +12,7 @@ export interface MsgCreateMintRequest {
 }
 
 export interface MsgCreateMintRequestResponse {
+  id: number;
   nftSchemaCode: string;
   tokenId: string;
 }
@@ -139,6 +140,7 @@ export const MsgCreateMintRequest = {
 };
 
 const baseMsgCreateMintRequestResponse: object = {
+  id: 0,
   nftSchemaCode: "",
   tokenId: "",
 };
@@ -148,11 +150,14 @@ export const MsgCreateMintRequestResponse = {
     message: MsgCreateMintRequestResponse,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
     if (message.nftSchemaCode !== "") {
-      writer.uint32(10).string(message.nftSchemaCode);
+      writer.uint32(18).string(message.nftSchemaCode);
     }
     if (message.tokenId !== "") {
-      writer.uint32(18).string(message.tokenId);
+      writer.uint32(26).string(message.tokenId);
     }
     return writer;
   },
@@ -170,9 +175,12 @@ export const MsgCreateMintRequestResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nftSchemaCode = reader.string();
+          message.id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
           message.tokenId = reader.string();
           break;
         default:
@@ -187,6 +195,11 @@ export const MsgCreateMintRequestResponse = {
     const message = {
       ...baseMsgCreateMintRequestResponse,
     } as MsgCreateMintRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
@@ -202,6 +215,7 @@ export const MsgCreateMintRequestResponse = {
 
   toJSON(message: MsgCreateMintRequestResponse): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
     message.tokenId !== undefined && (obj.tokenId = message.tokenId);
@@ -214,6 +228,11 @@ export const MsgCreateMintRequestResponse = {
     const message = {
       ...baseMsgCreateMintRequestResponse,
     } as MsgCreateMintRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = object.nftSchemaCode;
     } else {

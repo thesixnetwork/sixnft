@@ -32648,6 +32648,13 @@ paths:
                     requiredConfirm:
                       type: string
                       format: uint64
+                    status:
+                      type: string
+                      enum:
+                        - PENDING
+                        - SUCCESS_WITH_CONSENSUS
+                        - FAILED_WITHOUT_CONCENSUS
+                      default: PENDING
               pagination:
                 type: object
                 properties:
@@ -32775,6 +32782,13 @@ paths:
                   requiredConfirm:
                     type: string
                     format: uint64
+                  status:
+                    type: string
+                    enum:
+                      - PENDING
+                      - SUCCESS_WITH_CONSENSUS
+                      - FAILED_WITHOUT_CONCENSUS
+                    default: PENDING
         default:
           description: An unexpected error response.
           schema:
@@ -55648,9 +55662,19 @@ definitions:
       requiredConfirm:
         type: string
         format: uint64
+      status:
+        type: string
+        enum:
+          - PENDING
+          - SUCCESS_WITH_CONSENSUS
+          - FAILED_WITHOUT_CONCENSUS
+        default: PENDING
   sixnft.nftoracle.MsgCreateMintRequestResponse:
     type: object
     properties:
+      id:
+        type: string
+        format: uint64
       nftSchemaCode:
         type: string
       tokenId:
@@ -55676,6 +55700,13 @@ definitions:
             requiredConfirm:
               type: string
               format: uint64
+            status:
+              type: string
+              enum:
+                - PENDING
+                - SUCCESS_WITH_CONSENSUS
+                - FAILED_WITHOUT_CONCENSUS
+              default: PENDING
       pagination:
         type: object
         properties:
@@ -55717,6 +55748,13 @@ definitions:
           requiredConfirm:
             type: string
             format: uint64
+          status:
+            type: string
+            enum:
+              - PENDING
+              - SUCCESS_WITH_CONSENSUS
+              - FAILED_WITHOUT_CONCENSUS
+            default: PENDING
   sixnft.nftoracle.QueryParamsResponse:
     type: object
     properties:
@@ -55724,6 +55762,13 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftoracle.RequestStatus:
+    type: string
+    enum:
+      - PENDING
+      - SUCCESS_WITH_CONSENSUS
+      - FAILED_WITHOUT_CONCENSUS
+    default: PENDING
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

@@ -17,9 +17,12 @@ export interface NftoracleMintRequest {
 
   /** @format uint64 */
   requiredConfirm?: string;
+  status?: NftoracleRequestStatus;
 }
 
 export interface NftoracleMsgCreateMintRequestResponse {
+  /** @format uint64 */
+  id?: string;
   nftSchemaCode?: string;
   tokenId?: string;
 }
@@ -54,6 +57,12 @@ export interface NftoracleQueryGetMintRequestResponse {
 export interface NftoracleQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: NftoracleParams;
+}
+
+export enum NftoracleRequestStatus {
+  PENDING = "PENDING",
+  SUCCESS_WITH_CONSENSUS = "SUCCESS_WITH_CONSENSUS",
+  FAILED_WITHOUT_CONCENSUS = "FAILED_WITHOUT_CONCENSUS",
 }
 
 export interface ProtobufAny {
@@ -104,6 +113,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -333,6 +349,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

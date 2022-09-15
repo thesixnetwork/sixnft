@@ -4,11 +4,55 @@ import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftoracle";
 
+export enum RequestStatus {
+  PENDING = 0,
+  SUCCESS_WITH_CONSENSUS = 1,
+  FAILED_WITHOUT_CONCENSUS = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function requestStatusFromJSON(object: any): RequestStatus {
+  switch (object) {
+    case 0:
+    case "PENDING":
+      return RequestStatus.PENDING;
+    case 1:
+    case "SUCCESS_WITH_CONSENSUS":
+      return RequestStatus.SUCCESS_WITH_CONSENSUS;
+    case 2:
+    case "FAILED_WITHOUT_CONCENSUS":
+      return RequestStatus.FAILED_WITHOUT_CONCENSUS;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return RequestStatus.UNRECOGNIZED;
+  }
+}
+
+export function requestStatusToJSON(object: RequestStatus): string {
+  switch (object) {
+    case RequestStatus.PENDING:
+      return "PENDING";
+    case RequestStatus.SUCCESS_WITH_CONSENSUS:
+      return "SUCCESS_WITH_CONSENSUS";
+    case RequestStatus.FAILED_WITHOUT_CONCENSUS:
+      return "FAILED_WITHOUT_CONCENSUS";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface MintRequest {
   id: number;
   nftSchemaCode: string;
   tokenId: string;
   requiredConfirm: number;
+  /**
+   * Current Confirmed
+   * Nft Origin Data
+   * Hash of NFT Origin Data
+   */
+  status: RequestStatus;
 }
 
 const baseMintRequest: object = {
@@ -16,6 +60,7 @@ const baseMintRequest: object = {
   nftSchemaCode: "",
   tokenId: "",
   requiredConfirm: 0,
+  status: 0,
 };
 
 export const MintRequest = {
@@ -31,6 +76,9 @@ export const MintRequest = {
     }
     if (message.requiredConfirm !== 0) {
       writer.uint32(32).uint64(message.requiredConfirm);
+    }
+    if (message.status !== 0) {
+      writer.uint32(40).int32(message.status);
     }
     return writer;
   },
@@ -53,6 +101,9 @@ export const MintRequest = {
           break;
         case 4:
           message.requiredConfirm = longToNumber(reader.uint64() as Long);
+          break;
+        case 5:
+          message.status = reader.int32() as any;
           break;
         default:
           reader.skipType(tag & 7);
@@ -87,6 +138,11 @@ export const MintRequest = {
     } else {
       message.requiredConfirm = 0;
     }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = requestStatusFromJSON(object.status);
+    } else {
+      message.status = 0;
+    }
     return message;
   },
 
@@ -98,6 +154,8 @@ export const MintRequest = {
     message.tokenId !== undefined && (obj.tokenId = message.tokenId);
     message.requiredConfirm !== undefined &&
       (obj.requiredConfirm = message.requiredConfirm);
+    message.status !== undefined &&
+      (obj.status = requestStatusToJSON(message.status));
     return obj;
   },
 
@@ -125,6 +183,11 @@ export const MintRequest = {
       message.requiredConfirm = object.requiredConfirm;
     } else {
       message.requiredConfirm = 0;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = 0;
     }
     return message;
   },

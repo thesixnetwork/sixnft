@@ -14,7 +14,7 @@ message MintRequest {
   string nftSchemaCode = 2; 
   string tokenId = 3; 
   uint64 requiredConfirm = 4; 
-  RequestStatus status = 4;
+  RequestStatus status = 5;
   // Current Confirmed
   // Nft Origin Data
   // Hash of NFT Origin Data
