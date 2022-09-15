@@ -425,7 +425,7 @@ func TestAction(t *testing.T) {
 
 	fmt.Println("Before start action")
 
-	meta := types.NewMetadata(&data, types.AttributeOverriding_CHAIN)
+	meta := types.NewMetadata(&schema, &data, types.AttributeOverriding_CHAIN)
 	for _, action := range schema.OnchainData.Actions {
 		if action.Name == selectAction {
 			keeper.ProcessAction(meta, action)
