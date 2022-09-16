@@ -2,13 +2,14 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 
 import { Action } from "./module/types/nftmngr/action"
 import { ActionByRefId } from "./module/types/nftmngr/action_by_ref_id"
+import { DefaultMintValue } from "./module/types/nftmngr/attribute_definition"
 import { AttributeDefinition } from "./module/types/nftmngr/attribute_definition"
 import { DisplayOption } from "./module/types/nftmngr/display_option"
 import { NftAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
-import { NftAttributeValue_NumberAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
-import { NftAttributeValue_StringAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
-import { NftAttributeValue_BooleanAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
-import { NftAttributeValue_FloatAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { NumberAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { StringAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { BooleanAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
+import { FloatAttributeValue } from "./module/types/nftmngr/nft_attribute_value"
 import { NftData } from "./module/types/nftmngr/nft_data"
 import { NFTSchema } from "./module/types/nftmngr/nft_schema"
 import { OnChainData } from "./module/types/nftmngr/on_chain_data"
@@ -23,7 +24,7 @@ import { UpdatedOpenseaAttributes } from "./module/types/nftmngr/tx"
 import { UpdatedOriginData } from "./module/types/nftmngr/tx"
 
 
-export { Action, ActionByRefId, AttributeDefinition, DisplayOption, NftAttributeValue, NftAttributeValue_NumberAttributeValue, NftAttributeValue_StringAttributeValue, NftAttributeValue_BooleanAttributeValue, NftAttributeValue_FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, Organization, OriginData, Params, Status, OpenseaAttribute, UpdatedOpenseaAttributes, UpdatedOriginData };
+export { Action, ActionByRefId, DefaultMintValue, AttributeDefinition, DisplayOption, NftAttributeValue, NumberAttributeValue, StringAttributeValue, BooleanAttributeValue, FloatAttributeValue, NftData, NFTSchema, OnChainData, OnOffSwitch, OpenseaDisplayOption, OriginData, Params, Status, OpenseaAttribute, UpdatedOpenseaAttributes, UpdatedOriginData };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -74,13 +75,14 @@ const getDefaultState = () => {
 				_Structure: {
 						Action: getStructure(Action.fromPartial({})),
 						ActionByRefId: getStructure(ActionByRefId.fromPartial({})),
+						DefaultMintValue: getStructure(DefaultMintValue.fromPartial({})),
 						AttributeDefinition: getStructure(AttributeDefinition.fromPartial({})),
 						DisplayOption: getStructure(DisplayOption.fromPartial({})),
 						NftAttributeValue: getStructure(NftAttributeValue.fromPartial({})),
-						NftAttributeValue_NumberAttributeValue: getStructure(NftAttributeValue_NumberAttributeValue.fromPartial({})),
-						NftAttributeValue_StringAttributeValue: getStructure(NftAttributeValue_StringAttributeValue.fromPartial({})),
-						NftAttributeValue_BooleanAttributeValue: getStructure(NftAttributeValue_BooleanAttributeValue.fromPartial({})),
-						NftAttributeValue_FloatAttributeValue: getStructure(NftAttributeValue_FloatAttributeValue.fromPartial({})),
+						NumberAttributeValue: getStructure(NumberAttributeValue.fromPartial({})),
+						StringAttributeValue: getStructure(StringAttributeValue.fromPartial({})),
+						BooleanAttributeValue: getStructure(BooleanAttributeValue.fromPartial({})),
+						FloatAttributeValue: getStructure(FloatAttributeValue.fromPartial({})),
 						NftData: getStructure(NftData.fromPartial({})),
 						NFTSchema: getStructure(NFTSchema.fromPartial({})),
 						OnChainData: getStructure(OnChainData.fromPartial({})),
@@ -421,23 +423,6 @@ export default {
 				
 			}
 		},
-		
-		
-		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMetadata(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgCreateNFTSchema({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -450,6 +435,21 @@ export default {
 					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgCreateMetadata({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMetadata(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateMetadata:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -483,20 +483,6 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateMetadata({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMetadata(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateMetadata:Create Could not create message: ' + e.message)
-				}
-			}
-		},
 		async MsgCreateNFTSchema({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -507,6 +493,19 @@ export default {
 					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgCreateNFTSchema:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateMetadata({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMetadata(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMetadata:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateMetadata:Create Could not create message: ' + e.message)
 				}
 			}
 		},

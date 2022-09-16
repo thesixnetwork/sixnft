@@ -110,7 +110,7 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	if attri == nil {
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		// Number
 		return int64(attri.attributeValue.GetNumberAttributeValue().Value), nil
 	}
@@ -123,12 +123,12 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 	if attri == nil {
 		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.attributeValue.Name,
-			Value: &NftAttributeValue_NumberAttributeValue_{
-				NumberAttributeValue: &NftAttributeValue_NumberAttributeValue{
+			Value: &NftAttributeValue_NumberAttributeValue{
+				NumberAttributeValue: &NumberAttributeValue{
 					Value: uint64(value),
 				},
 			},
@@ -162,7 +162,7 @@ func (m *Metadata) MustGetString(key string) (string, error) {
 	if attri == nil {
 		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
 		// Number
 		return attri.attributeValue.GetStringAttributeValue().Value, nil
 	}
@@ -175,12 +175,12 @@ func (m *Metadata) SetString(key string, value string) error {
 	if attri == nil {
 		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.attributeValue.Name,
-			Value: &NftAttributeValue_StringAttributeValue_{
-				StringAttributeValue: &NftAttributeValue_StringAttributeValue{
+			Value: &NftAttributeValue_StringAttributeValue{
+				StringAttributeValue: &StringAttributeValue{
 					Value: value,
 				},
 			},
@@ -216,7 +216,7 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 	if attri == nil {
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		// Number
 		return attri.attributeValue.GetFloatAttributeValue().Value, nil
 	}
@@ -229,12 +229,12 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 	if attri == nil {
 		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.attributeValue.Name,
-			Value: &NftAttributeValue_FloatAttributeValue_{
-				FloatAttributeValue: &NftAttributeValue_FloatAttributeValue{
+			Value: &NftAttributeValue_FloatAttributeValue{
+				FloatAttributeValue: &FloatAttributeValue{
 					Value: value,
 				},
 			},
@@ -270,7 +270,7 @@ func (m *Metadata) MustGetBool(key string) (bool, error) {
 	if attri == nil {
 		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		// Number
 		return attri.attributeValue.GetBooleanAttributeValue().Value, nil
 	}
@@ -283,12 +283,12 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 	if attri == nil {
 		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
 	}
-	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue_); ok {
+	if _, ok := attri.attributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.attributeValue.Name,
-			Value: &NftAttributeValue_BooleanAttributeValue_{
-				BooleanAttributeValue: &NftAttributeValue_BooleanAttributeValue{
+			Value: &NftAttributeValue_BooleanAttributeValue{
+				BooleanAttributeValue: &BooleanAttributeValue{
 					Value: value,
 				},
 			},

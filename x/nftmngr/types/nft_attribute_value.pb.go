@@ -27,10 +27,10 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type NftAttributeValue struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Types that are valid to be assigned to Value:
-	//	*NftAttributeValue_NumberAttributeValue_
-	//	*NftAttributeValue_StringAttributeValue_
-	//	*NftAttributeValue_BooleanAttributeValue_
-	//	*NftAttributeValue_FloatAttributeValue_
+	//	*NftAttributeValue_NumberAttributeValue
+	//	*NftAttributeValue_StringAttributeValue
+	//	*NftAttributeValue_BooleanAttributeValue
+	//	*NftAttributeValue_FloatAttributeValue
 	Value isNftAttributeValue_Value `protobuf_oneof:"value"`
 }
 
@@ -73,23 +73,23 @@ type isNftAttributeValue_Value interface {
 	Size() int
 }
 
-type NftAttributeValue_NumberAttributeValue_ struct {
-	NumberAttributeValue *NftAttributeValue_NumberAttributeValue `protobuf:"bytes,2,opt,name=number_attribute_value,json=numberAttributeValue,proto3,oneof" json:"number_attribute_value,omitempty"`
+type NftAttributeValue_NumberAttributeValue struct {
+	NumberAttributeValue *NumberAttributeValue `protobuf:"bytes,2,opt,name=number_attribute_value,json=numberAttributeValue,proto3,oneof" json:"number_attribute_value,omitempty"`
 }
-type NftAttributeValue_StringAttributeValue_ struct {
-	StringAttributeValue *NftAttributeValue_StringAttributeValue `protobuf:"bytes,3,opt,name=string_attribute_value,json=stringAttributeValue,proto3,oneof" json:"string_attribute_value,omitempty"`
+type NftAttributeValue_StringAttributeValue struct {
+	StringAttributeValue *StringAttributeValue `protobuf:"bytes,3,opt,name=string_attribute_value,json=stringAttributeValue,proto3,oneof" json:"string_attribute_value,omitempty"`
 }
-type NftAttributeValue_BooleanAttributeValue_ struct {
-	BooleanAttributeValue *NftAttributeValue_BooleanAttributeValue `protobuf:"bytes,4,opt,name=boolean_attribute_value,json=booleanAttributeValue,proto3,oneof" json:"boolean_attribute_value,omitempty"`
+type NftAttributeValue_BooleanAttributeValue struct {
+	BooleanAttributeValue *BooleanAttributeValue `protobuf:"bytes,4,opt,name=boolean_attribute_value,json=booleanAttributeValue,proto3,oneof" json:"boolean_attribute_value,omitempty"`
 }
-type NftAttributeValue_FloatAttributeValue_ struct {
-	FloatAttributeValue *NftAttributeValue_FloatAttributeValue `protobuf:"bytes,5,opt,name=float_attribute_value,json=floatAttributeValue,proto3,oneof" json:"float_attribute_value,omitempty"`
+type NftAttributeValue_FloatAttributeValue struct {
+	FloatAttributeValue *FloatAttributeValue `protobuf:"bytes,5,opt,name=float_attribute_value,json=floatAttributeValue,proto3,oneof" json:"float_attribute_value,omitempty"`
 }
 
-func (*NftAttributeValue_NumberAttributeValue_) isNftAttributeValue_Value()  {}
-func (*NftAttributeValue_StringAttributeValue_) isNftAttributeValue_Value()  {}
-func (*NftAttributeValue_BooleanAttributeValue_) isNftAttributeValue_Value() {}
-func (*NftAttributeValue_FloatAttributeValue_) isNftAttributeValue_Value()   {}
+func (*NftAttributeValue_NumberAttributeValue) isNftAttributeValue_Value()  {}
+func (*NftAttributeValue_StringAttributeValue) isNftAttributeValue_Value()  {}
+func (*NftAttributeValue_BooleanAttributeValue) isNftAttributeValue_Value() {}
+func (*NftAttributeValue_FloatAttributeValue) isNftAttributeValue_Value()   {}
 
 func (m *NftAttributeValue) GetValue() isNftAttributeValue_Value {
 	if m != nil {
@@ -105,29 +105,29 @@ func (m *NftAttributeValue) GetName() string {
 	return ""
 }
 
-func (m *NftAttributeValue) GetNumberAttributeValue() *NftAttributeValue_NumberAttributeValue {
-	if x, ok := m.GetValue().(*NftAttributeValue_NumberAttributeValue_); ok {
+func (m *NftAttributeValue) GetNumberAttributeValue() *NumberAttributeValue {
+	if x, ok := m.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		return x.NumberAttributeValue
 	}
 	return nil
 }
 
-func (m *NftAttributeValue) GetStringAttributeValue() *NftAttributeValue_StringAttributeValue {
-	if x, ok := m.GetValue().(*NftAttributeValue_StringAttributeValue_); ok {
+func (m *NftAttributeValue) GetStringAttributeValue() *StringAttributeValue {
+	if x, ok := m.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
 		return x.StringAttributeValue
 	}
 	return nil
 }
 
-func (m *NftAttributeValue) GetBooleanAttributeValue() *NftAttributeValue_BooleanAttributeValue {
-	if x, ok := m.GetValue().(*NftAttributeValue_BooleanAttributeValue_); ok {
+func (m *NftAttributeValue) GetBooleanAttributeValue() *BooleanAttributeValue {
+	if x, ok := m.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		return x.BooleanAttributeValue
 	}
 	return nil
 }
 
-func (m *NftAttributeValue) GetFloatAttributeValue() *NftAttributeValue_FloatAttributeValue {
-	if x, ok := m.GetValue().(*NftAttributeValue_FloatAttributeValue_); ok {
+func (m *NftAttributeValue) GetFloatAttributeValue() *FloatAttributeValue {
+	if x, ok := m.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		return x.FloatAttributeValue
 	}
 	return nil
@@ -136,31 +136,29 @@ func (m *NftAttributeValue) GetFloatAttributeValue() *NftAttributeValue_FloatAtt
 // XXX_OneofWrappers is for the internal use of the proto package.
 func (*NftAttributeValue) XXX_OneofWrappers() []interface{} {
 	return []interface{}{
-		(*NftAttributeValue_NumberAttributeValue_)(nil),
-		(*NftAttributeValue_StringAttributeValue_)(nil),
-		(*NftAttributeValue_BooleanAttributeValue_)(nil),
-		(*NftAttributeValue_FloatAttributeValue_)(nil),
+		(*NftAttributeValue_NumberAttributeValue)(nil),
+		(*NftAttributeValue_StringAttributeValue)(nil),
+		(*NftAttributeValue_BooleanAttributeValue)(nil),
+		(*NftAttributeValue_FloatAttributeValue)(nil),
 	}
 }
 
-type NftAttributeValue_NumberAttributeValue struct {
+type NumberAttributeValue struct {
 	Value uint64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (m *NftAttributeValue_NumberAttributeValue) Reset() {
-	*m = NftAttributeValue_NumberAttributeValue{}
+func (m *NumberAttributeValue) Reset()         { *m = NumberAttributeValue{} }
+func (m *NumberAttributeValue) String() string { return proto.CompactTextString(m) }
+func (*NumberAttributeValue) ProtoMessage()    {}
+func (*NumberAttributeValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e19febe892d5c1e, []int{1}
 }
-func (m *NftAttributeValue_NumberAttributeValue) String() string { return proto.CompactTextString(m) }
-func (*NftAttributeValue_NumberAttributeValue) ProtoMessage()    {}
-func (*NftAttributeValue_NumberAttributeValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e19febe892d5c1e, []int{0, 0}
-}
-func (m *NftAttributeValue_NumberAttributeValue) XXX_Unmarshal(b []byte) error {
+func (m *NumberAttributeValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *NftAttributeValue_NumberAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *NumberAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_NftAttributeValue_NumberAttributeValue.Marshal(b, m, deterministic)
+		return xxx_messageInfo_NumberAttributeValue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -170,43 +168,41 @@ func (m *NftAttributeValue_NumberAttributeValue) XXX_Marshal(b []byte, determini
 		return b[:n], nil
 	}
 }
-func (m *NftAttributeValue_NumberAttributeValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NftAttributeValue_NumberAttributeValue.Merge(m, src)
+func (m *NumberAttributeValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NumberAttributeValue.Merge(m, src)
 }
-func (m *NftAttributeValue_NumberAttributeValue) XXX_Size() int {
+func (m *NumberAttributeValue) XXX_Size() int {
 	return m.Size()
 }
-func (m *NftAttributeValue_NumberAttributeValue) XXX_DiscardUnknown() {
-	xxx_messageInfo_NftAttributeValue_NumberAttributeValue.DiscardUnknown(m)
+func (m *NumberAttributeValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_NumberAttributeValue.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_NftAttributeValue_NumberAttributeValue proto.InternalMessageInfo
+var xxx_messageInfo_NumberAttributeValue proto.InternalMessageInfo
 
-func (m *NftAttributeValue_NumberAttributeValue) GetValue() uint64 {
+func (m *NumberAttributeValue) GetValue() uint64 {
 	if m != nil {
 		return m.Value
 	}
 	return 0
 }
 
-type NftAttributeValue_StringAttributeValue struct {
+type StringAttributeValue struct {
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (m *NftAttributeValue_StringAttributeValue) Reset() {
-	*m = NftAttributeValue_StringAttributeValue{}
+func (m *StringAttributeValue) Reset()         { *m = StringAttributeValue{} }
+func (m *StringAttributeValue) String() string { return proto.CompactTextString(m) }
+func (*StringAttributeValue) ProtoMessage()    {}
+func (*StringAttributeValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e19febe892d5c1e, []int{2}
 }
-func (m *NftAttributeValue_StringAttributeValue) String() string { return proto.CompactTextString(m) }
-func (*NftAttributeValue_StringAttributeValue) ProtoMessage()    {}
-func (*NftAttributeValue_StringAttributeValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e19febe892d5c1e, []int{0, 1}
-}
-func (m *NftAttributeValue_StringAttributeValue) XXX_Unmarshal(b []byte) error {
+func (m *StringAttributeValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *NftAttributeValue_StringAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *StringAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_NftAttributeValue_StringAttributeValue.Marshal(b, m, deterministic)
+		return xxx_messageInfo_StringAttributeValue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -216,43 +212,41 @@ func (m *NftAttributeValue_StringAttributeValue) XXX_Marshal(b []byte, determini
 		return b[:n], nil
 	}
 }
-func (m *NftAttributeValue_StringAttributeValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NftAttributeValue_StringAttributeValue.Merge(m, src)
+func (m *StringAttributeValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringAttributeValue.Merge(m, src)
 }
-func (m *NftAttributeValue_StringAttributeValue) XXX_Size() int {
+func (m *StringAttributeValue) XXX_Size() int {
 	return m.Size()
 }
-func (m *NftAttributeValue_StringAttributeValue) XXX_DiscardUnknown() {
-	xxx_messageInfo_NftAttributeValue_StringAttributeValue.DiscardUnknown(m)
+func (m *StringAttributeValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringAttributeValue.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_NftAttributeValue_StringAttributeValue proto.InternalMessageInfo
+var xxx_messageInfo_StringAttributeValue proto.InternalMessageInfo
 
-func (m *NftAttributeValue_StringAttributeValue) GetValue() string {
+func (m *StringAttributeValue) GetValue() string {
 	if m != nil {
 		return m.Value
 	}
 	return ""
 }
 
-type NftAttributeValue_BooleanAttributeValue struct {
+type BooleanAttributeValue struct {
 	Value bool `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue) Reset() {
-	*m = NftAttributeValue_BooleanAttributeValue{}
+func (m *BooleanAttributeValue) Reset()         { *m = BooleanAttributeValue{} }
+func (m *BooleanAttributeValue) String() string { return proto.CompactTextString(m) }
+func (*BooleanAttributeValue) ProtoMessage()    {}
+func (*BooleanAttributeValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e19febe892d5c1e, []int{3}
 }
-func (m *NftAttributeValue_BooleanAttributeValue) String() string { return proto.CompactTextString(m) }
-func (*NftAttributeValue_BooleanAttributeValue) ProtoMessage()    {}
-func (*NftAttributeValue_BooleanAttributeValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e19febe892d5c1e, []int{0, 2}
-}
-func (m *NftAttributeValue_BooleanAttributeValue) XXX_Unmarshal(b []byte) error {
+func (m *BooleanAttributeValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *NftAttributeValue_BooleanAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *BooleanAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_NftAttributeValue_BooleanAttributeValue.Marshal(b, m, deterministic)
+		return xxx_messageInfo_BooleanAttributeValue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -262,41 +256,41 @@ func (m *NftAttributeValue_BooleanAttributeValue) XXX_Marshal(b []byte, determin
 		return b[:n], nil
 	}
 }
-func (m *NftAttributeValue_BooleanAttributeValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NftAttributeValue_BooleanAttributeValue.Merge(m, src)
+func (m *BooleanAttributeValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BooleanAttributeValue.Merge(m, src)
 }
-func (m *NftAttributeValue_BooleanAttributeValue) XXX_Size() int {
+func (m *BooleanAttributeValue) XXX_Size() int {
 	return m.Size()
 }
-func (m *NftAttributeValue_BooleanAttributeValue) XXX_DiscardUnknown() {
-	xxx_messageInfo_NftAttributeValue_BooleanAttributeValue.DiscardUnknown(m)
+func (m *BooleanAttributeValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_BooleanAttributeValue.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_NftAttributeValue_BooleanAttributeValue proto.InternalMessageInfo
+var xxx_messageInfo_BooleanAttributeValue proto.InternalMessageInfo
 
-func (m *NftAttributeValue_BooleanAttributeValue) GetValue() bool {
+func (m *BooleanAttributeValue) GetValue() bool {
 	if m != nil {
 		return m.Value
 	}
 	return false
 }
 
-type NftAttributeValue_FloatAttributeValue struct {
+type FloatAttributeValue struct {
 	Value float64 `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (m *NftAttributeValue_FloatAttributeValue) Reset()         { *m = NftAttributeValue_FloatAttributeValue{} }
-func (m *NftAttributeValue_FloatAttributeValue) String() string { return proto.CompactTextString(m) }
-func (*NftAttributeValue_FloatAttributeValue) ProtoMessage()    {}
-func (*NftAttributeValue_FloatAttributeValue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8e19febe892d5c1e, []int{0, 3}
+func (m *FloatAttributeValue) Reset()         { *m = FloatAttributeValue{} }
+func (m *FloatAttributeValue) String() string { return proto.CompactTextString(m) }
+func (*FloatAttributeValue) ProtoMessage()    {}
+func (*FloatAttributeValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e19febe892d5c1e, []int{4}
 }
-func (m *NftAttributeValue_FloatAttributeValue) XXX_Unmarshal(b []byte) error {
+func (m *FloatAttributeValue) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *NftAttributeValue_FloatAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *FloatAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_NftAttributeValue_FloatAttributeValue.Marshal(b, m, deterministic)
+		return xxx_messageInfo_FloatAttributeValue.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -306,19 +300,19 @@ func (m *NftAttributeValue_FloatAttributeValue) XXX_Marshal(b []byte, determinis
 		return b[:n], nil
 	}
 }
-func (m *NftAttributeValue_FloatAttributeValue) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NftAttributeValue_FloatAttributeValue.Merge(m, src)
+func (m *FloatAttributeValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FloatAttributeValue.Merge(m, src)
 }
-func (m *NftAttributeValue_FloatAttributeValue) XXX_Size() int {
+func (m *FloatAttributeValue) XXX_Size() int {
 	return m.Size()
 }
-func (m *NftAttributeValue_FloatAttributeValue) XXX_DiscardUnknown() {
-	xxx_messageInfo_NftAttributeValue_FloatAttributeValue.DiscardUnknown(m)
+func (m *FloatAttributeValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_FloatAttributeValue.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_NftAttributeValue_FloatAttributeValue proto.InternalMessageInfo
+var xxx_messageInfo_FloatAttributeValue proto.InternalMessageInfo
 
-func (m *NftAttributeValue_FloatAttributeValue) GetValue() float64 {
+func (m *FloatAttributeValue) GetValue() float64 {
 	if m != nil {
 		return m.Value
 	}
@@ -327,38 +321,37 @@ func (m *NftAttributeValue_FloatAttributeValue) GetValue() float64 {
 
 func init() {
 	proto.RegisterType((*NftAttributeValue)(nil), "sixnft.nftmngr.NftAttributeValue")
-	proto.RegisterType((*NftAttributeValue_NumberAttributeValue)(nil), "sixnft.nftmngr.NftAttributeValue.NumberAttributeValue")
-	proto.RegisterType((*NftAttributeValue_StringAttributeValue)(nil), "sixnft.nftmngr.NftAttributeValue.StringAttributeValue")
-	proto.RegisterType((*NftAttributeValue_BooleanAttributeValue)(nil), "sixnft.nftmngr.NftAttributeValue.BooleanAttributeValue")
-	proto.RegisterType((*NftAttributeValue_FloatAttributeValue)(nil), "sixnft.nftmngr.NftAttributeValue.FloatAttributeValue")
+	proto.RegisterType((*NumberAttributeValue)(nil), "sixnft.nftmngr.NumberAttributeValue")
+	proto.RegisterType((*StringAttributeValue)(nil), "sixnft.nftmngr.StringAttributeValue")
+	proto.RegisterType((*BooleanAttributeValue)(nil), "sixnft.nftmngr.BooleanAttributeValue")
+	proto.RegisterType((*FloatAttributeValue)(nil), "sixnft.nftmngr.FloatAttributeValue")
 }
 
 func init() { proto.RegisterFile("nftmngr/nft_attribute_value.proto", fileDescriptor_8e19febe892d5c1e) }
 
 var fileDescriptor_8e19febe892d5c1e = []byte{
-	// 340 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x3f, 0x4e, 0xc3, 0x30,
-	0x14, 0x87, 0x63, 0x68, 0x81, 0x1a, 0x09, 0x09, 0xf7, 0x0f, 0xa5, 0x83, 0x55, 0x98, 0x2a, 0x01,
-	0x09, 0x02, 0x01, 0x33, 0x1d, 0x10, 0x53, 0x87, 0x22, 0x31, 0xb0, 0x54, 0xb6, 0x64, 0x47, 0x15,
-	0x89, 0x5d, 0x12, 0x07, 0xb5, 0xb7, 0xe0, 0x18, 0x1c, 0x85, 0xb1, 0x23, 0x23, 0x4a, 0x2e, 0x82,
-	0xe2, 0x24, 0x43, 0xb0, 0xa5, 0xb2, 0x25, 0x3f, 0x7f, 0xef, 0x7d, 0xc9, 0x7b, 0x09, 0x3c, 0x11,
-	0x5c, 0x85, 0xc2, 0x8f, 0x3c, 0xc1, 0xd5, 0x8c, 0x28, 0x15, 0xcd, 0x69, 0xa2, 0xd8, 0xec, 0x9d,
-	0x04, 0x09, 0x73, 0x17, 0x91, 0x54, 0x12, 0x1d, 0xc4, 0xf3, 0xa5, 0xe0, 0xca, 0x2d, 0xc9, 0xc1,
-	0xb1, 0x2f, 0xa5, 0x1f, 0x30, 0x4f, 0x9f, 0xd2, 0x84, 0x7b, 0x44, 0xac, 0x0a, 0xf4, 0xf4, 0xb3,
-	0x09, 0x0f, 0x27, 0x5c, 0xdd, 0x57, 0x7d, 0x9e, 0xf3, 0x36, 0x08, 0xc1, 0x86, 0x20, 0x21, 0xeb,
-	0x83, 0x21, 0x18, 0xb5, 0xa6, 0xfa, 0x1a, 0x09, 0xd8, 0x13, 0x49, 0x48, 0x59, 0xf4, 0x57, 0xda,
-	0xdf, 0x1a, 0x82, 0xd1, 0xfe, 0xd5, 0xad, 0x5b, 0xb7, 0xba, 0x46, 0x5b, 0x77, 0xa2, 0xeb, 0xeb,
-	0xe1, 0xa3, 0x33, 0xed, 0x08, 0x4b, 0x9e, 0xfb, 0x62, 0x15, 0xcd, 0x85, 0x6f, 0xf8, 0xb6, 0xff,
-	0xeb, 0x7b, 0xd2, 0xf5, 0xa6, 0x2f, 0xb6, 0xe4, 0xe8, 0x0d, 0x1e, 0x51, 0x29, 0x03, 0x46, 0x84,
-	0x21, 0x6c, 0x68, 0xe1, 0xdd, 0x66, 0xe1, 0xb8, 0x68, 0x60, 0x18, 0xbb, 0xd4, 0x76, 0x80, 0x5e,
-	0x61, 0x97, 0x07, 0x92, 0x18, 0x6b, 0xec, 0x37, 0xb5, 0xf0, 0x66, 0xb3, 0xf0, 0x21, 0x2f, 0x37,
-	0x74, 0x6d, 0x6e, 0xc6, 0x83, 0x73, 0xd8, 0xb1, 0xcd, 0x1f, 0x75, 0x60, 0xb3, 0x90, 0xe6, 0xcb,
-	0x6e, 0x4c, 0x8b, 0x9b, 0x9c, 0xb6, 0x4d, 0xaf, 0x4e, 0xb7, 0x2a, 0xfa, 0x02, 0x76, 0xad, 0xaf,
-	0x5e, 0xc7, 0xf7, 0x2a, 0xfc, 0x0c, 0xb6, 0x2d, 0x0f, 0x5e, 0x87, 0x41, 0x09, 0x8f, 0x77, 0xcb,
-	0x74, 0x7c, 0xf9, 0x95, 0x62, 0xb0, 0x4e, 0x31, 0xf8, 0x49, 0x31, 0xf8, 0xc8, 0xb0, 0xb3, 0xce,
-	0xb0, 0xf3, 0x9d, 0x61, 0xe7, 0xa5, 0x57, 0xcc, 0xc9, 0x5b, 0x7a, 0xd5, 0xbf, 0xa1, 0x56, 0x0b,
-	0x16, 0xd3, 0x1d, 0xfd, 0x8d, 0x5f, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x0b, 0x4a, 0x48, 0x57,
-	0x33, 0x03, 0x00, 0x00,
+	// 332 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xdf, 0x4a, 0xc3, 0x30,
+	0x14, 0x87, 0x1b, 0xb7, 0xa9, 0x8b, 0x20, 0x98, 0xfd, 0x71, 0x7a, 0x11, 0xe6, 0x54, 0x18, 0xa8,
+	0xad, 0xe8, 0x13, 0xb8, 0x0b, 0xf1, 0x6a, 0x17, 0x13, 0x04, 0x45, 0x18, 0x09, 0x24, 0x65, 0xd0,
+	0x25, 0xa3, 0x4d, 0x65, 0x7b, 0x0b, 0x1f, 0xc3, 0x47, 0xf1, 0x72, 0x97, 0x5e, 0x4a, 0xfb, 0x22,
+	0xd2, 0xb4, 0x45, 0xda, 0xe4, 0x2e, 0x9c, 0x7c, 0x7c, 0x87, 0xf3, 0x3b, 0x07, 0x9e, 0x09, 0xae,
+	0x96, 0xc2, 0x0f, 0x3d, 0xc1, 0xd5, 0x9c, 0x28, 0x15, 0x2e, 0x68, 0xac, 0xd8, 0xfc, 0x83, 0x04,
+	0x31, 0x73, 0x57, 0xa1, 0x54, 0x12, 0x1d, 0x46, 0x8b, 0xb5, 0xe0, 0xca, 0x2d, 0xc8, 0xd3, 0x13,
+	0x5f, 0x4a, 0x3f, 0x60, 0x9e, 0xfe, 0xa5, 0x31, 0xf7, 0x88, 0xd8, 0xe4, 0xe8, 0xe8, 0xab, 0x01,
+	0x8f, 0xa6, 0x5c, 0x3d, 0x94, 0x9e, 0x97, 0x4c, 0x83, 0x10, 0x6c, 0x0a, 0xb2, 0x64, 0x03, 0x30,
+	0x04, 0xe3, 0xf6, 0x4c, 0xbf, 0xd1, 0x3b, 0xec, 0x8b, 0x78, 0x49, 0x59, 0x58, 0x6f, 0x3a, 0xd8,
+	0x19, 0x82, 0xf1, 0xc1, 0xdd, 0x85, 0x5b, 0xed, 0xea, 0x4e, 0x35, 0x5d, 0x35, 0x3f, 0x39, 0xb3,
+	0xae, 0xb0, 0xd4, 0x33, 0x7b, 0xa4, 0xc2, 0x85, 0xf0, 0x0d, 0x7b, 0xc3, 0x6e, 0x7f, 0xd6, 0xb4,
+	0x69, 0x8f, 0x2c, 0x75, 0x34, 0x87, 0xc7, 0x54, 0xca, 0x80, 0x11, 0x61, 0xe8, 0x9b, 0x5a, 0x7f,
+	0x59, 0xd7, 0x4f, 0x72, 0xdc, 0xf0, 0xf7, 0xa8, 0xed, 0x03, 0xbd, 0xc2, 0x1e, 0x0f, 0x24, 0x31,
+	0x16, 0x32, 0x68, 0x69, 0xfd, 0x79, 0x5d, 0xff, 0x98, 0xc1, 0x86, 0xbc, 0xc3, 0xcd, 0xf2, 0x64,
+	0x0f, 0xb6, 0xb4, 0x6a, 0x74, 0x0d, 0xbb, 0xb6, 0x48, 0x51, 0xb7, 0x00, 0xf4, 0xb6, 0x9a, 0xb3,
+	0x7f, 0xda, 0x16, 0x51, 0x95, 0x6e, 0x97, 0xf4, 0x0d, 0xec, 0x59, 0x27, 0xae, 0xe2, 0xfb, 0x25,
+	0x7e, 0x05, 0x3b, 0x96, 0x09, 0xaa, 0x30, 0x28, 0xe0, 0xc9, 0xed, 0x77, 0x82, 0xc1, 0x36, 0xc1,
+	0xe0, 0x37, 0xc1, 0xe0, 0x33, 0xc5, 0xce, 0x36, 0xc5, 0xce, 0x4f, 0x8a, 0x9d, 0xb7, 0x7e, 0x9e,
+	0x8a, 0xb7, 0xf6, 0xca, 0x9b, 0x56, 0x9b, 0x15, 0x8b, 0xe8, 0xae, 0xbe, 0xcd, 0xfb, 0xbf, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0x2d, 0x49, 0x12, 0x61, 0xeb, 0x02, 0x00, 0x00,
 }
 
 func (m *NftAttributeValue) Marshal() (dAtA []byte, err error) {
@@ -400,12 +393,12 @@ func (m *NftAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *NftAttributeValue_NumberAttributeValue_) MarshalTo(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_NumberAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_NumberAttributeValue_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_NumberAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.NumberAttributeValue != nil {
 		{
@@ -421,12 +414,12 @@ func (m *NftAttributeValue_NumberAttributeValue_) MarshalToSizedBuffer(dAtA []by
 	}
 	return len(dAtA) - i, nil
 }
-func (m *NftAttributeValue_StringAttributeValue_) MarshalTo(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_StringAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_StringAttributeValue_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_StringAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.StringAttributeValue != nil {
 		{
@@ -442,12 +435,12 @@ func (m *NftAttributeValue_StringAttributeValue_) MarshalToSizedBuffer(dAtA []by
 	}
 	return len(dAtA) - i, nil
 }
-func (m *NftAttributeValue_BooleanAttributeValue_) MarshalTo(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_BooleanAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_BooleanAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.BooleanAttributeValue != nil {
 		{
@@ -463,12 +456,12 @@ func (m *NftAttributeValue_BooleanAttributeValue_) MarshalToSizedBuffer(dAtA []b
 	}
 	return len(dAtA) - i, nil
 }
-func (m *NftAttributeValue_FloatAttributeValue_) MarshalTo(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_FloatAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_FloatAttributeValue_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NftAttributeValue_FloatAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	if m.FloatAttributeValue != nil {
 		{
@@ -484,7 +477,7 @@ func (m *NftAttributeValue_FloatAttributeValue_) MarshalToSizedBuffer(dAtA []byt
 	}
 	return len(dAtA) - i, nil
 }
-func (m *NftAttributeValue_NumberAttributeValue) Marshal() (dAtA []byte, err error) {
+func (m *NumberAttributeValue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -494,12 +487,12 @@ func (m *NftAttributeValue_NumberAttributeValue) Marshal() (dAtA []byte, err err
 	return dAtA[:n], nil
 }
 
-func (m *NftAttributeValue_NumberAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+func (m *NumberAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_NumberAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *NumberAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -512,7 +505,7 @@ func (m *NftAttributeValue_NumberAttributeValue) MarshalToSizedBuffer(dAtA []byt
 	return len(dAtA) - i, nil
 }
 
-func (m *NftAttributeValue_StringAttributeValue) Marshal() (dAtA []byte, err error) {
+func (m *StringAttributeValue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -522,12 +515,12 @@ func (m *NftAttributeValue_StringAttributeValue) Marshal() (dAtA []byte, err err
 	return dAtA[:n], nil
 }
 
-func (m *NftAttributeValue_StringAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+func (m *StringAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_StringAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *StringAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -542,7 +535,7 @@ func (m *NftAttributeValue_StringAttributeValue) MarshalToSizedBuffer(dAtA []byt
 	return len(dAtA) - i, nil
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue) Marshal() (dAtA []byte, err error) {
+func (m *BooleanAttributeValue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -552,12 +545,12 @@ func (m *NftAttributeValue_BooleanAttributeValue) Marshal() (dAtA []byte, err er
 	return dAtA[:n], nil
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+func (m *BooleanAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *BooleanAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -575,7 +568,7 @@ func (m *NftAttributeValue_BooleanAttributeValue) MarshalToSizedBuffer(dAtA []by
 	return len(dAtA) - i, nil
 }
 
-func (m *NftAttributeValue_FloatAttributeValue) Marshal() (dAtA []byte, err error) {
+func (m *FloatAttributeValue) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -585,12 +578,12 @@ func (m *NftAttributeValue_FloatAttributeValue) Marshal() (dAtA []byte, err erro
 	return dAtA[:n], nil
 }
 
-func (m *NftAttributeValue_FloatAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+func (m *FloatAttributeValue) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *NftAttributeValue_FloatAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *FloatAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -631,7 +624,7 @@ func (m *NftAttributeValue) Size() (n int) {
 	return n
 }
 
-func (m *NftAttributeValue_NumberAttributeValue_) Size() (n int) {
+func (m *NftAttributeValue_NumberAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -643,7 +636,7 @@ func (m *NftAttributeValue_NumberAttributeValue_) Size() (n int) {
 	}
 	return n
 }
-func (m *NftAttributeValue_StringAttributeValue_) Size() (n int) {
+func (m *NftAttributeValue_StringAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -655,7 +648,7 @@ func (m *NftAttributeValue_StringAttributeValue_) Size() (n int) {
 	}
 	return n
 }
-func (m *NftAttributeValue_BooleanAttributeValue_) Size() (n int) {
+func (m *NftAttributeValue_BooleanAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -667,7 +660,7 @@ func (m *NftAttributeValue_BooleanAttributeValue_) Size() (n int) {
 	}
 	return n
 }
-func (m *NftAttributeValue_FloatAttributeValue_) Size() (n int) {
+func (m *NftAttributeValue_FloatAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -679,7 +672,7 @@ func (m *NftAttributeValue_FloatAttributeValue_) Size() (n int) {
 	}
 	return n
 }
-func (m *NftAttributeValue_NumberAttributeValue) Size() (n int) {
+func (m *NumberAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -691,7 +684,7 @@ func (m *NftAttributeValue_NumberAttributeValue) Size() (n int) {
 	return n
 }
 
-func (m *NftAttributeValue_StringAttributeValue) Size() (n int) {
+func (m *StringAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -704,7 +697,7 @@ func (m *NftAttributeValue_StringAttributeValue) Size() (n int) {
 	return n
 }
 
-func (m *NftAttributeValue_BooleanAttributeValue) Size() (n int) {
+func (m *BooleanAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -716,7 +709,7 @@ func (m *NftAttributeValue_BooleanAttributeValue) Size() (n int) {
 	return n
 }
 
-func (m *NftAttributeValue_FloatAttributeValue) Size() (n int) {
+func (m *FloatAttributeValue) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -824,11 +817,11 @@ func (m *NftAttributeValue) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &NftAttributeValue_NumberAttributeValue{}
+			v := &NumberAttributeValue{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Value = &NftAttributeValue_NumberAttributeValue_{v}
+			m.Value = &NftAttributeValue_NumberAttributeValue{v}
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
@@ -859,11 +852,11 @@ func (m *NftAttributeValue) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &NftAttributeValue_StringAttributeValue{}
+			v := &StringAttributeValue{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Value = &NftAttributeValue_StringAttributeValue_{v}
+			m.Value = &NftAttributeValue_StringAttributeValue{v}
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -894,11 +887,11 @@ func (m *NftAttributeValue) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &NftAttributeValue_BooleanAttributeValue{}
+			v := &BooleanAttributeValue{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Value = &NftAttributeValue_BooleanAttributeValue_{v}
+			m.Value = &NftAttributeValue_BooleanAttributeValue{v}
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
@@ -929,11 +922,11 @@ func (m *NftAttributeValue) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			v := &NftAttributeValue_FloatAttributeValue{}
+			v := &FloatAttributeValue{}
 			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
-			m.Value = &NftAttributeValue_FloatAttributeValue_{v}
+			m.Value = &NftAttributeValue_FloatAttributeValue{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -956,7 +949,7 @@ func (m *NftAttributeValue) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *NftAttributeValue_NumberAttributeValue) Unmarshal(dAtA []byte) error {
+func (m *NumberAttributeValue) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1025,7 +1018,7 @@ func (m *NftAttributeValue_NumberAttributeValue) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *NftAttributeValue_StringAttributeValue) Unmarshal(dAtA []byte) error {
+func (m *StringAttributeValue) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1107,7 +1100,7 @@ func (m *NftAttributeValue_StringAttributeValue) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *NftAttributeValue_BooleanAttributeValue) Unmarshal(dAtA []byte) error {
+func (m *BooleanAttributeValue) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1177,7 +1170,7 @@ func (m *NftAttributeValue_BooleanAttributeValue) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *NftAttributeValue_FloatAttributeValue) Unmarshal(dAtA []byte) error {
+func (m *FloatAttributeValue) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
