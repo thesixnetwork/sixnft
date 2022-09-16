@@ -23,7 +23,7 @@ func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]
 
 func ValidateRequiredAttributes(schemaAttributes []*types.AttributeDefinition, mapAttributeValues map[string]*types.NftAttributeValue) (bool, string) {
 	for _, schemaAttribute := range schemaAttributes {
-		if schemaAttribute.Required {
+		if schemaAttribute.Required && (schemaAttribute.DefaultMintValue == nil || schemaAttribute.DefaultMintValue.GetValue() == nil) {
 			if _, ok := mapAttributeValues[schemaAttribute.Name]; !ok {
 				return false, schemaAttribute.Name
 			}

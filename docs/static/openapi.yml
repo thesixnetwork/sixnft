@@ -32201,7 +32201,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       uri_retrieval_method:
@@ -32249,7 +32272,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       token_attributes:
@@ -32283,7 +32329,30 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
                       actions:
