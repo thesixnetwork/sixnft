@@ -1,8 +1,21 @@
 /* eslint-disable */
+import {
+  NumberAttributeValue,
+  StringAttributeValue,
+  BooleanAttributeValue,
+  FloatAttributeValue,
+} from "../nftmngr/nft_attribute_value";
 import { DisplayOption } from "../nftmngr/display_option";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftmngr";
+
+export interface DefaultMintValue {
+  number_attribute_value: NumberAttributeValue | undefined;
+  string_attribute_value: StringAttributeValue | undefined;
+  boolean_attribute_value: BooleanAttributeValue | undefined;
+  float_attribute_value: FloatAttributeValue | undefined;
+}
 
 export interface AttributeDefinition {
   name: string;
@@ -10,16 +23,197 @@ export interface AttributeDefinition {
   required: boolean;
   display_value_field: string;
   display_option: DisplayOption | undefined;
-  default_mint_value: string;
+  default_mint_value: DefaultMintValue | undefined;
   hidden_to_marketplace: boolean;
 }
+
+const baseDefaultMintValue: object = {};
+
+export const DefaultMintValue = {
+  encode(message: DefaultMintValue, writer: Writer = Writer.create()): Writer {
+    if (message.number_attribute_value !== undefined) {
+      NumberAttributeValue.encode(
+        message.number_attribute_value,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.string_attribute_value !== undefined) {
+      StringAttributeValue.encode(
+        message.string_attribute_value,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.boolean_attribute_value !== undefined) {
+      BooleanAttributeValue.encode(
+        message.boolean_attribute_value,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    if (message.float_attribute_value !== undefined) {
+      FloatAttributeValue.encode(
+        message.float_attribute_value,
+        writer.uint32(34).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): DefaultMintValue {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseDefaultMintValue } as DefaultMintValue;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.number_attribute_value = NumberAttributeValue.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.string_attribute_value = StringAttributeValue.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.boolean_attribute_value = BooleanAttributeValue.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 4:
+          message.float_attribute_value = FloatAttributeValue.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DefaultMintValue {
+    const message = { ...baseDefaultMintValue } as DefaultMintValue;
+    if (
+      object.number_attribute_value !== undefined &&
+      object.number_attribute_value !== null
+    ) {
+      message.number_attribute_value = NumberAttributeValue.fromJSON(
+        object.number_attribute_value
+      );
+    } else {
+      message.number_attribute_value = undefined;
+    }
+    if (
+      object.string_attribute_value !== undefined &&
+      object.string_attribute_value !== null
+    ) {
+      message.string_attribute_value = StringAttributeValue.fromJSON(
+        object.string_attribute_value
+      );
+    } else {
+      message.string_attribute_value = undefined;
+    }
+    if (
+      object.boolean_attribute_value !== undefined &&
+      object.boolean_attribute_value !== null
+    ) {
+      message.boolean_attribute_value = BooleanAttributeValue.fromJSON(
+        object.boolean_attribute_value
+      );
+    } else {
+      message.boolean_attribute_value = undefined;
+    }
+    if (
+      object.float_attribute_value !== undefined &&
+      object.float_attribute_value !== null
+    ) {
+      message.float_attribute_value = FloatAttributeValue.fromJSON(
+        object.float_attribute_value
+      );
+    } else {
+      message.float_attribute_value = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: DefaultMintValue): unknown {
+    const obj: any = {};
+    message.number_attribute_value !== undefined &&
+      (obj.number_attribute_value = message.number_attribute_value
+        ? NumberAttributeValue.toJSON(message.number_attribute_value)
+        : undefined);
+    message.string_attribute_value !== undefined &&
+      (obj.string_attribute_value = message.string_attribute_value
+        ? StringAttributeValue.toJSON(message.string_attribute_value)
+        : undefined);
+    message.boolean_attribute_value !== undefined &&
+      (obj.boolean_attribute_value = message.boolean_attribute_value
+        ? BooleanAttributeValue.toJSON(message.boolean_attribute_value)
+        : undefined);
+    message.float_attribute_value !== undefined &&
+      (obj.float_attribute_value = message.float_attribute_value
+        ? FloatAttributeValue.toJSON(message.float_attribute_value)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<DefaultMintValue>): DefaultMintValue {
+    const message = { ...baseDefaultMintValue } as DefaultMintValue;
+    if (
+      object.number_attribute_value !== undefined &&
+      object.number_attribute_value !== null
+    ) {
+      message.number_attribute_value = NumberAttributeValue.fromPartial(
+        object.number_attribute_value
+      );
+    } else {
+      message.number_attribute_value = undefined;
+    }
+    if (
+      object.string_attribute_value !== undefined &&
+      object.string_attribute_value !== null
+    ) {
+      message.string_attribute_value = StringAttributeValue.fromPartial(
+        object.string_attribute_value
+      );
+    } else {
+      message.string_attribute_value = undefined;
+    }
+    if (
+      object.boolean_attribute_value !== undefined &&
+      object.boolean_attribute_value !== null
+    ) {
+      message.boolean_attribute_value = BooleanAttributeValue.fromPartial(
+        object.boolean_attribute_value
+      );
+    } else {
+      message.boolean_attribute_value = undefined;
+    }
+    if (
+      object.float_attribute_value !== undefined &&
+      object.float_attribute_value !== null
+    ) {
+      message.float_attribute_value = FloatAttributeValue.fromPartial(
+        object.float_attribute_value
+      );
+    } else {
+      message.float_attribute_value = undefined;
+    }
+    return message;
+  },
+};
 
 const baseAttributeDefinition: object = {
   name: "",
   data_type: "",
   required: false,
   display_value_field: "",
-  default_mint_value: "",
   hidden_to_marketplace: false,
 };
 
@@ -46,8 +240,11 @@ export const AttributeDefinition = {
         writer.uint32(42).fork()
       ).ldelim();
     }
-    if (message.default_mint_value !== "") {
-      writer.uint32(50).string(message.default_mint_value);
+    if (message.default_mint_value !== undefined) {
+      DefaultMintValue.encode(
+        message.default_mint_value,
+        writer.uint32(50).fork()
+      ).ldelim();
     }
     if (message.hidden_to_marketplace === true) {
       writer.uint32(56).bool(message.hidden_to_marketplace);
@@ -81,7 +278,10 @@ export const AttributeDefinition = {
           );
           break;
         case 6:
-          message.default_mint_value = reader.string();
+          message.default_mint_value = DefaultMintValue.decode(
+            reader,
+            reader.uint32()
+          );
           break;
         case 7:
           message.hidden_to_marketplace = reader.bool();
@@ -128,9 +328,11 @@ export const AttributeDefinition = {
       object.default_mint_value !== undefined &&
       object.default_mint_value !== null
     ) {
-      message.default_mint_value = String(object.default_mint_value);
+      message.default_mint_value = DefaultMintValue.fromJSON(
+        object.default_mint_value
+      );
     } else {
-      message.default_mint_value = "";
+      message.default_mint_value = undefined;
     }
     if (
       object.hidden_to_marketplace !== undefined &&
@@ -155,7 +357,9 @@ export const AttributeDefinition = {
         ? DisplayOption.toJSON(message.display_option)
         : undefined);
     message.default_mint_value !== undefined &&
-      (obj.default_mint_value = message.default_mint_value);
+      (obj.default_mint_value = message.default_mint_value
+        ? DefaultMintValue.toJSON(message.default_mint_value)
+        : undefined);
     message.hidden_to_marketplace !== undefined &&
       (obj.hidden_to_marketplace = message.hidden_to_marketplace);
     return obj;
@@ -195,9 +399,11 @@ export const AttributeDefinition = {
       object.default_mint_value !== undefined &&
       object.default_mint_value !== null
     ) {
-      message.default_mint_value = object.default_mint_value;
+      message.default_mint_value = DefaultMintValue.fromPartial(
+        object.default_mint_value
+      );
     } else {
-      message.default_mint_value = "";
+      message.default_mint_value = undefined;
     }
     if (
       object.hidden_to_marketplace !== undefined &&

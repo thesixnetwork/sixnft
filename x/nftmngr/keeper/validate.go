@@ -23,7 +23,7 @@ func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]
 
 func ValidateRequiredAttributes(schemaAttributes []*types.AttributeDefinition, mapAttributeValues map[string]*types.NftAttributeValue) (bool, string) {
 	for _, schemaAttribute := range schemaAttributes {
-		if schemaAttribute.Required {
+		if schemaAttribute.Required && (schemaAttribute.DefaultMintValue == nil || schemaAttribute.DefaultMintValue.GetValue() == nil) {
 			if _, ok := mapAttributeValues[schemaAttribute.Name]; !ok {
 				return false, schemaAttribute.Name
 			}
@@ -92,16 +92,16 @@ func HasSameTypeAsSchema(mapSchemaAttributes map[string]*types.AttributeDefiniti
 }
 
 func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue); ok {
 		return "boolean"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue); ok {
 		return "string"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue); ok {
 		return "number"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue); ok {
 		return "float"
 	}
 	return "default"

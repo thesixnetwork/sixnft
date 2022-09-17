@@ -1,7 +1,17 @@
 syntax = "proto3";
 package sixnft.nftmngr;
 import "nftmngr/display_option.proto";
+import "nftmngr/nft_attribute_value.proto";
 option go_package = "sixnft/x/nftmngr/types";
+
+message DefaultMintValue {
+  oneof value {
+    NumberAttributeValue number_attribute_value = 1;
+    StringAttributeValue string_attribute_value = 2;
+    BooleanAttributeValue boolean_attribute_value = 3;
+    FloatAttributeValue float_attribute_value = 4;
+  }
+}
 
 message AttributeDefinition {
   
@@ -10,6 +20,6 @@ message AttributeDefinition {
   bool required = 3;
   string display_value_field = 4; 
   DisplayOption display_option = 5; 
-  string default_mint_value = 6; 
+  DefaultMintValue default_mint_value = 6;
   bool hidden_to_marketplace = 7;
 }

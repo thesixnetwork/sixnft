@@ -6,25 +6,25 @@ export const protobufPackage = "sixnft.nftmngr";
 
 export interface NftAttributeValue {
   name: string;
-  number_attribute_value: NftAttributeValue_NumberAttributeValue | undefined;
-  string_attribute_value: NftAttributeValue_StringAttributeValue | undefined;
-  boolean_attribute_value: NftAttributeValue_BooleanAttributeValue | undefined;
-  float_attribute_value: NftAttributeValue_FloatAttributeValue | undefined;
+  number_attribute_value: NumberAttributeValue | undefined;
+  string_attribute_value: StringAttributeValue | undefined;
+  boolean_attribute_value: BooleanAttributeValue | undefined;
+  float_attribute_value: FloatAttributeValue | undefined;
 }
 
-export interface NftAttributeValue_NumberAttributeValue {
+export interface NumberAttributeValue {
   value: number;
 }
 
-export interface NftAttributeValue_StringAttributeValue {
+export interface StringAttributeValue {
   value: string;
 }
 
-export interface NftAttributeValue_BooleanAttributeValue {
+export interface BooleanAttributeValue {
   value: boolean;
 }
 
-export interface NftAttributeValue_FloatAttributeValue {
+export interface FloatAttributeValue {
   value: number;
 }
 
@@ -36,25 +36,25 @@ export const NftAttributeValue = {
       writer.uint32(10).string(message.name);
     }
     if (message.number_attribute_value !== undefined) {
-      NftAttributeValue_NumberAttributeValue.encode(
+      NumberAttributeValue.encode(
         message.number_attribute_value,
         writer.uint32(18).fork()
       ).ldelim();
     }
     if (message.string_attribute_value !== undefined) {
-      NftAttributeValue_StringAttributeValue.encode(
+      StringAttributeValue.encode(
         message.string_attribute_value,
         writer.uint32(26).fork()
       ).ldelim();
     }
     if (message.boolean_attribute_value !== undefined) {
-      NftAttributeValue_BooleanAttributeValue.encode(
+      BooleanAttributeValue.encode(
         message.boolean_attribute_value,
         writer.uint32(34).fork()
       ).ldelim();
     }
     if (message.float_attribute_value !== undefined) {
-      NftAttributeValue_FloatAttributeValue.encode(
+      FloatAttributeValue.encode(
         message.float_attribute_value,
         writer.uint32(42).fork()
       ).ldelim();
@@ -73,25 +73,25 @@ export const NftAttributeValue = {
           message.name = reader.string();
           break;
         case 2:
-          message.number_attribute_value = NftAttributeValue_NumberAttributeValue.decode(
+          message.number_attribute_value = NumberAttributeValue.decode(
             reader,
             reader.uint32()
           );
           break;
         case 3:
-          message.string_attribute_value = NftAttributeValue_StringAttributeValue.decode(
+          message.string_attribute_value = StringAttributeValue.decode(
             reader,
             reader.uint32()
           );
           break;
         case 4:
-          message.boolean_attribute_value = NftAttributeValue_BooleanAttributeValue.decode(
+          message.boolean_attribute_value = BooleanAttributeValue.decode(
             reader,
             reader.uint32()
           );
           break;
         case 5:
-          message.float_attribute_value = NftAttributeValue_FloatAttributeValue.decode(
+          message.float_attribute_value = FloatAttributeValue.decode(
             reader,
             reader.uint32()
           );
@@ -115,7 +115,7 @@ export const NftAttributeValue = {
       object.number_attribute_value !== undefined &&
       object.number_attribute_value !== null
     ) {
-      message.number_attribute_value = NftAttributeValue_NumberAttributeValue.fromJSON(
+      message.number_attribute_value = NumberAttributeValue.fromJSON(
         object.number_attribute_value
       );
     } else {
@@ -125,7 +125,7 @@ export const NftAttributeValue = {
       object.string_attribute_value !== undefined &&
       object.string_attribute_value !== null
     ) {
-      message.string_attribute_value = NftAttributeValue_StringAttributeValue.fromJSON(
+      message.string_attribute_value = StringAttributeValue.fromJSON(
         object.string_attribute_value
       );
     } else {
@@ -135,7 +135,7 @@ export const NftAttributeValue = {
       object.boolean_attribute_value !== undefined &&
       object.boolean_attribute_value !== null
     ) {
-      message.boolean_attribute_value = NftAttributeValue_BooleanAttributeValue.fromJSON(
+      message.boolean_attribute_value = BooleanAttributeValue.fromJSON(
         object.boolean_attribute_value
       );
     } else {
@@ -145,7 +145,7 @@ export const NftAttributeValue = {
       object.float_attribute_value !== undefined &&
       object.float_attribute_value !== null
     ) {
-      message.float_attribute_value = NftAttributeValue_FloatAttributeValue.fromJSON(
+      message.float_attribute_value = FloatAttributeValue.fromJSON(
         object.float_attribute_value
       );
     } else {
@@ -159,27 +159,19 @@ export const NftAttributeValue = {
     message.name !== undefined && (obj.name = message.name);
     message.number_attribute_value !== undefined &&
       (obj.number_attribute_value = message.number_attribute_value
-        ? NftAttributeValue_NumberAttributeValue.toJSON(
-            message.number_attribute_value
-          )
+        ? NumberAttributeValue.toJSON(message.number_attribute_value)
         : undefined);
     message.string_attribute_value !== undefined &&
       (obj.string_attribute_value = message.string_attribute_value
-        ? NftAttributeValue_StringAttributeValue.toJSON(
-            message.string_attribute_value
-          )
+        ? StringAttributeValue.toJSON(message.string_attribute_value)
         : undefined);
     message.boolean_attribute_value !== undefined &&
       (obj.boolean_attribute_value = message.boolean_attribute_value
-        ? NftAttributeValue_BooleanAttributeValue.toJSON(
-            message.boolean_attribute_value
-          )
+        ? BooleanAttributeValue.toJSON(message.boolean_attribute_value)
         : undefined);
     message.float_attribute_value !== undefined &&
       (obj.float_attribute_value = message.float_attribute_value
-        ? NftAttributeValue_FloatAttributeValue.toJSON(
-            message.float_attribute_value
-          )
+        ? FloatAttributeValue.toJSON(message.float_attribute_value)
         : undefined);
     return obj;
   },
@@ -195,7 +187,7 @@ export const NftAttributeValue = {
       object.number_attribute_value !== undefined &&
       object.number_attribute_value !== null
     ) {
-      message.number_attribute_value = NftAttributeValue_NumberAttributeValue.fromPartial(
+      message.number_attribute_value = NumberAttributeValue.fromPartial(
         object.number_attribute_value
       );
     } else {
@@ -205,7 +197,7 @@ export const NftAttributeValue = {
       object.string_attribute_value !== undefined &&
       object.string_attribute_value !== null
     ) {
-      message.string_attribute_value = NftAttributeValue_StringAttributeValue.fromPartial(
+      message.string_attribute_value = StringAttributeValue.fromPartial(
         object.string_attribute_value
       );
     } else {
@@ -215,7 +207,7 @@ export const NftAttributeValue = {
       object.boolean_attribute_value !== undefined &&
       object.boolean_attribute_value !== null
     ) {
-      message.boolean_attribute_value = NftAttributeValue_BooleanAttributeValue.fromPartial(
+      message.boolean_attribute_value = BooleanAttributeValue.fromPartial(
         object.boolean_attribute_value
       );
     } else {
@@ -225,7 +217,7 @@ export const NftAttributeValue = {
       object.float_attribute_value !== undefined &&
       object.float_attribute_value !== null
     ) {
-      message.float_attribute_value = NftAttributeValue_FloatAttributeValue.fromPartial(
+      message.float_attribute_value = FloatAttributeValue.fromPartial(
         object.float_attribute_value
       );
     } else {
@@ -235,11 +227,11 @@ export const NftAttributeValue = {
   },
 };
 
-const baseNftAttributeValue_NumberAttributeValue: object = { value: 0 };
+const baseNumberAttributeValue: object = { value: 0 };
 
-export const NftAttributeValue_NumberAttributeValue = {
+export const NumberAttributeValue = {
   encode(
-    message: NftAttributeValue_NumberAttributeValue,
+    message: NumberAttributeValue,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.value !== 0) {
@@ -248,15 +240,10 @@ export const NftAttributeValue_NumberAttributeValue = {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): NftAttributeValue_NumberAttributeValue {
+  decode(input: Reader | Uint8Array, length?: number): NumberAttributeValue {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseNftAttributeValue_NumberAttributeValue,
-    } as NftAttributeValue_NumberAttributeValue;
+    const message = { ...baseNumberAttributeValue } as NumberAttributeValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -271,10 +258,8 @@ export const NftAttributeValue_NumberAttributeValue = {
     return message;
   },
 
-  fromJSON(object: any): NftAttributeValue_NumberAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_NumberAttributeValue,
-    } as NftAttributeValue_NumberAttributeValue;
+  fromJSON(object: any): NumberAttributeValue {
+    const message = { ...baseNumberAttributeValue } as NumberAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = Number(object.value);
     } else {
@@ -283,18 +268,14 @@ export const NftAttributeValue_NumberAttributeValue = {
     return message;
   },
 
-  toJSON(message: NftAttributeValue_NumberAttributeValue): unknown {
+  toJSON(message: NumberAttributeValue): unknown {
     const obj: any = {};
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<NftAttributeValue_NumberAttributeValue>
-  ): NftAttributeValue_NumberAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_NumberAttributeValue,
-    } as NftAttributeValue_NumberAttributeValue;
+  fromPartial(object: DeepPartial<NumberAttributeValue>): NumberAttributeValue {
+    const message = { ...baseNumberAttributeValue } as NumberAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
     } else {
@@ -304,11 +285,11 @@ export const NftAttributeValue_NumberAttributeValue = {
   },
 };
 
-const baseNftAttributeValue_StringAttributeValue: object = { value: "" };
+const baseStringAttributeValue: object = { value: "" };
 
-export const NftAttributeValue_StringAttributeValue = {
+export const StringAttributeValue = {
   encode(
-    message: NftAttributeValue_StringAttributeValue,
+    message: StringAttributeValue,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.value !== "") {
@@ -317,15 +298,10 @@ export const NftAttributeValue_StringAttributeValue = {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): NftAttributeValue_StringAttributeValue {
+  decode(input: Reader | Uint8Array, length?: number): StringAttributeValue {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseNftAttributeValue_StringAttributeValue,
-    } as NftAttributeValue_StringAttributeValue;
+    const message = { ...baseStringAttributeValue } as StringAttributeValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -340,10 +316,8 @@ export const NftAttributeValue_StringAttributeValue = {
     return message;
   },
 
-  fromJSON(object: any): NftAttributeValue_StringAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_StringAttributeValue,
-    } as NftAttributeValue_StringAttributeValue;
+  fromJSON(object: any): StringAttributeValue {
+    const message = { ...baseStringAttributeValue } as StringAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = String(object.value);
     } else {
@@ -352,18 +326,14 @@ export const NftAttributeValue_StringAttributeValue = {
     return message;
   },
 
-  toJSON(message: NftAttributeValue_StringAttributeValue): unknown {
+  toJSON(message: StringAttributeValue): unknown {
     const obj: any = {};
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<NftAttributeValue_StringAttributeValue>
-  ): NftAttributeValue_StringAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_StringAttributeValue,
-    } as NftAttributeValue_StringAttributeValue;
+  fromPartial(object: DeepPartial<StringAttributeValue>): StringAttributeValue {
+    const message = { ...baseStringAttributeValue } as StringAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
     } else {
@@ -373,11 +343,11 @@ export const NftAttributeValue_StringAttributeValue = {
   },
 };
 
-const baseNftAttributeValue_BooleanAttributeValue: object = { value: false };
+const baseBooleanAttributeValue: object = { value: false };
 
-export const NftAttributeValue_BooleanAttributeValue = {
+export const BooleanAttributeValue = {
   encode(
-    message: NftAttributeValue_BooleanAttributeValue,
+    message: BooleanAttributeValue,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.value === true) {
@@ -386,15 +356,10 @@ export const NftAttributeValue_BooleanAttributeValue = {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): NftAttributeValue_BooleanAttributeValue {
+  decode(input: Reader | Uint8Array, length?: number): BooleanAttributeValue {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseNftAttributeValue_BooleanAttributeValue,
-    } as NftAttributeValue_BooleanAttributeValue;
+    const message = { ...baseBooleanAttributeValue } as BooleanAttributeValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -409,10 +374,8 @@ export const NftAttributeValue_BooleanAttributeValue = {
     return message;
   },
 
-  fromJSON(object: any): NftAttributeValue_BooleanAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_BooleanAttributeValue,
-    } as NftAttributeValue_BooleanAttributeValue;
+  fromJSON(object: any): BooleanAttributeValue {
+    const message = { ...baseBooleanAttributeValue } as BooleanAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = Boolean(object.value);
     } else {
@@ -421,18 +384,16 @@ export const NftAttributeValue_BooleanAttributeValue = {
     return message;
   },
 
-  toJSON(message: NftAttributeValue_BooleanAttributeValue): unknown {
+  toJSON(message: BooleanAttributeValue): unknown {
     const obj: any = {};
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
   fromPartial(
-    object: DeepPartial<NftAttributeValue_BooleanAttributeValue>
-  ): NftAttributeValue_BooleanAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_BooleanAttributeValue,
-    } as NftAttributeValue_BooleanAttributeValue;
+    object: DeepPartial<BooleanAttributeValue>
+  ): BooleanAttributeValue {
+    const message = { ...baseBooleanAttributeValue } as BooleanAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
     } else {
@@ -442,11 +403,11 @@ export const NftAttributeValue_BooleanAttributeValue = {
   },
 };
 
-const baseNftAttributeValue_FloatAttributeValue: object = { value: 0 };
+const baseFloatAttributeValue: object = { value: 0 };
 
-export const NftAttributeValue_FloatAttributeValue = {
+export const FloatAttributeValue = {
   encode(
-    message: NftAttributeValue_FloatAttributeValue,
+    message: FloatAttributeValue,
     writer: Writer = Writer.create()
   ): Writer {
     if (message.value !== 0) {
@@ -455,15 +416,10 @@ export const NftAttributeValue_FloatAttributeValue = {
     return writer;
   },
 
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): NftAttributeValue_FloatAttributeValue {
+  decode(input: Reader | Uint8Array, length?: number): FloatAttributeValue {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseNftAttributeValue_FloatAttributeValue,
-    } as NftAttributeValue_FloatAttributeValue;
+    const message = { ...baseFloatAttributeValue } as FloatAttributeValue;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -478,10 +434,8 @@ export const NftAttributeValue_FloatAttributeValue = {
     return message;
   },
 
-  fromJSON(object: any): NftAttributeValue_FloatAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_FloatAttributeValue,
-    } as NftAttributeValue_FloatAttributeValue;
+  fromJSON(object: any): FloatAttributeValue {
+    const message = { ...baseFloatAttributeValue } as FloatAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = Number(object.value);
     } else {
@@ -490,18 +444,14 @@ export const NftAttributeValue_FloatAttributeValue = {
     return message;
   },
 
-  toJSON(message: NftAttributeValue_FloatAttributeValue): unknown {
+  toJSON(message: FloatAttributeValue): unknown {
     const obj: any = {};
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial(
-    object: DeepPartial<NftAttributeValue_FloatAttributeValue>
-  ): NftAttributeValue_FloatAttributeValue {
-    const message = {
-      ...baseNftAttributeValue_FloatAttributeValue,
-    } as NftAttributeValue_FloatAttributeValue;
+  fromPartial(object: DeepPartial<FloatAttributeValue>): FloatAttributeValue {
+    const message = { ...baseFloatAttributeValue } as FloatAttributeValue;
     if (object.value !== undefined && object.value !== null) {
       message.value = object.value;
     } else {

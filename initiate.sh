@@ -329,3 +329,8 @@ ignite scaffold message submitMintResponse mintRequestID:uint base64NftData:stri
     --response mintRequestID \
     --no-simulation \
     --module nftoracle
+ignite scaffold message setNFTAttribute nft_schema_code attribute_value:NftAttributeValue \
+    --desc "To set NFT attribute" \
+    --response nft_schema_code,attribute_name,attribute_value \
+    --no-simulation \
+    --module nftmngr

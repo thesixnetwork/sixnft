@@ -7,12 +7,14 @@ import { Api } from "./rest";
 import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 import { MsgCreateMetadata } from "./types/nftmngr/tx";
 import { MsgPerformActionByAdmin } from "./types/nftmngr/tx";
+import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
 
 
 const types = [
   ["/sixnft.nftmngr.MsgCreateNFTSchema", MsgCreateNFTSchema],
   ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
   ["/sixnft.nftmngr.MsgPerformActionByAdmin", MsgPerformActionByAdmin],
+  ["/sixnft.nftmngr.MsgSetNFTAttribute", MsgSetNFTAttribute],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -48,6 +50,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
     msgCreateNFTSchema: (data: MsgCreateNFTSchema): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgCreateNFTSchema", value: MsgCreateNFTSchema.fromPartial( data ) }),
     msgCreateMetadata: (data: MsgCreateMetadata): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgCreateMetadata", value: MsgCreateMetadata.fromPartial( data ) }),
     msgPerformActionByAdmin: (data: MsgPerformActionByAdmin): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgPerformActionByAdmin", value: MsgPerformActionByAdmin.fromPartial( data ) }),
+    msgSetNFTAttribute: (data: MsgSetNFTAttribute): EncodeObject => ({ typeUrl: "/sixnft.nftmngr.MsgSetNFTAttribute", value: MsgSetNFTAttribute.fromPartial( data ) }),
     
   };
 };
