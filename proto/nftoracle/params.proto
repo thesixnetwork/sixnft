@@ -8,5 +8,5 @@ option go_package = "sixnft/x/nftoracle/types";
 // Params defines the parameters for the module.
 message Params {
   option (gogoproto.goproto_stringer) = false;
-  
+  int64 mint_request_active_duration = 1 [(gogoproto.moretags) = "yaml:\"mint_request_active_duration\""];  
 }

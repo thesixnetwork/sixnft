@@ -28,6 +28,10 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 		NftSchemaCode:   msg.NftSchemaCode,
 		TokenId:         msg.TokenId,
 		RequiredConfirm: msg.RequiredConfirm,
+		Status:          types.RequestStatus_PENDING,
+		CurrentConfirm:  0,
+		CreatedAt:       ctx.BlockTime().Unix(),
+		ValidUntil:      ctx.BlockTime().Unix() + k.GetParams(ctx).MintRequestActiveDuration,
 	})
 
 	ctx.EventManager().EmitEvents(sdk.Events{

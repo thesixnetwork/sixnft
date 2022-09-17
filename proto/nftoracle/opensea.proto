@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.nftoracle;
+import "google/protobuf/any.proto";
+option go_package = "sixnft/x/nftoracle/types";
+
+
+message Trait {
+    string trait_type = 1;
+    google.protobuf.Any value = 2;
+    string display_type = 3;
+    string max_value = 4;
+}

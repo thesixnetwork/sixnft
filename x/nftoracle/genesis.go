@@ -1,9 +1,11 @@
 package nftoracle
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
+	"fmt"
 	"sixnft/x/nftoracle/keeper"
 	"sixnft/x/nftoracle/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis
@@ -13,6 +15,8 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.MintRequestList {
 		k.SetMintRequest(ctx, elem)
 	}
+
+	fmt.Println("############################### mint active duration", genState.Params.MintRequestActiveDuration)
 
 	// Set mintRequest count
 	k.SetMintRequestCount(ctx, genState.MintRequestCount)

@@ -1,6 +1,6 @@
 syntax = "proto3";
 package sixnft.nftoracle;
-
+import "nftoracle/opensea.proto";
 option go_package = "sixnft/x/nftoracle/types";
 
 enum RequestStatus {
@@ -9,13 +9,22 @@ enum RequestStatus {
   FAILED_WITHOUT_CONCENSUS = 2;
 }
 
+
+message NftOriginData {
+  string image = 1;
+  string holder_address = 2;
+  repeated Trait traits = 3;
+}
+
 message MintRequest {
   uint64 id = 1;
-  string nftSchemaCode = 2; 
-  string tokenId = 3; 
-  uint64 requiredConfirm = 4; 
+  string nft_schema_code = 2; 
+  string token_id = 3; 
+  uint64 required_confirm = 4; 
   RequestStatus status = 5;
-  // Current Confirmed
-  // Nft Origin Data
-  // Hash of NFT Origin Data
+  uint64 current_confirm = 6;
+  NftOriginData nft_origin_data = 7;
+  int64 created_at = 8;
+  int64 valid_until = 9;
+  bytes data_hash = 10;
 }
