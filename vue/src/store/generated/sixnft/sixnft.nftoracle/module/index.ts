@@ -4,10 +4,12 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
+import { MsgSubmitMintResponse } from "./types/nftoracle/tx";
 import { MsgCreateMintRequest } from "./types/nftoracle/tx";
 
 
 const types = [
+  ["/sixnft.nftoracle.MsgSubmitMintResponse", MsgSubmitMintResponse],
   ["/sixnft.nftoracle.MsgCreateMintRequest", MsgCreateMintRequest],
   
 ];
@@ -41,6 +43,7 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
+    msgSubmitMintResponse: (data: MsgSubmitMintResponse): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgSubmitMintResponse", value: MsgSubmitMintResponse.fromPartial( data ) }),
     msgCreateMintRequest: (data: MsgCreateMintRequest): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgCreateMintRequest", value: MsgCreateMintRequest.fromPartial( data ) }),
     
   };

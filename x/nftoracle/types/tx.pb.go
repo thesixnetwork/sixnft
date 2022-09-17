@@ -155,32 +155,143 @@ func (m *MsgCreateMintRequestResponse) GetTokenId() string {
 	return ""
 }
 
+type MsgSubmitMintResponse struct {
+	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	MintRequestID uint64 `protobuf:"varint,2,opt,name=mintRequestID,proto3" json:"mintRequestID,omitempty"`
+	Base64NftData string `protobuf:"bytes,3,opt,name=base64NftData,proto3" json:"base64NftData,omitempty"`
+}
+
+func (m *MsgSubmitMintResponse) Reset()         { *m = MsgSubmitMintResponse{} }
+func (m *MsgSubmitMintResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSubmitMintResponse) ProtoMessage()    {}
+func (*MsgSubmitMintResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7fb5383b6da1e6e, []int{2}
+}
+func (m *MsgSubmitMintResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSubmitMintResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSubmitMintResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSubmitMintResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSubmitMintResponse.Merge(m, src)
+}
+func (m *MsgSubmitMintResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSubmitMintResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSubmitMintResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSubmitMintResponse proto.InternalMessageInfo
+
+func (m *MsgSubmitMintResponse) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgSubmitMintResponse) GetMintRequestID() uint64 {
+	if m != nil {
+		return m.MintRequestID
+	}
+	return 0
+}
+
+func (m *MsgSubmitMintResponse) GetBase64NftData() string {
+	if m != nil {
+		return m.Base64NftData
+	}
+	return ""
+}
+
+type MsgSubmitMintResponseResponse struct {
+	MintRequestID string `protobuf:"bytes,1,opt,name=mintRequestID,proto3" json:"mintRequestID,omitempty"`
+}
+
+func (m *MsgSubmitMintResponseResponse) Reset()         { *m = MsgSubmitMintResponseResponse{} }
+func (m *MsgSubmitMintResponseResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSubmitMintResponseResponse) ProtoMessage()    {}
+func (*MsgSubmitMintResponseResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7fb5383b6da1e6e, []int{3}
+}
+func (m *MsgSubmitMintResponseResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSubmitMintResponseResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSubmitMintResponseResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSubmitMintResponseResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSubmitMintResponseResponse.Merge(m, src)
+}
+func (m *MsgSubmitMintResponseResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSubmitMintResponseResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSubmitMintResponseResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSubmitMintResponseResponse proto.InternalMessageInfo
+
+func (m *MsgSubmitMintResponseResponse) GetMintRequestID() string {
+	if m != nil {
+		return m.MintRequestID
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgCreateMintRequest)(nil), "sixnft.nftoracle.MsgCreateMintRequest")
 	proto.RegisterType((*MsgCreateMintRequestResponse)(nil), "sixnft.nftoracle.MsgCreateMintRequestResponse")
+	proto.RegisterType((*MsgSubmitMintResponse)(nil), "sixnft.nftoracle.MsgSubmitMintResponse")
+	proto.RegisterType((*MsgSubmitMintResponseResponse)(nil), "sixnft.nftoracle.MsgSubmitMintResponseResponse")
 }
 
 func init() { proto.RegisterFile("nftoracle/tx.proto", fileDescriptor_b7fb5383b6da1e6e) }
 
 var fileDescriptor_b7fb5383b6da1e6e = []byte{
-	// 268 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xca, 0x4b, 0x2b, 0xc9,
-	0x2f, 0x4a, 0x4c, 0xce, 0x49, 0xd5, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12,
-	0x28, 0xce, 0xac, 0xc8, 0x4b, 0x2b, 0xd1, 0x83, 0x4b, 0x29, 0xcd, 0x62, 0xe4, 0x12, 0xf1, 0x2d,
-	0x4e, 0x77, 0x2e, 0x4a, 0x4d, 0x2c, 0x49, 0xf5, 0xcd, 0xcc, 0x2b, 0x09, 0x4a, 0x2d, 0x2c, 0x4d,
-	0x2d, 0x2e, 0x11, 0x92, 0xe0, 0x62, 0x4f, 0x06, 0x09, 0xe6, 0x17, 0x49, 0x30, 0x2a, 0x30, 0x6a,
-	0x70, 0x06, 0xc1, 0xb8, 0x42, 0x2a, 0x5c, 0xbc, 0x79, 0x69, 0x25, 0xc1, 0xc9, 0x19, 0xa9, 0xb9,
-	0x89, 0xce, 0xf9, 0x29, 0xa9, 0x12, 0x4c, 0x60, 0x79, 0x54, 0x41, 0x90, 0xfe, 0x92, 0xfc, 0xec,
-	0xd4, 0x3c, 0xcf, 0x14, 0x09, 0x66, 0x88, 0x7e, 0x28, 0x57, 0x48, 0x83, 0x8b, 0xbf, 0x28, 0xb5,
-	0xb0, 0x34, 0xb3, 0x28, 0x35, 0xc5, 0x39, 0x3f, 0x2f, 0x2d, 0xb3, 0x28, 0x57, 0x82, 0x45, 0x81,
-	0x51, 0x83, 0x25, 0x08, 0x5d, 0x58, 0x29, 0x8f, 0x4b, 0x06, 0x9b, 0xdb, 0x82, 0x52, 0x8b, 0x0b,
-	0xf2, 0xf3, 0x8a, 0x53, 0x85, 0xf8, 0xb8, 0x98, 0x32, 0x53, 0xc0, 0xce, 0x63, 0x09, 0x62, 0xca,
-	0x4c, 0xa1, 0xd4, 0x65, 0x46, 0x45, 0x5c, 0xcc, 0xbe, 0xc5, 0xe9, 0x42, 0xd9, 0x5c, 0x82, 0x98,
-	0xe1, 0xa1, 0xa6, 0x87, 0x1e, 0x76, 0x7a, 0xd8, 0xdc, 0x26, 0xa5, 0x47, 0x9c, 0x3a, 0x98, 0x1f,
-	0x9c, 0x8c, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x09,
-	0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63, 0xb8, 0xf1, 0x58, 0x8e, 0x21, 0x4a, 0x02, 0x62, 0x90,
-	0x7e, 0x85, 0x3e, 0x52, 0x4c, 0x56, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x63, 0xd3, 0x18, 0x10,
-	0x00, 0x00, 0xff, 0xff, 0x15, 0xa3, 0x02, 0x4a, 0xe3, 0x01, 0x00, 0x00,
+	// 350 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x93, 0xcf, 0x4e, 0xc2, 0x40,
+	0x10, 0xc6, 0x59, 0x68, 0x34, 0x6e, 0xe2, 0xbf, 0x8d, 0x26, 0x0d, 0xd1, 0x86, 0x34, 0x46, 0x39,
+	0xb5, 0x09, 0x1a, 0x1f, 0x40, 0xf0, 0xc0, 0xa1, 0x1e, 0xca, 0xcd, 0x5b, 0xa1, 0x53, 0xdc, 0x60,
+	0x77, 0x61, 0x77, 0x48, 0xf0, 0xe0, 0x3b, 0x78, 0xf6, 0x89, 0x3c, 0x72, 0xf4, 0x68, 0xca, 0x8b,
+	0x18, 0x5a, 0x40, 0x0b, 0x8d, 0x21, 0xf1, 0xd4, 0xec, 0xb7, 0xdf, 0xcc, 0xf7, 0xcb, 0x74, 0x87,
+	0x32, 0x11, 0xa1, 0x54, 0x41, 0xef, 0x19, 0x5c, 0x9c, 0x38, 0x43, 0x25, 0x51, 0xb2, 0x23, 0xcd,
+	0x27, 0x22, 0x42, 0x67, 0x75, 0x65, 0xbf, 0x13, 0x7a, 0xe2, 0xe9, 0x7e, 0x53, 0x41, 0x80, 0xe0,
+	0x71, 0x81, 0x3e, 0x8c, 0xc6, 0xa0, 0x91, 0x99, 0x74, 0xb7, 0x37, 0x17, 0xa5, 0x32, 0x49, 0x8d,
+	0xd4, 0xf7, 0xfc, 0xe5, 0x91, 0x5d, 0xd0, 0x7d, 0x11, 0x61, 0xa7, 0xf7, 0x04, 0x71, 0xd0, 0x94,
+	0x21, 0x98, 0xe5, 0xf4, 0x3e, 0x2f, 0xce, 0xeb, 0x51, 0x0e, 0x40, 0xb4, 0x43, 0xb3, 0x92, 0xd5,
+	0x2f, 0x8e, 0xac, 0x4e, 0x0f, 0x15, 0x8c, 0xc6, 0x5c, 0x41, 0xd8, 0x94, 0x22, 0xe2, 0x2a, 0x36,
+	0x8d, 0x1a, 0xa9, 0x1b, 0xfe, 0xba, 0x6c, 0x0b, 0x7a, 0x56, 0xc4, 0xe6, 0x83, 0x1e, 0x4a, 0xa1,
+	0x81, 0x1d, 0xd0, 0x32, 0x0f, 0x53, 0x3c, 0xc3, 0x2f, 0xf3, 0xf0, 0xbf, 0x64, 0xf6, 0x2b, 0x3d,
+	0xf5, 0x74, 0xbf, 0x33, 0xee, 0xc6, 0x1c, 0xb3, 0xbc, 0x45, 0xd0, 0x9f, 0xc3, 0x88, 0x7f, 0xc8,
+	0xda, 0xad, 0x34, 0xd2, 0xf0, 0xf3, 0xe2, 0xdc, 0xd5, 0x0d, 0x34, 0xdc, 0xde, 0x3c, 0x44, 0xd8,
+	0x0a, 0x30, 0x58, 0x04, 0xe7, 0x45, 0xfb, 0x9e, 0x9e, 0x17, 0xc6, 0xaf, 0x30, 0x36, 0xc2, 0x32,
+	0x98, 0xbc, 0xd8, 0x48, 0x08, 0xad, 0x78, 0xba, 0xcf, 0x06, 0xf4, 0x78, 0xf3, 0xb7, 0x5e, 0x3a,
+	0xeb, 0x4f, 0xc0, 0x29, 0x1a, 0x71, 0xd5, 0xd9, 0xce, 0xb7, 0x42, 0x13, 0x94, 0x15, 0xcc, 0xed,
+	0xaa, 0xb0, 0xcb, 0xa6, 0xb1, 0xea, 0x6e, 0x69, 0x5c, 0x7e, 0xef, 0x1a, 0x1f, 0x89, 0x45, 0xa6,
+	0x89, 0x45, 0xbe, 0x12, 0x8b, 0xbc, 0xcd, 0xac, 0xd2, 0x74, 0x66, 0x95, 0x3e, 0x67, 0x56, 0xe9,
+	0xd1, 0xcc, 0x3a, 0xb9, 0x13, 0xf7, 0xd7, 0x02, 0xbc, 0x0c, 0x41, 0x77, 0x77, 0xd2, 0x25, 0xb8,
+	0xfe, 0x0e, 0x00, 0x00, 0xff, 0xff, 0xda, 0x7b, 0x34, 0xdb, 0x1a, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -196,6 +307,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MsgClient interface {
 	CreateMintRequest(ctx context.Context, in *MsgCreateMintRequest, opts ...grpc.CallOption) (*MsgCreateMintRequestResponse, error)
+	SubmitMintResponse(ctx context.Context, in *MsgSubmitMintResponse, opts ...grpc.CallOption) (*MsgSubmitMintResponseResponse, error)
 }
 
 type msgClient struct {
@@ -215,9 +327,19 @@ func (c *msgClient) CreateMintRequest(ctx context.Context, in *MsgCreateMintRequ
 	return out, nil
 }
 
+func (c *msgClient) SubmitMintResponse(ctx context.Context, in *MsgSubmitMintResponse, opts ...grpc.CallOption) (*MsgSubmitMintResponseResponse, error) {
+	out := new(MsgSubmitMintResponseResponse)
+	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Msg/SubmitMintResponse", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	CreateMintRequest(context.Context, *MsgCreateMintRequest) (*MsgCreateMintRequestResponse, error)
+	SubmitMintResponse(context.Context, *MsgSubmitMintResponse) (*MsgSubmitMintResponseResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -226,6 +348,9 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) CreateMintRequest(ctx context.Context, req *MsgCreateMintRequest) (*MsgCreateMintRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMintRequest not implemented")
+}
+func (*UnimplementedMsgServer) SubmitMintResponse(ctx context.Context, req *MsgSubmitMintResponse) (*MsgSubmitMintResponseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitMintResponse not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -250,6 +375,24 @@ func _Msg_CreateMintRequest_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SubmitMintResponse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSubmitMintResponse)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SubmitMintResponse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/sixnft.nftoracle.Msg/SubmitMintResponse",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SubmitMintResponse(ctx, req.(*MsgSubmitMintResponse))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "sixnft.nftoracle.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -257,6 +400,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateMintRequest",
 			Handler:    _Msg_CreateMintRequest_Handler,
+		},
+		{
+			MethodName: "SubmitMintResponse",
+			Handler:    _Msg_SubmitMintResponse_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -354,6 +501,78 @@ func (m *MsgCreateMintRequestResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgSubmitMintResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSubmitMintResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSubmitMintResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Base64NftData) > 0 {
+		i -= len(m.Base64NftData)
+		copy(dAtA[i:], m.Base64NftData)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64NftData)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.MintRequestID != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.MintRequestID))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSubmitMintResponseResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSubmitMintResponseResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSubmitMintResponseResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.MintRequestID) > 0 {
+		i -= len(m.MintRequestID)
+		copy(dAtA[i:], m.MintRequestID)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.MintRequestID)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -403,6 +622,39 @@ func (m *MsgCreateMintRequestResponse) Size() (n int) {
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = len(m.TokenId)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgSubmitMintResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.MintRequestID != 0 {
+		n += 1 + sovTx(uint64(m.MintRequestID))
+	}
+	l = len(m.Base64NftData)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgSubmitMintResponseResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.MintRequestID)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -691,6 +943,221 @@ func (m *MsgCreateMintRequestResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.TokenId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSubmitMintResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSubmitMintResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSubmitMintResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MintRequestID", wireType)
+			}
+			m.MintRequestID = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MintRequestID |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Base64NftData", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Base64NftData = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSubmitMintResponseResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSubmitMintResponseResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSubmitMintResponseResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MintRequestID", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MintRequestID = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

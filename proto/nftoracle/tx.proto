@@ -8,6 +8,7 @@ option go_package = "sixnft/x/nftoracle/types";
 // Msg defines the Msg service.
 service Msg {
       rpc CreateMintRequest(MsgCreateMintRequest) returns (MsgCreateMintRequestResponse);
+  rpc SubmitMintResponse(MsgSubmitMintResponse) returns (MsgSubmitMintResponseResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -22,6 +23,16 @@ message MsgCreateMintRequestResponse {
   uint64 id = 1;
   string nftSchemaCode = 2;
   string tokenId = 3;
+}
+
+message MsgSubmitMintResponse {
+  string creator = 1;
+  uint64 mintRequestID = 2;
+  string base64NftData = 3;
+}
+
+message MsgSubmitMintResponseResponse {
+  string mintRequestID = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

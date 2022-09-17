@@ -323,3 +323,9 @@ ignite scaffold map Organization owner \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold message submitMintResponse mintRequestID:uint base64NftData:string \
+    --desc "To submit mint response" \
+    --response mintRequestID \
+    --no-simulation \
+    --module nftoracle

@@ -17,6 +17,16 @@ export interface MsgCreateMintRequestResponse {
   tokenId: string;
 }
 
+export interface MsgSubmitMintResponse {
+  creator: string;
+  mintRequestID: number;
+  base64NftData: string;
+}
+
+export interface MsgSubmitMintResponseResponse {
+  mintRequestID: string;
+}
+
 const baseMsgCreateMintRequest: object = {
   creator: "",
   nftSchemaCode: "",
@@ -247,12 +257,185 @@ export const MsgCreateMintRequestResponse = {
   },
 };
 
+const baseMsgSubmitMintResponse: object = {
+  creator: "",
+  mintRequestID: 0,
+  base64NftData: "",
+};
+
+export const MsgSubmitMintResponse = {
+  encode(
+    message: MsgSubmitMintResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.mintRequestID !== 0) {
+      writer.uint32(16).uint64(message.mintRequestID);
+    }
+    if (message.base64NftData !== "") {
+      writer.uint32(26).string(message.base64NftData);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSubmitMintResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSubmitMintResponse } as MsgSubmitMintResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.mintRequestID = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.base64NftData = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitMintResponse {
+    const message = { ...baseMsgSubmitMintResponse } as MsgSubmitMintResponse;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.mintRequestID !== undefined && object.mintRequestID !== null) {
+      message.mintRequestID = Number(object.mintRequestID);
+    } else {
+      message.mintRequestID = 0;
+    }
+    if (object.base64NftData !== undefined && object.base64NftData !== null) {
+      message.base64NftData = String(object.base64NftData);
+    } else {
+      message.base64NftData = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitMintResponse): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.mintRequestID !== undefined &&
+      (obj.mintRequestID = message.mintRequestID);
+    message.base64NftData !== undefined &&
+      (obj.base64NftData = message.base64NftData);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitMintResponse>
+  ): MsgSubmitMintResponse {
+    const message = { ...baseMsgSubmitMintResponse } as MsgSubmitMintResponse;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.mintRequestID !== undefined && object.mintRequestID !== null) {
+      message.mintRequestID = object.mintRequestID;
+    } else {
+      message.mintRequestID = 0;
+    }
+    if (object.base64NftData !== undefined && object.base64NftData !== null) {
+      message.base64NftData = object.base64NftData;
+    } else {
+      message.base64NftData = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSubmitMintResponseResponse: object = { mintRequestID: "" };
+
+export const MsgSubmitMintResponseResponse = {
+  encode(
+    message: MsgSubmitMintResponseResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.mintRequestID !== "") {
+      writer.uint32(10).string(message.mintRequestID);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSubmitMintResponseResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSubmitMintResponseResponse,
+    } as MsgSubmitMintResponseResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.mintRequestID = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitMintResponseResponse {
+    const message = {
+      ...baseMsgSubmitMintResponseResponse,
+    } as MsgSubmitMintResponseResponse;
+    if (object.mintRequestID !== undefined && object.mintRequestID !== null) {
+      message.mintRequestID = String(object.mintRequestID);
+    } else {
+      message.mintRequestID = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitMintResponseResponse): unknown {
+    const obj: any = {};
+    message.mintRequestID !== undefined &&
+      (obj.mintRequestID = message.mintRequestID);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitMintResponseResponse>
+  ): MsgSubmitMintResponseResponse {
+    const message = {
+      ...baseMsgSubmitMintResponseResponse,
+    } as MsgSubmitMintResponseResponse;
+    if (object.mintRequestID !== undefined && object.mintRequestID !== null) {
+      message.mintRequestID = object.mintRequestID;
+    } else {
+      message.mintRequestID = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateMintRequest(
     request: MsgCreateMintRequest
   ): Promise<MsgCreateMintRequestResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SubmitMintResponse(
+    request: MsgSubmitMintResponse
+  ): Promise<MsgSubmitMintResponseResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -271,6 +454,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgCreateMintRequestResponse.decode(new Reader(data))
+    );
+  }
+
+  SubmitMintResponse(
+    request: MsgSubmitMintResponse
+  ): Promise<MsgSubmitMintResponseResponse> {
+    const data = MsgSubmitMintResponse.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftoracle.Msg",
+      "SubmitMintResponse",
+      data
+    );
+    return promise.then((data) =>
+      MsgSubmitMintResponseResponse.decode(new Reader(data))
     );
   }
 }
