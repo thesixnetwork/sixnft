@@ -33,6 +33,9 @@ type NftmngrKeep interface {
 		tokenId string,
 
 	) (val nftmngrtypes.NftData, found bool)
+
+	// ValidateNFTData(data *nftmngrtypes.NftData, schema *nftmngrtypes.NFTSchema) (bool, error)
+	SetNftData(ctx sdk.Context, nftData nftmngrtypes.NftData)
 }
 
 type AdminKeeper interface {

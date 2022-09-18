@@ -19,6 +19,12 @@ message NftOriginData {
   repeated Trait traits = 3;
 }
 
+message DataHash {
+  NftOriginData origin_data = 1;
+  bytes hash = 2;
+  repeated string confirmers = 3;
+}
+
 message MintRequest {
   uint64 id = 1;
   string nft_schema_code = 2; 
@@ -26,11 +32,12 @@ message MintRequest {
   uint64 required_confirm = 4; 
   RequestStatus status = 5;
   uint64 current_confirm = 6;
-  NftOriginData nft_origin_data = 7;
-  google.protobuf.Timestamp created_at = 8
+  map<string, bool> confirmers = 7;
+  NftOriginData nft_origin_data = 8;
+  google.protobuf.Timestamp created_at = 9
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  google.protobuf.Timestamp valid_until = 9
+  google.protobuf.Timestamp valid_until = 10
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  bytes data_hash = 10;
-  int64 expired_height = 11;
+  repeated DataHash data_hashes = 11;
+  int64 expired_height = 12;
 }

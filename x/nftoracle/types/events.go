@@ -9,4 +9,6 @@ const (
 
 	EventTypeMintRequest          = "mint_request"
 	AttributeKeyMintRequestStatus = "status"
+
+	EventTypeMintRequestConfirmed = "mint_request_confirmed"
 )
