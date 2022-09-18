@@ -20,7 +20,7 @@ genesis:
     app_state:
         nftoracle:
             params:
-                mint_request_active_duration: 600
+                mint_request_active_duration: "600s"
         admin:
             authorization:
                 root_admin: 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq

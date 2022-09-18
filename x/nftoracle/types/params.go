@@ -2,6 +2,7 @@ package types
 
 import (
 	"fmt"
+	time "time"
 
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
 	"gopkg.in/yaml.v2"
@@ -19,7 +20,7 @@ func ParamKeyTable() paramtypes.KeyTable {
 }
 
 // NewParams creates a new Params instance
-func NewParams(mintRequestActiveDuration int64) Params {
+func NewParams(mintRequestActiveDuration time.Duration) Params {
 	return Params{
 		MintRequestActiveDuration: mintRequestActiveDuration,
 	}
@@ -27,7 +28,8 @@ func NewParams(mintRequestActiveDuration int64) Params {
 
 // DefaultParams returns a default set of parameters
 func DefaultParams() Params {
-	return NewParams(0)
+	defaultDuration := 0 * time.Microsecond
+	return NewParams(defaultDuration)
 }
 
 // ParamSetPairs get the params.ParamSet
@@ -51,7 +53,7 @@ func (p Params) String() string {
 }
 
 func validateMintRequestActiveDuration(i interface{}) error {
-	v, ok := i.(int64)
+	v, ok := i.(time.Duration)
 	if !ok {
 		return fmt.Errorf("invalid parameter type: %T", i)
 	}

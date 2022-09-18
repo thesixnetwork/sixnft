@@ -1,6 +1,8 @@
 syntax = "proto3";
 package sixnft.nftoracle;
 import "nftoracle/opensea.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
 option go_package = "sixnft/x/nftoracle/types";
 
 enum RequestStatus {
@@ -24,7 +26,9 @@ message MintRequest {
   RequestStatus status = 5;
   uint64 current_confirm = 6;
   NftOriginData nft_origin_data = 7;
-  int64 created_at = 8;
-  int64 valid_until = 9;
+  google.protobuf.Timestamp created_at = 8
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp valid_until = 9
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   bytes data_hash = 10;
 }

@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { Timestamp } from "../google/protobuf/timestamp";
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Trait } from "../nftoracle/opensea";
@@ -57,8 +58,8 @@ export interface MintRequest {
   status: RequestStatus;
   current_confirm: number;
   nft_origin_data: NftOriginData | undefined;
-  created_at: number;
-  valid_until: number;
+  created_at: Date | undefined;
+  valid_until: Date | undefined;
   data_hash: Uint8Array;
 }
 
@@ -166,8 +167,6 @@ const baseMintRequest: object = {
   required_confirm: 0,
   status: 0,
   current_confirm: 0,
-  created_at: 0,
-  valid_until: 0,
 };
 
 export const MintRequest = {
@@ -196,11 +195,17 @@ export const MintRequest = {
         writer.uint32(58).fork()
       ).ldelim();
     }
-    if (message.created_at !== 0) {
-      writer.uint32(64).int64(message.created_at);
+    if (message.created_at !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.created_at),
+        writer.uint32(66).fork()
+      ).ldelim();
     }
-    if (message.valid_until !== 0) {
-      writer.uint32(72).int64(message.valid_until);
+    if (message.valid_until !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.valid_until),
+        writer.uint32(74).fork()
+      ).ldelim();
     }
     if (message.data_hash.length !== 0) {
       writer.uint32(82).bytes(message.data_hash);
@@ -240,10 +245,14 @@ export const MintRequest = {
           );
           break;
         case 8:
-          message.created_at = longToNumber(reader.int64() as Long);
+          message.created_at = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 9:
-          message.valid_until = longToNumber(reader.int64() as Long);
+          message.valid_until = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
           break;
         case 10:
           message.data_hash = reader.bytes();
@@ -306,14 +315,14 @@ export const MintRequest = {
       message.nft_origin_data = undefined;
     }
     if (object.created_at !== undefined && object.created_at !== null) {
-      message.created_at = Number(object.created_at);
+      message.created_at = fromJsonTimestamp(object.created_at);
     } else {
-      message.created_at = 0;
+      message.created_at = undefined;
     }
     if (object.valid_until !== undefined && object.valid_until !== null) {
-      message.valid_until = Number(object.valid_until);
+      message.valid_until = fromJsonTimestamp(object.valid_until);
     } else {
-      message.valid_until = 0;
+      message.valid_until = undefined;
     }
     if (object.data_hash !== undefined && object.data_hash !== null) {
       message.data_hash = bytesFromBase64(object.data_hash);
@@ -337,9 +346,16 @@ export const MintRequest = {
       (obj.nft_origin_data = message.nft_origin_data
         ? NftOriginData.toJSON(message.nft_origin_data)
         : undefined);
-    message.created_at !== undefined && (obj.created_at = message.created_at);
+    message.created_at !== undefined &&
+      (obj.created_at =
+        message.created_at !== undefined
+          ? message.created_at.toISOString()
+          : null);
     message.valid_until !== undefined &&
-      (obj.valid_until = message.valid_until);
+      (obj.valid_until =
+        message.valid_until !== undefined
+          ? message.valid_until.toISOString()
+          : null);
     message.data_hash !== undefined &&
       (obj.data_hash = base64FromBytes(
         message.data_hash !== undefined ? message.data_hash : new Uint8Array()
@@ -401,12 +417,12 @@ export const MintRequest = {
     if (object.created_at !== undefined && object.created_at !== null) {
       message.created_at = object.created_at;
     } else {
-      message.created_at = 0;
+      message.created_at = undefined;
     }
     if (object.valid_until !== undefined && object.valid_until !== null) {
       message.valid_until = object.valid_until;
     } else {
-      message.valid_until = 0;
+      message.valid_until = undefined;
     }
     if (object.data_hash !== undefined && object.data_hash !== null) {
       message.data_hash = object.data_hash;
@@ -460,6 +476,28 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = t.seconds * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

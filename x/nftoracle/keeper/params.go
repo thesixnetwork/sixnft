@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"sixnft/x/nftoracle/types"
+	"time"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -18,7 +19,7 @@ func (k Keeper) SetParams(ctx sdk.Context, params types.Params) {
 	k.paramstore.SetParamSet(ctx, &params)
 }
 
-func (k Keeper) MintRequestActiveDuration(ctx sdk.Context) (res int64) {
+func (k Keeper) MintRequestActiveDuration(ctx sdk.Context) (res time.Duration) {
 	k.paramstore.Get(ctx, types.KeyMintRequestActiveDuration, &res)
 	return
 }

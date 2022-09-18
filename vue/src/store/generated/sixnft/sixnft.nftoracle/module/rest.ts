@@ -23,10 +23,10 @@ export interface NftoracleMintRequest {
   current_confirm?: string;
   nft_origin_data?: NftoracleNftOriginData;
 
-  /** @format int64 */
+  /** @format date-time */
   created_at?: string;
 
-  /** @format int64 */
+  /** @format date-time */
   valid_until?: string;
 
   /** @format byte */
@@ -54,7 +54,6 @@ export interface NftoracleNftOriginData {
  * Params defines the parameters for the module.
  */
 export interface NftoracleParams {
-  /** @format int64 */
   mint_request_active_duration?: string;
 }
 

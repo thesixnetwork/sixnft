@@ -33525,10 +33525,10 @@ paths:
                                 type: string
                     created_at:
                       type: string
-                      format: int64
+                      format: date-time
                     valid_until:
                       type: string
-                      format: int64
+                      format: date-time
                     data_hash:
                       type: string
                       format: byte
@@ -33791,6 +33791,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/mint_request/{id}':
@@ -34023,10 +34033,10 @@ paths:
                               type: string
                   created_at:
                     type: string
-                    format: int64
+                    format: date-time
                   valid_until:
                     type: string
-                    format: int64
+                    format: date-time
                   data_hash:
                     type: string
                     format: byte
@@ -34238,8 +34248,7 @@ paths:
                 type: object
                 properties:
                   mint_request_active_duration:
-                    type: integer
-                    format: int64
+                    type: string
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -57887,10 +57896,10 @@ definitions:
                   type: string
       created_at:
         type: string
-        format: int64
+        format: date-time
       valid_until:
         type: string
-        format: int64
+        format: date-time
       data_hash:
         type: string
         format: byte
@@ -58098,8 +58107,7 @@ definitions:
     type: object
     properties:
       mint_request_active_duration:
-        type: integer
-        format: int64
+        type: string
     description: Params defines the parameters for the module.
   sixnft.nftoracle.QueryAllMintRequestResponse:
     type: object
@@ -58324,10 +58332,10 @@ definitions:
                         type: string
             created_at:
               type: string
-              format: int64
+              format: date-time
             valid_until:
               type: string
-              format: int64
+              format: date-time
             data_hash:
               type: string
               format: byte
@@ -58577,10 +58585,10 @@ definitions:
                       type: string
           created_at:
             type: string
-            format: int64
+            format: date-time
           valid_until:
             type: string
-            format: int64
+            format: date-time
           data_hash:
             type: string
             format: byte
@@ -58592,8 +58600,7 @@ definitions:
         type: object
         properties:
           mint_request_active_duration:
-            type: integer
-            format: int64
+            type: string
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   sixnft.nftoracle.RequestStatus:
     type: string

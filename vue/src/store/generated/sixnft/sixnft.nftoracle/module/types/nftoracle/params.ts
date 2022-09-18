@@ -1,20 +1,23 @@
 /* eslint-disable */
-import * as Long from "long";
-import { util, configure, Writer, Reader } from "protobufjs/minimal";
+import { Duration } from "../google/protobuf/duration";
+import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftoracle";
 
 /** Params defines the parameters for the module. */
 export interface Params {
-  mint_request_active_duration: number;
+  mint_request_active_duration: Duration | undefined;
 }
 
-const baseParams: object = { mint_request_active_duration: 0 };
+const baseParams: object = {};
 
 export const Params = {
   encode(message: Params, writer: Writer = Writer.create()): Writer {
-    if (message.mint_request_active_duration !== 0) {
-      writer.uint32(8).int64(message.mint_request_active_duration);
+    if (message.mint_request_active_duration !== undefined) {
+      Duration.encode(
+        message.mint_request_active_duration,
+        writer.uint32(10).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -27,8 +30,9 @@ export const Params = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.mint_request_active_duration = longToNumber(
-            reader.int64() as Long
+          message.mint_request_active_duration = Duration.decode(
+            reader,
+            reader.uint32()
           );
           break;
         default:
@@ -45,11 +49,11 @@ export const Params = {
       object.mint_request_active_duration !== undefined &&
       object.mint_request_active_duration !== null
     ) {
-      message.mint_request_active_duration = Number(
+      message.mint_request_active_duration = Duration.fromJSON(
         object.mint_request_active_duration
       );
     } else {
-      message.mint_request_active_duration = 0;
+      message.mint_request_active_duration = undefined;
     }
     return message;
   },
@@ -57,7 +61,9 @@ export const Params = {
   toJSON(message: Params): unknown {
     const obj: any = {};
     message.mint_request_active_duration !== undefined &&
-      (obj.mint_request_active_duration = message.mint_request_active_duration);
+      (obj.mint_request_active_duration = message.mint_request_active_duration
+        ? Duration.toJSON(message.mint_request_active_duration)
+        : undefined);
     return obj;
   },
 
@@ -67,24 +73,15 @@ export const Params = {
       object.mint_request_active_duration !== undefined &&
       object.mint_request_active_duration !== null
     ) {
-      message.mint_request_active_duration =
-        object.mint_request_active_duration;
+      message.mint_request_active_duration = Duration.fromPartial(
+        object.mint_request_active_duration
+      );
     } else {
-      message.mint_request_active_duration = 0;
+      message.mint_request_active_duration = undefined;
     }
     return message;
   },
 };
-
-declare var self: any | undefined;
-declare var window: any | undefined;
-var globalThis: any = (() => {
-  if (typeof globalThis !== "undefined") return globalThis;
-  if (typeof self !== "undefined") return self;
-  if (typeof window !== "undefined") return window;
-  if (typeof global !== "undefined") return global;
-  throw "Unable to locate global object";
-})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -96,15 +93,3 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
-
-function longToNumber(long: Long): number {
-  if (long.gt(Number.MAX_SAFE_INTEGER)) {
-    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-  }
-  return long.toNumber();
-}
-
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}

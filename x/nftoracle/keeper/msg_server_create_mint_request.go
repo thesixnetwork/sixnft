@@ -30,8 +30,8 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 		RequiredConfirm: msg.RequiredConfirm,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
-		CreatedAt:       ctx.BlockTime().Unix(),
-		ValidUntil:      ctx.BlockTime().Unix() + k.GetParams(ctx).MintRequestActiveDuration,
+		CreatedAt:       ctx.BlockTime(),
+		ValidUntil:      ctx.BlockTime().Add(k.MintRequestActiveDuration(ctx)),
 	})
 
 	ctx.EventManager().EmitEvents(sdk.Events{
