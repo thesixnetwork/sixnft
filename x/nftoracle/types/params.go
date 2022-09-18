@@ -8,6 +8,11 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const (
+	// DefaultParamspace default name for parameter store
+	DefaultMintRequestActiveDuration = 0 * time.Microsecond
+)
+
 var (
 	KeyMintRequestActiveDuration = []byte("MintRequestActiveDuration")
 )
@@ -28,8 +33,7 @@ func NewParams(mintRequestActiveDuration time.Duration) Params {
 
 // DefaultParams returns a default set of parameters
 func DefaultParams() Params {
-	defaultDuration := 0 * time.Microsecond
-	return NewParams(defaultDuration)
+	return NewParams(DefaultMintRequestActiveDuration)
 }
 
 // ParamSetPairs get the params.ParamSet
