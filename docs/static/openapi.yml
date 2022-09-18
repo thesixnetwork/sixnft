@@ -33322,6 +33322,7 @@ paths:
                         - PENDING
                         - SUCCESS_WITH_CONSENSUS
                         - FAILED_WITHOUT_CONCENSUS
+                        - EXPIRED
                       default: PENDING
                     current_confirm:
                       type: string
@@ -33532,6 +33533,9 @@ paths:
                     data_hash:
                       type: string
                       format: byte
+                    expired_height:
+                      type: string
+                      format: int64
               pagination:
                 type: object
                 properties:
@@ -33832,6 +33836,7 @@ paths:
                       - PENDING
                       - SUCCESS_WITH_CONSENSUS
                       - FAILED_WITHOUT_CONCENSUS
+                      - EXPIRED
                     default: PENDING
                   current_confirm:
                     type: string
@@ -34040,6 +34045,9 @@ paths:
                   data_hash:
                     type: string
                     format: byte
+                  expired_height:
+                    type: string
+                    format: int64
         default:
           description: An unexpected error response.
           schema:
@@ -57699,6 +57707,7 @@ definitions:
           - PENDING
           - SUCCESS_WITH_CONSENSUS
           - FAILED_WITHOUT_CONCENSUS
+          - EXPIRED
         default: PENDING
       current_confirm:
         type: string
@@ -57903,6 +57912,9 @@ definitions:
       data_hash:
         type: string
         format: byte
+      expired_height:
+        type: string
+        format: int64
   sixnft.nftoracle.MsgCreateMintRequestResponse:
     type: object
     properties:
@@ -58133,6 +58145,7 @@ definitions:
                 - PENDING
                 - SUCCESS_WITH_CONSENSUS
                 - FAILED_WITHOUT_CONCENSUS
+                - EXPIRED
               default: PENDING
             current_confirm:
               type: string
@@ -58339,6 +58352,9 @@ definitions:
             data_hash:
               type: string
               format: byte
+            expired_height:
+              type: string
+              format: int64
       pagination:
         type: object
         properties:
@@ -58386,6 +58402,7 @@ definitions:
               - PENDING
               - SUCCESS_WITH_CONSENSUS
               - FAILED_WITHOUT_CONCENSUS
+              - EXPIRED
             default: PENDING
           current_confirm:
             type: string
@@ -58592,6 +58609,9 @@ definitions:
           data_hash:
             type: string
             format: byte
+          expired_height:
+            type: string
+            format: int64
   sixnft.nftoracle.QueryParamsResponse:
     type: object
     properties:
@@ -58608,6 +58628,7 @@ definitions:
       - PENDING
       - SUCCESS_WITH_CONSENSUS
       - FAILED_WITHOUT_CONCENSUS
+      - EXPIRED
     default: PENDING
   sixnft.nftoracle.Trait:
     type: object

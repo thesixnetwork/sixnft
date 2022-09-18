@@ -24,15 +24,20 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, msg.NftSchemaCode)
 	}
 
+	createdAt := ctx.BlockTime()
+	endTime := createdAt.Add(k.MintRequestActiveDuration(ctx))
+
 	id_ := k.Keeper.AppendMintRequest(ctx, types.MintRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
 		TokenId:         msg.TokenId,
 		RequiredConfirm: msg.RequiredConfirm,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
-		CreatedAt:       ctx.BlockTime(),
-		ValidUntil:      ctx.BlockTime().Add(k.MintRequestActiveDuration(ctx)),
+		CreatedAt:       createdAt,
+		ValidUntil:      endTime,
 	})
+
+	k.Keeper.InsertActiveMintRequestQueue(ctx, id_, endTime)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

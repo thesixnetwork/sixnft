@@ -31,6 +31,9 @@ export interface NftoracleMintRequest {
 
   /** @format byte */
   data_hash?: string;
+
+  /** @format int64 */
+  expired_height?: string;
 }
 
 export interface NftoracleMsgCreateMintRequestResponse {
@@ -88,6 +91,7 @@ export enum NftoracleRequestStatus {
   PENDING = "PENDING",
   SUCCESS_WITH_CONSENSUS = "SUCCESS_WITH_CONSENSUS",
   FAILED_WITHOUT_CONCENSUS = "FAILED_WITHOUT_CONCENSUS",
+  EXPIRED = "EXPIRED",
 }
 
 export interface NftoracleTrait {

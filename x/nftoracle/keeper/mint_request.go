@@ -2,11 +2,21 @@ package keeper
 
 import (
 	"encoding/binary"
+	"fmt"
+	"time"
+
+	"sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/nftoracle/types"
+	"github.com/cosmos/cosmos-sdk/types/kv"
 )
+
+var (
+	ActiveMintRequestQueuePrefix = []byte{0x01}
+)
+
+var lenTime = len(sdk.FormatTimeBytes(time.Now()))
 
 // GetMintRequestCount get the total number of mintRequest
 func (k Keeper) GetMintRequestCount(ctx sdk.Context) uint64 {
@@ -93,6 +103,39 @@ func (k Keeper) GetAllMintRequest(ctx sdk.Context) (list []types.MintRequest) {
 	return
 }
 
+func (k Keeper) InsertActiveMintRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	bz := GetMintRequestIDBytes(requestID)
+	store.Set(ActiveMintRequestQueueKey(requestID, endTime), bz)
+}
+
+func (k Keeper) RemoveFromActiveMintRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	store.Delete(ActiveMintRequestQueueKey(requestID, endTime))
+}
+
+func (k Keeper) IterateActiveMintRequestsQueue(ctx sdk.Context, endTime time.Time, cb func(mintRequest types.MintRequest) (stop bool)) {
+	iterator := k.ActiveMintRequestQueueIterator(ctx, endTime)
+
+	defer iterator.Close()
+	for ; iterator.Valid(); iterator.Next() {
+		requestID, _ := SplitActiveMintRequestQueueKey(iterator.Key())
+		mintRequest, found := k.GetMintRequest(ctx, requestID)
+		if !found {
+			panic(fmt.Sprintf("mintRequest %d does not exist", requestID))
+		}
+
+		if cb(mintRequest) {
+			break
+		}
+	}
+}
+
+func (k Keeper) ActiveMintRequestQueueIterator(ctx sdk.Context, endTime time.Time) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return store.Iterator(ActiveMintRequestQueuePrefix, sdk.PrefixEndBytes(ActiveMintRequestByTimeKey(endTime)))
+}
+
 // GetMintRequestIDBytes returns the byte representation of the ID
 func GetMintRequestIDBytes(id uint64) []byte {
 	bz := make([]byte, 8)
@@ -103,4 +146,27 @@ func GetMintRequestIDBytes(id uint64) []byte {
 // GetMintRequestIDFromBytes returns ID in uint64 format from a byte array
 func GetMintRequestIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
+}
+
+func ActiveMintRequestQueueKey(requestID uint64, endTime time.Time) []byte {
+	return append(ActiveMintRequestByTimeKey(endTime), GetMintRequestIDBytes(requestID)...)
+}
+func ActiveMintRequestByTimeKey(endTime time.Time) []byte {
+	return append(ActiveMintRequestQueuePrefix, sdk.FormatTimeBytes(endTime)...)
+}
+
+func SplitActiveMintRequestQueueKey(key []byte) (requestID uint64, endTime time.Time) {
+	return splitKeyWithTime(key)
+}
+
+func splitKeyWithTime(key []byte) (requestID uint64, endTime time.Time) {
+	kv.AssertKeyLength(key[1:], 8+lenTime)
+
+	endTime, err := sdk.ParseTimeBytes(key[1 : 1+lenTime])
+	if err != nil {
+		panic(err)
+	}
+
+	requestID = GetMintRequestIDFromBytes(key[1+lenTime:])
+	return
 }

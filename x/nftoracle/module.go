@@ -11,14 +11,15 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 
+	"sixnft/x/nftoracle/client/cli"
+	"sixnft/x/nftoracle/keeper"
+	"sixnft/x/nftoracle/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"sixnft/x/nftoracle/client/cli"
-	"sixnft/x/nftoracle/keeper"
-	"sixnft/x/nftoracle/types"
 )
 
 var (
@@ -170,6 +171,21 @@ func (am AppModule) BeginBlock(_ sdk.Context, _ abci.RequestBeginBlock) {}
 
 // EndBlock executes all ABCI EndBlock logic respective to the capability module. It
 // returns no validator updates.
-func (am AppModule) EndBlock(_ sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
+func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
+	am.keeper.IterateActiveMintRequestsQueue(ctx, ctx.BlockHeader().Time, func(mintRequest types.MintRequest) (stop bool) {
+		if mintRequest.Status == types.RequestStatus_PENDING {
+			mintRequest.Status = types.RequestStatus_EXPIRED
+			mintRequest.ExpiredHeight = ctx.BlockHeight()
+			am.keeper.SetMintRequest(ctx, mintRequest)
+			am.keeper.RemoveFromActiveMintRequestQueue(ctx, mintRequest.Id, ctx.BlockHeader().Time)
+			ctx.EventManager().EmitEvent(
+				sdk.NewEvent(
+					types.EventTypeMintRequest,
+					sdk.NewAttribute(types.AttributeKeyMintRequestStatus, types.RequestStatus_EXPIRED.String()),
+				),
+			)
+		}
+		return false
+	})
 	return []abci.ValidatorUpdate{}
 }

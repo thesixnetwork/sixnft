@@ -6,4 +6,7 @@ const (
 	AttributeKeyNftSchemaCode   = "nft_schema_code"
 	AttributeKeyTokenID         = "token_id"
 	AttributeKeyRequiredConfirm = "required_confirm"
+
+	EventTypeMintRequest          = "mint_request"
+	AttributeKeyMintRequestStatus = "status"
 )

@@ -10,6 +10,7 @@ export enum RequestStatus {
   PENDING = 0,
   SUCCESS_WITH_CONSENSUS = 1,
   FAILED_WITHOUT_CONCENSUS = 2,
+  EXPIRED = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -24,6 +25,9 @@ export function requestStatusFromJSON(object: any): RequestStatus {
     case 2:
     case "FAILED_WITHOUT_CONCENSUS":
       return RequestStatus.FAILED_WITHOUT_CONCENSUS;
+    case 3:
+    case "EXPIRED":
+      return RequestStatus.EXPIRED;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -39,6 +43,8 @@ export function requestStatusToJSON(object: RequestStatus): string {
       return "SUCCESS_WITH_CONSENSUS";
     case RequestStatus.FAILED_WITHOUT_CONCENSUS:
       return "FAILED_WITHOUT_CONCENSUS";
+    case RequestStatus.EXPIRED:
+      return "EXPIRED";
     default:
       return "UNKNOWN";
   }
@@ -61,6 +67,7 @@ export interface MintRequest {
   created_at: Date | undefined;
   valid_until: Date | undefined;
   data_hash: Uint8Array;
+  expired_height: number;
 }
 
 const baseNftOriginData: object = { image: "", holder_address: "" };
@@ -167,6 +174,7 @@ const baseMintRequest: object = {
   required_confirm: 0,
   status: 0,
   current_confirm: 0,
+  expired_height: 0,
 };
 
 export const MintRequest = {
@@ -209,6 +217,9 @@ export const MintRequest = {
     }
     if (message.data_hash.length !== 0) {
       writer.uint32(82).bytes(message.data_hash);
+    }
+    if (message.expired_height !== 0) {
+      writer.uint32(88).int64(message.expired_height);
     }
     return writer;
   },
@@ -256,6 +267,9 @@ export const MintRequest = {
           break;
         case 10:
           message.data_hash = reader.bytes();
+          break;
+        case 11:
+          message.expired_height = longToNumber(reader.int64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -327,6 +341,11 @@ export const MintRequest = {
     if (object.data_hash !== undefined && object.data_hash !== null) {
       message.data_hash = bytesFromBase64(object.data_hash);
     }
+    if (object.expired_height !== undefined && object.expired_height !== null) {
+      message.expired_height = Number(object.expired_height);
+    } else {
+      message.expired_height = 0;
+    }
     return message;
   },
 
@@ -360,6 +379,8 @@ export const MintRequest = {
       (obj.data_hash = base64FromBytes(
         message.data_hash !== undefined ? message.data_hash : new Uint8Array()
       ));
+    message.expired_height !== undefined &&
+      (obj.expired_height = message.expired_height);
     return obj;
   },
 
@@ -428,6 +449,11 @@ export const MintRequest = {
       message.data_hash = object.data_hash;
     } else {
       message.data_hash = new Uint8Array();
+    }
+    if (object.expired_height !== undefined && object.expired_height !== null) {
+      message.expired_height = object.expired_height;
+    } else {
+      message.expired_height = 0;
     }
     return message;
   },

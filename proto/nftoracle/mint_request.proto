@@ -9,6 +9,7 @@ enum RequestStatus {
   PENDING = 0;
   SUCCESS_WITH_CONSENSUS = 1;
   FAILED_WITHOUT_CONCENSUS = 2;
+  EXPIRED = 3;
 }
 
 
@@ -31,4 +32,5 @@ message MintRequest {
   google.protobuf.Timestamp valid_until = 9
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   bytes data_hash = 10;
+  int64 expired_height = 11;
 }
