@@ -312,7 +312,7 @@ ignite scaffold message addTokenAttribute code:string base64NewAttriuteDefenitio
 #     ewogICAgICAgICAgIm5hbWUiOiAibmV3X2F0dHJpYnV0ZV9kZWZpbml0aW9uIiwKICAgICAgICAgICJkYXRhX3R5cGUiOiAibnVtYmVyIiwKICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLAogICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAiYm9vbF90cnVlX3ZhbHVlIjogIlllcyIsCiAgICAgICAgICAgICJib29sX2ZhbHNlX3ZhbHVlIjogIk5vIiwKICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgImRpc3BsYXlfdHlwZSI6ICJoZWhlIiwKICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJCYWNrZ3JvdW5kIiwKICAgICAgICAgICAgICAibWF4X3ZhbHVlIjogIjAiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZGVmYXVsdF9taW50X3ZhbHVlIjogIjEwIiwKICAgICAgICAgICJoaWRkZW5fdG9fbWFya2V0cGxhY2UiOiBmYWxzZQogICAgICAgIH0= \
 #     --from alice --yes
 
-ignite scaffold message addAttribute code:string base64NewAttriuteDefenition:string \
+ignite scaffold message addAttribute code:string base64NewTokenAttriute:string \
     --desc "To add more Defeniton Attribute of schema" \
     --response code:string,name:string,onchainData:OnChainData \
     --module nftmngr 
@@ -320,3 +320,8 @@ ignite scaffold message addAttribute code:string base64NewAttriuteDefenition:str
 # sixnftd tx nftmngr add-token-attribute mhrs1 \ 
 #     ewogICAgICAgICAgIm5hbWUiOiAibmV3X2F0dHJpYnV0ZV9kZWZpbml0aW9uIiwKICAgICAgICAgICJkYXRhX3R5cGUiOiAibnVtYmVyIiwKICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLAogICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAiYm9vbF90cnVlX3ZhbHVlIjogIlllcyIsCiAgICAgICAgICAgICJib29sX2ZhbHNlX3ZhbHVlIjogIk5vIiwKICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgImRpc3BsYXlfdHlwZSI6ICJoZWhlIiwKICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJCYWNrZ3JvdW5kIiwKICAgICAgICAgICAgICAibWF4X3ZhbHVlIjogIjAiCiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgICAiZGVmYXVsdF9taW50X3ZhbHVlIjogIjEwIiwKICAgICAgICAgICJoaWRkZW5fdG9fbWFya2V0cGxhY2UiOiBmYWxzZQogICAgICAgIH0= \
 #     --from alice --yes
+
+ignite scaffold message addAction code:string base64NewAction:string \
+    --desc "To add more Action of schema" \
+    --response code:string,name:string,onchainDataAction:OnChainData \
+    --module nftmngr
