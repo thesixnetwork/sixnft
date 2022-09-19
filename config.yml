@@ -5,6 +5,18 @@ accounts:
     - name: bob
       coins: ["10000token", "100000000stake"]
       mnemonic: total guard shrimp clip cruel broccoli cart frown awesome behind sick accident add rival token second prize result love eyebrow sort balcony model poet
+    - name: oracle1
+      coins: ["10000token", "100000000stake"]
+      mnemonic: list split future remain scene cheap pledge forum siren purse bright ivory split morning swing dumb fabric rapid remove worth diary task island donkey
+    - name: oracle2
+      coins: ["10000token", "100000000stake"]
+      mnemonic: achieve rice anger junk delay glove slam find poem feed emerge next core twice kitchen road proof remain notice slice walk super piece father
+    - name: oracle3
+      coins: ["10000token", "100000000stake"]
+      mnemonic: hint expose mix lemon leave genuine host fiction peasant daughter enable region mixture bean soda auction armed turtle iron become bracket wasp drama front
+    - name: oracle4
+      coins: ["10000token", "100000000stake"]
+      mnemonic: clown cabbage clean design mosquito surround citizen virus kite castle sponsor wife lesson coffee alien panel hand together good crazy fabric mouse hat town
 validator:
     name: alice
     staked: "100000000stake"
@@ -20,7 +32,7 @@ genesis:
     app_state:
         nftoracle:
             params:
-                mint_request_active_duration: "60s"
+                mint_request_active_duration: "120s"
         admin:
             authorization:
                 root_admin: 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq

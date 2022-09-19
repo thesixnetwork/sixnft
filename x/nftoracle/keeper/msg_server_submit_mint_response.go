@@ -57,6 +57,10 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 		return nil, sdkerrors.Wrap(types.ErrParsingOriginData, err.Error())
 	}
 
+	if nftOriginData.HolderAddress == "" || nftOriginData.Image == "" || nftOriginData.Traits == nil || len(nftOriginData.Traits) == 0 {
+		return nil, sdkerrors.Wrap(types.ErrParsingOriginData, "missing required fields")
+	}
+
 	if mintRequest.CurrentConfirm == 0 {
 		mintRequest.NftOriginData = &nftOriginData
 		// Create sha512 hash of nftMetadata
@@ -88,6 +92,9 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 				Confirmers: []string{msg.Creator},
 			})
 		}
+	}
+	if mintRequest.Confirmers == nil {
+		mintRequest.Confirmers = make(map[string]bool)
 	}
 	// Mark creator as confirmed
 	mintRequest.Confirmers[msg.Creator] = true
@@ -171,7 +178,7 @@ func (k Keeper) FromOriginDataToNftOriginAttribute(ctx sdk.Context, schema *nftm
 	// Create map of attribute definition by trait type
 	attributeByTrait := make(map[string]*nftmngrtypes.AttributeDefinition)
 	for _, attriDef := range schema.OriginData.OriginAttributes {
-		attributeByTrait[attriDef.DisplayOption.Opensea.DisplayType] = attriDef
+		attributeByTrait[attriDef.DisplayOption.Opensea.TraitType] = attriDef
 	}
 
 	for _, trait := range originData.Traits {

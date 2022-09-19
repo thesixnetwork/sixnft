@@ -56,6 +56,12 @@ export interface NftOriginData {
   traits: Trait[];
 }
 
+export interface DataHash {
+  origin_data: NftOriginData | undefined;
+  hash: Uint8Array;
+  confirmers: string[];
+}
+
 export interface MintRequest {
   id: number;
   nft_schema_code: string;
@@ -63,11 +69,17 @@ export interface MintRequest {
   required_confirm: number;
   status: RequestStatus;
   current_confirm: number;
+  confirmers: { [key: string]: boolean };
   nft_origin_data: NftOriginData | undefined;
   created_at: Date | undefined;
   valid_until: Date | undefined;
-  data_hash: Uint8Array;
+  data_hashes: DataHash[];
   expired_height: number;
+}
+
+export interface MintRequest_ConfirmersEntry {
+  key: string;
+  value: boolean;
 }
 
 const baseNftOriginData: object = { image: "", holder_address: "" };
@@ -167,6 +179,109 @@ export const NftOriginData = {
   },
 };
 
+const baseDataHash: object = { confirmers: "" };
+
+export const DataHash = {
+  encode(message: DataHash, writer: Writer = Writer.create()): Writer {
+    if (message.origin_data !== undefined) {
+      NftOriginData.encode(
+        message.origin_data,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.hash.length !== 0) {
+      writer.uint32(18).bytes(message.hash);
+    }
+    for (const v of message.confirmers) {
+      writer.uint32(26).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): DataHash {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseDataHash } as DataHash;
+    message.confirmers = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.origin_data = NftOriginData.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.hash = reader.bytes();
+          break;
+        case 3:
+          message.confirmers.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DataHash {
+    const message = { ...baseDataHash } as DataHash;
+    message.confirmers = [];
+    if (object.origin_data !== undefined && object.origin_data !== null) {
+      message.origin_data = NftOriginData.fromJSON(object.origin_data);
+    } else {
+      message.origin_data = undefined;
+    }
+    if (object.hash !== undefined && object.hash !== null) {
+      message.hash = bytesFromBase64(object.hash);
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      for (const e of object.confirmers) {
+        message.confirmers.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: DataHash): unknown {
+    const obj: any = {};
+    message.origin_data !== undefined &&
+      (obj.origin_data = message.origin_data
+        ? NftOriginData.toJSON(message.origin_data)
+        : undefined);
+    message.hash !== undefined &&
+      (obj.hash = base64FromBytes(
+        message.hash !== undefined ? message.hash : new Uint8Array()
+      ));
+    if (message.confirmers) {
+      obj.confirmers = message.confirmers.map((e) => e);
+    } else {
+      obj.confirmers = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<DataHash>): DataHash {
+    const message = { ...baseDataHash } as DataHash;
+    message.confirmers = [];
+    if (object.origin_data !== undefined && object.origin_data !== null) {
+      message.origin_data = NftOriginData.fromPartial(object.origin_data);
+    } else {
+      message.origin_data = undefined;
+    }
+    if (object.hash !== undefined && object.hash !== null) {
+      message.hash = object.hash;
+    } else {
+      message.hash = new Uint8Array();
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      for (const e of object.confirmers) {
+        message.confirmers.push(e);
+      }
+    }
+    return message;
+  },
+};
+
 const baseMintRequest: object = {
   id: 0,
   nft_schema_code: "",
@@ -197,29 +312,35 @@ export const MintRequest = {
     if (message.current_confirm !== 0) {
       writer.uint32(48).uint64(message.current_confirm);
     }
+    Object.entries(message.confirmers).forEach(([key, value]) => {
+      MintRequest_ConfirmersEntry.encode(
+        { key: key as any, value },
+        writer.uint32(58).fork()
+      ).ldelim();
+    });
     if (message.nft_origin_data !== undefined) {
       NftOriginData.encode(
         message.nft_origin_data,
-        writer.uint32(58).fork()
+        writer.uint32(66).fork()
       ).ldelim();
     }
     if (message.created_at !== undefined) {
       Timestamp.encode(
         toTimestamp(message.created_at),
-        writer.uint32(66).fork()
+        writer.uint32(74).fork()
       ).ldelim();
     }
     if (message.valid_until !== undefined) {
       Timestamp.encode(
         toTimestamp(message.valid_until),
-        writer.uint32(74).fork()
+        writer.uint32(82).fork()
       ).ldelim();
     }
-    if (message.data_hash.length !== 0) {
-      writer.uint32(82).bytes(message.data_hash);
+    for (const v of message.data_hashes) {
+      DataHash.encode(v!, writer.uint32(90).fork()).ldelim();
     }
     if (message.expired_height !== 0) {
-      writer.uint32(88).int64(message.expired_height);
+      writer.uint32(96).int64(message.expired_height);
     }
     return writer;
   },
@@ -228,6 +349,8 @@ export const MintRequest = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseMintRequest } as MintRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -250,25 +373,34 @@ export const MintRequest = {
           message.current_confirm = longToNumber(reader.uint64() as Long);
           break;
         case 7:
+          const entry7 = MintRequest_ConfirmersEntry.decode(
+            reader,
+            reader.uint32()
+          );
+          if (entry7.value !== undefined) {
+            message.confirmers[entry7.key] = entry7.value;
+          }
+          break;
+        case 8:
           message.nft_origin_data = NftOriginData.decode(
             reader,
             reader.uint32()
           );
           break;
-        case 8:
+        case 9:
           message.created_at = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 9:
+        case 10:
           message.valid_until = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 10:
-          message.data_hash = reader.bytes();
-          break;
         case 11:
+          message.data_hashes.push(DataHash.decode(reader, reader.uint32()));
+          break;
+        case 12:
           message.expired_height = longToNumber(reader.int64() as Long);
           break;
         default:
@@ -281,6 +413,8 @@ export const MintRequest = {
 
   fromJSON(object: any): MintRequest {
     const message = { ...baseMintRequest } as MintRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
@@ -320,6 +454,11 @@ export const MintRequest = {
     } else {
       message.current_confirm = 0;
     }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      Object.entries(object.confirmers).forEach(([key, value]) => {
+        message.confirmers[key] = Boolean(value);
+      });
+    }
     if (
       object.nft_origin_data !== undefined &&
       object.nft_origin_data !== null
@@ -338,8 +477,10 @@ export const MintRequest = {
     } else {
       message.valid_until = undefined;
     }
-    if (object.data_hash !== undefined && object.data_hash !== null) {
-      message.data_hash = bytesFromBase64(object.data_hash);
+    if (object.data_hashes !== undefined && object.data_hashes !== null) {
+      for (const e of object.data_hashes) {
+        message.data_hashes.push(DataHash.fromJSON(e));
+      }
     }
     if (object.expired_height !== undefined && object.expired_height !== null) {
       message.expired_height = Number(object.expired_height);
@@ -361,6 +502,12 @@ export const MintRequest = {
       (obj.status = requestStatusToJSON(message.status));
     message.current_confirm !== undefined &&
       (obj.current_confirm = message.current_confirm);
+    obj.confirmers = {};
+    if (message.confirmers) {
+      Object.entries(message.confirmers).forEach(([k, v]) => {
+        obj.confirmers[k] = v;
+      });
+    }
     message.nft_origin_data !== undefined &&
       (obj.nft_origin_data = message.nft_origin_data
         ? NftOriginData.toJSON(message.nft_origin_data)
@@ -375,10 +522,13 @@ export const MintRequest = {
         message.valid_until !== undefined
           ? message.valid_until.toISOString()
           : null);
-    message.data_hash !== undefined &&
-      (obj.data_hash = base64FromBytes(
-        message.data_hash !== undefined ? message.data_hash : new Uint8Array()
-      ));
+    if (message.data_hashes) {
+      obj.data_hashes = message.data_hashes.map((e) =>
+        e ? DataHash.toJSON(e) : undefined
+      );
+    } else {
+      obj.data_hashes = [];
+    }
     message.expired_height !== undefined &&
       (obj.expired_height = message.expired_height);
     return obj;
@@ -386,6 +536,8 @@ export const MintRequest = {
 
   fromPartial(object: DeepPartial<MintRequest>): MintRequest {
     const message = { ...baseMintRequest } as MintRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
@@ -425,6 +577,13 @@ export const MintRequest = {
     } else {
       message.current_confirm = 0;
     }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      Object.entries(object.confirmers).forEach(([key, value]) => {
+        if (value !== undefined) {
+          message.confirmers[key] = Boolean(value);
+        }
+      });
+    }
     if (
       object.nft_origin_data !== undefined &&
       object.nft_origin_data !== null
@@ -445,15 +604,101 @@ export const MintRequest = {
     } else {
       message.valid_until = undefined;
     }
-    if (object.data_hash !== undefined && object.data_hash !== null) {
-      message.data_hash = object.data_hash;
-    } else {
-      message.data_hash = new Uint8Array();
+    if (object.data_hashes !== undefined && object.data_hashes !== null) {
+      for (const e of object.data_hashes) {
+        message.data_hashes.push(DataHash.fromPartial(e));
+      }
     }
     if (object.expired_height !== undefined && object.expired_height !== null) {
       message.expired_height = object.expired_height;
     } else {
       message.expired_height = 0;
+    }
+    return message;
+  },
+};
+
+const baseMintRequest_ConfirmersEntry: object = { key: "", value: false };
+
+export const MintRequest_ConfirmersEntry = {
+  encode(
+    message: MintRequest_ConfirmersEntry,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value === true) {
+      writer.uint32(16).bool(message.value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MintRequest_ConfirmersEntry {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMintRequest_ConfirmersEntry,
+    } as MintRequest_ConfirmersEntry;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MintRequest_ConfirmersEntry {
+    const message = {
+      ...baseMintRequest_ConfirmersEntry,
+    } as MintRequest_ConfirmersEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = String(object.key);
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Boolean(object.value);
+    } else {
+      message.value = false;
+    }
+    return message;
+  },
+
+  toJSON(message: MintRequest_ConfirmersEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MintRequest_ConfirmersEntry>
+  ): MintRequest_ConfirmersEntry {
+    const message = {
+      ...baseMintRequest_ConfirmersEntry,
+    } as MintRequest_ConfirmersEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    } else {
+      message.value = false;
     }
     return message;
   },

@@ -1,25 +1,29 @@
 /* eslint-disable */
-import { Any } from "../google/protobuf/any";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftoracle";
 
 export interface Trait {
   trait_type: string;
-  value: Any | undefined;
+  value: string;
   display_type: string;
   max_value: string;
 }
 
-const baseTrait: object = { trait_type: "", display_type: "", max_value: "" };
+const baseTrait: object = {
+  trait_type: "",
+  value: "",
+  display_type: "",
+  max_value: "",
+};
 
 export const Trait = {
   encode(message: Trait, writer: Writer = Writer.create()): Writer {
     if (message.trait_type !== "") {
       writer.uint32(10).string(message.trait_type);
     }
-    if (message.value !== undefined) {
-      Any.encode(message.value, writer.uint32(18).fork()).ldelim();
+    if (message.value !== "") {
+      writer.uint32(18).string(message.value);
     }
     if (message.display_type !== "") {
       writer.uint32(26).string(message.display_type);
@@ -41,7 +45,7 @@ export const Trait = {
           message.trait_type = reader.string();
           break;
         case 2:
-          message.value = Any.decode(reader, reader.uint32());
+          message.value = reader.string();
           break;
         case 3:
           message.display_type = reader.string();
@@ -65,9 +69,9 @@ export const Trait = {
       message.trait_type = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = Any.fromJSON(object.value);
+      message.value = String(object.value);
     } else {
-      message.value = undefined;
+      message.value = "";
     }
     if (object.display_type !== undefined && object.display_type !== null) {
       message.display_type = String(object.display_type);
@@ -85,8 +89,7 @@ export const Trait = {
   toJSON(message: Trait): unknown {
     const obj: any = {};
     message.trait_type !== undefined && (obj.trait_type = message.trait_type);
-    message.value !== undefined &&
-      (obj.value = message.value ? Any.toJSON(message.value) : undefined);
+    message.value !== undefined && (obj.value = message.value);
     message.display_type !== undefined &&
       (obj.display_type = message.display_type);
     message.max_value !== undefined && (obj.max_value = message.max_value);
@@ -101,9 +104,9 @@ export const Trait = {
       message.trait_type = "";
     }
     if (object.value !== undefined && object.value !== null) {
-      message.value = Any.fromPartial(object.value);
+      message.value = object.value;
     } else {
-      message.value = undefined;
+      message.value = "";
     }
     if (object.display_type !== undefined && object.display_type !== null) {
       message.display_type = object.display_type;
