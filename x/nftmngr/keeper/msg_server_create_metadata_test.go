@@ -32,12 +32,13 @@ func TestCreateData(t *testing.T) {
 	{
 		"code": "buakaw1",
 		"name": "Buakaw1",
-		"owner": "6nft19p5yvwxtc2qngnwdqlhfzdcd0ssncwwumrx2ja",
+		"owner": "0xNFTOWNER",
 		"origin_data": {
 			"origin_base_uri": "https://bk1nft.sixnetwork.io/ipfs/QmcovEcZxiM1M9gf3535jUCpbqFZSjc2hHuYnZEbWNmt5a",
+			"uri_retrieval_method": "BASE",
 			"origin_chain": "ethereum",
 			"origin_contract_address": "0x9F1CC70b11f4129d042d0037c2066d12E16d9a52",
-			"attribute_overriding": "ORIGIN",
+			"attribute_overriding": "CHAIN",
 			"metadata_format": "opensea",
 			"origin_attributes": [
 				{
@@ -198,7 +199,7 @@ func TestCreateData(t *testing.T) {
 			"nft_attributes": [
 				{
 					"name": "expire_date",
-					"data_type": "long",
+					"data_type": "number",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
@@ -219,39 +220,49 @@ func TestCreateData(t *testing.T) {
 					"name": "first_discount_used",
 					"data_type": "boolean",
 					"required": true,
-					"hidden_to_marketplace": true
+					"hidden_to_marketplace": true,
+					"display_option": {
+						"bool_true_value": "Yes",
+						"bool_false_value": "_HIDDEN_",
+						"opensea": {
+							"display_type": "boolean",
+							"trait_type": "First Discount Used"
+						}
+					}
 				},
 				{
 					"name": "percent_discount_10",
-					"default_mint_value": "10",
-					"data_type": "interger",
+					"data_type": "number",
+					"default_mint_value": {
+						"number_attribute_value": {
+							"value": 10
+						}
+					},
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
 							"trait_type": "Available 10 Percent Discount",
-							"max_value": 5,
+							"max_value": 10,
 							"display_type": "number"
 						}
 					}
 				},
 				{
 					"name": "discount_percentage",
-					"default_mint_value": "0",
-					"data_type": "interger",
+					"data_type": "number",
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Discount",
+							"trait_type": "Discount Percentage",
 							"display_type": "boost_percentage"
 						}
 					}
 				},
 				{
 					"name": "discount_amount",
-					"default_mint_value": "0",
-					"data_type": "interger",
+					"data_type": "number",
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
@@ -268,9 +279,8 @@ func TestCreateData(t *testing.T) {
 					"desc": "Use 10% discount on purchase",
 					"when": "meta.GetNumber('percent_discount_10') > 0",
 					"then": [
-						"meta.SetNumber(meta.GetNumber('percent_discount_10') - 1)",
-						"meta.SetBoolean('first_discount_used', true)",
-						"meta.Random(x,y)"
+						"meta.SetNumber('percent_discount_10',meta.GetNumber('percent_discount_10') - 1)",
+						"meta.SetBoolean('first_discount_used', true)"
 					]
 				}
 			],
@@ -294,7 +304,8 @@ func TestCreateData(t *testing.T) {
 	{
 		"nft_schema_code": "buakaw1",
 		"token_id": "1",
-		"token_owner": "6nft19p5yvwxtc2qngnwdqlhfzdcd0ssncwwumrx2ja",
+		"token_owner": "0xTOKENOWNER",
+		"owner_address_type": "ORIGIN_ADDRESS",
 		"origin_image": "https://bk1nft.sixnetwork.io/ipfs/QmaBUdqTctVteajpoMVEpo55XEXe2YVwWDgeNi1UT47UKU/1.png",
 		"origin_attributes": [
 			{
@@ -362,7 +373,7 @@ func TestCreateData(t *testing.T) {
 			{
 				"name": "exclusive_party_access",
 				"boolean_attribute_value": {
-					"value": false
+					"value": true
 				}
 			},
 			{
@@ -378,9 +389,7 @@ func TestCreateData(t *testing.T) {
 				}
 			}
 		]
-	}
-	
-	`
+	}`
 	data := types.NftData{}
 	// err := k.GetCodec().(*codec.ProtoCodec).UnmarshalJSON([]byte(metadata), &data)
 	err := jsonpb.UnmarshalString(metadata, &data)
@@ -396,9 +405,37 @@ func TestCreateData(t *testing.T) {
 		return
 	}
 
+	// Append Attribute with default value to NFT Data if not exist in NFT Data yet
+	mapOfTokenAttributeValues := map[string]*types.NftAttributeValue{}
+	for _, attr := range data.OnchainAttributes {
+		mapOfTokenAttributeValues[attr.Name] = attr
+	}
+	for _, attr := range _schema.OnchainData.TokenAttributes {
+		if attr.Required {
+			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
+				if attr.DefaultMintValue != nil {
+					data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+				}
+			}
+		}
+	}
+	fmt.Println("data", data)
+
+	// Set default mint value
+	// for _, attr := range data.OnchainAttributes {
+	// 	hasValue, attrValueType := HasNftAttrubuteValue(*attr)
+	// 	fmt.Println("name: ", attr.Name, " | hasValue: ", hasValue, " | attrValueType: ", attrValueType)
+	// 	if !hasValue {
+	// 		_data, valid := SetDefaultNftAttributeValue(data, *attr, _schema)
+	// 		fmt.Println("Data: ", _data)
+	// 		fmt.Println("Valid: ", valid)
+	// 	}
+	// }
+
 	valid, err := ValidateNFTData(&data, &_schema)
 	fmt.Println("Valid: ", valid)
 	fmt.Println("Valid Err: ", err)
+
 	// fmt.Println("DataOutput", data)
 
 	// data := types.NftData{}
@@ -491,17 +528,70 @@ func HasSameTypeAsSchema(mapSchemaAttributes map[string]*types.AttributeDefiniti
 }
 
 func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue); ok {
 		return "boolean"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue); ok {
 		return "string"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue); ok {
 		return "number"
 	}
-	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue_); ok {
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue); ok {
 		return "float"
 	}
 	return "default"
+}
+
+// If onchain attributes value does not exist use default_mint_value from schema instead
+func HasNftAttrubuteValue(attribute types.NftAttributeValue) (bool, string) {
+	// Check if onchain attribute s value exist for each attribute
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_BooleanAttributeValue); ok {
+		return ok, "boolean"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_StringAttributeValue); ok {
+		return ok, "string"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_NumberAttributeValue); ok {
+		return ok, "number"
+	}
+	if _, ok := attribute.GetValue().(*types.NftAttributeValue_FloatAttributeValue); ok {
+		return ok, "float"
+	}
+	return false, "default"
+}
+
+func SetDefaultNftAttributeValue(data types.NftData, attribute types.NftAttributeValue, schema types.NFTSchema) (types.NftData, bool) {
+	mapAttributeDefinition := DataCreateAttrDefMap(schema.OnchainData.TokenAttributes)
+
+	for _, attriDef := range data.OnchainAttributes {
+		if attriDef.Name != attribute.Name {
+			continue
+		}
+		if mapAttributeDefinition[attriDef.Name].DataType == "number" {
+			newValue := mapAttributeDefinition[attriDef.Name].DefaultMintValue.GetNumberAttributeValue()
+			attriDef.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: newValue}
+		}
+		return data, true
+	}
+	return data, false
+}
+
+func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.DefaultMintValue) *types.NftAttributeValue {
+	nftAttributeValue := &types.NftAttributeValue{
+		Name: name,
+	}
+	switch defaultValue.Value.(type) {
+	case *types.DefaultMintValue_NumberAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: defaultValue.GetNumberAttributeValue()}
+	case *types.DefaultMintValue_StringAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{StringAttributeValue: defaultValue.GetStringAttributeValue()}
+	case *types.DefaultMintValue_BooleanAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{BooleanAttributeValue: defaultValue.GetBooleanAttributeValue()}
+	case *types.DefaultMintValue_FloatAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{FloatAttributeValue: defaultValue.GetFloatAttributeValue()}
+	default:
+		return nil
+	}
+	return nftAttributeValue
 }

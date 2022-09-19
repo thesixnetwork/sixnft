@@ -14,6 +14,7 @@ var (
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 3, "Error parsing metadata")
 	ErrCreatorDoesNotMatch    = sdkerrors.Register(ModuleName, 4, "Only creator can run this action")
 	ErrMetadataDoesNotExists  = sdkerrors.Register(ModuleName, 5, "Metadata of the toekn does not exists")
+	ErrParsingAttributeValue  = sdkerrors.Register(ModuleName, 6, "Error parsing attribute value")
 
 	// Metadata (100-199)
 	ErrMetadataAlreadyExists                     = sdkerrors.Register(ModuleName, 100, "Metadata already exists")
@@ -30,6 +31,7 @@ var (
 	ErrAttributeDefinitionTypesMismatch          = sdkerrors.Register(ModuleName, 111, "Attribute definition type is mismatch")
 	ErrAttributeAlreadyExists                    = sdkerrors.Register(ModuleName, 112, "Attribute already exists")
 	ErrInvalidAttribute                          = sdkerrors.Register(ModuleName, 113, "Invalid attribute")
+	ErrRequiredAttributeMissing                  = sdkerrors.Register(ModuleName, 114, "Required attribute missing")
 
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
@@ -40,10 +42,13 @@ var (
 	ErrDuplicateAttributesValue        = sdkerrors.Register(ModuleName, 205, "Duplicate attributes value")
 	ErrSameTypeNFTAttributes           = sdkerrors.Register(ModuleName, 206, "Same type NFT attributes")
 	ErrSameTypeTokenAttributes         = sdkerrors.Register(ModuleName, 207, "Same type token attributes")
+	ErrAttributeDoesNotExists          = sdkerrors.Register(ModuleName, 208, "Attribute does not exists")
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists = sdkerrors.Register(ModuleName, 300, "RefId already exists")
 	ErrEmptyChangeList    = sdkerrors.Register(ModuleName, 301, "No changes were updated")
 	ErrActionAlreadyExists = sdkerrors.Register(ModuleName, 302, "Action already exists")
 	ErrInvalidActionAttribute = sdkerrors.Register(ModuleName, 303, "Invalid action attribute")
+
+	ErrOrganizationOwner = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 )

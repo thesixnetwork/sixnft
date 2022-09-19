@@ -201,8 +201,12 @@
             },
             {
                 "name": "percent_discount_10",
-                "default_mint_value": "10",
                 "data_type": "number",
+                "default_mint_value": {
+                    "number_attribute_value": {
+                        "value": 10
+                    }
+                },
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
@@ -215,7 +219,6 @@
             },
             {
                 "name": "discount_percentage",
-                "default_mint_value": "10",
                 "data_type": "number",
                 "required": true,
                 "display_value_field": "value",
@@ -228,7 +231,6 @@
             },
             {
                 "name": "discount_amount",
-                "default_mint_value": "100",
                 "data_type": "number",
                 "required": true,
                 "display_value_field": "value",
