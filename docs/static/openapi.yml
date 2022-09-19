@@ -54892,6 +54892,12 @@ definitions:
             type: object
             properties:
               value:
+                type: object
+        properties:
+          number_attribute_value:
+            type: object
+            properties:
+              value:
                 type: string
                 format: uint64
           string_attribute_value:
@@ -54899,6 +54905,23 @@ definitions:
             properties:
               value:
                 type: string
+                format: uint64
+          string_attribute_value:
+            type: object
+            properties:
+              value:
+                type: string
+          boolean_attribute_value:
+            type: object
+            properties:
+              value:
+                type: boolean
+          float_attribute_value:
+            type: object
+            properties:
+              value:
+                type: number
+                format: double
           boolean_attribute_value:
             type: object
             properties:
@@ -55605,6 +55628,12 @@ definitions:
                       type: object
                       properties:
                         value:
+                          type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
                           type: string
                           format: uint64
                     string_attribute_value:
@@ -55612,6 +55641,23 @@ definitions:
                       properties:
                         value:
                           type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                     boolean_attribute_value:
                       type: object
                       properties:
@@ -55676,6 +55722,12 @@ definitions:
                       type: object
                       properties:
                         value:
+                          type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
                           type: string
                           format: uint64
                     string_attribute_value:
@@ -55683,6 +55735,23 @@ definitions:
                       properties:
                         value:
                           type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                     boolean_attribute_value:
                       type: object
                       properties:
@@ -55733,6 +55802,12 @@ definitions:
                       type: object
                       properties:
                         value:
+                          type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
                           type: string
                           format: uint64
                     string_attribute_value:
@@ -55740,6 +55815,23 @@ definitions:
                       properties:
                         value:
                           type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                     boolean_attribute_value:
                       type: object
                       properties:
