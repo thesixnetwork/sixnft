@@ -1,0 +1,325 @@
+{
+    "code": "sixnetwork.nftexpo",
+    "name": "NFTexpo",
+    "owner": "0xNFTOWNER",
+    "origin_data": {
+        "origin_base_uri": "https://ipfs.io/ipfs/QmcVhbj3Vt8W3YcuyyyDmbbRSJjFSsprR4EHwsgeJnVHfw/",
+        "uri_retrieval_method": "BASE",
+        "origin_chain": "ethereum",
+        "origin_contract_address": "0xaA83FA374645E875Ea58Bb94596d4adB467A06Ff",
+        "attribute_overriding": "CHAIN",
+        "metadata_format": "opensea",
+        "origin_attributes": [
+            {
+                "name": "background",
+                "data_type": "string",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Background"
+                    }
+                }
+            },
+            {
+                "name": "foreground",
+                "data_type": "string",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Foreground"
+                    }
+                }
+            },
+            {
+                "name": "Head",
+                "data_type": "string",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Head"
+                    }
+                }
+            },
+            {
+                "name": "moon",
+                "data_type": "string",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Moon"
+                    }
+                }
+            },
+            {
+                "name": "tail",
+                "data_type": "string",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Tail"
+                    }
+                }
+            }
+        ]
+    },
+    "onchain_data": {
+        "reveal_required": true,
+        "reveal_secret": "",
+        "nft_attributes": [
+            {
+                "name": "expire_date",
+                "data_type": "number",
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "display_type": "date",
+                        "trait_type": "Expire Date"
+                    }
+                }
+            }
+        ],
+        "token_attributes": [
+            {
+                "name": "points",
+                "data_type": "number",
+                "required": true,
+                "display_value_field": "value",
+                "hidden_to_marketplace": true,
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Points"
+                    }
+                }
+            },
+            {
+                "name": "check_point_1",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "hidden_to_marketplace": false,
+                "display_option": {
+                    "bool_true_value": "Checked",
+                    "bool_false_value": "No",
+                    "opensea": {
+                        "trait_type": "Check Point 1"
+                    }
+                }
+            },
+            {
+                "name": "check_point_2",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "hidden_to_marketplace": false,
+                "display_option": {
+                    "bool_true_value": "Checked",
+                    "bool_false_value": "No",
+                    "opensea": {
+                        "trait_type": "Check Point 2"
+                    }
+                }
+            },
+            {
+                "name": "mission_milestones",
+                "default_mint_value": {
+                    "number_attribute_value": {
+                        "value": 0
+                    }
+                },
+                "data_type": "number",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Milestones",
+                        "max_value": 3,
+                        "display_type": "number"
+                    }
+                }
+            },
+            {
+                "name": "bonus_milestone",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Discount (%)",
+                        "display_type": "boost_percentage"
+                    }
+                }
+            },
+            {
+                "name": "ais_customer",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "No",
+                    "opensea": {
+                        "trait_type": "AIS Customer"
+                    }
+                }
+            },
+            {
+                "name": "ais_gift_redeemed",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "No",
+                    "opensea": {
+                        "trait_type": "AIS Gift Redeemed"
+                    }
+                }
+            },
+            {
+                "name": "transformed",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
+                "data_type": "boolean",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "No",
+                    "opensea": {
+                        "trait_type": "Transformed"
+                    }
+                }
+            }
+        ],
+        "actions": [
+            {
+                "name": "use_checkpoint_1",
+                "desc": "Attend the event",
+                "when": "meta.GetBoolean('check_point_1') == false",
+                "then": [
+                    "meta.SetBoolean('check_point_1', true)",
+                    "meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+                ]
+            },
+            {
+                "name": "use_checkpoint_2",
+                "desc": "Go to stage 1",
+                "when": "meta.GetBoolean('check_point_2') == false",
+                "then": [
+                    "meta.SetBoolean('check_point_2', true)",
+                    "meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+                ]
+            },
+            {
+                "name": "claim_bonus",
+                "desc": "Claim bonus points",
+                "when": "meta.GetBoolean('bonus_milestone') == false",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') + 100)",
+                    "meta.SetBoolean('bonus_milestone', true)",
+                    "meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_100",
+                "desc": "Redeem merch for 100 points",
+                "when": "meta.GetBoolean('points') > 100",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 100)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_200",
+                "desc": "Redeem merch for 200 points",
+                "when": "meta.GetBoolean('points') > 200",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 200)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_300",
+                "desc": "Redeem merch for 300 points",
+                "when": "meta.GetBoolean('points') > 300",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 300)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_400",
+                "desc": "Redeem merch for 400 points",
+                "when": "meta.GetBoolean('points') > 400",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 400)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_500",
+                "desc": "Redeem merch for 500 points",
+                "when": "meta.GetBoolean('points') > 500",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 500)"
+                ]
+            },
+            {
+                "name": "redeem_merchandise_ais",
+                "desc": "Redeem AIS gift",
+                "when": "meta.GetBoolean('points') > 500 && meta.GetBoolean('ais_customer') == true && meta.GetBoolean('ais_gift_redeemed') == false",
+                "then": [
+                    "meta.SetNumber('points', meta.GetNumber('points') - 500)",
+                    "meta.SetBoolean('ais_gift_redeemed', true)"
+                ]
+            },
+            {
+                "name": "transform",
+                "desc": "Transform",
+                "when": "meta.GetBoolean('transformed') == false && meta.GetNumber('mission_milestones') == 3",
+                "then": [
+                    "meta.SetBoolean('transformed', true)",
+                    "meta.SetImage(meta.ReplaceAllString(meta.GetImage(),'.jpeg','-t.jpeg'))"
+                ]
+            }
+        ],
+        "on_off_switch": {
+            "active": true
+        },
+        "status": {
+            "first_mint_complete": false
+        },
+        "nft_attributes_value": [
+            {
+                "name": "expire_date",
+                "number_attribute_value": {
+                    "value": 1726694811
+                }
+            }
+        ]
+    }
+}

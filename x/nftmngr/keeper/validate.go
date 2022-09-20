@@ -113,3 +113,30 @@ func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
 	}
 	return "default"
 }
+
+func DefaultMintValueHasSameType(attributes []*types.AttributeDefinition) (bool, string) {
+	for _, attriDef := range attributes {
+		_, attrType := HasDefaultMintValue(*attriDef)
+		if attriDef.DataType != attrType {
+			return false, attriDef.Name
+		}
+	}
+	return true, ""
+}
+
+func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
+	// Check if onchain attribute s value exist for each attribute
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_BooleanAttributeValue); ok {
+		return ok, "boolean"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_StringAttributeValue); ok {
+		return ok, "string"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_NumberAttributeValue); ok {
+		return ok, "number"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_FloatAttributeValue); ok {
+		return ok, "float"
+	}
+	return false, "default"
+}
