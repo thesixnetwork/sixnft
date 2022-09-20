@@ -21,163 +21,64 @@ func TestCreateSchema(t *testing.T) {
 	// }
 	metadata := `
 	{
-		"code": "buakaw1",
-		"name": "Buakaw1",
-		"owner": "6nft19p5yvwxtc2qngnwdqlhfzdcd0ssncwwumrx2ja",
+		"code": "sixnetwork.nftexpo4",
+		"name": "NFTexpo",
+		"owner": "0xNFTOWNER",
 		"origin_data": {
-			"origin_base_uri": "https://bk1nft.sixnetwork.io/ipfs/QmcovEcZxiM1M9gf3535jUCpbqFZSjc2hHuYnZEbWNmt5a",
+			"origin_base_uri": "https://ipfs.io/ipfs/QmcVhbj3Vt8W3YcuyyyDmbbRSJjFSsprR4EHwsgeJnVHfw/",
+			"uri_retrieval_method": "BASE",
 			"origin_chain": "ethereum",
-			"origin_contract_address": "0x9F1CC70b11f4129d042d0037c2066d12E16d9a52",
-			"attribute_overriding": "ORIGIN",
+			"origin_contract_address": "0xaA83FA374645E875Ea58Bb94596d4adB467A06Ff",
+			"attribute_overriding": "CHAIN",
 			"metadata_format": "opensea",
 			"origin_attributes": [
 				{
-					"name": "background_l",
+					"name": "background",
 					"data_type": "string",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Background L"
+							"trait_type": "Background"
 						}
 					}
 				},
 				{
-					"name": "background_r",
+					"name": "foreground",
 					"data_type": "string",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Background R"
+							"trait_type": "Foreground"
 						}
 					}
 				},
 				{
-					"name": "plate_l",
+					"name": "head",
 					"data_type": "string",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Plate L"
+							"trait_type": "Head"
 						}
 					}
 				},
 				{
-					"name": "plate_r",
+					"name": "moon",
 					"data_type": "string",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Plate R"
+							"trait_type": "Moon"
 						}
 					}
 				},
 				{
-					"name": "body_l",
+					"name": "tail",
 					"data_type": "string",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Body L"
-						}
-					}
-				},
-				{
-					"name": "body_r",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Body R"
-						}
-					}
-				},
-				{
-					"name": "head_l",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Head L"
-						}
-					}
-				},
-				{
-					"name": "head_r",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Head R"
-						}
-					}
-				},
-				{
-					"name": "clothes_l",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Clothes L"
-						}
-					}
-				},
-				{
-					"name": "clothes_r",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Clothes R"
-						}
-					}
-				},
-				{
-					"name": "extra_l",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Extra L"
-						}
-					}
-				},
-				{
-					"name": "extra_r",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Extra R"
-						}
-					}
-				},
-				{
-					"name": "hand_l",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Hand L"
-						}
-					}
-				},
-				{
-					"name": "hand_r",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Hand R"
-						}
-					}
-				},
-				{
-					"name": "influencer",
-					"data_type": "string",
-					"display_value_field": "value",
-					"display_option": {
-						"opensea": {
-							"trait_type": "Influencer"
+							"trait_type": "Tail"
 						}
 					}
 				}
@@ -189,7 +90,7 @@ func TestCreateSchema(t *testing.T) {
 			"nft_attributes": [
 				{
 					"name": "expire_date",
-					"data_type": "long",
+					"data_type": "number",
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
@@ -201,67 +102,236 @@ func TestCreateSchema(t *testing.T) {
 			],
 			"token_attributes": [
 				{
-					"name": "exclusive_party_access",
-					"data_type": "boolean",
+					"name": "points",
+					"default_mint_value": {
+						"number_attribute_value": {
+							"value": 0
+						}
+					},
+					"data_type": "number",
 					"required": true,
-					"hidden_to_marketplace": true
+					"display_value_field": "value",
+					"hidden_to_marketplace": true,
+					"display_option": {
+						"opensea": {
+							"trait_type": "Points"
+						}
+					}
 				},
 				{
-					"name": "first_discount_used",
+					"name": "check_point_1",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
 					"data_type": "boolean",
 					"required": true,
-					"hidden_to_marketplace": true
+					"display_value_field": "value",
+					"hidden_to_marketplace": false,
+					"display_option": {
+						"bool_true_value": "Checked",
+						"bool_false_value": "No",
+						"opensea": {
+							"trait_type": "Check Point 1"
+						}
+					}
 				},
 				{
-					"name": "percent_discount_10",
-					"default_mint_value": "10",
-					"data_type": "interger",
+					"name": "check_point_2",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
+					"data_type": "boolean",
+					"required": true,
+					"display_value_field": "value",
+					"hidden_to_marketplace": false,
+					"display_option": {
+						"bool_true_value": "Checked",
+						"bool_false_value": "No",
+						"opensea": {
+							"trait_type": "Check Point 2"
+						}
+					}
+				},
+				{
+					"name": "mission_milestones",
+					"default_mint_value": {
+						"number_attribute_value": {
+							"value": 0
+						}
+					},
+					"data_type": "number",
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
 						"opensea": {
-							"trait_type": "Available 10 Percent Discount",
-							"max_value": 5,
+							"trait_type": "Milestones",
+							"max_value": 3,
 							"display_type": "number"
 						}
 					}
 				},
 				{
-					"name": "discount_percentage",
-					"default_mint_value": "0",
-					"data_type": "interger",
+					"name": "bonus_milestone",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
+					"data_type": "boolean",
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
+						"bool_true_value": "Yes",
+						"bool_false_value": "No",
 						"opensea": {
-							"trait_type": "Discount",
-							"display_type": "boost_percentage"
+							"trait_type": "Bonus Milestone"
 						}
 					}
 				},
 				{
-					"name": "discount_amount",
-					"default_mint_value": "0",
-					"data_type": "interger",
+					"name": "ais_customer",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
+					"data_type": "boolean",
 					"required": true,
 					"display_value_field": "value",
 					"display_option": {
+						"bool_true_value": "Yes",
+						"bool_false_value": "No",
 						"opensea": {
-							"trait_type": "Discount",
-							"display_type": "boost_number"
+							"trait_type": "AIS Customer"
+						}
+					}
+				},
+				{
+					"name": "ais_gift_redeemed",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
+					"data_type": "boolean",
+					"required": true,
+					"display_value_field": "value",
+					"display_option": {
+						"bool_true_value": "Yes",
+						"bool_false_value": "No",
+						"opensea": {
+							"trait_type": "AIS Gift Redeemed"
+						}
+					}
+				},
+				{
+					"name": "transformed",
+					"default_mint_value": {
+						"boolean_attribute_value": {
+							"value": false
+						}
+					},
+					"data_type": "boolean",
+					"required": true,
+					"display_value_field": "value",
+					"display_option": {
+						"bool_true_value": "Yes",
+						"bool_false_value": "No",
+						"opensea": {
+							"trait_type": "Transformed"
 						}
 					}
 				}
 			],
 			"actions": [
 				{
-					"name": "use10percentdiscount",
-					"desc": "Use 10% discount on purchase",
-					"when": "meta.GetNumber('percent_discount_10') > 0",
+					"name": "use_checkpoint_1",
+					"desc": "Attend the event",
+					"when": "meta.GetBoolean('check_point_1') == false",
 					"then": [
-						"meta.SetNumber(meta.GetNumber('percent_discount_10') - 1)",
-						"meta.SetBoolean('first_discount_used', true)",
-						"meta.Random(x,y)"
+						"meta.SetBoolean('check_point_1', true)",
+						"meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+					]
+				},
+				{
+					"name": "use_checkpoint_2",
+					"desc": "Go to stage 1",
+					"when": "meta.GetBoolean('check_point_2') == false",
+					"then": [
+						"meta.SetBoolean('check_point_2', true)",
+						"meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+					]
+				},
+				{
+					"name": "claim_bonus",
+					"desc": "Claim bonus points",
+					"when": "meta.GetBoolean('bonus_milestone') == false",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') + 100)",
+						"meta.SetBoolean('bonus_milestone', true)",
+						"meta.SetNumber('mission_milestones', meta.GetNumber('mission_milestones') + 1)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_100",
+					"desc": "Redeem merch for 100 points",
+					"when": "meta.GetBoolean('points') > 100",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 100)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_200",
+					"desc": "Redeem merch for 200 points",
+					"when": "meta.GetBoolean('points') > 200",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 200)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_300",
+					"desc": "Redeem merch for 300 points",
+					"when": "meta.GetBoolean('points') > 300",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 300)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_400",
+					"desc": "Redeem merch for 400 points",
+					"when": "meta.GetBoolean('points') > 400",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 400)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_500",
+					"desc": "Redeem merch for 500 points",
+					"when": "meta.GetBoolean('points') > 500",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 500)"
+					]
+				},
+				{
+					"name": "redeem_merchandise_ais",
+					"desc": "Redeem AIS gift",
+					"when": "meta.GetBoolean('points') > 500 && meta.GetBoolean('ais_customer') == true && meta.GetBoolean('ais_gift_redeemed') == false",
+					"then": [
+						"meta.SetNumber('points', meta.GetNumber('points') - 500)",
+						"meta.SetBoolean('ais_gift_redeemed', true)"
+					]
+				},
+				{
+					"name": "transform",
+					"desc": "Transform",
+					"when": "meta.GetBoolean('transformed') == false && meta.GetNumber('mission_milestones') == 3",
+					"then": [
+						"meta.SetBoolean('transformed', true)",
+						"meta.SetImage(meta.ReplaceAllString(meta.GetImage(),'.jpeg','-t.jpeg'))"
 					]
 				}
 			],
@@ -275,7 +345,7 @@ func TestCreateSchema(t *testing.T) {
 				{
 					"name": "expire_date",
 					"number_attribute_value": {
-						"value": 1665009678
+						"value": 1726694811
 					}
 				}
 			]
@@ -368,6 +438,12 @@ func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
+	// Validate if default mint value has the same type
+	fmt.Println("7 DefaultMintValueHasSameTypeAs")
+	hasSameType, err = DefaultMintValueHasSameTypeAs(schema.OnchainData.TokenAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Token Attributes: Default mint value type not the same: %s", err))
+	}
 	return true, nil
 }
 
@@ -397,13 +473,38 @@ func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onch
 	for _, attriVal := range onchainAttributes {
 		attrDef := mapOriginAttributes[attriVal.Name]
 		if attrDef == nil {
-			fmt.Println("Attribute not found: ", attriVal.Name)
 			continue
 		}
 		if attrDef.DataType != attriVal.DataType {
-			fmt.Println("attrDef.DataType: ", attrDef.DataType)
 			return false, attrDef.Name
 		}
 	}
 	return true, ""
+}
+
+func DefaultMintValueHasSameTypeAs(attributes []*types.AttributeDefinition) (bool, string) {
+	for _, attriDef := range attributes {
+		_, attrType := HasDefaultMintValue(*attriDef)
+		if attriDef.DataType != attrType {
+			return false, attriDef.Name
+		}
+	}
+	return true, ""
+}
+
+func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
+	// Check if onchain attribute s value exist for each attribute
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_BooleanAttributeValue); ok {
+		return ok, "boolean"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_StringAttributeValue); ok {
+		return ok, "string"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_NumberAttributeValue); ok {
+		return ok, "number"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_FloatAttributeValue); ok {
+		return ok, "float"
+	}
+	return false, "default"
 }

@@ -98,6 +98,11 @@ func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
+	// Validate if default mint value has the same type
+	hasSameType, err = DefaultMintValueHasSameType(schema.OnchainData.TokenAttributes)
+	if !hasSameType {
+		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", err))
+	}
 	return true, nil
 }
 
