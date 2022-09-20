@@ -62,7 +62,6 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 	}
 
 	if mintRequest.CurrentConfirm == 0 {
-		mintRequest.NftOriginData = &nftOriginData
 		// Create sha512 hash of nftMetadata
 		dataHash := sha256.Sum256(nftMetadata)
 		mintRequest.DataHashes = append(mintRequest.DataHashes, &types.DataHash{
@@ -122,8 +121,7 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 			),
 		)
 		if mintRequest.Status == types.RequestStatus_SUCCESS_WITH_CONSENSUS {
-			mintRequest.NftOriginData = mintRequest.DataHashes[0].OriginData
-			nftData, err := k.CreateMetaDataFromOriginData(ctx, mintRequest, mintRequest.NftOriginData)
+			nftData, err := k.CreateMetaDataFromOriginData(ctx, mintRequest, mintRequest.DataHashes[0].OriginData)
 			if err != nil {
 				return nil, err
 			}

@@ -33,11 +33,11 @@ message MintRequest {
   RequestStatus status = 5;
   uint64 current_confirm = 6;
   map<string, bool> confirmers = 7;
-  NftOriginData nft_origin_data = 8;
-  google.protobuf.Timestamp created_at = 9
+  // NftOriginData nft_origin_data = 8;
+  google.protobuf.Timestamp created_at = 8
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  google.protobuf.Timestamp valid_until = 10
-  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  repeated DataHash data_hashes = 11;
-  int64 expired_height = 12;
+  google.protobuf.Timestamp valid_until = 9
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  repeated DataHash data_hashes = 10;
+  int64 expired_height = 11;
 }
