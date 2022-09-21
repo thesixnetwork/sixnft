@@ -43,6 +43,15 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		return nil, sdkerrors.Wrap(types.ErrMetadataNotExists, actionParam.NftSchemaCode)
 	}
 
+	// Check action with reference exists
+	if actionParam.RefId != "" {
+
+		_, found := k.nftmngrKeeper.GetActionByRefId(ctx, actionParam.RefId)
+		if found {
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, actionParam.RefId)
+		}
+	}
+
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
