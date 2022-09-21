@@ -341,7 +341,7 @@ ignite scaffold list ActionRequest nft_schema_code:string token_id:string requir
     --no-simulation \
     --module nftoracle
 
-ignite scaffold message createActionRequest vm:string signature:Signature \
+ignite scaffold message createActionRequest vm:string base64_action_signature:string \
     --desc "To create Action Request" \
     --response request_id \
     --no-simulation \
