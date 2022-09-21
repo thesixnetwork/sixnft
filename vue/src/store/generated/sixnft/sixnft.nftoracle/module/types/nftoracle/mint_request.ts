@@ -1,66 +1,15 @@
 /* eslint-disable */
+import {
+  RequestStatus,
+  DataHash,
+  requestStatusFromJSON,
+  requestStatusToJSON,
+} from "../nftoracle/request";
 import { Timestamp } from "../google/protobuf/timestamp";
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
-import { Trait } from "../nftoracle/opensea";
 
 export const protobufPackage = "sixnft.nftoracle";
-
-export enum RequestStatus {
-  PENDING = 0,
-  SUCCESS_WITH_CONSENSUS = 1,
-  FAILED_WITHOUT_CONCENSUS = 2,
-  EXPIRED = 3,
-  UNRECOGNIZED = -1,
-}
-
-export function requestStatusFromJSON(object: any): RequestStatus {
-  switch (object) {
-    case 0:
-    case "PENDING":
-      return RequestStatus.PENDING;
-    case 1:
-    case "SUCCESS_WITH_CONSENSUS":
-      return RequestStatus.SUCCESS_WITH_CONSENSUS;
-    case 2:
-    case "FAILED_WITHOUT_CONCENSUS":
-      return RequestStatus.FAILED_WITHOUT_CONCENSUS;
-    case 3:
-    case "EXPIRED":
-      return RequestStatus.EXPIRED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return RequestStatus.UNRECOGNIZED;
-  }
-}
-
-export function requestStatusToJSON(object: RequestStatus): string {
-  switch (object) {
-    case RequestStatus.PENDING:
-      return "PENDING";
-    case RequestStatus.SUCCESS_WITH_CONSENSUS:
-      return "SUCCESS_WITH_CONSENSUS";
-    case RequestStatus.FAILED_WITHOUT_CONCENSUS:
-      return "FAILED_WITHOUT_CONCENSUS";
-    case RequestStatus.EXPIRED:
-      return "EXPIRED";
-    default:
-      return "UNKNOWN";
-  }
-}
-
-export interface NftOriginData {
-  image: string;
-  holder_address: string;
-  traits: Trait[];
-}
-
-export interface DataHash {
-  origin_data: NftOriginData | undefined;
-  hash: Uint8Array;
-  confirmers: string[];
-}
 
 export interface MintRequest {
   id: number;
@@ -70,7 +19,7 @@ export interface MintRequest {
   status: RequestStatus;
   current_confirm: number;
   confirmers: { [key: string]: boolean };
-  nft_origin_data: NftOriginData | undefined;
+  /** NftOriginData nft_origin_data = 8; */
   created_at: Date | undefined;
   valid_until: Date | undefined;
   data_hashes: DataHash[];
@@ -81,206 +30,6 @@ export interface MintRequest_ConfirmersEntry {
   key: string;
   value: boolean;
 }
-
-const baseNftOriginData: object = { image: "", holder_address: "" };
-
-export const NftOriginData = {
-  encode(message: NftOriginData, writer: Writer = Writer.create()): Writer {
-    if (message.image !== "") {
-      writer.uint32(10).string(message.image);
-    }
-    if (message.holder_address !== "") {
-      writer.uint32(18).string(message.holder_address);
-    }
-    for (const v of message.traits) {
-      Trait.encode(v!, writer.uint32(26).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): NftOriginData {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseNftOriginData } as NftOriginData;
-    message.traits = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.image = reader.string();
-          break;
-        case 2:
-          message.holder_address = reader.string();
-          break;
-        case 3:
-          message.traits.push(Trait.decode(reader, reader.uint32()));
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): NftOriginData {
-    const message = { ...baseNftOriginData } as NftOriginData;
-    message.traits = [];
-    if (object.image !== undefined && object.image !== null) {
-      message.image = String(object.image);
-    } else {
-      message.image = "";
-    }
-    if (object.holder_address !== undefined && object.holder_address !== null) {
-      message.holder_address = String(object.holder_address);
-    } else {
-      message.holder_address = "";
-    }
-    if (object.traits !== undefined && object.traits !== null) {
-      for (const e of object.traits) {
-        message.traits.push(Trait.fromJSON(e));
-      }
-    }
-    return message;
-  },
-
-  toJSON(message: NftOriginData): unknown {
-    const obj: any = {};
-    message.image !== undefined && (obj.image = message.image);
-    message.holder_address !== undefined &&
-      (obj.holder_address = message.holder_address);
-    if (message.traits) {
-      obj.traits = message.traits.map((e) => (e ? Trait.toJSON(e) : undefined));
-    } else {
-      obj.traits = [];
-    }
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<NftOriginData>): NftOriginData {
-    const message = { ...baseNftOriginData } as NftOriginData;
-    message.traits = [];
-    if (object.image !== undefined && object.image !== null) {
-      message.image = object.image;
-    } else {
-      message.image = "";
-    }
-    if (object.holder_address !== undefined && object.holder_address !== null) {
-      message.holder_address = object.holder_address;
-    } else {
-      message.holder_address = "";
-    }
-    if (object.traits !== undefined && object.traits !== null) {
-      for (const e of object.traits) {
-        message.traits.push(Trait.fromPartial(e));
-      }
-    }
-    return message;
-  },
-};
-
-const baseDataHash: object = { confirmers: "" };
-
-export const DataHash = {
-  encode(message: DataHash, writer: Writer = Writer.create()): Writer {
-    if (message.origin_data !== undefined) {
-      NftOriginData.encode(
-        message.origin_data,
-        writer.uint32(10).fork()
-      ).ldelim();
-    }
-    if (message.hash.length !== 0) {
-      writer.uint32(18).bytes(message.hash);
-    }
-    for (const v of message.confirmers) {
-      writer.uint32(26).string(v!);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): DataHash {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseDataHash } as DataHash;
-    message.confirmers = [];
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.origin_data = NftOriginData.decode(reader, reader.uint32());
-          break;
-        case 2:
-          message.hash = reader.bytes();
-          break;
-        case 3:
-          message.confirmers.push(reader.string());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): DataHash {
-    const message = { ...baseDataHash } as DataHash;
-    message.confirmers = [];
-    if (object.origin_data !== undefined && object.origin_data !== null) {
-      message.origin_data = NftOriginData.fromJSON(object.origin_data);
-    } else {
-      message.origin_data = undefined;
-    }
-    if (object.hash !== undefined && object.hash !== null) {
-      message.hash = bytesFromBase64(object.hash);
-    }
-    if (object.confirmers !== undefined && object.confirmers !== null) {
-      for (const e of object.confirmers) {
-        message.confirmers.push(String(e));
-      }
-    }
-    return message;
-  },
-
-  toJSON(message: DataHash): unknown {
-    const obj: any = {};
-    message.origin_data !== undefined &&
-      (obj.origin_data = message.origin_data
-        ? NftOriginData.toJSON(message.origin_data)
-        : undefined);
-    message.hash !== undefined &&
-      (obj.hash = base64FromBytes(
-        message.hash !== undefined ? message.hash : new Uint8Array()
-      ));
-    if (message.confirmers) {
-      obj.confirmers = message.confirmers.map((e) => e);
-    } else {
-      obj.confirmers = [];
-    }
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<DataHash>): DataHash {
-    const message = { ...baseDataHash } as DataHash;
-    message.confirmers = [];
-    if (object.origin_data !== undefined && object.origin_data !== null) {
-      message.origin_data = NftOriginData.fromPartial(object.origin_data);
-    } else {
-      message.origin_data = undefined;
-    }
-    if (object.hash !== undefined && object.hash !== null) {
-      message.hash = object.hash;
-    } else {
-      message.hash = new Uint8Array();
-    }
-    if (object.confirmers !== undefined && object.confirmers !== null) {
-      for (const e of object.confirmers) {
-        message.confirmers.push(e);
-      }
-    }
-    return message;
-  },
-};
 
 const baseMintRequest: object = {
   id: 0,
@@ -318,29 +67,23 @@ export const MintRequest = {
         writer.uint32(58).fork()
       ).ldelim();
     });
-    if (message.nft_origin_data !== undefined) {
-      NftOriginData.encode(
-        message.nft_origin_data,
-        writer.uint32(66).fork()
-      ).ldelim();
-    }
     if (message.created_at !== undefined) {
       Timestamp.encode(
         toTimestamp(message.created_at),
-        writer.uint32(74).fork()
+        writer.uint32(66).fork()
       ).ldelim();
     }
     if (message.valid_until !== undefined) {
       Timestamp.encode(
         toTimestamp(message.valid_until),
-        writer.uint32(82).fork()
+        writer.uint32(74).fork()
       ).ldelim();
     }
     for (const v of message.data_hashes) {
-      DataHash.encode(v!, writer.uint32(90).fork()).ldelim();
+      DataHash.encode(v!, writer.uint32(82).fork()).ldelim();
     }
     if (message.expired_height !== 0) {
-      writer.uint32(96).int64(message.expired_height);
+      writer.uint32(88).int64(message.expired_height);
     }
     return writer;
   },
@@ -382,25 +125,19 @@ export const MintRequest = {
           }
           break;
         case 8:
-          message.nft_origin_data = NftOriginData.decode(
-            reader,
-            reader.uint32()
-          );
-          break;
-        case 9:
           message.created_at = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 10:
+        case 9:
           message.valid_until = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 11:
+        case 10:
           message.data_hashes.push(DataHash.decode(reader, reader.uint32()));
           break;
-        case 12:
+        case 11:
           message.expired_height = longToNumber(reader.int64() as Long);
           break;
         default:
@@ -459,14 +196,6 @@ export const MintRequest = {
         message.confirmers[key] = Boolean(value);
       });
     }
-    if (
-      object.nft_origin_data !== undefined &&
-      object.nft_origin_data !== null
-    ) {
-      message.nft_origin_data = NftOriginData.fromJSON(object.nft_origin_data);
-    } else {
-      message.nft_origin_data = undefined;
-    }
     if (object.created_at !== undefined && object.created_at !== null) {
       message.created_at = fromJsonTimestamp(object.created_at);
     } else {
@@ -508,10 +237,6 @@ export const MintRequest = {
         obj.confirmers[k] = v;
       });
     }
-    message.nft_origin_data !== undefined &&
-      (obj.nft_origin_data = message.nft_origin_data
-        ? NftOriginData.toJSON(message.nft_origin_data)
-        : undefined);
     message.created_at !== undefined &&
       (obj.created_at =
         message.created_at !== undefined
@@ -583,16 +308,6 @@ export const MintRequest = {
           message.confirmers[key] = Boolean(value);
         }
       });
-    }
-    if (
-      object.nft_origin_data !== undefined &&
-      object.nft_origin_data !== null
-    ) {
-      message.nft_origin_data = NftOriginData.fromPartial(
-        object.nft_origin_data
-      );
-    } else {
-      message.nft_origin_data = undefined;
     }
     if (object.created_at !== undefined && object.created_at !== null) {
       message.created_at = object.created_at;
@@ -713,29 +428,6 @@ var globalThis: any = (() => {
   if (typeof global !== "undefined") return global;
   throw "Unable to locate global object";
 })();
-
-const atob: (b64: string) => string =
-  globalThis.atob ||
-  ((b64) => globalThis.Buffer.from(b64, "base64").toString("binary"));
-function bytesFromBase64(b64: string): Uint8Array {
-  const bin = atob(b64);
-  const arr = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; ++i) {
-    arr[i] = bin.charCodeAt(i);
-  }
-  return arr;
-}
-
-const btoa: (bin: string) => string =
-  globalThis.btoa ||
-  ((bin) => globalThis.Buffer.from(bin, "binary").toString("base64"));
-function base64FromBytes(arr: Uint8Array): string {
-  const bin: string[] = [];
-  for (let i = 0; i < arr.byteLength; ++i) {
-    bin.push(String.fromCharCode(arr[i]));
-  }
-  return btoa(bin.join(""));
-}
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin

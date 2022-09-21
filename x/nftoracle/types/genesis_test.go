@@ -31,6 +31,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				MintRequestCount: 2,
+				ActionRequestList: []types.ActionRequest{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				ActionRequestCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -58,6 +67,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				MintRequestCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionRequest",
+			genState: &types.GenesisState{
+				ActionRequestList: []types.ActionRequest{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid actionRequest count",
+			genState: &types.GenesisState{
+				ActionRequestList: []types.ActionRequest{
+					{
+						Id: 1,
+					},
+				},
+				ActionRequestCount: 0,
 			},
 			valid: false,
 		},

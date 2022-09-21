@@ -20,6 +20,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set mintRequest count
 	k.SetMintRequestCount(ctx, genState.MintRequestCount)
+	// Set all the actionRequest
+	for _, elem := range genState.ActionRequestList {
+		k.SetActionRequest(ctx, elem)
+	}
+
+	// Set actionRequest count
+	k.SetActionRequestCount(ctx, genState.ActionRequestCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -31,6 +38,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 
 	genesis.MintRequestList = k.GetAllMintRequest(ctx)
 	genesis.MintRequestCount = k.GetMintRequestCount(ctx)
+	genesis.ActionRequestList = k.GetAllActionRequest(ctx)
+	genesis.ActionRequestCount = k.GetActionRequestCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "nftoracle/params.proto";
 import "nftoracle/mint_request.proto";
+import "nftoracle/action_request.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "sixnft/x/nftoracle/types";
@@ -24,6 +25,16 @@ service Query {
 	// Queries a list of MintRequest items.
 	rpc MintRequestAll(QueryAllMintRequestRequest) returns (QueryAllMintRequestResponse) {
 		option (google.api.http).get = "/sixnft/nftoracle/mint_request";
+	}
+
+// Queries a ActionRequest by id.
+	rpc ActionRequest(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponse) {
+		option (google.api.http).get = "/sixnft/nftoracle/action_request/{id}";
+	}
+
+	// Queries a list of ActionRequest items.
+	rpc ActionRequestAll(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponse) {
+		option (google.api.http).get = "/sixnft/nftoracle/action_request";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -52,6 +63,23 @@ message QueryAllMintRequestRequest {
 
 message QueryAllMintRequestResponse {
 	repeated MintRequest MintRequest = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetActionRequestRequest {
+	uint64 id = 1;
+}
+
+message QueryGetActionRequestResponse {
+	ActionRequest ActionRequest = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllActionRequestRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllActionRequestResponse {
+	repeated ActionRequest ActionRequest = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

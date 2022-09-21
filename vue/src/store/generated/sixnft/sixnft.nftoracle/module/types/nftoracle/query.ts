@@ -7,6 +7,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { ActionRequest } from "../nftoracle/action_request";
 
 export const protobufPackage = "sixnft.nftoracle";
 
@@ -33,6 +34,23 @@ export interface QueryAllMintRequestRequest {
 
 export interface QueryAllMintRequestResponse {
   MintRequest: MintRequest[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetActionRequestRequest {
+  id: number;
+}
+
+export interface QueryGetActionRequestResponse {
+  ActionRequest: ActionRequest | undefined;
+}
+
+export interface QueryAllActionRequestRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllActionRequestResponse {
+  ActionRequest: ActionRequest[];
   pagination: PageResponse | undefined;
 }
 
@@ -450,6 +468,325 @@ export const QueryAllMintRequestResponse = {
   },
 };
 
+const baseQueryGetActionRequestRequest: object = { id: 0 };
+
+export const QueryGetActionRequestRequest = {
+  encode(
+    message: QueryGetActionRequestRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetActionRequestRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetActionRequestRequest,
+    } as QueryGetActionRequestRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetActionRequestRequest {
+    const message = {
+      ...baseQueryGetActionRequestRequest,
+    } as QueryGetActionRequestRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetActionRequestRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetActionRequestRequest>
+  ): QueryGetActionRequestRequest {
+    const message = {
+      ...baseQueryGetActionRequestRequest,
+    } as QueryGetActionRequestRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetActionRequestResponse: object = {};
+
+export const QueryGetActionRequestResponse = {
+  encode(
+    message: QueryGetActionRequestResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.ActionRequest !== undefined) {
+      ActionRequest.encode(
+        message.ActionRequest,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetActionRequestResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetActionRequestResponse,
+    } as QueryGetActionRequestResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ActionRequest = ActionRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetActionRequestResponse {
+    const message = {
+      ...baseQueryGetActionRequestResponse,
+    } as QueryGetActionRequestResponse;
+    if (object.ActionRequest !== undefined && object.ActionRequest !== null) {
+      message.ActionRequest = ActionRequest.fromJSON(object.ActionRequest);
+    } else {
+      message.ActionRequest = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetActionRequestResponse): unknown {
+    const obj: any = {};
+    message.ActionRequest !== undefined &&
+      (obj.ActionRequest = message.ActionRequest
+        ? ActionRequest.toJSON(message.ActionRequest)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetActionRequestResponse>
+  ): QueryGetActionRequestResponse {
+    const message = {
+      ...baseQueryGetActionRequestResponse,
+    } as QueryGetActionRequestResponse;
+    if (object.ActionRequest !== undefined && object.ActionRequest !== null) {
+      message.ActionRequest = ActionRequest.fromPartial(object.ActionRequest);
+    } else {
+      message.ActionRequest = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllActionRequestRequest: object = {};
+
+export const QueryAllActionRequestRequest = {
+  encode(
+    message: QueryAllActionRequestRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllActionRequestRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllActionRequestRequest,
+    } as QueryAllActionRequestRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllActionRequestRequest {
+    const message = {
+      ...baseQueryAllActionRequestRequest,
+    } as QueryAllActionRequestRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllActionRequestRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllActionRequestRequest>
+  ): QueryAllActionRequestRequest {
+    const message = {
+      ...baseQueryAllActionRequestRequest,
+    } as QueryAllActionRequestRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllActionRequestResponse: object = {};
+
+export const QueryAllActionRequestResponse = {
+  encode(
+    message: QueryAllActionRequestResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.ActionRequest) {
+      ActionRequest.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllActionRequestResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllActionRequestResponse,
+    } as QueryAllActionRequestResponse;
+    message.ActionRequest = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.ActionRequest.push(
+            ActionRequest.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllActionRequestResponse {
+    const message = {
+      ...baseQueryAllActionRequestResponse,
+    } as QueryAllActionRequestResponse;
+    message.ActionRequest = [];
+    if (object.ActionRequest !== undefined && object.ActionRequest !== null) {
+      for (const e of object.ActionRequest) {
+        message.ActionRequest.push(ActionRequest.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllActionRequestResponse): unknown {
+    const obj: any = {};
+    if (message.ActionRequest) {
+      obj.ActionRequest = message.ActionRequest.map((e) =>
+        e ? ActionRequest.toJSON(e) : undefined
+      );
+    } else {
+      obj.ActionRequest = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllActionRequestResponse>
+  ): QueryAllActionRequestResponse {
+    const message = {
+      ...baseQueryAllActionRequestResponse,
+    } as QueryAllActionRequestResponse;
+    message.ActionRequest = [];
+    if (object.ActionRequest !== undefined && object.ActionRequest !== null) {
+      for (const e of object.ActionRequest) {
+        message.ActionRequest.push(ActionRequest.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -462,6 +799,14 @@ export interface Query {
   MintRequestAll(
     request: QueryAllMintRequestRequest
   ): Promise<QueryAllMintRequestResponse>;
+  /** Queries a ActionRequest by id. */
+  ActionRequest(
+    request: QueryGetActionRequestRequest
+  ): Promise<QueryGetActionRequestResponse>;
+  /** Queries a list of ActionRequest items. */
+  ActionRequestAll(
+    request: QueryAllActionRequestRequest
+  ): Promise<QueryAllActionRequestResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -500,6 +845,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllMintRequestResponse.decode(new Reader(data))
+    );
+  }
+
+  ActionRequest(
+    request: QueryGetActionRequestRequest
+  ): Promise<QueryGetActionRequestResponse> {
+    const data = QueryGetActionRequestRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftoracle.Query",
+      "ActionRequest",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetActionRequestResponse.decode(new Reader(data))
+    );
+  }
+
+  ActionRequestAll(
+    request: QueryAllActionRequestRequest
+  ): Promise<QueryAllActionRequestResponse> {
+    const data = QueryAllActionRequestRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftoracle.Query",
+      "ActionRequestAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllActionRequestResponse.decode(new Reader(data))
     );
   }
 }

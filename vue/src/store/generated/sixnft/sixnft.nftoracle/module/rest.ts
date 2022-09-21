@@ -9,6 +9,16 @@
  * ---------------------------------------------------------------
  */
 
+export interface NftoracleActionRequest {
+  /** @format uint64 */
+  id?: string;
+  nftSchemaCode?: string;
+  tokenId?: string;
+
+  /** @format uint64 */
+  requiredConfirm?: string;
+}
+
 export interface NftoracleDataHash {
   origin_data?: NftoracleNftOriginData;
 
@@ -30,7 +40,6 @@ export interface NftoracleMintRequest {
   /** @format uint64 */
   current_confirm?: string;
   confirmers?: Record<string, boolean>;
-  nft_origin_data?: NftoracleNftOriginData;
 
   /** @format date-time */
   created_at?: string;
@@ -67,6 +76,21 @@ export interface NftoracleParams {
   mint_request_active_duration?: string;
 }
 
+export interface NftoracleQueryAllActionRequestResponse {
+  ActionRequest?: NftoracleActionRequest[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface NftoracleQueryAllMintRequestResponse {
   MintRequest?: NftoracleMintRequest[];
 
@@ -80,6 +104,10 @@ export interface NftoracleQueryAllMintRequestResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+export interface NftoracleQueryGetActionRequestResponse {
+  ActionRequest?: NftoracleActionRequest;
 }
 
 export interface NftoracleQueryGetMintRequestResponse {
@@ -156,6 +184,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -367,10 +402,52 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title nftoracle/genesis.proto
+ * @title nftoracle/action_request.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryActionRequestAll
+   * @summary Queries a list of ActionRequest items.
+   * @request GET:/sixnft/nftoracle/action_request
+   */
+  queryActionRequestAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftoracleQueryAllActionRequestResponse, RpcStatus>({
+      path: `/sixnft/nftoracle/action_request`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryActionRequest
+   * @summary Queries a ActionRequest by id.
+   * @request GET:/sixnft/nftoracle/action_request/{id}
+   */
+  queryActionRequest = (id: string, params: RequestParams = {}) =>
+    this.request<NftoracleQueryGetActionRequestResponse, RpcStatus>({
+      path: `/sixnft/nftoracle/action_request/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *
@@ -385,6 +462,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

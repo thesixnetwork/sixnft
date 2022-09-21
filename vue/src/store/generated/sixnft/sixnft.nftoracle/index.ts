@@ -1,13 +1,14 @@
 import { txClient, queryClient, MissingWalletError , registry} from './module'
 
-import { NftOriginData } from "./module/types/nftoracle/mint_request"
-import { DataHash } from "./module/types/nftoracle/mint_request"
+import { ActionRequest } from "./module/types/nftoracle/action_request"
 import { MintRequest } from "./module/types/nftoracle/mint_request"
 import { Trait } from "./module/types/nftoracle/opensea"
 import { Params } from "./module/types/nftoracle/params"
+import { NftOriginData } from "./module/types/nftoracle/request"
+import { DataHash } from "./module/types/nftoracle/request"
 
 
-export { NftOriginData, DataHash, MintRequest, Trait, Params };
+export { ActionRequest, MintRequest, Trait, Params, NftOriginData, DataHash };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -48,13 +49,16 @@ const getDefaultState = () => {
 				Params: {},
 				MintRequest: {},
 				MintRequestAll: {},
+				ActionRequest: {},
+				ActionRequestAll: {},
 				
 				_Structure: {
-						NftOriginData: getStructure(NftOriginData.fromPartial({})),
-						DataHash: getStructure(DataHash.fromPartial({})),
+						ActionRequest: getStructure(ActionRequest.fromPartial({})),
 						MintRequest: getStructure(MintRequest.fromPartial({})),
 						Trait: getStructure(Trait.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
+						NftOriginData: getStructure(NftOriginData.fromPartial({})),
+						DataHash: getStructure(DataHash.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -100,6 +104,18 @@ export default {
 						(<any> params).query=null
 					}
 			return state.MintRequestAll[JSON.stringify(params)] ?? {}
+		},
+				getActionRequest: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.ActionRequest[JSON.stringify(params)] ?? {}
+		},
+				getActionRequestAll: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.ActionRequestAll[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -205,21 +221,54 @@ export default {
 		},
 		
 		
-		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryActionRequest({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
 			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMintRequest(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryActionRequest( key.id)).data
+				
+					
+				commit('QUERY', { query: 'ActionRequest', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryActionRequest', payload: { options: { all }, params: {...key},query }})
+				return getters['getActionRequest']( { params: {...key}, query}) ?? {}
 			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMintRequest:Send Could not broadcast Tx: '+ e.message)
-				}
+				throw new Error('QueryClient:QueryActionRequest API Node Unavailable. Could not perform query: ' + e.message)
+				
 			}
 		},
+		
+		
+		
+		
+		 		
+		
+		
+		async QueryActionRequestAll({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const queryClient=await initQueryClient(rootGetters)
+				let value= (await queryClient.queryActionRequestAll(query)).data
+				
+					
+				while (all && (<any> value).pagination && (<any> value).pagination.next_key!=null) {
+					let next_values=(await queryClient.queryActionRequestAll({...query, 'pagination.key':(<any> value).pagination.next_key})).data
+					value = mergeResults(value, next_values);
+				}
+				commit('QUERY', { query: 'ActionRequestAll', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryActionRequestAll', payload: { options: { all }, params: {...key},query }})
+				return getters['getActionRequestAll']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryActionRequestAll API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
 		async sendMsgSubmitMintResponse({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -235,20 +284,22 @@ export default {
 				}
 			}
 		},
-		
-		async MsgCreateMintRequest({ rootGetters }, { value }) {
+		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgCreateMintRequest(value)
-				return msg
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgCreateMintRequest:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgSubmitMintResponse({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -259,6 +310,19 @@ export default {
 					throw new Error('TxClient:MsgSubmitMintResponse:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSubmitMintResponse:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateMintRequest({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateMintRequest(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
 				}
 			}
 		},

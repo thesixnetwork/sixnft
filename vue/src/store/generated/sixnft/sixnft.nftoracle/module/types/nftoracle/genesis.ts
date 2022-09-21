@@ -3,6 +3,7 @@ import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Params } from "../nftoracle/params";
 import { MintRequest } from "../nftoracle/mint_request";
+import { ActionRequest } from "../nftoracle/action_request";
 
 export const protobufPackage = "sixnft.nftoracle";
 
@@ -10,11 +11,13 @@ export const protobufPackage = "sixnft.nftoracle";
 export interface GenesisState {
   params: Params | undefined;
   mintRequestList: MintRequest[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   mintRequestCount: number;
+  actionRequestList: ActionRequest[];
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  actionRequestCount: number;
 }
 
-const baseGenesisState: object = { mintRequestCount: 0 };
+const baseGenesisState: object = { mintRequestCount: 0, actionRequestCount: 0 };
 
 export const GenesisState = {
   encode(message: GenesisState, writer: Writer = Writer.create()): Writer {
@@ -27,6 +30,12 @@ export const GenesisState = {
     if (message.mintRequestCount !== 0) {
       writer.uint32(24).uint64(message.mintRequestCount);
     }
+    for (const v of message.actionRequestList) {
+      ActionRequest.encode(v!, writer.uint32(34).fork()).ldelim();
+    }
+    if (message.actionRequestCount !== 0) {
+      writer.uint32(40).uint64(message.actionRequestCount);
+    }
     return writer;
   },
 
@@ -35,6 +44,7 @@ export const GenesisState = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseGenesisState } as GenesisState;
     message.mintRequestList = [];
+    message.actionRequestList = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -49,6 +59,14 @@ export const GenesisState = {
         case 3:
           message.mintRequestCount = longToNumber(reader.uint64() as Long);
           break;
+        case 4:
+          message.actionRequestList.push(
+            ActionRequest.decode(reader, reader.uint32())
+          );
+          break;
+        case 5:
+          message.actionRequestCount = longToNumber(reader.uint64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -60,6 +78,7 @@ export const GenesisState = {
   fromJSON(object: any): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
     message.mintRequestList = [];
+    message.actionRequestList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromJSON(object.params);
     } else {
@@ -81,6 +100,22 @@ export const GenesisState = {
     } else {
       message.mintRequestCount = 0;
     }
+    if (
+      object.actionRequestList !== undefined &&
+      object.actionRequestList !== null
+    ) {
+      for (const e of object.actionRequestList) {
+        message.actionRequestList.push(ActionRequest.fromJSON(e));
+      }
+    }
+    if (
+      object.actionRequestCount !== undefined &&
+      object.actionRequestCount !== null
+    ) {
+      message.actionRequestCount = Number(object.actionRequestCount);
+    } else {
+      message.actionRequestCount = 0;
+    }
     return message;
   },
 
@@ -97,12 +132,22 @@ export const GenesisState = {
     }
     message.mintRequestCount !== undefined &&
       (obj.mintRequestCount = message.mintRequestCount);
+    if (message.actionRequestList) {
+      obj.actionRequestList = message.actionRequestList.map((e) =>
+        e ? ActionRequest.toJSON(e) : undefined
+      );
+    } else {
+      obj.actionRequestList = [];
+    }
+    message.actionRequestCount !== undefined &&
+      (obj.actionRequestCount = message.actionRequestCount);
     return obj;
   },
 
   fromPartial(object: DeepPartial<GenesisState>): GenesisState {
     const message = { ...baseGenesisState } as GenesisState;
     message.mintRequestList = [];
+    message.actionRequestList = [];
     if (object.params !== undefined && object.params !== null) {
       message.params = Params.fromPartial(object.params);
     } else {
@@ -123,6 +168,22 @@ export const GenesisState = {
       message.mintRequestCount = object.mintRequestCount;
     } else {
       message.mintRequestCount = 0;
+    }
+    if (
+      object.actionRequestList !== undefined &&
+      object.actionRequestList !== null
+    ) {
+      for (const e of object.actionRequestList) {
+        message.actionRequestList.push(ActionRequest.fromPartial(e));
+      }
+    }
+    if (
+      object.actionRequestCount !== undefined &&
+      object.actionRequestCount !== null
+    ) {
+      message.actionRequestCount = object.actionRequestCount;
+    } else {
+      message.actionRequestCount = 0;
     }
     return message;
   },

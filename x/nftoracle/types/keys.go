@@ -27,3 +27,8 @@ const (
 	MintRequestKey      = "MintRequest-value-"
 	MintRequestCountKey = "MintRequest-count-"
 )
+
+const (
+	ActionRequestKey      = "ActionRequest-value-"
+	ActionRequestCountKey = "ActionRequest-count-"
+)
