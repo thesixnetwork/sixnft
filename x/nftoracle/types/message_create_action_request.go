@@ -9,11 +9,12 @@ const TypeMsgCreateActionRequest = "create_action_request"
 
 var _ sdk.Msg = &MsgCreateActionRequest{}
 
-func NewMsgCreateActionRequest(creator string, vm string, base64ActionSignature string) *MsgCreateActionRequest {
+func NewMsgCreateActionRequest(creator string, vm string, base64ActionSignature string, requiredConfirm uint64) *MsgCreateActionRequest {
 	return &MsgCreateActionRequest{
 		Creator:               creator,
 		Vm:                    vm,
 		Base64ActionSignature: base64ActionSignature,
+		RequiredConfirm:       requiredConfirm,
 	}
 }
 

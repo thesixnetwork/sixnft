@@ -15,6 +15,7 @@ export interface ActionParam {
   nft_schema_code: string;
   token_id: string;
   action: string;
+  ref_id: string;
   expired_at: Date | undefined;
 }
 
@@ -22,8 +23,9 @@ export interface ActionRequest {
   id: number;
   nft_schema_code: string;
   token_id: string;
-  action_name: string;
+  action: string;
   caller: string;
+  ref_id: string;
   required_confirm: number;
   status: RequestStatus;
   current_confirm: number;
@@ -32,6 +34,7 @@ export interface ActionRequest {
   valid_until: Date | undefined;
   data_hashes: DataHash[];
   expired_height: number;
+  execution_error_message: string;
 }
 
 export interface ActionRequest_ConfirmersEntry {
@@ -43,6 +46,7 @@ const baseActionParam: object = {
   nft_schema_code: "",
   token_id: "",
   action: "",
+  ref_id: "",
 };
 
 export const ActionParam = {
@@ -56,10 +60,13 @@ export const ActionParam = {
     if (message.action !== "") {
       writer.uint32(26).string(message.action);
     }
+    if (message.ref_id !== "") {
+      writer.uint32(34).string(message.ref_id);
+    }
     if (message.expired_at !== undefined) {
       Timestamp.encode(
         toTimestamp(message.expired_at),
-        writer.uint32(82).fork()
+        writer.uint32(42).fork()
       ).ldelim();
     }
     return writer;
@@ -81,7 +88,10 @@ export const ActionParam = {
         case 3:
           message.action = reader.string();
           break;
-        case 10:
+        case 4:
+          message.ref_id = reader.string();
+          break;
+        case 5:
           message.expired_at = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
@@ -114,6 +124,11 @@ export const ActionParam = {
     } else {
       message.action = "";
     }
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = String(object.ref_id);
+    } else {
+      message.ref_id = "";
+    }
     if (object.expired_at !== undefined && object.expired_at !== null) {
       message.expired_at = fromJsonTimestamp(object.expired_at);
     } else {
@@ -128,6 +143,7 @@ export const ActionParam = {
       (obj.nft_schema_code = message.nft_schema_code);
     message.token_id !== undefined && (obj.token_id = message.token_id);
     message.action !== undefined && (obj.action = message.action);
+    message.ref_id !== undefined && (obj.ref_id = message.ref_id);
     message.expired_at !== undefined &&
       (obj.expired_at =
         message.expired_at !== undefined
@@ -156,6 +172,11 @@ export const ActionParam = {
     } else {
       message.action = "";
     }
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = object.ref_id;
+    } else {
+      message.ref_id = "";
+    }
     if (object.expired_at !== undefined && object.expired_at !== null) {
       message.expired_at = object.expired_at;
     } else {
@@ -169,12 +190,14 @@ const baseActionRequest: object = {
   id: 0,
   nft_schema_code: "",
   token_id: "",
-  action_name: "",
+  action: "",
   caller: "",
+  ref_id: "",
   required_confirm: 0,
   status: 0,
   current_confirm: 0,
   expired_height: 0,
+  execution_error_message: "",
 };
 
 export const ActionRequest = {
@@ -188,44 +211,50 @@ export const ActionRequest = {
     if (message.token_id !== "") {
       writer.uint32(26).string(message.token_id);
     }
-    if (message.action_name !== "") {
-      writer.uint32(34).string(message.action_name);
+    if (message.action !== "") {
+      writer.uint32(34).string(message.action);
     }
     if (message.caller !== "") {
       writer.uint32(42).string(message.caller);
     }
+    if (message.ref_id !== "") {
+      writer.uint32(50).string(message.ref_id);
+    }
     if (message.required_confirm !== 0) {
-      writer.uint32(48).uint64(message.required_confirm);
+      writer.uint32(56).uint64(message.required_confirm);
     }
     if (message.status !== 0) {
-      writer.uint32(56).int32(message.status);
+      writer.uint32(64).int32(message.status);
     }
     if (message.current_confirm !== 0) {
-      writer.uint32(64).uint64(message.current_confirm);
+      writer.uint32(72).uint64(message.current_confirm);
     }
     Object.entries(message.confirmers).forEach(([key, value]) => {
       ActionRequest_ConfirmersEntry.encode(
         { key: key as any, value },
-        writer.uint32(74).fork()
+        writer.uint32(82).fork()
       ).ldelim();
     });
     if (message.created_at !== undefined) {
       Timestamp.encode(
         toTimestamp(message.created_at),
-        writer.uint32(82).fork()
+        writer.uint32(90).fork()
       ).ldelim();
     }
     if (message.valid_until !== undefined) {
       Timestamp.encode(
         toTimestamp(message.valid_until),
-        writer.uint32(90).fork()
+        writer.uint32(98).fork()
       ).ldelim();
     }
     for (const v of message.data_hashes) {
-      DataHash.encode(v!, writer.uint32(98).fork()).ldelim();
+      DataHash.encode(v!, writer.uint32(106).fork()).ldelim();
     }
     if (message.expired_height !== 0) {
-      writer.uint32(104).int64(message.expired_height);
+      writer.uint32(112).int64(message.expired_height);
+    }
+    if (message.execution_error_message !== "") {
+      writer.uint32(122).string(message.execution_error_message);
     }
     return writer;
   },
@@ -249,44 +278,50 @@ export const ActionRequest = {
           message.token_id = reader.string();
           break;
         case 4:
-          message.action_name = reader.string();
+          message.action = reader.string();
           break;
         case 5:
           message.caller = reader.string();
           break;
         case 6:
-          message.required_confirm = longToNumber(reader.uint64() as Long);
+          message.ref_id = reader.string();
           break;
         case 7:
-          message.status = reader.int32() as any;
+          message.required_confirm = longToNumber(reader.uint64() as Long);
           break;
         case 8:
-          message.current_confirm = longToNumber(reader.uint64() as Long);
+          message.status = reader.int32() as any;
           break;
         case 9:
-          const entry9 = ActionRequest_ConfirmersEntry.decode(
+          message.current_confirm = longToNumber(reader.uint64() as Long);
+          break;
+        case 10:
+          const entry10 = ActionRequest_ConfirmersEntry.decode(
             reader,
             reader.uint32()
           );
-          if (entry9.value !== undefined) {
-            message.confirmers[entry9.key] = entry9.value;
+          if (entry10.value !== undefined) {
+            message.confirmers[entry10.key] = entry10.value;
           }
           break;
-        case 10:
+        case 11:
           message.created_at = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 11:
+        case 12:
           message.valid_until = fromTimestamp(
             Timestamp.decode(reader, reader.uint32())
           );
           break;
-        case 12:
+        case 13:
           message.data_hashes.push(DataHash.decode(reader, reader.uint32()));
           break;
-        case 13:
+        case 14:
           message.expired_height = longToNumber(reader.int64() as Long);
+          break;
+        case 15:
+          message.execution_error_message = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -318,15 +353,20 @@ export const ActionRequest = {
     } else {
       message.token_id = "";
     }
-    if (object.action_name !== undefined && object.action_name !== null) {
-      message.action_name = String(object.action_name);
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
     } else {
-      message.action_name = "";
+      message.action = "";
     }
     if (object.caller !== undefined && object.caller !== null) {
       message.caller = String(object.caller);
     } else {
       message.caller = "";
+    }
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = String(object.ref_id);
+    } else {
+      message.ref_id = "";
     }
     if (
       object.required_confirm !== undefined &&
@@ -374,6 +414,14 @@ export const ActionRequest = {
     } else {
       message.expired_height = 0;
     }
+    if (
+      object.execution_error_message !== undefined &&
+      object.execution_error_message !== null
+    ) {
+      message.execution_error_message = String(object.execution_error_message);
+    } else {
+      message.execution_error_message = "";
+    }
     return message;
   },
 
@@ -383,9 +431,9 @@ export const ActionRequest = {
     message.nft_schema_code !== undefined &&
       (obj.nft_schema_code = message.nft_schema_code);
     message.token_id !== undefined && (obj.token_id = message.token_id);
-    message.action_name !== undefined &&
-      (obj.action_name = message.action_name);
+    message.action !== undefined && (obj.action = message.action);
     message.caller !== undefined && (obj.caller = message.caller);
+    message.ref_id !== undefined && (obj.ref_id = message.ref_id);
     message.required_confirm !== undefined &&
       (obj.required_confirm = message.required_confirm);
     message.status !== undefined &&
@@ -417,6 +465,8 @@ export const ActionRequest = {
     }
     message.expired_height !== undefined &&
       (obj.expired_height = message.expired_height);
+    message.execution_error_message !== undefined &&
+      (obj.execution_error_message = message.execution_error_message);
     return obj;
   },
 
@@ -442,15 +492,20 @@ export const ActionRequest = {
     } else {
       message.token_id = "";
     }
-    if (object.action_name !== undefined && object.action_name !== null) {
-      message.action_name = object.action_name;
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
     } else {
-      message.action_name = "";
+      message.action = "";
     }
     if (object.caller !== undefined && object.caller !== null) {
       message.caller = object.caller;
     } else {
       message.caller = "";
+    }
+    if (object.ref_id !== undefined && object.ref_id !== null) {
+      message.ref_id = object.ref_id;
+    } else {
+      message.ref_id = "";
     }
     if (
       object.required_confirm !== undefined &&
@@ -499,6 +554,14 @@ export const ActionRequest = {
       message.expired_height = object.expired_height;
     } else {
       message.expired_height = 0;
+    }
+    if (
+      object.execution_error_message !== undefined &&
+      object.execution_error_message !== null
+    ) {
+      message.execution_error_message = object.execution_error_message;
+    } else {
+      message.execution_error_message = "";
     }
     return message;
   },

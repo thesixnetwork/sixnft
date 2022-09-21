@@ -9,6 +9,7 @@ export enum RequestStatus {
   SUCCESS_WITH_CONSENSUS = 1,
   FAILED_WITHOUT_CONCENSUS = 2,
   EXPIRED = 3,
+  FAILED_ON_EXECUTION = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -26,6 +27,9 @@ export function requestStatusFromJSON(object: any): RequestStatus {
     case 3:
     case "EXPIRED":
       return RequestStatus.EXPIRED;
+    case 4:
+    case "FAILED_ON_EXECUTION":
+      return RequestStatus.FAILED_ON_EXECUTION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -43,6 +47,8 @@ export function requestStatusToJSON(object: RequestStatus): string {
       return "FAILED_WITHOUT_CONCENSUS";
     case RequestStatus.EXPIRED:
       return "EXPIRED";
+    case RequestStatus.FAILED_ON_EXECUTION:
+      return "FAILED_ON_EXECUTION";
     default:
       return "UNKNOWN";
   }

@@ -80,11 +80,17 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 
 func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*types.ActionParam, *string, error) {
 
+	// fmt.Println("########################## actionSig.Message", actionSig.Message, len(actionSig.Message))
+	// fmt.Println("########################## actionSig.Signature", actionSig.Signature)
+
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(actionSig.Message)), 10) + actionSig.Message
+	// fmt.Println("sign_msg: ", sign_msg)
 
 	data := []byte(sign_msg)
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
+
+	// fmt.Println("data: ", hexutil.Encode(data))
 
 	actionParam := &types.ActionParam{}
 	actionParamBz, err := base64.StdEncoding.DecodeString(actionSig.Message)
@@ -111,6 +117,7 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature or message")
 	}
 
+	// fmt.Println("sigPublicKey:", hexutil.Encode(sigPublicKey))
 	// get address from public key
 	pubEDCA, err := crypto.UnmarshalPubkey(sigPublicKey)
 	if err != nil {
@@ -123,5 +130,6 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 		return nil, nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
 	}
 	signer := eth_address_from_pubkey.Hex()
+	// fmt.Println("######################### signer", signer)
 	return actionParam, &signer, nil
 }

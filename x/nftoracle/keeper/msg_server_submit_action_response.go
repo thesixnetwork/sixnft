@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 
 	nftmngrkeeper "sixnft/x/nftmngr/keeper"
@@ -180,6 +181,10 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionReq
 	// Check if ChangeList is empty, error if empty
 	if len(meta.ChangeList) == 0 {
 		return sdkerrors.Wrap(types.ErrEmptyChangeList, actionRequest.Action)
+	} else {
+		for i, change := range meta.ChangeList {
+			fmt.Println("======================= Change", i, change.Key, change.PreviousValue, change.NewValue)
+		}
 	}
 
 	k.nftmngrKeeper.SetNftData(ctx, *tokenData)
@@ -276,12 +281,18 @@ func (k msgServer) UpdateMetaDataFromOriginData(ctx sdk.Context, nftData *nftmng
 	}
 
 	nftData.OriginAttributes = originAttributes
-	nftData.OnchainAttributes = make([]*nftmngrtypes.NftAttributeValue, 0)
 
-	// Poppulate Onchain Data
+	mapOfTokenAttributeValues := make(map[string]*nftmngrtypes.NftAttributeValue)
+	for _, attr := range nftData.OnchainAttributes {
+		mapOfTokenAttributeValues[attr.Name] = attr
+	}
 	for _, attr := range schema.OnchainData.TokenAttributes {
-		if attr.DefaultMintValue != nil {
-			nftData.OnchainAttributes = append(nftData.OnchainAttributes, nftmngrkeeper.NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+		if attr.Required {
+			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
+				if attr.DefaultMintValue != nil {
+					nftData.OnchainAttributes = append(nftData.OnchainAttributes, nftmngrkeeper.NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+				}
+			}
 		}
 	}
 

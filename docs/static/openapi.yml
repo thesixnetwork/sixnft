@@ -33353,9 +33353,11 @@ paths:
                       type: string
                     token_id:
                       type: string
-                    action_name:
+                    action:
                       type: string
                     caller:
+                      type: string
+                    ref_id:
                       type: string
                     required_confirm:
                       type: string
@@ -33367,6 +33369,7 @@ paths:
                         - SUCCESS_WITH_CONSENSUS
                         - FAILED_WITHOUT_CONCENSUS
                         - EXPIRED
+                        - FAILED_ON_EXECUTION
                       default: PENDING
                     current_confirm:
                       type: string
@@ -33416,6 +33419,8 @@ paths:
                     expired_height:
                       type: string
                       format: int64
+                    execution_error_message:
+                      type: string
               pagination:
                 type: object
                 properties:
@@ -33530,9 +33535,11 @@ paths:
                     type: string
                   token_id:
                     type: string
-                  action_name:
+                  action:
                     type: string
                   caller:
+                    type: string
+                  ref_id:
                     type: string
                   required_confirm:
                     type: string
@@ -33544,6 +33551,7 @@ paths:
                       - SUCCESS_WITH_CONSENSUS
                       - FAILED_WITHOUT_CONCENSUS
                       - EXPIRED
+                      - FAILED_ON_EXECUTION
                     default: PENDING
                   current_confirm:
                     type: string
@@ -33593,6 +33601,8 @@ paths:
                   expired_height:
                     type: string
                     format: int64
+                  execution_error_message:
+                    type: string
         default:
           description: An unexpected error response.
           schema:
@@ -33651,6 +33661,7 @@ paths:
                         - SUCCESS_WITH_CONSENSUS
                         - FAILED_WITHOUT_CONCENSUS
                         - EXPIRED
+                        - FAILED_ON_EXECUTION
                       default: PENDING
                     current_confirm:
                       type: string
@@ -33825,6 +33836,7 @@ paths:
                       - SUCCESS_WITH_CONSENSUS
                       - FAILED_WITHOUT_CONCENSUS
                       - EXPIRED
+                      - FAILED_ON_EXECUTION
                     default: PENDING
                   current_confirm:
                     type: string
@@ -57193,9 +57205,11 @@ definitions:
         type: string
       token_id:
         type: string
-      action_name:
+      action:
         type: string
       caller:
+        type: string
+      ref_id:
         type: string
       required_confirm:
         type: string
@@ -57207,6 +57221,7 @@ definitions:
           - SUCCESS_WITH_CONSENSUS
           - FAILED_WITHOUT_CONCENSUS
           - EXPIRED
+          - FAILED_ON_EXECUTION
         default: PENDING
       current_confirm:
         type: string
@@ -57256,6 +57271,8 @@ definitions:
       expired_height:
         type: string
         format: int64
+      execution_error_message:
+        type: string
   sixnft.nftoracle.DataHash:
     type: object
     properties:
@@ -57306,6 +57323,7 @@ definitions:
           - SUCCESS_WITH_CONSENSUS
           - FAILED_WITHOUT_CONCENSUS
           - EXPIRED
+          - FAILED_ON_EXECUTION
         default: PENDING
       current_confirm:
         type: string
@@ -57425,9 +57443,11 @@ definitions:
               type: string
             token_id:
               type: string
-            action_name:
+            action:
               type: string
             caller:
+              type: string
+            ref_id:
               type: string
             required_confirm:
               type: string
@@ -57439,6 +57459,7 @@ definitions:
                 - SUCCESS_WITH_CONSENSUS
                 - FAILED_WITHOUT_CONCENSUS
                 - EXPIRED
+                - FAILED_ON_EXECUTION
               default: PENDING
             current_confirm:
               type: string
@@ -57488,6 +57509,8 @@ definitions:
             expired_height:
               type: string
               format: int64
+            execution_error_message:
+              type: string
       pagination:
         type: object
         properties:
@@ -57538,6 +57561,7 @@ definitions:
                 - SUCCESS_WITH_CONSENSUS
                 - FAILED_WITHOUT_CONCENSUS
                 - EXPIRED
+                - FAILED_ON_EXECUTION
               default: PENDING
             current_confirm:
               type: string
@@ -57626,9 +57650,11 @@ definitions:
             type: string
           token_id:
             type: string
-          action_name:
+          action:
             type: string
           caller:
+            type: string
+          ref_id:
             type: string
           required_confirm:
             type: string
@@ -57640,6 +57666,7 @@ definitions:
               - SUCCESS_WITH_CONSENSUS
               - FAILED_WITHOUT_CONCENSUS
               - EXPIRED
+              - FAILED_ON_EXECUTION
             default: PENDING
           current_confirm:
             type: string
@@ -57689,6 +57716,8 @@ definitions:
           expired_height:
             type: string
             format: int64
+          execution_error_message:
+            type: string
   sixnft.nftoracle.QueryGetMintRequestResponse:
     type: object
     properties:
@@ -57712,6 +57741,7 @@ definitions:
               - SUCCESS_WITH_CONSENSUS
               - FAILED_WITHOUT_CONCENSUS
               - EXPIRED
+              - FAILED_ON_EXECUTION
             default: PENDING
           current_confirm:
             type: string
@@ -57781,6 +57811,7 @@ definitions:
       - SUCCESS_WITH_CONSENSUS
       - FAILED_WITHOUT_CONCENSUS
       - EXPIRED
+      - FAILED_ON_EXECUTION
     default: PENDING
   sixnft.nftoracle.Trait:
     type: object
