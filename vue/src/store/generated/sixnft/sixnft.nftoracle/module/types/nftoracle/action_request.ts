@@ -1,4 +1,11 @@
 /* eslint-disable */
+import {
+  RequestStatus,
+  DataHash,
+  requestStatusFromJSON,
+  requestStatusToJSON,
+} from "../nftoracle/request";
+import { Timestamp } from "../google/protobuf/timestamp";
 import * as Long from "long";
 import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
@@ -6,16 +13,35 @@ export const protobufPackage = "sixnft.nftoracle";
 
 export interface ActionRequest {
   id: number;
-  nftSchemaCode: string;
-  tokenId: string;
-  requiredConfirm: number;
+  nft_schema_code: string;
+  token_id: string;
+  action_name: string;
+  caller: string;
+  required_confirm: number;
+  status: RequestStatus;
+  current_confirm: number;
+  confirmers: { [key: string]: boolean };
+  created_at: Date | undefined;
+  valid_until: Date | undefined;
+  data_hashes: DataHash[];
+  expired_height: number;
+}
+
+export interface ActionRequest_ConfirmersEntry {
+  key: string;
+  value: boolean;
 }
 
 const baseActionRequest: object = {
   id: 0,
-  nftSchemaCode: "",
-  tokenId: "",
-  requiredConfirm: 0,
+  nft_schema_code: "",
+  token_id: "",
+  action_name: "",
+  caller: "",
+  required_confirm: 0,
+  status: 0,
+  current_confirm: 0,
+  expired_height: 0,
 };
 
 export const ActionRequest = {
@@ -23,14 +49,50 @@ export const ActionRequest = {
     if (message.id !== 0) {
       writer.uint32(8).uint64(message.id);
     }
-    if (message.nftSchemaCode !== "") {
-      writer.uint32(18).string(message.nftSchemaCode);
+    if (message.nft_schema_code !== "") {
+      writer.uint32(18).string(message.nft_schema_code);
     }
-    if (message.tokenId !== "") {
-      writer.uint32(26).string(message.tokenId);
+    if (message.token_id !== "") {
+      writer.uint32(26).string(message.token_id);
     }
-    if (message.requiredConfirm !== 0) {
-      writer.uint32(32).uint64(message.requiredConfirm);
+    if (message.action_name !== "") {
+      writer.uint32(34).string(message.action_name);
+    }
+    if (message.caller !== "") {
+      writer.uint32(42).string(message.caller);
+    }
+    if (message.required_confirm !== 0) {
+      writer.uint32(48).uint64(message.required_confirm);
+    }
+    if (message.status !== 0) {
+      writer.uint32(56).int32(message.status);
+    }
+    if (message.current_confirm !== 0) {
+      writer.uint32(64).uint64(message.current_confirm);
+    }
+    Object.entries(message.confirmers).forEach(([key, value]) => {
+      ActionRequest_ConfirmersEntry.encode(
+        { key: key as any, value },
+        writer.uint32(74).fork()
+      ).ldelim();
+    });
+    if (message.created_at !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.created_at),
+        writer.uint32(82).fork()
+      ).ldelim();
+    }
+    if (message.valid_until !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.valid_until),
+        writer.uint32(90).fork()
+      ).ldelim();
+    }
+    for (const v of message.data_hashes) {
+      DataHash.encode(v!, writer.uint32(98).fork()).ldelim();
+    }
+    if (message.expired_height !== 0) {
+      writer.uint32(104).int64(message.expired_height);
     }
     return writer;
   },
@@ -39,6 +101,8 @@ export const ActionRequest = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseActionRequest } as ActionRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -46,13 +110,50 @@ export const ActionRequest = {
           message.id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
-          message.nftSchemaCode = reader.string();
+          message.nft_schema_code = reader.string();
           break;
         case 3:
-          message.tokenId = reader.string();
+          message.token_id = reader.string();
           break;
         case 4:
-          message.requiredConfirm = longToNumber(reader.uint64() as Long);
+          message.action_name = reader.string();
+          break;
+        case 5:
+          message.caller = reader.string();
+          break;
+        case 6:
+          message.required_confirm = longToNumber(reader.uint64() as Long);
+          break;
+        case 7:
+          message.status = reader.int32() as any;
+          break;
+        case 8:
+          message.current_confirm = longToNumber(reader.uint64() as Long);
+          break;
+        case 9:
+          const entry9 = ActionRequest_ConfirmersEntry.decode(
+            reader,
+            reader.uint32()
+          );
+          if (entry9.value !== undefined) {
+            message.confirmers[entry9.key] = entry9.value;
+          }
+          break;
+        case 10:
+          message.created_at = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 11:
+          message.valid_until = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        case 12:
+          message.data_hashes.push(DataHash.decode(reader, reader.uint32()));
+          break;
+        case 13:
+          message.expired_height = longToNumber(reader.int64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -64,28 +165,81 @@ export const ActionRequest = {
 
   fromJSON(object: any): ActionRequest {
     const message = { ...baseActionRequest } as ActionRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
       message.id = 0;
     }
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = String(object.nftSchemaCode);
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = String(object.tokenId);
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = String(object.token_id);
     } else {
-      message.tokenId = "";
+      message.token_id = "";
+    }
+    if (object.action_name !== undefined && object.action_name !== null) {
+      message.action_name = String(object.action_name);
+    } else {
+      message.action_name = "";
+    }
+    if (object.caller !== undefined && object.caller !== null) {
+      message.caller = String(object.caller);
+    } else {
+      message.caller = "";
     }
     if (
-      object.requiredConfirm !== undefined &&
-      object.requiredConfirm !== null
+      object.required_confirm !== undefined &&
+      object.required_confirm !== null
     ) {
-      message.requiredConfirm = Number(object.requiredConfirm);
+      message.required_confirm = Number(object.required_confirm);
     } else {
-      message.requiredConfirm = 0;
+      message.required_confirm = 0;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = requestStatusFromJSON(object.status);
+    } else {
+      message.status = 0;
+    }
+    if (
+      object.current_confirm !== undefined &&
+      object.current_confirm !== null
+    ) {
+      message.current_confirm = Number(object.current_confirm);
+    } else {
+      message.current_confirm = 0;
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      Object.entries(object.confirmers).forEach(([key, value]) => {
+        message.confirmers[key] = Boolean(value);
+      });
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = fromJsonTimestamp(object.created_at);
+    } else {
+      message.created_at = undefined;
+    }
+    if (object.valid_until !== undefined && object.valid_until !== null) {
+      message.valid_until = fromJsonTimestamp(object.valid_until);
+    } else {
+      message.valid_until = undefined;
+    }
+    if (object.data_hashes !== undefined && object.data_hashes !== null) {
+      for (const e of object.data_hashes) {
+        message.data_hashes.push(DataHash.fromJSON(e));
+      }
+    }
+    if (object.expired_height !== undefined && object.expired_height !== null) {
+      message.expired_height = Number(object.expired_height);
+    } else {
+      message.expired_height = 0;
     }
     return message;
   },
@@ -93,38 +247,211 @@ export const ActionRequest = {
   toJSON(message: ActionRequest): unknown {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
-    message.nftSchemaCode !== undefined &&
-      (obj.nftSchemaCode = message.nftSchemaCode);
-    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
-    message.requiredConfirm !== undefined &&
-      (obj.requiredConfirm = message.requiredConfirm);
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.token_id !== undefined && (obj.token_id = message.token_id);
+    message.action_name !== undefined &&
+      (obj.action_name = message.action_name);
+    message.caller !== undefined && (obj.caller = message.caller);
+    message.required_confirm !== undefined &&
+      (obj.required_confirm = message.required_confirm);
+    message.status !== undefined &&
+      (obj.status = requestStatusToJSON(message.status));
+    message.current_confirm !== undefined &&
+      (obj.current_confirm = message.current_confirm);
+    obj.confirmers = {};
+    if (message.confirmers) {
+      Object.entries(message.confirmers).forEach(([k, v]) => {
+        obj.confirmers[k] = v;
+      });
+    }
+    message.created_at !== undefined &&
+      (obj.created_at =
+        message.created_at !== undefined
+          ? message.created_at.toISOString()
+          : null);
+    message.valid_until !== undefined &&
+      (obj.valid_until =
+        message.valid_until !== undefined
+          ? message.valid_until.toISOString()
+          : null);
+    if (message.data_hashes) {
+      obj.data_hashes = message.data_hashes.map((e) =>
+        e ? DataHash.toJSON(e) : undefined
+      );
+    } else {
+      obj.data_hashes = [];
+    }
+    message.expired_height !== undefined &&
+      (obj.expired_height = message.expired_height);
     return obj;
   },
 
   fromPartial(object: DeepPartial<ActionRequest>): ActionRequest {
     const message = { ...baseActionRequest } as ActionRequest;
+    message.confirmers = {};
+    message.data_hashes = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
       message.id = 0;
     }
-    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
-      message.nftSchemaCode = object.nftSchemaCode;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
     } else {
-      message.nftSchemaCode = "";
+      message.nft_schema_code = "";
     }
-    if (object.tokenId !== undefined && object.tokenId !== null) {
-      message.tokenId = object.tokenId;
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = object.token_id;
     } else {
-      message.tokenId = "";
+      message.token_id = "";
+    }
+    if (object.action_name !== undefined && object.action_name !== null) {
+      message.action_name = object.action_name;
+    } else {
+      message.action_name = "";
+    }
+    if (object.caller !== undefined && object.caller !== null) {
+      message.caller = object.caller;
+    } else {
+      message.caller = "";
     }
     if (
-      object.requiredConfirm !== undefined &&
-      object.requiredConfirm !== null
+      object.required_confirm !== undefined &&
+      object.required_confirm !== null
     ) {
-      message.requiredConfirm = object.requiredConfirm;
+      message.required_confirm = object.required_confirm;
     } else {
-      message.requiredConfirm = 0;
+      message.required_confirm = 0;
+    }
+    if (object.status !== undefined && object.status !== null) {
+      message.status = object.status;
+    } else {
+      message.status = 0;
+    }
+    if (
+      object.current_confirm !== undefined &&
+      object.current_confirm !== null
+    ) {
+      message.current_confirm = object.current_confirm;
+    } else {
+      message.current_confirm = 0;
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      Object.entries(object.confirmers).forEach(([key, value]) => {
+        if (value !== undefined) {
+          message.confirmers[key] = Boolean(value);
+        }
+      });
+    }
+    if (object.created_at !== undefined && object.created_at !== null) {
+      message.created_at = object.created_at;
+    } else {
+      message.created_at = undefined;
+    }
+    if (object.valid_until !== undefined && object.valid_until !== null) {
+      message.valid_until = object.valid_until;
+    } else {
+      message.valid_until = undefined;
+    }
+    if (object.data_hashes !== undefined && object.data_hashes !== null) {
+      for (const e of object.data_hashes) {
+        message.data_hashes.push(DataHash.fromPartial(e));
+      }
+    }
+    if (object.expired_height !== undefined && object.expired_height !== null) {
+      message.expired_height = object.expired_height;
+    } else {
+      message.expired_height = 0;
+    }
+    return message;
+  },
+};
+
+const baseActionRequest_ConfirmersEntry: object = { key: "", value: false };
+
+export const ActionRequest_ConfirmersEntry = {
+  encode(
+    message: ActionRequest_ConfirmersEntry,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value === true) {
+      writer.uint32(16).bool(message.value);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ActionRequest_ConfirmersEntry {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseActionRequest_ConfirmersEntry,
+    } as ActionRequest_ConfirmersEntry;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ActionRequest_ConfirmersEntry {
+    const message = {
+      ...baseActionRequest_ConfirmersEntry,
+    } as ActionRequest_ConfirmersEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = String(object.key);
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = Boolean(object.value);
+    } else {
+      message.value = false;
+    }
+    return message;
+  },
+
+  toJSON(message: ActionRequest_ConfirmersEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ActionRequest_ConfirmersEntry>
+  ): ActionRequest_ConfirmersEntry {
+    const message = {
+      ...baseActionRequest_ConfirmersEntry,
+    } as ActionRequest_ConfirmersEntry;
+    if (object.key !== undefined && object.key !== null) {
+      message.key = object.key;
+    } else {
+      message.key = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    } else {
+      message.value = false;
     }
     return message;
   },
@@ -150,6 +477,28 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function toTimestamp(date: Date): Timestamp {
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): Date {
+  let millis = t.seconds * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis);
+}
+
+function fromJsonTimestamp(o: any): Date {
+  if (o instanceof Date) {
+    return o;
+  } else if (typeof o === "string") {
+    return new Date(o);
+  } else {
+    return fromTimestamp(Timestamp.fromJSON(o));
+  }
+}
 
 function longToNumber(long: Long): number {
   if (long.gt(Number.MAX_SAFE_INTEGER)) {

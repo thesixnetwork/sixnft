@@ -12,11 +12,28 @@
 export interface NftoracleActionRequest {
   /** @format uint64 */
   id?: string;
-  nftSchemaCode?: string;
-  tokenId?: string;
+  nft_schema_code?: string;
+  token_id?: string;
+  action_name?: string;
+  caller?: string;
 
   /** @format uint64 */
-  requiredConfirm?: string;
+  required_confirm?: string;
+  status?: NftoracleRequestStatus;
+
+  /** @format uint64 */
+  current_confirm?: string;
+  confirmers?: Record<string, boolean>;
+
+  /** @format date-time */
+  created_at?: string;
+
+  /** @format date-time */
+  valid_until?: string;
+  data_hashes?: NftoracleDataHash[];
+
+  /** @format int64 */
+  expired_height?: string;
 }
 
 export interface NftoracleDataHash {
@@ -50,6 +67,10 @@ export interface NftoracleMintRequest {
 
   /** @format int64 */
   expired_height?: string;
+}
+
+export interface NftoracleMsgCreateActionRequestResponse {
+  requestId?: string;
 }
 
 export interface NftoracleMsgCreateMintRequestResponse {

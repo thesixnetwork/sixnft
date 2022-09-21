@@ -27,6 +27,16 @@ export interface MsgSubmitMintResponseResponse {
   mintRequestID: string;
 }
 
+export interface MsgCreateActionRequest {
+  creator: string;
+  vm: string;
+  base64ActionSignature: string;
+}
+
+export interface MsgCreateActionRequestResponse {
+  requestId: string;
+}
+
 const baseMsgCreateMintRequest: object = {
   creator: "",
   nftSchemaCode: "",
@@ -427,15 +437,192 @@ export const MsgSubmitMintResponseResponse = {
   },
 };
 
+const baseMsgCreateActionRequest: object = {
+  creator: "",
+  vm: "",
+  base64ActionSignature: "",
+};
+
+export const MsgCreateActionRequest = {
+  encode(
+    message: MsgCreateActionRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.vm !== "") {
+      writer.uint32(18).string(message.vm);
+    }
+    if (message.base64ActionSignature !== "") {
+      writer.uint32(26).string(message.base64ActionSignature);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateActionRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateActionRequest } as MsgCreateActionRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.vm = reader.string();
+          break;
+        case 3:
+          message.base64ActionSignature = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateActionRequest {
+    const message = { ...baseMsgCreateActionRequest } as MsgCreateActionRequest;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.vm !== undefined && object.vm !== null) {
+      message.vm = String(object.vm);
+    } else {
+      message.vm = "";
+    }
+    if (
+      object.base64ActionSignature !== undefined &&
+      object.base64ActionSignature !== null
+    ) {
+      message.base64ActionSignature = String(object.base64ActionSignature);
+    } else {
+      message.base64ActionSignature = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateActionRequest): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.vm !== undefined && (obj.vm = message.vm);
+    message.base64ActionSignature !== undefined &&
+      (obj.base64ActionSignature = message.base64ActionSignature);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateActionRequest>
+  ): MsgCreateActionRequest {
+    const message = { ...baseMsgCreateActionRequest } as MsgCreateActionRequest;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.vm !== undefined && object.vm !== null) {
+      message.vm = object.vm;
+    } else {
+      message.vm = "";
+    }
+    if (
+      object.base64ActionSignature !== undefined &&
+      object.base64ActionSignature !== null
+    ) {
+      message.base64ActionSignature = object.base64ActionSignature;
+    } else {
+      message.base64ActionSignature = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateActionRequestResponse: object = { requestId: "" };
+
+export const MsgCreateActionRequestResponse = {
+  encode(
+    message: MsgCreateActionRequestResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.requestId !== "") {
+      writer.uint32(10).string(message.requestId);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateActionRequestResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateActionRequestResponse,
+    } as MsgCreateActionRequestResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.requestId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateActionRequestResponse {
+    const message = {
+      ...baseMsgCreateActionRequestResponse,
+    } as MsgCreateActionRequestResponse;
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = String(object.requestId);
+    } else {
+      message.requestId = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateActionRequestResponse): unknown {
+    const obj: any = {};
+    message.requestId !== undefined && (obj.requestId = message.requestId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateActionRequestResponse>
+  ): MsgCreateActionRequestResponse {
+    const message = {
+      ...baseMsgCreateActionRequestResponse,
+    } as MsgCreateActionRequestResponse;
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = object.requestId;
+    } else {
+      message.requestId = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateMintRequest(
     request: MsgCreateMintRequest
   ): Promise<MsgCreateMintRequestResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SubmitMintResponse(
     request: MsgSubmitMintResponse
   ): Promise<MsgSubmitMintResponseResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  CreateActionRequest(
+    request: MsgCreateActionRequest
+  ): Promise<MsgCreateActionRequestResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -468,6 +655,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSubmitMintResponseResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateActionRequest(
+    request: MsgCreateActionRequest
+  ): Promise<MsgCreateActionRequestResponse> {
+    const data = MsgCreateActionRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftoracle.Msg",
+      "CreateActionRequest",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateActionRequestResponse.decode(new Reader(data))
     );
   }
 }

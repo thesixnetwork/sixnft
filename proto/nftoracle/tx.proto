@@ -9,6 +9,7 @@ option go_package = "sixnft/x/nftoracle/types";
 service Msg {
       rpc CreateMintRequest(MsgCreateMintRequest) returns (MsgCreateMintRequestResponse);
   rpc SubmitMintResponse(MsgSubmitMintResponse) returns (MsgSubmitMintResponseResponse);
+  rpc CreateActionRequest(MsgCreateActionRequest) returns (MsgCreateActionRequestResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -33,6 +34,17 @@ message MsgSubmitMintResponse {
 
 message MsgSubmitMintResponseResponse {
   string mintRequestID = 1;
+}
+
+message MsgCreateActionRequest {
+  string creator = 1;
+  string vm = 2;
+  string base64ActionSignature = 3;
+  uint64 requiredConfirm = 4;
+}
+
+message MsgCreateActionRequestResponse {
+  uint64 id = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

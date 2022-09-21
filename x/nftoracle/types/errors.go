@@ -19,4 +19,8 @@ var (
 	ErrDataHashMismatch                    = sdkerrors.Register(ModuleName, 9, "Data hash mismatch")
 	ErrOracleConfirmedAlready              = sdkerrors.Register(ModuleName, 10, "Oracle confirmed already")
 	ErrUnsupportedMetadataFormat           = sdkerrors.Register(ModuleName, 11, "Unsupported metadata format")
+	ErrInvalidBase64                       = sdkerrors.Register(ModuleName, 12, "Invalid base64")
+	ErrParsingActionSignature              = sdkerrors.Register(ModuleName, 13, "Error parsing action signature")
+	ErrParsingActionParam                  = sdkerrors.Register(ModuleName, 14, "Error parsing action params")
+	ErrVerifyingSignature                  = sdkerrors.Register(ModuleName, 15, "Error verify signature")
 )
