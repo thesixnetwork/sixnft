@@ -346,3 +346,9 @@ ignite scaffold message createActionRequest vm:string base64_action_signature:st
     --response request_id \
     --no-simulation \
     --module nftoracle
+
+ignite scaffold message submitActionResponse actionRequestID:uint base64NftData:string \
+    --desc "To submit action response" \
+    --response actionRequestID \
+    --no-simulation \
+    --module nftoracle

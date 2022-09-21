@@ -81,6 +81,10 @@ export interface NftoracleMsgCreateMintRequestResponse {
   tokenId?: string;
 }
 
+export interface NftoracleMsgSubmitActionResponseResponse {
+  actionRequestID?: string;
+}
+
 export interface NftoracleMsgSubmitMintResponseResponse {
   mintRequestID?: string;
 }

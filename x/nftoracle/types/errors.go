@@ -24,4 +24,12 @@ var (
 	ErrParsingActionParam                  = sdkerrors.Register(ModuleName, 14, "Error parsing action params")
 	ErrVerifyingSignature                  = sdkerrors.Register(ModuleName, 15, "Error verify signature")
 	ErrMetadataNotExists                   = sdkerrors.Register(ModuleName, 16, "Metadata not exists")
+
+	ErrActionRequestNotFound                 = sdkerrors.Register(ModuleName, 17, "Action request not found")
+	ErrActionRequestNotPending               = sdkerrors.Register(ModuleName, 18, "Action request not pending")
+	ErrActionRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 19, "Action request confirmed already complete")
+	ErrMetaDataNotFound                      = sdkerrors.Register(ModuleName, 20, "Metadata not found")
+	ErrUnauthorizedCaller                    = sdkerrors.Register(ModuleName, 21, "Unauthorized caller")
+	ErrEmptyChangeList                       = sdkerrors.Register(ModuleName, 22, "There's no changes from action")
+	ErrRefIdAlreadyExists                    = sdkerrors.Register(ModuleName, 23, "RefId already exists")
 )
