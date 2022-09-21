@@ -51,6 +51,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		TokenId:         actionParam.TokenId,
 		RequiredConfirm: msg.RequiredConfirm,
 		Caller:          *signer,
+		ActionName:      actionParam.Action,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
