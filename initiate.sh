@@ -334,3 +334,15 @@ ignite scaffold message setNFTAttribute nft_schema_code attribute_value:NftAttri
     --response nft_schema_code,attribute_name,attribute_value \
     --no-simulation \
     --module nftmngr
+
+
+ignite scaffold list ActionRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message createActionRequest vm:string signature:Signature \
+    --desc "To create Action Request" \
+    --response request_id \
+    --no-simulation \
+    --module nftoracle
