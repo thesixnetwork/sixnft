@@ -31,10 +31,11 @@ export interface MsgCreateActionRequest {
   creator: string;
   vm: string;
   base64ActionSignature: string;
+  requiredConfirm: number;
 }
 
 export interface MsgCreateActionRequestResponse {
-  requestId: string;
+  id: number;
 }
 
 const baseMsgCreateMintRequest: object = {
@@ -441,6 +442,7 @@ const baseMsgCreateActionRequest: object = {
   creator: "",
   vm: "",
   base64ActionSignature: "",
+  requiredConfirm: 0,
 };
 
 export const MsgCreateActionRequest = {
@@ -456,6 +458,9 @@ export const MsgCreateActionRequest = {
     }
     if (message.base64ActionSignature !== "") {
       writer.uint32(26).string(message.base64ActionSignature);
+    }
+    if (message.requiredConfirm !== 0) {
+      writer.uint32(32).uint64(message.requiredConfirm);
     }
     return writer;
   },
@@ -475,6 +480,9 @@ export const MsgCreateActionRequest = {
           break;
         case 3:
           message.base64ActionSignature = reader.string();
+          break;
+        case 4:
+          message.requiredConfirm = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -504,6 +512,14 @@ export const MsgCreateActionRequest = {
     } else {
       message.base64ActionSignature = "";
     }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = Number(object.requiredConfirm);
+    } else {
+      message.requiredConfirm = 0;
+    }
     return message;
   },
 
@@ -513,6 +529,8 @@ export const MsgCreateActionRequest = {
     message.vm !== undefined && (obj.vm = message.vm);
     message.base64ActionSignature !== undefined &&
       (obj.base64ActionSignature = message.base64ActionSignature);
+    message.requiredConfirm !== undefined &&
+      (obj.requiredConfirm = message.requiredConfirm);
     return obj;
   },
 
@@ -538,19 +556,27 @@ export const MsgCreateActionRequest = {
     } else {
       message.base64ActionSignature = "";
     }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = object.requiredConfirm;
+    } else {
+      message.requiredConfirm = 0;
+    }
     return message;
   },
 };
 
-const baseMsgCreateActionRequestResponse: object = { requestId: "" };
+const baseMsgCreateActionRequestResponse: object = { id: 0 };
 
 export const MsgCreateActionRequestResponse = {
   encode(
     message: MsgCreateActionRequestResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.requestId !== "") {
-      writer.uint32(10).string(message.requestId);
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
@@ -568,7 +594,7 @@ export const MsgCreateActionRequestResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.requestId = reader.string();
+          message.id = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -582,17 +608,17 @@ export const MsgCreateActionRequestResponse = {
     const message = {
       ...baseMsgCreateActionRequestResponse,
     } as MsgCreateActionRequestResponse;
-    if (object.requestId !== undefined && object.requestId !== null) {
-      message.requestId = String(object.requestId);
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
     } else {
-      message.requestId = "";
+      message.id = 0;
     }
     return message;
   },
 
   toJSON(message: MsgCreateActionRequestResponse): unknown {
     const obj: any = {};
-    message.requestId !== undefined && (obj.requestId = message.requestId);
+    message.id !== undefined && (obj.id = message.id);
     return obj;
   },
 
@@ -602,10 +628,10 @@ export const MsgCreateActionRequestResponse = {
     const message = {
       ...baseMsgCreateActionRequestResponse,
     } as MsgCreateActionRequestResponse;
-    if (object.requestId !== undefined && object.requestId !== null) {
-      message.requestId = object.requestId;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
     } else {
-      message.requestId = "";
+      message.id = 0;
     }
     return message;
   },

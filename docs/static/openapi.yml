@@ -33937,6 +33937,8 @@ paths:
                 properties:
                   mint_request_active_duration:
                     type: string
+                  action_request_active_duration:
+                    type: string
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -57377,8 +57379,9 @@ definitions:
   sixnft.nftoracle.MsgCreateActionRequestResponse:
     type: object
     properties:
-      requestId:
+      id:
         type: string
+        format: uint64
   sixnft.nftoracle.MsgCreateMintRequestResponse:
     type: object
     properties:
@@ -57418,6 +57421,8 @@ definitions:
     type: object
     properties:
       mint_request_active_duration:
+        type: string
+      action_request_active_duration:
         type: string
     description: Params defines the parameters for the module.
   sixnft.nftoracle.QueryAllActionRequestResponse:
@@ -57780,6 +57785,8 @@ definitions:
         type: object
         properties:
           mint_request_active_duration:
+            type: string
+          action_request_active_duration:
             type: string
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   sixnft.nftoracle.RequestStatus:

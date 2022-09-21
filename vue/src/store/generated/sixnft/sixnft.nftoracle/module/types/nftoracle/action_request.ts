@@ -11,6 +11,13 @@ import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "sixnft.nftoracle";
 
+export interface ActionParam {
+  nft_schema_code: string;
+  token_id: string;
+  action: string;
+  expired_at: Date | undefined;
+}
+
 export interface ActionRequest {
   id: number;
   nft_schema_code: string;
@@ -31,6 +38,132 @@ export interface ActionRequest_ConfirmersEntry {
   key: string;
   value: boolean;
 }
+
+const baseActionParam: object = {
+  nft_schema_code: "",
+  token_id: "",
+  action: "",
+};
+
+export const ActionParam = {
+  encode(message: ActionParam, writer: Writer = Writer.create()): Writer {
+    if (message.nft_schema_code !== "") {
+      writer.uint32(10).string(message.nft_schema_code);
+    }
+    if (message.token_id !== "") {
+      writer.uint32(18).string(message.token_id);
+    }
+    if (message.action !== "") {
+      writer.uint32(26).string(message.action);
+    }
+    if (message.expired_at !== undefined) {
+      Timestamp.encode(
+        toTimestamp(message.expired_at),
+        writer.uint32(82).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ActionParam {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseActionParam } as ActionParam;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nft_schema_code = reader.string();
+          break;
+        case 2:
+          message.token_id = reader.string();
+          break;
+        case 3:
+          message.action = reader.string();
+          break;
+        case 10:
+          message.expired_at = fromTimestamp(
+            Timestamp.decode(reader, reader.uint32())
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ActionParam {
+    const message = { ...baseActionParam } as ActionParam;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = String(object.nft_schema_code);
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = String(object.token_id);
+    } else {
+      message.token_id = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
+    } else {
+      message.action = "";
+    }
+    if (object.expired_at !== undefined && object.expired_at !== null) {
+      message.expired_at = fromJsonTimestamp(object.expired_at);
+    } else {
+      message.expired_at = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: ActionParam): unknown {
+    const obj: any = {};
+    message.nft_schema_code !== undefined &&
+      (obj.nft_schema_code = message.nft_schema_code);
+    message.token_id !== undefined && (obj.token_id = message.token_id);
+    message.action !== undefined && (obj.action = message.action);
+    message.expired_at !== undefined &&
+      (obj.expired_at =
+        message.expired_at !== undefined
+          ? message.expired_at.toISOString()
+          : null);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<ActionParam>): ActionParam {
+    const message = { ...baseActionParam } as ActionParam;
+    if (
+      object.nft_schema_code !== undefined &&
+      object.nft_schema_code !== null
+    ) {
+      message.nft_schema_code = object.nft_schema_code;
+    } else {
+      message.nft_schema_code = "";
+    }
+    if (object.token_id !== undefined && object.token_id !== null) {
+      message.token_id = object.token_id;
+    } else {
+      message.token_id = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
+    } else {
+      message.action = "";
+    }
+    if (object.expired_at !== undefined && object.expired_at !== null) {
+      message.expired_at = object.expired_at;
+    } else {
+      message.expired_at = undefined;
+    }
+    return message;
+  },
+};
 
 const baseActionRequest: object = {
   id: 0,

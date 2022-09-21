@@ -3,7 +3,6 @@ package sixnft.nftoracle;
 option go_package = "sixnft/x/nftoracle/types";
 
 message ActionSignature {
-    string signer = 1;
-    string signature = 2;
-    string message = 3;
+    string signature = 1;
+    string message = 2;
 }

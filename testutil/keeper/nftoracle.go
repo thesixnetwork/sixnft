@@ -102,7 +102,7 @@ func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())
 
 	// Initialize params
-	k.SetParams(ctx, types.DefaultParams())
+	// k.SetParams(ctx, types.DefaultParams())
 
 	return k, ctx
 }

@@ -4,23 +4,19 @@ import { Writer, Reader } from "protobufjs/minimal";
 export const protobufPackage = "sixnft.nftoracle";
 
 export interface ActionSignature {
-  signer: string;
   signature: string;
   message: string;
 }
 
-const baseActionSignature: object = { signer: "", signature: "", message: "" };
+const baseActionSignature: object = { signature: "", message: "" };
 
 export const ActionSignature = {
   encode(message: ActionSignature, writer: Writer = Writer.create()): Writer {
-    if (message.signer !== "") {
-      writer.uint32(10).string(message.signer);
-    }
     if (message.signature !== "") {
-      writer.uint32(18).string(message.signature);
+      writer.uint32(10).string(message.signature);
     }
     if (message.message !== "") {
-      writer.uint32(26).string(message.message);
+      writer.uint32(18).string(message.message);
     }
     return writer;
   },
@@ -33,12 +29,9 @@ export const ActionSignature = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.signer = reader.string();
-          break;
-        case 2:
           message.signature = reader.string();
           break;
-        case 3:
+        case 2:
           message.message = reader.string();
           break;
         default:
@@ -51,11 +44,6 @@ export const ActionSignature = {
 
   fromJSON(object: any): ActionSignature {
     const message = { ...baseActionSignature } as ActionSignature;
-    if (object.signer !== undefined && object.signer !== null) {
-      message.signer = String(object.signer);
-    } else {
-      message.signer = "";
-    }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = String(object.signature);
     } else {
@@ -71,7 +59,6 @@ export const ActionSignature = {
 
   toJSON(message: ActionSignature): unknown {
     const obj: any = {};
-    message.signer !== undefined && (obj.signer = message.signer);
     message.signature !== undefined && (obj.signature = message.signature);
     message.message !== undefined && (obj.message = message.message);
     return obj;
@@ -79,11 +66,6 @@ export const ActionSignature = {
 
   fromPartial(object: DeepPartial<ActionSignature>): ActionSignature {
     const message = { ...baseActionSignature } as ActionSignature;
-    if (object.signer !== undefined && object.signer !== null) {
-      message.signer = object.signer;
-    } else {
-      message.signer = "";
-    }
     if (object.signature !== undefined && object.signature !== null) {
       message.signature = object.signature;
     } else {

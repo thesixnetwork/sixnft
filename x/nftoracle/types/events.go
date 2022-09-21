@@ -11,4 +11,10 @@ const (
 	AttributeKeyMintRequestStatus = "status"
 
 	EventTypeMintRequestConfirmed = "mint_request_confirmed"
+
+	EventTypeActionRequestCreated = "action_request_created"
+	AttributeKeyActionRequestID   = "action_request_id"
+
+	EventTypeActionRequest          = "action_request"
+	AttributeKeyActionRequestStatus = "status"
 )

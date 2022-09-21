@@ -21,6 +21,7 @@ type (
 
 		nftmngrKeeper types.NftmngrKeep
 		adminKeeper   types.AdminKeeper
+		CDC           codec.BinaryCodec
 	}
 )
 
@@ -45,6 +46,7 @@ func NewKeeper(
 		paramstore:    ps,
 		nftmngrKeeper: nftmngrKeeper,
 		adminKeeper:   adminKeeper,
+		CDC:           cdc,
 	}
 }
 

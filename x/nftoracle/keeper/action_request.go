@@ -2,10 +2,17 @@ package keeper
 
 import (
 	"encoding/binary"
+	"fmt"
+	"time"
+
+	"sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/nftoracle/types"
+)
+
+var (
+	ActiveActionRequestQueuePrefix = []byte{0x02}
 )
 
 // GetActionRequestCount get the total number of actionRequest
@@ -103,4 +110,48 @@ func GetActionRequestIDBytes(id uint64) []byte {
 // GetActionRequestIDFromBytes returns ID in uint64 format from a byte array
 func GetActionRequestIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
+}
+
+func (k Keeper) InsertActiveActionRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	bz := GetActionRequestIDBytes(requestID)
+	store.Set(ActiveActionRequestQueueKey(requestID, endTime), bz)
+}
+
+func (k Keeper) RemoveFromActiveActionRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	store.Delete(ActiveActionRequestQueueKey(requestID, endTime))
+}
+
+func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.Time, cb func(ActionRequest types.ActionRequest) (stop bool)) {
+	iterator := k.ActiveActionRequestQueueIterator(ctx, endTime)
+
+	defer iterator.Close()
+	for ; iterator.Valid(); iterator.Next() {
+		requestID, _ := SplitActiveActionRequestQueueKey(iterator.Key())
+		ActionRequest, found := k.GetActionRequest(ctx, requestID)
+		if !found {
+			panic(fmt.Sprintf("ActionRequest %d does not exist", requestID))
+		}
+
+		if cb(ActionRequest) {
+			break
+		}
+	}
+}
+
+func (k Keeper) ActiveActionRequestQueueIterator(ctx sdk.Context, endTime time.Time) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return store.Iterator(ActiveActionRequestQueuePrefix, sdk.PrefixEndBytes(ActiveActionRequestByTimeKey(endTime)))
+}
+
+func ActiveActionRequestQueueKey(requestID uint64, endTime time.Time) []byte {
+	return append(ActiveActionRequestByTimeKey(endTime), GetActionRequestIDBytes(requestID)...)
+}
+func ActiveActionRequestByTimeKey(endTime time.Time) []byte {
+	return append(ActiveActionRequestQueuePrefix, sdk.FormatTimeBytes(endTime)...)
+}
+
+func SplitActiveActionRequestQueueKey(key []byte) (requestID uint64, endTime time.Time) {
+	return splitKeyWithTime(key)
 }

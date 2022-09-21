@@ -23,4 +23,5 @@ var (
 	ErrParsingActionSignature              = sdkerrors.Register(ModuleName, 13, "Error parsing action signature")
 	ErrParsingActionParam                  = sdkerrors.Register(ModuleName, 14, "Error parsing action params")
 	ErrVerifyingSignature                  = sdkerrors.Register(ModuleName, 15, "Error verify signature")
+	ErrMetadataNotExists                   = sdkerrors.Register(ModuleName, 16, "Metadata not exists")
 )
