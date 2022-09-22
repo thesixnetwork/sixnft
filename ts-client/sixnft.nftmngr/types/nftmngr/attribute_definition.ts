@@ -26,7 +26,7 @@ export interface AttributeDefinition {
   displayOption: DisplayOption | undefined;
   defaultMintValue: DefaultMintValue | undefined;
   hiddenToMarketplace: boolean;
-  id: number;
+  attributeId: number;
 }
 
 const baseDefaultMintValue: object = {};
@@ -217,7 +217,7 @@ const baseAttributeDefinition: object = {
   required: false,
   displayValueField: "",
   hiddenToMarketplace: false,
-  id: 0,
+  attributeId: 0,
 };
 
 export const AttributeDefinition = {
@@ -252,8 +252,8 @@ export const AttributeDefinition = {
     if (message.hiddenToMarketplace === true) {
       writer.uint32(56).bool(message.hiddenToMarketplace);
     }
-    if (message.id !== 0) {
-      writer.uint32(64).uint64(message.id);
+    if (message.attributeId !== 0) {
+      writer.uint32(64).uint64(message.attributeId);
     }
     return writer;
   },
@@ -290,7 +290,7 @@ export const AttributeDefinition = {
           message.hiddenToMarketplace = reader.bool();
           break;
         case 8:
-          message.id = longToNumber(reader.uint64() as Long);
+          message.attributeId = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -348,10 +348,10 @@ export const AttributeDefinition = {
     } else {
       message.hiddenToMarketplace = false;
     }
-    if (object.id !== undefined && object.id !== null) {
-      message.id = Number(object.id);
+    if (object.attributeId !== undefined && object.attributeId !== null) {
+      message.attributeId = Number(object.attributeId);
     } else {
-      message.id = 0;
+      message.attributeId = 0;
     }
     return message;
   },
@@ -373,7 +373,8 @@ export const AttributeDefinition = {
         : undefined);
     message.hiddenToMarketplace !== undefined &&
       (obj.hiddenToMarketplace = message.hiddenToMarketplace);
-    message.id !== undefined && (obj.id = message.id);
+    message.attributeId !== undefined &&
+      (obj.attributeId = message.attributeId);
     return obj;
   },
 
@@ -425,10 +426,10 @@ export const AttributeDefinition = {
     } else {
       message.hiddenToMarketplace = false;
     }
-    if (object.id !== undefined && object.id !== null) {
-      message.id = object.id;
+    if (object.attributeId !== undefined && object.attributeId !== null) {
+      message.attributeId = object.attributeId;
     } else {
-      message.id = 0;
+      message.attributeId = 0;
     }
     return message;
   },
