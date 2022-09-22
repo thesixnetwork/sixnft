@@ -67,8 +67,17 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	var i uint64 = 0
 	for _, attriDef := range mapAttributeDefinition {
 		mapAttributeDefinition[attriDef.Name] = attriDef
+		attriDef.AttributeId = i
+		i ++
+		// isAttributeIdSet := IsAttributeIdSet(attriDef)
+		
+		// if !isAttributeIdSet {
+		// 	attriDef.Id = i
+		// 	i ++
+		// }
 	}
 	// Check for duplicate origin attributes
 	duplicated, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
@@ -103,6 +112,9 @@ func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
+	// validate if attribute id is set
+	
+
 	return true, nil
 }
 

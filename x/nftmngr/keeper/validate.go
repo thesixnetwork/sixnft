@@ -3,6 +3,7 @@ package keeper
 import (
 	"fmt"
 	"sixnft/x/nftmngr/types"
+	"strconv"
 )
 
 func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.AttributeDefinition {
@@ -139,4 +140,12 @@ func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 		return ok, "float"
 	}
 	return false, "default"
+}
+
+//To verfiy if the attribute id is set
+func IsAttributeIdSet(attribute *types.AttributeDefinition) bool {
+	if strconv.FormatUint(attribute.GetAttributeId(),10) != "" || strconv.FormatUint(attribute.GetAttributeId(),10) != " "{
+		return false
+	}
+	return true
 }

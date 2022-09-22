@@ -31683,6 +31683,9 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              id:
+                                type: string
+                                format: uint64
                         uri_retrieval_method:
                           type: string
                           enum:
@@ -31754,6 +31757,9 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              id:
+                                type: string
+                                format: uint64
                         token_attributes:
                           type: array
                           items:
@@ -31811,6 +31817,9 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              id:
+                                type: string
+                                format: uint64
                         actions:
                           type: array
                           items:
@@ -32217,6 +32226,9 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
+                            id:
+                              type: string
+                              format: uint64
                       uri_retrieval_method:
                         type: string
                         enum:
@@ -32288,6 +32300,9 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
+                            id:
+                              type: string
+                              format: uint64
                       token_attributes:
                         type: array
                         items:
@@ -32345,6 +32360,9 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
+                            id:
+                              type: string
+                              format: uint64
                       actions:
                         type: array
                         items:
@@ -54912,6 +54930,9 @@ definitions:
                 format: double
       hidden_to_marketplace:
         type: boolean
+      id:
+        type: string
+        format: uint64
   sixnft.nftmngr.AttributeOverriding:
     type: string
     enum:
@@ -55043,6 +55064,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           token_attributes:
             type: array
             items:
@@ -55100,6 +55124,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           actions:
             type: array
             items:
@@ -55224,6 +55251,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           token_attributes:
             type: array
             items:
@@ -55281,6 +55311,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           actions:
             type: array
             items:
@@ -55405,6 +55438,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           token_attributes:
             type: array
             items:
@@ -55462,6 +55498,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           actions:
             type: array
             items:
@@ -55625,6 +55664,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           uri_retrieval_method:
             type: string
             enum:
@@ -55696,6 +55738,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           token_attributes:
             type: array
             items:
@@ -55753,6 +55798,9 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
+                id:
+                  type: string
+                  format: uint64
           actions:
             type: array
             items:
@@ -55980,6 +56028,9 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
+            id:
+              type: string
+              format: uint64
       token_attributes:
         type: array
         items:
@@ -56037,6 +56088,9 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
+            id:
+              type: string
+              format: uint64
       actions:
         type: array
         items:
@@ -56180,6 +56234,9 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
+            id:
+              type: string
+              format: uint64
       uri_retrieval_method:
         type: string
         enum:
@@ -56326,6 +56383,9 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
+                      id:
+                        type: string
+                        format: uint64
                 uri_retrieval_method:
                   type: string
                   enum:
@@ -56397,6 +56457,9 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
+                      id:
+                        type: string
+                        format: uint64
                 token_attributes:
                   type: array
                   items:
@@ -56454,6 +56517,9 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
+                      id:
+                        type: string
+                        format: uint64
                 actions:
                   type: array
                   items:
@@ -56777,6 +56843,9 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
+                    id:
+                      type: string
+                      format: uint64
               uri_retrieval_method:
                 type: string
                 enum:
@@ -56848,6 +56917,9 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
+                    id:
+                      type: string
+                      format: uint64
               token_attributes:
                 type: array
                 items:
@@ -56905,6 +56977,9 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
+                    id:
+                      type: string
+                      format: uint64
               actions:
                 type: array
                 items:
