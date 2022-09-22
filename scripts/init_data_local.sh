@@ -4,7 +4,7 @@ grantOracle()
     sixnftd tx admin grant-permission oracle $1 --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
 }
 
-BASE64_SCHEMA=`cat expo-nft-schema.json | base64 | tr -d '\n'`
+BASE64_SCHEMA=`cat nft-schema.json | base64 | tr -d '\n'`
 
 sixnftd tx nftmngr create-nft-schema --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC \
     ${BASE64_SCHEMA}
