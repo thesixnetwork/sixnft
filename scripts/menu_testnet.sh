@@ -50,7 +50,7 @@ case $choice in
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
-        sixnftd tx nftmngr perform-action-by-admin ${schema_code} ${token_id} ${action} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
+        sixnftd tx nftmngr perform-action-by-admin ${schema_code} ${token_id} ${action} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node http://sixnft.fivenet.sixprotocol.net:26657
         ;;
     5) echo "Set NFT Attribute"
         read -p "Enter Schema Code: " schema_code 
@@ -96,7 +96,7 @@ case $choice in
 
         echo "BASE64_ATTR: ${BASE64_ATTR}"
 
-        sixnftd tx nftmngr set-nft-attribute ${schema_code} ${BASE64_ATTR} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
+        sixnftd tx nftmngr set-nft-attribute ${schema_code} ${BASE64_ATTR} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node http://sixnft.fivenet.sixprotocol.net:26657
         ;;
     6) echo "Oracle - Create Mint Request"
         read -p "Enter Schema Code: " schema_code 
@@ -105,7 +105,7 @@ case $choice in
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
-        sixnftd tx nftoracle create-mint-request ${schema_code} ${token_id} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
+        sixnftd tx nftoracle create-mint-request ${schema_code} ${token_id} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node http://sixnft.fivenet.sixprotocol.net:26657
         ;;
     7) echo "Oracle - Get Mint Request"
         read -p "Mint Request ID: " mint_request_id 
@@ -116,7 +116,7 @@ case $choice in
         read -p "Oracle : " oracle_key_name
         BASE64_ORIGINDATA=`cat nft-origin-data.json | base64 | tr -d '\n'`
 
-        sixnftd tx nftoracle submit-mint-response ${mint_request_id} ${BASE64_ORIGINDATA} --from ${oracle_key_name} --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
+        sixnftd tx nftoracle submit-mint-response ${mint_request_id} ${BASE64_ORIGINDATA} --from ${oracle_key_name} --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node http://sixnft.fivenet.sixprotocol.net:26657
         ;;
     *) echo "Invalid choice"
        ;;

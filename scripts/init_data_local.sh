@@ -1,12 +1,12 @@
 grantOracle()
 {
     echo "Grant 'oracle' to $1"
-    sixnftd tx admin grant-permission oracle $1 --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC
+    sixnftd tx admin grant-permission oracle $1 --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
 }
 
 BASE64_SCHEMA=`cat nft-schema.json | base64 | tr -d '\n'`
 
-sixnftd tx nftmngr create-nft-schema --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y --node $DATACHAIN_RPC \
+sixnftd tx nftmngr create-nft-schema --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
     ${BASE64_SCHEMA}
 
 # grantOracle 6nft1clup6q6ucfdp4tg2r6zv82eu2m8xdegsjg3sk7
