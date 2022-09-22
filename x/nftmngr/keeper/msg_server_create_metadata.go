@@ -78,6 +78,14 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	// Merge Origin Attributes and Onchain Attributes together
+	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	mergedMap := CreateAttrDefMap(mergedAttributes)
+	// Check if attributes exist in schema
+	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)
+	if !attributesExistsInSchema {
+		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
+	}
 	// Validate required attributes
 	validated, requiredAttributeName := ValidateRequiredAttributes(schema.OnchainData.TokenAttributes, CreateNftAttrValueMap(data.OnchainAttributes))
 	if !validated {
@@ -98,9 +106,6 @@ func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s", err))
 	}
-	// Merge Origin Attributes and Onchain Attributes together
-	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	mergedMap := CreateAttrDefMap(mergedAttributes)
 	// Validate Onchain Attributes Exist in Schema
 	hasSameType, err = HasSameTypeAsSchema(mergedMap, data.OnchainAttributes)
 	if !hasSameType {
