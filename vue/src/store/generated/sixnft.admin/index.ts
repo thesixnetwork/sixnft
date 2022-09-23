@@ -163,32 +163,6 @@ export default {
 		},
 		
 		
-		async sendMsgMint({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.SixnftAdmin.tx.sendMsgMint({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgMint:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgMint:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgRevokePermission({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.SixnftAdmin.tx.sendMsgRevokePermission({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgRevokePermission:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgRevokePermission:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgBurn({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -215,33 +189,33 @@ export default {
 				}
 			}
 		},
-		
-		async MsgMint({ rootGetters }, { value }) {
+		async sendMsgMint({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.SixnftAdmin.tx.msgMint({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.SixnftAdmin.tx.sendMsgMint({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgMint:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgMint:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgMint:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
-		async MsgRevokePermission({ rootGetters }, { value }) {
+		async sendMsgRevokePermission({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.SixnftAdmin.tx.msgRevokePermission({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.SixnftAdmin.tx.sendMsgRevokePermission({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgRevokePermission:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgRevokePermission:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgRevokePermission:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgBurn({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -265,6 +239,32 @@ export default {
 					throw new Error('TxClient:MsgGrantPermission:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgGrantPermission:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgMint({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.SixnftAdmin.tx.msgMint({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgMint:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgMint:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgRevokePermission({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.SixnftAdmin.tx.msgRevokePermission({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgRevokePermission:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgRevokePermission:Create Could not create message: ' + e.message)
 				}
 			}
 		},
