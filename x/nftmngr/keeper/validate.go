@@ -140,3 +140,14 @@ func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 	}
 	return false, "default"
 }
+
+// Check if NFT data attributes exists in schema
+func NFTDataAttributesExistInSchema(mapAttributes map[string]*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
+	// Check if dataAttributes exist in schema
+	for _, attriVal := range dataAttributes {
+		if _, ok := mapAttributes[attriVal.Name]; !ok {
+			return false, attriVal.Name
+		}
+	}
+	return true, ""
+}

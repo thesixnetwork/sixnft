@@ -188,12 +188,24 @@
                 },
                 "data_type": "boolean",
                 "required": true,
-                "hidden_to_marketplace": true
+                "display_value_field": "value",
+                "hidden_to_marketplace": true,
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                }
             },
             {
                 "name": "first_discount_used",
                 "data_type": "boolean",
                 "required": true,
+                "display_value_field": "value",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
                 "hidden_to_marketplace": true,
                 "default_mint_value": {
                     "boolean_attribute_value": {
@@ -253,6 +265,11 @@
                     }
                 },
                 "required": true,
+                "default_mint_value": {
+                    "number_attribute_value": {
+                        "value": 10
+                    }
+                },
                 "display_value_field": "value",
                 "display_option": {
                     "opensea": {

@@ -453,6 +453,16 @@ func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error)
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := DataCreateAttrDefMap(schema.OriginData.OriginAttributes)
 
+	// Merge Origin Attributes and Onchain Attributes together
+	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	mergedMap := DataCreateAttrDefMap(mergedAttributes)
+
+	// Check if attributes exist in schema
+	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)
+	if !attributesExistsInSchema {
+		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
+	}
+
 	fmt.Println("1 NFTDataHasDuplicateNftAttributesValue")
 	// Validate Onchain Attributes Value
 	duplicated, err := NFTDataHasDuplicateNftAttributesValue(data.OnchainAttributes)
@@ -472,14 +482,13 @@ func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error)
 		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 	fmt.Println("4 HasSameTypeAsSchema")
-	// Merge Origin Attributes and Onchain Attributes together
-	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	mergedMap := DataCreateAttrDefMap(mergedAttributes)
+
 	// Validate Onchain Attributes Exist in Schema
 	hasSameType, err = HasSameTypeAsSchema(mergedMap, data.OnchainAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
+
 	return true, nil
 }
 
@@ -507,7 +516,6 @@ func NFTDataHasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue
 
 func HasSameTypeAsSchema(mapSchemaAttributes map[string]*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
 	// If attributes have same name, then they must have same type
-
 	for _, attriVal := range dataAttributes {
 		attDef := mapSchemaAttributes[attriVal.Name]
 		if attDef.DataType != GetTypeFromAttributeValue(attriVal) {
@@ -584,4 +592,16 @@ func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.Defau
 		return nil
 	}
 	return nftAttributeValue
+}
+
+// Check if NFT data attributes exists in schema
+func NFTDataAttributesExistInSchema(mapAttributes map[string]*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
+	// Check if dataAttributes exist in schema
+	for _, attriVal := range dataAttributes {
+		fmt.Println("NFTDataAttributesExistInSchema: ", attriVal.Name)
+		if _, ok := mapAttributes[attriVal.Name]; !ok {
+			return false, attriVal.Name
+		}
+	}
+	return true, ""
 }

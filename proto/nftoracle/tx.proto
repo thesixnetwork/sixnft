@@ -1,0 +1,61 @@
+syntax = "proto3";
+package sixnft.nftoracle;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "sixnft/x/nftoracle/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc CreateMintRequest(MsgCreateMintRequest) returns (MsgCreateMintRequestResponse);
+  rpc SubmitMintResponse(MsgSubmitMintResponse) returns (MsgSubmitMintResponseResponse);
+  rpc CreateActionRequest(MsgCreateActionRequest) returns (MsgCreateActionRequestResponse);
+  rpc SubmitActionResponse(MsgSubmitActionResponse) returns (MsgSubmitActionResponseResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgCreateMintRequest {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+  uint64 requiredConfirm = 4;
+}
+
+message MsgCreateMintRequestResponse {
+  uint64 id = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+}
+
+message MsgSubmitMintResponse {
+  string creator = 1;
+  uint64 mintRequestID = 2;
+  string base64NftData = 3;
+}
+
+message MsgSubmitMintResponseResponse {
+  string mintRequestID = 1;
+}
+
+message MsgCreateActionRequest {
+  string creator = 1;
+  string vm = 2;
+  string base64ActionSignature = 3;
+  uint64 requiredConfirm = 4;
+}
+
+message MsgCreateActionRequestResponse {
+  uint64 id = 1;
+}
+
+message MsgSubmitActionResponse {
+  string creator = 1;
+  uint64 actionRequestID = 2;
+  string base64NftData = 3;
+}
+
+message MsgSubmitActionResponseResponse {
+  string actionRequestID = 1;
+}
+
+// this line is used by starport scaffolding # proto/tx/message
