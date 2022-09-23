@@ -192,19 +192,6 @@ export default {
 		},
 		
 		
-		async sendMsgBindAddress({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const result = await client.SixnftEvmsupport.tx.sendMsgBindAddress({ value, fee: {amount: fee, gas: "200000"}, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgBindAddress:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgBindAddress:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgRemoveBinding({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -218,20 +205,20 @@ export default {
 				}
 			}
 		},
-		
-		async MsgBindAddress({ rootGetters }, { value }) {
+		async sendMsgBindAddress({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.SixnftEvmsupport.tx.msgBindAddress({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const result = await client.SixnftEvmsupport.tx.sendMsgBindAddress({ value, fee: {amount: fee, gas: "200000"}, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgBindAddress:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgBindAddress:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgBindAddress:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgRemoveBinding({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -242,6 +229,19 @@ export default {
 					throw new Error('TxClient:MsgRemoveBinding:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgRemoveBinding:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgBindAddress({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.SixnftEvmsupport.tx.msgBindAddress({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgBindAddress:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgBindAddress:Create Could not create message: ' + e.message)
 				}
 			}
 		},
