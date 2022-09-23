@@ -1,13 +1,13 @@
-import { Client, registry, MissingWalletError } from 'sixnft-client-ts'
+import { Client, registry, MissingWalletError } from 'thesixnetwork-sixnft-client-ts'
 
-import { ActionParam } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { ActionRequest } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { ActionSignature } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { MintRequest } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { Trait } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { Params } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { NftOriginData } from "sixnft-client-ts/sixnft.nftoracle/types"
-import { DataHash } from "sixnft-client-ts/sixnft.nftoracle/types"
+import { ActionParam } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { ActionRequest } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { ActionSignature } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { MintRequest } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { Trait } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { Params } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { NftOriginData } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
+import { DataHash } from "thesixnetwork-sixnft-client-ts/sixnft.nftoracle/types"
 
 
 export { ActionParam, ActionRequest, ActionSignature, MintRequest, Trait, Params, NftOriginData, DataHash };
@@ -266,16 +266,16 @@ export default {
 		},
 		
 		
-		async sendMsgCreateActionRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgSubmitActionResponse({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.SixnftNftoracle.tx.sendMsgCreateActionRequest({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.SixnftNftoracle.tx.sendMsgSubmitActionResponse({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateActionRequest:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgSubmitActionResponse:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -292,16 +292,16 @@ export default {
 				}
 			}
 		},
-		async sendMsgSubmitActionResponse({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgCreateActionRequest({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
-				const result = await client.SixnftNftoracle.tx.sendMsgSubmitActionResponse({ value, fee: {amount: fee, gas: "200000"}, memo })
+				const result = await client.SixnftNftoracle.tx.sendMsgCreateActionRequest({ value, fee: {amount: fee, gas: "200000"}, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgSubmitActionResponse:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgCreateActionRequest:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -319,16 +319,16 @@ export default {
 			}
 		},
 		
-		async MsgCreateActionRequest({ rootGetters }, { value }) {
+		async MsgSubmitActionResponse({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.SixnftNftoracle.tx.msgCreateActionRequest({value})
+				const msg = await client.SixnftNftoracle.tx.msgSubmitActionResponse({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateActionRequest:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSubmitActionResponse:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -345,16 +345,16 @@ export default {
 				}
 			}
 		},
-		async MsgSubmitActionResponse({ rootGetters }, { value }) {
+		async MsgCreateActionRequest({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.SixnftNftoracle.tx.msgSubmitActionResponse({value})
+				const msg = await client.SixnftNftoracle.tx.msgCreateActionRequest({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSubmitActionResponse:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateActionRequest:Create Could not create message: ' + e.message)
 				}
 			}
 		},

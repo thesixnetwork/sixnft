@@ -8,7 +8,7 @@
     "@starport/vuex": "^0.3.5",
     "buffer": "^6.0.3",
     "core-js": "^3.18.2",
-    "sixnft-client-ts": "file:../ts-client",
+    "thesixnetwork-sixnft-client-ts": "file:../ts-client",
     "vue": "^3.2.6",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.2"
