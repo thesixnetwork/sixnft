@@ -2,8 +2,9 @@ package nftoracle
 
 import (
 	"fmt"
-	"sixnft/x/nftoracle/keeper"
-	"sixnft/x/nftoracle/types"
+
+	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

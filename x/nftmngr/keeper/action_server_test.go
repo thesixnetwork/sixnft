@@ -2,9 +2,10 @@ package keeper_test
 
 import (
 	"fmt"
-	"sixnft/x/nftmngr/keeper"
-	"sixnft/x/nftmngr/types"
 	"testing"
+
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/gogo/protobuf/jsonpb"
 	"github.com/stretchr/testify/require"

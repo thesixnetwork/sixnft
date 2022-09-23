@@ -11,10 +11,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"sixnft/testutil/network"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftoracle/client/cli"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/testutil/network"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/client/cli"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func networkWithActionRequestObjects(t *testing.T, n int) (*network.Network, []types.ActionRequest) {

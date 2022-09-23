@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 	"strconv"
 
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"

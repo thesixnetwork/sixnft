@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func TestGenesisState_Validate(t *testing.T) {

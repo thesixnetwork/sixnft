@@ -22,7 +22,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/ante"
 
-	admintypes "sixnft/x/admin/types"
+	admintypes "github.com/thesixnetwork/sixnft/x/admin/types"
 
 	authrest "github.com/cosmos/cosmos-sdk/x/auth/client/rest"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
@@ -101,25 +101,26 @@ import (
 	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
 	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
 
-	"sixnft/docs"
-	adminmodule "sixnft/x/admin"
-	adminmodulekeeper "sixnft/x/admin/keeper"
-	adminmoduletypes "sixnft/x/admin/types"
-	evmsupportmodule "sixnft/x/evmsupport"
-	evmsupportmodulekeeper "sixnft/x/evmsupport/keeper"
-	evmsupportmoduletypes "sixnft/x/evmsupport/types"
-	nftmngrmodule "sixnft/x/nftmngr"
-	nftmngrmodulekeeper "sixnft/x/nftmngr/keeper"
-	nftmngrmoduletypes "sixnft/x/nftmngr/types"
-	nftoraclemodule "sixnft/x/nftoracle"
-	nftoraclemodulekeeper "sixnft/x/nftoracle/keeper"
-	nftoraclemoduletypes "sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/docs"
+
+	adminmodule "github.com/thesixnetwork/sixnft/x/admin"
+	adminmodulekeeper "github.com/thesixnetwork/sixnft/x/admin/keeper"
+	adminmoduletypes "github.com/thesixnetwork/sixnft/x/admin/types"
+	evmsupportmodule "github.com/thesixnetwork/sixnft/x/evmsupport"
+	evmsupportmodulekeeper "github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	evmsupportmoduletypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	nftmngrmodule "github.com/thesixnetwork/sixnft/x/nftmngr"
+	nftmngrmodulekeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	nftmngrmoduletypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	nftoraclemodule "github.com/thesixnetwork/sixnft/x/nftoracle"
+	nftoraclemodulekeeper "github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	nftoraclemoduletypes "github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
 const (
 	AccountAddressPrefix = "6nft"
-	Name                 = "sixnft"
+	Name                 = "github.com/thesixnetwork/sixnft"
 )
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals

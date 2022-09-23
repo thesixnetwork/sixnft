@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func CmdListMintRequest() *cobra.Command {

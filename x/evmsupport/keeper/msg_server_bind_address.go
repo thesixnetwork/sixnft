@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

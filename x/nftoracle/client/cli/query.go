@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module

@@ -1,8 +1,9 @@
 package keeper
 
 import (
-	"sixnft/x/nftoracle/types"
 	"time"
+
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

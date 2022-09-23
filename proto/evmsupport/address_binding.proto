@@ -1,7 +1,7 @@
 syntax = "proto3";
 package sixnft.evmsupport;
 
-option go_package = "sixnft/x/evmsupport/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 
 message AddressBinding {
   string ethAddress = 1; 

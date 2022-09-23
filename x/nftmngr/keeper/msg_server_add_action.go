@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -16,7 +16,7 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 
 	// structure for new action
 	var new_action types.Action
-	
+
 	//decode base64 string to bytes
 	input_action, err := base64.StdEncoding.DecodeString(msg.Base64NewAction)
 	if err != nil {
@@ -47,7 +47,6 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	// save schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-
 	return &types.MsgAddActionResponse{
 		Code:        msg.GetCode(),
 		Name:        schema.Name,
@@ -55,7 +54,7 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	}, nil
 }
 
-//validate Action data
+// validate Action data
 func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) error {
 	// Onchain Data Nft Actions Map
 	mapNftActions := CreateActionMap(schema.OnchainData.Actions)

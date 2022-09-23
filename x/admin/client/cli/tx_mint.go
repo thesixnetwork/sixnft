@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 var _ = strconv.Itoa(0)

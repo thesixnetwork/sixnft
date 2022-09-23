@@ -3,9 +3,10 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
+
 	// "strconv"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -49,7 +50,7 @@ func (k msgServer) AddTokenAttribute(goCtx context.Context, msg *types.MsgAddTok
 	}, nil
 }
 
-//validate AttributeDefinition data
+// validate AttributeDefinition data
 func (k Keeper) ValidateTokenAttribute(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
 	// Onchain Data Nft Attributes Map
 	mapNftOnchainAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)

@@ -4,7 +4,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	evmtypes "sixnft/x/evmsupport/types"
+	evmtypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 // AccountKeeper defines the expected account keeper used for simulations (noalias)

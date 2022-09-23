@@ -8,7 +8,7 @@ import "admin/params.proto";
 import "admin/authorization.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "sixnft/x/admin/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/admin/types";
 
 // Query defines the gRPC querier service.
 service Query {

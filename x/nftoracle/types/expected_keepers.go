@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	admintypes "sixnft/x/admin/types"
-	nftmngrtypes "sixnft/x/nftmngr/types"
+	admintypes "github.com/thesixnetwork/sixnft/x/admin/types"
+	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // AccountKeeper defines the expected account keeper used for simulations (noalias)

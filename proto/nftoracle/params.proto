@@ -4,7 +4,7 @@ package sixnft.nftoracle;
 import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";
 
-option go_package = "sixnft/x/nftoracle/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 // Params defines the parameters for the module.
 message Params {

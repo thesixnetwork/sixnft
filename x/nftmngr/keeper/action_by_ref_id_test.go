@@ -4,12 +4,13 @@ import (
 	"strconv"
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftmngr/keeper"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // Prevent strconv unused error

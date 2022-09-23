@@ -4,10 +4,11 @@ import (
 	"strconv"
 	"testing"
 
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/evmsupport/keeper"
-	"sixnft/x/evmsupport/types"
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"

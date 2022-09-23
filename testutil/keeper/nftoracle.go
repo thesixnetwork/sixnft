@@ -3,8 +3,8 @@ package keeper
 import (
 	"testing"
 
-	"sixnft/x/nftoracle/keeper"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -17,14 +17,14 @@ import (
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
 
-	nftmngrkeeper "sixnft/x/nftmngr/keeper"
-	nftmngrtypes "sixnft/x/nftmngr/types"
+	nftmngrkeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
-	adminKeeper "sixnft/x/admin/keeper"
-	admintypes "sixnft/x/admin/types"
+	adminKeeper "github.com/thesixnetwork/sixnft/x/admin/keeper"
+	admintypes "github.com/thesixnetwork/sixnft/x/admin/types"
 
-	evmsupportkeeper "sixnft/x/evmsupport/keeper"
-	evmsupporttypes "sixnft/x/evmsupport/types"
+	evmsupportkeeper "github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	evmsupporttypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {

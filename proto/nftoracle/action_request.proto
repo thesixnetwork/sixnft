@@ -4,7 +4,7 @@ import "nftoracle/opensea.proto";
 import "nftoracle/request.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
-option go_package = "sixnft/x/nftoracle/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 
 message ActionParam {

@@ -8,9 +8,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/admin/types"
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func TestAuthorizationQuery(t *testing.T) {

@@ -2,7 +2,8 @@ package keeper
 
 import (
 	"fmt"
-	"sixnft/x/nftmngr/types"
+
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.AttributeDefinition {

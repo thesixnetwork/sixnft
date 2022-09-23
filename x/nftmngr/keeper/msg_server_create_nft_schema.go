@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -55,7 +55,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 
 	}
-	_ = MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes,schema.OnchainData.NftAttributes,schema.OnchainData.TokenAttributes)
+	_ = MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
 
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
@@ -106,7 +106,6 @@ func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", err))
 	}
 	// validate if attribute id is set
-	
 
 	return true, nil
 }
@@ -125,8 +124,7 @@ func GetOrganizationFromSchemaCode(nftSchemaCode string) (bool, string) {
 	return true, organizationName
 }
 
-
-func MergeAllSchemaAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute[]*types.AttributeDefinition) []*types.AttributeDefinition {
+func MergeAllSchemaAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	var index uint64 = 0
 	for _, originAttribute := range originAttributes {

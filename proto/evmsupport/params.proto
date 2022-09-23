@@ -3,7 +3,7 @@ package sixnft.evmsupport;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "sixnft/x/evmsupport/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 
 // Params defines the parameters for the module.
 message Params {

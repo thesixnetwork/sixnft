@@ -9,9 +9,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"sixnft/testutil/sample"
-	adminsimulation "sixnft/x/admin/simulation"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/testutil/sample"
+	adminsimulation "github.com/thesixnetwork/sixnft/x/admin/simulation"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 // avoid unused import issue

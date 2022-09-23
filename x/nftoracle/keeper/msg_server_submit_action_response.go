@@ -9,9 +9,10 @@ import (
 	"errors"
 	"strconv"
 
-	nftmngrkeeper "sixnft/x/nftmngr/keeper"
-	nftmngrtypes "sixnft/x/nftmngr/types"
-	"sixnft/x/nftoracle/types"
+	nftmngrkeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
+
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"

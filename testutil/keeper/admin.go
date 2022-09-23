@@ -3,8 +3,8 @@ package keeper
 import (
 	"testing"
 
-	"sixnft/x/admin/keeper"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/keeper"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

@@ -2,8 +2,8 @@ package evmsupport
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/evmsupport/keeper"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

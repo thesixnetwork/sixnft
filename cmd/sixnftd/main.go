@@ -5,7 +5,7 @@ import (
 
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 	"github.com/ignite/cli/ignite/pkg/cosmoscmd"
-	"sixnft/app"
+	"github.com/thesixnetwork/sixnft/app"
 )
 
 func main() {

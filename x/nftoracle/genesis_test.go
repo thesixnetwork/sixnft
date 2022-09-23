@@ -3,11 +3,12 @@ package nftoracle_test
 import (
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftoracle"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftoracle"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func TestGenesis(t *testing.T) {

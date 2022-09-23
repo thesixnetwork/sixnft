@@ -6,9 +6,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"sixnft/x/nftmngr/types"
 )
 
 func (k Keeper) ActionByRefIdAll(c context.Context, req *types.QueryAllActionByRefIdRequest) (*types.QueryAllActionByRefIdResponse, error) {

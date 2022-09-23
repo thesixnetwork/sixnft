@@ -3,10 +3,11 @@ package keeper_test
 import (
 	"testing"
 
+	testkeeper "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-	testkeeper "sixnft/testutil/keeper"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func TestParamsQuery(t *testing.T) {

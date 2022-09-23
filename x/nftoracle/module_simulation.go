@@ -3,15 +3,16 @@ package nftoracle
 import (
 	"math/rand"
 
+	nftoraclesimulation "github.com/thesixnetwork/sixnft/x/nftoracle/simulation"
+
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"sixnft/testutil/sample"
-	nftoraclesimulation "sixnft/x/nftoracle/simulation"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/testutil/sample"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 // avoid unused import issue

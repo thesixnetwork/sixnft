@@ -16,9 +16,9 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"sixnft/x/evmsupport/client/cli"
-	"sixnft/x/evmsupport/keeper"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/client/cli"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 var (

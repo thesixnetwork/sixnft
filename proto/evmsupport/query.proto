@@ -8,7 +8,7 @@ import "evmsupport/params.proto";
 import "evmsupport/address_binding.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "sixnft/x/evmsupport/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 
 // Query defines the gRPC querier service.
 service Query {

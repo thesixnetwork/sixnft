@@ -3,10 +3,10 @@ package keeper_test
 import (
 	"fmt"
 	"testing"
-	
-	"sixnft/x/nftmngr/types"
+
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/jsonpb"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func TestCreateData(t *testing.T) {

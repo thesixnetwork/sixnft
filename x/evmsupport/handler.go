@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"sixnft/x/evmsupport/keeper"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 // NewHandler ...

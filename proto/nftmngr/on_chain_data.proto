@@ -5,7 +5,7 @@ import "nftmngr/action.proto";
 import "nftmngr/status.proto";
 import "nftmngr/on_off_switch.proto";
 import "nftmngr/nft_attribute_value.proto";
-option go_package = "sixnft/x/nftmngr/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 message OnChainData {
   bool reveal_required = 1;

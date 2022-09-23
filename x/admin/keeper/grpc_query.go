@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 var _ types.QueryServer = Keeper{}

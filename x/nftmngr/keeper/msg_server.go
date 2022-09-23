@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 type msgServer struct {

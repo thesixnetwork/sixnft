@@ -3,11 +3,12 @@ package evmsupport_test
 import (
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/evmsupport"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/evmsupport"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func TestGenesis(t *testing.T) {

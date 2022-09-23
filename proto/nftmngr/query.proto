@@ -11,7 +11,7 @@ import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "sixnft/x/nftmngr/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 // Query defines the gRPC querier service.
 service Query {
