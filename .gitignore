@@ -17,6 +17,6 @@
 
 .DS_Store
 .vscode/
-test
-vue
-ts-client
+test/*
+vue/*
+ts-client/*
