@@ -266,6 +266,19 @@ ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
     --no-simulation \
     --module nftmngr
 
+ignite scaffold module nftoracle
+
+ignite scaffold list MintRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message createMintRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --desc "To create Mint Request" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftoracle
 
 # To create token module
 ignite scaffold module admin
@@ -311,8 +324,31 @@ ignite scaffold map Organization owner \
     --no-simulation \
     --module nftmngr
 
+ignite scaffold message submitMintResponse mintRequestID:uint base64NftData:string \
+    --desc "To submit mint response" \
+    --response mintRequestID \
+    --no-simulation \
+    --module nftoracle
 ignite scaffold message setNFTAttribute nft_schema_code attribute_value:NftAttributeValue \
     --desc "To set NFT attribute" \
     --response nft_schema_code,attribute_name,attribute_value \
     --no-simulation \
     --module nftmngr
+
+
+ignite scaffold list ActionRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message createActionRequest vm:string base64_action_signature:string \
+    --desc "To create Action Request" \
+    --response request_id \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message submitActionResponse actionRequestID:uint base64NftData:string \
+    --desc "To submit action response" \
+    --response actionRequestID \
+    --no-simulation \
+    --module nftoracle

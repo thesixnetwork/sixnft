@@ -11,6 +11,10 @@ import { MsgAddTokenAttribute } from "./types/nftmngr/tx";
 import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
 import { MsgAddAction } from "./types/nftmngr/tx";
 import { MsgCreateMetadata } from "./types/nftmngr/tx";
+import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
+import { MsgCreateMetadata } from "./types/nftmngr/tx";
+import { MsgPerformActionByAdmin } from "./types/nftmngr/tx";
+import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 
 
 const types = [
@@ -21,7 +25,10 @@ const types = [
   ["/sixnft.nftmngr.MsgSetNFTAttribute", MsgSetNFTAttribute],
   ["/sixnft.nftmngr.MsgAddAction", MsgAddAction],
   ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
-  
+  ["/sixnft.nftmngr.MsgSetNFTAttribute", MsgSetNFTAttribute],
+  ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
+  ["/sixnft.nftmngr.MsgPerformActionByAdmin", MsgPerformActionByAdmin],
+  ["/sixnft.nftmngr.MsgCreateNFTSchema", MsgCreateNFTSchema],
 ];
 export const MissingWalletError = new Error("wallet is required");
 

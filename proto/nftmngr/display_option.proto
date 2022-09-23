@@ -5,7 +5,7 @@ option go_package = "sixnft/x/nftmngr/types";
 
 
 message DisplayOption {
-  string bool_true_value = 1;
+  string bool_true_value = 1 ;
   string bool_false_value = 2;
-  OpenseaDisplayOption opensea = 3;
+  OpenseaDisplayOption opensea = 3 ;
 }
