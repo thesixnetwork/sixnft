@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 var (

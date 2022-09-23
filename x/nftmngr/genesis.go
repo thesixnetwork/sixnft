@@ -2,8 +2,8 @@ package nftmngr
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/nftmngr/keeper"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

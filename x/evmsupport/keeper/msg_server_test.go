@@ -4,10 +4,11 @@ import (
 	"context"
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/x/evmsupport/keeper"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {

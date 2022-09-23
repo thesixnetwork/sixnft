@@ -1,7 +1,7 @@
 syntax = "proto3";
 package sixnft.nftmngr;
 
-option go_package = "sixnft/x/nftmngr/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 message OpenseaDisplayOption {
   

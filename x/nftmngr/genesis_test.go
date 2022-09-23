@@ -3,11 +3,12 @@ package nftmngr_test
 import (
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftmngr"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftmngr"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func TestGenesis(t *testing.T) {

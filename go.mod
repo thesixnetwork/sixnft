@@ -1,4 +1,4 @@
-module sixnft
+module github.com/thesixnetwork/sixnft
 
 go 1.18
 

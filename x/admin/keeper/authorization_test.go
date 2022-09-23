@@ -6,10 +6,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/admin/keeper"
-	"sixnft/x/admin/types"
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/admin/keeper"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func createTestAuthorization(keeper *keeper.Keeper, ctx sdk.Context) types.Authorization {

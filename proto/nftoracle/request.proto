@@ -3,7 +3,7 @@ package sixnft.nftoracle;
 import "nftoracle/opensea.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
-option go_package = "sixnft/x/nftoracle/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 enum RequestStatus {
   PENDING = 0;

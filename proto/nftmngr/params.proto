@@ -3,7 +3,7 @@ package sixnft.nftmngr;
 
 import "gogoproto/gogo.proto";
 
-option go_package = "sixnft/x/nftmngr/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 // Params defines the parameters for the module.
 message Params {

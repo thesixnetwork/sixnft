@@ -3,12 +3,13 @@ package keeper_test
 import (
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftoracle/keeper"
-	"sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func createNMintRequest(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.MintRequest {

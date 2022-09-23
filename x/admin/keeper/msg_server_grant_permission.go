@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

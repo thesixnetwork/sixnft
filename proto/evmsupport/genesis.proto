@@ -6,7 +6,7 @@ import "evmsupport/params.proto";
 import "evmsupport/address_binding.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
-option go_package = "sixnft/x/evmsupport/types";
+option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 
 // GenesisState defines the evmsupport module's genesis state.
 message GenesisState {

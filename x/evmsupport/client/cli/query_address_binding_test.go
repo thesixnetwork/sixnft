@@ -12,10 +12,10 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"sixnft/testutil/network"
-	"sixnft/testutil/nullify"
-	"sixnft/x/evmsupport/client/cli"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/testutil/network"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/client/cli"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 // Prevent strconv unused error

@@ -3,9 +3,10 @@ package keeper_test
 import (
 	"testing"
 
+	testkeeper "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	"github.com/stretchr/testify/require"
-	testkeeper "sixnft/testutil/keeper"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func TestGetParams(t *testing.T) {

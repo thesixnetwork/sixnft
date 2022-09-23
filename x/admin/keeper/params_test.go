@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	testkeeper "sixnft/testutil/keeper"
-	"sixnft/x/admin/types"
+	testkeeper "github.com/thesixnetwork/sixnft/testutil/keeper"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func TestGetParams(t *testing.T) {

@@ -5,10 +5,11 @@ import (
 	"strconv"
 	"testing"
 
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftoracle/keeper"
-	"sixnft/x/nftoracle/types"
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"

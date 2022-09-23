@@ -3,9 +3,10 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
+
 	// "strconv"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -49,7 +50,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 
 }
 
-//validate AttributeDefinition data
+// validate AttributeDefinition data
 func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
 	// Onchain Data Nft Attributes Map
 	mapNftOnchainAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
@@ -65,7 +66,6 @@ func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition
 	if _, found := mapNFTOriginAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-
 
 	// // validate struct data
 	// if attribute.Name == "" {

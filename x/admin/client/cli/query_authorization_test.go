@@ -9,10 +9,10 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"google.golang.org/grpc/status"
 
-	"sixnft/testutil/network"
-	"sixnft/testutil/nullify"
-	"sixnft/x/admin/client/cli"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/testutil/network"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/admin/client/cli"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 func networkWithAuthorizationObjects(t *testing.T) (*network.Network, types.Authorization) {

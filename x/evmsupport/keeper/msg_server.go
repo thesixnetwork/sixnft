@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 type msgServer struct {

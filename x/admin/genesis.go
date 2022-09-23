@@ -2,8 +2,8 @@ package admin
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/admin/keeper"
-	"sixnft/x/admin/types"
+	"github.com/thesixnetwork/sixnft/x/admin/keeper"
+	"github.com/thesixnetwork/sixnft/x/admin/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

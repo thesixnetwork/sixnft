@@ -3,15 +3,16 @@ package evmsupport
 import (
 	"math/rand"
 
+	evmsupportsimulation "github.com/thesixnetwork/sixnft/x/evmsupport/simulation"
+
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"sixnft/testutil/sample"
-	evmsupportsimulation "sixnft/x/evmsupport/simulation"
-	"sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/testutil/sample"
+	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 // avoid unused import issue

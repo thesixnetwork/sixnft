@@ -5,7 +5,7 @@ import (
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
-	"sixnft/testutil/sample"
+	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
 func TestMsgRemoveBinding_ValidateBasic(t *testing.T) {
