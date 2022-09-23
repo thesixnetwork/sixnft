@@ -7,21 +7,25 @@ import { Api } from "./rest";
 import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
 import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 import { MsgCreateMetadata } from "./types/nftmngr/tx";
-import { MsgPerformActionByAdmin } from "./types/nftmngr/tx";
 import { MsgAddAction } from "./types/nftmngr/tx";
 import { MsgAddTokenAttribute } from "./types/nftmngr/tx";
 import { MsgAddAttribute } from "./types/nftmngr/tx";
+import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
+import { MsgCreateMetadata } from "./types/nftmngr/tx";
+import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 
 
 const types = [
   ["/sixnft.nftmngr.MsgSetNFTAttribute", MsgSetNFTAttribute],
   ["/sixnft.nftmngr.MsgCreateNFTSchema", MsgCreateNFTSchema],
   ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
-  ["/sixnft.nftmngr.MsgPerformActionByAdmin", MsgPerformActionByAdmin],
   ["/sixnft.nftmngr.MsgAddAction", MsgAddAction],
   ["/sixnft.nftmngr.MsgAddTokenAttribute", MsgAddTokenAttribute],
   ["/sixnft.nftmngr.MsgAddAttribute", MsgAddAttribute],
-  
+  ["/sixnft.nftmngr.MsgSetNFTAttribute", MsgSetNFTAttribute],
+  ["/sixnft.nftmngr.MsgCreateMetadata", MsgCreateMetadata],
+  ["/sixnft.nftmngr.MsgPerformActionByAdmin", MsgPerformActionByAdmin],
+  ["/sixnft.nftmngr.MsgCreateNFTSchema", MsgCreateNFTSchema],
 ];
 export const MissingWalletError = new Error("wallet is required");
 
