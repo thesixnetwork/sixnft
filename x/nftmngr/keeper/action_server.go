@@ -29,7 +29,7 @@ func ProcessAction(meta *types.Metadata, action *types.Action) (err error) {
 			case error:
 				err = x
 			default:
-				err = errors.New("Unknown panic")
+				err = errors.New("unknown panic")
 			}
 		}
 	}()

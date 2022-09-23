@@ -1,23 +1,13 @@
 package keeper_test
 
 import (
-	"context"
 	"fmt"
 	"testing"
-
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/x/nftmngr/keeper"
+	
 	"sixnft/x/nftmngr/types"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/gogo/protobuf/jsonpb"
 )
-
-func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {
-	k, ctx := keepertest.NftmngrKeeper(t)
-	return keeper.NewMsgServerImpl(*k), sdk.WrapSDKContext(ctx)
-}
 
 func TestCreateData(t *testing.T) {
 	fmt.Println("Start Test")
@@ -496,10 +486,10 @@ func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error)
 func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	for _, originAttribute := range originAttributes {
-		mergedAttributes = append(mergedAttributes, originAttribute)
+		mergedAttributes = append(append(mergedAttributes, originAttribute), onchainAttributes...)
 	}
 	for _, onchainAttribute := range onchainAttributes {
-		mergedAttributes = append(mergedAttributes, onchainAttribute)
+		mergedAttributes = append(append(mergedAttributes, onchainAttribute), originAttributes...)
 	}
 	return mergedAttributes
 }

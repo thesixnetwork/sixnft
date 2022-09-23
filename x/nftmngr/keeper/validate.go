@@ -3,7 +3,6 @@ package keeper
 import (
 	"fmt"
 	"sixnft/x/nftmngr/types"
-	"strconv"
 )
 
 func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.AttributeDefinition {
@@ -82,10 +81,10 @@ func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onch
 func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	for _, originAttribute := range originAttributes {
-		mergedAttributes = append(mergedAttributes, originAttribute)
+		mergedAttributes = append(append(mergedAttributes, originAttribute), onchainAttributes...)
 	}
 	for _, onchainAttribute := range onchainAttributes {
-		mergedAttributes = append(mergedAttributes, onchainAttribute)
+		mergedAttributes = append(append(mergedAttributes, onchainAttribute), originAttributes...)
 	}
 	return mergedAttributes
 }
@@ -140,12 +139,4 @@ func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 		return ok, "float"
 	}
 	return false, "default"
-}
-
-//To verfiy if the attribute id is set
-func IsAttributeIdSet(attribute *types.AttributeDefinition) bool {
-	if strconv.FormatUint(attribute.GetAttributeId(),10) != "" || strconv.FormatUint(attribute.GetAttributeId(),10) != " "{
-		return false
-	}
-	return true
 }

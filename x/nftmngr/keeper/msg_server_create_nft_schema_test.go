@@ -361,6 +361,10 @@ func TestCreateSchema(t *testing.T) {
 		return
 	}
 	valid, err := ValidateNFTSchema(&data)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	fmt.Println("Valid: ", valid)
 	// fmt.Println("DataOutput", data)
 
@@ -380,7 +384,7 @@ func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.A
 	attrDefMap := make(map[string]*types.AttributeDefinition)
 	for n, attrDef := range attrDefs {
 		attrDefMap[attrDef.Name] = attrDef
-		attrDefMap[attrDef.Name].AttributeId = uint64(n)
+		attrDefMap[attrDef.Name].Index = uint64(n)
 	}
 	fmt.Println(attrDefMap)
 	return attrDefMap

@@ -61,7 +61,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, data.NftSchemaCode)
 	}
 	// Set first mint complete as true
-	if schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] == false {
+	if !schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] {
 		schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] = true
 		k.Keeper.SetNFTSchema(ctx, schema)
 	}

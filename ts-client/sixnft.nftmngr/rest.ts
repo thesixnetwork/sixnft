@@ -41,7 +41,7 @@ export interface NftmngrAttributeDefinition {
   hidden_to_marketplace?: boolean;
 
   /** @format uint64 */
-  attribute_id?: string;
+  index?: string;
 }
 
 export enum NftmngrAttributeOverriding {

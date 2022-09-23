@@ -7,16 +7,16 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgMint } from "./types/admin/tx";
-import { MsgBurn } from "./types/admin/tx";
 import { MsgGrantPermission } from "./types/admin/tx";
+import { MsgBurn } from "./types/admin/tx";
+import { MsgMint } from "./types/admin/tx";
 import { MsgRevokePermission } from "./types/admin/tx";
 
 
-export { MsgMint, MsgBurn, MsgGrantPermission, MsgRevokePermission };
+export { MsgGrantPermission, MsgBurn, MsgMint, MsgRevokePermission };
 
-type sendMsgMintParams = {
-  value: MsgMint,
+type sendMsgGrantPermissionParams = {
+  value: MsgGrantPermission,
   fee?: StdFee,
   memo?: string
 };
@@ -27,8 +27,8 @@ type sendMsgBurnParams = {
   memo?: string
 };
 
-type sendMsgGrantPermissionParams = {
-  value: MsgGrantPermission,
+type sendMsgMintParams = {
+  value: MsgMint,
   fee?: StdFee,
   memo?: string
 };
@@ -40,16 +40,16 @@ type sendMsgRevokePermissionParams = {
 };
 
 
-type msgMintParams = {
-  value: MsgMint,
+type msgGrantPermissionParams = {
+  value: MsgGrantPermission,
 };
 
 type msgBurnParams = {
   value: MsgBurn,
 };
 
-type msgGrantPermissionParams = {
-  value: MsgGrantPermission,
+type msgMintParams = {
+  value: MsgMint,
 };
 
 type msgRevokePermissionParams = {
@@ -74,17 +74,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgMint({ value, fee, memo }: sendMsgMintParams): Promise<DeliverTxResponse> {
+		async sendMsgGrantPermission({ value, fee, memo }: sendMsgGrantPermissionParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgMint: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgGrantPermission: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgMint({ value: MsgMint.fromPartial(value) })
+				let msg = this.msgGrantPermission({ value: MsgGrantPermission.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgMint: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgGrantPermission: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -102,17 +102,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgGrantPermission({ value, fee, memo }: sendMsgGrantPermissionParams): Promise<DeliverTxResponse> {
+		async sendMsgMint({ value, fee, memo }: sendMsgMintParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgGrantPermission: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgMint: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgGrantPermission({ value: MsgGrantPermission.fromPartial(value) })
+				let msg = this.msgMint({ value: MsgMint.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgGrantPermission: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgMint: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -131,11 +131,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 		},
 		
 		
-		msgMint({ value }: msgMintParams): EncodeObject {
+		msgGrantPermission({ value }: msgGrantPermissionParams): EncodeObject {
 			try {
-				return { typeUrl: "/sixnft.admin.MsgMint", value: MsgMint.fromPartial( value ) }  
+				return { typeUrl: "/sixnft.admin.MsgGrantPermission", value: MsgGrantPermission.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgMint: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgGrantPermission: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -147,11 +147,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgGrantPermission({ value }: msgGrantPermissionParams): EncodeObject {
+		msgMint({ value }: msgMintParams): EncodeObject {
 			try {
-				return { typeUrl: "/sixnft.admin.MsgGrantPermission", value: MsgGrantPermission.fromPartial( value ) }  
+				return { typeUrl: "/sixnft.admin.MsgMint", value: MsgMint.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgGrantPermission: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgMint: Could not create message: ' + e.message)
 			}
 		},
 		

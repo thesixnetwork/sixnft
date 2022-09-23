@@ -7,17 +7,11 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgRemoveBinding } from "./types/evmsupport/tx";
 import { MsgBindAddress } from "./types/evmsupport/tx";
+import { MsgRemoveBinding } from "./types/evmsupport/tx";
 
 
-export { MsgRemoveBinding, MsgBindAddress };
-
-type sendMsgRemoveBindingParams = {
-  value: MsgRemoveBinding,
-  fee?: StdFee,
-  memo?: string
-};
+export { MsgBindAddress, MsgRemoveBinding };
 
 type sendMsgBindAddressParams = {
   value: MsgBindAddress,
@@ -25,13 +19,19 @@ type sendMsgBindAddressParams = {
   memo?: string
 };
 
-
-type msgRemoveBindingParams = {
+type sendMsgRemoveBindingParams = {
   value: MsgRemoveBinding,
+  fee?: StdFee,
+  memo?: string
 };
+
 
 type msgBindAddressParams = {
   value: MsgBindAddress,
+};
+
+type msgRemoveBindingParams = {
+  value: MsgRemoveBinding,
 };
 
 
@@ -52,20 +52,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgRemoveBinding({ value, fee, memo }: sendMsgRemoveBindingParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgRemoveBinding: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgRemoveBinding({ value: MsgRemoveBinding.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgRemoveBinding: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
 		async sendMsgBindAddress({ value, fee, memo }: sendMsgBindAddressParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgBindAddress: Unable to sign Tx. Signer is not present.')
@@ -80,20 +66,34 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgRemoveBinding({ value }: msgRemoveBindingParams): EncodeObject {
-			try {
-				return { typeUrl: "/sixnft.evmsupport.MsgRemoveBinding", value: MsgRemoveBinding.fromPartial( value ) }  
+		async sendMsgRemoveBinding({ value, fee, memo }: sendMsgRemoveBindingParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgRemoveBinding: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgRemoveBinding({ value: MsgRemoveBinding.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgRemoveBinding: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgRemoveBinding: Could not broadcast Tx: '+ e.message)
 			}
 		},
+		
 		
 		msgBindAddress({ value }: msgBindAddressParams): EncodeObject {
 			try {
 				return { typeUrl: "/sixnft.evmsupport.MsgBindAddress", value: MsgBindAddress.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgBindAddress: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgRemoveBinding({ value }: msgRemoveBindingParams): EncodeObject {
+			try {
+				return { typeUrl: "/sixnft.evmsupport.MsgRemoveBinding", value: MsgRemoveBinding.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgRemoveBinding: Could not create message: ' + e.message)
 			}
 		},
 		

@@ -31703,7 +31703,7 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
-                              attribute_id:
+                              index:
                                 type: string
                                 format: uint64
                         uri_retrieval_method:
@@ -31777,7 +31777,7 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
-                              attribute_id:
+                              index:
                                 type: string
                                 format: uint64
                         token_attributes:
@@ -31837,7 +31837,7 @@ paths:
                                         format: double
                               hidden_to_marketplace:
                                 type: boolean
-                              attribute_id:
+                              index:
                                 type: string
                                 format: uint64
                         actions:
@@ -32256,7 +32256,7 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
-                            attribute_id:
+                            index:
                               type: string
                               format: uint64
                       uri_retrieval_method:
@@ -32330,7 +32330,7 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
-                            attribute_id:
+                            index:
                               type: string
                               format: uint64
                       token_attributes:
@@ -32390,7 +32390,7 @@ paths:
                                       format: double
                             hidden_to_marketplace:
                               type: boolean
-                            attribute_id:
+                            index:
                               type: string
                               format: uint64
                       actions:
@@ -54970,7 +54970,7 @@ definitions:
                 format: double
       hidden_to_marketplace:
         type: boolean
-      attribute_id:
+      index:
         type: string
         format: uint64
   sixnft.nftmngr.AttributeOverriding:
@@ -55104,7 +55104,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           token_attributes:
@@ -55164,7 +55164,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           actions:
@@ -55291,7 +55291,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           token_attributes:
@@ -55351,7 +55351,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           actions:
@@ -55478,7 +55478,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           token_attributes:
@@ -55538,7 +55538,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           actions:
@@ -55704,7 +55704,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           uri_retrieval_method:
@@ -55778,7 +55778,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           token_attributes:
@@ -55838,7 +55838,7 @@ definitions:
                           format: double
                 hidden_to_marketplace:
                   type: boolean
-                attribute_id:
+                index:
                   type: string
                   format: uint64
           actions:
@@ -56068,7 +56068,7 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
-            attribute_id:
+            index:
               type: string
               format: uint64
       token_attributes:
@@ -56128,7 +56128,7 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
-            attribute_id:
+            index:
               type: string
               format: uint64
       actions:
@@ -56274,7 +56274,7 @@ definitions:
                       format: double
             hidden_to_marketplace:
               type: boolean
-            attribute_id:
+            index:
               type: string
               format: uint64
       uri_retrieval_method:
@@ -56423,7 +56423,7 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
-                      attribute_id:
+                      index:
                         type: string
                         format: uint64
                 uri_retrieval_method:
@@ -56497,7 +56497,7 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
-                      attribute_id:
+                      index:
                         type: string
                         format: uint64
                 token_attributes:
@@ -56557,7 +56557,7 @@ definitions:
                                 format: double
                       hidden_to_marketplace:
                         type: boolean
-                      attribute_id:
+                      index:
                         type: string
                         format: uint64
                 actions:
@@ -56883,7 +56883,7 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
-                    attribute_id:
+                    index:
                       type: string
                       format: uint64
               uri_retrieval_method:
@@ -56957,7 +56957,7 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
-                    attribute_id:
+                    index:
                       type: string
                       format: uint64
               token_attributes:
@@ -57017,7 +57017,7 @@ definitions:
                               format: double
                     hidden_to_marketplace:
                       type: boolean
-                    attribute_id:
+                    index:
                       type: string
                       format: uint64
               actions:

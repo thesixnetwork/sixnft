@@ -7,22 +7,16 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgCreateMetadata } from "./types/nftmngr/tx";
 import { MsgSetNFTAttribute } from "./types/nftmngr/tx";
 import { MsgPerformActionByAdmin } from "./types/nftmngr/tx";
 import { MsgAddAttribute } from "./types/nftmngr/tx";
-import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 import { MsgAddTokenAttribute } from "./types/nftmngr/tx";
 import { MsgAddAction } from "./types/nftmngr/tx";
+import { MsgCreateMetadata } from "./types/nftmngr/tx";
+import { MsgCreateNFTSchema } from "./types/nftmngr/tx";
 
 
-export { MsgCreateMetadata, MsgSetNFTAttribute, MsgPerformActionByAdmin, MsgAddAttribute, MsgCreateNFTSchema, MsgAddTokenAttribute, MsgAddAction };
-
-type sendMsgCreateMetadataParams = {
-  value: MsgCreateMetadata,
-  fee?: StdFee,
-  memo?: string
-};
+export { MsgSetNFTAttribute, MsgPerformActionByAdmin, MsgAddAttribute, MsgAddTokenAttribute, MsgAddAction, MsgCreateMetadata, MsgCreateNFTSchema };
 
 type sendMsgSetNFTAttributeParams = {
   value: MsgSetNFTAttribute,
@@ -42,12 +36,6 @@ type sendMsgAddAttributeParams = {
   memo?: string
 };
 
-type sendMsgCreateNFTSchemaParams = {
-  value: MsgCreateNFTSchema,
-  fee?: StdFee,
-  memo?: string
-};
-
 type sendMsgAddTokenAttributeParams = {
   value: MsgAddTokenAttribute,
   fee?: StdFee,
@@ -60,10 +48,18 @@ type sendMsgAddActionParams = {
   memo?: string
 };
 
-
-type msgCreateMetadataParams = {
+type sendMsgCreateMetadataParams = {
   value: MsgCreateMetadata,
+  fee?: StdFee,
+  memo?: string
 };
+
+type sendMsgCreateNFTSchemaParams = {
+  value: MsgCreateNFTSchema,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgSetNFTAttributeParams = {
   value: MsgSetNFTAttribute,
@@ -77,16 +73,20 @@ type msgAddAttributeParams = {
   value: MsgAddAttribute,
 };
 
-type msgCreateNFTSchemaParams = {
-  value: MsgCreateNFTSchema,
-};
-
 type msgAddTokenAttributeParams = {
   value: MsgAddTokenAttribute,
 };
 
 type msgAddActionParams = {
   value: MsgAddAction,
+};
+
+type msgCreateMetadataParams = {
+  value: MsgCreateMetadata,
+};
+
+type msgCreateNFTSchemaParams = {
+  value: MsgCreateNFTSchema,
 };
 
 
@@ -106,20 +106,6 @@ interface TxClientOptions {
 export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "http://localhost:26657", prefix: "cosmos" }) => {
 
   return {
-		
-		async sendMsgCreateMetadata({ value, fee, memo }: sendMsgCreateMetadataParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateMetadata: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateMetadata({ value: MsgCreateMetadata.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateMetadata: Could not broadcast Tx: '+ e.message)
-			}
-		},
 		
 		async sendMsgSetNFTAttribute({ value, fee, memo }: sendMsgSetNFTAttributeParams): Promise<DeliverTxResponse> {
 			if (!signer) {
@@ -163,20 +149,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgCreateNFTSchema({ value, fee, memo }: sendMsgCreateNFTSchemaParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateNFTSchema: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateNFTSchema({ value: MsgCreateNFTSchema.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateNFTSchema: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
 		async sendMsgAddTokenAttribute({ value, fee, memo }: sendMsgAddTokenAttributeParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgAddTokenAttribute: Unable to sign Tx. Signer is not present.')
@@ -205,14 +177,34 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgCreateMetadata({ value }: msgCreateMetadataParams): EncodeObject {
-			try {
-				return { typeUrl: "/sixnft.nftmngr.MsgCreateMetadata", value: MsgCreateMetadata.fromPartial( value ) }  
+		async sendMsgCreateMetadata({ value, fee, memo }: sendMsgCreateMetadataParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateMetadata: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateMetadata({ value: MsgCreateMetadata.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateMetadata: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgCreateMetadata: Could not broadcast Tx: '+ e.message)
 			}
 		},
+		
+		async sendMsgCreateNFTSchema({ value, fee, memo }: sendMsgCreateNFTSchemaParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgCreateNFTSchema: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgCreateNFTSchema({ value: MsgCreateNFTSchema.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgCreateNFTSchema: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		
 		msgSetNFTAttribute({ value }: msgSetNFTAttributeParams): EncodeObject {
 			try {
@@ -238,14 +230,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgCreateNFTSchema({ value }: msgCreateNFTSchemaParams): EncodeObject {
-			try {
-				return { typeUrl: "/sixnft.nftmngr.MsgCreateNFTSchema", value: MsgCreateNFTSchema.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateNFTSchema: Could not create message: ' + e.message)
-			}
-		},
-		
 		msgAddTokenAttribute({ value }: msgAddTokenAttributeParams): EncodeObject {
 			try {
 				return { typeUrl: "/sixnft.nftmngr.MsgAddTokenAttribute", value: MsgAddTokenAttribute.fromPartial( value ) }  
@@ -259,6 +243,22 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return { typeUrl: "/sixnft.nftmngr.MsgAddAction", value: MsgAddAction.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgAddAction: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgCreateMetadata({ value }: msgCreateMetadataParams): EncodeObject {
+			try {
+				return { typeUrl: "/sixnft.nftmngr.MsgCreateMetadata", value: MsgCreateMetadata.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateMetadata: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgCreateNFTSchema({ value }: msgCreateNFTSchemaParams): EncodeObject {
+			try {
+				return { typeUrl: "/sixnft.nftmngr.MsgCreateNFTSchema", value: MsgCreateNFTSchema.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgCreateNFTSchema: Could not create message: ' + e.message)
 			}
 		},
 		
