@@ -81,10 +81,10 @@ func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onch
 func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	for _, originAttribute := range originAttributes {
-		mergedAttributes = append(mergedAttributes, originAttribute)
+		mergedAttributes = append(append(mergedAttributes, originAttribute), onchainAttributes...)
 	}
 	for _, onchainAttribute := range onchainAttributes {
-		mergedAttributes = append(mergedAttributes, onchainAttribute)
+		mergedAttributes = append(append(mergedAttributes, onchainAttribute), originAttributes...)
 	}
 	return mergedAttributes
 }

@@ -181,6 +181,11 @@
         "token_attributes": [
             {
                 "name": "exclusive_party_access",
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
                 "data_type": "boolean",
                 "required": true,
                 "display_value_field": "value",
@@ -202,9 +207,14 @@
                     }
                 },
                 "hidden_to_marketplace": true,
+                "default_mint_value": {
+                    "boolean_attribute_value": {
+                        "value": false
+                    }
+                },
                 "display_option": {
                     "bool_true_value": "Yes",
-                    "bool_false_value": "_HIDDEN_",
+                    "bool_false_value": "No",
                     "opensea": {
                         "display_type": "boolean",
                         "trait_type": "First Discount Used"
@@ -249,6 +259,11 @@
             {
                 "name": "discount_amount",
                 "data_type": "number",
+                "default_mint_value": {
+                    "number_attribute_value": {
+                        "value": 0
+                    }
+                },
                 "required": true,
                 "default_mint_value": {
                     "number_attribute_value": {

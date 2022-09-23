@@ -53,7 +53,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 
 	// Add attributes from schema to metadata onchain attributes
 	for _, attribute := range schema.OnchainData.NftAttributesValue {
-		data.OnchainAttributes = append(data.OnchainAttributes, attribute)
+		data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
 	}
 	// Check if the data already exists
 	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
@@ -61,7 +61,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrMetadataAlreadyExists, data.NftSchemaCode)
 	}
 	// Set first mint complete as true
-	if schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] == false {
+	if !schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] {
 		schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] = true
 		k.Keeper.SetNFTSchema(ctx, schema)
 	}
