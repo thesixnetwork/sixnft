@@ -120,7 +120,7 @@ import (
 
 const (
 	AccountAddressPrefix = "6nft"
-	Name                 = "github.com/thesixnetwork/sixnft"
+	Name                 = "sixnft"
 )
 
 // this line is used by starport scaffolding # stargate/wasm/app/enabledProposals
