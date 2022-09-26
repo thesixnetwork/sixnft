@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
+	"strconv"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
@@ -64,14 +65,17 @@ func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) er
 	}
 
 	//validate action struct
-	if action.Name == "" {
+	if action.Name == "" || action.Name == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action name is empty")
 	}
-	if action.Desc == "" {
+	if action.Desc == "" || action.Desc == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action description is empty")
 	}
-	if action.When == "" {
+	if action.When == "" || action.When == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action type is empty")
+	}
+	if strconv.FormatBool(action.GetIsActive()) == "" || strconv.FormatBool(action.GetIsActive()) == " " {
+		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action is_active is empty")
 	}
 	//validate array of action.Then is not empty
 	if len(action.Then) == 0 {

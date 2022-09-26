@@ -195,6 +195,7 @@
             {
                 "name": "check_in",
                 "desc": "Check In",
+                "is_active": true,
                 "when": "meta.GetBoolean('checked_in') == false",
                 "then": [
                     "meta.SetBoolean('checked_in', true)",
@@ -205,6 +206,7 @@
             {
                 "name": "claim_bonus_1",
                 "desc": "Claim Bonus 1",
+                "is_active": true,
                 "when": "meta.GetBoolean('bonus_1') == false",
                 "then": [
                     "meta.SetBoolean('bonus_1', true)",
@@ -214,6 +216,7 @@
             {
                 "name": "claim_bonus_2",
                 "desc": "Claim Bonus 2",
+                "is_active": false,
                 "when": "meta.GetBoolean('bonus_2') == false",
                 "then": [
                     "meta.SetBoolean('bonus_2', true)",
@@ -223,6 +226,7 @@
             {
                 "name": "redeem_200",
                 "desc": "Redeem gift for 200 points",
+                "is_active": true,
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 200",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -233,6 +237,7 @@
             {
                 "name": "redeem_400",
                 "desc": "Redeem gift for 400 points",
+                "is_active": true,
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 400",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -243,6 +248,7 @@
             {
                 "name": "redeem_600",
                 "desc": "Redeem gift for 600 points",
+                "is_active": true,
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 600",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -253,6 +259,7 @@
             {
                 "name": "transform",
                 "desc": "Transform",
+                "is_active": true,
                 "when": "meta.GetBoolean('transformed') == false && meta.GetNumber('missions_completed') == 3",
                 "then": [
                     "meta.SetBoolean('transformed', true)",

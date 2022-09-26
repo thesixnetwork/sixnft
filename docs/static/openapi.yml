@@ -30287,6 +30287,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -30735,6 +30745,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -31303,6 +31323,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -31829,6 +31859,8 @@ paths:
                                 type: string
                               desc:
                                 type: string
+                              is_active:
+                                type: boolean
                               when:
                                 type: string
                               then:
@@ -32131,6 +32163,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -32372,6 +32414,8 @@ paths:
                               type: string
                             desc:
                               type: string
+                            is_active:
+                              type: boolean
                             when:
                               type: string
                             then:
@@ -32882,6 +32926,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33481,6 +33535,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/action_request/{id}':
@@ -33769,6 +33833,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -55479,6 +55553,8 @@ definitions:
         type: string
       desc:
         type: string
+      is_active:
+        type: boolean
       when:
         type: string
       then:
@@ -55759,6 +55835,8 @@ definitions:
                   type: string
                 desc:
                   type: string
+                is_active:
+                  type: boolean
                 when:
                   type: string
                 then:
@@ -55946,6 +56024,8 @@ definitions:
                   type: string
                 desc:
                   type: string
+                is_active:
+                  type: boolean
                 when:
                   type: string
                 then:
@@ -56133,6 +56213,8 @@ definitions:
                   type: string
                 desc:
                   type: string
+                is_active:
+                  type: boolean
                 when:
                   type: string
                 then:
@@ -56433,6 +56515,8 @@ definitions:
                   type: string
                 desc:
                   type: string
+                is_active:
+                  type: boolean
                 when:
                   type: string
                 then:
@@ -56723,6 +56807,8 @@ definitions:
               type: string
             desc:
               type: string
+            is_active:
+              type: boolean
             when:
               type: string
             then:
@@ -57152,6 +57238,8 @@ definitions:
                         type: string
                       desc:
                         type: string
+                      is_active:
+                        type: boolean
                       when:
                         type: string
                       then:
@@ -57612,6 +57700,8 @@ definitions:
                       type: string
                     desc:
                       type: string
+                    is_active:
+                      type: boolean
                     when:
                       type: string
                     then:
