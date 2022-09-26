@@ -30176,89 +30176,6 @@ paths:
           format: uint64
       tags:
         - Query
-  /sixnft/admin/authorization:
-    get:
-      summary: Queries a Authorization by index.
-      operationId: SixnftAdminAuthorization
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              Authorization:
-                type: object
-                properties:
-                  root_admin:
-                    type: string
-                  permissions:
-                    type: object
-                    properties:
-                      map_name:
-                        type: object
-                        additionalProperties:
-                          type: object
-                          properties:
-                            addresses:
-                              type: array
-                              items:
-                                type: string
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
-  /sixnft/admin/params:
-    get:
-      summary: Parameters queries the parameters of the module.
-      operationId: SixnftAdminParams
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              params:
-                description: params holds all the parameters of this module.
-                type: object
-            description: >-
-              QueryParamsResponse is response type for the Query/Params RPC
-              method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
   /sixnft/evmsupport/address_binding:
     get:
       summary: Queries a list of AddressBinding items.
@@ -30370,16 +30287,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -30432,6 +30339,89 @@ paths:
     get:
       summary: Parameters queries the parameters of the module.
       operationId: SixnftEvmsupportParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /sixnft/nftadmin/authorization:
+    get:
+      summary: Queries a Authorization by index.
+      operationId: SixnftNftadminAuthorization
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Authorization:
+                type: object
+                properties:
+                  root_admin:
+                    type: string
+                  permissions:
+                    type: object
+                    properties:
+                      map_name:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            addresses:
+                              type: array
+                              items:
+                                type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /sixnft/nftadmin/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: SixnftNftadminParams
       responses:
         '200':
           description: A successful response.
@@ -30745,16 +30735,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -31320,16 +31300,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32161,16 +32131,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -32925,16 +32885,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/organization/{name}':
@@ -33531,16 +33481,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/action_request/{id}':
@@ -33829,16 +33769,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -55374,96 +55304,6 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  sixnft.admin.AddressList:
-    type: object
-    properties:
-      addresses:
-        type: array
-        items:
-          type: string
-  sixnft.admin.Authorization:
-    type: object
-    properties:
-      root_admin:
-        type: string
-      permissions:
-        type: object
-        properties:
-          map_name:
-            type: object
-            additionalProperties:
-              type: object
-              properties:
-                addresses:
-                  type: array
-                  items:
-                    type: string
-  sixnft.admin.MsgBurnResponse:
-    type: object
-    properties:
-      amount:
-        type: string
-      token:
-        type: string
-  sixnft.admin.MsgGrantPermissionResponse:
-    type: object
-    properties:
-      grantee:
-        type: string
-  sixnft.admin.MsgMintResponse:
-    type: object
-    properties:
-      amount:
-        type: string
-      token:
-        type: string
-  sixnft.admin.MsgRevokePermissionResponse:
-    type: object
-    properties:
-      revokee:
-        type: string
-  sixnft.admin.Params:
-    type: object
-    description: Params defines the parameters for the module.
-  sixnft.admin.Permissions:
-    type: object
-    properties:
-      map_name:
-        type: object
-        additionalProperties:
-          type: object
-          properties:
-            addresses:
-              type: array
-              items:
-                type: string
-  sixnft.admin.QueryGetAuthorizationResponse:
-    type: object
-    properties:
-      Authorization:
-        type: object
-        properties:
-          root_admin:
-            type: string
-          permissions:
-            type: object
-            properties:
-              map_name:
-                type: object
-                additionalProperties:
-                  type: object
-                  properties:
-                    addresses:
-                      type: array
-                      items:
-                        type: string
-  sixnft.admin.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params holds all the parameters of this module.
-        type: object
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
   sixnft.evmsupport.AddressBinding:
     type: object
     properties:
@@ -55536,6 +55376,96 @@ definitions:
           nativeAddress:
             type: string
   sixnft.evmsupport.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftadmin.AddressList:
+    type: object
+    properties:
+      addresses:
+        type: array
+        items:
+          type: string
+  sixnft.nftadmin.Authorization:
+    type: object
+    properties:
+      root_admin:
+        type: string
+      permissions:
+        type: object
+        properties:
+          map_name:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                addresses:
+                  type: array
+                  items:
+                    type: string
+  sixnft.nftadmin.MsgBurnResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
+  sixnft.nftadmin.MsgGrantPermissionResponse:
+    type: object
+    properties:
+      grantee:
+        type: string
+  sixnft.nftadmin.MsgMintResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
+  sixnft.nftadmin.MsgRevokePermissionResponse:
+    type: object
+    properties:
+      revokee:
+        type: string
+  sixnft.nftadmin.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  sixnft.nftadmin.Permissions:
+    type: object
+    properties:
+      map_name:
+        type: object
+        additionalProperties:
+          type: object
+          properties:
+            addresses:
+              type: array
+              items:
+                type: string
+  sixnft.nftadmin.QueryGetAuthorizationResponse:
+    type: object
+    properties:
+      Authorization:
+        type: object
+        properties:
+          root_admin:
+            type: string
+          permissions:
+            type: object
+            properties:
+              map_name:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    addresses:
+                      type: array
+                      items:
+                        type: string
+  sixnft.nftadmin.QueryParamsResponse:
     type: object
     properties:
       params:
