@@ -20,8 +20,8 @@ import (
 	nftmngrkeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
-	adminKeeper "github.com/thesixnetwork/sixnft/x/admin/keeper"
-	admintypes "github.com/thesixnetwork/sixnft/x/admin/types"
+	adminKeeper "github.com/thesixnetwork/sixnft/x/nftadmin/keeper"
+	admintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 
 	evmsupportkeeper "github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
 	evmsupporttypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"

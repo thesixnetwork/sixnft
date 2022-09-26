@@ -4,7 +4,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	admintypes "github.com/thesixnetwork/sixnft/x/admin/types"
+	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
@@ -45,6 +45,6 @@ type NftmngrKeep interface {
 }
 
 type AdminKeeper interface {
-	GetAuthorization(ctx sdk.Context) (val admintypes.Authorization, found bool)
+	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)
 	HasPermission(ctx sdk.Context, name string, addr sdk.AccAddress) bool
 }

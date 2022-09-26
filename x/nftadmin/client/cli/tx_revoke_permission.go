@@ -3,44 +3,41 @@ package cli
 import (
 	"strconv"
 
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
-
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
+	"github.com/thesixnetwork/sixnft/x/nftadmin/types"
 )
 
 var _ = strconv.Itoa(0)
 
-func CmdPerformActionByAdmin() *cobra.Command {
+func CmdRevokePermission() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "perform-action-by-nftadmin [nft-schema-code] [token-id] [action]",
-		Short: "To do action",
-		Args:  cobra.ExactArgs(3),
+		Use:   "revoke-permission [name] [revokee]",
+		Short: "To revoke permission",
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argNftSchemaCode := args[0]
-			argTokenId := args[1]
-			argAction := args[2]
+			argName := args[0]
+			argRevokee := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgPerformActionByAdmin(
+			msg := types.NewMsgRevokePermission(
 				clientCtx.GetFromAddress().String(),
-				argNftSchemaCode,
-				argTokenId,
-				argAction,
+				argName,
+				argRevokee,
 			)
-
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}
+
 	flags.AddTxFlagsToCmd(cmd)
 
 	return cmd
