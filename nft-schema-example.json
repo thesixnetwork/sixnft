@@ -267,6 +267,7 @@
         "actions": [
             {
                 "name": "use10percentdiscount",
+                "is_active" : false,
                 "desc": "Use 10% discount on purchase",
                 "when": "meta.GetNumber('percent_discount_10') > 0",
                 "then": [

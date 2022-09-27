@@ -6,11 +6,18 @@ export const protobufPackage = "sixnft.nftmngr";
 export interface Action {
   name: string;
   desc: string;
+  is_active: boolean;
   when: string;
   then: string[];
 }
 
-const baseAction: object = { name: "", desc: "", when: "", then: "" };
+const baseAction: object = {
+  name: "",
+  desc: "",
+  is_active: false,
+  when: "",
+  then: "",
+};
 
 export const Action = {
   encode(message: Action, writer: Writer = Writer.create()): Writer {
@@ -20,11 +27,14 @@ export const Action = {
     if (message.desc !== "") {
       writer.uint32(18).string(message.desc);
     }
+    if (message.is_active === true) {
+      writer.uint32(24).bool(message.is_active);
+    }
     if (message.when !== "") {
-      writer.uint32(26).string(message.when);
+      writer.uint32(34).string(message.when);
     }
     for (const v of message.then) {
-      writer.uint32(34).string(v!);
+      writer.uint32(42).string(v!);
     }
     return writer;
   },
@@ -44,9 +54,12 @@ export const Action = {
           message.desc = reader.string();
           break;
         case 3:
-          message.when = reader.string();
+          message.is_active = reader.bool();
           break;
         case 4:
+          message.when = reader.string();
+          break;
+        case 5:
           message.then.push(reader.string());
           break;
         default:
@@ -70,6 +83,11 @@ export const Action = {
     } else {
       message.desc = "";
     }
+    if (object.is_active !== undefined && object.is_active !== null) {
+      message.is_active = Boolean(object.is_active);
+    } else {
+      message.is_active = false;
+    }
     if (object.when !== undefined && object.when !== null) {
       message.when = String(object.when);
     } else {
@@ -87,6 +105,7 @@ export const Action = {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.desc !== undefined && (obj.desc = message.desc);
+    message.is_active !== undefined && (obj.is_active = message.is_active);
     message.when !== undefined && (obj.when = message.when);
     if (message.then) {
       obj.then = message.then.map((e) => e);
@@ -108,6 +127,11 @@ export const Action = {
       message.desc = object.desc;
     } else {
       message.desc = "";
+    }
+    if (object.is_active !== undefined && object.is_active !== null) {
+      message.is_active = object.is_active;
+    } else {
+      message.is_active = false;
     }
     if (object.when !== undefined && object.when !== null) {
       message.when = object.when;

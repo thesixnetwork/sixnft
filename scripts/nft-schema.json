@@ -200,7 +200,8 @@
                     "meta.SetBoolean('checked_in', true)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 200)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "claim_bonus_1",
@@ -209,7 +210,8 @@
                 "then": [
                     "meta.SetBoolean('bonus_1', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 200)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "claim_bonus_2",
@@ -218,7 +220,8 @@
                 "then": [
                     "meta.SetBoolean('bonus_2', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 200)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "redeem_200",
@@ -228,7 +231,8 @@
                     "meta.SetBoolean('redeemed', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') - 200)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "redeem_400",
@@ -238,7 +242,8 @@
                     "meta.SetBoolean('redeemed', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') - 400)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "redeem_600",
@@ -248,7 +253,8 @@
                     "meta.SetBoolean('redeemed', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') - 600)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)"
-                ]
+                ],
+                "is_active": true
             },
             {
                 "name": "transform",
@@ -257,7 +263,8 @@
                 "then": [
                     "meta.SetBoolean('transformed', true)",
                     "meta.SetImage(meta.ReplaceAllString(meta.GetImage(),'.jpeg','-t.jpeg'))"
-                ]
+                ],
+                "is_active": true
             }
         ],
         "on_off_switch": {
