@@ -19,6 +19,7 @@ export interface GooglerpcStatus {
 export interface NftmngrAction {
   name?: string;
   desc?: string;
+  is_active?: boolean;
   when?: string;
   then?: string[];
 }
@@ -107,6 +108,12 @@ export interface NftmngrMsgSetNFTAttributeResponse {
   nft_schema_code?: string;
   attribute_name?: string;
   nft_attribute_value?: string;
+}
+
+export interface NftmngrMsgToggleActionResponse {
+  code?: string;
+  name?: string;
+  onchainDataAction?: NftmngrOnChainData;
 }
 
 export interface NftmngrNFTSchema {
