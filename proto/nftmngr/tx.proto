@@ -2,13 +2,22 @@ syntax = "proto3";
 package sixnft.nftmngr;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "nftmngr/on_chain_data.proto";
+import "nftmngr/attribute_definition.proto";
+import "nftmngr/nft_attribute_value.proto";
 
-option go_package = "sixnft/x/nftmngr/types";
+import "google/protobuf/any.proto";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 // Msg defines the Msg service.
 service Msg {
       rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
+  rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
+  rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
+  rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
+  rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
+  rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -31,6 +40,82 @@ message MsgCreateMetadata {
 message MsgCreateMetadataResponse {
   string nftSchemaCode = 1;
   string tokenId = 2;
+}
+
+message OpenseaAttribute{
+  string trait_type = 1; 
+  google.protobuf.Any value = 2;
+}
+
+message UpdatedOpenseaAttributes {
+  repeated OpenseaAttribute attributes = 1;
+}
+
+message UpdatedOriginData {
+  oneof updated_origin_data {
+    UpdatedOpenseaAttributes opensea = 1;
+  }
+}
+
+message MsgPerformActionByAdmin {
+  string creator = 1;
+  string nft_schema_code = 2;
+  string tokenId = 3;
+  string action = 4;
+  string ref_id = 5;
+}
+
+message MsgPerformActionByAdminResponse {
+  string nft_schema_code = 1;
+  string token_id = 2;
+}
+
+message MsgAddAttribute {
+  string creator = 1;
+  string code = 2;
+  string base64NewAttriuteDefenition = 3;
+}
+
+message MsgAddAttributeResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainData = 3;
+}
+
+message MsgAddTokenAttribute {
+  string creator = 1;
+  string code = 2;
+  string base64NewTokenAttriute = 3;
+}
+
+message MsgAddTokenAttributeResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainData = 3;
+}
+
+message MsgAddAction {
+  string creator = 1;
+  string code = 2;
+  string base64NewAction = 3;
+}
+
+message MsgAddActionResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainData = 3;
+}
+
+message MsgSetNFTAttribute {
+  string creator = 1;
+  string nft_schema_code = 2;
+  string base64_nft_attribute_value = 3;
+}
+
+message MsgSetNFTAttributeResponse {
+  string nft_schema_code = 1;
+  string attribute_name = 2;
+  string nft_attribute_value = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

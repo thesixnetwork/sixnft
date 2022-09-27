@@ -2,7 +2,7 @@ package keeper
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // GetParams get all parameters as types.Params

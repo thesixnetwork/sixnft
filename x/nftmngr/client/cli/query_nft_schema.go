@@ -3,7 +3,7 @@ package cli
 import (
 	"context"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

@@ -1,9 +1,10 @@
 package keeper
 
 import (
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sixnft/x/nftmngr/types"
 )
 
 // SetNftData set a specific nftData in the store from its index

@@ -11434,140 +11434,6 @@ paths:
           type: string
       tags:
         - Query
-  /cosmos/mint/v1beta1/annual_provisions:
-    get:
-      summary: AnnualProvisions current minting annual provisions value.
-      operationId: CosmosMintV1Beta1AnnualProvisions
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              annual_provisions:
-                type: string
-                format: byte
-                description: >-
-                  annual_provisions is the current minting annual provisions
-                  value.
-            description: |-
-              QueryAnnualProvisionsResponse is the response type for the
-              Query/AnnualProvisions RPC method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
-  /cosmos/mint/v1beta1/inflation:
-    get:
-      summary: Inflation returns the current minting inflation value.
-      operationId: CosmosMintV1Beta1Inflation
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              inflation:
-                type: string
-                format: byte
-                description: inflation is the current minting inflation value.
-            description: >-
-              QueryInflationResponse is the response type for the
-              Query/Inflation RPC
-
-              method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
-  /cosmos/mint/v1beta1/params:
-    get:
-      summary: Params returns the total set of minting parameters.
-      operationId: CosmosMintV1Beta1Params
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              params:
-                description: params defines the parameters of the module.
-                type: object
-                properties:
-                  mint_denom:
-                    type: string
-                    title: type of coin to mint
-                  inflation_rate_change:
-                    type: string
-                    title: maximum annual change in inflation rate
-                  inflation_max:
-                    type: string
-                    title: maximum inflation rate
-                  inflation_min:
-                    type: string
-                    title: minimum inflation rate
-                  goal_bonded:
-                    type: string
-                    title: goal of percent bonded atoms
-                  blocks_per_year:
-                    type: string
-                    format: uint64
-                    title: expected blocks per year
-            description: >-
-              QueryParamsResponse is the response type for the Query/Params RPC
-              method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
   /cosmos/params/v1beta1/params:
     get:
       summary: |-
@@ -30176,6 +30042,795 @@ paths:
           format: uint64
       tags:
         - Query
+  /sixnft/evmsupport/address_binding:
+    get:
+      summary: Queries a list of AddressBinding items.
+      operationId: SixnftEvmsupportAddressBindingAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              addressBinding:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ethAddress:
+                      type: string
+                    nativeAddress:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
+    get:
+      summary: Queries a AddressBinding by index.
+      operationId: SixnftEvmsupportAddressBinding
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              addressBinding:
+                type: object
+                properties:
+                  ethAddress:
+                    type: string
+                  nativeAddress:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: ethAddress
+          in: path
+          required: true
+          type: string
+        - name: nativeAddress
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /sixnft/evmsupport/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: SixnftEvmsupportParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /sixnft/nftadmin/authorization:
+    get:
+      summary: Queries a Authorization by index.
+      operationId: SixnftNftadminAuthorization
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Authorization:
+                type: object
+                properties:
+                  root_admin:
+                    type: string
+                  permissions:
+                    type: object
+                    properties:
+                      map_name:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            addresses:
+                              type: array
+                              items:
+                                type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /sixnft/nftadmin/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: SixnftNftadminParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /sixnft/nftmngr/action_by_ref_id:
+    get:
+      summary: Queries a list of ActionByRefId items.
+      operationId: SixnftNftmngrActionByRefIdAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              actionByRefId:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    refId:
+                      type: string
+                    creator:
+                      type: string
+                    nftSchemaCode:
+                      type: string
+                    tokenId:
+                      type: string
+                    action:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                      description: >-
+                        A URL/resource name that uniquely identifies the type of
+                        the serialized
+
+                        protocol buffer message. This string must contain at
+                        least
+
+                        one "/" character. The last segment of the URL's path
+                        must represent
+
+                        the fully qualified name of the type (as in
+
+                        `path/google.protobuf.Duration`). The name should be in
+                        a canonical form
+
+                        (e.g., leading "." is not accepted).
+
+
+                        In practice, teams usually precompile into the binary
+                        all types that they
+
+                        expect it to use in the context of Any. However, for
+                        URLs which use the
+
+                        scheme `http`, `https`, or no scheme, one can optionally
+                        set up a type
+
+                        server that maps type URLs to message definitions as
+                        follows:
+
+
+                        * If no scheme is provided, `https` is assumed.
+
+                        * An HTTP GET on the URL must yield a
+                        [google.protobuf.Type][]
+                          value in binary format, or produce an error.
+                        * Applications are allowed to cache lookup results based
+                        on the
+                          URL, or have them precompiled into a binary to avoid any
+                          lookup. Therefore, binary compatibility needs to be preserved
+                          on changes to types. (Use versioned type names to manage
+                          breaking changes.)
+
+                        Note: this functionality is not currently available in
+                        the official
+
+                        protobuf release, and it is not used for type URLs
+                        beginning with
+
+                        type.googleapis.com.
+
+
+                        Schemes other than `http`, `https` (or the empty scheme)
+                        might be
+
+                        used with implementation specific semantics.
+                  additionalProperties: {}
+                  description: >-
+                    `Any` contains an arbitrary serialized protocol buffer
+                    message along with a
+
+                    URL that describes the type of the serialized message.
+
+
+                    Protobuf library provides support to pack/unpack Any values
+                    in the form
+
+                    of utility functions or additional generated methods of the
+                    Any type.
+
+
+                    Example 1: Pack and unpack a message in C++.
+
+                        Foo foo = ...;
+                        Any any;
+                        any.PackFrom(foo);
+                        ...
+                        if (any.UnpackTo(&foo)) {
+                          ...
+                        }
+
+                    Example 2: Pack and unpack a message in Java.
+
+                        Foo foo = ...;
+                        Any any = Any.pack(foo);
+                        ...
+                        if (any.is(Foo.class)) {
+                          foo = any.unpack(Foo.class);
+                        }
+
+                     Example 3: Pack and unpack a message in Python.
+
+                        foo = Foo(...)
+                        any = Any()
+                        any.Pack(foo)
+                        ...
+                        if any.Is(Foo.DESCRIPTOR):
+                          any.Unpack(foo)
+                          ...
+
+                     Example 4: Pack and unpack a message in Go
+
+                         foo := &pb.Foo{...}
+                         any, err := anypb.New(foo)
+                         if err != nil {
+                           ...
+                         }
+                         ...
+                         foo := &pb.Foo{}
+                         if err := any.UnmarshalTo(foo); err != nil {
+                           ...
+                         }
+
+                    The pack methods provided by protobuf library will by
+                    default use
+
+                    'type.googleapis.com/full.type.name' as the type URL and the
+                    unpack
+
+                    methods only use the fully qualified type name after the
+                    last '/'
+
+                    in the type URL, for example "foo.bar.com/x/y.z" will yield
+                    type
+
+                    name "y.z".
+
+
+
+                    JSON
+
+                    ====
+
+                    The JSON representation of an `Any` value uses the regular
+
+                    representation of the deserialized, embedded message, with
+                    an
+
+                    additional field `@type` which contains the type URL.
+                    Example:
+
+                        package google.profile;
+                        message Person {
+                          string first_name = 1;
+                          string last_name = 2;
+                        }
+
+                        {
+                          "@type": "type.googleapis.com/google.profile.Person",
+                          "firstName": <string>,
+                          "lastName": <string>
+                        }
+
+                    If the embedded message type is well-known and has a custom
+                    JSON
+
+                    representation, that representation will be embedded adding
+                    a field
+
+                    `value` which holds the custom JSON in addition to the
+                    `@type`
+
+                    field. Example (for message [google.protobuf.Duration][]):
+
+                        {
+                          "@type": "type.googleapis.com/google.protobuf.Duration",
+                          "value": "1.212s"
+                        }
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/sixnft/nftmngr/action_by_ref_id/{refId}':
+    get:
+      summary: Queries a ActionByRefId by index.
+      operationId: SixnftNftmngrActionByRefId
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              actionByRefId:
+                type: object
+                properties:
+                  refId:
+                    type: string
+                  creator:
+                    type: string
+                  nftSchemaCode:
+                    type: string
+                  tokenId:
+                    type: string
+                  action:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                      description: >-
+                        A URL/resource name that uniquely identifies the type of
+                        the serialized
+
+                        protocol buffer message. This string must contain at
+                        least
+
+                        one "/" character. The last segment of the URL's path
+                        must represent
+
+                        the fully qualified name of the type (as in
+
+                        `path/google.protobuf.Duration`). The name should be in
+                        a canonical form
+
+                        (e.g., leading "." is not accepted).
+
+
+                        In practice, teams usually precompile into the binary
+                        all types that they
+
+                        expect it to use in the context of Any. However, for
+                        URLs which use the
+
+                        scheme `http`, `https`, or no scheme, one can optionally
+                        set up a type
+
+                        server that maps type URLs to message definitions as
+                        follows:
+
+
+                        * If no scheme is provided, `https` is assumed.
+
+                        * An HTTP GET on the URL must yield a
+                        [google.protobuf.Type][]
+                          value in binary format, or produce an error.
+                        * Applications are allowed to cache lookup results based
+                        on the
+                          URL, or have them precompiled into a binary to avoid any
+                          lookup. Therefore, binary compatibility needs to be preserved
+                          on changes to types. (Use versioned type names to manage
+                          breaking changes.)
+
+                        Note: this functionality is not currently available in
+                        the official
+
+                        protobuf release, and it is not used for type URLs
+                        beginning with
+
+                        type.googleapis.com.
+
+
+                        Schemes other than `http`, `https` (or the empty scheme)
+                        might be
+
+                        used with implementation specific semantics.
+                  additionalProperties: {}
+                  description: >-
+                    `Any` contains an arbitrary serialized protocol buffer
+                    message along with a
+
+                    URL that describes the type of the serialized message.
+
+
+                    Protobuf library provides support to pack/unpack Any values
+                    in the form
+
+                    of utility functions or additional generated methods of the
+                    Any type.
+
+
+                    Example 1: Pack and unpack a message in C++.
+
+                        Foo foo = ...;
+                        Any any;
+                        any.PackFrom(foo);
+                        ...
+                        if (any.UnpackTo(&foo)) {
+                          ...
+                        }
+
+                    Example 2: Pack and unpack a message in Java.
+
+                        Foo foo = ...;
+                        Any any = Any.pack(foo);
+                        ...
+                        if (any.is(Foo.class)) {
+                          foo = any.unpack(Foo.class);
+                        }
+
+                     Example 3: Pack and unpack a message in Python.
+
+                        foo = Foo(...)
+                        any = Any()
+                        any.Pack(foo)
+                        ...
+                        if any.Is(Foo.DESCRIPTOR):
+                          any.Unpack(foo)
+                          ...
+
+                     Example 4: Pack and unpack a message in Go
+
+                         foo := &pb.Foo{...}
+                         any, err := anypb.New(foo)
+                         if err != nil {
+                           ...
+                         }
+                         ...
+                         foo := &pb.Foo{}
+                         if err := any.UnmarshalTo(foo); err != nil {
+                           ...
+                         }
+
+                    The pack methods provided by protobuf library will by
+                    default use
+
+                    'type.googleapis.com/full.type.name' as the type URL and the
+                    unpack
+
+                    methods only use the fully qualified type name after the
+                    last '/'
+
+                    in the type URL, for example "foo.bar.com/x/y.z" will yield
+                    type
+
+                    name "y.z".
+
+
+
+                    JSON
+
+                    ====
+
+                    The JSON representation of an `Any` value uses the regular
+
+                    representation of the deserialized, embedded message, with
+                    an
+
+                    additional field `@type` which contains the type URL.
+                    Example:
+
+                        package google.profile;
+                        message Person {
+                          string first_name = 1;
+                          string last_name = 2;
+                        }
+
+                        {
+                          "@type": "type.googleapis.com/google.profile.Person",
+                          "firstName": <string>,
+                          "lastName": <string>
+                        }
+
+                    If the embedded message type is well-known and has a custom
+                    JSON
+
+                    representation, that representation will be embedded adding
+                    a field
+
+                    `value` which holds the custom JSON in addition to the
+                    `@type`
+
+                    field. Example (for message [google.protobuf.Duration][]):
+
+                        {
+                          "@type": "type.googleapis.com/google.protobuf.Duration",
+                          "value": "1.212s"
+                        }
+      parameters:
+        - name: refId
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
   /sixnft/nftmngr/nft_data:
     get:
       summary: Queries a list of NftData items.
@@ -30191,15 +30846,23 @@ paths:
                 items:
                   type: object
                   properties:
-                    nftSchemaCode:
+                    nft_schema_code:
                       type: string
-                    tokenId:
+                    token_id:
                       type: string
-                    tokenOwner:
+                    token_owner:
                       type: string
-                    originImage:
+                    owner_address_type:
                       type: string
-                    originAttributes:
+                      enum:
+                        - ORIGIN_ADDRESS
+                        - INTERNAL_ADDRESS
+                      default: ORIGIN_ADDRESS
+                    origin_image:
+                      type: string
+                    onchain_image:
+                      type: string
+                    origin_attributes:
                       type: array
                       items:
                         type: object
@@ -30227,8 +30890,8 @@ paths:
                             properties:
                               value:
                                 type: number
-                                format: float
-                    onchainAttributes:
+                                format: double
+                    onchain_attributes:
                       type: array
                       items:
                         type: object
@@ -30256,7 +30919,7 @@ paths:
                             properties:
                               value:
                                 type: number
-                                format: float
+                                format: double
               pagination:
                 type: object
                 properties:
@@ -30541,15 +31204,23 @@ paths:
               nftData:
                 type: object
                 properties:
-                  nftSchemaCode:
+                  nft_schema_code:
                     type: string
-                  tokenId:
+                  token_id:
                     type: string
-                  tokenOwner:
+                  token_owner:
                     type: string
-                  originImage:
+                  owner_address_type:
                     type: string
-                  originAttributes:
+                    enum:
+                      - ORIGIN_ADDRESS
+                      - INTERNAL_ADDRESS
+                    default: ORIGIN_ADDRESS
+                  origin_image:
+                    type: string
+                  onchain_image:
+                    type: string
+                  origin_attributes:
                     type: array
                     items:
                       type: object
@@ -30577,8 +31248,8 @@ paths:
                           properties:
                             value:
                               type: number
-                              format: float
-                  onchainAttributes:
+                              format: double
+                  onchain_attributes:
                     type: array
                     items:
                       type: object
@@ -30606,7 +31277,7 @@ paths:
                           properties:
                             value:
                               type: number
-                              format: float
+                              format: double
         default:
           description: An unexpected error response.
           schema:
@@ -30857,6 +31528,10 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_true_value:
+                                    type: string
+                                  bool_false_value:
+                                    type: string
                                   opensea:
                                     type: object
                                     properties:
@@ -30868,9 +31543,41 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              index:
+                                type: string
+                                format: uint64
+                        uri_retrieval_method:
+                          type: string
+                          enum:
+                            - BASE
+                            - TOKEN
+                          default: BASE
                     onchain_data:
                       type: object
                       properties:
@@ -30895,6 +31602,10 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_true_value:
+                                    type: string
+                                  bool_false_value:
+                                    type: string
                                   opensea:
                                     type: object
                                     properties:
@@ -30906,9 +31617,35 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              index:
+                                type: string
+                                format: uint64
                         token_attributes:
                           type: array
                           items:
@@ -30925,6 +31662,10 @@ paths:
                               display_option:
                                 type: object
                                 properties:
+                                  bool_true_value:
+                                    type: string
+                                  bool_false_value:
+                                    type: string
                                   opensea:
                                     type: object
                                     properties:
@@ -30936,9 +31677,35 @@ paths:
                                         type: string
                                         format: uint64
                               default_mint_value:
-                                type: string
+                                type: object
+                                properties:
+                                  number_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                        format: uint64
+                                  string_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: string
+                                  boolean_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: boolean
+                                  float_attribute_value:
+                                    type: object
+                                    properties:
+                                      value:
+                                        type: number
+                                        format: double
                               hidden_to_marketplace:
                                 type: boolean
+                              index:
+                                type: string
+                                format: uint64
                         actions:
                           type: array
                           items:
@@ -30956,14 +31723,41 @@ paths:
                                   type: string
                         status:
                           type: object
-                          properties:
-                            first_mint_complete:
-                              type: boolean
+                          additionalProperties:
+                            type: boolean
                         on_off_switch:
                           type: object
-                          properties:
-                            active:
-                              type: boolean
+                          additionalProperties:
+                            type: boolean
+                        nft_attributes_value:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              number_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    format: uint64
+                              string_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                              boolean_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                              float_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: number
+                                    format: double
               pagination:
                 type: object
                 properties:
@@ -31287,6 +32081,10 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_true_value:
+                                  type: string
+                                bool_false_value:
+                                  type: string
                                 opensea:
                                   type: object
                                   properties:
@@ -31298,9 +32096,41 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
+                            index:
+                              type: string
+                              format: uint64
+                      uri_retrieval_method:
+                        type: string
+                        enum:
+                          - BASE
+                          - TOKEN
+                        default: BASE
                   onchain_data:
                     type: object
                     properties:
@@ -31325,6 +32155,10 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_true_value:
+                                  type: string
+                                bool_false_value:
+                                  type: string
                                 opensea:
                                   type: object
                                   properties:
@@ -31336,9 +32170,35 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
+                            index:
+                              type: string
+                              format: uint64
                       token_attributes:
                         type: array
                         items:
@@ -31355,6 +32215,10 @@ paths:
                             display_option:
                               type: object
                               properties:
+                                bool_true_value:
+                                  type: string
+                                bool_false_value:
+                                  type: string
                                 opensea:
                                   type: object
                                   properties:
@@ -31366,9 +32230,35 @@ paths:
                                       type: string
                                       format: uint64
                             default_mint_value:
-                              type: string
+                              type: object
+                              properties:
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
                             hidden_to_marketplace:
                               type: boolean
+                            index:
+                              type: string
+                              format: uint64
                       actions:
                         type: array
                         items:
@@ -31386,14 +32276,41 @@ paths:
                                 type: string
                       status:
                         type: object
-                        properties:
-                          first_mint_complete:
-                            type: boolean
+                        additionalProperties:
+                          type: boolean
                       on_off_switch:
                         type: object
-                        properties:
-                          active:
-                            type: boolean
+                        additionalProperties:
+                          type: boolean
+                      nft_attributes_value:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            number_attribute_value:
+                              type: object
+                              properties:
+                                value:
+                                  type: string
+                                  format: uint64
+                            string_attribute_value:
+                              type: object
+                              properties:
+                                value:
+                                  type: string
+                            boolean_attribute_value:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                            float_attribute_value:
+                              type: object
+                              properties:
+                                value:
+                                  type: number
+                                  format: double
         default:
           description: An unexpected error response.
           schema:
@@ -31581,6 +32498,505 @@ paths:
                         }
       parameters:
         - name: code
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /sixnft/nftmngr/organization:
+    get:
+      summary: Queries a list of Organization items.
+      operationId: SixnftNftmngrOrganizationAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              organization:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    owner:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                      description: >-
+                        A URL/resource name that uniquely identifies the type of
+                        the serialized
+
+                        protocol buffer message. This string must contain at
+                        least
+
+                        one "/" character. The last segment of the URL's path
+                        must represent
+
+                        the fully qualified name of the type (as in
+
+                        `path/google.protobuf.Duration`). The name should be in
+                        a canonical form
+
+                        (e.g., leading "." is not accepted).
+
+
+                        In practice, teams usually precompile into the binary
+                        all types that they
+
+                        expect it to use in the context of Any. However, for
+                        URLs which use the
+
+                        scheme `http`, `https`, or no scheme, one can optionally
+                        set up a type
+
+                        server that maps type URLs to message definitions as
+                        follows:
+
+
+                        * If no scheme is provided, `https` is assumed.
+
+                        * An HTTP GET on the URL must yield a
+                        [google.protobuf.Type][]
+                          value in binary format, or produce an error.
+                        * Applications are allowed to cache lookup results based
+                        on the
+                          URL, or have them precompiled into a binary to avoid any
+                          lookup. Therefore, binary compatibility needs to be preserved
+                          on changes to types. (Use versioned type names to manage
+                          breaking changes.)
+
+                        Note: this functionality is not currently available in
+                        the official
+
+                        protobuf release, and it is not used for type URLs
+                        beginning with
+
+                        type.googleapis.com.
+
+
+                        Schemes other than `http`, `https` (or the empty scheme)
+                        might be
+
+                        used with implementation specific semantics.
+                  additionalProperties: {}
+                  description: >-
+                    `Any` contains an arbitrary serialized protocol buffer
+                    message along with a
+
+                    URL that describes the type of the serialized message.
+
+
+                    Protobuf library provides support to pack/unpack Any values
+                    in the form
+
+                    of utility functions or additional generated methods of the
+                    Any type.
+
+
+                    Example 1: Pack and unpack a message in C++.
+
+                        Foo foo = ...;
+                        Any any;
+                        any.PackFrom(foo);
+                        ...
+                        if (any.UnpackTo(&foo)) {
+                          ...
+                        }
+
+                    Example 2: Pack and unpack a message in Java.
+
+                        Foo foo = ...;
+                        Any any = Any.pack(foo);
+                        ...
+                        if (any.is(Foo.class)) {
+                          foo = any.unpack(Foo.class);
+                        }
+
+                     Example 3: Pack and unpack a message in Python.
+
+                        foo = Foo(...)
+                        any = Any()
+                        any.Pack(foo)
+                        ...
+                        if any.Is(Foo.DESCRIPTOR):
+                          any.Unpack(foo)
+                          ...
+
+                     Example 4: Pack and unpack a message in Go
+
+                         foo := &pb.Foo{...}
+                         any, err := anypb.New(foo)
+                         if err != nil {
+                           ...
+                         }
+                         ...
+                         foo := &pb.Foo{}
+                         if err := any.UnmarshalTo(foo); err != nil {
+                           ...
+                         }
+
+                    The pack methods provided by protobuf library will by
+                    default use
+
+                    'type.googleapis.com/full.type.name' as the type URL and the
+                    unpack
+
+                    methods only use the fully qualified type name after the
+                    last '/'
+
+                    in the type URL, for example "foo.bar.com/x/y.z" will yield
+                    type
+
+                    name "y.z".
+
+
+
+                    JSON
+
+                    ====
+
+                    The JSON representation of an `Any` value uses the regular
+
+                    representation of the deserialized, embedded message, with
+                    an
+
+                    additional field `@type` which contains the type URL.
+                    Example:
+
+                        package google.profile;
+                        message Person {
+                          string first_name = 1;
+                          string last_name = 2;
+                        }
+
+                        {
+                          "@type": "type.googleapis.com/google.profile.Person",
+                          "firstName": <string>,
+                          "lastName": <string>
+                        }
+
+                    If the embedded message type is well-known and has a custom
+                    JSON
+
+                    representation, that representation will be embedded adding
+                    a field
+
+                    `value` which holds the custom JSON in addition to the
+                    `@type`
+
+                    field. Example (for message [google.protobuf.Duration][]):
+
+                        {
+                          "@type": "type.googleapis.com/google.protobuf.Duration",
+                          "value": "1.212s"
+                        }
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/sixnft/nftmngr/organization/{name}':
+    get:
+      summary: Queries a Organization by index.
+      operationId: SixnftNftmngrOrganization
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              organization:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  owner:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                      description: >-
+                        A URL/resource name that uniquely identifies the type of
+                        the serialized
+
+                        protocol buffer message. This string must contain at
+                        least
+
+                        one "/" character. The last segment of the URL's path
+                        must represent
+
+                        the fully qualified name of the type (as in
+
+                        `path/google.protobuf.Duration`). The name should be in
+                        a canonical form
+
+                        (e.g., leading "." is not accepted).
+
+
+                        In practice, teams usually precompile into the binary
+                        all types that they
+
+                        expect it to use in the context of Any. However, for
+                        URLs which use the
+
+                        scheme `http`, `https`, or no scheme, one can optionally
+                        set up a type
+
+                        server that maps type URLs to message definitions as
+                        follows:
+
+
+                        * If no scheme is provided, `https` is assumed.
+
+                        * An HTTP GET on the URL must yield a
+                        [google.protobuf.Type][]
+                          value in binary format, or produce an error.
+                        * Applications are allowed to cache lookup results based
+                        on the
+                          URL, or have them precompiled into a binary to avoid any
+                          lookup. Therefore, binary compatibility needs to be preserved
+                          on changes to types. (Use versioned type names to manage
+                          breaking changes.)
+
+                        Note: this functionality is not currently available in
+                        the official
+
+                        protobuf release, and it is not used for type URLs
+                        beginning with
+
+                        type.googleapis.com.
+
+
+                        Schemes other than `http`, `https` (or the empty scheme)
+                        might be
+
+                        used with implementation specific semantics.
+                  additionalProperties: {}
+                  description: >-
+                    `Any` contains an arbitrary serialized protocol buffer
+                    message along with a
+
+                    URL that describes the type of the serialized message.
+
+
+                    Protobuf library provides support to pack/unpack Any values
+                    in the form
+
+                    of utility functions or additional generated methods of the
+                    Any type.
+
+
+                    Example 1: Pack and unpack a message in C++.
+
+                        Foo foo = ...;
+                        Any any;
+                        any.PackFrom(foo);
+                        ...
+                        if (any.UnpackTo(&foo)) {
+                          ...
+                        }
+
+                    Example 2: Pack and unpack a message in Java.
+
+                        Foo foo = ...;
+                        Any any = Any.pack(foo);
+                        ...
+                        if (any.is(Foo.class)) {
+                          foo = any.unpack(Foo.class);
+                        }
+
+                     Example 3: Pack and unpack a message in Python.
+
+                        foo = Foo(...)
+                        any = Any()
+                        any.Pack(foo)
+                        ...
+                        if any.Is(Foo.DESCRIPTOR):
+                          any.Unpack(foo)
+                          ...
+
+                     Example 4: Pack and unpack a message in Go
+
+                         foo := &pb.Foo{...}
+                         any, err := anypb.New(foo)
+                         if err != nil {
+                           ...
+                         }
+                         ...
+                         foo := &pb.Foo{}
+                         if err := any.UnmarshalTo(foo); err != nil {
+                           ...
+                         }
+
+                    The pack methods provided by protobuf library will by
+                    default use
+
+                    'type.googleapis.com/full.type.name' as the type URL and the
+                    unpack
+
+                    methods only use the fully qualified type name after the
+                    last '/'
+
+                    in the type URL, for example "foo.bar.com/x/y.z" will yield
+                    type
+
+                    name "y.z".
+
+
+
+                    JSON
+
+                    ====
+
+                    The JSON representation of an `Any` value uses the regular
+
+                    representation of the deserialized, embedded message, with
+                    an
+
+                    additional field `@type` which contains the type URL.
+                    Example:
+
+                        package google.profile;
+                        message Person {
+                          string first_name = 1;
+                          string last_name = 2;
+                        }
+
+                        {
+                          "@type": "type.googleapis.com/google.profile.Person",
+                          "firstName": <string>,
+                          "lastName": <string>
+                        }
+
+                    If the embedded message type is well-known and has a custom
+                    JSON
+
+                    representation, that representation will be embedded adding
+                    a field
+
+                    `value` which holds the custom JSON in addition to the
+                    `@type`
+
+                    field. Example (for message [google.protobuf.Duration][]):
+
+                        {
+                          "@type": "type.googleapis.com/google.protobuf.Duration",
+                          "value": "1.212s"
+                        }
+      parameters:
+        - name: name
           in: path
           required: true
           type: string
@@ -31787,6 +33203,629 @@ paths:
                           "@type": "type.googleapis.com/google.protobuf.Duration",
                           "value": "1.212s"
                         }
+      tags:
+        - Query
+  /sixnft/nftoracle/action_request:
+    get:
+      summary: Queries a list of ActionRequest items.
+      operationId: SixnftNftoracleActionRequestAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ActionRequest:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    nft_schema_code:
+                      type: string
+                    token_id:
+                      type: string
+                    action:
+                      type: string
+                    caller:
+                      type: string
+                    ref_id:
+                      type: string
+                    required_confirm:
+                      type: string
+                      format: uint64
+                    status:
+                      type: string
+                      enum:
+                        - PENDING
+                        - SUCCESS_WITH_CONSENSUS
+                        - FAILED_WITHOUT_CONCENSUS
+                        - EXPIRED
+                        - FAILED_ON_EXECUTION
+                      default: PENDING
+                    current_confirm:
+                      type: string
+                      format: uint64
+                    confirmers:
+                      type: object
+                      additionalProperties:
+                        type: boolean
+                    created_at:
+                      type: string
+                      format: date-time
+                    valid_until:
+                      type: string
+                      format: date-time
+                    data_hashes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          origin_data:
+                            type: object
+                            properties:
+                              image:
+                                type: string
+                              holder_address:
+                                type: string
+                              traits:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    trait_type:
+                                      type: string
+                                    value:
+                                      type: string
+                                    display_type:
+                                      type: string
+                                    max_value:
+                                      type: string
+                          hash:
+                            type: string
+                            format: byte
+                          confirmers:
+                            type: array
+                            items:
+                              type: string
+                    expired_height:
+                      type: string
+                      format: int64
+                    execution_error_message:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/sixnft/nftoracle/action_request/{id}':
+    get:
+      summary: Queries a ActionRequest by id.
+      operationId: SixnftNftoracleActionRequest
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ActionRequest:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  nft_schema_code:
+                    type: string
+                  token_id:
+                    type: string
+                  action:
+                    type: string
+                  caller:
+                    type: string
+                  ref_id:
+                    type: string
+                  required_confirm:
+                    type: string
+                    format: uint64
+                  status:
+                    type: string
+                    enum:
+                      - PENDING
+                      - SUCCESS_WITH_CONSENSUS
+                      - FAILED_WITHOUT_CONCENSUS
+                      - EXPIRED
+                      - FAILED_ON_EXECUTION
+                    default: PENDING
+                  current_confirm:
+                    type: string
+                    format: uint64
+                  confirmers:
+                    type: object
+                    additionalProperties:
+                      type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                  valid_until:
+                    type: string
+                    format: date-time
+                  data_hashes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        origin_data:
+                          type: object
+                          properties:
+                            image:
+                              type: string
+                            holder_address:
+                              type: string
+                            traits:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  trait_type:
+                                    type: string
+                                  value:
+                                    type: string
+                                  display_type:
+                                    type: string
+                                  max_value:
+                                    type: string
+                        hash:
+                          type: string
+                          format: byte
+                        confirmers:
+                          type: array
+                          items:
+                            type: string
+                  expired_height:
+                    type: string
+                    format: int64
+                  execution_error_message:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /sixnft/nftoracle/mint_request:
+    get:
+      summary: Queries a list of MintRequest items.
+      operationId: SixnftNftoracleMintRequestAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              MintRequest:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    nft_schema_code:
+                      type: string
+                    token_id:
+                      type: string
+                    required_confirm:
+                      type: string
+                      format: uint64
+                    status:
+                      type: string
+                      enum:
+                        - PENDING
+                        - SUCCESS_WITH_CONSENSUS
+                        - FAILED_WITHOUT_CONCENSUS
+                        - EXPIRED
+                        - FAILED_ON_EXECUTION
+                      default: PENDING
+                    current_confirm:
+                      type: string
+                      format: uint64
+                    confirmers:
+                      type: object
+                      additionalProperties:
+                        type: boolean
+                    created_at:
+                      type: string
+                      format: date-time
+                      title: NftOriginData nft_origin_data = 8;
+                    valid_until:
+                      type: string
+                      format: date-time
+                    data_hashes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          origin_data:
+                            type: object
+                            properties:
+                              image:
+                                type: string
+                              holder_address:
+                                type: string
+                              traits:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    trait_type:
+                                      type: string
+                                    value:
+                                      type: string
+                                    display_type:
+                                      type: string
+                                    max_value:
+                                      type: string
+                          hash:
+                            type: string
+                            format: byte
+                          confirmers:
+                            type: array
+                            items:
+                              type: string
+                    expired_height:
+                      type: string
+                      format: int64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/sixnft/nftoracle/mint_request/{id}':
+    get:
+      summary: Queries a MintRequest by id.
+      operationId: SixnftNftoracleMintRequest
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              MintRequest:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  nft_schema_code:
+                    type: string
+                  token_id:
+                    type: string
+                  required_confirm:
+                    type: string
+                    format: uint64
+                  status:
+                    type: string
+                    enum:
+                      - PENDING
+                      - SUCCESS_WITH_CONSENSUS
+                      - FAILED_WITHOUT_CONCENSUS
+                      - EXPIRED
+                      - FAILED_ON_EXECUTION
+                    default: PENDING
+                  current_confirm:
+                    type: string
+                    format: uint64
+                  confirmers:
+                    type: object
+                    additionalProperties:
+                      type: boolean
+                  created_at:
+                    type: string
+                    format: date-time
+                    title: NftOriginData nft_origin_data = 8;
+                  valid_until:
+                    type: string
+                    format: date-time
+                  data_hashes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        origin_data:
+                          type: object
+                          properties:
+                            image:
+                              type: string
+                            holder_address:
+                              type: string
+                            traits:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  trait_type:
+                                    type: string
+                                  value:
+                                    type: string
+                                  display_type:
+                                    type: string
+                                  max_value:
+                                    type: string
+                        hash:
+                          type: string
+                          format: byte
+                        confirmers:
+                          type: array
+                          items:
+                            type: string
+                  expired_height:
+                    type: string
+                    format: int64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /sixnft/nftoracle/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: SixnftNftoracleParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+                properties:
+                  mint_request_active_duration:
+                    type: string
+                  action_request_active_duration:
+                    type: string
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
       tags:
         - Query
   /tendermint/spn/monitoringp/connection_channel_id:
@@ -40869,76 +42908,6 @@ definitions:
       WeightedVoteOption defines a unit of vote for vote split.
 
       Since: cosmos-sdk 0.43
-  cosmos.mint.v1beta1.Params:
-    type: object
-    properties:
-      mint_denom:
-        type: string
-        title: type of coin to mint
-      inflation_rate_change:
-        type: string
-        title: maximum annual change in inflation rate
-      inflation_max:
-        type: string
-        title: maximum inflation rate
-      inflation_min:
-        type: string
-        title: minimum inflation rate
-      goal_bonded:
-        type: string
-        title: goal of percent bonded atoms
-      blocks_per_year:
-        type: string
-        format: uint64
-        title: expected blocks per year
-    description: Params holds parameters for the mint module.
-  cosmos.mint.v1beta1.QueryAnnualProvisionsResponse:
-    type: object
-    properties:
-      annual_provisions:
-        type: string
-        format: byte
-        description: annual_provisions is the current minting annual provisions value.
-    description: |-
-      QueryAnnualProvisionsResponse is the response type for the
-      Query/AnnualProvisions RPC method.
-  cosmos.mint.v1beta1.QueryInflationResponse:
-    type: object
-    properties:
-      inflation:
-        type: string
-        format: byte
-        description: inflation is the current minting inflation value.
-    description: |-
-      QueryInflationResponse is the response type for the Query/Inflation RPC
-      method.
-  cosmos.mint.v1beta1.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params defines the parameters of the module.
-        type: object
-        properties:
-          mint_denom:
-            type: string
-            title: type of coin to mint
-          inflation_rate_change:
-            type: string
-            title: maximum annual change in inflation rate
-          inflation_max:
-            type: string
-            title: maximum inflation rate
-          inflation_min:
-            type: string
-            title: minimum inflation rate
-          goal_bonded:
-            type: string
-            title: goal of percent bonded atoms
-          blocks_per_year:
-            type: string
-            format: uint64
-            title: expected blocks per year
-    description: QueryParamsResponse is the response type for the Query/Params RPC method.
   cosmos.params.v1beta1.ParamChange:
     type: object
     properties:
@@ -53171,6 +55140,174 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
+  sixnft.evmsupport.AddressBinding:
+    type: object
+    properties:
+      ethAddress:
+        type: string
+      nativeAddress:
+        type: string
+  sixnft.evmsupport.MsgBindAddressResponse:
+    type: object
+    properties:
+      ethAddress:
+        type: string
+      nativeAddress:
+        type: string
+  sixnft.evmsupport.MsgRemoveBindingResponse:
+    type: object
+    properties:
+      ethAddress:
+        type: string
+      nativeAddress:
+        type: string
+  sixnft.evmsupport.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  sixnft.evmsupport.QueryAllAddressBindingResponse:
+    type: object
+    properties:
+      addressBinding:
+        type: array
+        items:
+          type: object
+          properties:
+            ethAddress:
+              type: string
+            nativeAddress:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  sixnft.evmsupport.QueryGetAddressBindingResponse:
+    type: object
+    properties:
+      addressBinding:
+        type: object
+        properties:
+          ethAddress:
+            type: string
+          nativeAddress:
+            type: string
+  sixnft.evmsupport.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftadmin.AddressList:
+    type: object
+    properties:
+      addresses:
+        type: array
+        items:
+          type: string
+  sixnft.nftadmin.Authorization:
+    type: object
+    properties:
+      root_admin:
+        type: string
+      permissions:
+        type: object
+        properties:
+          map_name:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                addresses:
+                  type: array
+                  items:
+                    type: string
+  sixnft.nftadmin.MsgBurnResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
+  sixnft.nftadmin.MsgGrantPermissionResponse:
+    type: object
+    properties:
+      grantee:
+        type: string
+  sixnft.nftadmin.MsgMintResponse:
+    type: object
+    properties:
+      amount:
+        type: string
+      token:
+        type: string
+  sixnft.nftadmin.MsgRevokePermissionResponse:
+    type: object
+    properties:
+      revokee:
+        type: string
+  sixnft.nftadmin.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  sixnft.nftadmin.Permissions:
+    type: object
+    properties:
+      map_name:
+        type: object
+        additionalProperties:
+          type: object
+          properties:
+            addresses:
+              type: array
+              items:
+                type: string
+  sixnft.nftadmin.QueryGetAuthorizationResponse:
+    type: object
+    properties:
+      Authorization:
+        type: object
+        properties:
+          root_admin:
+            type: string
+          permissions:
+            type: object
+            properties:
+              map_name:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    addresses:
+                      type: array
+                      items:
+                        type: string
+  sixnft.nftadmin.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
   sixnft.nftmngr.Action:
     type: object
     properties:
@@ -53184,6 +55321,19 @@ definitions:
         type: array
         items:
           type: string
+  sixnft.nftmngr.ActionByRefId:
+    type: object
+    properties:
+      refId:
+        type: string
+      creator:
+        type: string
+      nftSchemaCode:
+        type: string
+      tokenId:
+        type: string
+      action:
+        type: string
   sixnft.nftmngr.AttributeDefinition:
     type: object
     properties:
@@ -53198,6 +55348,10 @@ definitions:
       display_option:
         type: object
         properties:
+          bool_true_value:
+            type: string
+          bool_false_value:
+            type: string
           opensea:
             type: object
             properties:
@@ -53209,18 +55363,78 @@ definitions:
                 type: string
                 format: uint64
       default_mint_value:
-        type: string
+        type: object
+        properties:
+          number_attribute_value:
+            type: object
+            properties:
+              value:
+                type: string
+                format: uint64
+          string_attribute_value:
+            type: object
+            properties:
+              value:
+                type: string
+          boolean_attribute_value:
+            type: object
+            properties:
+              value:
+                type: boolean
+          float_attribute_value:
+            type: object
+            properties:
+              value:
+                type: number
+                format: double
       hidden_to_marketplace:
         type: boolean
+      index:
+        type: string
+        format: uint64
   sixnft.nftmngr.AttributeOverriding:
     type: string
     enum:
       - ORIGIN
       - CHAIN
     default: ORIGIN
+  sixnft.nftmngr.BooleanAttributeValue:
+    type: object
+    properties:
+      value:
+        type: boolean
+  sixnft.nftmngr.DefaultMintValue:
+    type: object
+    properties:
+      number_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+            format: uint64
+      string_attribute_value:
+        type: object
+        properties:
+          value:
+            type: string
+      boolean_attribute_value:
+        type: object
+        properties:
+          value:
+            type: boolean
+      float_attribute_value:
+        type: object
+        properties:
+          value:
+            type: number
+            format: double
   sixnft.nftmngr.DisplayOption:
     type: object
     properties:
+      bool_true_value:
+        type: string
+      bool_false_value:
+        type: string
       opensea:
         type: object
         properties:
@@ -53231,6 +55445,573 @@ definitions:
           max_value:
             type: string
             format: uint64
+  sixnft.nftmngr.FloatAttributeValue:
+    type: object
+    properties:
+      value:
+        type: number
+        format: double
+  sixnft.nftmngr.MsgAddActionResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      onchainData:
+        type: object
+        properties:
+          reveal_required:
+            type: boolean
+          reveal_secret:
+            type: string
+            format: byte
+          nft_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          token_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                when:
+                  type: string
+                then:
+                  type: array
+                  items:
+                    type: string
+          status:
+            type: object
+            additionalProperties:
+              type: boolean
+          on_off_switch:
+            type: object
+            additionalProperties:
+              type: boolean
+          nft_attributes_value:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
+  sixnft.nftmngr.MsgAddAttributeResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      onchainData:
+        type: object
+        properties:
+          reveal_required:
+            type: boolean
+          reveal_secret:
+            type: string
+            format: byte
+          nft_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          token_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                when:
+                  type: string
+                then:
+                  type: array
+                  items:
+                    type: string
+          status:
+            type: object
+            additionalProperties:
+              type: boolean
+          on_off_switch:
+            type: object
+            additionalProperties:
+              type: boolean
+          nft_attributes_value:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
+  sixnft.nftmngr.MsgAddTokenAttributeResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      onchainData:
+        type: object
+        properties:
+          reveal_required:
+            type: boolean
+          reveal_secret:
+            type: string
+            format: byte
+          nft_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          token_attributes:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                data_type:
+                  type: string
+                required:
+                  type: boolean
+                display_value_field:
+                  type: string
+                display_option:
+                  type: object
+                  properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
+                    opensea:
+                      type: object
+                      properties:
+                        display_type:
+                          type: string
+                        trait_type:
+                          type: string
+                        max_value:
+                          type: string
+                          format: uint64
+                default_mint_value:
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
+                hidden_to_marketplace:
+                  type: boolean
+                index:
+                  type: string
+                  format: uint64
+          actions:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                desc:
+                  type: string
+                when:
+                  type: string
+                then:
+                  type: array
+                  items:
+                    type: string
+          status:
+            type: object
+            additionalProperties:
+              type: boolean
+          on_off_switch:
+            type: object
+            additionalProperties:
+              type: boolean
+          nft_attributes_value:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
   sixnft.nftmngr.MsgCreateMetadataResponse:
     type: object
     properties:
@@ -53242,6 +56023,22 @@ definitions:
     type: object
     properties:
       code:
+        type: string
+  sixnft.nftmngr.MsgPerformActionByAdminResponse:
+    type: object
+    properties:
+      nft_schema_code:
+        type: string
+      token_id:
+        type: string
+  sixnft.nftmngr.MsgSetNFTAttributeResponse:
+    type: object
+    properties:
+      nft_schema_code:
+        type: string
+      attribute_name:
+        type: string
+      nft_attribute_value:
         type: string
   sixnft.nftmngr.NFTSchema:
     type: object
@@ -53285,6 +56082,10 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
                     opensea:
                       type: object
                       properties:
@@ -53296,9 +56097,41 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
+                index:
+                  type: string
+                  format: uint64
+          uri_retrieval_method:
+            type: string
+            enum:
+              - BASE
+              - TOKEN
+            default: BASE
       onchain_data:
         type: object
         properties:
@@ -53323,6 +56156,10 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
                     opensea:
                       type: object
                       properties:
@@ -53334,9 +56171,35 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
+                index:
+                  type: string
+                  format: uint64
           token_attributes:
             type: array
             items:
@@ -53353,6 +56216,10 @@ definitions:
                 display_option:
                   type: object
                   properties:
+                    bool_true_value:
+                      type: string
+                    bool_false_value:
+                      type: string
                     opensea:
                       type: object
                       properties:
@@ -53364,9 +56231,35 @@ definitions:
                           type: string
                           format: uint64
                 default_mint_value:
-                  type: string
+                  type: object
+                  properties:
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
                 hidden_to_marketplace:
                   type: boolean
+                index:
+                  type: string
+                  format: uint64
           actions:
             type: array
             items:
@@ -53384,14 +56277,41 @@ definitions:
                     type: string
           status:
             type: object
-            properties:
-              first_mint_complete:
-                type: boolean
+            additionalProperties:
+              type: boolean
           on_off_switch:
             type: object
-            properties:
-              active:
-                type: boolean
+            additionalProperties:
+              type: boolean
+          nft_attributes_value:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
   sixnft.nftmngr.NftAttributeValue:
     type: object
     properties:
@@ -53418,98 +56338,90 @@ definitions:
         properties:
           value:
             type: number
-            format: float
-  sixnft.nftmngr.NftAttributeValue.BooleanAttributeValue:
+            format: double
+  sixnft.nftmngr.NftData:
     type: object
     properties:
-      value:
-        type: boolean
-  sixnft.nftmngr.NftAttributeValue.FloatAttributeValue:
-    type: object
-    properties:
-      value:
-        type: number
-        format: float
-  sixnft.nftmngr.NftAttributeValue.NumberAttributeValue:
+      nft_schema_code:
+        type: string
+      token_id:
+        type: string
+      token_owner:
+        type: string
+      owner_address_type:
+        type: string
+        enum:
+          - ORIGIN_ADDRESS
+          - INTERNAL_ADDRESS
+        default: ORIGIN_ADDRESS
+      origin_image:
+        type: string
+      onchain_image:
+        type: string
+      origin_attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            number_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uint64
+            string_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+            boolean_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: boolean
+            float_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: number
+                  format: double
+      onchain_attributes:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            number_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uint64
+            string_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+            boolean_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: boolean
+            float_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: number
+                  format: double
+  sixnft.nftmngr.NumberAttributeValue:
     type: object
     properties:
       value:
         type: string
         format: uint64
-  sixnft.nftmngr.NftAttributeValue.StringAttributeValue:
-    type: object
-    properties:
-      value:
-        type: string
-  sixnft.nftmngr.NftData:
-    type: object
-    properties:
-      nftSchemaCode:
-        type: string
-      tokenId:
-        type: string
-      tokenOwner:
-        type: string
-      originImage:
-        type: string
-      originAttributes:
-        type: array
-        items:
-          type: object
-          properties:
-            name:
-              type: string
-            number_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-                  format: uint64
-            string_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-            boolean_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: boolean
-            float_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: number
-                  format: float
-      onchainAttributes:
-        type: array
-        items:
-          type: object
-          properties:
-            name:
-              type: string
-            number_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-                  format: uint64
-            string_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: string
-            boolean_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: boolean
-            float_attribute_value:
-              type: object
-              properties:
-                value:
-                  type: number
-                  format: float
   sixnft.nftmngr.OnChainData:
     type: object
     properties:
@@ -53534,6 +56446,10 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_true_value:
+                  type: string
+                bool_false_value:
+                  type: string
                 opensea:
                   type: object
                   properties:
@@ -53545,9 +56461,35 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
+            index:
+              type: string
+              format: uint64
       token_attributes:
         type: array
         items:
@@ -53564,6 +56506,10 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_true_value:
+                  type: string
+                bool_false_value:
+                  type: string
                 opensea:
                   type: object
                   properties:
@@ -53575,9 +56521,35 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
+            index:
+              type: string
+              format: uint64
       actions:
         type: array
         items:
@@ -53595,19 +56567,41 @@ definitions:
                 type: string
       status:
         type: object
-        properties:
-          first_mint_complete:
-            type: boolean
+        additionalProperties:
+          type: boolean
       on_off_switch:
         type: object
-        properties:
-          active:
-            type: boolean
-  sixnft.nftmngr.OnOffSwitch:
-    type: object
-    properties:
-      active:
-        type: boolean
+        additionalProperties:
+          type: boolean
+      nft_attributes_value:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            number_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+                  format: uint64
+            string_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: string
+            boolean_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: boolean
+            float_attribute_value:
+              type: object
+              properties:
+                value:
+                  type: number
+                  format: double
   sixnft.nftmngr.OpenseaDisplayOption:
     type: object
     properties:
@@ -53618,6 +56612,13 @@ definitions:
       max_value:
         type: string
         format: uint64
+  sixnft.nftmngr.Organization:
+    type: object
+    properties:
+      name:
+        type: string
+      owner:
+        type: string
   sixnft.nftmngr.OriginData:
     type: object
     properties:
@@ -53651,6 +56652,10 @@ definitions:
             display_option:
               type: object
               properties:
+                bool_true_value:
+                  type: string
+                bool_false_value:
+                  type: string
                 opensea:
                   type: object
                   properties:
@@ -53662,12 +56667,93 @@ definitions:
                       type: string
                       format: uint64
             default_mint_value:
-              type: string
+              type: object
+              properties:
+                number_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      format: uint64
+                string_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                boolean_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: boolean
+                float_attribute_value:
+                  type: object
+                  properties:
+                    value:
+                      type: number
+                      format: double
             hidden_to_marketplace:
               type: boolean
+            index:
+              type: string
+              format: uint64
+      uri_retrieval_method:
+        type: string
+        enum:
+          - BASE
+          - TOKEN
+        default: BASE
+  sixnft.nftmngr.OwnerAddressType:
+    type: string
+    enum:
+      - ORIGIN_ADDRESS
+      - INTERNAL_ADDRESS
+    default: ORIGIN_ADDRESS
   sixnft.nftmngr.Params:
     type: object
     description: Params defines the parameters for the module.
+  sixnft.nftmngr.QueryAllActionByRefIdResponse:
+    type: object
+    properties:
+      actionByRefId:
+        type: array
+        items:
+          type: object
+          properties:
+            refId:
+              type: string
+            creator:
+              type: string
+            nftSchemaCode:
+              type: string
+            tokenId:
+              type: string
+            action:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
   sixnft.nftmngr.QueryAllNFTSchemaResponse:
     type: object
     properties:
@@ -53715,6 +56801,10 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_true_value:
+                            type: string
+                          bool_false_value:
+                            type: string
                           opensea:
                             type: object
                             properties:
@@ -53726,9 +56816,41 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
+                      index:
+                        type: string
+                        format: uint64
+                uri_retrieval_method:
+                  type: string
+                  enum:
+                    - BASE
+                    - TOKEN
+                  default: BASE
             onchain_data:
               type: object
               properties:
@@ -53753,6 +56875,10 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_true_value:
+                            type: string
+                          bool_false_value:
+                            type: string
                           opensea:
                             type: object
                             properties:
@@ -53764,9 +56890,35 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
+                      index:
+                        type: string
+                        format: uint64
                 token_attributes:
                   type: array
                   items:
@@ -53783,6 +56935,10 @@ definitions:
                       display_option:
                         type: object
                         properties:
+                          bool_true_value:
+                            type: string
+                          bool_false_value:
+                            type: string
                           opensea:
                             type: object
                             properties:
@@ -53794,9 +56950,35 @@ definitions:
                                 type: string
                                 format: uint64
                       default_mint_value:
-                        type: string
+                        type: object
+                        properties:
+                          number_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                                format: uint64
+                          string_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                          boolean_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: boolean
+                          float_attribute_value:
+                            type: object
+                            properties:
+                              value:
+                                type: number
+                                format: double
                       hidden_to_marketplace:
                         type: boolean
+                      index:
+                        type: string
+                        format: uint64
                 actions:
                   type: array
                   items:
@@ -53814,14 +56996,41 @@ definitions:
                           type: string
                 status:
                   type: object
-                  properties:
-                    first_mint_complete:
-                      type: boolean
+                  additionalProperties:
+                    type: boolean
                 on_off_switch:
                   type: object
-                  properties:
-                    active:
-                      type: boolean
+                  additionalProperties:
+                    type: boolean
+                nft_attributes_value:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      number_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            format: uint64
+                      string_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                      boolean_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: boolean
+                      float_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: number
+                            format: double
       pagination:
         type: object
         properties:
@@ -53855,15 +57064,23 @@ definitions:
         items:
           type: object
           properties:
-            nftSchemaCode:
+            nft_schema_code:
               type: string
-            tokenId:
+            token_id:
               type: string
-            tokenOwner:
+            token_owner:
               type: string
-            originImage:
+            owner_address_type:
               type: string
-            originAttributes:
+              enum:
+                - ORIGIN_ADDRESS
+                - INTERNAL_ADDRESS
+              default: ORIGIN_ADDRESS
+            origin_image:
+              type: string
+            onchain_image:
+              type: string
+            origin_attributes:
               type: array
               items:
                 type: object
@@ -53891,8 +57108,8 @@ definitions:
                     properties:
                       value:
                         type: number
-                        format: float
-            onchainAttributes:
+                        format: double
+            onchain_attributes:
               type: array
               items:
                 type: object
@@ -53920,7 +57137,7 @@ definitions:
                     properties:
                       value:
                         type: number
-                        format: float
+                        format: double
       pagination:
         type: object
         properties:
@@ -53946,6 +57163,59 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  sixnft.nftmngr.QueryAllOrganizationResponse:
+    type: object
+    properties:
+      organization:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            owner:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  sixnft.nftmngr.QueryGetActionByRefIdResponse:
+    type: object
+    properties:
+      actionByRefId:
+        type: object
+        properties:
+          refId:
+            type: string
+          creator:
+            type: string
+          nftSchemaCode:
+            type: string
+          tokenId:
+            type: string
+          action:
+            type: string
   sixnft.nftmngr.QueryGetNFTSchemaResponse:
     type: object
     properties:
@@ -53991,6 +57261,10 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_true_value:
+                          type: string
+                        bool_false_value:
+                          type: string
                         opensea:
                           type: object
                           properties:
@@ -54002,9 +57276,41 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
+                    index:
+                      type: string
+                      format: uint64
+              uri_retrieval_method:
+                type: string
+                enum:
+                  - BASE
+                  - TOKEN
+                default: BASE
           onchain_data:
             type: object
             properties:
@@ -54029,6 +57335,10 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_true_value:
+                          type: string
+                        bool_false_value:
+                          type: string
                         opensea:
                           type: object
                           properties:
@@ -54040,9 +57350,35 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
+                    index:
+                      type: string
+                      format: uint64
               token_attributes:
                 type: array
                 items:
@@ -54059,6 +57395,10 @@ definitions:
                     display_option:
                       type: object
                       properties:
+                        bool_true_value:
+                          type: string
+                        bool_false_value:
+                          type: string
                         opensea:
                           type: object
                           properties:
@@ -54070,9 +57410,35 @@ definitions:
                               type: string
                               format: uint64
                     default_mint_value:
-                      type: string
+                      type: object
+                      properties:
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
                     hidden_to_marketplace:
                       type: boolean
+                    index:
+                      type: string
+                      format: uint64
               actions:
                 type: array
                 items:
@@ -54090,29 +57456,64 @@ definitions:
                         type: string
               status:
                 type: object
-                properties:
-                  first_mint_complete:
-                    type: boolean
+                additionalProperties:
+                  type: boolean
               on_off_switch:
                 type: object
-                properties:
-                  active:
-                    type: boolean
+                additionalProperties:
+                  type: boolean
+              nft_attributes_value:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    number_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          format: uint64
+                    string_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                    boolean_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: boolean
+                    float_attribute_value:
+                      type: object
+                      properties:
+                        value:
+                          type: number
+                          format: double
   sixnft.nftmngr.QueryGetNftDataResponse:
     type: object
     properties:
       nftData:
         type: object
         properties:
-          nftSchemaCode:
+          nft_schema_code:
             type: string
-          tokenId:
+          token_id:
             type: string
-          tokenOwner:
+          token_owner:
             type: string
-          originImage:
+          owner_address_type:
             type: string
-          originAttributes:
+            enum:
+              - ORIGIN_ADDRESS
+              - INTERNAL_ADDRESS
+            default: ORIGIN_ADDRESS
+          origin_image:
+            type: string
+          onchain_image:
+            type: string
+          origin_attributes:
             type: array
             items:
               type: object
@@ -54140,8 +57541,8 @@ definitions:
                   properties:
                     value:
                       type: number
-                      format: float
-          onchainAttributes:
+                      format: double
+          onchain_attributes:
             type: array
             items:
               type: object
@@ -54169,7 +57570,17 @@ definitions:
                   properties:
                     value:
                       type: number
-                      format: float
+                      format: double
+  sixnft.nftmngr.QueryGetOrganizationResponse:
+    type: object
+    properties:
+      organization:
+        type: object
+        properties:
+          name:
+            type: string
+          owner:
+            type: string
   sixnft.nftmngr.QueryParamsResponse:
     type: object
     properties:
@@ -54177,11 +57588,646 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
-  sixnft.nftmngr.Status:
+  sixnft.nftmngr.StringAttributeValue:
     type: object
     properties:
-      first_mint_complete:
-        type: boolean
+      value:
+        type: string
+  sixnft.nftmngr.URIRetrievalMethod:
+    type: string
+    enum:
+      - BASE
+      - TOKEN
+    default: BASE
+  sixnft.nftoracle.ActionRequest:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      nft_schema_code:
+        type: string
+      token_id:
+        type: string
+      action:
+        type: string
+      caller:
+        type: string
+      ref_id:
+        type: string
+      required_confirm:
+        type: string
+        format: uint64
+      status:
+        type: string
+        enum:
+          - PENDING
+          - SUCCESS_WITH_CONSENSUS
+          - FAILED_WITHOUT_CONCENSUS
+          - EXPIRED
+          - FAILED_ON_EXECUTION
+        default: PENDING
+      current_confirm:
+        type: string
+        format: uint64
+      confirmers:
+        type: object
+        additionalProperties:
+          type: boolean
+      created_at:
+        type: string
+        format: date-time
+      valid_until:
+        type: string
+        format: date-time
+      data_hashes:
+        type: array
+        items:
+          type: object
+          properties:
+            origin_data:
+              type: object
+              properties:
+                image:
+                  type: string
+                holder_address:
+                  type: string
+                traits:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      trait_type:
+                        type: string
+                      value:
+                        type: string
+                      display_type:
+                        type: string
+                      max_value:
+                        type: string
+            hash:
+              type: string
+              format: byte
+            confirmers:
+              type: array
+              items:
+                type: string
+      expired_height:
+        type: string
+        format: int64
+      execution_error_message:
+        type: string
+  sixnft.nftoracle.DataHash:
+    type: object
+    properties:
+      origin_data:
+        type: object
+        properties:
+          image:
+            type: string
+          holder_address:
+            type: string
+          traits:
+            type: array
+            items:
+              type: object
+              properties:
+                trait_type:
+                  type: string
+                value:
+                  type: string
+                display_type:
+                  type: string
+                max_value:
+                  type: string
+      hash:
+        type: string
+        format: byte
+      confirmers:
+        type: array
+        items:
+          type: string
+  sixnft.nftoracle.MintRequest:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      nft_schema_code:
+        type: string
+      token_id:
+        type: string
+      required_confirm:
+        type: string
+        format: uint64
+      status:
+        type: string
+        enum:
+          - PENDING
+          - SUCCESS_WITH_CONSENSUS
+          - FAILED_WITHOUT_CONCENSUS
+          - EXPIRED
+          - FAILED_ON_EXECUTION
+        default: PENDING
+      current_confirm:
+        type: string
+        format: uint64
+      confirmers:
+        type: object
+        additionalProperties:
+          type: boolean
+      created_at:
+        type: string
+        format: date-time
+        title: NftOriginData nft_origin_data = 8;
+      valid_until:
+        type: string
+        format: date-time
+      data_hashes:
+        type: array
+        items:
+          type: object
+          properties:
+            origin_data:
+              type: object
+              properties:
+                image:
+                  type: string
+                holder_address:
+                  type: string
+                traits:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      trait_type:
+                        type: string
+                      value:
+                        type: string
+                      display_type:
+                        type: string
+                      max_value:
+                        type: string
+            hash:
+              type: string
+              format: byte
+            confirmers:
+              type: array
+              items:
+                type: string
+      expired_height:
+        type: string
+        format: int64
+  sixnft.nftoracle.MsgCreateActionRequestResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  sixnft.nftoracle.MsgCreateMintRequestResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      nftSchemaCode:
+        type: string
+      tokenId:
+        type: string
+  sixnft.nftoracle.MsgSubmitActionResponseResponse:
+    type: object
+    properties:
+      actionRequestID:
+        type: string
+  sixnft.nftoracle.MsgSubmitMintResponseResponse:
+    type: object
+    properties:
+      mintRequestID:
+        type: string
+  sixnft.nftoracle.NftOriginData:
+    type: object
+    properties:
+      image:
+        type: string
+      holder_address:
+        type: string
+      traits:
+        type: array
+        items:
+          type: object
+          properties:
+            trait_type:
+              type: string
+            value:
+              type: string
+            display_type:
+              type: string
+            max_value:
+              type: string
+  sixnft.nftoracle.Params:
+    type: object
+    properties:
+      mint_request_active_duration:
+        type: string
+      action_request_active_duration:
+        type: string
+    description: Params defines the parameters for the module.
+  sixnft.nftoracle.QueryAllActionRequestResponse:
+    type: object
+    properties:
+      ActionRequest:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            nft_schema_code:
+              type: string
+            token_id:
+              type: string
+            action:
+              type: string
+            caller:
+              type: string
+            ref_id:
+              type: string
+            required_confirm:
+              type: string
+              format: uint64
+            status:
+              type: string
+              enum:
+                - PENDING
+                - SUCCESS_WITH_CONSENSUS
+                - FAILED_WITHOUT_CONCENSUS
+                - EXPIRED
+                - FAILED_ON_EXECUTION
+              default: PENDING
+            current_confirm:
+              type: string
+              format: uint64
+            confirmers:
+              type: object
+              additionalProperties:
+                type: boolean
+            created_at:
+              type: string
+              format: date-time
+            valid_until:
+              type: string
+              format: date-time
+            data_hashes:
+              type: array
+              items:
+                type: object
+                properties:
+                  origin_data:
+                    type: object
+                    properties:
+                      image:
+                        type: string
+                      holder_address:
+                        type: string
+                      traits:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            trait_type:
+                              type: string
+                            value:
+                              type: string
+                            display_type:
+                              type: string
+                            max_value:
+                              type: string
+                  hash:
+                    type: string
+                    format: byte
+                  confirmers:
+                    type: array
+                    items:
+                      type: string
+            expired_height:
+              type: string
+              format: int64
+            execution_error_message:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  sixnft.nftoracle.QueryAllMintRequestResponse:
+    type: object
+    properties:
+      MintRequest:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            nft_schema_code:
+              type: string
+            token_id:
+              type: string
+            required_confirm:
+              type: string
+              format: uint64
+            status:
+              type: string
+              enum:
+                - PENDING
+                - SUCCESS_WITH_CONSENSUS
+                - FAILED_WITHOUT_CONCENSUS
+                - EXPIRED
+                - FAILED_ON_EXECUTION
+              default: PENDING
+            current_confirm:
+              type: string
+              format: uint64
+            confirmers:
+              type: object
+              additionalProperties:
+                type: boolean
+            created_at:
+              type: string
+              format: date-time
+              title: NftOriginData nft_origin_data = 8;
+            valid_until:
+              type: string
+              format: date-time
+            data_hashes:
+              type: array
+              items:
+                type: object
+                properties:
+                  origin_data:
+                    type: object
+                    properties:
+                      image:
+                        type: string
+                      holder_address:
+                        type: string
+                      traits:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            trait_type:
+                              type: string
+                            value:
+                              type: string
+                            display_type:
+                              type: string
+                            max_value:
+                              type: string
+                  hash:
+                    type: string
+                    format: byte
+                  confirmers:
+                    type: array
+                    items:
+                      type: string
+            expired_height:
+              type: string
+              format: int64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  sixnft.nftoracle.QueryGetActionRequestResponse:
+    type: object
+    properties:
+      ActionRequest:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          nft_schema_code:
+            type: string
+          token_id:
+            type: string
+          action:
+            type: string
+          caller:
+            type: string
+          ref_id:
+            type: string
+          required_confirm:
+            type: string
+            format: uint64
+          status:
+            type: string
+            enum:
+              - PENDING
+              - SUCCESS_WITH_CONSENSUS
+              - FAILED_WITHOUT_CONCENSUS
+              - EXPIRED
+              - FAILED_ON_EXECUTION
+            default: PENDING
+          current_confirm:
+            type: string
+            format: uint64
+          confirmers:
+            type: object
+            additionalProperties:
+              type: boolean
+          created_at:
+            type: string
+            format: date-time
+          valid_until:
+            type: string
+            format: date-time
+          data_hashes:
+            type: array
+            items:
+              type: object
+              properties:
+                origin_data:
+                  type: object
+                  properties:
+                    image:
+                      type: string
+                    holder_address:
+                      type: string
+                    traits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          trait_type:
+                            type: string
+                          value:
+                            type: string
+                          display_type:
+                            type: string
+                          max_value:
+                            type: string
+                hash:
+                  type: string
+                  format: byte
+                confirmers:
+                  type: array
+                  items:
+                    type: string
+          expired_height:
+            type: string
+            format: int64
+          execution_error_message:
+            type: string
+  sixnft.nftoracle.QueryGetMintRequestResponse:
+    type: object
+    properties:
+      MintRequest:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          nft_schema_code:
+            type: string
+          token_id:
+            type: string
+          required_confirm:
+            type: string
+            format: uint64
+          status:
+            type: string
+            enum:
+              - PENDING
+              - SUCCESS_WITH_CONSENSUS
+              - FAILED_WITHOUT_CONCENSUS
+              - EXPIRED
+              - FAILED_ON_EXECUTION
+            default: PENDING
+          current_confirm:
+            type: string
+            format: uint64
+          confirmers:
+            type: object
+            additionalProperties:
+              type: boolean
+          created_at:
+            type: string
+            format: date-time
+            title: NftOriginData nft_origin_data = 8;
+          valid_until:
+            type: string
+            format: date-time
+          data_hashes:
+            type: array
+            items:
+              type: object
+              properties:
+                origin_data:
+                  type: object
+                  properties:
+                    image:
+                      type: string
+                    holder_address:
+                      type: string
+                    traits:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          trait_type:
+                            type: string
+                          value:
+                            type: string
+                          display_type:
+                            type: string
+                          max_value:
+                            type: string
+                hash:
+                  type: string
+                  format: byte
+                confirmers:
+                  type: array
+                  items:
+                    type: string
+          expired_height:
+            type: string
+            format: int64
+  sixnft.nftoracle.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+        properties:
+          mint_request_active_duration:
+            type: string
+          action_request_active_duration:
+            type: string
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  sixnft.nftoracle.RequestStatus:
+    type: string
+    enum:
+      - PENDING
+      - SUCCESS_WITH_CONSENSUS
+      - FAILED_WITHOUT_CONCENSUS
+      - EXPIRED
+      - FAILED_ON_EXECUTION
+    default: PENDING
+  sixnft.nftoracle.Trait:
+    type: object
+    properties:
+      trait_type:
+        type: string
+      value:
+        type: string
+      display_type:
+        type: string
+      max_value:
+        type: string
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

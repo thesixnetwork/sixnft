@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 var (
@@ -32,6 +32,11 @@ func GetTxCmd() *cobra.Command {
 
 	cmd.AddCommand(CmdCreateNFTSchema())
 	cmd.AddCommand(CmdCreateMetadata())
+	cmd.AddCommand(CmdPerformActionByAdmin())
+	cmd.AddCommand(CmdAddAttribute())
+	cmd.AddCommand(CmdAddTokenAttribute())
+	cmd.AddCommand(CmdAddAction())
+	cmd.AddCommand(CmdSetNFTAttribute())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

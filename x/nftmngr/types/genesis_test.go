@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
@@ -40,6 +40,22 @@ func TestGenesisState_Validate(t *testing.T) {
 						TokenId:       "1",
 					},
 				},
+				ActionByRefIdList: []types.ActionByRefId{
+					{
+						RefId: "0",
+					},
+					{
+						RefId: "1",
+					},
+				},
+				OrganizationList: []types.Organization{
+					{
+						Name: "0",
+					},
+					{
+						Name: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -69,6 +85,34 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						NftSchemaCode: "0",
 						TokenId:       "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionByRefId",
+			genState: &types.GenesisState{
+				ActionByRefIdList: []types.ActionByRefId{
+					{
+						RefId: "0",
+					},
+					{
+						RefId: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated organization",
+			genState: &types.GenesisState{
+				OrganizationList: []types.Organization{
+					{
+						Name: "0",
+					},
+					{
+						Name: "0",
 					},
 				},
 			},

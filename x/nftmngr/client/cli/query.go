@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module
@@ -29,6 +29,10 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdShowNFTSchema())
 	cmd.AddCommand(CmdListNftData())
 	cmd.AddCommand(CmdShowNftData())
+	cmd.AddCommand(CmdListActionByRefId())
+	cmd.AddCommand(CmdShowActionByRefId())
+	cmd.AddCommand(CmdListOrganization())
+	cmd.AddCommand(CmdShowOrganization())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

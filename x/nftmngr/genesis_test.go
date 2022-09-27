@@ -3,11 +3,12 @@ package nftmngr_test
 import (
 	"testing"
 
+	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
+
 	"github.com/stretchr/testify/require"
-	keepertest "sixnft/testutil/keeper"
-	"sixnft/testutil/nullify"
-	"sixnft/x/nftmngr"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/testutil/nullify"
+	"github.com/thesixnetwork/sixnft/x/nftmngr"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func TestGenesis(t *testing.T) {
@@ -32,6 +33,22 @@ func TestGenesis(t *testing.T) {
 				TokenId:       "1",
 			},
 		},
+		ActionByRefIdList: []types.ActionByRefId{
+			{
+				RefId: "0",
+			},
+			{
+				RefId: "1",
+			},
+		},
+		OrganizationList: []types.Organization{
+			{
+				Name: "0",
+			},
+			{
+				Name: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -45,5 +62,7 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.NFTSchemaList, got.NFTSchemaList)
 	require.ElementsMatch(t, genesisState.NftDataList, got.NftDataList)
+	require.ElementsMatch(t, genesisState.ActionByRefIdList, got.ActionByRefIdList)
+	require.ElementsMatch(t, genesisState.OrganizationList, got.OrganizationList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

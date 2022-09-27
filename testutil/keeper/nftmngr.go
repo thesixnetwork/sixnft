@@ -3,8 +3,8 @@ package keeper
 import (
 	"testing"
 
-	"sixnft/x/nftmngr/keeper"
-	"sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -16,6 +16,9 @@ import (
 	"github.com/tendermint/tendermint/libs/log"
 	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	tmdb "github.com/tendermint/tm-db"
+
+	evmsupportkeeper "github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
+	evmsupporttypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func NftmngrKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
@@ -37,11 +40,26 @@ func NftmngrKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		memStoreKey,
 		"NftmngrParams",
 	)
+
+	evmSupportStoreKey := sdk.NewKVStoreKey(evmsupporttypes.StoreKey)
+	evmSupportMemStoreKey := storetypes.NewMemoryStoreKey(evmsupporttypes.MemStoreKey)
+
 	k := keeper.NewKeeper(
 		cdc,
 		storeKey,
 		memStoreKey,
 		paramsSubspace,
+		evmsupportkeeper.NewKeeper(
+			cdc,
+			evmSupportStoreKey,
+			evmSupportMemStoreKey,
+			typesparams.NewSubspace(cdc,
+				types.Amino,
+				evmSupportStoreKey,
+				evmSupportMemStoreKey,
+				"EvmsupportParams",
+			),
+		),
 	)
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())

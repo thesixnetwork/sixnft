@@ -20,7 +20,15 @@ import CosmosIbcGoIbcCoreChannelV1 from './cosmos/ibc-go/ibc.core.channel.v1'
 import CosmosIbcGoIbcCoreClientV1 from './cosmos/ibc-go/ibc.core.client.v1'
 import CosmosIbcGoIbcCoreConnectionV1 from './cosmos/ibc-go/ibc.core.connection.v1'
 import CosmosIbcGoIbcCorePortV1 from './cosmos/ibc-go/ibc.core.port.v1'
+import SixnftSixnftAdmin from './sixnft/sixnft.admin'
+import SixnftSixnftEvmsupport from './sixnft/sixnft.evmsupport'
 import SixnftSixnftNftmngr from './sixnft/sixnft.nftmngr'
+import SixnftSixnftNftoracle from './sixnft/sixnft.nftoracle'
+import ThesixnetworkSixnftSixnftAdmin from './thesixnetwork/sixnft/sixnft.admin'
+import ThesixnetworkSixnftSixnftEvmsupport from './thesixnetwork/sixnft/sixnft.evmsupport'
+import ThesixnetworkSixnftSixnftNftadmin from './thesixnetwork/sixnft/sixnft.nftadmin'
+import ThesixnetworkSixnftSixnftNftmngr from './thesixnetwork/sixnft/sixnft.nftmngr'
+import ThesixnetworkSixnftSixnftNftoracle from './thesixnetwork/sixnft/sixnft.nftoracle'
 
 
 export default { 
@@ -44,7 +52,15 @@ export default {
   CosmosIbcGoIbcCoreClientV1: load(CosmosIbcGoIbcCoreClientV1, 'ibc.core.client.v1'),
   CosmosIbcGoIbcCoreConnectionV1: load(CosmosIbcGoIbcCoreConnectionV1, 'ibc.core.connection.v1'),
   CosmosIbcGoIbcCorePortV1: load(CosmosIbcGoIbcCorePortV1, 'ibc.core.port.v1'),
+  SixnftSixnftAdmin: load(SixnftSixnftAdmin, 'sixnft.admin'),
+  SixnftSixnftEvmsupport: load(SixnftSixnftEvmsupport, 'sixnft.evmsupport'),
   SixnftSixnftNftmngr: load(SixnftSixnftNftmngr, 'sixnft.nftmngr'),
+  SixnftSixnftNftoracle: load(SixnftSixnftNftoracle, 'sixnft.nftoracle'),
+  ThesixnetworkSixnftSixnftAdmin: load(ThesixnetworkSixnftSixnftAdmin, 'sixnft.admin'),
+  ThesixnetworkSixnftSixnftEvmsupport: load(ThesixnetworkSixnftSixnftEvmsupport, 'sixnft.evmsupport'),
+  ThesixnetworkSixnftSixnftNftadmin: load(ThesixnetworkSixnftSixnftNftadmin, 'sixnft.nftadmin'),
+  ThesixnetworkSixnftSixnftNftmngr: load(ThesixnetworkSixnftSixnftNftmngr, 'sixnft.nftmngr'),
+  ThesixnetworkSixnftSixnftNftoracle: load(ThesixnetworkSixnftSixnftNftoracle, 'sixnft.nftoracle'),
   
 }
 

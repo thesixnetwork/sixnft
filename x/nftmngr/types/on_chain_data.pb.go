@@ -23,13 +23,14 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type OnChainData struct {
-	RevealRequired  bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
-	RevealSecret    []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
-	NftAttributes   []*AttributeDefinition `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
-	TokenAttributes []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions         []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
-	Status          *Status                `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`
-	OnOffSwitch     *OnOffSwitch           `protobuf:"bytes,7,opt,name=on_off_switch,json=onOffSwitch,proto3" json:"on_off_switch,omitempty"`
+	RevealRequired     bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
+	RevealSecret       []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
+	NftAttributes      []*AttributeDefinition `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
+	TokenAttributes    []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions            []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status             map[string]bool        `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	OnOffSwitch        map[string]bool        `protobuf:"bytes,7,rep,name=on_off_switch,json=onOffSwitch,proto3" json:"on_off_switch,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	NftAttributesValue []*NftAttributeValue   `protobuf:"bytes,8,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
 }
 
 func (m *OnChainData) Reset()         { *m = OnChainData{} }
@@ -100,50 +101,66 @@ func (m *OnChainData) GetActions() []*Action {
 	return nil
 }
 
-func (m *OnChainData) GetStatus() *Status {
+func (m *OnChainData) GetStatus() map[string]bool {
 	if m != nil {
 		return m.Status
 	}
 	return nil
 }
 
-func (m *OnChainData) GetOnOffSwitch() *OnOffSwitch {
+func (m *OnChainData) GetOnOffSwitch() map[string]bool {
 	if m != nil {
 		return m.OnOffSwitch
 	}
 	return nil
 }
 
+func (m *OnChainData) GetNftAttributesValue() []*NftAttributeValue {
+	if m != nil {
+		return m.NftAttributesValue
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*OnChainData)(nil), "sixnft.nftmngr.OnChainData")
+	proto.RegisterMapType((map[string]bool)(nil), "sixnft.nftmngr.OnChainData.OnOffSwitchEntry")
+	proto.RegisterMapType((map[string]bool)(nil), "sixnft.nftmngr.OnChainData.StatusEntry")
 }
 
 func init() { proto.RegisterFile("nftmngr/on_chain_data.proto", fileDescriptor_35d167410338c830) }
 
 var fileDescriptor_35d167410338c830 = []byte{
-	// 350 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x91, 0xcf, 0x4e, 0x2a, 0x31,
-	0x14, 0xc6, 0x99, 0xcb, 0xbd, 0x70, 0x53, 0xfe, 0xdd, 0x34, 0x37, 0x64, 0x02, 0xc9, 0x64, 0x02,
-	0x0b, 0x59, 0x0d, 0x44, 0x1f, 0xc0, 0xa8, 0xac, 0x5c, 0x48, 0x52, 0x76, 0x6e, 0x26, 0x65, 0x68,
-	0xa5, 0x51, 0x5b, 0x6c, 0x0f, 0x8a, 0x6f, 0xe1, 0xda, 0x27, 0x72, 0xc9, 0xd2, 0xa5, 0x81, 0x17,
-	0x31, 0xb6, 0x33, 0x23, 0x28, 0x0b, 0x97, 0xf3, 0x9d, 0xdf, 0xf7, 0x4d, 0xcf, 0x77, 0x50, 0x5b,
-	0x72, 0xb8, 0x95, 0x57, 0xba, 0xaf, 0x64, 0x9c, 0xcc, 0xa8, 0x90, 0xf1, 0x94, 0x02, 0x8d, 0xe6,
-	0x5a, 0x81, 0xc2, 0x75, 0x23, 0x96, 0x92, 0x43, 0x94, 0x32, 0xad, 0x4e, 0x06, 0x53, 0x00, 0x2d,
-	0x26, 0x0b, 0x60, 0xf1, 0x94, 0x71, 0x21, 0x05, 0x08, 0x25, 0x9d, 0xa7, 0xf5, 0x3f, 0x67, 0x92,
-	0x7d, 0xaa, 0x01, 0x0a, 0x0b, 0x93, 0xaa, 0xdb, 0x3f, 0x57, 0x9c, 0xc7, 0xe6, 0x41, 0x40, 0x32,
-	0x73, 0xc3, 0xce, 0x73, 0x11, 0x55, 0x46, 0xf2, 0xec, 0xe3, 0x4d, 0x43, 0x0a, 0x14, 0x1f, 0xa0,
-	0x86, 0x66, 0xf7, 0x8c, 0xde, 0xc4, 0x9a, 0xdd, 0x2d, 0x84, 0x66, 0x53, 0xdf, 0x0b, 0xbd, 0xde,
-	0x5f, 0x52, 0x77, 0x32, 0x49, 0x55, 0xdc, 0x45, 0xb5, 0x14, 0x34, 0x2c, 0xd1, 0x0c, 0xfc, 0x5f,
-	0xa1, 0xd7, 0xab, 0x92, 0xaa, 0x13, 0xc7, 0x56, 0xc3, 0xe7, 0xa8, 0x2e, 0x39, 0xc4, 0xf9, 0x22,
-	0xc6, 0x2f, 0x86, 0xc5, 0x5e, 0xe5, 0xb0, 0x1b, 0xed, 0xee, 0x1c, 0x9d, 0x64, 0xc4, 0x30, 0xdf,
-	0x94, 0xd4, 0x24, 0x87, 0x5c, 0x37, 0xf8, 0x02, 0xfd, 0x03, 0x75, 0xcd, 0xe4, 0x76, 0xda, 0xef,
-	0x9f, 0xa7, 0x35, 0xac, 0x79, 0x2b, 0x6f, 0x80, 0xca, 0xae, 0x3c, 0xe3, 0xff, 0xb1, 0x31, 0xcd,
-	0x6f, 0x31, 0x76, 0x4c, 0x32, 0x0c, 0x47, 0xa8, 0xe4, 0x8a, 0xf5, 0x4b, 0xa1, 0xb7, 0xcf, 0x30,
-	0xb6, 0x53, 0x92, 0x52, 0xf8, 0x18, 0xd5, 0x76, 0x2a, 0xf7, 0xcb, 0xd6, 0xd6, 0xfe, 0x6a, 0x1b,
-	0xc9, 0x11, 0xe7, 0x63, 0x8b, 0x90, 0x8a, 0xfa, 0xfc, 0x38, 0x1d, 0xbc, 0xac, 0x03, 0x6f, 0xb5,
-	0x0e, 0xbc, 0xb7, 0x75, 0xe0, 0x3d, 0x6d, 0x82, 0xc2, 0x6a, 0x13, 0x14, 0x5e, 0x37, 0x41, 0xe1,
-	0xb2, 0xe9, 0x22, 0xfa, 0xcb, 0x7e, 0x76, 0x5c, 0x78, 0x9c, 0x33, 0x33, 0x29, 0xd9, 0xab, 0x1e,
-	0xbd, 0x07, 0x00, 0x00, 0xff, 0xff, 0x16, 0xc2, 0xbf, 0x4d, 0x71, 0x02, 0x00, 0x00,
+	// 460 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x52, 0x41, 0x6f, 0xd3, 0x30,
+	0x14, 0x6e, 0x5a, 0xda, 0x0d, 0x77, 0xed, 0x2a, 0xab, 0x42, 0x51, 0x91, 0xa2, 0x6e, 0x3b, 0xac,
+	0x07, 0x94, 0x20, 0xb8, 0x00, 0x07, 0x10, 0x30, 0x0e, 0x70, 0x58, 0x91, 0x2b, 0x71, 0xe0, 0x12,
+	0xb9, 0xa9, 0xbd, 0x5a, 0xdd, 0xec, 0x61, 0xbf, 0x6c, 0xeb, 0x7f, 0xe0, 0xc0, 0xcf, 0xe2, 0xb8,
+	0x23, 0x47, 0xd4, 0xfe, 0x11, 0x14, 0x3b, 0xe9, 0x92, 0x82, 0x10, 0xdc, 0x92, 0xef, 0x7d, 0xdf,
+	0xf7, 0x9e, 0xbf, 0xf7, 0xd0, 0x43, 0xc9, 0xe1, 0x42, 0x9e, 0xe9, 0x48, 0xc9, 0x38, 0x99, 0x53,
+	0x21, 0xe3, 0x19, 0x05, 0x1a, 0x5e, 0x6a, 0x05, 0x0a, 0x77, 0x8d, 0xb8, 0x91, 0x1c, 0xc2, 0x9c,
+	0x33, 0x38, 0x2c, 0xc8, 0x14, 0x40, 0x8b, 0x69, 0x0a, 0x2c, 0x9e, 0x31, 0x2e, 0xa4, 0x00, 0xa1,
+	0xa4, 0xd3, 0x0c, 0xfa, 0x1b, 0x4e, 0xf2, 0x27, 0xd4, 0x00, 0x85, 0xd4, 0xe4, 0x68, 0xb9, 0xb9,
+	0xe2, 0x3c, 0x36, 0xd7, 0x02, 0x92, 0x79, 0x5e, 0x3c, 0x28, 0x8a, 0x92, 0x43, 0x7c, 0xd7, 0xf0,
+	0x8a, 0x9e, 0xa7, 0xcc, 0x51, 0x0e, 0xbf, 0x36, 0x51, 0x7b, 0x2c, 0xdf, 0x66, 0x63, 0x9f, 0x50,
+	0xa0, 0xf8, 0x18, 0xed, 0x6b, 0x76, 0xc5, 0xe8, 0x79, 0xac, 0xd9, 0x97, 0x54, 0x68, 0x36, 0xf3,
+	0xbd, 0xa1, 0x37, 0xda, 0x25, 0x5d, 0x07, 0x93, 0x1c, 0xc5, 0x47, 0xa8, 0x93, 0x13, 0x0d, 0x4b,
+	0x34, 0x03, 0xbf, 0x3e, 0xf4, 0x46, 0x7b, 0x64, 0xcf, 0x81, 0x13, 0x8b, 0xe1, 0x0f, 0xa8, 0x5b,
+	0x69, 0x6d, 0xfc, 0xc6, 0xb0, 0x31, 0x6a, 0x3f, 0x39, 0x0a, 0xab, 0xb1, 0x84, 0xaf, 0x0b, 0xc6,
+	0xc9, 0x26, 0x0c, 0xd2, 0x91, 0x1c, 0x36, 0xb8, 0xc1, 0xa7, 0xa8, 0x07, 0x6a, 0xc1, 0x64, 0xd9,
+	0xed, 0xde, 0xbf, 0xbb, 0xed, 0x5b, 0x71, 0xc9, 0xef, 0x31, 0xda, 0x71, 0xf9, 0x1a, 0xbf, 0x69,
+	0x6d, 0x1e, 0xfc, 0x66, 0x63, 0xcb, 0xa4, 0xa0, 0xe1, 0x57, 0xa8, 0xe5, 0xb2, 0xf7, 0x5b, 0x56,
+	0x70, 0xbc, 0x2d, 0x28, 0x05, 0x19, 0x4e, 0x2c, 0xf3, 0x9d, 0x04, 0xbd, 0x24, 0xb9, 0x0c, 0x7f,
+	0x44, 0x9d, 0xca, 0x9a, 0xfc, 0x1d, 0xeb, 0xf3, 0xe8, 0x6f, 0x3e, 0x63, 0x39, 0xe6, 0x7c, 0x62,
+	0xe9, 0xce, 0xac, 0xad, 0xee, 0x10, 0x3c, 0x41, 0xfd, 0x6a, 0xc0, 0x6e, 0xb9, 0xfe, 0xae, 0x35,
+	0x3e, 0xd8, 0x36, 0x3e, 0x2d, 0x25, 0xfa, 0x29, 0x23, 0x12, 0x5c, 0x09, 0xd9, 0x62, 0x83, 0xe7,
+	0xa8, 0x5d, 0x9a, 0x1e, 0xf7, 0x50, 0x63, 0xc1, 0x96, 0xf6, 0x0c, 0xee, 0x93, 0xec, 0x13, 0xf7,
+	0x51, 0xd3, 0xb5, 0xa9, 0xdb, 0xd3, 0x70, 0x3f, 0x2f, 0xea, 0xcf, 0xbc, 0xc1, 0x4b, 0xd4, 0xdb,
+	0x1e, 0xf8, 0x7f, 0xf4, 0x6f, 0xde, 0x7f, 0x5f, 0x05, 0xde, 0xed, 0x2a, 0xf0, 0x7e, 0xae, 0x02,
+	0xef, 0xdb, 0x3a, 0xa8, 0xdd, 0xae, 0x83, 0xda, 0x8f, 0x75, 0x50, 0xfb, 0x1c, 0x9d, 0x09, 0x98,
+	0xa7, 0xd3, 0x30, 0x51, 0x17, 0x11, 0xcc, 0x59, 0xf6, 0x30, 0x06, 0xd7, 0x4a, 0x2f, 0x22, 0xf7,
+	0xc6, 0xe8, 0x26, 0x2a, 0xae, 0x1d, 0x96, 0x97, 0xcc, 0x4c, 0x5b, 0xf6, 0xc0, 0x9f, 0xfe, 0x0a,
+	0x00, 0x00, 0xff, 0xff, 0xd5, 0x20, 0xbf, 0xa0, 0x9f, 0x03, 0x00, 0x00,
 }
 
 func (m *OnChainData) Marshal() (dAtA []byte, err error) {
@@ -166,29 +183,63 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.OnOffSwitch != nil {
-		{
-			size, err := m.OnOffSwitch.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.NftAttributesValue) > 0 {
+		for iNdEx := len(m.NftAttributesValue) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NftAttributesValue[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
-			i -= size
-			i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x42
 		}
-		i--
-		dAtA[i] = 0x3a
 	}
-	if m.Status != nil {
-		{
-			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.OnOffSwitch) > 0 {
+		for k := range m.OnOffSwitch {
+			v := m.OnOffSwitch[k]
+			baseI := i
+			i--
+			if v {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
 			}
-			i -= size
-			i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x10
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintOnChainData(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintOnChainData(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x3a
 		}
-		i--
-		dAtA[i] = 0x32
+	}
+	if len(m.Status) > 0 {
+		for k := range m.Status {
+			v := m.Status[k]
+			baseI := i
+			i--
+			if v {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i--
+			dAtA[i] = 0x10
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintOnChainData(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintOnChainData(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x32
+		}
 	}
 	if len(m.Actions) > 0 {
 		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
@@ -294,13 +345,27 @@ func (m *OnChainData) Size() (n int) {
 			n += 1 + l + sovOnChainData(uint64(l))
 		}
 	}
-	if m.Status != nil {
-		l = m.Status.Size()
-		n += 1 + l + sovOnChainData(uint64(l))
+	if len(m.Status) > 0 {
+		for k, v := range m.Status {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovOnChainData(uint64(len(k))) + 1 + 1
+			n += mapEntrySize + 1 + sovOnChainData(uint64(mapEntrySize))
+		}
 	}
-	if m.OnOffSwitch != nil {
-		l = m.OnOffSwitch.Size()
-		n += 1 + l + sovOnChainData(uint64(l))
+	if len(m.OnOffSwitch) > 0 {
+		for k, v := range m.OnOffSwitch {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovOnChainData(uint64(len(k))) + 1 + 1
+			n += mapEntrySize + 1 + sovOnChainData(uint64(mapEntrySize))
+		}
+	}
+	if len(m.NftAttributesValue) > 0 {
+		for _, e := range m.NftAttributesValue {
+			l = e.Size()
+			n += 1 + l + sovOnChainData(uint64(l))
+		}
 	}
 	return n
 }
@@ -526,11 +591,90 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.Status == nil {
-				m.Status = &Status{}
+				m.Status = make(map[string]bool)
 			}
-			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
+			var mapkey string
+			var mapvalue bool
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowOnChainData
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var mapvaluetemp int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvaluetemp |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					mapvalue = bool(mapvaluetemp != 0)
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipOnChainData(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
 			}
+			m.Status[mapkey] = mapvalue
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -562,9 +706,122 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.OnOffSwitch == nil {
-				m.OnOffSwitch = &OnOffSwitch{}
+				m.OnOffSwitch = make(map[string]bool)
 			}
-			if err := m.OnOffSwitch.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			var mapkey string
+			var mapvalue bool
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowOnChainData
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var mapvaluetemp int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowOnChainData
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvaluetemp |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					mapvalue = bool(mapvaluetemp != 0)
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipOnChainData(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthOnChainData
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.OnOffSwitch[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributesValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftAttributesValue = append(m.NftAttributesValue, &NftAttributeValue{})
+			if err := m.NftAttributesValue[len(m.NftAttributesValue)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

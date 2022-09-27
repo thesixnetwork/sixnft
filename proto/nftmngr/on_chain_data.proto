@@ -4,7 +4,8 @@ import "nftmngr/attribute_definition.proto";
 import "nftmngr/action.proto";
 import "nftmngr/status.proto";
 import "nftmngr/on_off_switch.proto";
-option go_package = "sixnft/x/nftmngr/types";
+import "nftmngr/nft_attribute_value.proto";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 message OnChainData {
   bool reveal_required = 1;
@@ -12,6 +13,7 @@ message OnChainData {
   repeated AttributeDefinition nft_attributes = 3; 
   repeated AttributeDefinition token_attributes = 4; 
   repeated Action actions = 5; 
-  Status status = 6;
-  OnOffSwitch on_off_switch = 7;
+  map<string, bool> status = 6;
+  map<string, bool> on_off_switch = 7;
+  repeated NftAttributeValue nft_attributes_value = 8;
 }

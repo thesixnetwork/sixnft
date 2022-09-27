@@ -26,7 +26,7 @@ ignite scaffold type DisplayOption opensea \
 # syntax = "proto3";
 # package sixnft.nftmngr;
 # import "nftmngr/opensea_display_option.proto";
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message DisplayOption {
   
@@ -42,7 +42,7 @@ ignite scaffold type AttributeDefinition name data_type display_value_field disp
 # syntax = "proto3";
 # package sixnft.nftmngr;
 # import "nftmngr/display_option.proto";
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message AttributeDefinition {
   
@@ -61,7 +61,7 @@ ignite scaffold type OriginData origin_chain origin_contract_address origin_base
 # syntax = "proto3";
 # package sixnft.nftmngr;
 # import "nftmngr/attribute_definition.proto";
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # enum AttributeOverriding {
 #   ORIGIN = 0;
@@ -86,7 +86,7 @@ ignite scaffold type Action name desc when then \
 # syntax = "proto3";
 # package sixnft.nftmngr;
 
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message Action {
   
@@ -104,7 +104,7 @@ ignite scaffold type OnChainData nft_attributes token_attributes actions then \
 # package sixnft.nftmngr;
 # import "nftmngr/attribute_definition.proto";
 # import "nftmngr/action.proto";
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message OnChainData {
   
@@ -125,7 +125,7 @@ ignite scaffold map NFTSchema name owner origin_data onchain_data \
 # import "nftmngr/on_chain_data.proto";
 # import "nftmngr/origin_data.proto";
 
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message NFTSchema {
 #   string code = 1; 
@@ -165,7 +165,10 @@ ignite scaffold message createNFTSchema nft_schema_base64 \
 
 # Test create NFTSchema
 sixnftd tx nftmngr create-nft-schema --from alice \
-    ewogICAgImNvZGUiOiAiYnVha2F3MSIsCiAgICAibmFtZSI6ICJCdWFrYXcxIiwKICAgICJvd25lciI6ICI2bmZ0MTVzOHlldjJjdjJ2ZTdsemVtNXl1Zmp5bm5mZTB1MnQ5c2xwd3ZuIiwKICAgICJvcmlnaW5fZGF0YSI6IHsKICAgICAgICAib3JpZ2luX2Jhc2VfdXJpIjogImh0dHBzOi8vYmsxbmZ0LnNpeG5ldHdvcmsuaW8vaXBmcy9RbWNvdkVjWnhpTTFNOWdmMzUzNWpVQ3BicUZaU2pjMmhIdVluWkViV05tdDVhIiwKICAgICAgICAib3JpZ2luX2NoYWluIjogImV0aGVyZXVtIiwKICAgICAgICAib3JpZ2luX2NvbnRyYWN0X2FkZHJlc3MiOiAiMHg5RjFDQzcwYjExZjQxMjlkMDQyZDAwMzdjMjA2NmQxMkUxNmQ5YTUyIiwKICAgICAgICAiYXR0cmlidXRlX292ZXJyaWRpbmciOiAiT1JJR0lOIiwKICAgICAgICAibWV0YWRhdGFfZm9ybWF0IjogIm9wZW5zZWEiLAogICAgICAgICJvcmlnaW5fYXR0cmlidXRlcyI6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIm5hbWUiOiAiYmFja2dyb3VuZF9sIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiQmFja2dyb3VuZCBMIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIm5hbWUiOiAiYmFja2dyb3VuZF9yIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiQmFja2dyb3VuZCBSIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIm5hbWUiOiAicGxhdGVfbCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIlBsYXRlIEwiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJwbGF0ZV9yIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiUGxhdGUgUiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImJvZHlfbCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkJvZHkgTCIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImJvZHlfciIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkJvZHkgUiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImhlYWRfbCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkhlYWQgTCIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImhlYWRfciIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkhlYWQgUiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImNsb3RoZXNfbCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkNsb3RoZXMgTCIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImNsb3RoZXNfciIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkNsb3RoZXMgUiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImV4dHJhX2wiLAogICAgICAgICAgICAgICAgImRhdGFfdHlwZSI6ICJzdHJpbmciLAogICAgICAgICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAgICAgICAgICJvcGVuc2VhIjogewogICAgICAgICAgICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJFeHRyYSBMIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIm5hbWUiOiAiZXh0cmFfciIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogInN0cmluZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogIkV4dHJhIFIiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJoYW5kX2wiLAogICAgICAgICAgICAgICAgImRhdGFfdHlwZSI6ICJzdHJpbmciLAogICAgICAgICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAgICAgICAgICJvcGVuc2VhIjogewogICAgICAgICAgICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJIYW5kIEwiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJoYW5kX3IiLAogICAgICAgICAgICAgICAgImRhdGFfdHlwZSI6ICJzdHJpbmciLAogICAgICAgICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAgICAgICAgICJvcGVuc2VhIjogewogICAgICAgICAgICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJIYW5kIFIiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJpbmZsdWVuY2VyIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiSW5mbHVlbmNlciIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICBdCiAgICB9LAogICAgIm9uY2hhaW5fZGF0YSI6IHsKICAgICAgICAibmZ0X2F0dHJpYnV0ZXMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImV4cGlyZV9kYXRlIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAibG9uZyIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV92YWx1ZV9maWVsZCI6ICJ2YWx1ZSIsCiAgICAgICAgICAgICAgICAiZGlzcGxheV9vcHRpb24iOiB7CiAgICAgICAgICAgICAgICAgICAgIm9wZW5zZWEiOiB7CiAgICAgICAgICAgICAgICAgICAgICAgICJkaXNwbGF5X3R5cGUiOiAiZGF0ZSIsCiAgICAgICAgICAgICAgICAgICAgICAgICJ0cmFpdF90eXBlIjogImJpcnRoZGF5IgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInRva2VuX2F0dHJpYnV0ZXMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImV4Y2x1c2l2ZV9wYXJ0eV9hY2Nlc3MiLAogICAgICAgICAgICAgICAgImRhdGFfdHlwZSI6ICJib29sZWFuIiwKICAgICAgICAgICAgICAgICJoaWRkZW5fdG9fbWFya2V0cGxhY2UiOiB0cnVlCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogImZpcnN0X2Rpc2NvdW50X3VzZWQiLAogICAgICAgICAgICAgICAgImRhdGFfdHlwZSI6ICJib29sZWFuIiwKICAgICAgICAgICAgICAgICJoaWRkZW5fdG9fbWFya2V0cGxhY2UiOiB0cnVlCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogInBlcmNlbnRfZGlzY291bnRfMTAiLAogICAgICAgICAgICAgICAgImRlZmF1bHRfbWludF92YWx1ZSI6ICIxMCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogImludGVyZ2VyIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiQXZhaWxhYmxlIDEwIFBlcmNlbnQgRGlzY291bnQiLAogICAgICAgICAgICAgICAgICAgICAgICAibWF4X3ZhbHVlIjogNSwKICAgICAgICAgICAgICAgICAgICAgICAgImRpc3BsYXlfdHlwZSI6ICJudW1iZXIiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJkaXNjb3VudF9wZXJjZW50YWdlIiwKICAgICAgICAgICAgICAgICJkZWZhdWx0X21pbnRfdmFsdWUiOiAiMCIsCiAgICAgICAgICAgICAgICAiZGF0YV90eXBlIjogImludGVyZ2VyIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X3ZhbHVlX2ZpZWxkIjogInZhbHVlIiwKICAgICAgICAgICAgICAgICJkaXNwbGF5X29wdGlvbiI6IHsKICAgICAgICAgICAgICAgICAgICAib3BlbnNlYSI6IHsKICAgICAgICAgICAgICAgICAgICAgICAgInRyYWl0X3R5cGUiOiAiRGlzY291bnQiLAogICAgICAgICAgICAgICAgICAgICAgICAiZGlzcGxheV90eXBlIjogImJvb3N0X3BlcmNlbnRhZ2UiCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAibmFtZSI6ICJkaXNjb3VudF9hbW91bnQiLAogICAgICAgICAgICAgICAgImRlZmF1bHRfbWludF92YWx1ZSI6ICIwIiwKICAgICAgICAgICAgICAgICJkYXRhX3R5cGUiOiAiaW50ZXJnZXIiLAogICAgICAgICAgICAgICAgImRpc3BsYXlfdmFsdWVfZmllbGQiOiAidmFsdWUiLAogICAgICAgICAgICAgICAgImRpc3BsYXlfb3B0aW9uIjogewogICAgICAgICAgICAgICAgICAgICJvcGVuc2VhIjogewogICAgICAgICAgICAgICAgICAgICAgICAidHJhaXRfdHlwZSI6ICJEaXNjb3VudCIsCiAgICAgICAgICAgICAgICAgICAgICAgICJkaXNwbGF5X3R5cGUiOiAiYm9vc3RfbnVtYmVyIgogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImFjdGlvbnMiOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJuYW1lIjogInVzZTEwcGVyY2VudGRpc2NvdW50IiwKICAgICAgICAgICAgICAgICJkZXNjIjogIlVzZSAxMCUgZGlzY291bnQgb24gcHVyY2hhc2UiLAogICAgICAgICAgICAgICAgIndoZW4iOiAibWV0YS5HZXROdW1iZXIoJ3BlcmNlbnRfZGlzY291bnRfMTAnKSA
+    <BASE64 schema>
+
+sixnftd query nftmngr show-nft-schema \
+    <NFT schema code>
 
 
 ignite scaffold type Status first_mint_complete \
@@ -196,7 +199,7 @@ ignite scaffold map NftData token_owner origin_image origin_attributes onchain_a
 # package sixnft.nftmngr;
 
 # import "nftmngr/nft_attribute_value.proto";
-# option go_package = "sixnft/x/nftmngr/types";
+# option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 # message NftData {
 #   string nftSchemaCode = 1; 
@@ -213,3 +216,139 @@ ignite scaffold message createMetadata nft_schema_code token_id base64NFTData \
     --response nft_schema_code,token_id \
     --no-simulation \
     --module nftmngr
+
+#Test create metadata
+sixnftd tx nftmngr create-metadata buakaw1 1 --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake \
+    <BASE64 NFT Data>
+
+
+# Create Action
+ignite scaffold message performActionByAdmin nft_schema_code token_id action \
+    --desc "To do action" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftmngr
+
+
+# Test create action
+sixnftd tx nftmngr perform-action-by-nftadmin buakaw1 1 use10percentdiscount --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake
+
+# Create evm_support module
+
+ignite scaffold module evm_support 
+
+ignite scaffold map AddressBinding \
+    --index eth_address:string,native_address:string \
+    --no-message \
+    --no-simulation \
+    --module evm_support
+
+ignite scaffold message bindAddress eth_address:string signature:string signed_message:string \
+    --desc "To bind EVM address with native address" \
+    --response eth_address,native_address \
+    --no-simulation \
+    --module evm_support
+
+ignite scaffold message removeBinding eth_address:string signature:string signed_message:string \
+    --desc "To remove binding address" \
+    --response eth_address \
+    --no-simulation \
+    --module evm_support
+
+# string creator = 1;
+#   string nftSchemaCode = 2;
+#   string tokenId = 3;
+#   string action = 4;
+
+ignite scaffold map ActionByRefId creator nft_schema_code token_id action \
+    --index ref_id \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
+ignite scaffold module nftoracle
+
+ignite scaffold list MintRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message createMintRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --desc "To create Mint Request" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftoracle
+
+# To create token module
+ignite scaffold module admin
+
+ignite scaffold type permissions \
+    --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold single authorization root_admin:string permissions:Permissions \
+    --no-message \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message grantPermission name grantee \
+    --desc "To grant permission" \
+    --response grantee \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message revokePermission name revokee \
+    --desc "To revoke permission" \
+    --response revokee \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message mint amount:uint token:string \
+    --desc "To mint token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin
+
+ignite scaffold message burn amount:uint token:string \
+    --desc "To burn token" \
+    --response amount,token \
+    --no-simulation \
+    --module admin
+
+
+ignite scaffold map Organization owner \
+    --index name \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
+ignite scaffold message submitMintResponse mintRequestID:uint base64NftData:string \
+    --desc "To submit mint response" \
+    --response mintRequestID \
+    --no-simulation \
+    --module nftoracle
+ignite scaffold message setNFTAttribute nft_schema_code attribute_value:NftAttributeValue \
+    --desc "To set NFT attribute" \
+    --response nft_schema_code,attribute_name,attribute_value \
+    --no-simulation \
+    --module nftmngr
+
+
+ignite scaffold list ActionRequest nft_schema_code:string token_id:string required_confirm:uint \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message createActionRequest vm:string base64_action_signature:string \
+    --desc "To create Action Request" \
+    --response request_id \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message submitActionResponse actionRequestID:uint base64NftData:string \
+    --desc "To submit action response" \
+    --response actionRequestID \
+    --no-simulation \
+    --module nftoracle

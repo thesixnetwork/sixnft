@@ -11,14 +11,15 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 
+	"github.com/thesixnetwork/sixnft/x/nftmngr/client/cli"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"sixnft/x/nftmngr/client/cli"
-	"sixnft/x/nftmngr/keeper"
-	"sixnft/x/nftmngr/types"
 )
 
 var (
@@ -98,9 +99,10 @@ func (AppModuleBasic) GetQueryCmd() *cobra.Command {
 type AppModule struct {
 	AppModuleBasic
 
-	keeper        keeper.Keeper
-	accountKeeper types.AccountKeeper
-	bankKeeper    types.BankKeeper
+	keeper           keeper.Keeper
+	accountKeeper    types.AccountKeeper
+	bankKeeper       types.BankKeeper
+	evmsupportKeeper types.EvmsupportKeeper
 }
 
 func NewAppModule(
@@ -108,12 +110,14 @@ func NewAppModule(
 	keeper keeper.Keeper,
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
+	evmsupportKeeper types.EvmsupportKeeper,
 ) AppModule {
 	return AppModule{
-		AppModuleBasic: NewAppModuleBasic(cdc),
-		keeper:         keeper,
-		accountKeeper:  accountKeeper,
-		bankKeeper:     bankKeeper,
+		AppModuleBasic:   NewAppModuleBasic(cdc),
+		keeper:           keeper,
+		accountKeeper:    accountKeeper,
+		bankKeeper:       bankKeeper,
+		evmsupportKeeper: evmsupportKeeper,
 	}
 }
 

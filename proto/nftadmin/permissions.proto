@@ -1,0 +1,12 @@
+syntax = "proto3";
+package sixnft.nftadmin;
+
+option go_package = "github.com/thesixnetwork/sixnft/x/nftadmin/types";
+
+message AddressList {
+    repeated string addresses = 1;
+}
+
+message Permissions {
+  map<string, AddressList> map_name = 1;
+}
