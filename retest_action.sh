@@ -17,6 +17,6 @@ read
 echo "Value before action >>"
 sixnftd query nftmngr show-nft-data buakaw1 1 --output json | jq '.nftData.onchain_attributes[] | select(.name=="percent_discount_10").number_attribute_value.value'
 
-sixnftd tx nftmngr perform-action-by-admin buakaw1 1 use10percentdiscount --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
+sixnftd tx nftmngr perform-action-by-nftadmin buakaw1 1 use10percentdiscount --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
 echo "Value after action"
 sixnftd query nftmngr show-nft-data buakaw1 1 --output json | jq '.nftData.onchain_attributes[] | select(.name=="percent_discount_10").number_attribute_value.value'

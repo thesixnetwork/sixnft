@@ -50,7 +50,7 @@ case $choice in
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
-        sixnftd tx nftmngr perform-action-by-admin ${schema_code} ${token_id} ${action} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
+        sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
         ;;
     5) echo "Set NFT Attribute"
         read -p "Enter Schema Code: " schema_code 

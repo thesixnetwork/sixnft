@@ -38,6 +38,10 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 
 	// append new nft_attributes to array of OnchainData.NftAttributes
 	schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
+	// count the index of new attribute
+	index := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	// set new index to new attribute
+	new_add_attribute.Index = uint64(index-1)
 
 	// set schema
 	k.Keeper.SetNFTSchema(ctx, schema)
@@ -99,4 +103,18 @@ func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition
 	// 	return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute HiddenToMarketplace is false")
 	// }
 	return nil
+}
+
+// merge all attributes and count the index
+func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) int {
+	// length or originAttributes
+	length_originAttributes := len(originAttributes)
+	// length or onchainNFTAttributes
+	length_onchainNFTAttributes := len(onchainNFTAttributes)
+	// length or onchainTokenAttribute
+	length_onchainTokenAttribute := len(onchainTokenAttribute)
+
+	// length of all attributes
+	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
+	return length_allAttributes
 }
