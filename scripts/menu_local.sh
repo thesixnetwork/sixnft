@@ -13,6 +13,7 @@ echo "##  5. Set NFT Attribute                   ##"
 echo "##  6. Oracle - Create Mint Request        ##"
 echo "##  7. Oracle - Get Mint Request           ##"
 echo "##  8. Oracle - Submit Mint Response       ##"
+echo "##  9. Add Attribute                       ##"
 echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
@@ -117,6 +118,15 @@ case $choice in
         BASE64_ORIGINDATA=`cat nft-origin-data.json | base64 | tr -d '\n'`
 
         sixnftd tx nftoracle submit-mint-response ${mint_request_id} ${BASE64_ORIGINDATA} --from ${oracle_key_name} --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
+        ;;
+    9) echo "Add Attribute"
+        read -p "Enter Schema Code: " schema_code 
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        BASE64_ATTRIBUTE=`cat new-attribute.json | base64 | tr -d '\n'`
+        sixnftd tx nftmngr add-attribute ${schema_code} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+            ${BASE64_ATTRIBUTE}
         ;;
     *) echo "Invalid choice"
        ;;
