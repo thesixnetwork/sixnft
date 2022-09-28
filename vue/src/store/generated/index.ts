@@ -24,6 +24,7 @@ import SixnftSixnftAdmin from './sixnft/sixnft.admin'
 import SixnftSixnftEvmsupport from './sixnft/sixnft.evmsupport'
 import SixnftSixnftNftmngr from './sixnft/sixnft.nftmngr'
 import SixnftSixnftNftoracle from './sixnft/sixnft.nftoracle'
+import SixnftSixnftTest from './sixnft/sixnft.test'
 import ThesixnetworkSixnftSixnftAdmin from './thesixnetwork/sixnft/sixnft.admin'
 import ThesixnetworkSixnftSixnftEvmsupport from './thesixnetwork/sixnft/sixnft.evmsupport'
 import ThesixnetworkSixnftSixnftNftadmin from './thesixnetwork/sixnft/sixnft.nftadmin'
@@ -56,6 +57,7 @@ export default {
   SixnftSixnftEvmsupport: load(SixnftSixnftEvmsupport, 'sixnft.evmsupport'),
   SixnftSixnftNftmngr: load(SixnftSixnftNftmngr, 'sixnft.nftmngr'),
   SixnftSixnftNftoracle: load(SixnftSixnftNftoracle, 'sixnft.nftoracle'),
+  SixnftSixnftTest: load(SixnftSixnftTest, 'sixnft.test'),
   ThesixnetworkSixnftSixnftAdmin: load(ThesixnetworkSixnftSixnftAdmin, 'sixnft.admin'),
   ThesixnetworkSixnftSixnftEvmsupport: load(ThesixnetworkSixnftSixnftEvmsupport, 'sixnft.evmsupport'),
   ThesixnetworkSixnftSixnftNftadmin: load(ThesixnetworkSixnftSixnftNftadmin, 'sixnft.nftadmin'),

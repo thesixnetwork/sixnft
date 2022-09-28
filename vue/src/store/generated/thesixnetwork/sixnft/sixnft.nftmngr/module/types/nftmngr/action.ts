@@ -6,7 +6,7 @@ export const protobufPackage = "sixnft.nftmngr";
 export interface Action {
   name: string;
   desc: string;
-  is_active: boolean;
+  disable: boolean;
   when: string;
   then: string[];
 }
@@ -14,7 +14,7 @@ export interface Action {
 const baseAction: object = {
   name: "",
   desc: "",
-  is_active: false,
+  disable: false,
   when: "",
   then: "",
 };
@@ -27,8 +27,8 @@ export const Action = {
     if (message.desc !== "") {
       writer.uint32(18).string(message.desc);
     }
-    if (message.is_active === true) {
-      writer.uint32(24).bool(message.is_active);
+    if (message.disable === true) {
+      writer.uint32(24).bool(message.disable);
     }
     if (message.when !== "") {
       writer.uint32(34).string(message.when);
@@ -54,7 +54,7 @@ export const Action = {
           message.desc = reader.string();
           break;
         case 3:
-          message.is_active = reader.bool();
+          message.disable = reader.bool();
           break;
         case 4:
           message.when = reader.string();
@@ -83,10 +83,10 @@ export const Action = {
     } else {
       message.desc = "";
     }
-    if (object.is_active !== undefined && object.is_active !== null) {
-      message.is_active = Boolean(object.is_active);
+    if (object.disable !== undefined && object.disable !== null) {
+      message.disable = Boolean(object.disable);
     } else {
-      message.is_active = false;
+      message.disable = false;
     }
     if (object.when !== undefined && object.when !== null) {
       message.when = String(object.when);
@@ -105,7 +105,7 @@ export const Action = {
     const obj: any = {};
     message.name !== undefined && (obj.name = message.name);
     message.desc !== undefined && (obj.desc = message.desc);
-    message.is_active !== undefined && (obj.is_active = message.is_active);
+    message.disable !== undefined && (obj.disable = message.disable);
     message.when !== undefined && (obj.when = message.when);
     if (message.then) {
       obj.then = message.then.map((e) => e);
@@ -128,10 +128,10 @@ export const Action = {
     } else {
       message.desc = "";
     }
-    if (object.is_active !== undefined && object.is_active !== null) {
-      message.is_active = object.is_active;
+    if (object.disable !== undefined && object.disable !== null) {
+      message.disable = object.disable;
     } else {
-      message.is_active = false;
+      message.disable = false;
     }
     if (object.when !== undefined && object.when !== null) {
       message.when = object.when;

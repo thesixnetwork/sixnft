@@ -19,7 +19,7 @@ export interface GooglerpcStatus {
 export interface NftmngrAction {
   name?: string;
   desc?: string;
-  is_active?: boolean;
+  disable?: boolean;
   when?: string;
   then?: string[];
 }

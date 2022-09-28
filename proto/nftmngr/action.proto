@@ -7,7 +7,7 @@ message Action {
   
   string name = 1; 
   string desc = 2; 
-  bool is_active = 3;
+  bool disable = 3;
   string when = 4; 
   repeated string then = 5; 
 }
