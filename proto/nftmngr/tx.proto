@@ -19,6 +19,7 @@ service Msg {
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
   rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
+  rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -128,6 +129,18 @@ message MsgSetBaseUri {
 message MsgSetBaseUriResponse {
   string code = 1;
   string uri = 2;
+}
+
+message MsgToggleAction {
+  string creator = 1;
+  string code = 2;
+  string action = 3;
+}
+
+message MsgToggleActionResponse {
+  string code = 1;
+  string name = 2;
+  OnChainData onchainDataAction = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

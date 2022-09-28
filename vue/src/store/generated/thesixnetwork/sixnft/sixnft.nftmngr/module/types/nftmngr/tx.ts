@@ -111,6 +111,18 @@ export interface MsgSetBaseUriResponse {
   uri: string;
 }
 
+export interface MsgToggleAction {
+  creator: string;
+  code: string;
+  action: string;
+}
+
+export interface MsgToggleActionResponse {
+  code: string;
+  name: string;
+  onchainDataAction: OnChainData | undefined;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -1939,6 +1951,214 @@ export const MsgSetBaseUriResponse = {
   },
 };
 
+const baseMsgToggleAction: object = { creator: "", code: "", action: "" };
+
+export const MsgToggleAction = {
+  encode(message: MsgToggleAction, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.code !== "") {
+      writer.uint32(18).string(message.code);
+    }
+    if (message.action !== "") {
+      writer.uint32(26).string(message.action);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgToggleAction {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgToggleAction } as MsgToggleAction;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.code = reader.string();
+          break;
+        case 3:
+          message.action = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgToggleAction {
+    const message = { ...baseMsgToggleAction } as MsgToggleAction;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = String(object.action);
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgToggleAction): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.code !== undefined && (obj.code = message.code);
+    message.action !== undefined && (obj.action = message.action);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgToggleAction>): MsgToggleAction {
+    const message = { ...baseMsgToggleAction } as MsgToggleAction;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (object.action !== undefined && object.action !== null) {
+      message.action = object.action;
+    } else {
+      message.action = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgToggleActionResponse: object = { code: "", name: "" };
+
+export const MsgToggleActionResponse = {
+  encode(
+    message: MsgToggleActionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.code !== "") {
+      writer.uint32(10).string(message.code);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.onchainDataAction !== undefined) {
+      OnChainData.encode(
+        message.onchainDataAction,
+        writer.uint32(26).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgToggleActionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgToggleActionResponse,
+    } as MsgToggleActionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.code = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        case 3:
+          message.onchainDataAction = OnChainData.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgToggleActionResponse {
+    const message = {
+      ...baseMsgToggleActionResponse,
+    } as MsgToggleActionResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (
+      object.onchainDataAction !== undefined &&
+      object.onchainDataAction !== null
+    ) {
+      message.onchainDataAction = OnChainData.fromJSON(
+        object.onchainDataAction
+      );
+    } else {
+      message.onchainDataAction = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgToggleActionResponse): unknown {
+    const obj: any = {};
+    message.code !== undefined && (obj.code = message.code);
+    message.name !== undefined && (obj.name = message.name);
+    message.onchainDataAction !== undefined &&
+      (obj.onchainDataAction = message.onchainDataAction
+        ? OnChainData.toJSON(message.onchainDataAction)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgToggleActionResponse>
+  ): MsgToggleActionResponse {
+    const message = {
+      ...baseMsgToggleActionResponse,
+    } as MsgToggleActionResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (
+      object.onchainDataAction !== undefined &&
+      object.onchainDataAction !== null
+    ) {
+      message.onchainDataAction = OnChainData.fromPartial(
+        object.onchainDataAction
+      );
+    } else {
+      message.onchainDataAction = undefined;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -1958,8 +2178,9 @@ export interface Msg {
   SetNFTAttribute(
     request: MsgSetNFTAttribute
   ): Promise<MsgSetNFTAttributeResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SetBaseUri(request: MsgSetBaseUri): Promise<MsgSetBaseUriResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ToggleAction(request: MsgToggleAction): Promise<MsgToggleActionResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2062,6 +2283,18 @@ export class MsgClientImpl implements Msg {
     const promise = this.rpc.request("sixnft.nftmngr.Msg", "SetBaseUri", data);
     return promise.then((data) =>
       MsgSetBaseUriResponse.decode(new Reader(data))
+    );
+  }
+
+  ToggleAction(request: MsgToggleAction): Promise<MsgToggleActionResponse> {
+    const data = MsgToggleAction.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Msg",
+      "ToggleAction",
+      data
+    );
+    return promise.then((data) =>
+      MsgToggleActionResponse.decode(new Reader(data))
     );
   }
 }

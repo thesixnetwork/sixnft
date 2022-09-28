@@ -181,6 +181,9 @@ func (k Keeper) FromOriginDataToNftOriginAttribute(ctx sdk.Context, schema *nftm
 	}
 
 	for _, trait := range originData.Traits {
+		if attributeByTrait[trait.TraitType] == nil {
+			return nil, sdkerrors.Wrap(types.ErrNFTSchemaAttributeNotFound, trait.TraitType)
+		}
 		attributeValue, err := TranslateToAttributeValue(attributeByTrait[trait.TraitType], trait.Value)
 		if err != nil {
 			return nil, err

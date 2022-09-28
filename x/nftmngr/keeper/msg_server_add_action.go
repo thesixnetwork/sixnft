@@ -64,13 +64,13 @@ func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) er
 	}
 
 	//validate action struct
-	if action.Name == "" {
+	if action.Name == "" || action.Name == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action name is empty")
 	}
-	if action.Desc == "" {
+	if action.Desc == "" || action.Desc == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action description is empty")
 	}
-	if action.When == "" {
+	if action.When == "" || action.When == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action type is empty")
 	}
 	//validate array of action.Then is not empty

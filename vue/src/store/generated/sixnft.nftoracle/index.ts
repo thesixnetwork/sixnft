@@ -371,6 +371,35 @@ export default {
 				}
 			}
 		},
+<<<<<<< HEAD
+=======
+		async MsgCreateMintRequest({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.SixnftNftoracle.tx.msgCreateMintRequest({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSubmitMintResponse({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.SixnftNftoracle.tx.msgSubmitMintResponse({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitMintResponse:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSubmitMintResponse:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+>>>>>>> d4be0bdce891c17db8d406a09d36e6ee5b4bc928
 		
 	}
 }
