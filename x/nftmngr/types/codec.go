@@ -15,6 +15,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgAddTokenAttribute{}, "nftmngr/AddTokenAttribute", nil)
 	cdc.RegisterConcrete(&MsgAddAction{}, "nftmngr/AddAction", nil)
 	cdc.RegisterConcrete(&MsgSetNFTAttribute{}, "nftmngr/SetNFTAttribute", nil)
+	cdc.RegisterConcrete(&MsgSetBaseUri{}, "nftmngr/SetBaseUri", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -39,6 +40,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetNFTAttribute{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSetBaseUri{},
 	)
 	// this line is used by starport scaffolding # 3
 

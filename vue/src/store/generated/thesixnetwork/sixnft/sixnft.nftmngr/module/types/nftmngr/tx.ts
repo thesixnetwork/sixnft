@@ -100,6 +100,17 @@ export interface MsgSetNFTAttributeResponse {
   nft_attribute_value: string;
 }
 
+export interface MsgSetBaseUri {
+  creator: string;
+  code: string;
+  newBaseUri: string;
+}
+
+export interface MsgSetBaseUriResponse {
+  code: string;
+  uri: string;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -1762,6 +1773,172 @@ export const MsgSetNFTAttributeResponse = {
   },
 };
 
+const baseMsgSetBaseUri: object = { creator: "", code: "", newBaseUri: "" };
+
+export const MsgSetBaseUri = {
+  encode(message: MsgSetBaseUri, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.code !== "") {
+      writer.uint32(18).string(message.code);
+    }
+    if (message.newBaseUri !== "") {
+      writer.uint32(26).string(message.newBaseUri);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetBaseUri {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetBaseUri } as MsgSetBaseUri;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.code = reader.string();
+          break;
+        case 3:
+          message.newBaseUri = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetBaseUri {
+    const message = { ...baseMsgSetBaseUri } as MsgSetBaseUri;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (object.newBaseUri !== undefined && object.newBaseUri !== null) {
+      message.newBaseUri = String(object.newBaseUri);
+    } else {
+      message.newBaseUri = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetBaseUri): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.code !== undefined && (obj.code = message.code);
+    message.newBaseUri !== undefined && (obj.newBaseUri = message.newBaseUri);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSetBaseUri>): MsgSetBaseUri {
+    const message = { ...baseMsgSetBaseUri } as MsgSetBaseUri;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (object.newBaseUri !== undefined && object.newBaseUri !== null) {
+      message.newBaseUri = object.newBaseUri;
+    } else {
+      message.newBaseUri = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSetBaseUriResponse: object = { code: "", uri: "" };
+
+export const MsgSetBaseUriResponse = {
+  encode(
+    message: MsgSetBaseUriResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.code !== "") {
+      writer.uint32(10).string(message.code);
+    }
+    if (message.uri !== "") {
+      writer.uint32(18).string(message.uri);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetBaseUriResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetBaseUriResponse } as MsgSetBaseUriResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.code = reader.string();
+          break;
+        case 2:
+          message.uri = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetBaseUriResponse {
+    const message = { ...baseMsgSetBaseUriResponse } as MsgSetBaseUriResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = String(object.code);
+    } else {
+      message.code = "";
+    }
+    if (object.uri !== undefined && object.uri !== null) {
+      message.uri = String(object.uri);
+    } else {
+      message.uri = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetBaseUriResponse): unknown {
+    const obj: any = {};
+    message.code !== undefined && (obj.code = message.code);
+    message.uri !== undefined && (obj.uri = message.uri);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSetBaseUriResponse>
+  ): MsgSetBaseUriResponse {
+    const message = { ...baseMsgSetBaseUriResponse } as MsgSetBaseUriResponse;
+    if (object.code !== undefined && object.code !== null) {
+      message.code = object.code;
+    } else {
+      message.code = "";
+    }
+    if (object.uri !== undefined && object.uri !== null) {
+      message.uri = object.uri;
+    } else {
+      message.uri = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -1778,10 +1955,11 @@ export interface Msg {
     request: MsgAddTokenAttribute
   ): Promise<MsgAddTokenAttributeResponse>;
   AddAction(request: MsgAddAction): Promise<MsgAddActionResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SetNFTAttribute(
     request: MsgSetNFTAttribute
   ): Promise<MsgSetNFTAttributeResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SetBaseUri(request: MsgSetBaseUri): Promise<MsgSetBaseUriResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1876,6 +2054,14 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSetNFTAttributeResponse.decode(new Reader(data))
+    );
+  }
+
+  SetBaseUri(request: MsgSetBaseUri): Promise<MsgSetBaseUriResponse> {
+    const data = MsgSetBaseUri.encode(request).finish();
+    const promise = this.rpc.request("sixnft.nftmngr.Msg", "SetBaseUri", data);
+    return promise.then((data) =>
+      MsgSetBaseUriResponse.decode(new Reader(data))
     );
   }
 }

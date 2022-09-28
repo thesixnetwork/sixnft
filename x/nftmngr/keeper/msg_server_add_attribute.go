@@ -41,7 +41,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	// count the index of new attribute
 	index := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
 	// set new index to new attribute
-	new_add_attribute.Index = uint64(index-1)
+	new_add_attribute.Index = uint64(index - 1)
 
 	// set schema
 	k.Keeper.SetNFTSchema(ctx, schema)

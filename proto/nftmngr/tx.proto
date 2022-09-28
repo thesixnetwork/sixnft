@@ -18,6 +18,7 @@ service Msg {
   rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
   rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
+  rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -116,6 +117,17 @@ message MsgSetNFTAttributeResponse {
   string nft_schema_code = 1;
   string attribute_name = 2;
   string nft_attribute_value = 3;
+}
+
+message MsgSetBaseUri {
+  string creator = 1;
+  string code = 2;
+  string newBaseUri = 3;
+}
+
+message MsgSetBaseUriResponse {
+  string code = 1;
+  string uri = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

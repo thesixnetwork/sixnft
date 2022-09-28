@@ -6,15 +6,15 @@ import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "
 import { Api } from "./rest";
 import { MsgBurn } from "./types/nftadmin/tx";
 import { MsgGrantPermission } from "./types/nftadmin/tx";
-import { MsgMint } from "./types/nftadmin/tx";
 import { MsgRevokePermission } from "./types/nftadmin/tx";
+import { MsgMint } from "./types/nftadmin/tx";
 
 
 const types = [
   ["/sixnft.nftadmin.MsgBurn", MsgBurn],
   ["/sixnft.nftadmin.MsgGrantPermission", MsgGrantPermission],
-  ["/sixnft.nftadmin.MsgMint", MsgMint],
   ["/sixnft.nftadmin.MsgRevokePermission", MsgRevokePermission],
+  ["/sixnft.nftadmin.MsgMint", MsgMint],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -49,8 +49,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
     msgBurn: (data: MsgBurn): EncodeObject => ({ typeUrl: "/sixnft.nftadmin.MsgBurn", value: MsgBurn.fromPartial( data ) }),
     msgGrantPermission: (data: MsgGrantPermission): EncodeObject => ({ typeUrl: "/sixnft.nftadmin.MsgGrantPermission", value: MsgGrantPermission.fromPartial( data ) }),
-    msgMint: (data: MsgMint): EncodeObject => ({ typeUrl: "/sixnft.nftadmin.MsgMint", value: MsgMint.fromPartial( data ) }),
     msgRevokePermission: (data: MsgRevokePermission): EncodeObject => ({ typeUrl: "/sixnft.nftadmin.MsgRevokePermission", value: MsgRevokePermission.fromPartial( data ) }),
+    msgMint: (data: MsgMint): EncodeObject => ({ typeUrl: "/sixnft.nftadmin.MsgMint", value: MsgMint.fromPartial( data ) }),
     
   };
 };
