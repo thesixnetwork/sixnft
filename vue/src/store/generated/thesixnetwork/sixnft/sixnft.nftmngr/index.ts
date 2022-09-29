@@ -425,18 +425,33 @@ export default {
 		},
 		
 		
-		async sendMsgSetBaseUri({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgAddAttribute({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetBaseUri(value)
+				const msg = await txClient.msgAddAttribute(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetBaseUri:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgAddAttribute:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgSetBaseUri:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgAddAttribute:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgCreateNFTSchema({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateNFTSchema(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -485,33 +500,18 @@ export default {
 				}
 			}
 		},
-		async sendMsgSetSchemaOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgAddAction({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetSchemaOwner(value)
+				const msg = await txClient.msgAddAction(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetSchemaOwner:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgAddAction:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgSetSchemaOwner:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgSetNFTAttribute({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetNFTAttribute(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetNFTAttribute:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgSetNFTAttribute:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgAddAction:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -530,62 +530,75 @@ export default {
 				}
 			}
 		},
-		async sendMsgAddAttribute({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgSetBaseUri({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgAddAttribute(value)
+				const msg = await txClient.msgSetBaseUri(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgAddAttribute:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetBaseUri:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgAddAttribute:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgSetBaseUri:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
-		async sendMsgAddAction({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgChangeSchemaOwner({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgAddAction(value)
+				const msg = await txClient.msgChangeSchemaOwner(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgAddAction:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgChangeSchemaOwner:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgAddAction:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgChangeSchemaOwner:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
-		async sendMsgCreateNFTSchema({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgSetNFTAttribute({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateNFTSchema(value)
+				const msg = await txClient.msgSetNFTAttribute(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetNFTAttribute:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateNFTSchema:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgSetNFTAttribute:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
 		
-		async MsgSetBaseUri({ rootGetters }, { value }) {
+		async MsgAddAttribute({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetBaseUri(value)
+				const msg = await txClient.msgAddAttribute(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetBaseUri:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgAddAttribute:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSetBaseUri:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgAddAttribute:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateNFTSchema({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateNFTSchema(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateNFTSchema:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -628,29 +641,16 @@ export default {
 				}
 			}
 		},
-		async MsgSetSchemaOwner({ rootGetters }, { value }) {
+		async MsgAddAction({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetSchemaOwner(value)
+				const msg = await txClient.msgAddAction(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetSchemaOwner:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgAddAction:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSetSchemaOwner:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgSetNFTAttribute({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetNFTAttribute(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetNFTAttribute:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgSetNFTAttribute:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgAddAction:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -667,42 +667,42 @@ export default {
 				}
 			}
 		},
-		async MsgAddAttribute({ rootGetters }, { value }) {
+		async MsgSetBaseUri({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgAddAttribute(value)
+				const msg = await txClient.msgSetBaseUri(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgAddAttribute:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetBaseUri:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgAddAttribute:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSetBaseUri:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		async MsgAddAction({ rootGetters }, { value }) {
+		async MsgChangeSchemaOwner({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgAddAction(value)
+				const msg = await txClient.msgChangeSchemaOwner(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgAddAction:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgChangeSchemaOwner:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgAddAction:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgChangeSchemaOwner:Create Could not create message: ' + e.message)
 				}
 			}
 		},
-		async MsgCreateNFTSchema({ rootGetters }, { value }) {
+		async MsgSetNFTAttribute({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateNFTSchema(value)
+				const msg = await txClient.msgSetNFTAttribute(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateNFTSchema:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetNFTAttribute:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateNFTSchema:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSetNFTAttribute:Create Could not create message: ' + e.message)
 				}
 			}
 		},

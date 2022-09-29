@@ -4,17 +4,17 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateMintRequest } from "./types/nftoracle/tx";
 import { MsgSubmitMintResponse } from "./types/nftoracle/tx";
-import { MsgSubmitActionResponse } from "./types/nftoracle/tx";
 import { MsgCreateActionRequest } from "./types/nftoracle/tx";
+import { MsgCreateMintRequest } from "./types/nftoracle/tx";
+import { MsgSubmitActionResponse } from "./types/nftoracle/tx";
 
 
 const types = [
-  ["/sixnft.nftoracle.MsgCreateMintRequest", MsgCreateMintRequest],
   ["/sixnft.nftoracle.MsgSubmitMintResponse", MsgSubmitMintResponse],
-  ["/sixnft.nftoracle.MsgSubmitActionResponse", MsgSubmitActionResponse],
   ["/sixnft.nftoracle.MsgCreateActionRequest", MsgCreateActionRequest],
+  ["/sixnft.nftoracle.MsgCreateMintRequest", MsgCreateMintRequest],
+  ["/sixnft.nftoracle.MsgSubmitActionResponse", MsgSubmitActionResponse],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -47,10 +47,10 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateMintRequest: (data: MsgCreateMintRequest): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgCreateMintRequest", value: MsgCreateMintRequest.fromPartial( data ) }),
     msgSubmitMintResponse: (data: MsgSubmitMintResponse): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgSubmitMintResponse", value: MsgSubmitMintResponse.fromPartial( data ) }),
-    msgSubmitActionResponse: (data: MsgSubmitActionResponse): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgSubmitActionResponse", value: MsgSubmitActionResponse.fromPartial( data ) }),
     msgCreateActionRequest: (data: MsgCreateActionRequest): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgCreateActionRequest", value: MsgCreateActionRequest.fromPartial( data ) }),
+    msgCreateMintRequest: (data: MsgCreateMintRequest): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgCreateMintRequest", value: MsgCreateMintRequest.fromPartial( data ) }),
+    msgSubmitActionResponse: (data: MsgSubmitActionResponse): EncodeObject => ({ typeUrl: "/sixnft.nftoracle.MsgSubmitActionResponse", value: MsgSubmitActionResponse.fromPartial( data ) }),
     
   };
 };

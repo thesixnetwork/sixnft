@@ -123,14 +123,14 @@ export interface MsgToggleActionResponse {
   onchainDataAction: OnChainData | undefined;
 }
 
-export interface MsgSetSchemaOwner {
+export interface MsgChangeSchemaOwner {
   creator: string;
-  schemaCode: string;
+  nftSchemaCode: string;
   newOwner: string;
 }
 
-export interface MsgSetSchemaOwnerResponse {
-  schemaCode: string;
+export interface MsgChangeSchemaOwnerResponse {
+  nftSchemaCode: string;
   newOwner: string;
 }
 
@@ -2170,19 +2170,22 @@ export const MsgToggleActionResponse = {
   },
 };
 
-const baseMsgSetSchemaOwner: object = {
+const baseMsgChangeSchemaOwner: object = {
   creator: "",
-  schemaCode: "",
+  nftSchemaCode: "",
   newOwner: "",
 };
 
-export const MsgSetSchemaOwner = {
-  encode(message: MsgSetSchemaOwner, writer: Writer = Writer.create()): Writer {
+export const MsgChangeSchemaOwner = {
+  encode(
+    message: MsgChangeSchemaOwner,
+    writer: Writer = Writer.create()
+  ): Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
-    if (message.schemaCode !== "") {
-      writer.uint32(18).string(message.schemaCode);
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
     }
     if (message.newOwner !== "") {
       writer.uint32(26).string(message.newOwner);
@@ -2190,10 +2193,10 @@ export const MsgSetSchemaOwner = {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgSetSchemaOwner {
+  decode(input: Reader | Uint8Array, length?: number): MsgChangeSchemaOwner {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgSetSchemaOwner } as MsgSetSchemaOwner;
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -2201,7 +2204,7 @@ export const MsgSetSchemaOwner = {
           message.creator = reader.string();
           break;
         case 2:
-          message.schemaCode = reader.string();
+          message.nftSchemaCode = reader.string();
           break;
         case 3:
           message.newOwner = reader.string();
@@ -2214,17 +2217,17 @@ export const MsgSetSchemaOwner = {
     return message;
   },
 
-  fromJSON(object: any): MsgSetSchemaOwner {
-    const message = { ...baseMsgSetSchemaOwner } as MsgSetSchemaOwner;
+  fromJSON(object: any): MsgChangeSchemaOwner {
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
     }
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = String(object.schemaCode);
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (object.newOwner !== undefined && object.newOwner !== null) {
       message.newOwner = String(object.newOwner);
@@ -2234,25 +2237,26 @@ export const MsgSetSchemaOwner = {
     return message;
   },
 
-  toJSON(message: MsgSetSchemaOwner): unknown {
+  toJSON(message: MsgChangeSchemaOwner): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
     message.newOwner !== undefined && (obj.newOwner = message.newOwner);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgSetSchemaOwner>): MsgSetSchemaOwner {
-    const message = { ...baseMsgSetSchemaOwner } as MsgSetSchemaOwner;
+  fromPartial(object: DeepPartial<MsgChangeSchemaOwner>): MsgChangeSchemaOwner {
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
       message.creator = "";
     }
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = object.schemaCode;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (object.newOwner !== undefined && object.newOwner !== null) {
       message.newOwner = object.newOwner;
@@ -2263,15 +2267,18 @@ export const MsgSetSchemaOwner = {
   },
 };
 
-const baseMsgSetSchemaOwnerResponse: object = { schemaCode: "", newOwner: "" };
+const baseMsgChangeSchemaOwnerResponse: object = {
+  nftSchemaCode: "",
+  newOwner: "",
+};
 
-export const MsgSetSchemaOwnerResponse = {
+export const MsgChangeSchemaOwnerResponse = {
   encode(
-    message: MsgSetSchemaOwnerResponse,
+    message: MsgChangeSchemaOwnerResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.schemaCode !== "") {
-      writer.uint32(10).string(message.schemaCode);
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(10).string(message.nftSchemaCode);
     }
     if (message.newOwner !== "") {
       writer.uint32(18).string(message.newOwner);
@@ -2282,17 +2289,17 @@ export const MsgSetSchemaOwnerResponse = {
   decode(
     input: Reader | Uint8Array,
     length?: number
-  ): MsgSetSchemaOwnerResponse {
+  ): MsgChangeSchemaOwnerResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
-      ...baseMsgSetSchemaOwnerResponse,
-    } as MsgSetSchemaOwnerResponse;
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.schemaCode = reader.string();
+          message.nftSchemaCode = reader.string();
           break;
         case 2:
           message.newOwner = reader.string();
@@ -2305,14 +2312,14 @@ export const MsgSetSchemaOwnerResponse = {
     return message;
   },
 
-  fromJSON(object: any): MsgSetSchemaOwnerResponse {
+  fromJSON(object: any): MsgChangeSchemaOwnerResponse {
     const message = {
-      ...baseMsgSetSchemaOwnerResponse,
-    } as MsgSetSchemaOwnerResponse;
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = String(object.schemaCode);
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (object.newOwner !== undefined && object.newOwner !== null) {
       message.newOwner = String(object.newOwner);
@@ -2322,23 +2329,24 @@ export const MsgSetSchemaOwnerResponse = {
     return message;
   },
 
-  toJSON(message: MsgSetSchemaOwnerResponse): unknown {
+  toJSON(message: MsgChangeSchemaOwnerResponse): unknown {
     const obj: any = {};
-    message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
     message.newOwner !== undefined && (obj.newOwner = message.newOwner);
     return obj;
   },
 
   fromPartial(
-    object: DeepPartial<MsgSetSchemaOwnerResponse>
-  ): MsgSetSchemaOwnerResponse {
+    object: DeepPartial<MsgChangeSchemaOwnerResponse>
+  ): MsgChangeSchemaOwnerResponse {
     const message = {
-      ...baseMsgSetSchemaOwnerResponse,
-    } as MsgSetSchemaOwnerResponse;
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = object.schemaCode;
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (object.newOwner !== undefined && object.newOwner !== null) {
       message.newOwner = object.newOwner;
@@ -2371,9 +2379,9 @@ export interface Msg {
   SetBaseUri(request: MsgSetBaseUri): Promise<MsgSetBaseUriResponse>;
   ToggleAction(request: MsgToggleAction): Promise<MsgToggleActionResponse>;
   /** this line is used by starport scaffolding # proto/tx/rpc */
-  SetSchemaOwner(
-    request: MsgSetSchemaOwner
-  ): Promise<MsgSetSchemaOwnerResponse>;
+  ChangeSchemaOwner(
+    request: MsgChangeSchemaOwner
+  ): Promise<MsgChangeSchemaOwnerResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2491,17 +2499,17 @@ export class MsgClientImpl implements Msg {
     );
   }
 
-  SetSchemaOwner(
-    request: MsgSetSchemaOwner
-  ): Promise<MsgSetSchemaOwnerResponse> {
-    const data = MsgSetSchemaOwner.encode(request).finish();
+  ChangeSchemaOwner(
+    request: MsgChangeSchemaOwner
+  ): Promise<MsgChangeSchemaOwnerResponse> {
+    const data = MsgChangeSchemaOwner.encode(request).finish();
     const promise = this.rpc.request(
       "sixnft.nftmngr.Msg",
-      "SetSchemaOwner",
+      "ChangeSchemaOwner",
       data
     );
     return promise.then((data) =>
-      MsgSetSchemaOwnerResponse.decode(new Reader(data))
+      MsgChangeSchemaOwnerResponse.decode(new Reader(data))
     );
   }
 }

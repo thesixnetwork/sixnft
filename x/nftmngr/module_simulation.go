@@ -135,18 +135,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		weightMsgToggleAction,
 		nftmngrsimulation.SimulateMsgToggleAction(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
-
-	var weightMsgSetSchemaOwner int
-	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSetSchemaOwner, &weightMsgSetSchemaOwner, nil,
-		func(_ *rand.Rand) {
-			weightMsgSetSchemaOwner = defaultWeightMsgSetSchemaOwner
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgSetSchemaOwner,
-		nftmngrsimulation.SimulateMsgSetSchemaOwner(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations

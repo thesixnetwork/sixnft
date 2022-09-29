@@ -8,21 +8,21 @@ import (
 	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
-func TestMsgSetSchemaOwner_ValidateBasic(t *testing.T) {
+func TestMsgChangeSchemaOwner_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgSetSchemaOwner
+		msg  MsgChangeSchemaOwner
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgSetSchemaOwner{
+			msg: MsgChangeSchemaOwner{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgSetSchemaOwner{
+			msg: MsgChangeSchemaOwner{
 				Creator: sample.AccAddress(),
 			},
 		},

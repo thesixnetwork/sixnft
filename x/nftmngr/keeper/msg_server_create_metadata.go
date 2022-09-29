@@ -29,6 +29,12 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
 	}
+
+	// Check if creator is the schema owner
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	}
+
 	// Validate Schema Message and return error if not valid
 	valid, err := k.ValidateNFTData(&data, &schema)
 	_ = valid

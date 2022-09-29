@@ -20,7 +20,7 @@ service Msg {
   rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
   rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
-  rpc SetSchemaOwner(MsgSetSchemaOwner) returns (MsgSetSchemaOwnerResponse);
+  rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -144,14 +144,14 @@ message MsgToggleActionResponse {
   OnChainData onchainDataAction = 3;
 }
 
-message MsgSetSchemaOwner {
+message MsgChangeSchemaOwner {
   string creator = 1;
-  string schemaCode = 2;
+  string nftSchemaCode = 2;
   string newOwner = 3;
 }
 
-message MsgSetSchemaOwnerResponse {
-  string schemaCode = 1;
+message MsgChangeSchemaOwnerResponse {
+  string nftSchemaCode = 1;
   string newOwner = 2;
 }
 

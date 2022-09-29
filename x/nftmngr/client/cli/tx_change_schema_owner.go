@@ -12,13 +12,13 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdSetSchemaOwner() *cobra.Command {
+func CmdChangeSchemaOwner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-schema-owner [schema-code] [new-owner]",
-		Short: "this module aim to providing schema owner able to change or transfer to new ownter",
+		Use:   "change-schema-owner [nft-schema-code] [new-owner]",
+		Short: "To update schema owner",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argSchemaCode := args[0]
+			argNftSchemaCode := args[0]
 			argNewOwner := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
@@ -26,9 +26,9 @@ func CmdSetSchemaOwner() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgSetSchemaOwner(
+			msg := types.NewMsgChangeSchemaOwner(
 				clientCtx.GetFromAddress().String(),
-				argSchemaCode,
+				argNftSchemaCode,
 				argNewOwner,
 			)
 			if err := msg.ValidateBasic(); err != nil {
