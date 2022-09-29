@@ -115,6 +115,11 @@ export interface NftmngrMsgSetNFTAttributeResponse {
   nft_attribute_value?: string;
 }
 
+export interface NftmngrMsgSetSchemaOwnerResponse {
+  schemaCode?: string;
+  newOwner?: string;
+}
+
 export interface NftmngrMsgToggleActionResponse {
   code?: string;
   name?: string;
