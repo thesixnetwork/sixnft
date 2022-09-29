@@ -11,13 +11,26 @@ import (
 func (k msgServer) SetSchemaOwner(goCtx context.Context, msg *types.MsgSetSchemaOwner) (*types.MsgSetSchemaOwnerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.Code)
+	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.Code)
+		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.SchemaCode)
 	}
 
-	// TODO: Handling the message
-	_ = ctx
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	}
 
-	return &types.MsgSetSchemaOwnerResponse{}, nil
+	new_owner, err := sdk.AccAddressFromBech32(msg.NewOwner)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrInvalidAccdress, msg.Creator)
+	}
+
+	schema.Owner = new_owner.String()
+
+	k.Keeper.SetNFTSchema(ctx, schema)
+
+	return &types.MsgSetSchemaOwnerResponse{
+		SchemaCode: msg.SchemaCode,
+		NewOwner:   msg.NewOwner,
+	}, nil
 }
