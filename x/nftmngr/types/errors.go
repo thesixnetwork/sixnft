@@ -44,6 +44,7 @@ var (
 	ErrSameTypeTokenAttributes         = sdkerrors.Register(ModuleName, 207, "Same type token attributes")
 	ErrAttributeDoesNotExists          = sdkerrors.Register(ModuleName, 208, "Attribute does not exists")
 	ErrNotSameTypeDefaultMintValue     = sdkerrors.Register(ModuleName, 209, "Not same type default mint value")
+	ErrInvalidAccdress                 = sdkerrors.Register(ModuleName, 210, "Invalid address")
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists     = sdkerrors.Register(ModuleName, 300, "RefId already exists")
