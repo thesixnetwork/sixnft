@@ -352,3 +352,10 @@ ignite scaffold message submitActionResponse actionRequestID:uint base64NftData:
     --response actionRequestID \
     --no-simulation \
     --module nftoracle
+
+
+ignite scaffold message changeSchemaOwner nft_schema_code:string new_owner:string \
+    --desc "To update schema owner" \
+    --response nft_schema_code,new_owner \
+    --no-simulation \
+    --module nftmngr

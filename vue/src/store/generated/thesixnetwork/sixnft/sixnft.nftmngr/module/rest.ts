@@ -90,6 +90,11 @@ export interface NftmngrMsgAddTokenAttributeResponse {
   onchainData?: NftmngrOnChainData;
 }
 
+export interface NftmngrMsgChangeSchemaOwnerResponse {
+  nftSchemaCode?: string;
+  newOwner?: string;
+}
+
 export interface NftmngrMsgCreateMetadataResponse {
   nftSchemaCode?: string;
   tokenId?: string;

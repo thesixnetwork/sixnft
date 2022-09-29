@@ -40,7 +40,7 @@ const (
 	opWeightMsgSetBaseUri = "op_weight_msg_set_base_uri"
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgSetBaseUri int = 100
-	opWeightMsgToggleAction = "op_weight_msg_toggle_action"
+	opWeightMsgToggleAction        = "op_weight_msg_toggle_action"
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgToggleAction int = 100
 
