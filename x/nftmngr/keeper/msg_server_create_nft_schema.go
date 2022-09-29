@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -11,6 +12,12 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+)
+
+const (
+	// AttributeName regular expression
+	RegxAttributeName = `^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`
+	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
 )
 
 func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
@@ -73,41 +80,63 @@ func (k msgServer) ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 		mapAttributeOriginDefinition[attriDef.Name] = attriDef
 	}
 	// Check for duplicate origin attributes
-	duplicated, err := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
+	duplicated, errString := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
 	if duplicated {
-		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
+		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributes, fmt.Sprintf("Duplicate attribute name: %s", errString))
+	}
+	// Validate Origin Data Origin Attributes
+	err := ValidateAttributeDefinition(schema.OriginData.OriginAttributes)
+	if err != nil {
+		return false, err
+	}
+	// Validate Onchain Data Onchain Attributes
+	err = ValidateAttributeDefinition(append(schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes...))
+	if err != nil {
+		return false, err
 	}
 	// Validate for duplicate onchain nft attributes
-	duplicated, err = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
+	duplicated, errString = HasDuplicateAttributes(schema.OnchainData.NftAttributes)
 	if duplicated {
-		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", errString))
 	}
 	// Validate for duplicate onchain token attributes
-	duplicated, err = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
+	duplicated, errString = HasDuplicateAttributes(schema.OnchainData.TokenAttributes)
 	if duplicated {
-		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainTokenAttributes, fmt.Sprintf("Duplicate attribute name: %s", err))
+		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainTokenAttributes, fmt.Sprintf("Duplicate attribute name: %s", errString))
 	}
-	duplicated, err = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
+	duplicated, errString = HasDuplicateNftAttributesValue(schema.OnchainData.NftAttributesValue)
 	if duplicated {
-		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
+		return false, sdkerrors.Wrap(types.ErrDuplicateAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", errString))
 	}
 	// Validate if attributes have the same type
-	hasSameType, err := HasSameType(mapAttributeOriginDefinition, schema.OnchainData.NftAttributes)
+	hasSameType, errString := HasSameType(mapAttributeOriginDefinition, schema.OnchainData.NftAttributes)
 	if !hasSameType {
-		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
+		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}
-	hasSameType, err = HasSameType(mapAttributeOriginDefinition, schema.OnchainData.TokenAttributes)
+	hasSameType, errString = HasSameType(mapAttributeOriginDefinition, schema.OnchainData.TokenAttributes)
 	if !hasSameType {
-		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", err))
+		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}
 	// Validate if default mint value has the same type
-	hasSameType, err = DefaultMintValueHasSameType(schema.OnchainData.TokenAttributes)
+	hasSameType, errString = DefaultMintValueHasSameType(schema.OnchainData.TokenAttributes)
 	if !hasSameType {
-		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", err))
+		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}
 	// validate if attribute id is set
 
 	return true, nil
+}
+
+func ValidateAttributeDefinition(attributeDefinitions []*types.AttributeDefinition) error {
+	// Loop over definitions and validate
+	for _, attrDef := range attributeDefinitions {
+		// Check if attribute name is snake case
+		matched, _ := regexp.MatchString(RegxAttributeName, attrDef.Name)
+		if !matched {
+			return sdkerrors.Wrap(types.ErrInvalidAttributeName, attrDef.Name)
+		}
+	}
+	return nil
 }
 
 func GetOrganizationFromSchemaCode(nftSchemaCode string) (bool, string) {
