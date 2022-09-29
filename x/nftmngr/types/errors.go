@@ -53,4 +53,6 @@ var (
 	ErrInvalidActionAttribute = sdkerrors.Register(ModuleName, 303, "Invalid action attribute")
 	ErrActionIsDisabled       = sdkerrors.Register(ModuleName, 304, "Action is disabled")
 	ErrOrganizationOwner      = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+
+	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
 )
