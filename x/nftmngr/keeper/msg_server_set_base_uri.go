@@ -3,10 +3,9 @@ package keeper
 import (
 	"context"
 
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
@@ -27,6 +26,6 @@ func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (
 
 	return &types.MsgSetBaseUriResponse{
 		Code: msg.Code,
-		Uri: msg.NewBaseUri,
+		Uri:  msg.NewBaseUri,
 	}, nil
 }

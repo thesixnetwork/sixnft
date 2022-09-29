@@ -123,6 +123,17 @@ export interface MsgToggleActionResponse {
   onchainDataAction: OnChainData | undefined;
 }
 
+export interface MsgChangeSchemaOwner {
+  creator: string;
+  nftSchemaCode: string;
+  newOwner: string;
+}
+
+export interface MsgChangeSchemaOwnerResponse {
+  nftSchemaCode: string;
+  newOwner: string;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -2159,6 +2170,193 @@ export const MsgToggleActionResponse = {
   },
 };
 
+const baseMsgChangeSchemaOwner: object = {
+  creator: "",
+  nftSchemaCode: "",
+  newOwner: "",
+};
+
+export const MsgChangeSchemaOwner = {
+  encode(
+    message: MsgChangeSchemaOwner,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.newOwner !== "") {
+      writer.uint32(26).string(message.newOwner);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgChangeSchemaOwner {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.newOwner = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgChangeSchemaOwner {
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.newOwner !== undefined && object.newOwner !== null) {
+      message.newOwner = String(object.newOwner);
+    } else {
+      message.newOwner = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgChangeSchemaOwner): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.newOwner !== undefined && (obj.newOwner = message.newOwner);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgChangeSchemaOwner>): MsgChangeSchemaOwner {
+    const message = { ...baseMsgChangeSchemaOwner } as MsgChangeSchemaOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.newOwner !== undefined && object.newOwner !== null) {
+      message.newOwner = object.newOwner;
+    } else {
+      message.newOwner = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgChangeSchemaOwnerResponse: object = {
+  nftSchemaCode: "",
+  newOwner: "",
+};
+
+export const MsgChangeSchemaOwnerResponse = {
+  encode(
+    message: MsgChangeSchemaOwnerResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(10).string(message.nftSchemaCode);
+    }
+    if (message.newOwner !== "") {
+      writer.uint32(18).string(message.newOwner);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgChangeSchemaOwnerResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 2:
+          message.newOwner = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgChangeSchemaOwnerResponse {
+    const message = {
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.newOwner !== undefined && object.newOwner !== null) {
+      message.newOwner = String(object.newOwner);
+    } else {
+      message.newOwner = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgChangeSchemaOwnerResponse): unknown {
+    const obj: any = {};
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.newOwner !== undefined && (obj.newOwner = message.newOwner);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgChangeSchemaOwnerResponse>
+  ): MsgChangeSchemaOwnerResponse {
+    const message = {
+      ...baseMsgChangeSchemaOwnerResponse,
+    } as MsgChangeSchemaOwnerResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.newOwner !== undefined && object.newOwner !== null) {
+      message.newOwner = object.newOwner;
+    } else {
+      message.newOwner = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -2179,8 +2377,11 @@ export interface Msg {
     request: MsgSetNFTAttribute
   ): Promise<MsgSetNFTAttributeResponse>;
   SetBaseUri(request: MsgSetBaseUri): Promise<MsgSetBaseUriResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   ToggleAction(request: MsgToggleAction): Promise<MsgToggleActionResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ChangeSchemaOwner(
+    request: MsgChangeSchemaOwner
+  ): Promise<MsgChangeSchemaOwnerResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2295,6 +2496,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgToggleActionResponse.decode(new Reader(data))
+    );
+  }
+
+  ChangeSchemaOwner(
+    request: MsgChangeSchemaOwner
+  ): Promise<MsgChangeSchemaOwnerResponse> {
+    const data = MsgChangeSchemaOwner.encode(request).finish();
+    const promise = this.rpc.request(
+      "sixnft.nftmngr.Msg",
+      "ChangeSchemaOwner",
+      data
+    );
+    return promise.then((data) =>
+      MsgChangeSchemaOwnerResponse.decode(new Reader(data))
     );
   }
 }
