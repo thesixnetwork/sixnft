@@ -33392,83 +33392,88 @@ paths:
                   properties:
                     nftSchemaCode:
                       type: string
+                    nftCount:
+                      type: string
+                      format: uint64
                     nftData:
-                      type: object
-                      properties:
-                        nft_schema_code:
-                          type: string
-                        token_id:
-                          type: string
-                        token_owner:
-                          type: string
-                        owner_address_type:
-                          type: string
-                          enum:
-                            - ORIGIN_ADDRESS
-                            - INTERNAL_ADDRESS
-                          default: ORIGIN_ADDRESS
-                        origin_image:
-                          type: string
-                        onchain_image:
-                          type: string
-                        origin_attributes:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              number_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                                    format: uint64
-                              string_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                              boolean_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: boolean
-                              float_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: number
-                                    format: double
-                        onchain_attributes:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              number_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                                    format: uint64
-                              string_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                              boolean_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: boolean
-                              float_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: number
-                                    format: double
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          nft_schema_code:
+                            type: string
+                          token_id:
+                            type: string
+                          token_owner:
+                            type: string
+                          owner_address_type:
+                            type: string
+                            enum:
+                              - ORIGIN_ADDRESS
+                              - INTERNAL_ADDRESS
+                            default: ORIGIN_ADDRESS
+                          origin_image:
+                            type: string
+                          onchain_image:
+                            type: string
+                          origin_attributes:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
+                          onchain_attributes:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                number_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                      format: uint64
+                                string_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: string
+                                boolean_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: boolean
+                                float_attribute_value:
+                                  type: object
+                                  properties:
+                                    value:
+                                      type: number
+                                      format: double
               pagination:
                 type: object
                 properties:
@@ -33745,83 +33750,88 @@ paths:
                 properties:
                   nftSchemaCode:
                     type: string
+                  nftCount:
+                    type: string
+                    format: uint64
                   nftData:
-                    type: object
-                    properties:
-                      nft_schema_code:
-                        type: string
-                      token_id:
-                        type: string
-                      token_owner:
-                        type: string
-                      owner_address_type:
-                        type: string
-                        enum:
-                          - ORIGIN_ADDRESS
-                          - INTERNAL_ADDRESS
-                        default: ORIGIN_ADDRESS
-                      origin_image:
-                        type: string
-                      onchain_image:
-                        type: string
-                      origin_attributes:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                            number_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: string
-                                  format: uint64
-                            string_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: string
-                            boolean_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: boolean
-                            float_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: number
-                                  format: double
-                      onchain_attributes:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                            number_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: string
-                                  format: uint64
-                            string_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: string
-                            boolean_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: boolean
-                            float_attribute_value:
-                              type: object
-                              properties:
-                                value:
-                                  type: number
-                                  format: double
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        nft_schema_code:
+                          type: string
+                        token_id:
+                          type: string
+                        token_owner:
+                          type: string
+                        owner_address_type:
+                          type: string
+                          enum:
+                            - ORIGIN_ADDRESS
+                            - INTERNAL_ADDRESS
+                          default: ORIGIN_ADDRESS
+                        origin_image:
+                          type: string
+                        onchain_image:
+                          type: string
+                        origin_attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              number_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    format: uint64
+                              string_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                              boolean_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                              float_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: number
+                                    format: double
+                        onchain_attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              number_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                                    format: uint64
+                              string_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: string
+                              boolean_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                              float_attribute_value:
+                                type: object
+                                properties:
+                                  value:
+                                    type: number
+                                    format: double
         default:
           description: An unexpected error response.
           schema:
@@ -57580,83 +57590,88 @@ definitions:
     properties:
       nftSchemaCode:
         type: string
+      nftCount:
+        type: string
+        format: uint64
       nftData:
-        type: object
-        properties:
-          nft_schema_code:
-            type: string
-          token_id:
-            type: string
-          token_owner:
-            type: string
-          owner_address_type:
-            type: string
-            enum:
-              - ORIGIN_ADDRESS
-              - INTERNAL_ADDRESS
-            default: ORIGIN_ADDRESS
-          origin_image:
-            type: string
-          onchain_image:
-            type: string
-          origin_attributes:
-            type: array
-            items:
-              type: object
-              properties:
-                name:
-                  type: string
-                number_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                      format: uint64
-                string_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                boolean_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: boolean
-                float_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: number
-                      format: double
-          onchain_attributes:
-            type: array
-            items:
-              type: object
-              properties:
-                name:
-                  type: string
-                number_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                      format: uint64
-                string_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: string
-                boolean_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: boolean
-                float_attribute_value:
-                  type: object
-                  properties:
-                    value:
-                      type: number
-                      format: double
+        type: array
+        items:
+          type: object
+          properties:
+            nft_schema_code:
+              type: string
+            token_id:
+              type: string
+            token_owner:
+              type: string
+            owner_address_type:
+              type: string
+              enum:
+                - ORIGIN_ADDRESS
+                - INTERNAL_ADDRESS
+              default: ORIGIN_ADDRESS
+            origin_image:
+              type: string
+            onchain_image:
+              type: string
+            origin_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  number_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: uint64
+                  string_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                  boolean_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: boolean
+                  float_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        format: double
+            onchain_attributes:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  number_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: uint64
+                  string_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                  boolean_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: boolean
+                  float_attribute_value:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                        format: double
   thesixnetwork.sixnft.nftmngr.NftData:
     type: object
     properties:
@@ -58388,83 +58403,88 @@ definitions:
           properties:
             nftSchemaCode:
               type: string
+            nftCount:
+              type: string
+              format: uint64
             nftData:
-              type: object
-              properties:
-                nft_schema_code:
-                  type: string
-                token_id:
-                  type: string
-                token_owner:
-                  type: string
-                owner_address_type:
-                  type: string
-                  enum:
-                    - ORIGIN_ADDRESS
-                    - INTERNAL_ADDRESS
-                  default: ORIGIN_ADDRESS
-                origin_image:
-                  type: string
-                onchain_image:
-                  type: string
-                origin_attributes:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      number_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                            format: uint64
-                      string_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                      boolean_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: boolean
-                      float_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: number
-                            format: double
-                onchain_attributes:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      number_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                            format: uint64
-                      string_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                      boolean_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: boolean
-                      float_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: number
-                            format: double
+              type: array
+              items:
+                type: object
+                properties:
+                  nft_schema_code:
+                    type: string
+                  token_id:
+                    type: string
+                  token_owner:
+                    type: string
+                  owner_address_type:
+                    type: string
+                    enum:
+                      - ORIGIN_ADDRESS
+                      - INTERNAL_ADDRESS
+                    default: ORIGIN_ADDRESS
+                  origin_image:
+                    type: string
+                  onchain_image:
+                    type: string
+                  origin_attributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
+                  onchain_attributes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        number_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                              format: uint64
+                        string_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: string
+                        boolean_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: boolean
+                        float_attribute_value:
+                          type: object
+                          properties:
+                            value:
+                              type: number
+                              format: double
       pagination:
         type: object
         properties:
@@ -58935,83 +58955,88 @@ definitions:
         properties:
           nftSchemaCode:
             type: string
+          nftCount:
+            type: string
+            format: uint64
           nftData:
-            type: object
-            properties:
-              nft_schema_code:
-                type: string
-              token_id:
-                type: string
-              token_owner:
-                type: string
-              owner_address_type:
-                type: string
-                enum:
-                  - ORIGIN_ADDRESS
-                  - INTERNAL_ADDRESS
-                default: ORIGIN_ADDRESS
-              origin_image:
-                type: string
-              onchain_image:
-                type: string
-              origin_attributes:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    number_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: string
-                          format: uint64
-                    string_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: string
-                    boolean_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: boolean
-                    float_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: number
-                          format: double
-              onchain_attributes:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    number_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: string
-                          format: uint64
-                    string_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: string
-                    boolean_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: boolean
-                    float_attribute_value:
-                      type: object
-                      properties:
-                        value:
-                          type: number
-                          format: double
+            type: array
+            items:
+              type: object
+              properties:
+                nft_schema_code:
+                  type: string
+                token_id:
+                  type: string
+                token_owner:
+                  type: string
+                owner_address_type:
+                  type: string
+                  enum:
+                    - ORIGIN_ADDRESS
+                    - INTERNAL_ADDRESS
+                  default: ORIGIN_ADDRESS
+                origin_image:
+                  type: string
+                onchain_image:
+                  type: string
+                origin_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      number_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            format: uint64
+                      string_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                      boolean_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: boolean
+                      float_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: number
+                            format: double
+                onchain_attributes:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      number_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            format: uint64
+                      string_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                      boolean_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: boolean
+                      float_attribute_value:
+                        type: object
+                        properties:
+                          value:
+                            type: number
+                            format: double
   thesixnetwork.sixnft.nftmngr.QueryGetNftDataResponse:
     type: object
     properties:

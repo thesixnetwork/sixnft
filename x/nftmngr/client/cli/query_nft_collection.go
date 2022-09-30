@@ -9,39 +9,6 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func CmdListNftCollection() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "list-nft-collection",
-		Short: "list all NftCollection",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			clientCtx := client.GetClientContextFromCmd(cmd)
-
-			pageReq, err := client.ReadPageRequest(cmd.Flags())
-			if err != nil {
-				return err
-			}
-
-			queryClient := types.NewQueryClient(clientCtx)
-
-			params := &types.QueryAllNftCollectionRequest{
-				Pagination: pageReq,
-			}
-
-			res, err := queryClient.NftCollectionAll(context.Background(), params)
-			if err != nil {
-				return err
-			}
-
-			return clientCtx.PrintProto(res)
-		},
-	}
-
-	flags.AddPaginationFlagsToCmd(cmd, cmd.Use)
-	flags.AddQueryFlagsToCmd(cmd)
-
-	return cmd
-}
-
 func CmdShowNftCollection() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show-nft-collection [nft-schema-code]",

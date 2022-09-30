@@ -65,11 +65,6 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
 	}
 
-	// Queries a list of NftCollection items.
-	rpc NftCollectionAll(QueryAllNftCollectionRequest) returns (QueryAllNftCollectionResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection";
-	}
-
 // this line is used by starport scaffolding # 2
 }
 
@@ -162,15 +157,6 @@ message QueryGetNftCollectionRequest {
 
 message QueryGetNftCollectionResponse {
 	NftCollection nftCollection = 1 [(gogoproto.nullable) = false];
-}
-
-message QueryAllNftCollectionRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
-}
-
-message QueryAllNftCollectionResponse {
-	repeated NftCollection nftCollection = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
