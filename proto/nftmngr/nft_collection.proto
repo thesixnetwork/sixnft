@@ -6,7 +6,8 @@ import "nftmngr/nft_data.proto";
 
 message NftCollection {
   string nftSchemaCode = 1; 
-  repeated NftData nftData = 2; 
+  uint64 nftCount = 2;
+  repeated NftData nftData = 3; 
   
 }
 

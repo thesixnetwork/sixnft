@@ -17,25 +17,6 @@ func (k Keeper) SetNftCollection(ctx sdk.Context, nftCollection types.NftCollect
 	), b)
 }
 
-// AppendNftCollection appends a nftCollection in the store with a new id and update the count
-func (k Keeper) AppendNftCollection(
-	ctx sdk.Context,
-	nftCollection types.NftCollection,
-) uint64 {
-	// Create the nftCollection
-	count := k.GetNftCollectionDataCount(ctx)
-	// Set the ID of the appended value
-	nftCollection.Id = count
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NftCollectionKeyPrefix))
-	appendedValue := k.cdc.MustMarshal(&nftCollection)
-	store.Set(types.NftCollectionKey(count), appendedValue)
-
-	// Update nftCollection count
-	k.SetNftCollectionDataCount(ctx, count+1)
-
-	return count
-}
-
 // SetNftCollectionDataCount set the total number of nftCollection
 func (k Keeper) SetNftCollectionDataCount(ctx sdk.Context, count uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NftCollectionDataCountKey))
