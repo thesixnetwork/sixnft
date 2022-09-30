@@ -10,8 +10,9 @@ const DefaultIndex uint64 = 1
 // DefaultGenesis returns the default Capability genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		MintRequestList:   []MintRequest{},
-		ActionRequestList: []ActionRequest{},
+		MintRequestList:            []MintRequest{},
+		ActionRequestList:          []ActionRequest{},
+		CollectionOwnerRequestList: []CollectionOwnerRequest{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -43,6 +44,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("actionRequest id should be lower or equal than the last id")
 		}
 		actionRequestIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in collectionOwnerRequest
+	collectionOwnerRequestIdMap := make(map[uint64]bool)
+	collectionOwnerRequestCount := gs.GetCollectionOwnerRequestCount()
+	for _, elem := range gs.CollectionOwnerRequestList {
+		if _, ok := collectionOwnerRequestIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for collectionOwnerRequest")
+		}
+		if elem.Id >= collectionOwnerRequestCount {
+			return fmt.Errorf("collectionOwnerRequest id should be lower or equal than the last id")
+		}
+		collectionOwnerRequestIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

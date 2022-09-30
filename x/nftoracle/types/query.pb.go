@@ -481,63 +481,264 @@ func (m *QueryAllActionRequestResponse) GetPagination() *query.PageResponse {
 	return nil
 }
 
+type QueryGetCollectionOwnerRequestRequest struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *QueryGetCollectionOwnerRequestRequest) Reset()         { *m = QueryGetCollectionOwnerRequestRequest{} }
+func (m *QueryGetCollectionOwnerRequestRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetCollectionOwnerRequestRequest) ProtoMessage()    {}
+func (*QueryGetCollectionOwnerRequestRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a7d06501fbd25d28, []int{10}
+}
+func (m *QueryGetCollectionOwnerRequestRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetCollectionOwnerRequestRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetCollectionOwnerRequestRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetCollectionOwnerRequestRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetCollectionOwnerRequestRequest.Merge(m, src)
+}
+func (m *QueryGetCollectionOwnerRequestRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetCollectionOwnerRequestRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetCollectionOwnerRequestRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetCollectionOwnerRequestRequest proto.InternalMessageInfo
+
+func (m *QueryGetCollectionOwnerRequestRequest) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type QueryGetCollectionOwnerRequestResponse struct {
+	CollectionOwnerRequest CollectionOwnerRequest `protobuf:"bytes,1,opt,name=CollectionOwnerRequest,proto3" json:"CollectionOwnerRequest"`
+}
+
+func (m *QueryGetCollectionOwnerRequestResponse) Reset() {
+	*m = QueryGetCollectionOwnerRequestResponse{}
+}
+func (m *QueryGetCollectionOwnerRequestResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetCollectionOwnerRequestResponse) ProtoMessage()    {}
+func (*QueryGetCollectionOwnerRequestResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a7d06501fbd25d28, []int{11}
+}
+func (m *QueryGetCollectionOwnerRequestResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetCollectionOwnerRequestResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetCollectionOwnerRequestResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetCollectionOwnerRequestResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetCollectionOwnerRequestResponse.Merge(m, src)
+}
+func (m *QueryGetCollectionOwnerRequestResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetCollectionOwnerRequestResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetCollectionOwnerRequestResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetCollectionOwnerRequestResponse proto.InternalMessageInfo
+
+func (m *QueryGetCollectionOwnerRequestResponse) GetCollectionOwnerRequest() CollectionOwnerRequest {
+	if m != nil {
+		return m.CollectionOwnerRequest
+	}
+	return CollectionOwnerRequest{}
+}
+
+type QueryAllCollectionOwnerRequestRequest struct {
+	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllCollectionOwnerRequestRequest) Reset()         { *m = QueryAllCollectionOwnerRequestRequest{} }
+func (m *QueryAllCollectionOwnerRequestRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryAllCollectionOwnerRequestRequest) ProtoMessage()    {}
+func (*QueryAllCollectionOwnerRequestRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a7d06501fbd25d28, []int{12}
+}
+func (m *QueryAllCollectionOwnerRequestRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllCollectionOwnerRequestRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllCollectionOwnerRequestRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllCollectionOwnerRequestRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllCollectionOwnerRequestRequest.Merge(m, src)
+}
+func (m *QueryAllCollectionOwnerRequestRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllCollectionOwnerRequestRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllCollectionOwnerRequestRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllCollectionOwnerRequestRequest proto.InternalMessageInfo
+
+func (m *QueryAllCollectionOwnerRequestRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryAllCollectionOwnerRequestResponse struct {
+	CollectionOwnerRequest []CollectionOwnerRequest `protobuf:"bytes,1,rep,name=CollectionOwnerRequest,proto3" json:"CollectionOwnerRequest"`
+	Pagination             *query.PageResponse      `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) Reset() {
+	*m = QueryAllCollectionOwnerRequestResponse{}
+}
+func (m *QueryAllCollectionOwnerRequestResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryAllCollectionOwnerRequestResponse) ProtoMessage()    {}
+func (*QueryAllCollectionOwnerRequestResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a7d06501fbd25d28, []int{13}
+}
+func (m *QueryAllCollectionOwnerRequestResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryAllCollectionOwnerRequestResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryAllCollectionOwnerRequestResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryAllCollectionOwnerRequestResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryAllCollectionOwnerRequestResponse.Merge(m, src)
+}
+func (m *QueryAllCollectionOwnerRequestResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryAllCollectionOwnerRequestResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryAllCollectionOwnerRequestResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryAllCollectionOwnerRequestResponse proto.InternalMessageInfo
+
+func (m *QueryAllCollectionOwnerRequestResponse) GetCollectionOwnerRequest() []CollectionOwnerRequest {
+	if m != nil {
+		return m.CollectionOwnerRequest
+	}
+	return nil
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 func init() {
-	proto.RegisterType((*QueryParamsRequest)(nil), "sixnft.nftoracle.QueryParamsRequest")
-	proto.RegisterType((*QueryParamsResponse)(nil), "sixnft.nftoracle.QueryParamsResponse")
-	proto.RegisterType((*QueryGetMintRequestRequest)(nil), "sixnft.nftoracle.QueryGetMintRequestRequest")
-	proto.RegisterType((*QueryGetMintRequestResponse)(nil), "sixnft.nftoracle.QueryGetMintRequestResponse")
-	proto.RegisterType((*QueryAllMintRequestRequest)(nil), "sixnft.nftoracle.QueryAllMintRequestRequest")
-	proto.RegisterType((*QueryAllMintRequestResponse)(nil), "sixnft.nftoracle.QueryAllMintRequestResponse")
-	proto.RegisterType((*QueryGetActionRequestRequest)(nil), "sixnft.nftoracle.QueryGetActionRequestRequest")
-	proto.RegisterType((*QueryGetActionRequestResponse)(nil), "sixnft.nftoracle.QueryGetActionRequestResponse")
-	proto.RegisterType((*QueryAllActionRequestRequest)(nil), "sixnft.nftoracle.QueryAllActionRequestRequest")
-	proto.RegisterType((*QueryAllActionRequestResponse)(nil), "sixnft.nftoracle.QueryAllActionRequestResponse")
+	proto.RegisterType((*QueryParamsRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryParamsRequest")
+	proto.RegisterType((*QueryParamsResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryParamsResponse")
+	proto.RegisterType((*QueryGetMintRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetMintRequestRequest")
+	proto.RegisterType((*QueryGetMintRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetMintRequestResponse")
+	proto.RegisterType((*QueryAllMintRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllMintRequestRequest")
+	proto.RegisterType((*QueryAllMintRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllMintRequestResponse")
+	proto.RegisterType((*QueryGetActionRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetActionRequestRequest")
+	proto.RegisterType((*QueryGetActionRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetActionRequestResponse")
+	proto.RegisterType((*QueryAllActionRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllActionRequestRequest")
+	proto.RegisterType((*QueryAllActionRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllActionRequestResponse")
+	proto.RegisterType((*QueryGetCollectionOwnerRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetCollectionOwnerRequestRequest")
+	proto.RegisterType((*QueryGetCollectionOwnerRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryGetCollectionOwnerRequestResponse")
+	proto.RegisterType((*QueryAllCollectionOwnerRequestRequest)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllCollectionOwnerRequestRequest")
+	proto.RegisterType((*QueryAllCollectionOwnerRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.QueryAllCollectionOwnerRequestResponse")
 }
 
 func init() { proto.RegisterFile("nftoracle/query.proto", fileDescriptor_a7d06501fbd25d28) }
 
 var fileDescriptor_a7d06501fbd25d28 = []byte{
-	// 627 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x95, 0x4f, 0x6f, 0xd3, 0x3e,
-	0x18, 0xc7, 0xeb, 0xee, 0xcf, 0xc1, 0xd3, 0x6f, 0x9a, 0xfc, 0x1b, 0xa8, 0x0a, 0x5d, 0x56, 0x19,
-	0xba, 0x4d, 0xb0, 0xd9, 0xea, 0x90, 0xb8, 0x77, 0x12, 0xec, 0x30, 0x4d, 0x1a, 0x3d, 0x72, 0x41,
-	0x6e, 0xeb, 0x66, 0x11, 0x69, 0x9c, 0x25, 0x2e, 0xdb, 0x84, 0xb8, 0xf0, 0x0a, 0x90, 0x10, 0xe2,
-	0x84, 0x78, 0x05, 0x1c, 0x79, 0x0f, 0x3b, 0x4e, 0xe2, 0xc2, 0x09, 0xa1, 0x96, 0x97, 0xc0, 0x0b,
-	0x40, 0xb1, 0x5d, 0x9a, 0x34, 0x09, 0x1d, 0xd3, 0x4e, 0xad, 0xfc, 0x7c, 0xfd, 0x7d, 0x3e, 0xcf,
-	0xf3, 0xd8, 0x0e, 0xbc, 0xe5, 0xf7, 0xa4, 0x08, 0x59, 0xc7, 0xe3, 0xf4, 0x64, 0xc0, 0xc3, 0x73,
-	0x12, 0x84, 0x42, 0x0a, 0xb4, 0x12, 0xb9, 0x67, 0x7e, 0x4f, 0x92, 0x3f, 0x51, 0x6b, 0xd5, 0x11,
-	0x8e, 0x50, 0x41, 0x1a, 0xff, 0xd3, 0x3a, 0xab, 0xea, 0x08, 0xe1, 0x78, 0x9c, 0xb2, 0xc0, 0xa5,
-	0xcc, 0xf7, 0x85, 0x64, 0xd2, 0x15, 0x7e, 0x64, 0xa2, 0xf7, 0x3b, 0x22, 0xea, 0x8b, 0x88, 0xb6,
-	0x59, 0x64, 0xec, 0xe9, 0xcb, 0x46, 0x9b, 0x4b, 0xd6, 0xa0, 0x01, 0x73, 0x5c, 0x5f, 0x89, 0x8d,
-	0xf6, 0xf6, 0x04, 0x24, 0x60, 0x21, 0xeb, 0x8f, 0x3d, 0xaa, 0x93, 0xf5, 0xbe, 0xeb, 0xcb, 0xe7,
-	0x21, 0x3f, 0x19, 0xf0, 0x48, 0x9a, 0xa8, 0x3d, 0x89, 0xb2, 0x4e, 0xec, 0x96, 0x8e, 0xe3, 0x55,
-	0x88, 0x9e, 0xc6, 0x79, 0x8f, 0x94, 0x65, 0x4b, 0xc7, 0xf0, 0x21, 0xfc, 0x3f, 0xb5, 0x1a, 0x05,
-	0xc2, 0x8f, 0x38, 0x7a, 0x04, 0x17, 0x75, 0xea, 0x0a, 0xa8, 0x81, 0xad, 0xa5, 0xdd, 0x0a, 0x99,
-	0xee, 0x02, 0xd1, 0x3b, 0xf6, 0xe6, 0x2f, 0xbe, 0xaf, 0x97, 0x5a, 0x46, 0x8d, 0xb7, 0xa1, 0xa5,
-	0xec, 0xf6, 0xb9, 0x3c, 0x74, 0x7d, 0x69, 0xb2, 0x98, 0x1f, 0xb4, 0x0c, 0xcb, 0x6e, 0x57, 0x39,
-	0xce, 0xb7, 0xca, 0x6e, 0x17, 0x77, 0xe1, 0x9d, 0x5c, 0xb5, 0x81, 0x78, 0x0c, 0x97, 0x12, 0xcb,
-	0x86, 0x64, 0x2d, 0x4b, 0x92, 0x10, 0x19, 0x9c, 0xe4, 0x3e, 0xdc, 0x35, 0x4c, 0x4d, 0xcf, 0xcb,
-	0x61, 0x7a, 0x02, 0xe1, 0x64, 0x00, 0x26, 0xc7, 0x06, 0xd1, 0xd3, 0x22, 0xf1, 0xb4, 0x88, 0x3e,
-	0x0c, 0x66, 0x5a, 0xe4, 0x88, 0x39, 0x7c, 0x6c, 0x91, 0xd8, 0x89, 0x3f, 0x03, 0x53, 0xcc, 0x74,
-	0x9a, 0xa2, 0x62, 0xe6, 0xae, 0x53, 0x0c, 0xda, 0x4f, 0xe1, 0x96, 0x15, 0xee, 0xe6, 0x4c, 0x5c,
-	0xcd, 0x90, 0xe2, 0x25, 0xb0, 0x3a, 0xee, 0x7d, 0x53, 0x1d, 0x97, 0x19, 0xb3, 0xf2, 0xe0, 0x5a,
-	0x81, 0xde, 0x14, 0x78, 0x00, 0xff, 0x4b, 0x05, 0x4c, 0x2f, 0xd7, 0xb3, 0x25, 0xa6, 0x64, 0xa6,
-	0xc8, 0xf4, 0x5e, 0xdc, 0x33, 0x74, 0x4d, 0xcf, 0xcb, 0xa5, 0xbb, 0xa9, 0xa9, 0x7d, 0x01, 0xa6,
-	0xac, 0x6c, 0xa2, 0xe2, 0xb2, 0xe6, 0xae, 0x5b, 0xd6, 0x8d, 0x4d, 0x6f, 0xf7, 0xd7, 0x02, 0x5c,
-	0x50, 0xdc, 0xe8, 0x14, 0x2e, 0xea, 0x9b, 0x88, 0xee, 0x65, 0x91, 0xb2, 0x17, 0xde, 0xaa, 0xcf,
-	0x50, 0xe9, 0x64, 0xb8, 0xf6, 0xe6, 0xeb, 0xcf, 0x77, 0x65, 0x0b, 0x55, 0xa8, 0x96, 0xd3, 0xe9,
-	0x37, 0x09, 0x7d, 0x00, 0xa9, 0x13, 0x8d, 0xb6, 0x0b, 0x8c, 0x73, 0x9f, 0x02, 0x6b, 0xe7, 0x8a,
-	0x6a, 0x83, 0xf3, 0x40, 0xe1, 0xd4, 0xd1, 0xdd, 0x2c, 0x4e, 0xf2, 0x29, 0xa4, 0xaf, 0xdc, 0xee,
-	0x6b, 0xf4, 0x1e, 0xc0, 0xe5, 0x84, 0x49, 0xd3, 0xf3, 0x0a, 0xe1, 0x72, 0xdf, 0x84, 0x42, 0xb8,
-	0xfc, 0xab, 0x8d, 0x37, 0x14, 0x5c, 0x0d, 0xd9, 0x7f, 0x87, 0x43, 0x9f, 0xc0, 0xd4, 0x59, 0x42,
-	0xa4, 0xb8, 0x0b, 0x79, 0xc7, 0xde, 0xa2, 0x57, 0xd6, 0x1b, 0xb4, 0x1d, 0x85, 0xb6, 0x89, 0xea,
-	0x59, 0xb4, 0xf4, 0x47, 0x42, 0x77, 0xee, 0x23, 0x80, 0x2b, 0x29, 0xa3, 0xb8, 0x77, 0xa4, 0xb8,
-	0x1b, 0xff, 0x04, 0x59, 0x74, 0xc5, 0xf0, 0x96, 0x82, 0xc4, 0xa8, 0x36, 0x0b, 0x72, 0xef, 0xe0,
-	0x62, 0x68, 0x83, 0xcb, 0xa1, 0x0d, 0x7e, 0x0c, 0x6d, 0xf0, 0x76, 0x64, 0x97, 0x2e, 0x47, 0x76,
-	0xe9, 0xdb, 0xc8, 0x2e, 0x3d, 0x6b, 0x38, 0xae, 0x3c, 0x1e, 0xb4, 0x49, 0x47, 0xf4, 0xa9, 0x3c,
-	0xe6, 0xb1, 0x11, 0x97, 0xa7, 0x22, 0x7c, 0x31, 0xf6, 0x3c, 0x4b, 0xb8, 0xca, 0xf3, 0x80, 0x47,
-	0xed, 0x45, 0xf5, 0x5d, 0x7c, 0xf8, 0x3b, 0x00, 0x00, 0xff, 0xff, 0x48, 0x0a, 0xcc, 0xc5, 0xf8,
-	0x07, 0x00, 0x00,
+	// 776 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x96, 0x4f, 0x4f, 0xd4, 0x4e,
+	0x18, 0xc7, 0x77, 0x16, 0x7e, 0x1c, 0x86, 0xfc, 0x88, 0x19, 0x91, 0x60, 0xc5, 0xba, 0xa9, 0xe1,
+	0x4f, 0x44, 0xda, 0x00, 0x89, 0x1a, 0x84, 0xe8, 0xa2, 0xc0, 0xc1, 0x18, 0x11, 0x4f, 0xea, 0xc1,
+	0x74, 0x77, 0x87, 0xd2, 0xd8, 0xed, 0x2c, 0xed, 0x20, 0xa0, 0xf1, 0xe2, 0x2b, 0x30, 0xe1, 0xee,
+	0x7b, 0x30, 0x9e, 0x0c, 0x47, 0x2f, 0x1c, 0x49, 0xbc, 0x78, 0x32, 0x0a, 0x26, 0x5e, 0x8c, 0xaf,
+	0xc1, 0x74, 0xe6, 0x59, 0xb6, 0xdd, 0x6d, 0xb7, 0x95, 0x5d, 0x4f, 0xbb, 0xe9, 0x3c, 0x7f, 0x3e,
+	0xdf, 0xef, 0xd3, 0x3c, 0x53, 0x7c, 0xce, 0x5d, 0xe7, 0xcc, 0x33, 0xcb, 0x0e, 0x35, 0x36, 0xb7,
+	0xa8, 0xb7, 0xab, 0xd7, 0x3c, 0xc6, 0x19, 0x51, 0xf9, 0x06, 0xf5, 0xed, 0x1d, 0x97, 0xf2, 0x6d,
+	0xe6, 0x3d, 0xd7, 0x83, 0xbf, 0xeb, 0x5c, 0x3f, 0x89, 0x55, 0x06, 0x2d, 0x66, 0x31, 0x11, 0x6a,
+	0x04, 0xff, 0x64, 0x96, 0x32, 0x62, 0x31, 0x66, 0x39, 0xd4, 0x30, 0x6b, 0xb6, 0x61, 0xba, 0x2e,
+	0xe3, 0x26, 0xb7, 0x99, 0xeb, 0xc3, 0xe9, 0x95, 0x32, 0xf3, 0xab, 0xcc, 0x37, 0x4a, 0xa6, 0x0f,
+	0xcd, 0x8c, 0x17, 0xd3, 0x25, 0xca, 0xcd, 0x69, 0xa3, 0x66, 0x5a, 0xb6, 0x2b, 0x82, 0x21, 0x76,
+	0xa8, 0x81, 0x55, 0x33, 0x3d, 0xb3, 0x5a, 0xaf, 0x31, 0xd2, 0x78, 0x5e, 0xb5, 0x5d, 0xfe, 0xcc,
+	0xa3, 0x9b, 0x5b, 0xd4, 0xe7, 0x70, 0xaa, 0x36, 0x4e, 0xcd, 0x72, 0x50, 0xad, 0xe9, 0x7c, 0xa2,
+	0x71, 0x5e, 0x66, 0x8e, 0x43, 0x65, 0x0c, 0xdb, 0x76, 0xa9, 0x17, 0x8d, 0xd4, 0x06, 0x31, 0x79,
+	0x18, 0x10, 0xae, 0x8a, 0xe6, 0x6b, 0xf2, 0x4c, 0x7b, 0x8a, 0xcf, 0x46, 0x9e, 0xfa, 0x35, 0xe6,
+	0xfa, 0x94, 0xdc, 0xc5, 0x7d, 0x12, 0x72, 0x18, 0x15, 0xd0, 0x44, 0xff, 0xcc, 0x98, 0xde, 0xde,
+	0x3d, 0x5d, 0xe6, 0x2f, 0xf6, 0x1e, 0x7c, 0xbd, 0x94, 0x5b, 0x83, 0x5c, 0xed, 0x2a, 0x56, 0x44,
+	0xf1, 0x15, 0xca, 0xef, 0xdb, 0x2e, 0x87, 0x9e, 0xf0, 0x43, 0x06, 0x70, 0xde, 0xae, 0x88, 0xfa,
+	0xbd, 0x6b, 0x79, 0xbb, 0xa2, 0x79, 0xf8, 0x42, 0x6c, 0x34, 0x20, 0x3d, 0xc2, 0xfd, 0xa1, 0xc7,
+	0xc0, 0x35, 0x99, 0xc6, 0x15, 0x4a, 0x01, 0xb8, 0x70, 0x15, 0xad, 0x02, 0x84, 0x45, 0xc7, 0x89,
+	0x21, 0x5c, 0xc6, 0xb8, 0x31, 0xc6, 0x13, 0x27, 0xe4, 0xcc, 0xf5, 0x60, 0xe6, 0xba, 0x7c, 0xc1,
+	0x60, 0xe6, 0xfa, 0xaa, 0x69, 0xd1, 0x7a, 0x89, 0x50, 0xa6, 0xb6, 0x8f, 0x40, 0x5a, 0x73, 0x9b,
+	0x24, 0x69, 0x3d, 0x9d, 0x4b, 0x23, 0x2b, 0x11, 0xf8, 0xbc, 0x80, 0x1f, 0x4f, 0x85, 0x97, 0x44,
+	0x11, 0x7a, 0x1d, 0x8f, 0xd4, 0xe7, 0x52, 0x14, 0xaf, 0x57, 0xca, 0x1c, 0x5f, 0xe2, 0x8b, 0x09,
+	0xf1, 0x20, 0xf7, 0x31, 0xfe, 0x3f, 0x72, 0x00, 0xce, 0x4e, 0xa5, 0x09, 0x8e, 0x24, 0x81, 0xe4,
+	0x68, 0x25, 0x6d, 0x1d, 0x58, 0x8b, 0x8e, 0x13, 0xcb, 0xda, 0xad, 0x89, 0x7e, 0x42, 0x20, 0xb2,
+	0xb5, 0x51, 0xb2, 0xc8, 0x9e, 0xee, 0x88, 0xec, 0xde, 0x64, 0xaf, 0xe3, 0xd1, 0xfa, 0xa4, 0xee,
+	0x9c, 0x2c, 0x8f, 0x07, 0xc1, 0xee, 0x48, 0x19, 0xf1, 0x3b, 0x84, 0xc7, 0xd2, 0x32, 0xc1, 0x07,
+	0x8e, 0x87, 0xe2, 0x23, 0xc0, 0xfd, 0x6b, 0x69, 0x86, 0xc4, 0x67, 0x83, 0x33, 0x09, 0xb5, 0x35,
+	0x06, 0xca, 0x8a, 0x8e, 0xd3, 0x5e, 0x59, 0xb7, 0x5e, 0x88, 0x9f, 0x75, 0x47, 0xda, 0x74, 0xcc,
+	0xe0, 0x48, 0xcf, 0xbf, 0x72, 0xa4, 0x6b, 0x2f, 0xcd, 0xcc, 0x77, 0x8c, 0xff, 0x13, 0x4a, 0xc9,
+	0x1e, 0xc2, 0x7d, 0x72, 0xef, 0x93, 0x99, 0x34, 0xe6, 0xd6, 0xab, 0x47, 0x99, 0xfd, 0xab, 0x1c,
+	0x49, 0xa2, 0x15, 0xde, 0x7c, 0xfe, 0xb1, 0x97, 0x57, 0xc8, 0xb0, 0x21, 0xc3, 0x8d, 0xe6, 0x5b,
+	0x95, 0x7c, 0x40, 0x91, 0x6d, 0x4a, 0xe6, 0x32, 0xb5, 0x89, 0xbd, 0xa2, 0x94, 0x9b, 0xa7, 0xca,
+	0x05, 0xd4, 0x49, 0x81, 0x3a, 0x4a, 0x2e, 0xb7, 0xa2, 0x86, 0x2f, 0x7a, 0xe3, 0x95, 0x5d, 0x79,
+	0x4d, 0xde, 0x23, 0x3c, 0x10, 0x2a, 0x52, 0x74, 0x9c, 0x8c, 0xe0, 0xb1, 0x37, 0x57, 0x46, 0xf0,
+	0xf8, 0xeb, 0x48, 0x1b, 0x13, 0xe0, 0x05, 0xa2, 0xb6, 0x07, 0x27, 0xfb, 0xa8, 0x69, 0xc7, 0x91,
+	0xf9, 0xac, 0x7e, 0xc5, 0x2d, 0x67, 0x65, 0xe1, 0x94, 0xd9, 0x80, 0x3d, 0x25, 0xb0, 0xc7, 0xc9,
+	0x68, 0x2b, 0x76, 0xf4, 0xd3, 0x49, 0x3a, 0xfe, 0x11, 0xe1, 0x33, 0x91, 0x42, 0x81, 0xe7, 0xf3,
+	0x59, 0x7d, 0xeb, 0x40, 0x40, 0xd2, 0x95, 0xa1, 0x4d, 0x08, 0x01, 0x1a, 0x29, 0xa4, 0x09, 0x20,
+	0xbf, 0x51, 0xd2, 0x0e, 0x21, 0x4b, 0x59, 0x4d, 0x6c, 0xbb, 0x17, 0x95, 0xe5, 0x4e, 0xcb, 0x80,
+	0xa6, 0x25, 0xa1, 0xe9, 0x16, 0x59, 0x30, 0x22, 0xf5, 0x5a, 0x15, 0x26, 0x7d, 0xbd, 0xca, 0x61,
+	0xfd, 0x42, 0xf8, 0x7c, 0x7c, 0xa7, 0x60, 0x6a, 0x4b, 0x59, 0x7d, 0xef, 0x86, 0xe6, 0xd4, 0x05,
+	0xaf, 0xdd, 0x16, 0x9a, 0xe7, 0xc8, 0x8d, 0xd3, 0x6a, 0x5e, 0xbc, 0x77, 0x70, 0xa4, 0xa2, 0xc3,
+	0x23, 0x15, 0x7d, 0x3b, 0x52, 0xd1, 0xdb, 0x63, 0x35, 0x77, 0x78, 0xac, 0xe6, 0xbe, 0x1c, 0xab,
+	0xb9, 0x27, 0xd3, 0x96, 0xcd, 0x37, 0xb6, 0x4a, 0x7a, 0x99, 0x55, 0xe3, 0xab, 0xef, 0x84, 0xea,
+	0xf3, 0xdd, 0x1a, 0xf5, 0x4b, 0x7d, 0xe2, 0xfb, 0x7f, 0xf6, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x83, 0x4a, 0x16, 0xed, 0x18, 0x0d, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -562,6 +763,10 @@ type QueryClient interface {
 	ActionRequest(ctx context.Context, in *QueryGetActionRequestRequest, opts ...grpc.CallOption) (*QueryGetActionRequestResponse, error)
 	// Queries a list of ActionRequest items.
 	ActionRequestAll(ctx context.Context, in *QueryAllActionRequestRequest, opts ...grpc.CallOption) (*QueryAllActionRequestResponse, error)
+	// Queries a CollectionOwnerRequest by id.
+	CollectionOwnerRequest(ctx context.Context, in *QueryGetCollectionOwnerRequestRequest, opts ...grpc.CallOption) (*QueryGetCollectionOwnerRequestResponse, error)
+	// Queries a list of CollectionOwnerRequest items.
+	CollectionOwnerRequestAll(ctx context.Context, in *QueryAllCollectionOwnerRequestRequest, opts ...grpc.CallOption) (*QueryAllCollectionOwnerRequestResponse, error)
 }
 
 type queryClient struct {
@@ -574,7 +779,7 @@ func NewQueryClient(cc grpc1.ClientConn) QueryClient {
 
 func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error) {
 	out := new(QueryParamsResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Query/Params", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/Params", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -583,7 +788,7 @@ func (c *queryClient) Params(ctx context.Context, in *QueryParamsRequest, opts .
 
 func (c *queryClient) MintRequest(ctx context.Context, in *QueryGetMintRequestRequest, opts ...grpc.CallOption) (*QueryGetMintRequestResponse, error) {
 	out := new(QueryGetMintRequestResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Query/MintRequest", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/MintRequest", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -592,7 +797,7 @@ func (c *queryClient) MintRequest(ctx context.Context, in *QueryGetMintRequestRe
 
 func (c *queryClient) MintRequestAll(ctx context.Context, in *QueryAllMintRequestRequest, opts ...grpc.CallOption) (*QueryAllMintRequestResponse, error) {
 	out := new(QueryAllMintRequestResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Query/MintRequestAll", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/MintRequestAll", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -601,7 +806,7 @@ func (c *queryClient) MintRequestAll(ctx context.Context, in *QueryAllMintReques
 
 func (c *queryClient) ActionRequest(ctx context.Context, in *QueryGetActionRequestRequest, opts ...grpc.CallOption) (*QueryGetActionRequestResponse, error) {
 	out := new(QueryGetActionRequestResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Query/ActionRequest", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/ActionRequest", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -610,7 +815,25 @@ func (c *queryClient) ActionRequest(ctx context.Context, in *QueryGetActionReque
 
 func (c *queryClient) ActionRequestAll(ctx context.Context, in *QueryAllActionRequestRequest, opts ...grpc.CallOption) (*QueryAllActionRequestResponse, error) {
 	out := new(QueryAllActionRequestResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftoracle.Query/ActionRequestAll", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/ActionRequestAll", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) CollectionOwnerRequest(ctx context.Context, in *QueryGetCollectionOwnerRequestRequest, opts ...grpc.CallOption) (*QueryGetCollectionOwnerRequestResponse, error) {
+	out := new(QueryGetCollectionOwnerRequestResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/CollectionOwnerRequest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) CollectionOwnerRequestAll(ctx context.Context, in *QueryAllCollectionOwnerRequestRequest, opts ...grpc.CallOption) (*QueryAllCollectionOwnerRequestResponse, error) {
+	out := new(QueryAllCollectionOwnerRequestResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Query/CollectionOwnerRequestAll", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -629,6 +852,10 @@ type QueryServer interface {
 	ActionRequest(context.Context, *QueryGetActionRequestRequest) (*QueryGetActionRequestResponse, error)
 	// Queries a list of ActionRequest items.
 	ActionRequestAll(context.Context, *QueryAllActionRequestRequest) (*QueryAllActionRequestResponse, error)
+	// Queries a CollectionOwnerRequest by id.
+	CollectionOwnerRequest(context.Context, *QueryGetCollectionOwnerRequestRequest) (*QueryGetCollectionOwnerRequestResponse, error)
+	// Queries a list of CollectionOwnerRequest items.
+	CollectionOwnerRequestAll(context.Context, *QueryAllCollectionOwnerRequestRequest) (*QueryAllCollectionOwnerRequestResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -650,6 +877,12 @@ func (*UnimplementedQueryServer) ActionRequest(ctx context.Context, req *QueryGe
 func (*UnimplementedQueryServer) ActionRequestAll(ctx context.Context, req *QueryAllActionRequestRequest) (*QueryAllActionRequestResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ActionRequestAll not implemented")
 }
+func (*UnimplementedQueryServer) CollectionOwnerRequest(ctx context.Context, req *QueryGetCollectionOwnerRequestRequest) (*QueryGetCollectionOwnerRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CollectionOwnerRequest not implemented")
+}
+func (*UnimplementedQueryServer) CollectionOwnerRequestAll(ctx context.Context, req *QueryAllCollectionOwnerRequestRequest) (*QueryAllCollectionOwnerRequestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CollectionOwnerRequestAll not implemented")
+}
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
 	s.RegisterService(&_Query_serviceDesc, srv)
@@ -665,7 +898,7 @@ func _Query_Params_Handler(srv interface{}, ctx context.Context, dec func(interf
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftoracle.Query/Params",
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/Params",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).Params(ctx, req.(*QueryParamsRequest))
@@ -683,7 +916,7 @@ func _Query_MintRequest_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftoracle.Query/MintRequest",
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/MintRequest",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).MintRequest(ctx, req.(*QueryGetMintRequestRequest))
@@ -701,7 +934,7 @@ func _Query_MintRequestAll_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftoracle.Query/MintRequestAll",
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/MintRequestAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).MintRequestAll(ctx, req.(*QueryAllMintRequestRequest))
@@ -719,7 +952,7 @@ func _Query_ActionRequest_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftoracle.Query/ActionRequest",
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/ActionRequest",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).ActionRequest(ctx, req.(*QueryGetActionRequestRequest))
@@ -737,7 +970,7 @@ func _Query_ActionRequestAll_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftoracle.Query/ActionRequestAll",
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/ActionRequestAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(QueryServer).ActionRequestAll(ctx, req.(*QueryAllActionRequestRequest))
@@ -745,8 +978,44 @@ func _Query_ActionRequestAll_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_CollectionOwnerRequest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetCollectionOwnerRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).CollectionOwnerRequest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/CollectionOwnerRequest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).CollectionOwnerRequest(ctx, req.(*QueryGetCollectionOwnerRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_CollectionOwnerRequestAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryAllCollectionOwnerRequestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).CollectionOwnerRequestAll(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Query/CollectionOwnerRequestAll",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).CollectionOwnerRequestAll(ctx, req.(*QueryAllCollectionOwnerRequestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Query_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "sixnft.nftoracle.Query",
+	ServiceName: "thesixnetwork.sixnft.nftoracle.Query",
 	HandlerType: (*QueryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -768,6 +1037,14 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ActionRequestAll",
 			Handler:    _Query_ActionRequestAll_Handler,
+		},
+		{
+			MethodName: "CollectionOwnerRequest",
+			Handler:    _Query_CollectionOwnerRequest_Handler,
+		},
+		{
+			MethodName: "CollectionOwnerRequestAll",
+			Handler:    _Query_CollectionOwnerRequestAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1120,6 +1397,151 @@ func (m *QueryAllActionRequestResponse) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetCollectionOwnerRequestRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetCollectionOwnerRequestRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetCollectionOwnerRequestRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetCollectionOwnerRequestResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetCollectionOwnerRequestResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetCollectionOwnerRequestResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	{
+		size, err := m.CollectionOwnerRequest.MarshalToSizedBuffer(dAtA[:i])
+		if err != nil {
+			return 0, err
+		}
+		i -= size
+		i = encodeVarintQuery(dAtA, i, uint64(size))
+	}
+	i--
+	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllCollectionOwnerRequestRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllCollectionOwnerRequestRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllCollectionOwnerRequestRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.CollectionOwnerRequest) > 0 {
+		for iNdEx := len(m.CollectionOwnerRequest) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.CollectionOwnerRequest[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -1250,6 +1672,61 @@ func (m *QueryAllActionRequestResponse) Size() (n int) {
 	_ = l
 	if len(m.ActionRequest) > 0 {
 		for _, e := range m.ActionRequest {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetCollectionOwnerRequestRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovQuery(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *QueryGetCollectionOwnerRequestResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = m.CollectionOwnerRequest.Size()
+	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryAllCollectionOwnerRequestRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryAllCollectionOwnerRequestResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.CollectionOwnerRequest) > 0 {
+		for _, e := range m.CollectionOwnerRequest {
 			l = e.Size()
 			n += 1 + l + sovQuery(uint64(l))
 		}
@@ -2056,6 +2533,364 @@ func (m *QueryAllActionRequestResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.ActionRequest = append(m.ActionRequest, ActionRequest{})
 			if err := m.ActionRequest[len(m.ActionRequest)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetCollectionOwnerRequestRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetCollectionOwnerRequestRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetCollectionOwnerRequestRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetCollectionOwnerRequestResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetCollectionOwnerRequestResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetCollectionOwnerRequestResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CollectionOwnerRequest", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := m.CollectionOwnerRequest.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllCollectionOwnerRequestRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllCollectionOwnerRequestRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllCollectionOwnerRequestRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryAllCollectionOwnerRequestResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryAllCollectionOwnerRequestResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryAllCollectionOwnerRequestResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CollectionOwnerRequest", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CollectionOwnerRequest = append(m.CollectionOwnerRequest, CollectionOwnerRequest{})
+			if err := m.CollectionOwnerRequest[len(m.CollectionOwnerRequest)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

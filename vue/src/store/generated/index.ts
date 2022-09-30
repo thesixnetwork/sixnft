@@ -37,6 +37,7 @@ import ThesixnetworkSixnftSixnftEvmsupport from './thesixnetwork/sixnft/sixnft.e
 import ThesixnetworkSixnftSixnftNftadmin from './thesixnetwork/sixnft/sixnft.nftadmin'
 import ThesixnetworkSixnftSixnftNftmngr from './thesixnetwork/sixnft/sixnft.nftmngr'
 import ThesixnetworkSixnftSixnftNftoracle from './thesixnetwork/sixnft/sixnft.nftoracle'
+import ThesixnetworkSixnftThesixnetworkSixnftNftoracle from './thesixnetwork/sixnft/thesixnetwork.sixnft.nftoracle'
 
 
 export default { 
@@ -77,6 +78,7 @@ export default {
   ThesixnetworkSixnftSixnftNftadmin: load(ThesixnetworkSixnftSixnftNftadmin, 'sixnft.nftadmin'),
   ThesixnetworkSixnftSixnftNftmngr: load(ThesixnetworkSixnftSixnftNftmngr, 'sixnft.nftmngr'),
   ThesixnetworkSixnftSixnftNftoracle: load(ThesixnetworkSixnftSixnftNftoracle, 'sixnft.nftoracle'),
+  ThesixnetworkSixnftThesixnetworkSixnftNftoracle: load(ThesixnetworkSixnftThesixnetworkSixnftNftoracle, 'thesixnetwork.sixnft.nftoracle'),
   
 }
 

@@ -32,3 +32,8 @@ const (
 	ActionRequestKey      = "ActionRequest-value-"
 	ActionRequestCountKey = "ActionRequest-count-"
 )
+
+const (
+	CollectionOwnerRequestKey      = "CollectionOwnerRequest-value-"
+	CollectionOwnerRequestCountKey = "CollectionOwnerRequest-count-"
+)

@@ -1,0 +1,11 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.nftoracle;
+
+option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
+
+message CollectionOwnerRequest {
+  uint64 id = 1;
+  string nftSchemaCode = 2; 
+  string base64OwnerSignature = 3; 
+  
+}

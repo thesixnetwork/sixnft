@@ -33,6 +33,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		ActionRequestCount: 2,
+		CollectionOwnerRequestList: []types.CollectionOwnerRequest{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		CollectionOwnerRequestCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -48,5 +57,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.MintRequestCount, got.MintRequestCount)
 	require.ElementsMatch(t, genesisState.ActionRequestList, got.ActionRequestList)
 	require.Equal(t, genesisState.ActionRequestCount, got.ActionRequestCount)
+	require.ElementsMatch(t, genesisState.CollectionOwnerRequestList, got.CollectionOwnerRequestList)
+	require.Equal(t, genesisState.CollectionOwnerRequestCount, got.CollectionOwnerRequestCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
