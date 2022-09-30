@@ -4,17 +4,13 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgCreateActionRequest } from "./types/nftoracle/tx";
-import { MsgSubmitActionResponse } from "./types/nftoracle/tx";
-import { MsgSubmitMintResponse } from "./types/nftoracle/tx";
-import { MsgCreateMintRequest } from "./types/nftoracle/tx";
+import { MsgRemoveBinding } from "./types/evmsupport/tx";
+import { MsgBindAddress } from "./types/evmsupport/tx";
 
 
 const types = [
-  ["/thesixnetwork.sixnft.nftoracle.MsgCreateActionRequest", MsgCreateActionRequest],
-  ["/thesixnetwork.sixnft.nftoracle.MsgSubmitActionResponse", MsgSubmitActionResponse],
-  ["/thesixnetwork.sixnft.nftoracle.MsgSubmitMintResponse", MsgSubmitMintResponse],
-  ["/thesixnetwork.sixnft.nftoracle.MsgCreateMintRequest", MsgCreateMintRequest],
+  ["/thesixnetwork.sixnft.evmsupport.MsgRemoveBinding", MsgRemoveBinding],
+  ["/thesixnetwork.sixnft.evmsupport.MsgBindAddress", MsgBindAddress],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -47,10 +43,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgCreateActionRequest: (data: MsgCreateActionRequest): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftoracle.MsgCreateActionRequest", value: MsgCreateActionRequest.fromPartial( data ) }),
-    msgSubmitActionResponse: (data: MsgSubmitActionResponse): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftoracle.MsgSubmitActionResponse", value: MsgSubmitActionResponse.fromPartial( data ) }),
-    msgSubmitMintResponse: (data: MsgSubmitMintResponse): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftoracle.MsgSubmitMintResponse", value: MsgSubmitMintResponse.fromPartial( data ) }),
-    msgCreateMintRequest: (data: MsgCreateMintRequest): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftoracle.MsgCreateMintRequest", value: MsgCreateMintRequest.fromPartial( data ) }),
+    msgRemoveBinding: (data: MsgRemoveBinding): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.evmsupport.MsgRemoveBinding", value: MsgRemoveBinding.fromPartial( data ) }),
+    msgBindAddress: (data: MsgBindAddress): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.evmsupport.MsgBindAddress", value: MsgBindAddress.fromPartial( data ) }),
     
   };
 };
