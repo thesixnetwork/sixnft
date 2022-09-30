@@ -80,20 +80,20 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		// Create a new collection aka SetNftCollection
 		collection = types.NftCollection{
 			NftSchemaCode: data.NftSchemaCode,
-			NftData:       []*types.NftData{},
-			NftCount:      0,
+			NftDatas:      []*types.NftData{},
+			Total:         0,
 		}
 		k.Keeper.SetNftCollection(ctx, collection)
 	}
 	// Append the data to the collection
-	collection.NftData = append(collection.NftData, &data)
+	collection.NftDatas = append(collection.NftDatas, &data)
 
 	// Set count for nft collection
 	count := k.Keeper.GetNftCollectionDataCount(ctx)
 	count += 1
 
 	// Increment the collection count
-	collection.NftCount = count
+	collection.Total = count
 	k.Keeper.SetNftCollectionDataCount(ctx, count)
 
 	// Set the collection

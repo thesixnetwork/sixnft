@@ -146,8 +146,8 @@ export interface NftmngrNftCollection {
   nftSchemaCode?: string;
 
   /** @format uint64 */
-  nftCount?: string;
-  nftData?: NftmngrNftData[];
+  total?: string;
+  nftDatas?: NftmngrNftData[];
 }
 
 export interface NftmngrNftData {

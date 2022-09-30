@@ -7,21 +7,21 @@ export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
 export interface NftCollection {
   nftSchemaCode: string;
-  nftCount: number;
-  nftData: NftData[];
+  total: number;
+  nftDatas: NftData[];
 }
 
-const baseNftCollection: object = { nftSchemaCode: "", nftCount: 0 };
+const baseNftCollection: object = { nftSchemaCode: "", total: 0 };
 
 export const NftCollection = {
   encode(message: NftCollection, writer: Writer = Writer.create()): Writer {
     if (message.nftSchemaCode !== "") {
       writer.uint32(10).string(message.nftSchemaCode);
     }
-    if (message.nftCount !== 0) {
-      writer.uint32(16).uint64(message.nftCount);
+    if (message.total !== 0) {
+      writer.uint32(16).uint64(message.total);
     }
-    for (const v of message.nftData) {
+    for (const v of message.nftDatas) {
       NftData.encode(v!, writer.uint32(26).fork()).ldelim();
     }
     return writer;
@@ -31,7 +31,7 @@ export const NftCollection = {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseNftCollection } as NftCollection;
-    message.nftData = [];
+    message.nftDatas = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -39,10 +39,10 @@ export const NftCollection = {
           message.nftSchemaCode = reader.string();
           break;
         case 2:
-          message.nftCount = longToNumber(reader.uint64() as Long);
+          message.total = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.nftData.push(NftData.decode(reader, reader.uint32()));
+          message.nftDatas.push(NftData.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -54,20 +54,20 @@ export const NftCollection = {
 
   fromJSON(object: any): NftCollection {
     const message = { ...baseNftCollection } as NftCollection;
-    message.nftData = [];
+    message.nftDatas = [];
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
       message.nftSchemaCode = "";
     }
-    if (object.nftCount !== undefined && object.nftCount !== null) {
-      message.nftCount = Number(object.nftCount);
+    if (object.total !== undefined && object.total !== null) {
+      message.total = Number(object.total);
     } else {
-      message.nftCount = 0;
+      message.total = 0;
     }
-    if (object.nftData !== undefined && object.nftData !== null) {
-      for (const e of object.nftData) {
-        message.nftData.push(NftData.fromJSON(e));
+    if (object.nftDatas !== undefined && object.nftDatas !== null) {
+      for (const e of object.nftDatas) {
+        message.nftDatas.push(NftData.fromJSON(e));
       }
     }
     return message;
@@ -77,33 +77,33 @@ export const NftCollection = {
     const obj: any = {};
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
-    message.nftCount !== undefined && (obj.nftCount = message.nftCount);
-    if (message.nftData) {
-      obj.nftData = message.nftData.map((e) =>
+    message.total !== undefined && (obj.total = message.total);
+    if (message.nftDatas) {
+      obj.nftDatas = message.nftDatas.map((e) =>
         e ? NftData.toJSON(e) : undefined
       );
     } else {
-      obj.nftData = [];
+      obj.nftDatas = [];
     }
     return obj;
   },
 
   fromPartial(object: DeepPartial<NftCollection>): NftCollection {
     const message = { ...baseNftCollection } as NftCollection;
-    message.nftData = [];
+    message.nftDatas = [];
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = object.nftSchemaCode;
     } else {
       message.nftSchemaCode = "";
     }
-    if (object.nftCount !== undefined && object.nftCount !== null) {
-      message.nftCount = object.nftCount;
+    if (object.total !== undefined && object.total !== null) {
+      message.total = object.total;
     } else {
-      message.nftCount = 0;
+      message.total = 0;
     }
-    if (object.nftData !== undefined && object.nftData !== null) {
-      for (const e of object.nftData) {
-        message.nftData.push(NftData.fromPartial(e));
+    if (object.nftDatas !== undefined && object.nftDatas !== null) {
+      for (const e of object.nftDatas) {
+        message.nftDatas.push(NftData.fromPartial(e));
       }
     }
     return message;
