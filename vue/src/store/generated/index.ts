@@ -39,6 +39,7 @@ import ThesixnetworkSixnftSixnftNftmngr from './thesixnetwork/sixnft/sixnft.nftm
 import ThesixnetworkSixnftSixnftNftoracle from './thesixnetwork/sixnft/sixnft.nftoracle'
 import ThesixnetworkSixnftThesixnetworkSixnftEvmsupport from './thesixnetwork/sixnft/thesixnetwork.sixnft.evmsupport'
 import ThesixnetworkSixnftThesixnetworkSixnftNftadmin from './thesixnetwork/sixnft/thesixnetwork.sixnft.nftadmin'
+import ThesixnetworkSixnftThesixnetworkSixnftNftmngr from './thesixnetwork/sixnft/thesixnetwork.sixnft.nftmngr'
 import ThesixnetworkSixnftThesixnetworkSixnftNftoracle from './thesixnetwork/sixnft/thesixnetwork.sixnft.nftoracle'
 
 
@@ -82,6 +83,7 @@ export default {
   ThesixnetworkSixnftSixnftNftoracle: load(ThesixnetworkSixnftSixnftNftoracle, 'sixnft.nftoracle'),
   ThesixnetworkSixnftThesixnetworkSixnftEvmsupport: load(ThesixnetworkSixnftThesixnetworkSixnftEvmsupport, 'thesixnetwork.sixnft.evmsupport'),
   ThesixnetworkSixnftThesixnetworkSixnftNftadmin: load(ThesixnetworkSixnftThesixnetworkSixnftNftadmin, 'thesixnetwork.sixnft.nftadmin'),
+  ThesixnetworkSixnftThesixnetworkSixnftNftmngr: load(ThesixnetworkSixnftThesixnetworkSixnftNftmngr, 'thesixnetwork.sixnft.nftmngr'),
   ThesixnetworkSixnftThesixnetworkSixnftNftoracle: load(ThesixnetworkSixnftThesixnetworkSixnftNftoracle, 'thesixnetwork.sixnft.nftoracle'),
   
 }

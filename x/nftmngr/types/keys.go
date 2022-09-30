@@ -15,6 +15,9 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_nftmngr"
+
+	// NFT Collection
+	NftCollectionDataCountKey = "NftCollectionData-count-"
 )
 
 func KeyPrefix(p string) []byte {
