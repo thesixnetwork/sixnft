@@ -1,11 +1,24 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.nftoracle;
+import "nftoracle/request.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 message CollectionOwnerRequest {
   uint64 id = 1;
   string nftSchemaCode = 2; 
-  string base64OwnerSignature = 3; 
+  string signer = 3;
+  uint64 required_confirm = 4; 
+  RequestStatus status = 5;
+  uint64 current_confirm = 6;
+  map<string, bool> confirmers = 7;
+  google.protobuf.Timestamp created_at = 8
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp valid_until = 9
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  repeated DataHash data_hashes = 10;
+  int64 expired_height = 11;
   
 }
