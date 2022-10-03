@@ -33,4 +33,7 @@ var (
 	ErrEmptyChangeList                       = sdkerrors.Register(ModuleName, 22, "There's no changes from action")
 	ErrRefIdAlreadyExists                    = sdkerrors.Register(ModuleName, 23, "RefId already exists")
 	ErrNFTSchemaAttributeNotFound            = sdkerrors.Register(ModuleName, 24, "NFTSchema attribute not found")
+
+	ErrParsingCollectionOwnerSignature    = sdkerrors.Register(ModuleName, 25, "Error parsing collection owner signature")
+	ErrNFTSchemaAlreadyVerified 		  = sdkerrors.Register(ModuleName, 26, "NFTSchema already verified")
 )

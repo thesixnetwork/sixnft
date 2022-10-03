@@ -13,6 +13,6 @@ message NFTSchema {
   string owner = 3; 
   OriginData origin_data = 4;
   OnChainData onchain_data = 5;
-  
+  bool isVerified = 6;
 }
 
