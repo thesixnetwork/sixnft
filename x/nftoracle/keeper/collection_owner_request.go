@@ -2,8 +2,8 @@ package keeper
 
 import (
 	"encoding/binary"
-	"time"
 	"fmt"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"

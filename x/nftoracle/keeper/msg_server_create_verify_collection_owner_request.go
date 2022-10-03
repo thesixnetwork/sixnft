@@ -8,9 +8,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg *types.MsgCreateVerifyCollectionOwnerRequest) (*types.MsgCreateVerifyCollectionOwnerRequestResponse, error) {
@@ -48,10 +48,10 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.MintRequestActiveDuration(ctx))
-	
+
 	id_ := k.Keeper.AppendCollectionOwnerRequest(ctx, types.CollectionOwnerRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
-		Signer: 		*signer,
+		Signer:          *signer,
 		RequiredConfirm: msg.RequiredConfirm,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
@@ -61,11 +61,10 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 
-
 	return &types.MsgCreateVerifyCollectionOwnerRequestResponse{
-		Id: id_,
+		Id:            id_,
 		NftSchemaCode: _schema.Code,
-		OwnerAddress: *signer,
+		OwnerAddress:  *signer,
 	}, nil
 }
 
@@ -80,7 +79,7 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	collectionOwnerType := &types.CollectionOwnerSignature{}
 	collectionOwnerTypeBz, err := base64.StdEncoding.DecodeString(collectionOwnerSig.Message)
 	if err != nil {
-		return nil,  err
+		return nil, err
 	}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(collectionOwnerTypeBz, collectionOwnerType)
 	if err != nil {
@@ -91,7 +90,7 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	decode_signature, err := hexutil.Decode(collectionOwnerSig.Signature)
 	if err != nil {
 		// log.Fatalf("Failed to decode signature: %v", msg.Signature)
-		return nil,  sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature")
 	}
 	signature_with_revocery_id := decode_signature
 
@@ -109,9 +108,9 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 
 	signatureNoRecoverID := signature_with_revocery_id[:len(signature_with_revocery_id)-1] // remove recovery id
 	if verified := crypto.VerifySignature(sigPublicKey, hash.Bytes(), signatureNoRecoverID); !verified {
-		return  nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
+		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
 	}
 	signer := eth_address_from_pubkey.Hex()
 	// fmt.Println("######################### signer", signer)
-	return  &signer, nil
+	return &signer, nil
 }

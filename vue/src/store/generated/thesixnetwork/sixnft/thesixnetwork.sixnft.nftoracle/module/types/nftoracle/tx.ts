@@ -51,12 +51,25 @@ export interface MsgSubmitActionResponseResponse {
 export interface MsgCreateVerifyCollectionOwnerRequest {
   creator: string;
   nftSchemaCode: string;
-  requireConfirm: number;
+  base64VerifierSignature: string;
+  requiredConfirm: number;
 }
 
 export interface MsgCreateVerifyCollectionOwnerRequestResponse {
+  id: number;
   nftSchemaCode: string;
   ownerAddress: string;
+}
+
+export interface MsgSubmitVerifyCollectionOwner {
+  creator: string;
+  verifyRequestID: number;
+  schemaCode: string;
+  contractOwnerAddress: string;
+}
+
+export interface MsgSubmitVerifyCollectionOwnerResponse {
+  verifyRequestID: number;
 }
 
 const baseMsgCreateMintRequest: object = {
@@ -849,7 +862,8 @@ export const MsgSubmitActionResponseResponse = {
 const baseMsgCreateVerifyCollectionOwnerRequest: object = {
   creator: "",
   nftSchemaCode: "",
-  requireConfirm: 0,
+  base64VerifierSignature: "",
+  requiredConfirm: 0,
 };
 
 export const MsgCreateVerifyCollectionOwnerRequest = {
@@ -863,8 +877,11 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     if (message.nftSchemaCode !== "") {
       writer.uint32(18).string(message.nftSchemaCode);
     }
-    if (message.requireConfirm !== 0) {
-      writer.uint32(24).uint64(message.requireConfirm);
+    if (message.base64VerifierSignature !== "") {
+      writer.uint32(26).string(message.base64VerifierSignature);
+    }
+    if (message.requiredConfirm !== 0) {
+      writer.uint32(32).uint64(message.requiredConfirm);
     }
     return writer;
   },
@@ -888,7 +905,10 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
           message.nftSchemaCode = reader.string();
           break;
         case 3:
-          message.requireConfirm = longToNumber(reader.uint64() as Long);
+          message.base64VerifierSignature = reader.string();
+          break;
+        case 4:
+          message.requiredConfirm = longToNumber(reader.uint64() as Long);
           break;
         default:
           reader.skipType(tag & 7);
@@ -912,10 +932,21 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     } else {
       message.nftSchemaCode = "";
     }
-    if (object.requireConfirm !== undefined && object.requireConfirm !== null) {
-      message.requireConfirm = Number(object.requireConfirm);
+    if (
+      object.base64VerifierSignature !== undefined &&
+      object.base64VerifierSignature !== null
+    ) {
+      message.base64VerifierSignature = String(object.base64VerifierSignature);
     } else {
-      message.requireConfirm = 0;
+      message.base64VerifierSignature = "";
+    }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = Number(object.requiredConfirm);
+    } else {
+      message.requiredConfirm = 0;
     }
     return message;
   },
@@ -925,8 +956,10 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
-    message.requireConfirm !== undefined &&
-      (obj.requireConfirm = message.requireConfirm);
+    message.base64VerifierSignature !== undefined &&
+      (obj.base64VerifierSignature = message.base64VerifierSignature);
+    message.requiredConfirm !== undefined &&
+      (obj.requiredConfirm = message.requiredConfirm);
     return obj;
   },
 
@@ -946,16 +979,28 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     } else {
       message.nftSchemaCode = "";
     }
-    if (object.requireConfirm !== undefined && object.requireConfirm !== null) {
-      message.requireConfirm = object.requireConfirm;
+    if (
+      object.base64VerifierSignature !== undefined &&
+      object.base64VerifierSignature !== null
+    ) {
+      message.base64VerifierSignature = object.base64VerifierSignature;
     } else {
-      message.requireConfirm = 0;
+      message.base64VerifierSignature = "";
+    }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = object.requiredConfirm;
+    } else {
+      message.requiredConfirm = 0;
     }
     return message;
   },
 };
 
 const baseMsgCreateVerifyCollectionOwnerRequestResponse: object = {
+  id: 0,
   nftSchemaCode: "",
   ownerAddress: "",
 };
@@ -965,11 +1010,14 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
     message: MsgCreateVerifyCollectionOwnerRequestResponse,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
     if (message.nftSchemaCode !== "") {
-      writer.uint32(10).string(message.nftSchemaCode);
+      writer.uint32(18).string(message.nftSchemaCode);
     }
     if (message.ownerAddress !== "") {
-      writer.uint32(18).string(message.ownerAddress);
+      writer.uint32(26).string(message.ownerAddress);
     }
     return writer;
   },
@@ -987,9 +1035,12 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nftSchemaCode = reader.string();
+          message.id = longToNumber(reader.uint64() as Long);
           break;
         case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
           message.ownerAddress = reader.string();
           break;
         default:
@@ -1004,6 +1055,11 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
     const message = {
       ...baseMsgCreateVerifyCollectionOwnerRequestResponse,
     } as MsgCreateVerifyCollectionOwnerRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
@@ -1019,6 +1075,7 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
 
   toJSON(message: MsgCreateVerifyCollectionOwnerRequestResponse): unknown {
     const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
     message.ownerAddress !== undefined &&
@@ -1032,6 +1089,11 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
     const message = {
       ...baseMsgCreateVerifyCollectionOwnerRequestResponse,
     } as MsgCreateVerifyCollectionOwnerRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
     if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
       message.nftSchemaCode = object.nftSchemaCode;
     } else {
@@ -1041,6 +1103,223 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
       message.ownerAddress = object.ownerAddress;
     } else {
       message.ownerAddress = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSubmitVerifyCollectionOwner: object = {
+  creator: "",
+  verifyRequestID: 0,
+  schemaCode: "",
+  contractOwnerAddress: "",
+};
+
+export const MsgSubmitVerifyCollectionOwner = {
+  encode(
+    message: MsgSubmitVerifyCollectionOwner,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.verifyRequestID !== 0) {
+      writer.uint32(16).uint64(message.verifyRequestID);
+    }
+    if (message.schemaCode !== "") {
+      writer.uint32(26).string(message.schemaCode);
+    }
+    if (message.contractOwnerAddress !== "") {
+      writer.uint32(34).string(message.contractOwnerAddress);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSubmitVerifyCollectionOwner {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.verifyRequestID = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.schemaCode = reader.string();
+          break;
+        case 4:
+          message.contractOwnerAddress = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitVerifyCollectionOwner {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = Number(object.verifyRequestID);
+    } else {
+      message.verifyRequestID = 0;
+    }
+    if (object.schemaCode !== undefined && object.schemaCode !== null) {
+      message.schemaCode = String(object.schemaCode);
+    } else {
+      message.schemaCode = "";
+    }
+    if (
+      object.contractOwnerAddress !== undefined &&
+      object.contractOwnerAddress !== null
+    ) {
+      message.contractOwnerAddress = String(object.contractOwnerAddress);
+    } else {
+      message.contractOwnerAddress = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitVerifyCollectionOwner): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.verifyRequestID !== undefined &&
+      (obj.verifyRequestID = message.verifyRequestID);
+    message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
+    message.contractOwnerAddress !== undefined &&
+      (obj.contractOwnerAddress = message.contractOwnerAddress);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitVerifyCollectionOwner>
+  ): MsgSubmitVerifyCollectionOwner {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = object.verifyRequestID;
+    } else {
+      message.verifyRequestID = 0;
+    }
+    if (object.schemaCode !== undefined && object.schemaCode !== null) {
+      message.schemaCode = object.schemaCode;
+    } else {
+      message.schemaCode = "";
+    }
+    if (
+      object.contractOwnerAddress !== undefined &&
+      object.contractOwnerAddress !== null
+    ) {
+      message.contractOwnerAddress = object.contractOwnerAddress;
+    } else {
+      message.contractOwnerAddress = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSubmitVerifyCollectionOwnerResponse: object = {
+  verifyRequestID: 0,
+};
+
+export const MsgSubmitVerifyCollectionOwnerResponse = {
+  encode(
+    message: MsgSubmitVerifyCollectionOwnerResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.verifyRequestID !== 0) {
+      writer.uint32(8).uint64(message.verifyRequestID);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSubmitVerifyCollectionOwnerResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.verifyRequestID = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitVerifyCollectionOwnerResponse {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = Number(object.verifyRequestID);
+    } else {
+      message.verifyRequestID = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitVerifyCollectionOwnerResponse): unknown {
+    const obj: any = {};
+    message.verifyRequestID !== undefined &&
+      (obj.verifyRequestID = message.verifyRequestID);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitVerifyCollectionOwnerResponse>
+  ): MsgSubmitVerifyCollectionOwnerResponse {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = object.verifyRequestID;
+    } else {
+      message.verifyRequestID = 0;
     }
     return message;
   },
@@ -1060,10 +1339,13 @@ export interface Msg {
   SubmitActionResponse(
     request: MsgSubmitActionResponse
   ): Promise<MsgSubmitActionResponseResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   CreateVerifyCollectionOwnerRequest(
     request: MsgCreateVerifyCollectionOwnerRequest
   ): Promise<MsgCreateVerifyCollectionOwnerRequestResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SubmitVerifyCollectionOwner(
+    request: MsgSubmitVerifyCollectionOwner
+  ): Promise<MsgSubmitVerifyCollectionOwnerResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1138,6 +1420,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgCreateVerifyCollectionOwnerRequestResponse.decode(new Reader(data))
+    );
+  }
+
+  SubmitVerifyCollectionOwner(
+    request: MsgSubmitVerifyCollectionOwner
+  ): Promise<MsgSubmitVerifyCollectionOwnerResponse> {
+    const data = MsgSubmitVerifyCollectionOwner.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftoracle.Msg",
+      "SubmitVerifyCollectionOwner",
+      data
+    );
+    return promise.then((data) =>
+      MsgSubmitVerifyCollectionOwnerResponse.decode(new Reader(data))
     );
   }
 }

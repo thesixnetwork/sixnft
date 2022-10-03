@@ -13,6 +13,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateActionRequest{}, "nftoracle/CreateActionRequest", nil)
 	cdc.RegisterConcrete(&MsgSubmitActionResponse{}, "nftoracle/SubmitActionResponse", nil)
 	cdc.RegisterConcrete(&MsgCreateVerifyCollectionOwnerRequest{}, "nftoracle/CreateVerifyCollectionOwnerRequest", nil)
+	cdc.RegisterConcrete(&MsgSubmitVerifyCollectionOwner{}, "nftoracle/SubmitVerifyCollectionOwner", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -31,6 +32,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgCreateVerifyCollectionOwnerRequest{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSubmitVerifyCollectionOwner{},
 	)
 	// this line is used by starport scaffolding # 3
 

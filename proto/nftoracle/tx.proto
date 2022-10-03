@@ -12,6 +12,7 @@ service Msg {
   rpc CreateActionRequest(MsgCreateActionRequest) returns (MsgCreateActionRequestResponse);
   rpc SubmitActionResponse(MsgSubmitActionResponse) returns (MsgSubmitActionResponseResponse);
   rpc CreateVerifyCollectionOwnerRequest(MsgCreateVerifyCollectionOwnerRequest) returns (MsgCreateVerifyCollectionOwnerRequestResponse);
+  rpc SubmitVerifyCollectionOwner(MsgSubmitVerifyCollectionOwner) returns (MsgSubmitVerifyCollectionOwnerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -70,6 +71,17 @@ message MsgCreateVerifyCollectionOwnerRequestResponse {
   uint64 id = 1;
   string nftSchemaCode = 2;
   string ownerAddress = 3;
+}
+
+message MsgSubmitVerifyCollectionOwner {
+  string creator = 1;
+  uint64 verifyRequestID = 2;
+  string schemaCode = 3;
+  string contractOwnerAddress = 4;
+}
+
+message MsgSubmitVerifyCollectionOwnerResponse {
+  uint64 verifyRequestID = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

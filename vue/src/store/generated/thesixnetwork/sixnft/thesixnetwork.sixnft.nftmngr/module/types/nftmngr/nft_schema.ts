@@ -11,9 +11,15 @@ export interface NFTSchema {
   owner: string;
   origin_data: OriginData | undefined;
   onchain_data: OnChainData | undefined;
+  isVerified: boolean;
 }
 
-const baseNFTSchema: object = { code: "", name: "", owner: "" };
+const baseNFTSchema: object = {
+  code: "",
+  name: "",
+  owner: "",
+  isVerified: false,
+};
 
 export const NFTSchema = {
   encode(message: NFTSchema, writer: Writer = Writer.create()): Writer {
@@ -34,6 +40,9 @@ export const NFTSchema = {
         message.onchain_data,
         writer.uint32(42).fork()
       ).ldelim();
+    }
+    if (message.isVerified === true) {
+      writer.uint32(48).bool(message.isVerified);
     }
     return writer;
   },
@@ -59,6 +68,9 @@ export const NFTSchema = {
           break;
         case 5:
           message.onchain_data = OnChainData.decode(reader, reader.uint32());
+          break;
+        case 6:
+          message.isVerified = reader.bool();
           break;
         default:
           reader.skipType(tag & 7);
@@ -95,6 +107,11 @@ export const NFTSchema = {
     } else {
       message.onchain_data = undefined;
     }
+    if (object.isVerified !== undefined && object.isVerified !== null) {
+      message.isVerified = Boolean(object.isVerified);
+    } else {
+      message.isVerified = false;
+    }
     return message;
   },
 
@@ -111,6 +128,7 @@ export const NFTSchema = {
       (obj.onchain_data = message.onchain_data
         ? OnChainData.toJSON(message.onchain_data)
         : undefined);
+    message.isVerified !== undefined && (obj.isVerified = message.isVerified);
     return obj;
   },
 
@@ -140,6 +158,11 @@ export const NFTSchema = {
       message.onchain_data = OnChainData.fromPartial(object.onchain_data);
     } else {
       message.onchain_data = undefined;
+    }
+    if (object.isVerified !== undefined && object.isVerified !== null) {
+      message.isVerified = object.isVerified;
+    } else {
+      message.isVerified = false;
     }
     return message;
   },

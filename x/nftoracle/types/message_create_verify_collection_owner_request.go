@@ -11,8 +11,8 @@ var _ sdk.Msg = &MsgCreateVerifyCollectionOwnerRequest{}
 
 func NewMsgCreateVerifyCollectionOwnerRequest(creator string, nftSchemaCode string, requiredConfirm uint64) *MsgCreateVerifyCollectionOwnerRequest {
 	return &MsgCreateVerifyCollectionOwnerRequest{
-		Creator:        creator,
-		NftSchemaCode:  nftSchemaCode,
+		Creator:         creator,
+		NftSchemaCode:   nftSchemaCode,
 		RequiredConfirm: requiredConfirm,
 	}
 }
