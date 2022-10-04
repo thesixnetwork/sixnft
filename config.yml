@@ -17,6 +17,15 @@ accounts:
     - name: oracle4
       coins: ["10000token", "100000000stake"]
       mnemonic: clown cabbage clean design mosquito surround citizen virus kite castle sponsor wife lesson coffee alien panel hand together good crazy fabric mouse hat town
+    - name: actioner1
+      coins: ["10000token", "100000000stake"]
+      mnemonic: boost festival prize turn skate inspire alley opinion blush bright month weekend cage village refuse room remind resource legal favorite entire right convince prison
+    - name: actioner2
+      coins: ["10000token", "100000000stake"]
+      mnemonic: oyster green arrange wave elegant oven jaguar pass quote profit miracle interest emotion match express merit clock wrestle reunion punch memory action upper draft
+    - name: actioner3
+      coins: ["10000token", "100000000stake"]
+      mnemonic: first educate action fee physical seek recipe hub anxiety best mango measure chimney sphere once cabbage strike dizzy near knock correct answer skin inside
 validator:
     name: alice
     staked: "100000000stake"

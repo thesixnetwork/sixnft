@@ -31355,6 +31355,10 @@ paths:
                       type: string
                     owner:
                       type: string
+                    system_actioners:
+                      type: array
+                      items:
+                        type: string
                     origin_data:
                       type: object
                       properties:
@@ -31910,6 +31914,10 @@ paths:
                     type: string
                   owner:
                     type: string
+                  system_actioners:
+                    type: array
+                    items:
+                      type: string
                   origin_data:
                     type: object
                     properties:
@@ -56067,6 +56075,13 @@ definitions:
                     value:
                       type: number
                       format: double
+  sixnft.nftmngr.MsgAddSystemActionerResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      actioner:
+        type: string
   sixnft.nftmngr.MsgAddTokenAttributeResponse:
     type: object
     properties:
@@ -56282,6 +56297,13 @@ definitions:
         type: string
       token_id:
         type: string
+  sixnft.nftmngr.MsgRemoveSystemActionerResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      actioner:
+        type: string
   sixnft.nftmngr.MsgSetBaseUriResponse:
     type: object
     properties:
@@ -56496,6 +56518,10 @@ definitions:
         type: string
       owner:
         type: string
+      system_actioners:
+        type: array
+        items:
+          type: string
       origin_data:
         type: object
         properties:
@@ -57221,6 +57247,10 @@ definitions:
               type: string
             owner:
               type: string
+            system_actioners:
+              type: array
+              items:
+                type: string
             origin_data:
               type: object
               properties:
@@ -57685,6 +57715,10 @@ definitions:
             type: string
           owner:
             type: string
+          system_actioners:
+            type: array
+            items:
+              type: string
           origin_data:
             type: object
             properties:

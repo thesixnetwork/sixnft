@@ -9,4 +9,8 @@ const (
 	EventTypeSchemaOwnerChanged = "schema_owner_changed"
 	AttributeKeyNftSchemaCode   = "nft_schema_code"
 	AttributeKeyNewOwner        = "new_owner"
+
+	EventTypeAddSystemActioner    = "add_system_actioner"
+	EventTypeRemoveSystemActioner = "remove_system_actioner"
+	AttributeKeyActioner          = "actioner"
 )

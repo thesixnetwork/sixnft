@@ -84,6 +84,11 @@ export interface NftmngrMsgAddAttributeResponse {
   onchainData?: NftmngrOnChainData;
 }
 
+export interface NftmngrMsgAddSystemActionerResponse {
+  nftSchemaCode?: string;
+  actioner?: string;
+}
+
 export interface NftmngrMsgAddTokenAttributeResponse {
   code?: string;
   name?: string;
@@ -109,6 +114,11 @@ export interface NftmngrMsgPerformActionByAdminResponse {
   token_id?: string;
 }
 
+export interface NftmngrMsgRemoveSystemActionerResponse {
+  nftSchemaCode?: string;
+  actioner?: string;
+}
+
 export interface NftmngrMsgSetBaseUriResponse {
   code?: string;
   uri?: string;
@@ -130,6 +140,7 @@ export interface NftmngrNFTSchema {
   code?: string;
   name?: string;
   owner?: string;
+  system_actioners?: string[];
   origin_data?: NftmngrOriginData;
   onchain_data?: NftmngrOnChainData;
 }
