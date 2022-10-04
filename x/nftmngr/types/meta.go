@@ -16,6 +16,7 @@ type MetadataChange struct {
 
 type Metadata struct {
 	nftData           *NftData
+	schema            *NFTSchema
 	attributeOverring AttributeOverriding
 	ChangeList        []*MetadataChange `json:"change_list,omitempty"`
 }
@@ -31,6 +32,7 @@ var mapAllKey = map[string]*MetadataAttribute{}
 func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
 	meta := &Metadata{
 		nftData:           tokenData,
+		schema:            schema,
 		attributeOverring: attributeOverring,
 		ChangeList:        []*MetadataChange{},
 	}
@@ -75,6 +77,23 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 
 func (m *Metadata) CurrentTimestamp() int64 {
 	return time.Now().Unix()
+}
+
+func (m *Metadata) GetBaseURI() string {
+	return m.schema.OriginData.OriginBaseUri
+}
+
+func (m *Metadata) GetTokenURI() string {
+	return m.nftData.TokenUri
+}
+
+func (m *Metadata) SetTokenURI(uri string) {
+	m.ChangeList = append(m.ChangeList, &MetadataChange{
+		Key:           "tokenURI",
+		PreviousValue: m.nftData.TokenUri,
+		NewValue:      uri,
+	})
+	m.nftData.TokenUri = uri
 }
 
 func (m *Metadata) GetImage() string {
