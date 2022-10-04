@@ -32,6 +32,10 @@ func (k Keeper) NftCollection(c context.Context, req *types.QueryGetNftCollectio
 		return nil
 	})
 
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
 	val, found := k.GetNftCollection(
 		ctx,
 		req.NftSchemaCode,
