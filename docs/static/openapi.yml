@@ -30718,6 +30718,8 @@ paths:
                       type: string
                     onchain_image:
                       type: string
+                    token_uri:
+                      type: string
                     origin_attributes:
                       type: array
                       items:
@@ -31075,6 +31077,8 @@ paths:
                   origin_image:
                     type: string
                   onchain_image:
+                    type: string
+                  token_uri:
                     type: string
                   origin_attributes:
                     type: array
@@ -33372,16 +33376,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -33731,6 +33725,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/action_request/{id}':
@@ -34022,6 +34026,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/mint_request/{id}':
@@ -34283,6 +34297,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -56783,6 +56807,8 @@ definitions:
         type: string
       onchain_image:
         type: string
+      token_uri:
+        type: string
       origin_attributes:
         type: array
         items:
@@ -57509,6 +57535,8 @@ definitions:
               type: string
             onchain_image:
               type: string
+            token_uri:
+              type: string
             origin_attributes:
               type: array
               items:
@@ -57943,6 +57971,8 @@ definitions:
           origin_image:
             type: string
           onchain_image:
+            type: string
+          token_uri:
             type: string
           origin_attributes:
             type: array
