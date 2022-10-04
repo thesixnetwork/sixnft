@@ -20,6 +20,17 @@ const (
 	NftCollectionDataCountKey = "NftCollectionData-count-"
 )
 
+// KVStore keys
+var (
+	// BalancesPrefix is the prefix for the account balances store. We use a byte
+	// (instead of `[]byte("balances")` to save some disk space).
+	CollectionPrefix = []byte{0x1}
+)
+
 func KeyPrefix(p string) []byte {
 	return []byte(p)
+}
+
+func CollectionkeyPrefix(nftSchemaCode []byte) []byte {
+	return append(CollectionPrefix, nftSchemaCode...)
 }

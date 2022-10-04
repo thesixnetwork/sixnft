@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/cosmos/cosmos-sdk/0.20220523154235-2921a1c3c918/store/prefix"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -16,19 +16,19 @@ func (k Keeper) NftCollection(c context.Context, req *types.QueryGetNftCollectio
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var nftCollections []types.NftCollection
+	var metadatas []*types.NftData
 	ctx := sdk.UnwrapSDKContext(c)
 
-	store := ctx.KVStore(k.storeKey)
-	NftcollectionStore := prefix.NewStore(store, types.KeyPrefix(types.NftCollectionKeyPrefix))
+	// store := ctx.KVStore(k.storeKey)
+	// NftcollectionStore := prefix.NewStore(store, types.KeyPrefix(types.NftCollectionKeyPrefix))
+	NftcollectionStore := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix([]byte(req.NftSchemaCode)))
 
 	pageRes, err := query.Paginate(NftcollectionStore, req.Pagination, func(key []byte, value []byte) error {
-		var nftCollection types.NftCollection
-		if err := k.cdc.Unmarshal(value, &nftCollection); err != nil {
+		var nftData types.NftData
+		if err := k.cdc.Unmarshal(value, &nftData); err != nil {
 			return err
 		}
-
-		nftCollections = append(nftCollections, nftCollection)
+		metadatas = append(metadatas, &nftData)
 		return nil
 	})
 
@@ -36,13 +36,5 @@ func (k Keeper) NftCollection(c context.Context, req *types.QueryGetNftCollectio
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	val, found := k.GetNftCollection(
-		ctx,
-		req.NftSchemaCode,
-	)
-	if !found {
-		return nil, status.Error(codes.NotFound, "not found")
-	}
-
-	return &types.QueryGetNftCollectionResponse{NftCollection: val, Pagination: pageRes}, nil
+	return &types.QueryGetNftCollectionResponse{NftCollection: metadatas, Pagination: pageRes}, nil
 }

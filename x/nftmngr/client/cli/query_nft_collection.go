@@ -17,12 +17,18 @@ func CmdShowNftCollection() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
+			pageReq, err := client.ReadPageRequest(cmd.Flags())
+			if err != nil {
+				return err
+			}
+
 			queryClient := types.NewQueryClient(clientCtx)
 
 			argNftSchemaCode := args[0]
 
 			params := &types.QueryGetNftCollectionRequest{
 				NftSchemaCode: argNftSchemaCode,
+				Pagination:    pageReq,
 			}
 
 			res, err := queryClient.NftCollection(context.Background(), params)
@@ -33,7 +39,7 @@ func CmdShowNftCollection() *cobra.Command {
 			return clientCtx.PrintProto(res)
 		},
 	}
-
+	flags.AddPaginationFlagsToCmd(cmd, cmd.Use)
 	flags.AddQueryFlagsToCmd(cmd)
 
 	return cmd

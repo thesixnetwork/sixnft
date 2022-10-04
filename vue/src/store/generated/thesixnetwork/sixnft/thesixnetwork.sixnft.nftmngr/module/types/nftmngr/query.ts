@@ -9,7 +9,6 @@ import {
 import { NftData } from "../nftmngr/nft_data";
 import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 import { Organization } from "../nftmngr/organization";
-import { NftCollection } from "../nftmngr/nft_collection";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
@@ -93,10 +92,12 @@ export interface QueryAllOrganizationResponse {
 
 export interface QueryGetNftCollectionRequest {
   nftSchemaCode: string;
+  pagination: PageRequest | undefined;
 }
 
 export interface QueryGetNftCollectionResponse {
-  nftCollection: NftCollection | undefined;
+  nftCollection: NftData[];
+  pagination: PageResponse | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -1466,6 +1467,9 @@ export const QueryGetNftCollectionRequest = {
     if (message.nftSchemaCode !== "") {
       writer.uint32(10).string(message.nftSchemaCode);
     }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
     return writer;
   },
 
@@ -1484,6 +1488,9 @@ export const QueryGetNftCollectionRequest = {
         case 1:
           message.nftSchemaCode = reader.string();
           break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1501,6 +1508,11 @@ export const QueryGetNftCollectionRequest = {
     } else {
       message.nftSchemaCode = "";
     }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
     return message;
   },
 
@@ -1508,6 +1520,10 @@ export const QueryGetNftCollectionRequest = {
     const obj: any = {};
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
     return obj;
   },
 
@@ -1522,6 +1538,11 @@ export const QueryGetNftCollectionRequest = {
     } else {
       message.nftSchemaCode = "";
     }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
     return message;
   },
 };
@@ -1533,10 +1554,13 @@ export const QueryGetNftCollectionResponse = {
     message: QueryGetNftCollectionResponse,
     writer: Writer = Writer.create()
   ): Writer {
-    if (message.nftCollection !== undefined) {
-      NftCollection.encode(
-        message.nftCollection,
-        writer.uint32(10).fork()
+    for (const v of message.nftCollection) {
+      NftData.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
       ).ldelim();
     }
     return writer;
@@ -1551,11 +1575,15 @@ export const QueryGetNftCollectionResponse = {
     const message = {
       ...baseQueryGetNftCollectionResponse,
     } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.nftCollection = NftCollection.decode(reader, reader.uint32());
+          message.nftCollection.push(NftData.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -1569,19 +1597,32 @@ export const QueryGetNftCollectionResponse = {
     const message = {
       ...baseQueryGetNftCollectionResponse,
     } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
     if (object.nftCollection !== undefined && object.nftCollection !== null) {
-      message.nftCollection = NftCollection.fromJSON(object.nftCollection);
+      for (const e of object.nftCollection) {
+        message.nftCollection.push(NftData.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
     } else {
-      message.nftCollection = undefined;
+      message.pagination = undefined;
     }
     return message;
   },
 
   toJSON(message: QueryGetNftCollectionResponse): unknown {
     const obj: any = {};
-    message.nftCollection !== undefined &&
-      (obj.nftCollection = message.nftCollection
-        ? NftCollection.toJSON(message.nftCollection)
+    if (message.nftCollection) {
+      obj.nftCollection = message.nftCollection.map((e) =>
+        e ? NftData.toJSON(e) : undefined
+      );
+    } else {
+      obj.nftCollection = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
         : undefined);
     return obj;
   },
@@ -1592,10 +1633,16 @@ export const QueryGetNftCollectionResponse = {
     const message = {
       ...baseQueryGetNftCollectionResponse,
     } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
     if (object.nftCollection !== undefined && object.nftCollection !== null) {
-      message.nftCollection = NftCollection.fromPartial(object.nftCollection);
+      for (const e of object.nftCollection) {
+        message.nftCollection.push(NftData.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
     } else {
-      message.nftCollection = undefined;
+      message.pagination = undefined;
     }
     return message;
   },

@@ -8,6 +8,12 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
+func (k Keeper) AddMetadataToCollection(ctx sdk.Context, data *types.NftData) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix([]byte(data.NftSchemaCode)))
+	b := k.cdc.MustMarshal(data)
+	store.Set([]byte(data.TokenId), b)
+}
+
 // SetNftCollection set a specific nftCollection in the store from its index
 func (k Keeper) SetNftCollection(ctx sdk.Context, nftCollection types.NftCollection) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NftCollectionKeyPrefix))
