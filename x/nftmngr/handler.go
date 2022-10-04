@@ -47,6 +47,12 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgChangeSchemaOwner:
 			res, err := msgServer.ChangeSchemaOwner(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgAddSystemActioner:
+			res, err := msgServer.AddSystemActioner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgRemoveSystemActioner:
+			res, err := msgServer.RemoveSystemActioner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)
