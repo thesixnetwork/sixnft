@@ -18,7 +18,7 @@ message CollectionOwnerRequest {
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   google.protobuf.Timestamp valid_until = 9
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  repeated DataHash data_hashes = 10;
+  repeated OriginTxInfo origin_tx = 10;
   int64 expired_height = 11;
   
 }

@@ -32,9 +32,11 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		return nil, sdkerrors.Wrap(types.ErrNFTSchemaAlreadyVerified, msg.NftSchemaCode)
 	}
 
-	collectionOwnerBz, err := base64.StdEncoding.DecodeString(msg.Base64VerifierSignature)
+	// TODO: Check chain origin and modify how to verify signature according to chain origin in the future
+
+	collectionOwnerBz, err := base64.StdEncoding.DecodeString(msg.Base64VerifyRequestorSignature)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrInvalidBase64, msg.Base64VerifierSignature)
+		return nil, sdkerrors.Wrap(types.ErrInvalidBase64, msg.Base64VerifyRequestorSignature)
 	}
 	data := types.CollectionOwnerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(collectionOwnerBz, &data)
@@ -47,7 +49,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	}
 
 	createdAt := ctx.BlockTime()
-	endTime := createdAt.Add(k.MintRequestActiveDuration(ctx))
+	endTime := createdAt.Add(k.VerifyRequestActiveDuration(ctx))
 
 	id_ := k.Keeper.AppendCollectionOwnerRequest(ctx, types.CollectionOwnerRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
@@ -58,7 +60,16 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
 		Confirmers:      make(map[string]bool),
-		DataHashes:      make([]*types.DataHash, 0),
+		OriginTx:      	 make([]*types.OriginTxInfo, 0),
+	})
+
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeVerificationRequestCreated,
+			sdk.NewAttribute(types.AttributeKeyVerifyRequestID, strconv.FormatUint(id_, 10)),
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),
+		),
 	})
 
 	return &types.MsgCreateVerifyCollectionOwnerRequestResponse{

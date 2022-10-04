@@ -1,7 +1,7 @@
 /* eslint-disable */
 import {
   RequestStatus,
-  DataHash,
+  OriginTxInfo,
   requestStatusFromJSON,
   requestStatusToJSON,
 } from "../nftoracle/request";
@@ -21,7 +21,7 @@ export interface CollectionOwnerRequest {
   confirmers: { [key: string]: boolean };
   created_at: Date | undefined;
   valid_until: Date | undefined;
-  data_hashes: DataHash[];
+  origin_tx: OriginTxInfo[];
   expired_height: number;
 }
 
@@ -81,8 +81,8 @@ export const CollectionOwnerRequest = {
         writer.uint32(74).fork()
       ).ldelim();
     }
-    for (const v of message.data_hashes) {
-      DataHash.encode(v!, writer.uint32(82).fork()).ldelim();
+    for (const v of message.origin_tx) {
+      OriginTxInfo.encode(v!, writer.uint32(82).fork()).ldelim();
     }
     if (message.expired_height !== 0) {
       writer.uint32(88).int64(message.expired_height);
@@ -95,7 +95,7 @@ export const CollectionOwnerRequest = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseCollectionOwnerRequest } as CollectionOwnerRequest;
     message.confirmers = {};
-    message.data_hashes = [];
+    message.origin_tx = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -137,7 +137,7 @@ export const CollectionOwnerRequest = {
           );
           break;
         case 10:
-          message.data_hashes.push(DataHash.decode(reader, reader.uint32()));
+          message.origin_tx.push(OriginTxInfo.decode(reader, reader.uint32()));
           break;
         case 11:
           message.expired_height = longToNumber(reader.int64() as Long);
@@ -153,7 +153,7 @@ export const CollectionOwnerRequest = {
   fromJSON(object: any): CollectionOwnerRequest {
     const message = { ...baseCollectionOwnerRequest } as CollectionOwnerRequest;
     message.confirmers = {};
-    message.data_hashes = [];
+    message.origin_tx = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = Number(object.id);
     } else {
@@ -205,9 +205,9 @@ export const CollectionOwnerRequest = {
     } else {
       message.valid_until = undefined;
     }
-    if (object.data_hashes !== undefined && object.data_hashes !== null) {
-      for (const e of object.data_hashes) {
-        message.data_hashes.push(DataHash.fromJSON(e));
+    if (object.origin_tx !== undefined && object.origin_tx !== null) {
+      for (const e of object.origin_tx) {
+        message.origin_tx.push(OriginTxInfo.fromJSON(e));
       }
     }
     if (object.expired_height !== undefined && object.expired_height !== null) {
@@ -246,12 +246,12 @@ export const CollectionOwnerRequest = {
         message.valid_until !== undefined
           ? message.valid_until.toISOString()
           : null);
-    if (message.data_hashes) {
-      obj.data_hashes = message.data_hashes.map((e) =>
-        e ? DataHash.toJSON(e) : undefined
+    if (message.origin_tx) {
+      obj.origin_tx = message.origin_tx.map((e) =>
+        e ? OriginTxInfo.toJSON(e) : undefined
       );
     } else {
-      obj.data_hashes = [];
+      obj.origin_tx = [];
     }
     message.expired_height !== undefined &&
       (obj.expired_height = message.expired_height);
@@ -263,7 +263,7 @@ export const CollectionOwnerRequest = {
   ): CollectionOwnerRequest {
     const message = { ...baseCollectionOwnerRequest } as CollectionOwnerRequest;
     message.confirmers = {};
-    message.data_hashes = [];
+    message.origin_tx = [];
     if (object.id !== undefined && object.id !== null) {
       message.id = object.id;
     } else {
@@ -317,9 +317,9 @@ export const CollectionOwnerRequest = {
     } else {
       message.valid_until = undefined;
     }
-    if (object.data_hashes !== undefined && object.data_hashes !== null) {
-      for (const e of object.data_hashes) {
-        message.data_hashes.push(DataHash.fromPartial(e));
+    if (object.origin_tx !== undefined && object.origin_tx !== null) {
+      for (const e of object.origin_tx) {
+        message.origin_tx.push(OriginTxInfo.fromPartial(e));
       }
     }
     if (object.expired_height !== undefined && object.expired_height !== null) {

@@ -19,4 +19,9 @@ message Params {
     (gogoproto.stdduration) = true,  
     (gogoproto.moretags) = "yaml:\"action_request_active_duration\""
   ];  
+  google.protobuf.Duration verify_request_active_duration = 3 [
+    (gogoproto.nullable)    = false,
+    (gogoproto.stdduration) = true,  
+    (gogoproto.moretags) = "yaml:\"verify_request_active_duration\""
+  ];  
 }

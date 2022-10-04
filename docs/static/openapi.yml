@@ -33592,6 +33592,7 @@ paths:
                         - FAILED_WITHOUT_CONCENSUS
                         - EXPIRED
                         - FAILED_ON_EXECUTION
+                        - FAILED_REJECT_BY_CONSENSUS
                       default: PENDING
                     current_confirm:
                       type: string
@@ -33784,6 +33785,7 @@ paths:
                       - FAILED_WITHOUT_CONCENSUS
                       - EXPIRED
                       - FAILED_ON_EXECUTION
+                      - FAILED_REJECT_BY_CONSENSUS
                     default: PENDING
                   current_confirm:
                     type: string
@@ -33894,6 +33896,7 @@ paths:
                         - FAILED_WITHOUT_CONCENSUS
                         - EXPIRED
                         - FAILED_ON_EXECUTION
+                        - FAILED_REJECT_BY_CONSENSUS
                       default: PENDING
                     current_confirm:
                       type: string
@@ -34079,6 +34082,7 @@ paths:
                       - FAILED_WITHOUT_CONCENSUS
                       - EXPIRED
                       - FAILED_ON_EXECUTION
+                      - FAILED_REJECT_BY_CONSENSUS
                     default: PENDING
                   current_confirm:
                     type: string
@@ -34229,6 +34233,7 @@ paths:
                         - FAILED_WITHOUT_CONCENSUS
                         - EXPIRED
                         - FAILED_ON_EXECUTION
+                        - FAILED_REJECT_BY_CONSENSUS
                       default: PENDING
                     current_confirm:
                       type: string
@@ -34243,31 +34248,22 @@ paths:
                     valid_until:
                       type: string
                       format: date-time
-                    data_hashes:
+                    origin_tx:
                       type: array
                       items:
                         type: object
                         properties:
-                          origin_data:
+                          transactionOriginDataInfo:
                             type: object
                             properties:
-                              image:
+                              chain:
                                 type: string
-                              holder_address:
+                              tx_hash:
                                 type: string
-                              traits:
-                                type: array
-                                items:
-                                  type: object
-                                  properties:
-                                    trait_type:
-                                      type: string
-                                    value:
-                                      type: string
-                                    display_type:
-                                      type: string
-                                    max_value:
-                                      type: string
+                              block_number:
+                                type: string
+                              deployer_address:
+                                type: string
                           hash:
                             type: string
                             format: byte
@@ -34413,6 +34409,7 @@ paths:
                       - FAILED_WITHOUT_CONCENSUS
                       - EXPIRED
                       - FAILED_ON_EXECUTION
+                      - FAILED_REJECT_BY_CONSENSUS
                     default: PENDING
                   current_confirm:
                     type: string
@@ -34427,31 +34424,22 @@ paths:
                   valid_until:
                     type: string
                     format: date-time
-                  data_hashes:
+                  origin_tx:
                     type: array
                     items:
                       type: object
                       properties:
-                        origin_data:
+                        transactionOriginDataInfo:
                           type: object
                           properties:
-                            image:
+                            chain:
                               type: string
-                            holder_address:
+                            tx_hash:
                               type: string
-                            traits:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  trait_type:
-                                    type: string
-                                  value:
-                                    type: string
-                                  display_type:
-                                    type: string
-                                  max_value:
-                                    type: string
+                            block_number:
+                              type: string
+                            deployer_address:
+                              type: string
                         hash:
                           type: string
                           format: byte
@@ -58603,6 +58591,7 @@ definitions:
           - FAILED_WITHOUT_CONCENSUS
           - EXPIRED
           - FAILED_ON_EXECUTION
+          - FAILED_REJECT_BY_CONSENSUS
         default: PENDING
       current_confirm:
         type: string
@@ -58675,6 +58664,7 @@ definitions:
           - FAILED_WITHOUT_CONCENSUS
           - EXPIRED
           - FAILED_ON_EXECUTION
+          - FAILED_REJECT_BY_CONSENSUS
         default: PENDING
       current_confirm:
         type: string
@@ -58689,31 +58679,22 @@ definitions:
       valid_until:
         type: string
         format: date-time
-      data_hashes:
+      origin_tx:
         type: array
         items:
           type: object
           properties:
-            origin_data:
+            transactionOriginDataInfo:
               type: object
               properties:
-                image:
+                chain:
                   type: string
-                holder_address:
+                tx_hash:
                   type: string
-                traits:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      trait_type:
-                        type: string
-                      value:
-                        type: string
-                      display_type:
-                        type: string
-                      max_value:
-                        type: string
+                block_number:
+                  type: string
+                deployer_address:
+                  type: string
             hash:
               type: string
               format: byte
@@ -58775,6 +58756,7 @@ definitions:
           - FAILED_WITHOUT_CONCENSUS
           - EXPIRED
           - FAILED_ON_EXECUTION
+          - FAILED_REJECT_BY_CONSENSUS
         default: PENDING
       current_confirm:
         type: string
@@ -58887,6 +58869,27 @@ definitions:
               type: string
             max_value:
               type: string
+  thesixnetwork.sixnft.nftoracle.OriginTxInfo:
+    type: object
+    properties:
+      transactionOriginDataInfo:
+        type: object
+        properties:
+          chain:
+            type: string
+          tx_hash:
+            type: string
+          block_number:
+            type: string
+          deployer_address:
+            type: string
+      hash:
+        type: string
+        format: byte
+      confirmers:
+        type: array
+        items:
+          type: string
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -58927,6 +58930,7 @@ definitions:
                 - FAILED_WITHOUT_CONCENSUS
                 - EXPIRED
                 - FAILED_ON_EXECUTION
+                - FAILED_REJECT_BY_CONSENSUS
               default: PENDING
             current_confirm:
               type: string
@@ -59029,6 +59033,7 @@ definitions:
                 - FAILED_WITHOUT_CONCENSUS
                 - EXPIRED
                 - FAILED_ON_EXECUTION
+                - FAILED_REJECT_BY_CONSENSUS
               default: PENDING
             current_confirm:
               type: string
@@ -59043,31 +59048,22 @@ definitions:
             valid_until:
               type: string
               format: date-time
-            data_hashes:
+            origin_tx:
               type: array
               items:
                 type: object
                 properties:
-                  origin_data:
+                  transactionOriginDataInfo:
                     type: object
                     properties:
-                      image:
+                      chain:
                         type: string
-                      holder_address:
+                      tx_hash:
                         type: string
-                      traits:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            trait_type:
-                              type: string
-                            value:
-                              type: string
-                            display_type:
-                              type: string
-                            max_value:
-                              type: string
+                      block_number:
+                        type: string
+                      deployer_address:
+                        type: string
                   hash:
                     type: string
                     format: byte
@@ -59129,6 +59125,7 @@ definitions:
                 - FAILED_WITHOUT_CONCENSUS
                 - EXPIRED
                 - FAILED_ON_EXECUTION
+                - FAILED_REJECT_BY_CONSENSUS
               default: PENDING
             current_confirm:
               type: string
@@ -59234,6 +59231,7 @@ definitions:
               - FAILED_WITHOUT_CONCENSUS
               - EXPIRED
               - FAILED_ON_EXECUTION
+              - FAILED_REJECT_BY_CONSENSUS
             default: PENDING
           current_confirm:
             type: string
@@ -59309,6 +59307,7 @@ definitions:
               - FAILED_WITHOUT_CONCENSUS
               - EXPIRED
               - FAILED_ON_EXECUTION
+              - FAILED_REJECT_BY_CONSENSUS
             default: PENDING
           current_confirm:
             type: string
@@ -59323,31 +59322,22 @@ definitions:
           valid_until:
             type: string
             format: date-time
-          data_hashes:
+          origin_tx:
             type: array
             items:
               type: object
               properties:
-                origin_data:
+                transactionOriginDataInfo:
                   type: object
                   properties:
-                    image:
+                    chain:
                       type: string
-                    holder_address:
+                    tx_hash:
                       type: string
-                    traits:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          trait_type:
-                            type: string
-                          value:
-                            type: string
-                          display_type:
-                            type: string
-                          max_value:
-                            type: string
+                    block_number:
+                      type: string
+                    deployer_address:
+                      type: string
                 hash:
                   type: string
                   format: byte
@@ -59382,6 +59372,7 @@ definitions:
               - FAILED_WITHOUT_CONCENSUS
               - EXPIRED
               - FAILED_ON_EXECUTION
+              - FAILED_REJECT_BY_CONSENSUS
             default: PENDING
           current_confirm:
             type: string
@@ -59452,6 +59443,7 @@ definitions:
       - FAILED_WITHOUT_CONCENSUS
       - EXPIRED
       - FAILED_ON_EXECUTION
+      - FAILED_REJECT_BY_CONSENSUS
     default: PENDING
   thesixnetwork.sixnft.nftoracle.Trait:
     type: object
@@ -59463,4 +59455,15 @@ definitions:
       display_type:
         type: string
       max_value:
+        type: string
+  thesixnetwork.sixnft.nftoracle.TransactionOriginDataInfo:
+    type: object
+    properties:
+      chain:
+        type: string
+      tx_hash:
+        type: string
+      block_number:
+        type: string
+      deployer_address:
         type: string

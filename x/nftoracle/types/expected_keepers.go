@@ -27,6 +27,8 @@ type NftmngrKeep interface {
 
 	) (val nftmngrtypes.NFTSchema, found bool)
 
+	SetNFTSchema(ctx sdk.Context, nFTSchema nftmngrtypes.NFTSchema)
+
 	GetNftData(
 		ctx sdk.Context,
 		nftSchemaCode string,

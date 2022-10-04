@@ -10,6 +10,7 @@ export enum RequestStatus {
   FAILED_WITHOUT_CONCENSUS = 2,
   EXPIRED = 3,
   FAILED_ON_EXECUTION = 4,
+  FAILED_REJECT_BY_CONSENSUS = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -30,6 +31,9 @@ export function requestStatusFromJSON(object: any): RequestStatus {
     case 4:
     case "FAILED_ON_EXECUTION":
       return RequestStatus.FAILED_ON_EXECUTION;
+    case 5:
+    case "FAILED_REJECT_BY_CONSENSUS":
+      return RequestStatus.FAILED_REJECT_BY_CONSENSUS;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -49,6 +53,8 @@ export function requestStatusToJSON(object: RequestStatus): string {
       return "EXPIRED";
     case RequestStatus.FAILED_ON_EXECUTION:
       return "FAILED_ON_EXECUTION";
+    case RequestStatus.FAILED_REJECT_BY_CONSENSUS:
+      return "FAILED_REJECT_BY_CONSENSUS";
     default:
       return "UNKNOWN";
   }
@@ -60,8 +66,21 @@ export interface NftOriginData {
   traits: Trait[];
 }
 
+export interface TransactionOriginDataInfo {
+  chain: string;
+  tx_hash: string;
+  block_number: string;
+  deployer_address: string;
+}
+
 export interface DataHash {
   origin_data: NftOriginData | undefined;
+  hash: Uint8Array;
+  confirmers: string[];
+}
+
+export interface OriginTxInfo {
+  transactionOriginDataInfo: TransactionOriginDataInfo | undefined;
   hash: Uint8Array;
   confirmers: string[];
 }
@@ -163,6 +182,139 @@ export const NftOriginData = {
   },
 };
 
+const baseTransactionOriginDataInfo: object = {
+  chain: "",
+  tx_hash: "",
+  block_number: "",
+  deployer_address: "",
+};
+
+export const TransactionOriginDataInfo = {
+  encode(
+    message: TransactionOriginDataInfo,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.chain !== "") {
+      writer.uint32(10).string(message.chain);
+    }
+    if (message.tx_hash !== "") {
+      writer.uint32(18).string(message.tx_hash);
+    }
+    if (message.block_number !== "") {
+      writer.uint32(26).string(message.block_number);
+    }
+    if (message.deployer_address !== "") {
+      writer.uint32(34).string(message.deployer_address);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): TransactionOriginDataInfo {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseTransactionOriginDataInfo,
+    } as TransactionOriginDataInfo;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.chain = reader.string();
+          break;
+        case 2:
+          message.tx_hash = reader.string();
+          break;
+        case 3:
+          message.block_number = reader.string();
+          break;
+        case 4:
+          message.deployer_address = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TransactionOriginDataInfo {
+    const message = {
+      ...baseTransactionOriginDataInfo,
+    } as TransactionOriginDataInfo;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = String(object.chain);
+    } else {
+      message.chain = "";
+    }
+    if (object.tx_hash !== undefined && object.tx_hash !== null) {
+      message.tx_hash = String(object.tx_hash);
+    } else {
+      message.tx_hash = "";
+    }
+    if (object.block_number !== undefined && object.block_number !== null) {
+      message.block_number = String(object.block_number);
+    } else {
+      message.block_number = "";
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = String(object.deployer_address);
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+
+  toJSON(message: TransactionOriginDataInfo): unknown {
+    const obj: any = {};
+    message.chain !== undefined && (obj.chain = message.chain);
+    message.tx_hash !== undefined && (obj.tx_hash = message.tx_hash);
+    message.block_number !== undefined &&
+      (obj.block_number = message.block_number);
+    message.deployer_address !== undefined &&
+      (obj.deployer_address = message.deployer_address);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<TransactionOriginDataInfo>
+  ): TransactionOriginDataInfo {
+    const message = {
+      ...baseTransactionOriginDataInfo,
+    } as TransactionOriginDataInfo;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = object.chain;
+    } else {
+      message.chain = "";
+    }
+    if (object.tx_hash !== undefined && object.tx_hash !== null) {
+      message.tx_hash = object.tx_hash;
+    } else {
+      message.tx_hash = "";
+    }
+    if (object.block_number !== undefined && object.block_number !== null) {
+      message.block_number = object.block_number;
+    } else {
+      message.block_number = "";
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = object.deployer_address;
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+};
+
 const baseDataHash: object = { confirmers: "" };
 
 export const DataHash = {
@@ -251,6 +403,122 @@ export const DataHash = {
       message.origin_data = NftOriginData.fromPartial(object.origin_data);
     } else {
       message.origin_data = undefined;
+    }
+    if (object.hash !== undefined && object.hash !== null) {
+      message.hash = object.hash;
+    } else {
+      message.hash = new Uint8Array();
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      for (const e of object.confirmers) {
+        message.confirmers.push(e);
+      }
+    }
+    return message;
+  },
+};
+
+const baseOriginTxInfo: object = { confirmers: "" };
+
+export const OriginTxInfo = {
+  encode(message: OriginTxInfo, writer: Writer = Writer.create()): Writer {
+    if (message.transactionOriginDataInfo !== undefined) {
+      TransactionOriginDataInfo.encode(
+        message.transactionOriginDataInfo,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    if (message.hash.length !== 0) {
+      writer.uint32(18).bytes(message.hash);
+    }
+    for (const v of message.confirmers) {
+      writer.uint32(26).string(v!);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): OriginTxInfo {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseOriginTxInfo } as OriginTxInfo;
+    message.confirmers = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.transactionOriginDataInfo = TransactionOriginDataInfo.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 2:
+          message.hash = reader.bytes();
+          break;
+        case 3:
+          message.confirmers.push(reader.string());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OriginTxInfo {
+    const message = { ...baseOriginTxInfo } as OriginTxInfo;
+    message.confirmers = [];
+    if (
+      object.transactionOriginDataInfo !== undefined &&
+      object.transactionOriginDataInfo !== null
+    ) {
+      message.transactionOriginDataInfo = TransactionOriginDataInfo.fromJSON(
+        object.transactionOriginDataInfo
+      );
+    } else {
+      message.transactionOriginDataInfo = undefined;
+    }
+    if (object.hash !== undefined && object.hash !== null) {
+      message.hash = bytesFromBase64(object.hash);
+    }
+    if (object.confirmers !== undefined && object.confirmers !== null) {
+      for (const e of object.confirmers) {
+        message.confirmers.push(String(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: OriginTxInfo): unknown {
+    const obj: any = {};
+    message.transactionOriginDataInfo !== undefined &&
+      (obj.transactionOriginDataInfo = message.transactionOriginDataInfo
+        ? TransactionOriginDataInfo.toJSON(message.transactionOriginDataInfo)
+        : undefined);
+    message.hash !== undefined &&
+      (obj.hash = base64FromBytes(
+        message.hash !== undefined ? message.hash : new Uint8Array()
+      ));
+    if (message.confirmers) {
+      obj.confirmers = message.confirmers.map((e) => e);
+    } else {
+      obj.confirmers = [];
+    }
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<OriginTxInfo>): OriginTxInfo {
+    const message = { ...baseOriginTxInfo } as OriginTxInfo;
+    message.confirmers = [];
+    if (
+      object.transactionOriginDataInfo !== undefined &&
+      object.transactionOriginDataInfo !== null
+    ) {
+      message.transactionOriginDataInfo = TransactionOriginDataInfo.fromPartial(
+        object.transactionOriginDataInfo
+      );
+    } else {
+      message.transactionOriginDataInfo = undefined;
     }
     if (object.hash !== undefined && object.hash !== null) {
       message.hash = object.hash;

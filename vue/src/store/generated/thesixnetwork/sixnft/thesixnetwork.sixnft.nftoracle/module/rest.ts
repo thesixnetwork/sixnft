@@ -57,7 +57,7 @@ export interface NftoracleCollectionOwnerRequest {
 
   /** @format date-time */
   valid_until?: string;
-  data_hashes?: NftoracleDataHash[];
+  origin_tx?: NftoracleOriginTxInfo[];
 
   /** @format int64 */
   expired_height?: string;
@@ -134,12 +134,21 @@ export interface NftoracleNftOriginData {
   traits?: NftoracleTrait[];
 }
 
+export interface NftoracleOriginTxInfo {
+  transactionOriginDataInfo?: NftoracleTransactionOriginDataInfo;
+
+  /** @format byte */
+  hash?: string;
+  confirmers?: string[];
+}
+
 /**
  * Params defines the parameters for the module.
  */
 export interface NftoracleParams {
   mint_request_active_duration?: string;
   action_request_active_duration?: string;
+  verify_request_active_duration?: string;
 }
 
 export interface NftoracleQueryAllActionRequestResponse {
@@ -213,6 +222,7 @@ export enum NftoracleRequestStatus {
   FAILED_WITHOUT_CONCENSUS = "FAILED_WITHOUT_CONCENSUS",
   EXPIRED = "EXPIRED",
   FAILED_ON_EXECUTION = "FAILED_ON_EXECUTION",
+  FAILED_REJECT_BY_CONSENSUS = "FAILED_REJECT_BY_CONSENSUS",
 }
 
 export interface NftoracleTrait {
@@ -220,6 +230,13 @@ export interface NftoracleTrait {
   value?: string;
   display_type?: string;
   max_value?: string;
+}
+
+export interface NftoracleTransactionOriginDataInfo {
+  chain?: string;
+  tx_hash?: string;
+  block_number?: string;
+  deployer_address?: string;
 }
 
 export interface ProtobufAny {

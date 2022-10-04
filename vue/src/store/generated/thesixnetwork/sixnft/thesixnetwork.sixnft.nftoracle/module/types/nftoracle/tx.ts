@@ -51,7 +51,7 @@ export interface MsgSubmitActionResponseResponse {
 export interface MsgCreateVerifyCollectionOwnerRequest {
   creator: string;
   nftSchemaCode: string;
-  base64VerifierSignature: string;
+  base64VerifyRequestorSignature: string;
   requiredConfirm: number;
 }
 
@@ -65,7 +65,7 @@ export interface MsgSubmitVerifyCollectionOwner {
   creator: string;
   verifyRequestID: number;
   schemaCode: string;
-  contractOwnerAddress: string;
+  base64OriginTxInfo: string;
 }
 
 export interface MsgSubmitVerifyCollectionOwnerResponse {
@@ -862,7 +862,7 @@ export const MsgSubmitActionResponseResponse = {
 const baseMsgCreateVerifyCollectionOwnerRequest: object = {
   creator: "",
   nftSchemaCode: "",
-  base64VerifierSignature: "",
+  base64VerifyRequestorSignature: "",
   requiredConfirm: 0,
 };
 
@@ -877,8 +877,8 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     if (message.nftSchemaCode !== "") {
       writer.uint32(18).string(message.nftSchemaCode);
     }
-    if (message.base64VerifierSignature !== "") {
-      writer.uint32(26).string(message.base64VerifierSignature);
+    if (message.base64VerifyRequestorSignature !== "") {
+      writer.uint32(26).string(message.base64VerifyRequestorSignature);
     }
     if (message.requiredConfirm !== 0) {
       writer.uint32(32).uint64(message.requiredConfirm);
@@ -905,7 +905,7 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
           message.nftSchemaCode = reader.string();
           break;
         case 3:
-          message.base64VerifierSignature = reader.string();
+          message.base64VerifyRequestorSignature = reader.string();
           break;
         case 4:
           message.requiredConfirm = longToNumber(reader.uint64() as Long);
@@ -933,12 +933,14 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
       message.nftSchemaCode = "";
     }
     if (
-      object.base64VerifierSignature !== undefined &&
-      object.base64VerifierSignature !== null
+      object.base64VerifyRequestorSignature !== undefined &&
+      object.base64VerifyRequestorSignature !== null
     ) {
-      message.base64VerifierSignature = String(object.base64VerifierSignature);
+      message.base64VerifyRequestorSignature = String(
+        object.base64VerifyRequestorSignature
+      );
     } else {
-      message.base64VerifierSignature = "";
+      message.base64VerifyRequestorSignature = "";
     }
     if (
       object.requiredConfirm !== undefined &&
@@ -956,8 +958,9 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
-    message.base64VerifierSignature !== undefined &&
-      (obj.base64VerifierSignature = message.base64VerifierSignature);
+    message.base64VerifyRequestorSignature !== undefined &&
+      (obj.base64VerifyRequestorSignature =
+        message.base64VerifyRequestorSignature);
     message.requiredConfirm !== undefined &&
       (obj.requiredConfirm = message.requiredConfirm);
     return obj;
@@ -980,12 +983,13 @@ export const MsgCreateVerifyCollectionOwnerRequest = {
       message.nftSchemaCode = "";
     }
     if (
-      object.base64VerifierSignature !== undefined &&
-      object.base64VerifierSignature !== null
+      object.base64VerifyRequestorSignature !== undefined &&
+      object.base64VerifyRequestorSignature !== null
     ) {
-      message.base64VerifierSignature = object.base64VerifierSignature;
+      message.base64VerifyRequestorSignature =
+        object.base64VerifyRequestorSignature;
     } else {
-      message.base64VerifierSignature = "";
+      message.base64VerifyRequestorSignature = "";
     }
     if (
       object.requiredConfirm !== undefined &&
@@ -1112,7 +1116,7 @@ const baseMsgSubmitVerifyCollectionOwner: object = {
   creator: "",
   verifyRequestID: 0,
   schemaCode: "",
-  contractOwnerAddress: "",
+  base64OriginTxInfo: "",
 };
 
 export const MsgSubmitVerifyCollectionOwner = {
@@ -1129,8 +1133,8 @@ export const MsgSubmitVerifyCollectionOwner = {
     if (message.schemaCode !== "") {
       writer.uint32(26).string(message.schemaCode);
     }
-    if (message.contractOwnerAddress !== "") {
-      writer.uint32(34).string(message.contractOwnerAddress);
+    if (message.base64OriginTxInfo !== "") {
+      writer.uint32(34).string(message.base64OriginTxInfo);
     }
     return writer;
   },
@@ -1157,7 +1161,7 @@ export const MsgSubmitVerifyCollectionOwner = {
           message.schemaCode = reader.string();
           break;
         case 4:
-          message.contractOwnerAddress = reader.string();
+          message.base64OriginTxInfo = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1190,12 +1194,12 @@ export const MsgSubmitVerifyCollectionOwner = {
       message.schemaCode = "";
     }
     if (
-      object.contractOwnerAddress !== undefined &&
-      object.contractOwnerAddress !== null
+      object.base64OriginTxInfo !== undefined &&
+      object.base64OriginTxInfo !== null
     ) {
-      message.contractOwnerAddress = String(object.contractOwnerAddress);
+      message.base64OriginTxInfo = String(object.base64OriginTxInfo);
     } else {
-      message.contractOwnerAddress = "";
+      message.base64OriginTxInfo = "";
     }
     return message;
   },
@@ -1206,8 +1210,8 @@ export const MsgSubmitVerifyCollectionOwner = {
     message.verifyRequestID !== undefined &&
       (obj.verifyRequestID = message.verifyRequestID);
     message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
-    message.contractOwnerAddress !== undefined &&
-      (obj.contractOwnerAddress = message.contractOwnerAddress);
+    message.base64OriginTxInfo !== undefined &&
+      (obj.base64OriginTxInfo = message.base64OriginTxInfo);
     return obj;
   },
 
@@ -1236,12 +1240,12 @@ export const MsgSubmitVerifyCollectionOwner = {
       message.schemaCode = "";
     }
     if (
-      object.contractOwnerAddress !== undefined &&
-      object.contractOwnerAddress !== null
+      object.base64OriginTxInfo !== undefined &&
+      object.base64OriginTxInfo !== null
     ) {
-      message.contractOwnerAddress = object.contractOwnerAddress;
+      message.base64OriginTxInfo = object.base64OriginTxInfo;
     } else {
-      message.contractOwnerAddress = "";
+      message.base64OriginTxInfo = "";
     }
     return message;
   },

@@ -63,7 +63,7 @@ message MsgSubmitActionResponseResponse {
 message MsgCreateVerifyCollectionOwnerRequest {
   string creator = 1;
   string nftSchemaCode = 2;
-  string base64VerifierSignature = 3;
+  string base64VerifyRequestorSignature = 3;
   uint64 requiredConfirm = 4;
 }
 
@@ -77,7 +77,7 @@ message MsgSubmitVerifyCollectionOwner {
   string creator = 1;
   uint64 verifyRequestID = 2;
   string schemaCode = 3;
-  string contractOwnerAddress = 4;
+  string base64OriginTxInfo = 4;
 }
 
 message MsgSubmitVerifyCollectionOwnerResponse {
