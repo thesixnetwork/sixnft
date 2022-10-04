@@ -359,3 +359,8 @@ ignite scaffold message changeSchemaOwner nft_schema_code:string new_owner:strin
     --response nft_schema_code,new_owner \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold list CollectionOwnerRequest nft_schema_code:string base64_owner_signature:string \
+    --no-message \
+    --no-simulation \
+    --module nftoracle

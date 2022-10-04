@@ -43,6 +43,7 @@ export interface NftData {
   owner_address_type: OwnerAddressType;
   origin_image: string;
   onchain_image: string;
+  token_uri: string;
   origin_attributes: NftAttributeValue[];
   onchain_attributes: NftAttributeValue[];
 }
@@ -54,6 +55,7 @@ const baseNftData: object = {
   owner_address_type: 0,
   origin_image: "",
   onchain_image: "",
+  token_uri: "",
 };
 
 export const NftData = {
@@ -76,11 +78,14 @@ export const NftData = {
     if (message.onchain_image !== "") {
       writer.uint32(50).string(message.onchain_image);
     }
+    if (message.token_uri !== "") {
+      writer.uint32(58).string(message.token_uri);
+    }
     for (const v of message.origin_attributes) {
-      NftAttributeValue.encode(v!, writer.uint32(58).fork()).ldelim();
+      NftAttributeValue.encode(v!, writer.uint32(66).fork()).ldelim();
     }
     for (const v of message.onchain_attributes) {
-      NftAttributeValue.encode(v!, writer.uint32(66).fork()).ldelim();
+      NftAttributeValue.encode(v!, writer.uint32(74).fork()).ldelim();
     }
     return writer;
   },
@@ -113,11 +118,14 @@ export const NftData = {
           message.onchain_image = reader.string();
           break;
         case 7:
+          message.token_uri = reader.string();
+          break;
+        case 8:
           message.origin_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
           break;
-        case 8:
+        case 9:
           message.onchain_attributes.push(
             NftAttributeValue.decode(reader, reader.uint32())
           );
@@ -172,6 +180,11 @@ export const NftData = {
     } else {
       message.onchain_image = "";
     }
+    if (object.token_uri !== undefined && object.token_uri !== null) {
+      message.token_uri = String(object.token_uri);
+    } else {
+      message.token_uri = "";
+    }
     if (
       object.origin_attributes !== undefined &&
       object.origin_attributes !== null
@@ -206,6 +219,7 @@ export const NftData = {
       (obj.origin_image = message.origin_image);
     message.onchain_image !== undefined &&
       (obj.onchain_image = message.onchain_image);
+    message.token_uri !== undefined && (obj.token_uri = message.token_uri);
     if (message.origin_attributes) {
       obj.origin_attributes = message.origin_attributes.map((e) =>
         e ? NftAttributeValue.toJSON(e) : undefined
@@ -262,6 +276,11 @@ export const NftData = {
       message.onchain_image = object.onchain_image;
     } else {
       message.onchain_image = "";
+    }
+    if (object.token_uri !== undefined && object.token_uri !== null) {
+      message.token_uri = object.token_uri;
+    } else {
+      message.token_uri = "";
     }
     if (
       object.origin_attributes !== undefined &&

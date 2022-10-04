@@ -40,6 +40,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ActionRequestCount: 2,
+				CollectionOwnerRequestList: []types.CollectionOwnerRequest{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				CollectionOwnerRequestCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -93,6 +102,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ActionRequestCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated collectionOwnerRequest",
+			genState: &types.GenesisState{
+				CollectionOwnerRequestList: []types.CollectionOwnerRequest{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid collectionOwnerRequest count",
+			genState: &types.GenesisState{
+				CollectionOwnerRequestList: []types.CollectionOwnerRequest{
+					{
+						Id: 1,
+					},
+				},
+				CollectionOwnerRequestCount: 0,
 			},
 			valid: false,
 		},

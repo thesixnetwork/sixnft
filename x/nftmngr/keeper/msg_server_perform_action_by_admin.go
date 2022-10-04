@@ -23,8 +23,17 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	// Map system actioners
+	mapSystemActioners := make(map[string]bool)
+	for _, systemActioner := range schema.SystemActioners {
+		mapSystemActioners[systemActioner] = true
+	}
+
+	// Check if Creator is one of system actioners
+	if _, ok := mapSystemActioners[msg.Creator]; !ok {
+		if msg.Creator != schema.Owner {
+			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+		}
 	}
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {

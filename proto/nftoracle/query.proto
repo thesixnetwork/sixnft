@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sixnft.nftoracle;
+package thesixnetwork.sixnft.nftoracle;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "nftoracle/params.proto";
 import "nftoracle/mint_request.proto";
 import "nftoracle/action_request.proto";
+import "nftoracle/collection_owner_request.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -35,6 +36,16 @@ service Query {
 	// Queries a list of ActionRequest items.
 	rpc ActionRequestAll(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponse) {
 		option (google.api.http).get = "/sixnft/nftoracle/action_request";
+	}
+
+// Queries a CollectionOwnerRequest by id.
+	rpc CollectionOwnerRequest(QueryGetCollectionOwnerRequestRequest) returns (QueryGetCollectionOwnerRequestResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/collection_owner_request/{id}";
+	}
+
+	// Queries a list of CollectionOwnerRequest items.
+	rpc CollectionOwnerRequestAll(QueryAllCollectionOwnerRequestRequest) returns (QueryAllCollectionOwnerRequestResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/collection_owner_request";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -80,6 +91,23 @@ message QueryAllActionRequestRequest {
 
 message QueryAllActionRequestResponse {
 	repeated ActionRequest ActionRequest = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCollectionOwnerRequestRequest {
+	uint64 id = 1;
+}
+
+message QueryGetCollectionOwnerRequestResponse {
+	CollectionOwnerRequest CollectionOwnerRequest = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCollectionOwnerRequestRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCollectionOwnerRequestResponse {
+	repeated CollectionOwnerRequest CollectionOwnerRequest = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

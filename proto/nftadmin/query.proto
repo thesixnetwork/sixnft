@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sixnft.nftadmin;
+package thesixnetwork.sixnft.nftadmin;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";

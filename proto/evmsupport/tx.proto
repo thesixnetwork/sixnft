@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sixnft.evmsupport;
+package thesixnetwork.sixnft.evmsupport;
 
 // this line is used by starport scaffolding # proto/tx/import
 
