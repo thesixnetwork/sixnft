@@ -6,6 +6,13 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
+message TxOriginParam {
+  string chain = 1;
+  string tx_hash = 2;
+  uint64 block_number = 3;
+  string deployer_address = 4;
+}
+
 message CollectionOwnerRequest {
   uint64 id = 1;
   string nftSchemaCode = 2; 

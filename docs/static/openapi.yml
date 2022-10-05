@@ -34177,6 +34177,8 @@ paths:
                     type: string
                   action_request_active_duration:
                     type: string
+                  verify_request_active_duration:
+                    type: string
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -34262,6 +34264,7 @@ paths:
                                 type: string
                               block_number:
                                 type: string
+                                format: uint64
                               deployer_address:
                                 type: string
                           hash:
@@ -34438,6 +34441,7 @@ paths:
                               type: string
                             block_number:
                               type: string
+                              format: uint64
                             deployer_address:
                               type: string
                         hash:
@@ -58693,6 +58697,7 @@ definitions:
                   type: string
                 block_number:
                   type: string
+                  format: uint64
                 deployer_address:
                   type: string
             hash:
@@ -58881,6 +58886,7 @@ definitions:
             type: string
           block_number:
             type: string
+            format: uint64
           deployer_address:
             type: string
       hash:
@@ -58896,6 +58902,8 @@ definitions:
       mint_request_active_duration:
         type: string
       action_request_active_duration:
+        type: string
+      verify_request_active_duration:
         type: string
     description: Params defines the parameters for the module.
   thesixnetwork.sixnft.nftoracle.QueryAllActionRequestResponse:
@@ -59062,6 +59070,7 @@ definitions:
                         type: string
                       block_number:
                         type: string
+                        format: uint64
                       deployer_address:
                         type: string
                   hash:
@@ -59336,6 +59345,7 @@ definitions:
                       type: string
                     block_number:
                       type: string
+                      format: uint64
                     deployer_address:
                       type: string
                 hash:
@@ -59434,6 +59444,8 @@ definitions:
             type: string
           action_request_active_duration:
             type: string
+          verify_request_active_duration:
+            type: string
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftoracle.RequestStatus:
     type: string
@@ -59465,5 +59477,6 @@ definitions:
         type: string
       block_number:
         type: string
+        format: uint64
       deployer_address:
         type: string

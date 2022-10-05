@@ -15,7 +15,7 @@ var _ = strconv.Itoa(0)
 
 func CmdSubmitVerifyCollectionOwner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "submit-verify-collection-owner [verify-request-id] [schema-code] [contract-owner-address]",
+		Use:   "submit-verify-collection-owner [verify-request-id] [schema-code] [base64OriginTxInfo]",
 		Short: "To Sumint Verify Collection Owner",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -24,7 +24,7 @@ func CmdSubmitVerifyCollectionOwner() *cobra.Command {
 				return err
 			}
 			argSchemaCode := args[1]
-			argContractOwnerAddress := args[2]
+			argTransactionOriginDataInfo := args[2]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -35,7 +35,7 @@ func CmdSubmitVerifyCollectionOwner() *cobra.Command {
 				clientCtx.GetFromAddress().String(),
 				argVerifyRequestID,
 				argSchemaCode,
-				argContractOwnerAddress,
+				argTransactionOriginDataInfo,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

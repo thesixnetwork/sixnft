@@ -56,8 +56,8 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 
-	dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
 	if verifyRequest.CurrentConfirm == 0 {
+		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
 		// hash schema
 		verifyRequest.OriginTx = append(verifyRequest.OriginTx, &types.OriginTxInfo{
 			TransactionOriginDataInfo: &transactionOrigin,
@@ -71,7 +71,7 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		}
 
 		// Compare data hash with previous data
-		verifyRequest.OriginTx[0].TransactionOriginDataInfo.DeployerAddress = transactionOrigin.DeployerAddress
+		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
 		dataHashMatch := false
 		for _, origin_tx := range verifyRequest.OriginTx {
 			if res := bytes.Compare(dataHash[:], origin_tx.Hash); res == 0 {
@@ -104,7 +104,7 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		// chaek if signer and deployer address is same
 		if verifyRequest.Signer != transactionOrigin.DeployerAddress {
 			verifyRequest.Status = types.RequestStatus_FAILED_REJECT_BY_CONSENSUS
-			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer)
+			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer +","+ transactionOrigin.DeployerAddress)
 		}else {
 			verifyRequest.Status = types.RequestStatus_SUCCESS_WITH_CONSENSUS
 		}

@@ -11,6 +11,13 @@ import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 
+export interface TxOriginParam {
+  chain: string;
+  tx_hash: string;
+  block_number: number;
+  deployer_address: string;
+}
+
 export interface CollectionOwnerRequest {
   id: number;
   nftSchemaCode: string;
@@ -29,6 +36,125 @@ export interface CollectionOwnerRequest_ConfirmersEntry {
   key: string;
   value: boolean;
 }
+
+const baseTxOriginParam: object = {
+  chain: "",
+  tx_hash: "",
+  block_number: 0,
+  deployer_address: "",
+};
+
+export const TxOriginParam = {
+  encode(message: TxOriginParam, writer: Writer = Writer.create()): Writer {
+    if (message.chain !== "") {
+      writer.uint32(10).string(message.chain);
+    }
+    if (message.tx_hash !== "") {
+      writer.uint32(18).string(message.tx_hash);
+    }
+    if (message.block_number !== 0) {
+      writer.uint32(24).uint64(message.block_number);
+    }
+    if (message.deployer_address !== "") {
+      writer.uint32(34).string(message.deployer_address);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): TxOriginParam {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseTxOriginParam } as TxOriginParam;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.chain = reader.string();
+          break;
+        case 2:
+          message.tx_hash = reader.string();
+          break;
+        case 3:
+          message.block_number = longToNumber(reader.uint64() as Long);
+          break;
+        case 4:
+          message.deployer_address = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): TxOriginParam {
+    const message = { ...baseTxOriginParam } as TxOriginParam;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = String(object.chain);
+    } else {
+      message.chain = "";
+    }
+    if (object.tx_hash !== undefined && object.tx_hash !== null) {
+      message.tx_hash = String(object.tx_hash);
+    } else {
+      message.tx_hash = "";
+    }
+    if (object.block_number !== undefined && object.block_number !== null) {
+      message.block_number = Number(object.block_number);
+    } else {
+      message.block_number = 0;
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = String(object.deployer_address);
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+
+  toJSON(message: TxOriginParam): unknown {
+    const obj: any = {};
+    message.chain !== undefined && (obj.chain = message.chain);
+    message.tx_hash !== undefined && (obj.tx_hash = message.tx_hash);
+    message.block_number !== undefined &&
+      (obj.block_number = message.block_number);
+    message.deployer_address !== undefined &&
+      (obj.deployer_address = message.deployer_address);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<TxOriginParam>): TxOriginParam {
+    const message = { ...baseTxOriginParam } as TxOriginParam;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = object.chain;
+    } else {
+      message.chain = "";
+    }
+    if (object.tx_hash !== undefined && object.tx_hash !== null) {
+      message.tx_hash = object.tx_hash;
+    } else {
+      message.tx_hash = "";
+    }
+    if (object.block_number !== undefined && object.block_number !== null) {
+      message.block_number = object.block_number;
+    } else {
+      message.block_number = 0;
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = object.deployer_address;
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+};
 
 const baseCollectionOwnerRequest: object = {
   id: 0,

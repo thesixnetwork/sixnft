@@ -24,7 +24,7 @@ message NftOriginData {
 message TransactionOriginDataInfo {
   string chain = 1;
   string tx_hash = 2;
-  string block_number = 3;
+  uint64 block_number = 3;
   string deployer_address = 4;
 }
 

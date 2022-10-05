@@ -1,6 +1,7 @@
 /* eslint-disable */
+import * as Long from "long";
+import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Trait } from "../nftoracle/opensea";
-import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 
@@ -69,7 +70,7 @@ export interface NftOriginData {
 export interface TransactionOriginDataInfo {
   chain: string;
   tx_hash: string;
-  block_number: string;
+  block_number: number;
   deployer_address: string;
 }
 
@@ -185,7 +186,7 @@ export const NftOriginData = {
 const baseTransactionOriginDataInfo: object = {
   chain: "",
   tx_hash: "",
-  block_number: "",
+  block_number: 0,
   deployer_address: "",
 };
 
@@ -200,8 +201,8 @@ export const TransactionOriginDataInfo = {
     if (message.tx_hash !== "") {
       writer.uint32(18).string(message.tx_hash);
     }
-    if (message.block_number !== "") {
-      writer.uint32(26).string(message.block_number);
+    if (message.block_number !== 0) {
+      writer.uint32(24).uint64(message.block_number);
     }
     if (message.deployer_address !== "") {
       writer.uint32(34).string(message.deployer_address);
@@ -228,7 +229,7 @@ export const TransactionOriginDataInfo = {
           message.tx_hash = reader.string();
           break;
         case 3:
-          message.block_number = reader.string();
+          message.block_number = longToNumber(reader.uint64() as Long);
           break;
         case 4:
           message.deployer_address = reader.string();
@@ -256,9 +257,9 @@ export const TransactionOriginDataInfo = {
       message.tx_hash = "";
     }
     if (object.block_number !== undefined && object.block_number !== null) {
-      message.block_number = String(object.block_number);
+      message.block_number = Number(object.block_number);
     } else {
-      message.block_number = "";
+      message.block_number = 0;
     }
     if (
       object.deployer_address !== undefined &&
@@ -301,7 +302,7 @@ export const TransactionOriginDataInfo = {
     if (object.block_number !== undefined && object.block_number !== null) {
       message.block_number = object.block_number;
     } else {
-      message.block_number = "";
+      message.block_number = 0;
     }
     if (
       object.deployer_address !== undefined &&
@@ -577,3 +578,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}

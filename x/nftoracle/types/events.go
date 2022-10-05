@@ -26,4 +26,6 @@ const (
 	EventTypeVerificationRequestCreated   = "verify_request_created"
 	AttributeKeyVerifyRequestID           = "verify_request_id"
 	AttributeKeyVerificationRequestStatus = "status"
+
+	AttributeRequestorAddress = "requestor_address"
 )

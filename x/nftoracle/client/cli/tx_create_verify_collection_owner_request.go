@@ -15,12 +15,13 @@ var _ = strconv.Itoa(0)
 
 func CmdCreateVerifyCollectionOwnerRequest() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-verify-collection-owner-request [nft-schema-code] [require-confirm]",
+		Use:   "create-verify-collection-owner-request [nft-schema-code] [base64VerifyRequestorSignature] [require-confirm]",
 		Short: "To create Verify Collection Owner Request",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argNftSchemaCode := args[0]
-			argRequireConfirm, err := cast.ToUint64E(args[1])
+			argBase64VerifyRequestorSignature := args[1]
+			argRequireConfirm, err := cast.ToUint64E(args[2])
 			if err != nil {
 				return err
 			}
@@ -33,6 +34,7 @@ func CmdCreateVerifyCollectionOwnerRequest() *cobra.Command {
 			msg := types.NewMsgCreateVerifyCollectionOwnerRequest(
 				clientCtx.GetFromAddress().String(),
 				argNftSchemaCode,
+				argBase64VerifyRequestorSignature,
 				argRequireConfirm,
 			)
 			if err := msg.ValidateBasic(); err != nil {
