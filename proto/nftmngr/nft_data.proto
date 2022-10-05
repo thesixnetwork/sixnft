@@ -16,6 +16,7 @@ message NftData {
   OwnerAddressType owner_address_type = 4;
   string origin_image = 5; 
   string onchain_image = 6; 
-  repeated NftAttributeValue origin_attributes = 7; 
-  repeated NftAttributeValue onchain_attributes = 8;
+  string token_uri = 7;
+  repeated NftAttributeValue origin_attributes = 8; 
+  repeated NftAttributeValue onchain_attributes = 9;
 }

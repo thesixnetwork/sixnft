@@ -31202,6 +31202,8 @@ paths:
                       type: string
                     onchain_image:
                       type: string
+                    token_uri:
+                      type: string
                     origin_attributes:
                       type: array
                       items:
@@ -31560,6 +31562,8 @@ paths:
                     type: string
                   onchain_image:
                     type: string
+                  token_uri:
+                    type: string
                   origin_attributes:
                     type: array
                     items:
@@ -31835,6 +31839,10 @@ paths:
                       type: string
                     owner:
                       type: string
+                    system_actioners:
+                      type: array
+                      items:
+                        type: string
                     origin_data:
                       type: object
                       properties:
@@ -32392,6 +32400,10 @@ paths:
                     type: string
                   owner:
                     type: string
+                  system_actioners:
+                    type: array
+                    items:
+                      type: string
                   origin_data:
                     type: object
                     properties:
@@ -56575,6 +56587,13 @@ definitions:
                     value:
                       type: number
                       format: double
+  thesixnetwork.sixnft.nftmngr.MsgAddSystemActionerResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      actioner:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgAddTokenAttributeResponse:
     type: object
     properties:
@@ -56790,6 +56809,13 @@ definitions:
         type: string
       token_id:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgRemoveSystemActionerResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      actioner:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgSetBaseUriResponse:
     type: object
     properties:
@@ -57004,6 +57030,10 @@ definitions:
         type: string
       owner:
         type: string
+      system_actioners:
+        type: array
+        items:
+          type: string
       origin_data:
         type: object
         properties:
@@ -57316,6 +57346,8 @@ definitions:
       origin_image:
         type: string
       onchain_image:
+        type: string
+      token_uri:
         type: string
       origin_attributes:
         type: array
@@ -57729,6 +57761,10 @@ definitions:
               type: string
             owner:
               type: string
+            system_actioners:
+              type: array
+              items:
+                type: string
             origin_data:
               type: object
               properties:
@@ -58045,6 +58081,8 @@ definitions:
               type: string
             onchain_image:
               type: string
+            token_uri:
+              type: string
             origin_attributes:
               type: array
               items:
@@ -58193,6 +58231,10 @@ definitions:
             type: string
           owner:
             type: string
+          system_actioners:
+            type: array
+            items:
+              type: string
           origin_data:
             type: object
             properties:
@@ -58481,6 +58523,8 @@ definitions:
           origin_image:
             type: string
           onchain_image:
+            type: string
+          token_uri:
             type: string
           origin_attributes:
             type: array

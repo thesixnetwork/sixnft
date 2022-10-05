@@ -21,6 +21,8 @@ service Msg {
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
   rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
+  rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
+  rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -153,6 +155,28 @@ message MsgChangeSchemaOwner {
 message MsgChangeSchemaOwnerResponse {
   string nftSchemaCode = 1;
   string newOwner = 2;
+}
+
+message MsgAddSystemActioner {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string actioner = 3;
+}
+
+message MsgAddSystemActionerResponse {
+  string nftSchemaCode = 1;
+  string actioner = 2;
+}
+
+message MsgRemoveSystemActioner {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string actioner = 3;
+}
+
+message MsgRemoveSystemActionerResponse {
+  string nftSchemaCode = 1;
+  string actioner = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

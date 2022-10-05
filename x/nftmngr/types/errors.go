@@ -55,4 +55,9 @@ var (
 	ErrOrganizationOwner      = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
+
+	ErrSystemActionerAlreadyExists = sdkerrors.Register(ModuleName, 600, "System actioner already exists")
+	ErrSystemActionerDoesNotExists = sdkerrors.Register(ModuleName, 601, "System actioner does not exists")
+
+	ErrUnauthorized = sdkerrors.Register(ModuleName, 700, "Unauthorized")
 )
