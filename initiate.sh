@@ -364,3 +364,15 @@ ignite scaffold list CollectionOwnerRequest nft_schema_code:string base64_owner_
     --no-message \
     --no-simulation \
     --module nftoracle
+
+ignite scaffold message createVerifyCollectionOwnerRequest nft_schema_code:string required_confirm:uint \          
+    --desc "To create Verify Collection Owner Request" \
+    --response id:uint,nft_schema_code:string,ownerAddress:string \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message SubmitVerifyCollectionOwner verifyRequestID:uint schema_code:string contractOwnerAddress:string \
+    --desc "To Sumint Verify Collection Owner" \
+    --response verifyRequestID:uint \
+    --no-simulation \
+    --module nftoracle

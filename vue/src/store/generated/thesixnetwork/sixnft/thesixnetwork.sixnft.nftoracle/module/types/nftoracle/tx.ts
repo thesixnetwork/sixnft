@@ -48,6 +48,30 @@ export interface MsgSubmitActionResponseResponse {
   actionRequestID: string;
 }
 
+export interface MsgCreateVerifyCollectionOwnerRequest {
+  creator: string;
+  nftSchemaCode: string;
+  base64VerifyRequestorSignature: string;
+  requiredConfirm: number;
+}
+
+export interface MsgCreateVerifyCollectionOwnerRequestResponse {
+  id: number;
+  nftSchemaCode: string;
+  ownerAddress: string;
+}
+
+export interface MsgSubmitVerifyCollectionOwner {
+  creator: string;
+  verifyRequestID: number;
+  schemaCode: string;
+  base64OriginTxInfo: string;
+}
+
+export interface MsgSubmitVerifyCollectionOwnerResponse {
+  verifyRequestID: number;
+}
+
 const baseMsgCreateMintRequest: object = {
   creator: "",
   nftSchemaCode: "",
@@ -835,6 +859,476 @@ export const MsgSubmitActionResponseResponse = {
   },
 };
 
+const baseMsgCreateVerifyCollectionOwnerRequest: object = {
+  creator: "",
+  nftSchemaCode: "",
+  base64VerifyRequestorSignature: "",
+  requiredConfirm: 0,
+};
+
+export const MsgCreateVerifyCollectionOwnerRequest = {
+  encode(
+    message: MsgCreateVerifyCollectionOwnerRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.base64VerifyRequestorSignature !== "") {
+      writer.uint32(26).string(message.base64VerifyRequestorSignature);
+    }
+    if (message.requiredConfirm !== 0) {
+      writer.uint32(32).uint64(message.requiredConfirm);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateVerifyCollectionOwnerRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequest,
+    } as MsgCreateVerifyCollectionOwnerRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.base64VerifyRequestorSignature = reader.string();
+          break;
+        case 4:
+          message.requiredConfirm = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateVerifyCollectionOwnerRequest {
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequest,
+    } as MsgCreateVerifyCollectionOwnerRequest;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (
+      object.base64VerifyRequestorSignature !== undefined &&
+      object.base64VerifyRequestorSignature !== null
+    ) {
+      message.base64VerifyRequestorSignature = String(
+        object.base64VerifyRequestorSignature
+      );
+    } else {
+      message.base64VerifyRequestorSignature = "";
+    }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = Number(object.requiredConfirm);
+    } else {
+      message.requiredConfirm = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateVerifyCollectionOwnerRequest): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.base64VerifyRequestorSignature !== undefined &&
+      (obj.base64VerifyRequestorSignature =
+        message.base64VerifyRequestorSignature);
+    message.requiredConfirm !== undefined &&
+      (obj.requiredConfirm = message.requiredConfirm);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateVerifyCollectionOwnerRequest>
+  ): MsgCreateVerifyCollectionOwnerRequest {
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequest,
+    } as MsgCreateVerifyCollectionOwnerRequest;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (
+      object.base64VerifyRequestorSignature !== undefined &&
+      object.base64VerifyRequestorSignature !== null
+    ) {
+      message.base64VerifyRequestorSignature =
+        object.base64VerifyRequestorSignature;
+    } else {
+      message.base64VerifyRequestorSignature = "";
+    }
+    if (
+      object.requiredConfirm !== undefined &&
+      object.requiredConfirm !== null
+    ) {
+      message.requiredConfirm = object.requiredConfirm;
+    } else {
+      message.requiredConfirm = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateVerifyCollectionOwnerRequestResponse: object = {
+  id: 0,
+  nftSchemaCode: "",
+  ownerAddress: "",
+};
+
+export const MsgCreateVerifyCollectionOwnerRequestResponse = {
+  encode(
+    message: MsgCreateVerifyCollectionOwnerRequestResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.ownerAddress !== "") {
+      writer.uint32(26).string(message.ownerAddress);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgCreateVerifyCollectionOwnerRequestResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequestResponse,
+    } as MsgCreateVerifyCollectionOwnerRequestResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.ownerAddress = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateVerifyCollectionOwnerRequestResponse {
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequestResponse,
+    } as MsgCreateVerifyCollectionOwnerRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.ownerAddress !== undefined && object.ownerAddress !== null) {
+      message.ownerAddress = String(object.ownerAddress);
+    } else {
+      message.ownerAddress = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateVerifyCollectionOwnerRequestResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.ownerAddress !== undefined &&
+      (obj.ownerAddress = message.ownerAddress);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateVerifyCollectionOwnerRequestResponse>
+  ): MsgCreateVerifyCollectionOwnerRequestResponse {
+    const message = {
+      ...baseMsgCreateVerifyCollectionOwnerRequestResponse,
+    } as MsgCreateVerifyCollectionOwnerRequestResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.ownerAddress !== undefined && object.ownerAddress !== null) {
+      message.ownerAddress = object.ownerAddress;
+    } else {
+      message.ownerAddress = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSubmitVerifyCollectionOwner: object = {
+  creator: "",
+  verifyRequestID: 0,
+  schemaCode: "",
+  base64OriginTxInfo: "",
+};
+
+export const MsgSubmitVerifyCollectionOwner = {
+  encode(
+    message: MsgSubmitVerifyCollectionOwner,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.verifyRequestID !== 0) {
+      writer.uint32(16).uint64(message.verifyRequestID);
+    }
+    if (message.schemaCode !== "") {
+      writer.uint32(26).string(message.schemaCode);
+    }
+    if (message.base64OriginTxInfo !== "") {
+      writer.uint32(34).string(message.base64OriginTxInfo);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSubmitVerifyCollectionOwner {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.verifyRequestID = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.schemaCode = reader.string();
+          break;
+        case 4:
+          message.base64OriginTxInfo = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitVerifyCollectionOwner {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = Number(object.verifyRequestID);
+    } else {
+      message.verifyRequestID = 0;
+    }
+    if (object.schemaCode !== undefined && object.schemaCode !== null) {
+      message.schemaCode = String(object.schemaCode);
+    } else {
+      message.schemaCode = "";
+    }
+    if (
+      object.base64OriginTxInfo !== undefined &&
+      object.base64OriginTxInfo !== null
+    ) {
+      message.base64OriginTxInfo = String(object.base64OriginTxInfo);
+    } else {
+      message.base64OriginTxInfo = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitVerifyCollectionOwner): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.verifyRequestID !== undefined &&
+      (obj.verifyRequestID = message.verifyRequestID);
+    message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
+    message.base64OriginTxInfo !== undefined &&
+      (obj.base64OriginTxInfo = message.base64OriginTxInfo);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitVerifyCollectionOwner>
+  ): MsgSubmitVerifyCollectionOwner {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwner,
+    } as MsgSubmitVerifyCollectionOwner;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = object.verifyRequestID;
+    } else {
+      message.verifyRequestID = 0;
+    }
+    if (object.schemaCode !== undefined && object.schemaCode !== null) {
+      message.schemaCode = object.schemaCode;
+    } else {
+      message.schemaCode = "";
+    }
+    if (
+      object.base64OriginTxInfo !== undefined &&
+      object.base64OriginTxInfo !== null
+    ) {
+      message.base64OriginTxInfo = object.base64OriginTxInfo;
+    } else {
+      message.base64OriginTxInfo = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSubmitVerifyCollectionOwnerResponse: object = {
+  verifyRequestID: 0,
+};
+
+export const MsgSubmitVerifyCollectionOwnerResponse = {
+  encode(
+    message: MsgSubmitVerifyCollectionOwnerResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.verifyRequestID !== 0) {
+      writer.uint32(8).uint64(message.verifyRequestID);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgSubmitVerifyCollectionOwnerResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.verifyRequestID = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSubmitVerifyCollectionOwnerResponse {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = Number(object.verifyRequestID);
+    } else {
+      message.verifyRequestID = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSubmitVerifyCollectionOwnerResponse): unknown {
+    const obj: any = {};
+    message.verifyRequestID !== undefined &&
+      (obj.verifyRequestID = message.verifyRequestID);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgSubmitVerifyCollectionOwnerResponse>
+  ): MsgSubmitVerifyCollectionOwnerResponse {
+    const message = {
+      ...baseMsgSubmitVerifyCollectionOwnerResponse,
+    } as MsgSubmitVerifyCollectionOwnerResponse;
+    if (
+      object.verifyRequestID !== undefined &&
+      object.verifyRequestID !== null
+    ) {
+      message.verifyRequestID = object.verifyRequestID;
+    } else {
+      message.verifyRequestID = 0;
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateMintRequest(
@@ -846,10 +1340,16 @@ export interface Msg {
   CreateActionRequest(
     request: MsgCreateActionRequest
   ): Promise<MsgCreateActionRequestResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   SubmitActionResponse(
     request: MsgSubmitActionResponse
   ): Promise<MsgSubmitActionResponseResponse>;
+  CreateVerifyCollectionOwnerRequest(
+    request: MsgCreateVerifyCollectionOwnerRequest
+  ): Promise<MsgCreateVerifyCollectionOwnerRequestResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SubmitVerifyCollectionOwner(
+    request: MsgSubmitVerifyCollectionOwner
+  ): Promise<MsgSubmitVerifyCollectionOwnerResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -910,6 +1410,34 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgSubmitActionResponseResponse.decode(new Reader(data))
+    );
+  }
+
+  CreateVerifyCollectionOwnerRequest(
+    request: MsgCreateVerifyCollectionOwnerRequest
+  ): Promise<MsgCreateVerifyCollectionOwnerRequestResponse> {
+    const data = MsgCreateVerifyCollectionOwnerRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftoracle.Msg",
+      "CreateVerifyCollectionOwnerRequest",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateVerifyCollectionOwnerRequestResponse.decode(new Reader(data))
+    );
+  }
+
+  SubmitVerifyCollectionOwner(
+    request: MsgSubmitVerifyCollectionOwner
+  ): Promise<MsgSubmitVerifyCollectionOwnerResponse> {
+    const data = MsgSubmitVerifyCollectionOwner.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftoracle.Msg",
+      "SubmitVerifyCollectionOwner",
+      data
+    );
+    return promise.then((data) =>
+      MsgSubmitVerifyCollectionOwnerResponse.decode(new Reader(data))
     );
   }
 }

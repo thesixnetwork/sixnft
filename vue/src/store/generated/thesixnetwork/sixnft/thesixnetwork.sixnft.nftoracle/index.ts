@@ -3,15 +3,19 @@ import { txClient, queryClient, MissingWalletError , registry} from './module'
 import { ActionParam } from "./module/types/nftoracle/action_request"
 import { ActionRequest } from "./module/types/nftoracle/action_request"
 import { ActionSignature } from "./module/types/nftoracle/action_signature"
+import { TxOriginParam } from "./module/types/nftoracle/collection_owner_request"
 import { CollectionOwnerRequest } from "./module/types/nftoracle/collection_owner_request"
+import { CollectionOwnerSignature } from "./module/types/nftoracle/collection_owner_signature"
 import { MintRequest } from "./module/types/nftoracle/mint_request"
 import { Trait } from "./module/types/nftoracle/opensea"
 import { Params } from "./module/types/nftoracle/params"
 import { NftOriginData } from "./module/types/nftoracle/request"
+import { TransactionOriginDataInfo } from "./module/types/nftoracle/request"
 import { DataHash } from "./module/types/nftoracle/request"
+import { OriginTxInfo } from "./module/types/nftoracle/request"
 
 
-export { ActionParam, ActionRequest, ActionSignature, CollectionOwnerRequest, MintRequest, Trait, Params, NftOriginData, DataHash };
+export { ActionParam, ActionRequest, ActionSignature, TxOriginParam, CollectionOwnerRequest, CollectionOwnerSignature, MintRequest, Trait, Params, NftOriginData, TransactionOriginDataInfo, DataHash, OriginTxInfo };
 
 async function initTxClient(vuexGetters) {
 	return await txClient(vuexGetters['common/wallet/signer'], {
@@ -61,12 +65,16 @@ const getDefaultState = () => {
 						ActionParam: getStructure(ActionParam.fromPartial({})),
 						ActionRequest: getStructure(ActionRequest.fromPartial({})),
 						ActionSignature: getStructure(ActionSignature.fromPartial({})),
+						TxOriginParam: getStructure(TxOriginParam.fromPartial({})),
 						CollectionOwnerRequest: getStructure(CollectionOwnerRequest.fromPartial({})),
+						CollectionOwnerSignature: getStructure(CollectionOwnerSignature.fromPartial({})),
 						MintRequest: getStructure(MintRequest.fromPartial({})),
 						Trait: getStructure(Trait.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						NftOriginData: getStructure(NftOriginData.fromPartial({})),
+						TransactionOriginDataInfo: getStructure(TransactionOriginDataInfo.fromPartial({})),
 						DataHash: getStructure(DataHash.fromPartial({})),
+						OriginTxInfo: getStructure(OriginTxInfo.fromPartial({})),
 						
 		},
 		_Registry: registry,
@@ -337,6 +345,21 @@ export default {
 		},
 		
 		
+		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSubmitMintResponse(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitMintResponse:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSubmitMintResponse:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		async sendMsgSubmitActionResponse({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -349,21 +372,6 @@ export default {
 					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgSubmitActionResponse:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMintRequest(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMintRequest:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -397,7 +405,50 @@ export default {
 				}
 			}
 		},
+		async sendMsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSubmitVerifyCollectionOwnerRequest(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerResponse:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgSubmitVerifyCollectionOwner({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSubmitVerifyCollectionOwner(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitVerifyCollectionOwner:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgSubmitVerifyCollectionOwner:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
 		
+		async MsgSubmitMintResponse({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSubmitMintResponse(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitMintResponse:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSubmitMintResponse:Create Could not create message: ' + e.message)
+				}
+			}
+		},
 		async MsgSubmitActionResponse({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -408,19 +459,6 @@ export default {
 					throw new Error('TxClient:MsgSubmitActionResponse:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSubmitActionResponse:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgCreateMintRequest({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMintRequest(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -447,6 +485,32 @@ export default {
 					throw new Error('TxClient:MsgSubmitMintResponse:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgSubmitMintResponse:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateVerifyCollectionOwnerRequest(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgSubmitVerifyCollectionOwner({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgSubmitVerifyCollectionOwner(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgSubmitVerifyCollectionOwner:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgSubmitVerifyCollectionOwner:Create Could not create message: ' + e.message)
 				}
 			}
 		},

@@ -2,10 +2,16 @@ package keeper
 
 import (
 	"encoding/binary"
+	"fmt"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
+)
+
+var (
+	ActiveVerifyCollectionRequestQueuePrefix = []byte{0x03}
 )
 
 // GetCollectionOwnerRequestCount get the total number of collectionOwnerRequest
@@ -103,4 +109,48 @@ func GetCollectionOwnerRequestIDBytes(id uint64) []byte {
 // GetCollectionOwnerRequestIDFromBytes returns ID in uint64 format from a byte array
 func GetCollectionOwnerRequestIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
+}
+
+func (k Keeper) InsertActiveVerifyCollectionOwnerRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	bz := GetCollectionOwnerRequestIDBytes(requestID)
+	store.Set(ActiveVerifyCollectionOwnerQueueKey(requestID, endTime), bz)
+}
+
+func (k Keeper) RemoveFromActiveVerifyCollectionOwnerQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
+	store := ctx.KVStore(k.storeKey)
+	store.Delete(ActiveVerifyCollectionOwnerQueueKey(requestID, endTime))
+}
+
+func (k Keeper) IterateActiveVerifyCollectionOwnersQueue(ctx sdk.Context, endTime time.Time, cb func(mintRequest types.CollectionOwnerRequest) (stop bool)) {
+	iterator := k.ActiveVerifyCollectionOwnerQueueIterator(ctx, endTime)
+
+	defer iterator.Close()
+	for ; iterator.Valid(); iterator.Next() {
+		requestID, _ := SplitActiveVerifyCollectionOwnerQueueKey(iterator.Key())
+		mintRequest, found := k.GetCollectionOwnerRequest(ctx, requestID)
+		if !found {
+			panic(fmt.Sprintf("mintRequest %d does not exist", requestID))
+		}
+
+		if cb(mintRequest) {
+			break
+		}
+	}
+}
+
+func (k Keeper) ActiveVerifyCollectionOwnerQueueIterator(ctx sdk.Context, endTime time.Time) sdk.Iterator {
+	store := ctx.KVStore(k.storeKey)
+	return store.Iterator(ActiveVerifyCollectionRequestQueuePrefix, sdk.PrefixEndBytes(ActiveVerifyCollectionOwnerByTimeKey(endTime)))
+}
+
+func ActiveVerifyCollectionOwnerQueueKey(requestID uint64, endTime time.Time) []byte {
+	return append(ActiveVerifyCollectionOwnerByTimeKey(endTime), GetCollectionOwnerRequestIDBytes(requestID)...)
+}
+func ActiveVerifyCollectionOwnerByTimeKey(endTime time.Time) []byte {
+	return append(ActiveVerifyCollectionRequestQueuePrefix, sdk.FormatTimeBytes(endTime)...)
+}
+
+func SplitActiveVerifyCollectionOwnerQueueKey(key []byte) (requestID uint64, endTime time.Time) {
+	return splitKeyWithTime(key)
 }

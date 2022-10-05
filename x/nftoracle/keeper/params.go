@@ -13,6 +13,7 @@ func (k Keeper) GetParams(ctx sdk.Context) types.Params {
 	return types.NewParams(
 		k.MintRequestActiveDuration(ctx),
 		k.ActionRequestActiveDuration(ctx),
+		k.VerifyRequestActiveDuration(ctx),
 	)
 }
 
@@ -27,6 +28,11 @@ func (k Keeper) MintRequestActiveDuration(ctx sdk.Context) (res time.Duration) {
 }
 
 func (k Keeper) ActionRequestActiveDuration(ctx sdk.Context) (res time.Duration) {
-	k.paramstore.Get(ctx, types.KeyMintRequestActiveDuration, &res)
+	k.paramstore.Get(ctx, types.KeyActionRequestActiveDuration, &res)
+	return
+}
+
+func (k Keeper) VerifyRequestActiveDuration(ctx sdk.Context) (res time.Duration) {
+	k.paramstore.Get(ctx, types.KeyVerifyRequestActiveDuration, &res)
 	return
 }

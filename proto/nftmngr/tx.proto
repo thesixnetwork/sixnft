@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sixnft.nftmngr;
+package thesixnetwork.sixnft.nftmngr;
 
 // this line is used by starport scaffolding # proto/tx/import
 import "nftmngr/on_chain_data.proto";
