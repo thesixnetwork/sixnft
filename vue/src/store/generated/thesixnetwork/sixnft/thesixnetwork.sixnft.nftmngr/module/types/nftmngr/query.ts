@@ -13,7 +13,7 @@ import { Organization } from "../nftmngr/organization";
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
-export interface QueryParamsRequest {}
+export interface QueryParamsRequest { }
 
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {

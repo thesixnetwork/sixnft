@@ -15,7 +15,7 @@ const types = [
   ["/thesixnetwork.sixnft.nftadmin.MsgGrantPermission", MsgGrantPermission],
   ["/thesixnetwork.sixnft.nftadmin.MsgRevokePermission", MsgRevokePermission],
   ["/thesixnetwork.sixnft.nftadmin.MsgMint", MsgMint],
-  
+
 ];
 export const MissingWalletError = new Error("wallet is required");
 
@@ -40,18 +40,18 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
   let client;
   if (addr) {
     client = await SigningStargateClient.connectWithSigner(addr, wallet, { registry });
-  }else{
-    client = await SigningStargateClient.offline( wallet, { registry });
+  } else {
+    client = await SigningStargateClient.offline(wallet, { registry });
   }
   const { address } = (await wallet.getAccounts())[0];
 
   return {
-    signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgBurn: (data: MsgBurn): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgBurn", value: MsgBurn.fromPartial( data ) }),
-    msgGrantPermission: (data: MsgGrantPermission): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgGrantPermission", value: MsgGrantPermission.fromPartial( data ) }),
-    msgRevokePermission: (data: MsgRevokePermission): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgRevokePermission", value: MsgRevokePermission.fromPartial( data ) }),
-    msgMint: (data: MsgMint): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgMint", value: MsgMint.fromPartial( data ) }),
-    
+    signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = { fee: defaultFee, memo: "" }) => client.signAndBroadcast(address, msgs, fee, memo),
+    msgBurn: (data: MsgBurn): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgBurn", value: MsgBurn.fromPartial(data) }),
+    msgGrantPermission: (data: MsgGrantPermission): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgGrantPermission", value: MsgGrantPermission.fromPartial(data) }),
+    msgRevokePermission: (data: MsgRevokePermission): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgRevokePermission", value: MsgRevokePermission.fromPartial(data) }),
+    msgMint: (data: MsgMint): EncodeObject => ({ typeUrl: "/thesixnetwork.sixnft.nftadmin.MsgMint", value: MsgMint.fromPartial(data) }),
+
   };
 };
 
