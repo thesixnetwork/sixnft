@@ -47,6 +47,15 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	// save schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeAddAction,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
+			sdk.NewAttribute(types.AttributeKeyAddActionName,new_action.Name),
+			sdk.NewAttribute(types.AttributeKeyAddActionResult, "success"),
+		),
+	})
+
 	return &types.MsgAddActionResponse{
 		Code:        msg.GetCode(),
 		Name:        schema.Name,
