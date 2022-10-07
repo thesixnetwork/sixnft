@@ -376,3 +376,10 @@ ignite scaffold message SubmitVerifyCollectionOwner verifyRequestID:uint schema_
     --response verifyRequestID:uint \
     --no-simulation \
     --module nftoracle
+
+
+ignite scaffold message resyncAttributes nft_schema_code:string token_id:string \
+    --desc "To resync onchain attributes" \
+    --response nft_schema_code \
+    --no-simulation \
+    --module nftmngr

@@ -45,6 +45,11 @@ export interface NftmngrAttributeDefinition {
   index?: string;
 }
 
+export enum NftmngrAttributeLocation {
+  NFT_ATTRIBUTE = "NFT_ATTRIBUTE",
+  TOKEN_ATTRIBUTE = "TOKEN_ATTRIBUTE",
+}
+
 export enum NftmngrAttributeOverriding {
   ORIGIN = "ORIGIN",
   CHAIN = "CHAIN",
@@ -122,6 +127,10 @@ export interface NftmngrMsgPerformActionByAdminResponse {
 export interface NftmngrMsgRemoveSystemActionerResponse {
   nftSchemaCode?: string;
   actioner?: string;
+}
+
+export interface NftmngrMsgResyncAttributesResponse {
+  nftSchemaCode?: string;
 }
 
 export interface NftmngrMsgSetBaseUriResponse {

@@ -10,9 +10,10 @@ const (
 	AttributeKeyAddActionName   = "add_action_name"
 	AttributeKeyAddActionResult = "add_action_result"
 
-	EventTypeAddAttribute          = "add_attribute"
-	AttributeKeyAddAttributeName   = "add_attribute_name"
-	AttributeKeyAddAttributeResult = "add_attribute_result"
+	EventTypeAddAttribute            = "add_attribute"
+	AttributeKeyAddAttributeName     = "add_attribute_name"
+	AttributeKeyAddAttributeLocation = "add_attribute_location"
+	AttributeKeyAddAttributeResult   = "add_attribute_result"
 
 	EventTypeSchemaOwnerChanged = "schema_owner_changed"
 	AttributeKeyNftSchemaCode   = "nft_schema_code"
@@ -52,4 +53,6 @@ const (
 	//Show attribute
 	EventTypeShowAttribute          = "show_attribute"
 	AttributeKeyShowAttributeResult = "show_attribute_result"
+	AttributeKeyTokenId       = "token_id"
+	EventTypeResyncAttributes = "resync_attributes"
 )
