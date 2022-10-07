@@ -21,4 +21,29 @@ const (
 	EventTypeAddSystemActioner    = "add_system_actioner"
 	EventTypeRemoveSystemActioner = "remove_system_actioner"
 	AttributeKeyActioner          = "actioner"
+
+	EventTypeCreateSchema          = "craete_schema"
+	AttributeKeyCreateSchemaCode   = "create_schema_code"
+	AttributeKeyCreateSchemaResult = "create_schema_result"
+
+	EventTypeCreateMetadata = "create_metadata"
+	AttributeKeyCreateMetaDataTokenID = "token_id"
+	AttributeKeyCreateMetaDataResult = "create_metadata_result"
+
+	//set base uri
+	EventTypeSetBaseURI = "set_base_uri"
+	AttributeKeySetBaseURI = "base_uri"
+	AttributeKeySetBaseURIResult = "set_base_uri_result"
+
+	//set nft schema value
+	EventTypeSetNFTSchemaValue = "set_nft_schema_value"
+	AttributeKeySetNFTSchemaValue = "nft_schema_new_value"
+	AttributeKeySetNFTSchemaValueResult = "set_nft_schema_value_result"
+
+	//toggle nft action
+	EventTypeToggleNFTAction = "toggle_nft_action"
+	AttributeKeyToggleNFTAction = "nft_action"
+	AttributeKeyToggleNFTActionResult = "toggle_nft_action_result"
+
+
 )

@@ -46,6 +46,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	// set schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeAddAttribute,

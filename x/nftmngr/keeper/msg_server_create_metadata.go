@@ -74,6 +74,17 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	// Add the data to the store
 	k.Keeper.SetNftData(ctx, data)
 
+
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeCreateMetadata,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyCreateMetaDataTokenID, msg.TokenId),
+			sdk.NewAttribute(types.AttributeKeyCreateMetaDataResult, "success"),
+		),
+	})
+
 	return &types.MsgCreateMetadataResponse{
 		NftSchemaCode: data.NftSchemaCode,
 		TokenId:       data.TokenId,
