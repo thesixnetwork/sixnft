@@ -50,6 +50,15 @@ func (k msgServer) RevokePermission(goCtx context.Context, msg *types.MsgRevokeP
 		return nil, sdkerrors.Wrapf(types.ErrGranteeNotFoundForName, "grantee %s not found for name %s", msg.Revokee, msg.Name)
 	}
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeRevokePermission,
+			sdk.NewAttribute(types.AttributeKeyRevokePermissionType, msg.Name),
+			sdk.NewAttribute(types.AttributeKeyRevokePermissionAddress, msg.Revokee),
+			sdk.NewAttribute(types.AttributeKeyRevokePermissionStatus, "success"),
+		),
+	})
+
 	k.Keeper.SetAuthorization(ctx, auth)
 
 	return &types.MsgRevokePermissionResponse{
