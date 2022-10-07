@@ -58,6 +58,15 @@ func (k msgServer) SetNFTAttribute(goCtx context.Context, msg *types.MsgSetNFTAt
 	}
 
 	k.Keeper.SetNFTSchema(ctx, schema)
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeAddAttribute,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeySetNFTSchemaValue, attributeValue.Name),
+			sdk.NewAttribute(types.AttributeKeySetNFTSchemaValueResult, "success"),
+		),
+	})
 
 	return &types.MsgSetNFTAttributeResponse{}, nil
 }

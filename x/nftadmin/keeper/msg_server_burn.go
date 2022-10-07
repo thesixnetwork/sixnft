@@ -44,6 +44,15 @@ func (k msgServer) Burn(goCtx context.Context, msg *types.MsgBurn) (*types.MsgBu
 		return nil, err
 	}
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeBurn,
+			sdk.NewAttribute(types.AttributeKeyToken, msg.Token),
+			sdk.NewAttribute(types.AttributeKeyAmount, strconv.FormatUint(msg.Amount, 10)),
+			sdk.NewAttribute(types.AttributeKeyBurnStatus, "success"),
+		),
+	})
+
 	return &types.MsgBurnResponse{
 		Amount: strconv.FormatUint(msg.Amount, 10),
 		Token:  msg.Token,

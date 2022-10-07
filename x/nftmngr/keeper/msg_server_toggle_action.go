@@ -40,6 +40,16 @@ func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleActio
 
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeToggleNFTAction,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
+			sdk.NewAttribute(types.AttributeKeyToggleNFTAction, msg.Action),
+			sdk.NewAttribute(types.AttributeKeyToggleNFTActionResult, "success"),
+		),
+	})
+
 	return &types.MsgToggleActionResponse{
 		Code:              msg.Code,
 		Name:              mapAction.Name,
