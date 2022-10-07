@@ -26,24 +26,30 @@ const (
 	AttributeKeyCreateSchemaCode   = "create_schema_code"
 	AttributeKeyCreateSchemaResult = "create_schema_result"
 
-	EventTypeCreateMetadata = "create_metadata"
+	EventTypeCreateMetadata           = "create_metadata"
 	AttributeKeyCreateMetaDataTokenID = "token_id"
-	AttributeKeyCreateMetaDataResult = "create_metadata_result"
+	AttributeKeyCreateMetaDataResult  = "create_metadata_result"
 
 	//set base uri
-	EventTypeSetBaseURI = "set_base_uri"
-	AttributeKeySetBaseURI = "base_uri"
+	EventTypeSetBaseURI          = "set_base_uri"
+	AttributeKeySetBaseURI       = "base_uri"
 	AttributeKeySetBaseURIResult = "set_base_uri_result"
 
 	//set nft schema value
-	EventTypeSetNFTSchemaValue = "set_nft_schema_value"
-	AttributeKeySetNFTSchemaValue = "nft_schema_new_value"
+	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
+	AttributeKeySetNFTSchemaValue       = "nft_schema_new_value"
 	AttributeKeySetNFTSchemaValueResult = "set_nft_schema_value_result"
 
 	//toggle nft action
-	EventTypeToggleNFTAction = "toggle_nft_action"
-	AttributeKeyToggleNFTAction = "nft_action"
+	EventTypeToggleNFTAction          = "toggle_nft_action"
+	AttributeKeyToggleNFTAction       = "nft_action"
 	AttributeKeyToggleNFTActionResult = "toggle_nft_action_result"
 
+	//Hidden attribute
+	EventTypeHiddenAttribute          = "hidden_attribute"
+	AttributeKeyHiddenAttributeResult = "hidden_attribute_result"
 
+	//Show attribute
+	EventTypeShowAttribute          = "show_attribute"
+	AttributeKeyShowAttributeResult = "show_attribute_result"
 )

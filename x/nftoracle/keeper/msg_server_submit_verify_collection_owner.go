@@ -3,14 +3,14 @@ package keeper
 import (
 	"bytes"
 	"context"
-	"strconv"
 	"crypto/sha256"
 	"encoding/base64"
+	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types.MsgSubmitVerifyCollectionOwner) (*types.MsgSubmitVerifyCollectionOwnerResponse, error) {
@@ -27,13 +27,13 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, msg.Creator)
 	}
-	
+
 	// get request for verification
 	verifyRequest, found := k.GetCollectionOwnerRequest(ctx, msg.VerifyRequestID)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrVerifyRequestNotFound, strconv.FormatUint(msg.VerifyRequestID, 10))
 	}
-	
+
 	// check if request is still pending
 	if verifyRequest.Status != types.RequestStatus_PENDING {
 		return nil, sdkerrors.Wrap(types.ErrVerifyRequestNotPending, strconv.FormatUint(msg.VerifyRequestID, 10))
@@ -61,10 +61,10 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		// hash schema
 		verifyRequest.OriginTx = append(verifyRequest.OriginTx, &types.OriginTxInfo{
 			TransactionOriginDataInfo: &transactionOrigin,
-			Hash: dataHash[:],
-			Confirmers: []string{msg.Creator},
+			Hash:                      dataHash[:],
+			Confirmers:                []string{msg.Creator},
 		})
-	}else {
+	} else {
 		// check if creator has alraedy confirmed
 		if _, ok := verifyRequest.Confirmers[msg.Creator]; ok {
 			return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+msg.Creator)
@@ -83,12 +83,12 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		if !dataHashMatch {
 			verifyRequest.OriginTx = append(verifyRequest.OriginTx, &types.OriginTxInfo{
 				TransactionOriginDataInfo: &transactionOrigin,
-				Hash: dataHash[:],
-				Confirmers: []string{msg.Creator},
+				Hash:                      dataHash[:],
+				Confirmers:                []string{msg.Creator},
 			})
 		}
 	}
-	
+
 	if verifyRequest.Confirmers == nil {
 		verifyRequest.Confirmers = make(map[string]bool)
 	}
@@ -100,15 +100,15 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	verifyRequest.CurrentConfirm++
 
 	if verifyRequest.CurrentConfirm == verifyRequest.RequiredConfirm {
-		
+
 		// chaek if signer and deployer address is same
 		if verifyRequest.Signer != transactionOrigin.DeployerAddress {
 			verifyRequest.Status = types.RequestStatus_FAILED_REJECT_BY_CONSENSUS
-			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer +","+ transactionOrigin.DeployerAddress)
-		}else {
+			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer+","+transactionOrigin.DeployerAddress)
+		} else {
 			verifyRequest.Status = types.RequestStatus_SUCCESS_WITH_CONSENSUS
 		}
-		
+
 		// Verify collection owner
 		// Check if there is only one data hash
 		if len(verifyRequest.OriginTx) > 1 {
@@ -135,7 +135,7 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 			if !found {
 				return nil, sdkerrors.Wrap(types.ErrMetaDataNotFound, verifyRequest.NftSchemaCode)
 			}
-			
+
 			// Set Collection Owner is verified
 			schema.IsVerified = true
 			k.nftmngrKeeper.SetNFTSchema(ctx, schema)
@@ -145,7 +145,6 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 
 	// Update Mint Request Back to storage
 	k.SetCollectionOwnerRequest(ctx, verifyRequest)
-
 
 	return &types.MsgSubmitVerifyCollectionOwnerResponse{}, nil
 }

@@ -156,6 +156,17 @@ export interface MsgRemoveSystemActionerResponse {
   actioner: string;
 }
 
+export interface MsgHidddenAttributes {
+  creator: string;
+  nftSchemaCode: string;
+  attibuteName: string;
+  attributeName: string;
+}
+
+export interface MsgHidddenAttributesResponse {
+  nftSchema: string;
+}
+
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
 export const MsgCreateNFTSchema = {
@@ -2761,6 +2772,192 @@ export const MsgRemoveSystemActionerResponse = {
   },
 };
 
+const baseMsgHidddenAttributes: object = {
+  creator: "",
+  nftSchemaCode: "",
+  attibuteName: "",
+  attributeName: "",
+};
+
+export const MsgHidddenAttributes = {
+  encode(
+    message: MsgHidddenAttributes,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.attibuteName !== "") {
+      writer.uint32(26).string(message.attibuteName);
+    }
+    if (message.attributeName !== "") {
+      writer.uint32(34).string(message.attributeName);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgHidddenAttributes {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgHidddenAttributes } as MsgHidddenAttributes;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.attibuteName = reader.string();
+          break;
+        case 4:
+          message.attributeName = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgHidddenAttributes {
+    const message = { ...baseMsgHidddenAttributes } as MsgHidddenAttributes;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.attibuteName !== undefined && object.attibuteName !== null) {
+      message.attibuteName = String(object.attibuteName);
+    } else {
+      message.attibuteName = "";
+    }
+    if (object.attributeName !== undefined && object.attributeName !== null) {
+      message.attributeName = String(object.attributeName);
+    } else {
+      message.attributeName = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgHidddenAttributes): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.attibuteName !== undefined &&
+      (obj.attibuteName = message.attibuteName);
+    message.attributeName !== undefined &&
+      (obj.attributeName = message.attributeName);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgHidddenAttributes>): MsgHidddenAttributes {
+    const message = { ...baseMsgHidddenAttributes } as MsgHidddenAttributes;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.attibuteName !== undefined && object.attibuteName !== null) {
+      message.attibuteName = object.attibuteName;
+    } else {
+      message.attibuteName = "";
+    }
+    if (object.attributeName !== undefined && object.attributeName !== null) {
+      message.attributeName = object.attributeName;
+    } else {
+      message.attributeName = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgHidddenAttributesResponse: object = { nftSchema: "" };
+
+export const MsgHidddenAttributesResponse = {
+  encode(
+    message: MsgHidddenAttributesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nftSchema !== "") {
+      writer.uint32(10).string(message.nftSchema);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgHidddenAttributesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgHidddenAttributesResponse,
+    } as MsgHidddenAttributesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftSchema = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgHidddenAttributesResponse {
+    const message = {
+      ...baseMsgHidddenAttributesResponse,
+    } as MsgHidddenAttributesResponse;
+    if (object.nftSchema !== undefined && object.nftSchema !== null) {
+      message.nftSchema = String(object.nftSchema);
+    } else {
+      message.nftSchema = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgHidddenAttributesResponse): unknown {
+    const obj: any = {};
+    message.nftSchema !== undefined && (obj.nftSchema = message.nftSchema);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgHidddenAttributesResponse>
+  ): MsgHidddenAttributesResponse {
+    const message = {
+      ...baseMsgHidddenAttributesResponse,
+    } as MsgHidddenAttributesResponse;
+    if (object.nftSchema !== undefined && object.nftSchema !== null) {
+      message.nftSchema = object.nftSchema;
+    } else {
+      message.nftSchema = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -2788,10 +2985,13 @@ export interface Msg {
   AddSystemActioner(
     request: MsgAddSystemActioner
   ): Promise<MsgAddSystemActionerResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   RemoveSystemActioner(
     request: MsgRemoveSystemActioner
   ): Promise<MsgRemoveSystemActionerResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  HidddenAttributes(
+    request: MsgHidddenAttributes
+  ): Promise<MsgHidddenAttributesResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2956,6 +3156,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgRemoveSystemActionerResponse.decode(new Reader(data))
+    );
+  }
+
+  HidddenAttributes(
+    request: MsgHidddenAttributes
+  ): Promise<MsgHidddenAttributesResponse> {
+    const data = MsgHidddenAttributes.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Msg",
+      "HidddenAttributes",
+      data
+    );
+    return promise.then((data) =>
+      MsgHidddenAttributesResponse.decode(new Reader(data))
     );
   }
 }

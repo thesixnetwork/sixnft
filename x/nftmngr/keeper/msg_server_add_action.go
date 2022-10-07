@@ -51,7 +51,7 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 		sdk.NewEvent(
 			types.EventTypeAddAction,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
-			sdk.NewAttribute(types.AttributeKeyAddActionName,new_action.Name),
+			sdk.NewAttribute(types.AttributeKeyAddActionName, new_action.Name),
 			sdk.NewAttribute(types.AttributeKeyAddActionResult, "success"),
 		),
 	})

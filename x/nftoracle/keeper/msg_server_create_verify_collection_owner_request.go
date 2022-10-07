@@ -44,7 +44,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingCollectionOwnerSignature, err.Error())
 	}
-	_,signer, err := k.ValidateCollectionOwnerSignature(data)
+	_, signer, err := k.ValidateCollectionOwnerSignature(data)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
 	}
@@ -61,7 +61,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
 		Confirmers:      make(map[string]bool),
-		OriginTx:      	 make([]*types.OriginTxInfo, 0),
+		OriginTx:        make([]*types.OriginTxInfo, 0),
 	})
 
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -94,11 +94,11 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	collectionOwnerParam := &types.TxOriginParam{}
 	collectionOwnerTypeBz, err := base64.StdEncoding.DecodeString(collectionOwnerSig.Message)
 	if err != nil {
-		return nil ,nil, err
+		return nil, nil, err
 	}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(collectionOwnerTypeBz, collectionOwnerParam)
 	if err != nil {
-		return nil ,nil, sdkerrors.Wrap(types.ErrParsingActionParam, err.Error())
+		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, err.Error())
 	}
 
 	//validate signature format
@@ -127,5 +127,5 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	}
 	signer := eth_address_from_pubkey.Hex()
 	// fmt.Println("######################### signer", signer)
-	return collectionOwnerParam,&signer, nil
+	return collectionOwnerParam, &signer, nil
 }

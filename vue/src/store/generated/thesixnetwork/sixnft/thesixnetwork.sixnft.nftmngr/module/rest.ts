@@ -109,6 +109,10 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
   code?: string;
 }
 
+export interface NftmngrMsgHidddenAttributesResponse {
+  nftSchema?: string;
+}
+
 export interface NftmngrMsgPerformActionByAdminResponse {
   nft_schema_code?: string;
   token_id?: string;

@@ -23,6 +23,7 @@ service Msg {
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
   rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
   rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
+  rpc HidddenAttributes(MsgHidddenAttributes) returns (MsgHidddenAttributesResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -177,6 +178,17 @@ message MsgRemoveSystemActioner {
 message MsgRemoveSystemActionerResponse {
   string nftSchemaCode = 1;
   string actioner = 2;
+}
+
+message MsgHidddenAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string attibuteName = 3;
+  string attributeName = 4;
+}
+
+message MsgHidddenAttributesResponse {
+  string nftSchema = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
