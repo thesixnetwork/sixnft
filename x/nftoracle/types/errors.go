@@ -39,8 +39,8 @@ var (
 	ErrNotCollectionOwner              = sdkerrors.Register(ModuleName, 27, "Not collection owner")
 	ErrNotContractOwner                = sdkerrors.Register(ModuleName, 28, "Not collection owner")
 
-	ErrVerifyRequestNotFound = sdkerrors.Register(ModuleName, 29, "Verify request not found")
-	ErrVerifyRequestNotPending = sdkerrors.Register(ModuleName, 30, "Verify request not pending")
+	ErrVerifyRequestNotFound                 = sdkerrors.Register(ModuleName, 29, "Verify request not found")
+	ErrVerifyRequestNotPending               = sdkerrors.Register(ModuleName, 30, "Verify request not pending")
 	ErrVerifyRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 31, "Verify request confirmed already complete")
-	ErrOracleRejectVerifyRequest = sdkerrors.Register(ModuleName, 32, "Oracle reject verify request")
+	ErrOracleRejectVerifyRequest             = sdkerrors.Register(ModuleName, 32, "Oracle reject verify request")
 )

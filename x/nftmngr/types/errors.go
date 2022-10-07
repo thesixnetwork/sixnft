@@ -33,6 +33,8 @@ var (
 	ErrInvalidAttribute                          = sdkerrors.Register(ModuleName, 113, "Invalid attribute")
 	ErrRequiredAttributeMissing                  = sdkerrors.Register(ModuleName, 114, "Required attribute missing")
 	ErrOnchainAttributesNotExistsInSchema        = sdkerrors.Register(ModuleName, 115, "Onchain attributes not exists in schema")
+	ErrNftDataDoesNotExists                      = sdkerrors.Register(ModuleName, 116, "NFT data does not exists")
+	ErrNoDefaultValue                            = sdkerrors.Register(ModuleName, 117, "No default value")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")

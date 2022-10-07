@@ -36,12 +36,20 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
-	// append new nft_attributes to array of OnchainData.NftAttributes
-	schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
+	// Swith location of attribute
+	switch msg.Location {
+	case types.AttributeLocation_NFT_ATTRIBUTE:
+		// append new nft_attributes to array of OnchainData.NftAttributes
+		schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
+	case types.AttributeLocation_TOKEN_ATTRIBUTE:
+		// append new token_attributes to array of OnchainData.TokenAttributes
+		schema.OnchainData.TokenAttributes = append(schema.OnchainData.TokenAttributes, &new_add_attribute)
+		// end the case
+	}
 	// count the index of new attribute
-	index := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
 	// set new index to new attribute
-	new_add_attribute.Index = uint64(index - 1)
+	new_add_attribute.Index = uint64(count - 1)
 
 	// set schema
 	k.Keeper.SetNFTSchema(ctx, schema)
@@ -52,6 +60,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 			types.EventTypeAddAttribute,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
 			sdk.NewAttribute(types.AttributeKeyAddAttributeName, new_add_attribute.Name),
+			sdk.NewAttribute(types.AttributeKeyAddAttributeLocation, types.AttributeLocation.String(msg.Location)),
 			sdk.NewAttribute(types.AttributeKeyAddAttributeResult, "success"),
 		),
 	})

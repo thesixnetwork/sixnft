@@ -9,12 +9,12 @@ const TypeMsgCreateVerifyCollectionOwnerRequest = "create_verify_collection_owne
 
 var _ sdk.Msg = &MsgCreateVerifyCollectionOwnerRequest{}
 
-func NewMsgCreateVerifyCollectionOwnerRequest(creator string, nftSchemaCode string,base64VerifyRequestorSignature string,requiredConfirm uint64) *MsgCreateVerifyCollectionOwnerRequest {
+func NewMsgCreateVerifyCollectionOwnerRequest(creator string, nftSchemaCode string, base64VerifyRequestorSignature string, requiredConfirm uint64) *MsgCreateVerifyCollectionOwnerRequest {
 	return &MsgCreateVerifyCollectionOwnerRequest{
-		Creator:         creator,
-		NftSchemaCode:   nftSchemaCode,
+		Creator:                        creator,
+		NftSchemaCode:                  nftSchemaCode,
 		Base64VerifyRequestorSignature: base64VerifyRequestorSignature,
-		RequiredConfirm: requiredConfirm,
+		RequiredConfirm:                requiredConfirm,
 	}
 }
 

@@ -5,6 +5,38 @@ import { OnChainData } from "../nftmngr/on_chain_data";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
+export enum AttributeLocation {
+  NFT_ATTRIBUTE = 0,
+  TOKEN_ATTRIBUTE = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function attributeLocationFromJSON(object: any): AttributeLocation {
+  switch (object) {
+    case 0:
+    case "NFT_ATTRIBUTE":
+      return AttributeLocation.NFT_ATTRIBUTE;
+    case 1:
+    case "TOKEN_ATTRIBUTE":
+      return AttributeLocation.TOKEN_ATTRIBUTE;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return AttributeLocation.UNRECOGNIZED;
+  }
+}
+
+export function attributeLocationToJSON(object: AttributeLocation): string {
+  switch (object) {
+    case AttributeLocation.NFT_ATTRIBUTE:
+      return "NFT_ATTRIBUTE";
+    case AttributeLocation.TOKEN_ATTRIBUTE:
+      return "TOKEN_ATTRIBUTE";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface MsgCreateNFTSchema {
   creator: string;
   nftSchemaBase64: string;
@@ -55,6 +87,7 @@ export interface MsgPerformActionByAdminResponse {
 export interface MsgAddAttribute {
   creator: string;
   code: string;
+  location: AttributeLocation;
   base64NewAttriuteDefenition: string;
 }
 
@@ -154,6 +187,16 @@ export interface MsgRemoveSystemActioner {
 export interface MsgRemoveSystemActionerResponse {
   nftSchemaCode: string;
   actioner: string;
+}
+
+export interface MsgResyncAttributes {
+  creator: string;
+  nftSchemaCode: string;
+  tokenId: string;
+}
+
+export interface MsgResyncAttributesResponse {
+  nftSchemaCode: string;
 }
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
@@ -973,6 +1016,7 @@ export const MsgPerformActionByAdminResponse = {
 const baseMsgAddAttribute: object = {
   creator: "",
   code: "",
+  location: 0,
   base64NewAttriuteDefenition: "",
 };
 
@@ -984,8 +1028,11 @@ export const MsgAddAttribute = {
     if (message.code !== "") {
       writer.uint32(18).string(message.code);
     }
+    if (message.location !== 0) {
+      writer.uint32(24).int32(message.location);
+    }
     if (message.base64NewAttriuteDefenition !== "") {
-      writer.uint32(26).string(message.base64NewAttriuteDefenition);
+      writer.uint32(34).string(message.base64NewAttriuteDefenition);
     }
     return writer;
   },
@@ -1004,6 +1051,9 @@ export const MsgAddAttribute = {
           message.code = reader.string();
           break;
         case 3:
+          message.location = reader.int32() as any;
+          break;
+        case 4:
           message.base64NewAttriuteDefenition = reader.string();
           break;
         default:
@@ -1026,6 +1076,11 @@ export const MsgAddAttribute = {
     } else {
       message.code = "";
     }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = attributeLocationFromJSON(object.location);
+    } else {
+      message.location = 0;
+    }
     if (
       object.base64NewAttriuteDefenition !== undefined &&
       object.base64NewAttriuteDefenition !== null
@@ -1043,6 +1098,8 @@ export const MsgAddAttribute = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.code !== undefined && (obj.code = message.code);
+    message.location !== undefined &&
+      (obj.location = attributeLocationToJSON(message.location));
     message.base64NewAttriuteDefenition !== undefined &&
       (obj.base64NewAttriuteDefenition = message.base64NewAttriuteDefenition);
     return obj;
@@ -1059,6 +1116,11 @@ export const MsgAddAttribute = {
       message.code = object.code;
     } else {
       message.code = "";
+    }
+    if (object.location !== undefined && object.location !== null) {
+      message.location = object.location;
+    } else {
+      message.location = 0;
     }
     if (
       object.base64NewAttriuteDefenition !== undefined &&
@@ -2761,6 +2823,173 @@ export const MsgRemoveSystemActionerResponse = {
   },
 };
 
+const baseMsgResyncAttributes: object = {
+  creator: "",
+  nftSchemaCode: "",
+  tokenId: "",
+};
+
+export const MsgResyncAttributes = {
+  encode(
+    message: MsgResyncAttributes,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(18).string(message.nftSchemaCode);
+    }
+    if (message.tokenId !== "") {
+      writer.uint32(26).string(message.tokenId);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgResyncAttributes {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgResyncAttributes } as MsgResyncAttributes;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 3:
+          message.tokenId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgResyncAttributes {
+    const message = { ...baseMsgResyncAttributes } as MsgResyncAttributes;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = String(object.tokenId);
+    } else {
+      message.tokenId = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgResyncAttributes): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgResyncAttributes>): MsgResyncAttributes {
+    const message = { ...baseMsgResyncAttributes } as MsgResyncAttributes;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.tokenId !== undefined && object.tokenId !== null) {
+      message.tokenId = object.tokenId;
+    } else {
+      message.tokenId = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgResyncAttributesResponse: object = { nftSchemaCode: "" };
+
+export const MsgResyncAttributesResponse = {
+  encode(
+    message: MsgResyncAttributesResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(10).string(message.nftSchemaCode);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgResyncAttributesResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgResyncAttributesResponse,
+    } as MsgResyncAttributesResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftSchemaCode = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgResyncAttributesResponse {
+    const message = {
+      ...baseMsgResyncAttributesResponse,
+    } as MsgResyncAttributesResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgResyncAttributesResponse): unknown {
+    const obj: any = {};
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgResyncAttributesResponse>
+  ): MsgResyncAttributesResponse {
+    const message = {
+      ...baseMsgResyncAttributesResponse,
+    } as MsgResyncAttributesResponse;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -2788,10 +3017,13 @@ export interface Msg {
   AddSystemActioner(
     request: MsgAddSystemActioner
   ): Promise<MsgAddSystemActionerResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   RemoveSystemActioner(
     request: MsgRemoveSystemActioner
   ): Promise<MsgRemoveSystemActionerResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ResyncAttributes(
+    request: MsgResyncAttributes
+  ): Promise<MsgResyncAttributesResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -2956,6 +3188,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgRemoveSystemActionerResponse.decode(new Reader(data))
+    );
+  }
+
+  ResyncAttributes(
+    request: MsgResyncAttributes
+  ): Promise<MsgResyncAttributesResponse> {
+    const data = MsgResyncAttributes.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Msg",
+      "ResyncAttributes",
+      data
+    );
+    return promise.then((data) =>
+      MsgResyncAttributesResponse.decode(new Reader(data))
     );
   }
 }
