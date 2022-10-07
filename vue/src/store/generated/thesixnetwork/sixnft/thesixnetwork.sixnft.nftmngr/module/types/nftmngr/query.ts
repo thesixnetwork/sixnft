@@ -90,6 +90,16 @@ export interface QueryAllOrganizationResponse {
   pagination: PageResponse | undefined;
 }
 
+export interface QueryGetNftCollectionRequest {
+  nftSchemaCode: string;
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryGetNftCollectionResponse {
+  nftCollection: NftData[];
+  pagination: PageResponse | undefined;
+}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -1447,6 +1457,197 @@ export const QueryAllOrganizationResponse = {
   },
 };
 
+const baseQueryGetNftCollectionRequest: object = { nftSchemaCode: "" };
+
+export const QueryGetNftCollectionRequest = {
+  encode(
+    message: QueryGetNftCollectionRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(10).string(message.nftSchemaCode);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNftCollectionRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNftCollectionRequest,
+    } as QueryGetNftCollectionRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftSchemaCode = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetNftCollectionRequest {
+    const message = {
+      ...baseQueryGetNftCollectionRequest,
+    } as QueryGetNftCollectionRequest;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetNftCollectionRequest): unknown {
+    const obj: any = {};
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetNftCollectionRequest>
+  ): QueryGetNftCollectionRequest {
+    const message = {
+      ...baseQueryGetNftCollectionRequest,
+    } as QueryGetNftCollectionRequest;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
+    } else {
+      message.nftSchemaCode = "";
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetNftCollectionResponse: object = {};
+
+export const QueryGetNftCollectionResponse = {
+  encode(
+    message: QueryGetNftCollectionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.nftCollection) {
+      NftData.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNftCollectionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNftCollectionResponse,
+    } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nftCollection.push(NftData.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetNftCollectionResponse {
+    const message = {
+      ...baseQueryGetNftCollectionResponse,
+    } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
+    if (object.nftCollection !== undefined && object.nftCollection !== null) {
+      for (const e of object.nftCollection) {
+        message.nftCollection.push(NftData.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetNftCollectionResponse): unknown {
+    const obj: any = {};
+    if (message.nftCollection) {
+      obj.nftCollection = message.nftCollection.map((e) =>
+        e ? NftData.toJSON(e) : undefined
+      );
+    } else {
+      obj.nftCollection = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetNftCollectionResponse>
+  ): QueryGetNftCollectionResponse {
+    const message = {
+      ...baseQueryGetNftCollectionResponse,
+    } as QueryGetNftCollectionResponse;
+    message.nftCollection = [];
+    if (object.nftCollection !== undefined && object.nftCollection !== null) {
+      for (const e of object.nftCollection) {
+        message.nftCollection.push(NftData.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1479,6 +1680,10 @@ export interface Query {
   OrganizationAll(
     request: QueryAllOrganizationRequest
   ): Promise<QueryAllOrganizationResponse>;
+  /** Queries a NftCollection by index. */
+  NftCollection(
+    request: QueryGetNftCollectionRequest
+  ): Promise<QueryGetNftCollectionResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1603,6 +1808,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllOrganizationResponse.decode(new Reader(data))
+    );
+  }
+
+  NftCollection(
+    request: QueryGetNftCollectionRequest
+  ): Promise<QueryGetNftCollectionResponse> {
+    const data = QueryGetNftCollectionRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Query",
+      "NftCollection",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetNftCollectionResponse.decode(new Reader(data))
     );
   }
 }

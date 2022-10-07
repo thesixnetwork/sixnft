@@ -285,6 +285,21 @@ export interface NftmngrQueryGetNFTSchemaResponse {
   nFTSchema?: NftmngrNFTSchema;
 }
 
+export interface NftmngrQueryGetNftCollectionResponse {
+  nftCollection?: NftmngrNftData[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface NftmngrQueryGetNftDataResponse {
   nftData?: NftmngrNftData;
 }
@@ -866,6 +881,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     this.request<NftmngrQueryParamsResponse, GooglerpcStatus>({
       path: `/sixnft/nftmngr/params`,
       method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNftCollection
+   * @summary Queries a NftCollection by index.
+   * @request GET:/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}
+   */
+  queryNftCollection = (
+    nftSchemaCode: string,
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftmngrQueryGetNftCollectionResponse, GooglerpcStatus>({
+      path: `/thesixnetwork/sixnft/nftmngr/nft_collection/${nftSchemaCode}`,
+      method: "GET",
+      query: query,
       format: "json",
       ...params,
     });
