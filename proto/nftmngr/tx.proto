@@ -24,6 +24,7 @@ service Msg {
   rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
   rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
   rpc HidddenAttributes(MsgHidddenAttributes) returns (MsgHidddenAttributesResponse);
+  rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -183,12 +184,23 @@ message MsgRemoveSystemActionerResponse {
 message MsgHidddenAttributes {
   string creator = 1;
   string nftSchemaCode = 2;
-  string attibuteName = 3;
-  string attributeName = 4;
+  string attributeName = 3;
 }
 
 message MsgHidddenAttributesResponse {
   string nftSchema = 1;
+  string HiddenAttributeName = 3;
+}
+
+message MsgShowAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string attributeName = 3;
+}
+
+message MsgShowAttributesResponse {
+  string nftSchema = 1;
+  string showedAttributeName = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -12,11 +12,11 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdHidddenAttributes() *cobra.Command {
+func CmdShowAttributes() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "hiddden-attributes [nft-schema-code] [attibute-name] [attribute-name]",
-		Short: "To Hide attribute from market place",
-		Args:  cobra.ExactArgs(1),
+		Use:   "show-attributes [nft-schema-code] [attribute-name]",
+		Short: "To show attribute from market place aka delete from hidden list",
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argNftSchemaCode := args[0]
 			argAttributeName := args[1]
@@ -26,7 +26,7 @@ func CmdHidddenAttributes() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgHidddenAttributes(
+			msg := types.NewMsgShowAttributes(
 				clientCtx.GetFromAddress().String(),
 				argNftSchemaCode,
 				argAttributeName,

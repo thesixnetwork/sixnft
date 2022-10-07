@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) HidddenAttributes(goCtx context.Context, msg *types.MsgHidddenAttributes) (*types.MsgHidddenAttributesResponse, error) {
+func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Retreive schema
@@ -22,36 +22,32 @@ func (k msgServer) HidddenAttributes(goCtx context.Context, msg *types.MsgHiddde
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-	// Check if list of hidden attributes already exists
+	// Check if list of hidden attributes already exists and remove attribute from list
 	if schema.HiddenAttributes == nil {
 		schema.HiddenAttributes = make([]string, 0)
-	}
-
-	// check if attribute already hidden
-	for _, attribute := range schema.HiddenAttributes {
-		if attribute == msg.AttributeName {
-			return nil, sdkerrors.Wrap(types.ErrAttributeAlreadyHidden, msg.AttributeName)
+	} else {
+		for i, attribute := range schema.HiddenAttributes {
+			if attribute == msg.AttributeName {
+				schema.HiddenAttributes = append(schema.HiddenAttributes[:i], schema.HiddenAttributes[i+1:]...)
+			}
 		}
 	}
-
-	for _, hiddenAttribute := range schema.HiddenAttributes {
-		schema.HiddenAttributes = append(append(schema.HiddenAttributes, hiddenAttribute), msg.AttributeName)
-	}
-
+	
 	// emit events
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
-			types.EventTypeHiddenAttribute,
+			types.EventTypeShowAttribute,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyHiddenAttributeResult, msg.AttributeName),
-			sdk.NewAttribute(types.AttributeKeyHiddenAttributeResult, "success"),
+			sdk.NewAttribute(types.AttributeKeyShowAttributeResult, msg.AttributeName),
+			sdk.NewAttribute(types.AttributeKeyShowAttributeResult, "success"),
 		),
 	)
 
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-	return &types.MsgHidddenAttributesResponse{
+
+	return &types.MsgShowAttributesResponse{
 		NftSchema: schema.Code,
-		HiddenAttributeName: msg.AttributeName,
+		ShowedAttributeName: msg.AttributeName,
 	}, nil
 }

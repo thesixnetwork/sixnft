@@ -134,6 +134,8 @@ export interface NftmngrMsgSetNFTAttributeResponse {
   nft_attribute_value?: string;
 }
 
+export type NftmngrMsgShowAttributesResponse = object;
+
 export interface NftmngrMsgToggleActionResponse {
   code?: string;
   name?: string;
@@ -148,6 +150,7 @@ export interface NftmngrNFTSchema {
   origin_data?: NftmngrOriginData;
   onchain_data?: NftmngrOnChainData;
   isVerified?: boolean;
+  hidden_attributes?: string[];
 }
 
 export interface NftmngrNftAttributeValue {

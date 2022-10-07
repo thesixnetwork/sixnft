@@ -5,27 +5,27 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const TypeMsgHidddenAttributes = "hiddden_attributes"
+const TypeMsgShowAttributes = "show_attributes"
 
-var _ sdk.Msg = &MsgHidddenAttributes{}
+var _ sdk.Msg = &MsgShowAttributes{}
 
-func NewMsgHidddenAttributes(creator string, nftSchemaCode string, attributeName string) *MsgHidddenAttributes {
-	return &MsgHidddenAttributes{
+func NewMsgShowAttributes(creator string, nftSchemaCode string, attributeName string) *MsgShowAttributes {
+	return &MsgShowAttributes{
 		Creator:       creator,
 		NftSchemaCode: nftSchemaCode,
 		AttributeName: attributeName,
 	}
 }
 
-func (msg *MsgHidddenAttributes) Route() string {
+func (msg *MsgShowAttributes) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgHidddenAttributes) Type() string {
-	return TypeMsgHidddenAttributes
+func (msg *MsgShowAttributes) Type() string {
+	return TypeMsgShowAttributes
 }
 
-func (msg *MsgHidddenAttributes) GetSigners() []sdk.AccAddress {
+func (msg *MsgShowAttributes) GetSigners() []sdk.AccAddress {
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		panic(err)
@@ -33,12 +33,12 @@ func (msg *MsgHidddenAttributes) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{creator}
 }
 
-func (msg *MsgHidddenAttributes) GetSignBytes() []byte {
+func (msg *MsgShowAttributes) GetSignBytes() []byte {
 	bz := ModuleCdc.MustMarshalJSON(msg)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgHidddenAttributes) ValidateBasic() error {
+func (msg *MsgShowAttributes) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)

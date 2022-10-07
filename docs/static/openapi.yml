@@ -30944,6 +30944,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31508,6 +31518,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32090,6 +32110,10 @@ paths:
                                     format: double
                     isVerified:
                       type: boolean
+                    hidden_attributes:
+                      type: array
+                      items:
+                        type: string
               pagination:
                 type: object
                 properties:
@@ -32346,6 +32370,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32641,6 +32675,10 @@ paths:
                                   format: double
                   isVerified:
                     type: boolean
+                  hidden_attributes:
+                    type: array
+                    items:
+                      type: string
         default:
           description: An unexpected error response.
           schema:
@@ -33108,6 +33146,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33876,6 +33924,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -57153,6 +57211,8 @@ definitions:
         type: string
       nft_attribute_value:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgShowAttributesResponse:
+    type: object
   thesixnetwork.sixnft.nftmngr.MsgToggleActionResponse:
     type: object
     properties:
@@ -57622,6 +57682,10 @@ definitions:
                       format: double
       isVerified:
         type: boolean
+      hidden_attributes:
+        type: array
+        items:
+          type: string
   thesixnetwork.sixnft.nftmngr.NftAttributeValue:
     type: object
     properties:
@@ -58353,6 +58417,10 @@ definitions:
                             format: double
             isVerified:
               type: boolean
+            hidden_attributes:
+              type: array
+              items:
+                type: string
       pagination:
         type: object
         properties:
@@ -58823,6 +58891,10 @@ definitions:
                           format: double
           isVerified:
             type: boolean
+          hidden_attributes:
+            type: array
+            items:
+              type: string
   thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionResponse:
     type: object
     properties:

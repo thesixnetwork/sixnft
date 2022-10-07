@@ -21,6 +21,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgAddSystemActioner{}, "nftmngr/AddSystemActioner", nil)
 	cdc.RegisterConcrete(&MsgRemoveSystemActioner{}, "nftmngr/RemoveSystemActioner", nil)
 	cdc.RegisterConcrete(&MsgHidddenAttributes{}, "nftmngr/HidddenAttributes", nil)
+	cdc.RegisterConcrete(&MsgShowAttributes{}, "nftmngr/ShowAttributes", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -63,6 +64,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgHidddenAttributes{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgShowAttributes{},
 	)
 	// this line is used by starport scaffolding # 3
 
