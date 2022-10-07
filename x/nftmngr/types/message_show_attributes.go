@@ -9,11 +9,12 @@ const TypeMsgShowAttributes = "show_attributes"
 
 var _ sdk.Msg = &MsgShowAttributes{}
 
-func NewMsgShowAttributes(creator string, nftSchemaCode string, attributeName string) *MsgShowAttributes {
+func NewMsgShowAttributes(creator string, nftSchemaCode string, show bool, attributeNames []string) *MsgShowAttributes {
 	return &MsgShowAttributes{
-		Creator:       creator,
-		NftSchemaCode: nftSchemaCode,
-		AttributeName: attributeName,
+		Creator:        creator,
+		NftSchemaCode:  nftSchemaCode,
+		Show:           show,
+		AttributeNames: attributeNames,
 	}
 }
 

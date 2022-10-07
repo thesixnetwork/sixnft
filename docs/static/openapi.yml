@@ -30483,6 +30483,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -32100,10 +32110,6 @@ paths:
                                     format: double
                     isVerified:
                       type: boolean
-                    hidden_attributes:
-                      type: array
-                      items:
-                        type: string
               pagination:
                 type: object
                 properties:
@@ -32665,10 +32671,6 @@ paths:
                                   format: double
                   isVerified:
                     type: boolean
-                  hidden_attributes:
-                    type: array
-                    items:
-                      type: string
         default:
           description: An unexpected error response.
           schema:
@@ -57172,13 +57174,6 @@ definitions:
     properties:
       code:
         type: string
-  thesixnetwork.sixnft.nftmngr.MsgHidddenAttributesResponse:
-    type: object
-    properties:
-      nftSchema:
-        type: string
-      HiddenAttributeName:
-        type: string
   thesixnetwork.sixnft.nftmngr.MsgPerformActionByAdminResponse:
     type: object
     properties:
@@ -57218,8 +57213,6 @@ definitions:
     type: object
     properties:
       nftSchema:
-        type: string
-      showedAttributeName:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgToggleActionResponse:
     type: object
@@ -57690,10 +57683,6 @@ definitions:
                       format: double
       isVerified:
         type: boolean
-      hidden_attributes:
-        type: array
-        items:
-          type: string
   thesixnetwork.sixnft.nftmngr.NftAttributeValue:
     type: object
     properties:
@@ -58425,10 +58414,6 @@ definitions:
                             format: double
             isVerified:
               type: boolean
-            hidden_attributes:
-              type: array
-              items:
-                type: string
       pagination:
         type: object
         properties:
@@ -58899,10 +58884,6 @@ definitions:
                           format: double
           isVerified:
             type: boolean
-          hidden_attributes:
-            type: array
-            items:
-              type: string
   thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionResponse:
     type: object
     properties:

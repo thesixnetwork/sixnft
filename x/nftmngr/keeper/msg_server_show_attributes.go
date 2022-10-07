@@ -8,6 +8,13 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
+type ReadAttribute struct {
+	AttributeName       string
+	AttributeDefinition *types.AttributeDefinition
+	AttributeLocation   types.AttributeLocation
+	AttrributeIndex     int
+}
+
 func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -22,22 +29,37 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-	// Check if list of hidden attributes already exists and remove attribute from list
-	if schema.HiddenAttributes == nil {
-		schema.HiddenAttributes = make([]string, 0)
-	} else {
-		// check if attribute is exist as schema on chain data attribute
-		for i, nftAttribute := range schema.OnchainData.NftAttributes {
-			if nftAttribute.Name == msg.AttributeName {
-				schema.HiddenAttributes = append(schema.HiddenAttributes[:i], schema.HiddenAttributes[i+1:]...)
-			}
+	// Create map of nftattributes and tokenattributes ni ReadAttribute struct
+	mapReadAttribute := make(map[string]ReadAttribute)
+	for i, nftAttribute := range schema.OnchainData.NftAttributes {
+		mapReadAttribute[nftAttribute.Name] = ReadAttribute{
+			AttributeName:       nftAttribute.Name,
+			AttributeDefinition: nftAttribute,
+			AttributeLocation:   types.AttributeLocation_NFT_ATTRIBUTE,
+			AttrributeIndex:     i,
 		}
+	}
 
-		// check if attribute is exist as token attribute
-		for i, tokenAttributes := range schema.OnchainData.TokenAttributes {
-			if tokenAttributes.Name == msg.AttributeName {
-				schema.HiddenAttributes = append(schema.HiddenAttributes[:i], schema.HiddenAttributes[i+1:]...)
-			}
+	for i, tokenAttribute := range schema.OnchainData.TokenAttributes {
+		mapReadAttribute[tokenAttribute.Name] = ReadAttribute{
+			AttributeName:       tokenAttribute.Name,
+			AttributeDefinition: tokenAttribute,
+			AttributeLocation:   types.AttributeLocation_TOKEN_ATTRIBUTE,
+			AttrributeIndex:     i,
+		}
+	}
+
+	// loop over msg.AttributeNames
+	for _, attributeName := range msg.AttributeNames {
+		// check if attribute is exist in mapReadAttribute
+		if _, ok := mapReadAttribute[attributeName]; !ok {
+			return nil, sdkerrors.Wrap(types.ErrAttributeDoesNotExists, attributeName)
+		}
+		readAttributeDef := mapReadAttribute[attributeName]
+		if readAttributeDef.AttributeLocation == types.AttributeLocation_NFT_ATTRIBUTE {
+			schema.OnchainData.NftAttributes[readAttributeDef.AttrributeIndex].HiddenToMarketplace = !msg.Show
+		} else {
+			schema.OnchainData.TokenAttributes[readAttributeDef.AttrributeIndex].HiddenToMarketplace = !msg.Show
 		}
 	}
 
@@ -46,7 +68,6 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 		sdk.NewEvent(
 			types.EventTypeShowAttribute,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyShowAttributeResult, msg.AttributeName),
 			sdk.NewAttribute(types.AttributeKeyShowAttributeResult, "success"),
 		),
 	)
@@ -55,6 +76,5 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 
 	return &types.MsgShowAttributesResponse{
 		NftSchema:           schema.Code,
-		ShowedAttributeName: msg.AttributeName,
 	}, nil
 }

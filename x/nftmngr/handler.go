@@ -56,9 +56,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgResyncAttributes:
 			res, err := msgServer.ResyncAttributes(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgHidddenAttributes:
-			res, err := msgServer.HidddenAttributes(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgShowAttributes:
 			res, err := msgServer.ShowAttributes(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)

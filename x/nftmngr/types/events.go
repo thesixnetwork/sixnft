@@ -47,12 +47,12 @@ const (
 	AttributeKeyToggleNFTActionResult = "toggle_nft_action_result"
 
 	//Hidden attribute
-	EventTypeHiddenAttribute          = "hidden_attribute"
-	AttributeKeyHiddenAttributeResult = "hidden_attribute_result"
+	EventTypeHiddenAttribute          = "hide_attribute"
+	AttributeKeyHiddenAttributeResult = "hide_attribute_result"
 
 	//Show attribute
 	EventTypeShowAttribute          = "show_attribute"
 	AttributeKeyShowAttributeResult = "show_attribute_result"
-	AttributeKeyTokenId       = "token_id"
-	EventTypeResyncAttributes = "resync_attributes"
+	AttributeKeyTokenId             = "token_id"
+	EventTypeResyncAttributes       = "resync_attributes"
 )

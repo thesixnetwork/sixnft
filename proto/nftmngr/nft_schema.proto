@@ -15,6 +15,5 @@ message NFTSchema {
   OriginData origin_data = 5;
   OnChainData onchain_data = 6;
   bool isVerified = 7;
-  repeated string hidden_attributes = 8;
 }
 

@@ -13,7 +13,6 @@ export interface NFTSchema {
   origin_data: OriginData | undefined;
   onchain_data: OnChainData | undefined;
   isVerified: boolean;
-  hidden_attributes: string[];
 }
 
 const baseNFTSchema: object = {
@@ -22,7 +21,6 @@ const baseNFTSchema: object = {
   owner: "",
   system_actioners: "",
   isVerified: false,
-  hidden_attributes: "",
 };
 
 export const NFTSchema = {
@@ -51,9 +49,6 @@ export const NFTSchema = {
     if (message.isVerified === true) {
       writer.uint32(56).bool(message.isVerified);
     }
-    for (const v of message.hidden_attributes) {
-      writer.uint32(66).string(v!);
-    }
     return writer;
   },
 
@@ -62,7 +57,6 @@ export const NFTSchema = {
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = { ...baseNFTSchema } as NFTSchema;
     message.system_actioners = [];
-    message.hidden_attributes = [];
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -87,9 +81,6 @@ export const NFTSchema = {
         case 7:
           message.isVerified = reader.bool();
           break;
-        case 8:
-          message.hidden_attributes.push(reader.string());
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -101,7 +92,6 @@ export const NFTSchema = {
   fromJSON(object: any): NFTSchema {
     const message = { ...baseNFTSchema } as NFTSchema;
     message.system_actioners = [];
-    message.hidden_attributes = [];
     if (object.code !== undefined && object.code !== null) {
       message.code = String(object.code);
     } else {
@@ -140,14 +130,6 @@ export const NFTSchema = {
     } else {
       message.isVerified = false;
     }
-    if (
-      object.hidden_attributes !== undefined &&
-      object.hidden_attributes !== null
-    ) {
-      for (const e of object.hidden_attributes) {
-        message.hidden_attributes.push(String(e));
-      }
-    }
     return message;
   },
 
@@ -170,18 +152,12 @@ export const NFTSchema = {
         ? OnChainData.toJSON(message.onchain_data)
         : undefined);
     message.isVerified !== undefined && (obj.isVerified = message.isVerified);
-    if (message.hidden_attributes) {
-      obj.hidden_attributes = message.hidden_attributes.map((e) => e);
-    } else {
-      obj.hidden_attributes = [];
-    }
     return obj;
   },
 
   fromPartial(object: DeepPartial<NFTSchema>): NFTSchema {
     const message = { ...baseNFTSchema } as NFTSchema;
     message.system_actioners = [];
-    message.hidden_attributes = [];
     if (object.code !== undefined && object.code !== null) {
       message.code = object.code;
     } else {
@@ -219,14 +195,6 @@ export const NFTSchema = {
       message.isVerified = object.isVerified;
     } else {
       message.isVerified = false;
-    }
-    if (
-      object.hidden_attributes !== undefined &&
-      object.hidden_attributes !== null
-    ) {
-      for (const e of object.hidden_attributes) {
-        message.hidden_attributes.push(e);
-      }
     }
     return message;
   },

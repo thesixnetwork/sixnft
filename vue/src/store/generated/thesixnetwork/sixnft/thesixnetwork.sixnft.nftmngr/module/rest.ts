@@ -114,11 +114,6 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
   code?: string;
 }
 
-export interface NftmngrMsgHidddenAttributesResponse {
-  nftSchema?: string;
-  HiddenAttributeName?: string;
-}
-
 export interface NftmngrMsgPerformActionByAdminResponse {
   nft_schema_code?: string;
   token_id?: string;
@@ -146,7 +141,6 @@ export interface NftmngrMsgSetNFTAttributeResponse {
 
 export interface NftmngrMsgShowAttributesResponse {
   nftSchema?: string;
-  showedAttributeName?: string;
 }
 
 export interface NftmngrMsgToggleActionResponse {
@@ -163,7 +157,6 @@ export interface NftmngrNFTSchema {
   origin_data?: NftmngrOriginData;
   onchain_data?: NftmngrOnChainData;
   isVerified?: boolean;
-  hidden_attributes?: string[];
 }
 
 export interface NftmngrNftAttributeValue {
