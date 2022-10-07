@@ -23,7 +23,13 @@ service Msg {
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
   rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
   rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
+  rpc ResyncAttributes(MsgResyncAttributes) returns (MsgResyncAttributesResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
+}
+
+enum AttributeLocation {
+  NFT_ATTRIBUTE = 0;
+  TOKEN_ATTRIBUTE = 1;
 }
 
 message MsgCreateNFTSchema {
@@ -78,7 +84,8 @@ message MsgPerformActionByAdminResponse {
 message MsgAddAttribute {
   string creator = 1;
   string code = 2;
-  string base64NewAttriuteDefenition = 3;
+  AttributeLocation location = 3;
+  string base64NewAttriuteDefenition = 4;
 }
 
 message MsgAddAttributeResponse {
@@ -177,6 +184,16 @@ message MsgRemoveSystemActioner {
 message MsgRemoveSystemActionerResponse {
   string nftSchemaCode = 1;
   string actioner = 2;
+}
+
+message MsgResyncAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+}
+
+message MsgResyncAttributesResponse {
+  string nftSchemaCode = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message
