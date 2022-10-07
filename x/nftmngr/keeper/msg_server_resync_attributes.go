@@ -45,6 +45,15 @@ func (k msgServer) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncA
 		}
 	}
 
+	// Emit Event
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeResyncAttributes,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyTokenId, msg.TokenId),
+		),
+	)
+
 	// Set nftdata
 	k.Keeper.SetNftData(ctx, nftData)
 

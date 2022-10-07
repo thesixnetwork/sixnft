@@ -45,4 +45,7 @@ const (
 	EventTypeToggleNFTAction          = "toggle_nft_action"
 	AttributeKeyToggleNFTAction       = "nft_action"
 	AttributeKeyToggleNFTActionResult = "toggle_nft_action_result"
+
+	AttributeKeyTokenId       = "token_id"
+	EventTypeResyncAttributes = "resync_attributes"
 )
