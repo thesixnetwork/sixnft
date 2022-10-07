@@ -8,6 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
+
 func (k msgServer) HidddenAttributes(goCtx context.Context, msg *types.MsgHidddenAttributes) (*types.MsgHidddenAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -34,9 +35,25 @@ func (k msgServer) HidddenAttributes(goCtx context.Context, msg *types.MsgHiddde
 		}
 	}
 
-	for _, hiddenAttribute := range schema.HiddenAttributes {
-		schema.HiddenAttributes = append(append(schema.HiddenAttributes, hiddenAttribute), msg.AttributeName)
+	// check if attribute is exist as schema on chain data attribute
+	for _, nftAttribute := range schema.OnchainData.NftAttributes {
+		if nftAttribute.Name == msg.AttributeName {
+			schema.HiddenAttributes = append(schema.HiddenAttributes, msg.AttributeName)
+		}
 	}
+
+	// check if attribute is exist as token attribute
+	for _, tokenAttributes := range schema.OnchainData.TokenAttributes {
+		if tokenAttributes.Name == msg.AttributeName {
+			schema.HiddenAttributes = append(schema.HiddenAttributes, msg.AttributeName)
+		}
+	}
+
+
+
+	// for _, hiddenAttribute := range schema.HiddenAttributes {
+	// 	schema.HiddenAttributes = append(append(schema.HiddenAttributes, hiddenAttribute), msg.AttributeName)
+	// }
 
 	// emit events
 	ctx.EventManager().EmitEvent(

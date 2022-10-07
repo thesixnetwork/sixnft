@@ -57181,6 +57181,8 @@ definitions:
     properties:
       nftSchema:
         type: string
+      HiddenAttributeName:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgPerformActionByAdminResponse:
     type: object
     properties:
@@ -57213,6 +57215,11 @@ definitions:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgShowAttributesResponse:
     type: object
+    properties:
+      nftSchema:
+        type: string
+      showedAttributeName:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgToggleActionResponse:
     type: object
     properties:

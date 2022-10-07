@@ -26,13 +26,21 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 	if schema.HiddenAttributes == nil {
 		schema.HiddenAttributes = make([]string, 0)
 	} else {
-		for i, attribute := range schema.HiddenAttributes {
-			if attribute == msg.AttributeName {
+		// check if attribute is exist as schema on chain data attribute
+		for i, nftAttribute := range schema.OnchainData.NftAttributes {
+			if nftAttribute.Name == msg.AttributeName {
+				schema.HiddenAttributes = append(schema.HiddenAttributes[:i], schema.HiddenAttributes[i+1:]...)
+			}
+		}
+
+		// check if attribute is exist as token attribute
+		for i, tokenAttributes := range schema.OnchainData.TokenAttributes {
+			if tokenAttributes.Name == msg.AttributeName {
 				schema.HiddenAttributes = append(schema.HiddenAttributes[:i], schema.HiddenAttributes[i+1:]...)
 			}
 		}
 	}
-	
+
 	// emit events
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
@@ -45,9 +53,8 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-
 	return &types.MsgShowAttributesResponse{
-		NftSchema: schema.Code,
+		NftSchema:           schema.Code,
 		ShowedAttributeName: msg.AttributeName,
 	}, nil
 }

@@ -111,6 +111,7 @@ export interface NftmngrMsgCreateNFTSchemaResponse {
 
 export interface NftmngrMsgHidddenAttributesResponse {
   nftSchema?: string;
+  HiddenAttributeName?: string;
 }
 
 export interface NftmngrMsgPerformActionByAdminResponse {
@@ -134,7 +135,10 @@ export interface NftmngrMsgSetNFTAttributeResponse {
   nft_attribute_value?: string;
 }
 
-export type NftmngrMsgShowAttributesResponse = object;
+export interface NftmngrMsgShowAttributesResponse {
+  nftSchema?: string;
+  showedAttributeName?: string;
+}
 
 export interface NftmngrMsgToggleActionResponse {
   code?: string;

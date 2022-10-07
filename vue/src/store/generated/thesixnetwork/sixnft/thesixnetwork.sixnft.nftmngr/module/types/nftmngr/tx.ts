@@ -164,6 +164,7 @@ export interface MsgHidddenAttributes {
 
 export interface MsgHidddenAttributesResponse {
   nftSchema: string;
+  HiddenAttributeName: string;
 }
 
 export interface MsgShowAttributes {
@@ -172,7 +173,10 @@ export interface MsgShowAttributes {
   attributeName: string;
 }
 
-export interface MsgShowAttributesResponse {}
+export interface MsgShowAttributesResponse {
+  nftSchema: string;
+  showedAttributeName: string;
+}
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
@@ -2877,7 +2881,10 @@ export const MsgHidddenAttributes = {
   },
 };
 
-const baseMsgHidddenAttributesResponse: object = { nftSchema: "" };
+const baseMsgHidddenAttributesResponse: object = {
+  nftSchema: "",
+  HiddenAttributeName: "",
+};
 
 export const MsgHidddenAttributesResponse = {
   encode(
@@ -2886,6 +2893,9 @@ export const MsgHidddenAttributesResponse = {
   ): Writer {
     if (message.nftSchema !== "") {
       writer.uint32(10).string(message.nftSchema);
+    }
+    if (message.HiddenAttributeName !== "") {
+      writer.uint32(26).string(message.HiddenAttributeName);
     }
     return writer;
   },
@@ -2905,6 +2915,9 @@ export const MsgHidddenAttributesResponse = {
         case 1:
           message.nftSchema = reader.string();
           break;
+        case 3:
+          message.HiddenAttributeName = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -2922,12 +2935,22 @@ export const MsgHidddenAttributesResponse = {
     } else {
       message.nftSchema = "";
     }
+    if (
+      object.HiddenAttributeName !== undefined &&
+      object.HiddenAttributeName !== null
+    ) {
+      message.HiddenAttributeName = String(object.HiddenAttributeName);
+    } else {
+      message.HiddenAttributeName = "";
+    }
     return message;
   },
 
   toJSON(message: MsgHidddenAttributesResponse): unknown {
     const obj: any = {};
     message.nftSchema !== undefined && (obj.nftSchema = message.nftSchema);
+    message.HiddenAttributeName !== undefined &&
+      (obj.HiddenAttributeName = message.HiddenAttributeName);
     return obj;
   },
 
@@ -2941,6 +2964,14 @@ export const MsgHidddenAttributesResponse = {
       message.nftSchema = object.nftSchema;
     } else {
       message.nftSchema = "";
+    }
+    if (
+      object.HiddenAttributeName !== undefined &&
+      object.HiddenAttributeName !== null
+    ) {
+      message.HiddenAttributeName = object.HiddenAttributeName;
+    } else {
+      message.HiddenAttributeName = "";
     }
     return message;
   },
@@ -3041,13 +3072,22 @@ export const MsgShowAttributes = {
   },
 };
 
-const baseMsgShowAttributesResponse: object = {};
+const baseMsgShowAttributesResponse: object = {
+  nftSchema: "",
+  showedAttributeName: "",
+};
 
 export const MsgShowAttributesResponse = {
   encode(
-    _: MsgShowAttributesResponse,
+    message: MsgShowAttributesResponse,
     writer: Writer = Writer.create()
   ): Writer {
+    if (message.nftSchema !== "") {
+      writer.uint32(10).string(message.nftSchema);
+    }
+    if (message.showedAttributeName !== "") {
+      writer.uint32(26).string(message.showedAttributeName);
+    }
     return writer;
   },
 
@@ -3063,6 +3103,12 @@ export const MsgShowAttributesResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.nftSchema = reader.string();
+          break;
+        case 3:
+          message.showedAttributeName = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -3071,24 +3117,53 @@ export const MsgShowAttributesResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgShowAttributesResponse {
+  fromJSON(object: any): MsgShowAttributesResponse {
     const message = {
       ...baseMsgShowAttributesResponse,
     } as MsgShowAttributesResponse;
+    if (object.nftSchema !== undefined && object.nftSchema !== null) {
+      message.nftSchema = String(object.nftSchema);
+    } else {
+      message.nftSchema = "";
+    }
+    if (
+      object.showedAttributeName !== undefined &&
+      object.showedAttributeName !== null
+    ) {
+      message.showedAttributeName = String(object.showedAttributeName);
+    } else {
+      message.showedAttributeName = "";
+    }
     return message;
   },
 
-  toJSON(_: MsgShowAttributesResponse): unknown {
+  toJSON(message: MsgShowAttributesResponse): unknown {
     const obj: any = {};
+    message.nftSchema !== undefined && (obj.nftSchema = message.nftSchema);
+    message.showedAttributeName !== undefined &&
+      (obj.showedAttributeName = message.showedAttributeName);
     return obj;
   },
 
   fromPartial(
-    _: DeepPartial<MsgShowAttributesResponse>
+    object: DeepPartial<MsgShowAttributesResponse>
   ): MsgShowAttributesResponse {
     const message = {
       ...baseMsgShowAttributesResponse,
     } as MsgShowAttributesResponse;
+    if (object.nftSchema !== undefined && object.nftSchema !== null) {
+      message.nftSchema = object.nftSchema;
+    } else {
+      message.nftSchema = "";
+    }
+    if (
+      object.showedAttributeName !== undefined &&
+      object.showedAttributeName !== null
+    ) {
+      message.showedAttributeName = object.showedAttributeName;
+    } else {
+      message.showedAttributeName = "";
+    }
     return message;
   },
 };
