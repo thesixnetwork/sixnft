@@ -117,9 +117,9 @@ func TestListNftCollection(t *testing.T) {
 		step := 2
 		for i := 0; i < len(objs); i += step {
 			args := request(nil, uint64(i), uint64(step), false)
-			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdListNftCollection(), args)
+			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowNftCollection(), args)
 			require.NoError(t, err)
-			var resp types.QueryAllNftCollectionResponse
+			var resp types.QueryGetNftCollectionResponse
 			require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
 			require.LessOrEqual(t, len(resp.NftCollection), step)
 			require.Subset(t,
@@ -133,9 +133,9 @@ func TestListNftCollection(t *testing.T) {
 		var next []byte
 		for i := 0; i < len(objs); i += step {
 			args := request(next, 0, uint64(step), false)
-			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdListNftCollection(), args)
+			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowNftCollection(), args)
 			require.NoError(t, err)
-			var resp types.QueryAllNftCollectionResponse
+			var resp types.QueryGetNftCollectionResponse
 			require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
 			require.LessOrEqual(t, len(resp.NftCollection), step)
 			require.Subset(t,
@@ -147,9 +147,9 @@ func TestListNftCollection(t *testing.T) {
 	})
 	t.Run("Total", func(t *testing.T) {
 		args := request(nil, 0, uint64(len(objs)), true)
-		out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdListNftCollection(), args)
+		out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowNftCollection(), args)
 		require.NoError(t, err)
-		var resp types.QueryAllNftCollectionResponse
+		var resp types.QueryGetNftCollectionResponse
 		require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
 		require.NoError(t, err)
 		require.Equal(t, len(objs), int(resp.Pagination.Total))
