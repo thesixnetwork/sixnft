@@ -75,6 +75,6 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 	k.Keeper.SetNFTSchema(ctx, schema)
 
 	return &types.MsgShowAttributesResponse{
-		NftSchema:           schema.Code,
+		NftSchema: schema.Code,
 	}, nil
 }

@@ -23,6 +23,24 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
 	}
 
+	// Create map of existing attribute in nftdata
+	mapExistingAttributes := make(map[string]bool)
+	for _, attribute := range tokenData.OnchainAttributes {
+		mapExistingAttributes[attribute.Name] = true
+	}
+
+	// Loop over schema.TokenAttributes to check if exists in nftdata
+	for _, attribute := range schema.OnchainData.TokenAttributes {
+		if _, ok := mapExistingAttributes[attribute.Name]; !ok {
+			if attribute.DefaultMintValue == nil {
+				return nil, sdkerrors.Wrap(types.ErrNoDefaultValue, attribute.Name)
+			}
+			// Add attribute to nftdata with default value
+			tokenData.OnchainAttributes = append(tokenData.OnchainAttributes,
+				NewNFTAttributeValueFromDefaultValue(attribute.Name, attribute.DefaultMintValue))
+		}
+	}
+
 	// Map system actioners
 	mapSystemActioners := make(map[string]bool)
 	for _, systemActioner := range schema.SystemActioners {

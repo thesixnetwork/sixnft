@@ -34,7 +34,6 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdCreateMetadata())
 	cmd.AddCommand(CmdPerformActionByAdmin())
 	cmd.AddCommand(CmdAddAttribute())
-	cmd.AddCommand(CmdAddTokenAttribute())
 	cmd.AddCommand(CmdAddAction())
 	cmd.AddCommand(CmdSetNFTAttribute())
 	cmd.AddCommand(CmdSetBaseUri())

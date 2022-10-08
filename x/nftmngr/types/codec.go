@@ -12,7 +12,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateMetadata{}, "nftmngr/CreateMetadata", nil)
 	cdc.RegisterConcrete(&MsgPerformActionByAdmin{}, "nftmngr/PerformActionByAdmin", nil)
 	cdc.RegisterConcrete(&MsgAddAttribute{}, "nftmngr/AddAttribute", nil)
-	cdc.RegisterConcrete(&MsgAddTokenAttribute{}, "nftmngr/AddTokenAttribute", nil)
 	cdc.RegisterConcrete(&MsgAddAction{}, "nftmngr/AddAction", nil)
 	cdc.RegisterConcrete(&MsgSetNFTAttribute{}, "nftmngr/SetNFTAttribute", nil)
 	cdc.RegisterConcrete(&MsgSetBaseUri{}, "nftmngr/SetBaseUri", nil)
@@ -37,9 +36,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgAddAttribute{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgAddTokenAttribute{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgAddAction{},

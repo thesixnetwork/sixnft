@@ -94,12 +94,6 @@ export interface NftmngrMsgAddSystemActionerResponse {
   actioner?: string;
 }
 
-export interface NftmngrMsgAddTokenAttributeResponse {
-  code?: string;
-  name?: string;
-  onchainData?: NftmngrOnChainData;
-}
-
 export interface NftmngrMsgChangeSchemaOwnerResponse {
   nftSchemaCode?: string;
   newOwner?: string;

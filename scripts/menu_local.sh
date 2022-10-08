@@ -14,6 +14,7 @@ echo "##  6. Oracle - Create Mint Request        ##"
 echo "##  7. Oracle - Get Mint Request           ##"
 echo "##  8. Oracle - Submit Mint Response       ##"
 echo "##  9. Add Attribute                       ##"
+echo "##  10. Add Action Value                   ##"
 echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
@@ -121,12 +122,22 @@ case $choice in
         ;;
     9) echo "Add Attribute"
         read -p "Enter Schema Code: " schema_code 
+        read -p "Enter Attribute location >>>  0 : nft_attribute, 1 : token_attribute >>>" location
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
         BASE64_ATTRIBUTE=`cat new-attribute.json | base64 | tr -d '\n'`
-        sixnftd tx nftmngr add-attribute ${schema_code} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+        sixnftd tx nftmngr add-attribute ${schema_code} ${location} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             ${BASE64_ATTRIBUTE}
+        ;;
+
+    10) echo "Add Action"
+        read -p "Enter Schema Code: " schema_code 
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        BASE64_ACTION=`cat new-action.json | base64 | tr -d '\n'`
+        sixnftd tx nftmngr add-action ${schema_code} ${BASE64_ACTION} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
         ;;
     *) echo "Invalid choice"
        ;;

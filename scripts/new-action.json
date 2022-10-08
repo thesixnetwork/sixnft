@@ -1,0 +1,9 @@
+{
+    "name": "test_action",
+    "desc": "booooooost",
+    "disable": false,
+    "when": "meta.GetBoolean('checked_in') == true",
+    "then": [
+        "meta.SetNumber('points2', meta.GetNumber('points2') + 10000)"
+    ]
+  }

@@ -97,18 +97,6 @@ export interface MsgAddAttributeResponse {
   onchainData: OnChainData | undefined;
 }
 
-export interface MsgAddTokenAttribute {
-  creator: string;
-  code: string;
-  base64NewTokenAttriute: string;
-}
-
-export interface MsgAddTokenAttributeResponse {
-  code: string;
-  name: string;
-  onchainData: OnChainData | undefined;
-}
-
 export interface MsgAddAction {
   creator: string;
   code: string;
@@ -1232,218 +1220,6 @@ export const MsgAddAttributeResponse = {
     const message = {
       ...baseMsgAddAttributeResponse,
     } as MsgAddAttributeResponse;
-    if (object.code !== undefined && object.code !== null) {
-      message.code = object.code;
-    } else {
-      message.code = "";
-    }
-    if (object.name !== undefined && object.name !== null) {
-      message.name = object.name;
-    } else {
-      message.name = "";
-    }
-    if (object.onchainData !== undefined && object.onchainData !== null) {
-      message.onchainData = OnChainData.fromPartial(object.onchainData);
-    } else {
-      message.onchainData = undefined;
-    }
-    return message;
-  },
-};
-
-const baseMsgAddTokenAttribute: object = {
-  creator: "",
-  code: "",
-  base64NewTokenAttriute: "",
-};
-
-export const MsgAddTokenAttribute = {
-  encode(
-    message: MsgAddTokenAttribute,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.creator !== "") {
-      writer.uint32(10).string(message.creator);
-    }
-    if (message.code !== "") {
-      writer.uint32(18).string(message.code);
-    }
-    if (message.base64NewTokenAttriute !== "") {
-      writer.uint32(26).string(message.base64NewTokenAttriute);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): MsgAddTokenAttribute {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgAddTokenAttribute } as MsgAddTokenAttribute;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.creator = reader.string();
-          break;
-        case 2:
-          message.code = reader.string();
-          break;
-        case 3:
-          message.base64NewTokenAttriute = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): MsgAddTokenAttribute {
-    const message = { ...baseMsgAddTokenAttribute } as MsgAddTokenAttribute;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = String(object.creator);
-    } else {
-      message.creator = "";
-    }
-    if (object.code !== undefined && object.code !== null) {
-      message.code = String(object.code);
-    } else {
-      message.code = "";
-    }
-    if (
-      object.base64NewTokenAttriute !== undefined &&
-      object.base64NewTokenAttriute !== null
-    ) {
-      message.base64NewTokenAttriute = String(object.base64NewTokenAttriute);
-    } else {
-      message.base64NewTokenAttriute = "";
-    }
-    return message;
-  },
-
-  toJSON(message: MsgAddTokenAttribute): unknown {
-    const obj: any = {};
-    message.creator !== undefined && (obj.creator = message.creator);
-    message.code !== undefined && (obj.code = message.code);
-    message.base64NewTokenAttriute !== undefined &&
-      (obj.base64NewTokenAttriute = message.base64NewTokenAttriute);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<MsgAddTokenAttribute>): MsgAddTokenAttribute {
-    const message = { ...baseMsgAddTokenAttribute } as MsgAddTokenAttribute;
-    if (object.creator !== undefined && object.creator !== null) {
-      message.creator = object.creator;
-    } else {
-      message.creator = "";
-    }
-    if (object.code !== undefined && object.code !== null) {
-      message.code = object.code;
-    } else {
-      message.code = "";
-    }
-    if (
-      object.base64NewTokenAttriute !== undefined &&
-      object.base64NewTokenAttriute !== null
-    ) {
-      message.base64NewTokenAttriute = object.base64NewTokenAttriute;
-    } else {
-      message.base64NewTokenAttriute = "";
-    }
-    return message;
-  },
-};
-
-const baseMsgAddTokenAttributeResponse: object = { code: "", name: "" };
-
-export const MsgAddTokenAttributeResponse = {
-  encode(
-    message: MsgAddTokenAttributeResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.code !== "") {
-      writer.uint32(10).string(message.code);
-    }
-    if (message.name !== "") {
-      writer.uint32(18).string(message.name);
-    }
-    if (message.onchainData !== undefined) {
-      OnChainData.encode(
-        message.onchainData,
-        writer.uint32(26).fork()
-      ).ldelim();
-    }
-    return writer;
-  },
-
-  decode(
-    input: Reader | Uint8Array,
-    length?: number
-  ): MsgAddTokenAttributeResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseMsgAddTokenAttributeResponse,
-    } as MsgAddTokenAttributeResponse;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.code = reader.string();
-          break;
-        case 2:
-          message.name = reader.string();
-          break;
-        case 3:
-          message.onchainData = OnChainData.decode(reader, reader.uint32());
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): MsgAddTokenAttributeResponse {
-    const message = {
-      ...baseMsgAddTokenAttributeResponse,
-    } as MsgAddTokenAttributeResponse;
-    if (object.code !== undefined && object.code !== null) {
-      message.code = String(object.code);
-    } else {
-      message.code = "";
-    }
-    if (object.name !== undefined && object.name !== null) {
-      message.name = String(object.name);
-    } else {
-      message.name = "";
-    }
-    if (object.onchainData !== undefined && object.onchainData !== null) {
-      message.onchainData = OnChainData.fromJSON(object.onchainData);
-    } else {
-      message.onchainData = undefined;
-    }
-    return message;
-  },
-
-  toJSON(message: MsgAddTokenAttributeResponse): unknown {
-    const obj: any = {};
-    message.code !== undefined && (obj.code = message.code);
-    message.name !== undefined && (obj.name = message.name);
-    message.onchainData !== undefined &&
-      (obj.onchainData = message.onchainData
-        ? OnChainData.toJSON(message.onchainData)
-        : undefined);
-    return obj;
-  },
-
-  fromPartial(
-    object: DeepPartial<MsgAddTokenAttributeResponse>
-  ): MsgAddTokenAttributeResponse {
-    const message = {
-      ...baseMsgAddTokenAttributeResponse,
-    } as MsgAddTokenAttributeResponse;
     if (object.code !== undefined && object.code !== null) {
       message.code = object.code;
     } else {
@@ -3201,9 +2977,6 @@ export interface Msg {
     request: MsgPerformActionByAdmin
   ): Promise<MsgPerformActionByAdminResponse>;
   AddAttribute(request: MsgAddAttribute): Promise<MsgAddAttributeResponse>;
-  AddTokenAttribute(
-    request: MsgAddTokenAttribute
-  ): Promise<MsgAddTokenAttributeResponse>;
   AddAction(request: MsgAddAction): Promise<MsgAddActionResponse>;
   SetNFTAttribute(
     request: MsgSetNFTAttribute
@@ -3284,20 +3057,6 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgAddAttributeResponse.decode(new Reader(data))
-    );
-  }
-
-  AddTokenAttribute(
-    request: MsgAddTokenAttribute
-  ): Promise<MsgAddTokenAttributeResponse> {
-    const data = MsgAddTokenAttribute.encode(request).finish();
-    const promise = this.rpc.request(
-      "thesixnetwork.sixnft.nftmngr.Msg",
-      "AddTokenAttribute",
-      data
-    );
-    return promise.then((data) =>
-      MsgAddTokenAttributeResponse.decode(new Reader(data))
     );
   }
 

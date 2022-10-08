@@ -15,7 +15,6 @@ service Msg {
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
-  rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
   rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
@@ -90,18 +89,6 @@ message MsgAddAttribute {
 }
 
 message MsgAddAttributeResponse {
-  string code = 1;
-  string name = 2;
-  OnChainData onchainData = 3;
-}
-
-message MsgAddTokenAttribute {
-  string creator = 1;
-  string code = 2;
-  string base64NewTokenAttriute = 3;
-}
-
-message MsgAddTokenAttributeResponse {
   string code = 1;
   string name = 2;
   OnChainData onchainData = 3;
