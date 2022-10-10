@@ -13,6 +13,7 @@ service Msg {
   rpc SubmitActionResponse(MsgSubmitActionResponse) returns (MsgSubmitActionResponseResponse);
   rpc CreateVerifyCollectionOwnerRequest(MsgCreateVerifyCollectionOwnerRequest) returns (MsgCreateVerifyCollectionOwnerRequestResponse);
   rpc SubmitVerifyCollectionOwner(MsgSubmitVerifyCollectionOwner) returns (MsgSubmitVerifyCollectionOwnerResponse);
+  rpc SetMinimumConfirmation(MsgSetMinimumConfirmation) returns (MsgSetMinimumConfirmationResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -82,6 +83,15 @@ message MsgSubmitVerifyCollectionOwner {
 
 message MsgSubmitVerifyCollectionOwnerResponse {
   uint64 verifyRequestID = 1;
+}
+
+message MsgSetMinimumConfirmation {
+  string creator = 1;
+  string newConfirmation = 2;
+}
+
+message MsgSetMinimumConfirmationResponse {
+  string newConfirmation = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

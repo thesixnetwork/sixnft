@@ -17,6 +17,8 @@ const (
 	MemStoreKey = "mem_nftoracle"
 
 	KeyPermissionOracle = "oracle"
+
+	KeyPermissionOracleAdmin = "oracle_admin"
 )
 
 func KeyPrefix(p string) []byte {
