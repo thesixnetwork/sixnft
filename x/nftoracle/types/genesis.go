@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		MintRequestList:            []MintRequest{},
 		ActionRequestList:          []ActionRequest{},
 		CollectionOwnerRequestList: []CollectionOwnerRequest{},
+		OracleConfig:               nil,
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}

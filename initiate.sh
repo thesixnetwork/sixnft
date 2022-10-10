@@ -383,3 +383,15 @@ ignite scaffold message resyncAttributes nft_schema_code:string token_id:string 
     --response nft_schema_code \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold single OracleConfig \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message setMinimumConfirmation new_confirmation \
+    --desc "To set minimum confirmation" \
+    --response new_confirmation \
+    --no-simulation \
+    --module nftoracle

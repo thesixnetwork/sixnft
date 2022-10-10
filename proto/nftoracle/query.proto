@@ -8,6 +8,7 @@ import "nftoracle/params.proto";
 import "nftoracle/mint_request.proto";
 import "nftoracle/action_request.proto";
 import "nftoracle/collection_owner_request.proto";
+import "nftoracle/oracle_config.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -48,6 +49,10 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/collection_owner_request";
 	}
 
+// Queries a OracleConfig by index.
+	rpc OracleConfig(QueryGetOracleConfigRequest) returns (QueryGetOracleConfigResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/oracle_config";
+	}
 // this line is used by starport scaffolding # 2
 }
 
@@ -111,4 +116,9 @@ message QueryAllCollectionOwnerRequestResponse {
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
+message QueryGetOracleConfigRequest {}
+
+message QueryGetOracleConfigResponse {
+	OracleConfig OracleConfig = 1 [(gogoproto.nullable) = false];
+}
 // this line is used by starport scaffolding # 3
