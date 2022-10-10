@@ -33,7 +33,6 @@ var (
 	ErrEmptyChangeList                       = sdkerrors.Register(ModuleName, 22, "There's no changes from action")
 	ErrRefIdAlreadyExists                    = sdkerrors.Register(ModuleName, 23, "RefId already exists")
 	ErrNFTSchemaAttributeNotFound            = sdkerrors.Register(ModuleName, 24, "NFTSchema attribute not found")
-	ErrNoOracleAdminPermission               = sdkerrors.Register(ModuleName, 25, "No oracle admin permission")
 
 	ErrParsingCollectionOwnerSignature = sdkerrors.Register(ModuleName, 25, "Error parsing collection owner signature")
 	ErrNFTSchemaAlreadyVerified        = sdkerrors.Register(ModuleName, 26, "NFTSchema already verified")
@@ -44,4 +43,5 @@ var (
 	ErrVerifyRequestNotPending               = sdkerrors.Register(ModuleName, 30, "Verify request not pending")
 	ErrVerifyRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 31, "Verify request confirmed already complete")
 	ErrOracleRejectVerifyRequest             = sdkerrors.Register(ModuleName, 32, "Oracle reject verify request")
+	ErrNoOracleAdminPermission               = sdkerrors.Register(ModuleName, 33, "No oracle admin permission")
 )

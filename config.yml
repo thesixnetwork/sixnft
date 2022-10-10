@@ -40,6 +40,8 @@ faucet:
 genesis:
     app_state:
         nftoracle:
+            oracle_config:
+                minimum_confirmation: 4
             params:
                 mint_request_active_duration: "120s"
                 action_request_active_duration: "120s"

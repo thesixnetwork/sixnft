@@ -19,7 +19,7 @@ export interface GenesisState {
   collectionOwnerRequestList: CollectionOwnerRequest[];
   collectionOwnerRequestCount: number;
   /** this line is used by starport scaffolding # genesis/proto/state */
-  oracleConfig: OracleConfig | undefined;
+  oracle_config: OracleConfig | undefined;
 }
 
 const baseGenesisState: object = {
@@ -51,9 +51,9 @@ export const GenesisState = {
     if (message.collectionOwnerRequestCount !== 0) {
       writer.uint32(56).uint64(message.collectionOwnerRequestCount);
     }
-    if (message.oracleConfig !== undefined) {
+    if (message.oracle_config !== undefined) {
       OracleConfig.encode(
-        message.oracleConfig,
+        message.oracle_config,
         writer.uint32(66).fork()
       ).ldelim();
     }
@@ -100,7 +100,7 @@ export const GenesisState = {
           );
           break;
         case 8:
-          message.oracleConfig = OracleConfig.decode(reader, reader.uint32());
+          message.oracle_config = OracleConfig.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -172,10 +172,10 @@ export const GenesisState = {
     } else {
       message.collectionOwnerRequestCount = 0;
     }
-    if (object.oracleConfig !== undefined && object.oracleConfig !== null) {
-      message.oracleConfig = OracleConfig.fromJSON(object.oracleConfig);
+    if (object.oracle_config !== undefined && object.oracle_config !== null) {
+      message.oracle_config = OracleConfig.fromJSON(object.oracle_config);
     } else {
-      message.oracleConfig = undefined;
+      message.oracle_config = undefined;
     }
     return message;
   },
@@ -211,9 +211,9 @@ export const GenesisState = {
     }
     message.collectionOwnerRequestCount !== undefined &&
       (obj.collectionOwnerRequestCount = message.collectionOwnerRequestCount);
-    message.oracleConfig !== undefined &&
-      (obj.oracleConfig = message.oracleConfig
-        ? OracleConfig.toJSON(message.oracleConfig)
+    message.oracle_config !== undefined &&
+      (obj.oracle_config = message.oracle_config
+        ? OracleConfig.toJSON(message.oracle_config)
         : undefined);
     return obj;
   },
@@ -278,10 +278,10 @@ export const GenesisState = {
     } else {
       message.collectionOwnerRequestCount = 0;
     }
-    if (object.oracleConfig !== undefined && object.oracleConfig !== null) {
-      message.oracleConfig = OracleConfig.fromPartial(object.oracleConfig);
+    if (object.oracle_config !== undefined && object.oracle_config !== null) {
+      message.oracle_config = OracleConfig.fromPartial(object.oracle_config);
     } else {
-      message.oracleConfig = undefined;
+      message.oracle_config = undefined;
     }
     return message;
   },
