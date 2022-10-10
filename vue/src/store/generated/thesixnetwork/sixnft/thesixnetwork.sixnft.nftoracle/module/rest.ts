@@ -134,6 +134,8 @@ export interface NftoracleNftOriginData {
   traits?: NftoracleTrait[];
 }
 
+export type NftoracleOracleConfig = object;
+
 export interface NftoracleOriginTxInfo {
   transactionOriginDataInfo?: NftoracleTransactionOriginDataInfo;
 
@@ -206,6 +208,10 @@ export interface NftoracleQueryGetCollectionOwnerRequestResponse {
 
 export interface NftoracleQueryGetMintRequestResponse {
   MintRequest?: NftoracleMintRequest;
+}
+
+export interface NftoracleQueryGetOracleConfigResponse {
+  OracleConfig?: NftoracleOracleConfig;
 }
 
 /**
@@ -289,6 +295,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -518,6 +531,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -559,6 +573,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -616,6 +631,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -638,6 +654,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryCollectionOwnerRequest = (id: string, params: RequestParams = {}) =>
     this.request<NftoracleQueryGetCollectionOwnerRequestResponse, RpcStatus>({
       path: `/thesixnetwork/sixnft/nftoracle/collection_owner_request/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryOracleConfig
+   * @summary Queries a OracleConfig by index.
+   * @request GET:/thesixnetwork/sixnft/nftoracle/oracle_config
+   */
+  queryOracleConfig = (params: RequestParams = {}) =>
+    this.request<NftoracleQueryGetOracleConfigResponse, RpcStatus>({
+      path: `/thesixnetwork/sixnft/nftoracle/oracle_config`,
       method: "GET",
       format: "json",
       ...params,

@@ -6,6 +6,7 @@ import "nftoracle/params.proto";
 import "nftoracle/mint_request.proto";
 import "nftoracle/action_request.proto";
 import "nftoracle/collection_owner_request.proto";
+import "nftoracle/oracle_config.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -19,5 +20,6 @@ message GenesisState {
   uint64 actionRequestCount = 5;
   repeated CollectionOwnerRequest collectionOwnerRequestList = 6 [(gogoproto.nullable) = false];
   uint64 collectionOwnerRequestCount = 7;
+  OracleConfig oracleConfig = 8;
   // this line is used by starport scaffolding # genesis/proto/state
 }

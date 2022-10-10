@@ -37,3 +37,7 @@ const (
 	CollectionOwnerRequestKey      = "CollectionOwnerRequest-value-"
 	CollectionOwnerRequestCountKey = "CollectionOwnerRequest-count-"
 )
+
+const (
+	OracleConfigKey = "OracleConfig-value-"
+)

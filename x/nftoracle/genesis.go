@@ -35,6 +35,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set collectionOwnerRequest count
 	k.SetCollectionOwnerRequestCount(ctx, genState.CollectionOwnerRequestCount)
+	// Set if defined
+	if genState.OracleConfig != nil {
+		k.SetOracleConfig(ctx, *genState.OracleConfig)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -50,6 +54,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.ActionRequestCount = k.GetActionRequestCount(ctx)
 	genesis.CollectionOwnerRequestList = k.GetAllCollectionOwnerRequest(ctx)
 	genesis.CollectionOwnerRequestCount = k.GetCollectionOwnerRequestCount(ctx)
+	// Get all oracleConfig
+	oracleConfig, found := k.GetOracleConfig(ctx)
+	if found {
+		genesis.OracleConfig = &oracleConfig
+	}
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

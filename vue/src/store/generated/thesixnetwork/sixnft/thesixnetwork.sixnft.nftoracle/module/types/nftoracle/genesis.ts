@@ -5,6 +5,7 @@ import { Params } from "../nftoracle/params";
 import { MintRequest } from "../nftoracle/mint_request";
 import { ActionRequest } from "../nftoracle/action_request";
 import { CollectionOwnerRequest } from "../nftoracle/collection_owner_request";
+import { OracleConfig } from "../nftoracle/oracle_config";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 
@@ -16,8 +17,9 @@ export interface GenesisState {
   actionRequestList: ActionRequest[];
   actionRequestCount: number;
   collectionOwnerRequestList: CollectionOwnerRequest[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   collectionOwnerRequestCount: number;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  oracleConfig: OracleConfig | undefined;
 }
 
 const baseGenesisState: object = {
@@ -48,6 +50,12 @@ export const GenesisState = {
     }
     if (message.collectionOwnerRequestCount !== 0) {
       writer.uint32(56).uint64(message.collectionOwnerRequestCount);
+    }
+    if (message.oracleConfig !== undefined) {
+      OracleConfig.encode(
+        message.oracleConfig,
+        writer.uint32(66).fork()
+      ).ldelim();
     }
     return writer;
   },
@@ -90,6 +98,9 @@ export const GenesisState = {
           message.collectionOwnerRequestCount = longToNumber(
             reader.uint64() as Long
           );
+          break;
+        case 8:
+          message.oracleConfig = OracleConfig.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -161,6 +172,11 @@ export const GenesisState = {
     } else {
       message.collectionOwnerRequestCount = 0;
     }
+    if (object.oracleConfig !== undefined && object.oracleConfig !== null) {
+      message.oracleConfig = OracleConfig.fromJSON(object.oracleConfig);
+    } else {
+      message.oracleConfig = undefined;
+    }
     return message;
   },
 
@@ -195,6 +211,10 @@ export const GenesisState = {
     }
     message.collectionOwnerRequestCount !== undefined &&
       (obj.collectionOwnerRequestCount = message.collectionOwnerRequestCount);
+    message.oracleConfig !== undefined &&
+      (obj.oracleConfig = message.oracleConfig
+        ? OracleConfig.toJSON(message.oracleConfig)
+        : undefined);
     return obj;
   },
 
@@ -257,6 +277,11 @@ export const GenesisState = {
       message.collectionOwnerRequestCount = object.collectionOwnerRequestCount;
     } else {
       message.collectionOwnerRequestCount = 0;
+    }
+    if (object.oracleConfig !== undefined && object.oracleConfig !== null) {
+      message.oracleConfig = OracleConfig.fromPartial(object.oracleConfig);
+    } else {
+      message.oracleConfig = undefined;
     }
     return message;
   },
