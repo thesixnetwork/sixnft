@@ -44,6 +44,15 @@ func (k msgServer) Mint(goCtx context.Context, msg *types.MsgMint) (*types.MsgMi
 		return nil, err
 	}
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeBurn,
+			sdk.NewAttribute(types.EventTypeBurn, msg.Token),
+			sdk.NewAttribute(types.AttributeKeyAmount, strconv.FormatUint(msg.Amount, 10)),
+			sdk.NewAttribute(types.AttributeKeyMintStatus, "success"),
+		),
+	})
+
 	return &types.MsgMintResponse{
 		Amount: strconv.FormatUint(msg.Amount, 10),
 		Token:  msg.Token,

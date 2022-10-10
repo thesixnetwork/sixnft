@@ -24,7 +24,7 @@ ignite scaffold type DisplayOption opensea \
 # modify proto file to be like this
 
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 # import "nftmngr/opensea_display_option.proto";
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
@@ -40,7 +40,7 @@ ignite scaffold type AttributeDefinition name data_type display_value_field disp
     --module nftmngr
 # Modify proto file to be like this
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 # import "nftmngr/display_option.proto";
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
@@ -59,7 +59,7 @@ ignite scaffold type OriginData origin_chain origin_contract_address origin_base
     --module nftmngr
 # Modify proto file to be like this
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 # import "nftmngr/attribute_definition.proto";
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
@@ -84,7 +84,7 @@ ignite scaffold type Action name desc when then \
     --module nftmngr
 # Modify proto file to be like this
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
@@ -101,7 +101,7 @@ ignite scaffold type OnChainData nft_attributes token_attributes actions then \
     --module nftmngr
 # Modify proto file to be like this
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 # import "nftmngr/attribute_definition.proto";
 # import "nftmngr/action.proto";
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
@@ -119,7 +119,7 @@ ignite scaffold map NFTSchema name owner origin_data onchain_data \
     --module nftmngr
 # Modify proto file to be like this
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 
 
 # import "nftmngr/on_chain_data.proto";
@@ -196,7 +196,7 @@ ignite scaffold map NftData token_owner origin_image origin_attributes onchain_a
     --module nftmngr
 # Modify proto file
 # syntax = "proto3";
-# package sixnft.nftmngr;
+# package thesixnetwork.sixnft.nftmngr;
 
 # import "nftmngr/nft_attribute_value.proto";
 # option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
@@ -364,3 +364,22 @@ ignite scaffold list CollectionOwnerRequest nft_schema_code:string base64_owner_
     --no-message \
     --no-simulation \
     --module nftoracle
+
+ignite scaffold message createVerifyCollectionOwnerRequest nft_schema_code:string required_confirm:uint \          
+    --desc "To create Verify Collection Owner Request" \
+    --response id:uint,nft_schema_code:string,ownerAddress:string \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold message SubmitVerifyCollectionOwner verifyRequestID:uint schema_code:string contractOwnerAddress:string \
+    --desc "To Sumint Verify Collection Owner" \
+    --response verifyRequestID:uint \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message resyncAttributes nft_schema_code:string token_id:string \
+    --desc "To resync onchain attributes" \
+    --response nft_schema_code \
+    --no-simulation \
+    --module nftmngr

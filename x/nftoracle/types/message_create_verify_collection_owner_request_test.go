@@ -8,21 +8,21 @@ import (
 	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
-func TestMsgAddTokenAttribute_ValidateBasic(t *testing.T) {
+func TestMsgCreateVerifyCollectionOwnerRequest_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgAddTokenAttribute
+		msg  MsgCreateVerifyCollectionOwnerRequest
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgAddTokenAttribute{
+			msg: MsgCreateVerifyCollectionOwnerRequest{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgAddTokenAttribute{
+			msg: MsgCreateVerifyCollectionOwnerRequest{
 				Creator: sample.AccAddress(),
 			},
 		},

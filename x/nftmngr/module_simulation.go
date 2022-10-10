@@ -99,10 +99,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 			weightMsgAddTokenAttribute = defaultWeightMsgAddTokenAttribute
 		},
 	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgAddTokenAttribute,
-		nftmngrsimulation.SimulateMsgAddTokenAttribute(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
 
 	var weightMsgAddAction int
 	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgAddAction, &weightMsgAddAction, nil,

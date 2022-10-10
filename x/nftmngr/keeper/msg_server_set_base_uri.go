@@ -24,6 +24,16 @@ func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (
 
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeSetBaseURI,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
+			sdk.NewAttribute(types.AttributeKeySetBaseURI, msg.NewBaseUri),
+			sdk.NewAttribute(types.AttributeKeySetBaseURIResult, "success"),
+		),
+	})
+
 	return &types.MsgSetBaseUriResponse{
 		Code: msg.Code,
 		Uri:  msg.NewBaseUri,

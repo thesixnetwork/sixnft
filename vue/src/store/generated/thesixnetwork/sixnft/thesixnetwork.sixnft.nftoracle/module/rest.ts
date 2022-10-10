@@ -42,7 +42,25 @@ export interface NftoracleCollectionOwnerRequest {
   /** @format uint64 */
   id?: string;
   nftSchemaCode?: string;
-  base64OwnerSignature?: string;
+  signer?: string;
+
+  /** @format uint64 */
+  required_confirm?: string;
+  status?: NftoracleRequestStatus;
+
+  /** @format uint64 */
+  current_confirm?: string;
+  confirmers?: Record<string, boolean>;
+
+  /** @format date-time */
+  created_at?: string;
+
+  /** @format date-time */
+  valid_until?: string;
+  origin_tx?: NftoracleOriginTxInfo[];
+
+  /** @format int64 */
+  expired_height?: string;
 }
 
 export interface NftoracleDataHash {
@@ -90,6 +108,13 @@ export interface NftoracleMsgCreateMintRequestResponse {
   tokenId?: string;
 }
 
+export interface NftoracleMsgCreateVerifyCollectionOwnerRequestResponse {
+  /** @format uint64 */
+  id?: string;
+  nftSchemaCode?: string;
+  ownerAddress?: string;
+}
+
 export interface NftoracleMsgSubmitActionResponseResponse {
   actionRequestID?: string;
 }
@@ -98,10 +123,23 @@ export interface NftoracleMsgSubmitMintResponseResponse {
   mintRequestID?: string;
 }
 
+export interface NftoracleMsgSubmitVerifyCollectionOwnerResponse {
+  /** @format uint64 */
+  verifyRequestID?: string;
+}
+
 export interface NftoracleNftOriginData {
   image?: string;
   holder_address?: string;
   traits?: NftoracleTrait[];
+}
+
+export interface NftoracleOriginTxInfo {
+  transactionOriginDataInfo?: NftoracleTransactionOriginDataInfo;
+
+  /** @format byte */
+  hash?: string;
+  confirmers?: string[];
 }
 
 /**
@@ -110,6 +148,7 @@ export interface NftoracleNftOriginData {
 export interface NftoracleParams {
   mint_request_active_duration?: string;
   action_request_active_duration?: string;
+  verify_request_active_duration?: string;
 }
 
 export interface NftoracleQueryAllActionRequestResponse {
@@ -183,6 +222,7 @@ export enum NftoracleRequestStatus {
   FAILED_WITHOUT_CONCENSUS = "FAILED_WITHOUT_CONCENSUS",
   EXPIRED = "EXPIRED",
   FAILED_ON_EXECUTION = "FAILED_ON_EXECUTION",
+  FAILED_REJECT_BY_CONSENSUS = "FAILED_REJECT_BY_CONSENSUS",
 }
 
 export interface NftoracleTrait {
@@ -190,6 +230,15 @@ export interface NftoracleTrait {
   value?: string;
   display_type?: string;
   max_value?: string;
+}
+
+export interface NftoracleTransactionOriginDataInfo {
+  chain?: string;
+  tx_hash?: string;
+
+  /** @format uint64 */
+  block_number?: string;
+  deployer_address?: string;
 }
 
 export interface ProtobufAny {
@@ -240,13 +289,6 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
 }
 
 /**
@@ -476,7 +518,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -518,7 +559,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -576,7 +616,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

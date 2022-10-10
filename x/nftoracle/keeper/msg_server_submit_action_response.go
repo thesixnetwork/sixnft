@@ -225,7 +225,7 @@ func ProcessAction(meta *nftmngrtypes.Metadata, action *nftmngrtypes.Action) (er
 			case error:
 				err = x
 			default:
-				err = errors.New("Unknown panic")
+				err = errors.New("unknown panic")
 			}
 		}
 	}()

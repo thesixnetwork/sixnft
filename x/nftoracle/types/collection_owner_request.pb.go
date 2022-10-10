@@ -5,16 +5,21 @@ package types
 
 import (
 	fmt "fmt"
+	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
+	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
+	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+	time "time"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -22,17 +27,93 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type TxOriginParam struct {
+	Chain           string `protobuf:"bytes,1,opt,name=chain,proto3" json:"chain,omitempty"`
+	TxHash          string `protobuf:"bytes,2,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
+	BlockNumber     uint64 `protobuf:"varint,3,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
+	DeployerAddress string `protobuf:"bytes,4,opt,name=deployer_address,json=deployerAddress,proto3" json:"deployer_address,omitempty"`
+}
+
+func (m *TxOriginParam) Reset()         { *m = TxOriginParam{} }
+func (m *TxOriginParam) String() string { return proto.CompactTextString(m) }
+func (*TxOriginParam) ProtoMessage()    {}
+func (*TxOriginParam) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5b5e5fd2fa665471, []int{0}
+}
+func (m *TxOriginParam) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *TxOriginParam) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_TxOriginParam.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *TxOriginParam) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TxOriginParam.Merge(m, src)
+}
+func (m *TxOriginParam) XXX_Size() int {
+	return m.Size()
+}
+func (m *TxOriginParam) XXX_DiscardUnknown() {
+	xxx_messageInfo_TxOriginParam.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TxOriginParam proto.InternalMessageInfo
+
+func (m *TxOriginParam) GetChain() string {
+	if m != nil {
+		return m.Chain
+	}
+	return ""
+}
+
+func (m *TxOriginParam) GetTxHash() string {
+	if m != nil {
+		return m.TxHash
+	}
+	return ""
+}
+
+func (m *TxOriginParam) GetBlockNumber() uint64 {
+	if m != nil {
+		return m.BlockNumber
+	}
+	return 0
+}
+
+func (m *TxOriginParam) GetDeployerAddress() string {
+	if m != nil {
+		return m.DeployerAddress
+	}
+	return ""
+}
+
 type CollectionOwnerRequest struct {
-	Id                   uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	NftSchemaCode        string `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
-	Base64OwnerSignature string `protobuf:"bytes,3,opt,name=base64OwnerSignature,proto3" json:"base64OwnerSignature,omitempty"`
+	Id              uint64          `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	NftSchemaCode   string          `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Signer          string          `protobuf:"bytes,3,opt,name=signer,proto3" json:"signer,omitempty"`
+	RequiredConfirm uint64          `protobuf:"varint,4,opt,name=required_confirm,json=requiredConfirm,proto3" json:"required_confirm,omitempty"`
+	Status          RequestStatus   `protobuf:"varint,5,opt,name=status,proto3,enum=thesixnetwork.sixnft.nftoracle.RequestStatus" json:"status,omitempty"`
+	CurrentConfirm  uint64          `protobuf:"varint,6,opt,name=current_confirm,json=currentConfirm,proto3" json:"current_confirm,omitempty"`
+	Confirmers      map[string]bool `protobuf:"bytes,7,rep,name=confirmers,proto3" json:"confirmers,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	CreatedAt       time.Time       `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3,stdtime" json:"created_at"`
+	ValidUntil      time.Time       `protobuf:"bytes,9,opt,name=valid_until,json=validUntil,proto3,stdtime" json:"valid_until"`
+	OriginTx        []*OriginTxInfo `protobuf:"bytes,10,rep,name=origin_tx,json=originTx,proto3" json:"origin_tx,omitempty"`
+	ExpiredHeight   int64           `protobuf:"varint,11,opt,name=expired_height,json=expiredHeight,proto3" json:"expired_height,omitempty"`
 }
 
 func (m *CollectionOwnerRequest) Reset()         { *m = CollectionOwnerRequest{} }
 func (m *CollectionOwnerRequest) String() string { return proto.CompactTextString(m) }
 func (*CollectionOwnerRequest) ProtoMessage()    {}
 func (*CollectionOwnerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5b5e5fd2fa665471, []int{0}
+	return fileDescriptor_5b5e5fd2fa665471, []int{1}
 }
 func (m *CollectionOwnerRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -75,15 +156,73 @@ func (m *CollectionOwnerRequest) GetNftSchemaCode() string {
 	return ""
 }
 
-func (m *CollectionOwnerRequest) GetBase64OwnerSignature() string {
+func (m *CollectionOwnerRequest) GetSigner() string {
 	if m != nil {
-		return m.Base64OwnerSignature
+		return m.Signer
 	}
 	return ""
 }
 
+func (m *CollectionOwnerRequest) GetRequiredConfirm() uint64 {
+	if m != nil {
+		return m.RequiredConfirm
+	}
+	return 0
+}
+
+func (m *CollectionOwnerRequest) GetStatus() RequestStatus {
+	if m != nil {
+		return m.Status
+	}
+	return RequestStatus_PENDING
+}
+
+func (m *CollectionOwnerRequest) GetCurrentConfirm() uint64 {
+	if m != nil {
+		return m.CurrentConfirm
+	}
+	return 0
+}
+
+func (m *CollectionOwnerRequest) GetConfirmers() map[string]bool {
+	if m != nil {
+		return m.Confirmers
+	}
+	return nil
+}
+
+func (m *CollectionOwnerRequest) GetCreatedAt() time.Time {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return time.Time{}
+}
+
+func (m *CollectionOwnerRequest) GetValidUntil() time.Time {
+	if m != nil {
+		return m.ValidUntil
+	}
+	return time.Time{}
+}
+
+func (m *CollectionOwnerRequest) GetOriginTx() []*OriginTxInfo {
+	if m != nil {
+		return m.OriginTx
+	}
+	return nil
+}
+
+func (m *CollectionOwnerRequest) GetExpiredHeight() int64 {
+	if m != nil {
+		return m.ExpiredHeight
+	}
+	return 0
+}
+
 func init() {
+	proto.RegisterType((*TxOriginParam)(nil), "thesixnetwork.sixnft.nftoracle.TxOriginParam")
 	proto.RegisterType((*CollectionOwnerRequest)(nil), "thesixnetwork.sixnft.nftoracle.CollectionOwnerRequest")
+	proto.RegisterMapType((map[string]bool)(nil), "thesixnetwork.sixnft.nftoracle.CollectionOwnerRequest.ConfirmersEntry")
 }
 
 func init() {
@@ -91,22 +230,94 @@ func init() {
 }
 
 var fileDescriptor_5b5e5fd2fa665471 = []byte{
-	// 234 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xd2, 0xc8, 0x4b, 0x2b, 0xc9,
-	0x2f, 0x4a, 0x4c, 0xce, 0x49, 0xd5, 0x4f, 0xce, 0xcf, 0xc9, 0x49, 0x4d, 0x2e, 0xc9, 0xcc, 0xcf,
-	0x8b, 0xcf, 0x2f, 0xcf, 0x4b, 0x2d, 0x8a, 0x2f, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0xd1, 0x2b,
-	0x28, 0xca, 0x2f, 0xc9, 0x17, 0x92, 0x2b, 0xc9, 0x48, 0x2d, 0xce, 0xac, 0xc8, 0x4b, 0x2d, 0x29,
-	0xcf, 0x2f, 0xca, 0xd6, 0x03, 0x31, 0xd3, 0x4a, 0xf4, 0xe0, 0xda, 0x95, 0x9a, 0x18, 0xb9, 0xc4,
-	0x9c, 0xe1, 0x46, 0xf8, 0x83, 0x4c, 0x08, 0x82, 0x18, 0x20, 0xc4, 0xc7, 0xc5, 0x94, 0x99, 0x22,
-	0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0x12, 0xc4, 0x94, 0x99, 0x22, 0xa4, 0xc2, 0xc5, 0x9b, 0x97, 0x56,
-	0x12, 0x9c, 0x9c, 0x91, 0x9a, 0x9b, 0xe8, 0x9c, 0x9f, 0x92, 0x2a, 0xc1, 0xa4, 0xc0, 0xa8, 0xc1,
-	0x19, 0x84, 0x2a, 0x28, 0x64, 0xc4, 0x25, 0x92, 0x94, 0x58, 0x9c, 0x6a, 0x66, 0x02, 0x36, 0x2b,
-	0x38, 0x33, 0x3d, 0x2f, 0xb1, 0xa4, 0xb4, 0x28, 0x55, 0x82, 0x19, 0xac, 0x18, 0xab, 0x9c, 0x93,
-	0xf7, 0x89, 0x47, 0x72, 0x8c, 0x17, 0x1e, 0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7, 0x38, 0xe1, 0xb1,
-	0x1c, 0xc3, 0x85, 0xc7, 0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x44, 0x19, 0xa6, 0x67, 0x96, 0x64,
-	0x94, 0x26, 0xe9, 0x25, 0xe7, 0xe7, 0xea, 0xa3, 0xf8, 0x44, 0x1f, 0xe2, 0x13, 0xfd, 0x0a, 0x7d,
-	0x44, 0x50, 0x94, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x3d, 0x6e, 0x0c, 0x08, 0x00, 0x00,
-	0xff, 0xff, 0xd9, 0x08, 0x82, 0x0f, 0x24, 0x01, 0x00, 0x00,
+	// 601 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0x4f, 0x6e, 0xd3, 0x40,
+	0x14, 0xc6, 0xe3, 0x24, 0x4d, 0x93, 0x09, 0x4d, 0xaa, 0x51, 0xd5, 0x5a, 0x59, 0xb8, 0xa6, 0x02,
+	0x61, 0x24, 0xb0, 0x45, 0xd9, 0x20, 0x24, 0x16, 0x6d, 0x54, 0xd4, 0x0a, 0x89, 0x22, 0xb7, 0x6c,
+	0xd8, 0x58, 0x13, 0x7b, 0x6c, 0x8f, 0x6a, 0xcf, 0x84, 0xf1, 0x73, 0xeb, 0xdc, 0x81, 0x45, 0x4f,
+	0xc1, 0x59, 0xba, 0xec, 0x92, 0x15, 0xa0, 0xf6, 0x22, 0xc8, 0x63, 0x27, 0x25, 0x08, 0x51, 0xb1,
+	0x7b, 0xef, 0x27, 0x7f, 0xef, 0x9f, 0xbf, 0x41, 0x16, 0x0f, 0x41, 0x48, 0xe2, 0x27, 0xd4, 0xf1,
+	0x45, 0x92, 0x50, 0x1f, 0x98, 0xe0, 0x9e, 0xb8, 0xe0, 0x54, 0x7a, 0x92, 0x7e, 0xce, 0x69, 0x06,
+	0xf6, 0x54, 0x0a, 0x10, 0xd8, 0x80, 0x98, 0x66, 0xac, 0xe0, 0x14, 0x2e, 0x84, 0x3c, 0xb3, 0xcb,
+	0x30, 0x04, 0x7b, 0x21, 0x1f, 0x6d, 0xdd, 0x55, 0x5a, 0x12, 0x8e, 0x36, 0x22, 0x11, 0x09, 0x15,
+	0x3a, 0x65, 0x54, 0xd3, 0xed, 0x48, 0x88, 0x28, 0xa1, 0x8e, 0xca, 0x26, 0x79, 0xe8, 0x00, 0x4b,
+	0x69, 0x06, 0x24, 0x9d, 0x56, 0x1f, 0xec, 0x7c, 0xd1, 0xd0, 0xda, 0x69, 0x71, 0x2c, 0x59, 0xc4,
+	0xf8, 0x07, 0x22, 0x49, 0x8a, 0x37, 0xd0, 0x8a, 0x1f, 0x13, 0xc6, 0x75, 0xcd, 0xd4, 0xac, 0x9e,
+	0x5b, 0x25, 0x78, 0x0b, 0xad, 0x42, 0xe1, 0xc5, 0x24, 0x8b, 0xf5, 0xa6, 0xe2, 0x1d, 0x28, 0x0e,
+	0x49, 0x16, 0xe3, 0x87, 0xe8, 0xc1, 0x24, 0x11, 0xfe, 0x99, 0xc7, 0xf3, 0x74, 0x42, 0xa5, 0xde,
+	0x32, 0x35, 0xab, 0xed, 0xf6, 0x15, 0x7b, 0xaf, 0x10, 0x7e, 0x8a, 0xd6, 0x03, 0x3a, 0x4d, 0xc4,
+	0x8c, 0x4a, 0x8f, 0x04, 0x81, 0xa4, 0x59, 0xa6, 0xb7, 0x55, 0x91, 0xe1, 0x9c, 0xef, 0x55, 0x78,
+	0xe7, 0xeb, 0x0a, 0xda, 0x1c, 0x2f, 0x2e, 0x74, 0x5c, 0x1e, 0xc8, 0xad, 0xd6, 0xc4, 0x03, 0xd4,
+	0x64, 0x81, 0x1a, 0xaa, 0xed, 0x36, 0x59, 0x80, 0x1f, 0xa1, 0x35, 0x1e, 0xc2, 0x89, 0x1f, 0xd3,
+	0x94, 0x8c, 0x45, 0x40, 0xeb, 0xb9, 0x96, 0x21, 0xde, 0x44, 0x9d, 0x8c, 0x45, 0xbc, 0x1e, 0xac,
+	0xe7, 0xd6, 0x59, 0x39, 0x53, 0x79, 0x3f, 0x26, 0x69, 0xe0, 0xf9, 0x82, 0x87, 0x4c, 0xa6, 0x6a,
+	0xa6, 0xb6, 0x3b, 0x9c, 0xf3, 0x71, 0x85, 0xf1, 0x01, 0xea, 0x64, 0x40, 0x20, 0xcf, 0xf4, 0x15,
+	0x53, 0xb3, 0x06, 0xbb, 0xcf, 0xed, 0x7f, 0xff, 0x23, 0xbb, 0x9e, 0xf8, 0x44, 0x89, 0xdc, 0x5a,
+	0x8c, 0x9f, 0xa0, 0xa1, 0x9f, 0x4b, 0x49, 0x39, 0x2c, 0x1a, 0x76, 0x54, 0xc3, 0x41, 0x8d, 0xe7,
+	0xfd, 0x42, 0x84, 0xea, 0x0f, 0xa8, 0xcc, 0xf4, 0x55, 0xb3, 0x65, 0xf5, 0x77, 0xdf, 0xde, 0xd7,
+	0xf3, 0xef, 0x47, 0xb3, 0xc7, 0x8b, 0x42, 0x07, 0x1c, 0xe4, 0xcc, 0xfd, 0xad, 0x32, 0x1e, 0x23,
+	0xe4, 0x4b, 0x4a, 0x80, 0x06, 0x1e, 0x01, 0xbd, 0x6b, 0x6a, 0x56, 0x7f, 0x77, 0x64, 0x57, 0x86,
+	0xb1, 0xe7, 0x86, 0xb1, 0x4f, 0xe7, 0x86, 0xd9, 0xef, 0x5e, 0x7d, 0xdf, 0x6e, 0x5c, 0xfe, 0xd8,
+	0xd6, 0xdc, 0x5e, 0xad, 0xdb, 0x03, 0x7c, 0x80, 0xfa, 0xe7, 0x24, 0x61, 0x81, 0x97, 0x73, 0x60,
+	0x89, 0xde, 0xfb, 0x8f, 0x2a, 0x48, 0x09, 0x3f, 0x96, 0x3a, 0x7c, 0x84, 0x7a, 0x42, 0x79, 0xd0,
+	0x83, 0x42, 0x47, 0x6a, 0xe5, 0x67, 0xf7, 0xad, 0x5c, 0x99, 0xf6, 0xb4, 0x38, 0xe2, 0xa1, 0x70,
+	0xbb, 0xa2, 0xce, 0xf0, 0x63, 0x34, 0xa0, 0xc5, 0x54, 0xfd, 0xd8, 0x98, 0xb2, 0x28, 0x06, 0xbd,
+	0x6f, 0x6a, 0x56, 0xcb, 0x5d, 0xab, 0xe9, 0xa1, 0x82, 0xa3, 0x37, 0x68, 0xf8, 0xc7, 0x71, 0xf0,
+	0x3a, 0x6a, 0x9d, 0xd1, 0x59, 0xed, 0xfb, 0x32, 0x2c, 0xdf, 0xc2, 0x39, 0x49, 0xf2, 0xca, 0x5b,
+	0x5d, 0xb7, 0x4a, 0x5e, 0x37, 0x5f, 0x69, 0xfb, 0xef, 0xae, 0x6e, 0x0c, 0xed, 0xfa, 0xc6, 0xd0,
+	0x7e, 0xde, 0x18, 0xda, 0xe5, 0xad, 0xd1, 0xb8, 0xbe, 0x35, 0x1a, 0xdf, 0x6e, 0x8d, 0xc6, 0xa7,
+	0x17, 0x11, 0x83, 0x38, 0x9f, 0xd8, 0xbe, 0x48, 0x9d, 0xa5, 0x0d, 0x9c, 0x6a, 0x03, 0xa7, 0x70,
+	0xee, 0xde, 0x30, 0xcc, 0xa6, 0x34, 0x9b, 0x74, 0xd4, 0x9d, 0x5e, 0xfe, 0x0a, 0x00, 0x00, 0xff,
+	0xff, 0x29, 0x74, 0x9f, 0x68, 0x27, 0x04, 0x00, 0x00,
+}
+
+func (m *TxOriginParam) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *TxOriginParam) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *TxOriginParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.DeployerAddress) > 0 {
+		i -= len(m.DeployerAddress)
+		copy(dAtA[i:], m.DeployerAddress)
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(m.DeployerAddress)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.BlockNumber != 0 {
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(m.BlockNumber))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.TxHash) > 0 {
+		i -= len(m.TxHash)
+		copy(dAtA[i:], m.TxHash)
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(m.TxHash)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Chain) > 0 {
+		i -= len(m.Chain)
+		copy(dAtA[i:], m.Chain)
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(m.Chain)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *CollectionOwnerRequest) Marshal() (dAtA []byte, err error) {
@@ -129,10 +340,82 @@ func (m *CollectionOwnerRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	_ = i
 	var l int
 	_ = l
-	if len(m.Base64OwnerSignature) > 0 {
-		i -= len(m.Base64OwnerSignature)
-		copy(dAtA[i:], m.Base64OwnerSignature)
-		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(m.Base64OwnerSignature)))
+	if m.ExpiredHeight != 0 {
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(m.ExpiredHeight))
+		i--
+		dAtA[i] = 0x58
+	}
+	if len(m.OriginTx) > 0 {
+		for iNdEx := len(m.OriginTx) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.OriginTx[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x52
+		}
+	}
+	n1, err1 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.ValidUntil, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.ValidUntil):])
+	if err1 != nil {
+		return 0, err1
+	}
+	i -= n1
+	i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(n1))
+	i--
+	dAtA[i] = 0x4a
+	n2, err2 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CreatedAt, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CreatedAt):])
+	if err2 != nil {
+		return 0, err2
+	}
+	i -= n2
+	i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(n2))
+	i--
+	dAtA[i] = 0x42
+	if len(m.Confirmers) > 0 {
+		for k := range m.Confirmers {
+			v := m.Confirmers[k]
+			baseI := i
+			i--
+			if v {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i--
+			dAtA[i] = 0x10
+			i -= len(k)
+			copy(dAtA[i:], k)
+			i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(k)))
+			i--
+			dAtA[i] = 0xa
+			i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(baseI-i))
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
+	if m.CurrentConfirm != 0 {
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(m.CurrentConfirm))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.Status != 0 {
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(m.Status))
+		i--
+		dAtA[i] = 0x28
+	}
+	if m.RequiredConfirm != 0 {
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(m.RequiredConfirm))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.Signer) > 0 {
+		i -= len(m.Signer)
+		copy(dAtA[i:], m.Signer)
+		i = encodeVarintCollectionOwnerRequest(dAtA, i, uint64(len(m.Signer)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -162,6 +445,30 @@ func encodeVarintCollectionOwnerRequest(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *TxOriginParam) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Chain)
+	if l > 0 {
+		n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	}
+	l = len(m.TxHash)
+	if l > 0 {
+		n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	}
+	if m.BlockNumber != 0 {
+		n += 1 + sovCollectionOwnerRequest(uint64(m.BlockNumber))
+	}
+	l = len(m.DeployerAddress)
+	if l > 0 {
+		n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	}
+	return n
+}
+
 func (m *CollectionOwnerRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -175,9 +482,39 @@ func (m *CollectionOwnerRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovCollectionOwnerRequest(uint64(l))
 	}
-	l = len(m.Base64OwnerSignature)
+	l = len(m.Signer)
 	if l > 0 {
 		n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	}
+	if m.RequiredConfirm != 0 {
+		n += 1 + sovCollectionOwnerRequest(uint64(m.RequiredConfirm))
+	}
+	if m.Status != 0 {
+		n += 1 + sovCollectionOwnerRequest(uint64(m.Status))
+	}
+	if m.CurrentConfirm != 0 {
+		n += 1 + sovCollectionOwnerRequest(uint64(m.CurrentConfirm))
+	}
+	if len(m.Confirmers) > 0 {
+		for k, v := range m.Confirmers {
+			_ = k
+			_ = v
+			mapEntrySize := 1 + len(k) + sovCollectionOwnerRequest(uint64(len(k))) + 1 + 1
+			n += mapEntrySize + 1 + sovCollectionOwnerRequest(uint64(mapEntrySize))
+		}
+	}
+	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.CreatedAt)
+	n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.ValidUntil)
+	n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+	if len(m.OriginTx) > 0 {
+		for _, e := range m.OriginTx {
+			l = e.Size()
+			n += 1 + l + sovCollectionOwnerRequest(uint64(l))
+		}
+	}
+	if m.ExpiredHeight != 0 {
+		n += 1 + sovCollectionOwnerRequest(uint64(m.ExpiredHeight))
 	}
 	return n
 }
@@ -187,6 +524,171 @@ func sovCollectionOwnerRequest(x uint64) (n int) {
 }
 func sozCollectionOwnerRequest(x uint64) (n int) {
 	return sovCollectionOwnerRequest(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *TxOriginParam) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCollectionOwnerRequest
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: TxOriginParam: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: TxOriginParam: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Chain", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Chain = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TxHash", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TxHash = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BlockNumber", wireType)
+			}
+			m.BlockNumber = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BlockNumber |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeployerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DeployerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCollectionOwnerRequest(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *CollectionOwnerRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -270,7 +772,7 @@ func (m *CollectionOwnerRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Base64OwnerSignature", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Signer", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -298,8 +800,299 @@ func (m *CollectionOwnerRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Base64OwnerSignature = string(dAtA[iNdEx:postIndex])
+			m.Signer = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RequiredConfirm", wireType)
+			}
+			m.RequiredConfirm = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.RequiredConfirm |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 5:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= RequestStatus(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentConfirm", wireType)
+			}
+			m.CurrentConfirm = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.CurrentConfirm |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Confirmers", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Confirmers == nil {
+				m.Confirmers = make(map[string]bool)
+			}
+			var mapkey string
+			var mapvalue bool
+			for iNdEx < postIndex {
+				entryPreIndex := iNdEx
+				var wire uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowCollectionOwnerRequest
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					wire |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				fieldNum := int32(wire >> 3)
+				if fieldNum == 1 {
+					var stringLenmapkey uint64
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowCollectionOwnerRequest
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						stringLenmapkey |= uint64(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					intStringLenmapkey := int(stringLenmapkey)
+					if intStringLenmapkey < 0 {
+						return ErrInvalidLengthCollectionOwnerRequest
+					}
+					postStringIndexmapkey := iNdEx + intStringLenmapkey
+					if postStringIndexmapkey < 0 {
+						return ErrInvalidLengthCollectionOwnerRequest
+					}
+					if postStringIndexmapkey > l {
+						return io.ErrUnexpectedEOF
+					}
+					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
+					iNdEx = postStringIndexmapkey
+				} else if fieldNum == 2 {
+					var mapvaluetemp int
+					for shift := uint(0); ; shift += 7 {
+						if shift >= 64 {
+							return ErrIntOverflowCollectionOwnerRequest
+						}
+						if iNdEx >= l {
+							return io.ErrUnexpectedEOF
+						}
+						b := dAtA[iNdEx]
+						iNdEx++
+						mapvaluetemp |= int(b&0x7F) << shift
+						if b < 0x80 {
+							break
+						}
+					}
+					mapvalue = bool(mapvaluetemp != 0)
+				} else {
+					iNdEx = entryPreIndex
+					skippy, err := skipCollectionOwnerRequest(dAtA[iNdEx:])
+					if err != nil {
+						return err
+					}
+					if (skippy < 0) || (iNdEx+skippy) < 0 {
+						return ErrInvalidLengthCollectionOwnerRequest
+					}
+					if (iNdEx + skippy) > postIndex {
+						return io.ErrUnexpectedEOF
+					}
+					iNdEx += skippy
+				}
+			}
+			m.Confirmers[mapkey] = mapvalue
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.CreatedAt, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ValidUntil", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.ValidUntil, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OriginTx", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCollectionOwnerRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OriginTx = append(m.OriginTx, &OriginTxInfo{})
+			if err := m.OriginTx[len(m.OriginTx)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 11:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExpiredHeight", wireType)
+			}
+			m.ExpiredHeight = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCollectionOwnerRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ExpiredHeight |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCollectionOwnerRequest(dAtA[iNdEx:])

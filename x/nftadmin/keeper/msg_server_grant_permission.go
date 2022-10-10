@@ -48,6 +48,15 @@ func (k msgServer) GrantPermission(goCtx context.Context, msg *types.MsgGrantPer
 		}
 	}
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeGrantPermission,
+			sdk.NewAttribute(types.AttributeKeyPermissionType, msg.Name),
+			sdk.NewAttribute(types.AttributeKeyPermissionAddress, msg.Grantee),
+			sdk.NewAttribute(types.AttributeKeyGrantPermissionStatus, "success"),
+		),
+	})
+
 	k.Keeper.SetAuthorization(ctx, auth)
 
 	return &types.MsgGrantPermissionResponse{

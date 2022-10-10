@@ -74,6 +74,44 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	// Add the data to the store
 	k.Keeper.SetNftData(ctx, data)
 
+	// Add the minted of any schema to collection
+	k.Keeper.AddMetadataToCollection(ctx, &data)
+
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeCreateMetadata,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyCreateMetaDataTokenID, msg.TokenId),
+			sdk.NewAttribute(types.AttributeKeyCreateMetaDataResult, "success"),
+		),
+	})
+
+	// // Check if the nft collection exists
+	// collection, collectionFound := k.Keeper.GetNftCollection(ctx, data.NftSchemaCode)
+	// if !collectionFound {
+	// 	// Create a new collection aka SetNftCollection
+	// 	collection = types.NftCollection{
+	// 		NftSchemaCode: data.NftSchemaCode,
+	// 		NftDatas:      []*types.NftData{},
+	// 		Total:         0,
+	// 	}
+	// 	k.Keeper.SetNftCollection(ctx, collection)
+	// }
+	// // Append the data to the collection
+	// collection.NftDatas = append(collection.NftDatas, &data)
+
+	// // Set count for nft collection
+	// count := k.Keeper.GetNftCollectionDataCount(ctx)
+	// count += 1
+
+	// // Increment the collection count
+	// collection.Total = count
+	// k.Keeper.SetNftCollectionDataCount(ctx, count)
+
+	// // Set the collection
+	// k.Keeper.SetNftCollection(ctx, collection)
+
 	return &types.MsgCreateMetadataResponse{
 		NftSchemaCode: data.NftSchemaCode,
 		TokenId:       data.TokenId,

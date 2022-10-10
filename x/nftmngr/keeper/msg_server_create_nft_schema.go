@@ -67,6 +67,15 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeCreateSchema,
+			sdk.NewAttribute(types.AttributeKeyCreateSchemaCode, schema.Code),
+			sdk.NewAttribute(types.AttributeKeyCreateSchemaResult, "success"),
+		),
+	})
+
 	return &types.MsgCreateNFTSchemaResponse{
 		Code: schema.Code,
 	}, nil

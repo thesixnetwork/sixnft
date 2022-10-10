@@ -8,6 +8,7 @@ export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 export interface Params {
   mint_request_active_duration: Duration | undefined;
   action_request_active_duration: Duration | undefined;
+  verify_request_active_duration: Duration | undefined;
 }
 
 const baseParams: object = {};
@@ -24,6 +25,12 @@ export const Params = {
       Duration.encode(
         message.action_request_active_duration,
         writer.uint32(18).fork()
+      ).ldelim();
+    }
+    if (message.verify_request_active_duration !== undefined) {
+      Duration.encode(
+        message.verify_request_active_duration,
+        writer.uint32(26).fork()
       ).ldelim();
     }
     return writer;
@@ -44,6 +51,12 @@ export const Params = {
           break;
         case 2:
           message.action_request_active_duration = Duration.decode(
+            reader,
+            reader.uint32()
+          );
+          break;
+        case 3:
+          message.verify_request_active_duration = Duration.decode(
             reader,
             reader.uint32()
           );
@@ -78,6 +91,16 @@ export const Params = {
     } else {
       message.action_request_active_duration = undefined;
     }
+    if (
+      object.verify_request_active_duration !== undefined &&
+      object.verify_request_active_duration !== null
+    ) {
+      message.verify_request_active_duration = Duration.fromJSON(
+        object.verify_request_active_duration
+      );
+    } else {
+      message.verify_request_active_duration = undefined;
+    }
     return message;
   },
 
@@ -90,6 +113,10 @@ export const Params = {
     message.action_request_active_duration !== undefined &&
       (obj.action_request_active_duration = message.action_request_active_duration
         ? Duration.toJSON(message.action_request_active_duration)
+        : undefined);
+    message.verify_request_active_duration !== undefined &&
+      (obj.verify_request_active_duration = message.verify_request_active_duration
+        ? Duration.toJSON(message.verify_request_active_duration)
         : undefined);
     return obj;
   },
@@ -115,6 +142,16 @@ export const Params = {
       );
     } else {
       message.action_request_active_duration = undefined;
+    }
+    if (
+      object.verify_request_active_duration !== undefined &&
+      object.verify_request_active_duration !== null
+    ) {
+      message.verify_request_active_duration = Duration.fromPartial(
+        object.verify_request_active_duration
+      );
+    } else {
+      message.verify_request_active_duration = undefined;
     }
     return message;
   },

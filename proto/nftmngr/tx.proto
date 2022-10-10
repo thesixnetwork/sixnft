@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sixnft.nftmngr;
+package thesixnetwork.sixnft.nftmngr;
 
 // this line is used by starport scaffolding # proto/tx/import
 import "nftmngr/on_chain_data.proto";
@@ -15,7 +15,6 @@ service Msg {
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
-  rpc AddTokenAttribute(MsgAddTokenAttribute) returns (MsgAddTokenAttributeResponse);
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
   rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
@@ -23,7 +22,14 @@ service Msg {
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
   rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
   rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
+  rpc ResyncAttributes(MsgResyncAttributes) returns (MsgResyncAttributesResponse);
+  rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
+}
+
+enum AttributeLocation {
+  NFT_ATTRIBUTE = 0;
+  TOKEN_ATTRIBUTE = 1;
 }
 
 message MsgCreateNFTSchema {
@@ -78,22 +84,11 @@ message MsgPerformActionByAdminResponse {
 message MsgAddAttribute {
   string creator = 1;
   string code = 2;
-  string base64NewAttriuteDefenition = 3;
+  AttributeLocation location = 3;
+  string base64NewAttriuteDefenition = 4;
 }
 
 message MsgAddAttributeResponse {
-  string code = 1;
-  string name = 2;
-  OnChainData onchainData = 3;
-}
-
-message MsgAddTokenAttribute {
-  string creator = 1;
-  string code = 2;
-  string base64NewTokenAttriute = 3;
-}
-
-message MsgAddTokenAttributeResponse {
   string code = 1;
   string name = 2;
   OnChainData onchainData = 3;
@@ -177,6 +172,26 @@ message MsgRemoveSystemActioner {
 message MsgRemoveSystemActionerResponse {
   string nftSchemaCode = 1;
   string actioner = 2;
+}
+
+message MsgResyncAttributesResponse {
+  string nftSchemaCode = 1;
+}
+
+message MsgShowAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  bool show = 3;
+  repeated string attributeNames = 4;
+}
+
+message MsgShowAttributesResponse {
+  string nftSchema = 1;
+}
+message MsgResyncAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

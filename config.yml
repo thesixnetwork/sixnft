@@ -43,6 +43,15 @@ genesis:
             params:
                 mint_request_active_duration: "120s"
                 action_request_active_duration: "120s"
+                verify_request_active_duration: "120s"
         nftadmin:
             authorization:
                 root_admin: 6nft1q3566qhn4hnjf8l0zt90daew2ade2yc6l5usaq
+build:
+    binary: "sixnftd"
+    main: "cmd/sixnftd"
+    ldflags:
+      - '-X "github.com/cosmos/cosmos-sdk/version.BuildTags=netgo,ledger"'
+    tags:
+      - netgo
+      - ledger

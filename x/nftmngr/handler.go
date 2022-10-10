@@ -29,9 +29,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgAddAttribute:
 			res, err := msgServer.AddAttribute(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgAddTokenAttribute:
-			res, err := msgServer.AddTokenAttribute(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgAddAction:
 			res, err := msgServer.AddAction(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
@@ -52,6 +49,12 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgRemoveSystemActioner:
 			res, err := msgServer.RemoveSystemActioner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgResyncAttributes:
+			res, err := msgServer.ResyncAttributes(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgShowAttributes:
+			res, err := msgServer.ShowAttributes(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:

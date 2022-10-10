@@ -28,6 +28,31 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type AttributeLocation int32
+
+const (
+	AttributeLocation_NFT_ATTRIBUTE   AttributeLocation = 0
+	AttributeLocation_TOKEN_ATTRIBUTE AttributeLocation = 1
+)
+
+var AttributeLocation_name = map[int32]string{
+	0: "NFT_ATTRIBUTE",
+	1: "TOKEN_ATTRIBUTE",
+}
+
+var AttributeLocation_value = map[string]int32{
+	"NFT_ATTRIBUTE":   0,
+	"TOKEN_ATTRIBUTE": 1,
+}
+
+func (x AttributeLocation) String() string {
+	return proto.EnumName(AttributeLocation_name, int32(x))
+}
+
+func (AttributeLocation) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{0}
+}
+
 type MsgCreateNFTSchema struct {
 	Creator         string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
 	NftSchemaBase64 string `protobuf:"bytes,2,opt,name=nftSchemaBase64,proto3" json:"nftSchemaBase64,omitempty"`
@@ -541,9 +566,10 @@ func (m *MsgPerformActionByAdminResponse) GetTokenId() string {
 }
 
 type MsgAddAttribute struct {
-	Creator                     string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	Code                        string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Base64NewAttriuteDefenition string `protobuf:"bytes,3,opt,name=base64NewAttriuteDefenition,proto3" json:"base64NewAttriuteDefenition,omitempty"`
+	Creator                     string            `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Code                        string            `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Location                    AttributeLocation `protobuf:"varint,3,opt,name=location,proto3,enum=thesixnetwork.sixnft.nftmngr.AttributeLocation" json:"location,omitempty"`
+	Base64NewAttriuteDefenition string            `protobuf:"bytes,4,opt,name=base64NewAttriuteDefenition,proto3" json:"base64NewAttriuteDefenition,omitempty"`
 }
 
 func (m *MsgAddAttribute) Reset()         { *m = MsgAddAttribute{} }
@@ -591,6 +617,13 @@ func (m *MsgAddAttribute) GetCode() string {
 		return m.Code
 	}
 	return ""
+}
+
+func (m *MsgAddAttribute) GetLocation() AttributeLocation {
+	if m != nil {
+		return m.Location
+	}
+	return AttributeLocation_NFT_ATTRIBUTE
 }
 
 func (m *MsgAddAttribute) GetBase64NewAttriuteDefenition() string {
@@ -660,126 +693,6 @@ func (m *MsgAddAttributeResponse) GetOnchainData() *OnChainData {
 	return nil
 }
 
-type MsgAddTokenAttribute struct {
-	Creator                string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	Code                   string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
-	Base64NewTokenAttriute string `protobuf:"bytes,3,opt,name=base64NewTokenAttriute,proto3" json:"base64NewTokenAttriute,omitempty"`
-}
-
-func (m *MsgAddTokenAttribute) Reset()         { *m = MsgAddTokenAttribute{} }
-func (m *MsgAddTokenAttribute) String() string { return proto.CompactTextString(m) }
-func (*MsgAddTokenAttribute) ProtoMessage()    {}
-func (*MsgAddTokenAttribute) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{11}
-}
-func (m *MsgAddTokenAttribute) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *MsgAddTokenAttribute) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_MsgAddTokenAttribute.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *MsgAddTokenAttribute) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgAddTokenAttribute.Merge(m, src)
-}
-func (m *MsgAddTokenAttribute) XXX_Size() int {
-	return m.Size()
-}
-func (m *MsgAddTokenAttribute) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgAddTokenAttribute.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_MsgAddTokenAttribute proto.InternalMessageInfo
-
-func (m *MsgAddTokenAttribute) GetCreator() string {
-	if m != nil {
-		return m.Creator
-	}
-	return ""
-}
-
-func (m *MsgAddTokenAttribute) GetCode() string {
-	if m != nil {
-		return m.Code
-	}
-	return ""
-}
-
-func (m *MsgAddTokenAttribute) GetBase64NewTokenAttriute() string {
-	if m != nil {
-		return m.Base64NewTokenAttriute
-	}
-	return ""
-}
-
-type MsgAddTokenAttributeResponse struct {
-	Code        string       `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name        string       `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	OnchainData *OnChainData `protobuf:"bytes,3,opt,name=onchainData,proto3" json:"onchainData,omitempty"`
-}
-
-func (m *MsgAddTokenAttributeResponse) Reset()         { *m = MsgAddTokenAttributeResponse{} }
-func (m *MsgAddTokenAttributeResponse) String() string { return proto.CompactTextString(m) }
-func (*MsgAddTokenAttributeResponse) ProtoMessage()    {}
-func (*MsgAddTokenAttributeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{12}
-}
-func (m *MsgAddTokenAttributeResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *MsgAddTokenAttributeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_MsgAddTokenAttributeResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *MsgAddTokenAttributeResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_MsgAddTokenAttributeResponse.Merge(m, src)
-}
-func (m *MsgAddTokenAttributeResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *MsgAddTokenAttributeResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_MsgAddTokenAttributeResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_MsgAddTokenAttributeResponse proto.InternalMessageInfo
-
-func (m *MsgAddTokenAttributeResponse) GetCode() string {
-	if m != nil {
-		return m.Code
-	}
-	return ""
-}
-
-func (m *MsgAddTokenAttributeResponse) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *MsgAddTokenAttributeResponse) GetOnchainData() *OnChainData {
-	if m != nil {
-		return m.OnchainData
-	}
-	return nil
-}
-
 type MsgAddAction struct {
 	Creator         string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
 	Code            string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
@@ -790,7 +703,7 @@ func (m *MsgAddAction) Reset()         { *m = MsgAddAction{} }
 func (m *MsgAddAction) String() string { return proto.CompactTextString(m) }
 func (*MsgAddAction) ProtoMessage()    {}
 func (*MsgAddAction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{13}
+	return fileDescriptor_17e298b08d1e9780, []int{11}
 }
 func (m *MsgAddAction) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -850,7 +763,7 @@ func (m *MsgAddActionResponse) Reset()         { *m = MsgAddActionResponse{} }
 func (m *MsgAddActionResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgAddActionResponse) ProtoMessage()    {}
 func (*MsgAddActionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{14}
+	return fileDescriptor_17e298b08d1e9780, []int{12}
 }
 func (m *MsgAddActionResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -910,7 +823,7 @@ func (m *MsgSetNFTAttribute) Reset()         { *m = MsgSetNFTAttribute{} }
 func (m *MsgSetNFTAttribute) String() string { return proto.CompactTextString(m) }
 func (*MsgSetNFTAttribute) ProtoMessage()    {}
 func (*MsgSetNFTAttribute) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{15}
+	return fileDescriptor_17e298b08d1e9780, []int{13}
 }
 func (m *MsgSetNFTAttribute) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -970,7 +883,7 @@ func (m *MsgSetNFTAttributeResponse) Reset()         { *m = MsgSetNFTAttributeRe
 func (m *MsgSetNFTAttributeResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgSetNFTAttributeResponse) ProtoMessage()    {}
 func (*MsgSetNFTAttributeResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{16}
+	return fileDescriptor_17e298b08d1e9780, []int{14}
 }
 func (m *MsgSetNFTAttributeResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1030,7 +943,7 @@ func (m *MsgSetBaseUri) Reset()         { *m = MsgSetBaseUri{} }
 func (m *MsgSetBaseUri) String() string { return proto.CompactTextString(m) }
 func (*MsgSetBaseUri) ProtoMessage()    {}
 func (*MsgSetBaseUri) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{17}
+	return fileDescriptor_17e298b08d1e9780, []int{15}
 }
 func (m *MsgSetBaseUri) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1089,7 +1002,7 @@ func (m *MsgSetBaseUriResponse) Reset()         { *m = MsgSetBaseUriResponse{} }
 func (m *MsgSetBaseUriResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgSetBaseUriResponse) ProtoMessage()    {}
 func (*MsgSetBaseUriResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{18}
+	return fileDescriptor_17e298b08d1e9780, []int{16}
 }
 func (m *MsgSetBaseUriResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1142,7 +1055,7 @@ func (m *MsgToggleAction) Reset()         { *m = MsgToggleAction{} }
 func (m *MsgToggleAction) String() string { return proto.CompactTextString(m) }
 func (*MsgToggleAction) ProtoMessage()    {}
 func (*MsgToggleAction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{19}
+	return fileDescriptor_17e298b08d1e9780, []int{17}
 }
 func (m *MsgToggleAction) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1202,7 +1115,7 @@ func (m *MsgToggleActionResponse) Reset()         { *m = MsgToggleActionResponse
 func (m *MsgToggleActionResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgToggleActionResponse) ProtoMessage()    {}
 func (*MsgToggleActionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{20}
+	return fileDescriptor_17e298b08d1e9780, []int{18}
 }
 func (m *MsgToggleActionResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1262,7 +1175,7 @@ func (m *MsgChangeSchemaOwner) Reset()         { *m = MsgChangeSchemaOwner{} }
 func (m *MsgChangeSchemaOwner) String() string { return proto.CompactTextString(m) }
 func (*MsgChangeSchemaOwner) ProtoMessage()    {}
 func (*MsgChangeSchemaOwner) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{21}
+	return fileDescriptor_17e298b08d1e9780, []int{19}
 }
 func (m *MsgChangeSchemaOwner) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1321,7 +1234,7 @@ func (m *MsgChangeSchemaOwnerResponse) Reset()         { *m = MsgChangeSchemaOwn
 func (m *MsgChangeSchemaOwnerResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgChangeSchemaOwnerResponse) ProtoMessage()    {}
 func (*MsgChangeSchemaOwnerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{22}
+	return fileDescriptor_17e298b08d1e9780, []int{20}
 }
 func (m *MsgChangeSchemaOwnerResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1374,7 +1287,7 @@ func (m *MsgAddSystemActioner) Reset()         { *m = MsgAddSystemActioner{} }
 func (m *MsgAddSystemActioner) String() string { return proto.CompactTextString(m) }
 func (*MsgAddSystemActioner) ProtoMessage()    {}
 func (*MsgAddSystemActioner) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{23}
+	return fileDescriptor_17e298b08d1e9780, []int{21}
 }
 func (m *MsgAddSystemActioner) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1433,7 +1346,7 @@ func (m *MsgAddSystemActionerResponse) Reset()         { *m = MsgAddSystemAction
 func (m *MsgAddSystemActionerResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgAddSystemActionerResponse) ProtoMessage()    {}
 func (*MsgAddSystemActionerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{24}
+	return fileDescriptor_17e298b08d1e9780, []int{22}
 }
 func (m *MsgAddSystemActionerResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1486,7 +1399,7 @@ func (m *MsgRemoveSystemActioner) Reset()         { *m = MsgRemoveSystemActioner
 func (m *MsgRemoveSystemActioner) String() string { return proto.CompactTextString(m) }
 func (*MsgRemoveSystemActioner) ProtoMessage()    {}
 func (*MsgRemoveSystemActioner) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{25}
+	return fileDescriptor_17e298b08d1e9780, []int{23}
 }
 func (m *MsgRemoveSystemActioner) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1545,7 +1458,7 @@ func (m *MsgRemoveSystemActionerResponse) Reset()         { *m = MsgRemoveSystem
 func (m *MsgRemoveSystemActionerResponse) String() string { return proto.CompactTextString(m) }
 func (*MsgRemoveSystemActionerResponse) ProtoMessage()    {}
 func (*MsgRemoveSystemActionerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_17e298b08d1e9780, []int{26}
+	return fileDescriptor_17e298b08d1e9780, []int{24}
 }
 func (m *MsgRemoveSystemActionerResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1588,113 +1501,340 @@ func (m *MsgRemoveSystemActionerResponse) GetActioner() string {
 	return ""
 }
 
+type MsgResyncAttributesResponse struct {
+	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+}
+
+func (m *MsgResyncAttributesResponse) Reset()         { *m = MsgResyncAttributesResponse{} }
+func (m *MsgResyncAttributesResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgResyncAttributesResponse) ProtoMessage()    {}
+func (*MsgResyncAttributesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{25}
+}
+func (m *MsgResyncAttributesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgResyncAttributesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgResyncAttributesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgResyncAttributesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgResyncAttributesResponse.Merge(m, src)
+}
+func (m *MsgResyncAttributesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgResyncAttributesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgResyncAttributesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgResyncAttributesResponse proto.InternalMessageInfo
+
+func (m *MsgResyncAttributesResponse) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+type MsgShowAttributes struct {
+	Creator        string   `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NftSchemaCode  string   `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Show           bool     `protobuf:"varint,3,opt,name=show,proto3" json:"show,omitempty"`
+	AttributeNames []string `protobuf:"bytes,4,rep,name=attributeNames,proto3" json:"attributeNames,omitempty"`
+}
+
+func (m *MsgShowAttributes) Reset()         { *m = MsgShowAttributes{} }
+func (m *MsgShowAttributes) String() string { return proto.CompactTextString(m) }
+func (*MsgShowAttributes) ProtoMessage()    {}
+func (*MsgShowAttributes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{26}
+}
+func (m *MsgShowAttributes) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgShowAttributes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgShowAttributes.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgShowAttributes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgShowAttributes.Merge(m, src)
+}
+func (m *MsgShowAttributes) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgShowAttributes) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgShowAttributes.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgShowAttributes proto.InternalMessageInfo
+
+func (m *MsgShowAttributes) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgShowAttributes) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgShowAttributes) GetShow() bool {
+	if m != nil {
+		return m.Show
+	}
+	return false
+}
+
+func (m *MsgShowAttributes) GetAttributeNames() []string {
+	if m != nil {
+		return m.AttributeNames
+	}
+	return nil
+}
+
+type MsgShowAttributesResponse struct {
+	NftSchema string `protobuf:"bytes,1,opt,name=nftSchema,proto3" json:"nftSchema,omitempty"`
+}
+
+func (m *MsgShowAttributesResponse) Reset()         { *m = MsgShowAttributesResponse{} }
+func (m *MsgShowAttributesResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgShowAttributesResponse) ProtoMessage()    {}
+func (*MsgShowAttributesResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{27}
+}
+func (m *MsgShowAttributesResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgShowAttributesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgShowAttributesResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgShowAttributesResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgShowAttributesResponse.Merge(m, src)
+}
+func (m *MsgShowAttributesResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgShowAttributesResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgShowAttributesResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgShowAttributesResponse proto.InternalMessageInfo
+
+func (m *MsgShowAttributesResponse) GetNftSchema() string {
+	if m != nil {
+		return m.NftSchema
+	}
+	return ""
+}
+
+type MsgResyncAttributes struct {
+	Creator       string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NftSchemaCode string `protobuf:"bytes,2,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	TokenId       string `protobuf:"bytes,3,opt,name=tokenId,proto3" json:"tokenId,omitempty"`
+}
+
+func (m *MsgResyncAttributes) Reset()         { *m = MsgResyncAttributes{} }
+func (m *MsgResyncAttributes) String() string { return proto.CompactTextString(m) }
+func (*MsgResyncAttributes) ProtoMessage()    {}
+func (*MsgResyncAttributes) Descriptor() ([]byte, []int) {
+	return fileDescriptor_17e298b08d1e9780, []int{28}
+}
+func (m *MsgResyncAttributes) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgResyncAttributes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgResyncAttributes.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgResyncAttributes) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgResyncAttributes.Merge(m, src)
+}
+func (m *MsgResyncAttributes) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgResyncAttributes) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgResyncAttributes.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgResyncAttributes proto.InternalMessageInfo
+
+func (m *MsgResyncAttributes) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgResyncAttributes) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *MsgResyncAttributes) GetTokenId() string {
+	if m != nil {
+		return m.TokenId
+	}
+	return ""
+}
+
 func init() {
-	proto.RegisterType((*MsgCreateNFTSchema)(nil), "sixnft.nftmngr.MsgCreateNFTSchema")
-	proto.RegisterType((*MsgCreateNFTSchemaResponse)(nil), "sixnft.nftmngr.MsgCreateNFTSchemaResponse")
-	proto.RegisterType((*MsgCreateMetadata)(nil), "sixnft.nftmngr.MsgCreateMetadata")
-	proto.RegisterType((*MsgCreateMetadataResponse)(nil), "sixnft.nftmngr.MsgCreateMetadataResponse")
-	proto.RegisterType((*OpenseaAttribute)(nil), "sixnft.nftmngr.OpenseaAttribute")
-	proto.RegisterType((*UpdatedOpenseaAttributes)(nil), "sixnft.nftmngr.UpdatedOpenseaAttributes")
-	proto.RegisterType((*UpdatedOriginData)(nil), "sixnft.nftmngr.UpdatedOriginData")
-	proto.RegisterType((*MsgPerformActionByAdmin)(nil), "sixnft.nftmngr.MsgPerformActionByAdmin")
-	proto.RegisterType((*MsgPerformActionByAdminResponse)(nil), "sixnft.nftmngr.MsgPerformActionByAdminResponse")
-	proto.RegisterType((*MsgAddAttribute)(nil), "sixnft.nftmngr.MsgAddAttribute")
-	proto.RegisterType((*MsgAddAttributeResponse)(nil), "sixnft.nftmngr.MsgAddAttributeResponse")
-	proto.RegisterType((*MsgAddTokenAttribute)(nil), "sixnft.nftmngr.MsgAddTokenAttribute")
-	proto.RegisterType((*MsgAddTokenAttributeResponse)(nil), "sixnft.nftmngr.MsgAddTokenAttributeResponse")
-	proto.RegisterType((*MsgAddAction)(nil), "sixnft.nftmngr.MsgAddAction")
-	proto.RegisterType((*MsgAddActionResponse)(nil), "sixnft.nftmngr.MsgAddActionResponse")
-	proto.RegisterType((*MsgSetNFTAttribute)(nil), "sixnft.nftmngr.MsgSetNFTAttribute")
-	proto.RegisterType((*MsgSetNFTAttributeResponse)(nil), "sixnft.nftmngr.MsgSetNFTAttributeResponse")
-	proto.RegisterType((*MsgSetBaseUri)(nil), "sixnft.nftmngr.MsgSetBaseUri")
-	proto.RegisterType((*MsgSetBaseUriResponse)(nil), "sixnft.nftmngr.MsgSetBaseUriResponse")
-	proto.RegisterType((*MsgToggleAction)(nil), "sixnft.nftmngr.MsgToggleAction")
-	proto.RegisterType((*MsgToggleActionResponse)(nil), "sixnft.nftmngr.MsgToggleActionResponse")
-	proto.RegisterType((*MsgChangeSchemaOwner)(nil), "sixnft.nftmngr.MsgChangeSchemaOwner")
-	proto.RegisterType((*MsgChangeSchemaOwnerResponse)(nil), "sixnft.nftmngr.MsgChangeSchemaOwnerResponse")
-	proto.RegisterType((*MsgAddSystemActioner)(nil), "sixnft.nftmngr.MsgAddSystemActioner")
-	proto.RegisterType((*MsgAddSystemActionerResponse)(nil), "sixnft.nftmngr.MsgAddSystemActionerResponse")
-	proto.RegisterType((*MsgRemoveSystemActioner)(nil), "sixnft.nftmngr.MsgRemoveSystemActioner")
-	proto.RegisterType((*MsgRemoveSystemActionerResponse)(nil), "sixnft.nftmngr.MsgRemoveSystemActionerResponse")
+	proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AttributeLocation", AttributeLocation_name, AttributeLocation_value)
+	proto.RegisterType((*MsgCreateNFTSchema)(nil), "thesixnetwork.sixnft.nftmngr.MsgCreateNFTSchema")
+	proto.RegisterType((*MsgCreateNFTSchemaResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgCreateNFTSchemaResponse")
+	proto.RegisterType((*MsgCreateMetadata)(nil), "thesixnetwork.sixnft.nftmngr.MsgCreateMetadata")
+	proto.RegisterType((*MsgCreateMetadataResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgCreateMetadataResponse")
+	proto.RegisterType((*OpenseaAttribute)(nil), "thesixnetwork.sixnft.nftmngr.OpenseaAttribute")
+	proto.RegisterType((*UpdatedOpenseaAttributes)(nil), "thesixnetwork.sixnft.nftmngr.UpdatedOpenseaAttributes")
+	proto.RegisterType((*UpdatedOriginData)(nil), "thesixnetwork.sixnft.nftmngr.UpdatedOriginData")
+	proto.RegisterType((*MsgPerformActionByAdmin)(nil), "thesixnetwork.sixnft.nftmngr.MsgPerformActionByAdmin")
+	proto.RegisterType((*MsgPerformActionByAdminResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgPerformActionByAdminResponse")
+	proto.RegisterType((*MsgAddAttribute)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddAttribute")
+	proto.RegisterType((*MsgAddAttributeResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddAttributeResponse")
+	proto.RegisterType((*MsgAddAction)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddAction")
+	proto.RegisterType((*MsgAddActionResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddActionResponse")
+	proto.RegisterType((*MsgSetNFTAttribute)(nil), "thesixnetwork.sixnft.nftmngr.MsgSetNFTAttribute")
+	proto.RegisterType((*MsgSetNFTAttributeResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgSetNFTAttributeResponse")
+	proto.RegisterType((*MsgSetBaseUri)(nil), "thesixnetwork.sixnft.nftmngr.MsgSetBaseUri")
+	proto.RegisterType((*MsgSetBaseUriResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgSetBaseUriResponse")
+	proto.RegisterType((*MsgToggleAction)(nil), "thesixnetwork.sixnft.nftmngr.MsgToggleAction")
+	proto.RegisterType((*MsgToggleActionResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgToggleActionResponse")
+	proto.RegisterType((*MsgChangeSchemaOwner)(nil), "thesixnetwork.sixnft.nftmngr.MsgChangeSchemaOwner")
+	proto.RegisterType((*MsgChangeSchemaOwnerResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgChangeSchemaOwnerResponse")
+	proto.RegisterType((*MsgAddSystemActioner)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddSystemActioner")
+	proto.RegisterType((*MsgAddSystemActionerResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgAddSystemActionerResponse")
+	proto.RegisterType((*MsgRemoveSystemActioner)(nil), "thesixnetwork.sixnft.nftmngr.MsgRemoveSystemActioner")
+	proto.RegisterType((*MsgRemoveSystemActionerResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgRemoveSystemActionerResponse")
+	proto.RegisterType((*MsgResyncAttributesResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgResyncAttributesResponse")
+	proto.RegisterType((*MsgShowAttributes)(nil), "thesixnetwork.sixnft.nftmngr.MsgShowAttributes")
+	proto.RegisterType((*MsgShowAttributesResponse)(nil), "thesixnetwork.sixnft.nftmngr.MsgShowAttributesResponse")
+	proto.RegisterType((*MsgResyncAttributes)(nil), "thesixnetwork.sixnft.nftmngr.MsgResyncAttributes")
 }
 
 func init() { proto.RegisterFile("nftmngr/tx.proto", fileDescriptor_17e298b08d1e9780) }
 
 var fileDescriptor_17e298b08d1e9780 = []byte{
-	// 1159 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x58, 0x4d, 0x6f, 0xdb, 0xb6,
-	0x1b, 0x8f, 0xe2, 0x26, 0x6d, 0x9e, 0x34, 0x2f, 0x56, 0x93, 0xd6, 0x51, 0x5a, 0x37, 0x25, 0xd2,
-	0x7f, 0xf3, 0x2f, 0x06, 0x7b, 0xc8, 0x86, 0x5e, 0x86, 0x02, 0xcd, 0x0b, 0x82, 0xe5, 0x90, 0x64,
-	0x70, 0xdc, 0xad, 0xd8, 0xd6, 0x69, 0x8c, 0x45, 0x29, 0x42, 0x63, 0x4a, 0x90, 0xe8, 0x26, 0x06,
-	0x36, 0x60, 0x3b, 0xec, 0xb6, 0xc3, 0x80, 0x1e, 0x77, 0xdc, 0x3e, 0xcc, 0x8e, 0x3d, 0xee, 0x38,
-	0x24, 0x5f, 0x64, 0x10, 0x49, 0xc9, 0xb2, 0x44, 0xd9, 0x71, 0x56, 0xe4, 0x26, 0x92, 0xbf, 0xe7,
-	0xfd, 0xf7, 0x3c, 0xa4, 0x0d, 0xf3, 0xd4, 0x66, 0x6d, 0xea, 0x04, 0x75, 0x76, 0x56, 0xf3, 0x03,
-	0x8f, 0x79, 0xfa, 0x6c, 0xe8, 0x9e, 0x51, 0x9b, 0xd5, 0xe4, 0x81, 0xb1, 0x1c, 0x23, 0x3c, 0x6a,
-	0xb6, 0x8e, 0xb1, 0x4b, 0x4d, 0x0b, 0x33, 0x2c, 0xc0, 0x06, 0x8a, 0x0f, 0x31, 0x63, 0x81, 0x7b,
-	0xd4, 0x61, 0xc4, 0xb4, 0x88, 0xed, 0x52, 0x97, 0xb9, 0x1e, 0x95, 0x98, 0x47, 0x31, 0x86, 0xda,
-	0xcc, 0xec, 0xe1, 0xde, 0xe2, 0x93, 0x0e, 0x91, 0x90, 0x25, 0xc7, 0xf3, 0x9c, 0x13, 0x52, 0xe7,
-	0xab, 0xa3, 0x8e, 0x5d, 0xc7, 0xb4, 0x2b, 0x8e, 0xd0, 0x2b, 0xd0, 0xf7, 0x42, 0x67, 0x2b, 0x20,
-	0x98, 0x91, 0xfd, 0x9d, 0xe6, 0x61, 0xeb, 0x98, 0xb4, 0xb1, 0x5e, 0x81, 0x9b, 0xad, 0x68, 0xcb,
-	0x0b, 0x2a, 0xda, 0x8a, 0xb6, 0x36, 0xd5, 0x88, 0x97, 0xfa, 0x1a, 0xcc, 0x51, 0x9b, 0x09, 0xd8,
-	0x26, 0x0e, 0xc9, 0xb3, 0x4f, 0x2b, 0xe3, 0x1c, 0x91, 0xdd, 0x46, 0x1f, 0x83, 0x91, 0xd7, 0xdc,
-	0x20, 0xa1, 0xef, 0xd1, 0x90, 0xe8, 0x3a, 0xdc, 0x68, 0x79, 0x16, 0x91, 0xea, 0xf9, 0x37, 0x7a,
-	0xa7, 0x41, 0x39, 0x11, 0xd9, 0x23, 0x0c, 0x47, 0x99, 0x18, 0xe0, 0xcb, 0x2a, 0xcc, 0x24, 0x46,
-	0xb7, 0x22, 0x65, 0xc2, 0x93, 0xfe, 0xcd, 0x48, 0x9e, 0x79, 0x6f, 0x08, 0xdd, 0xb5, 0x2a, 0x25,
-	0x21, 0x2f, 0x97, 0x91, 0xfc, 0x11, 0xf7, 0x75, 0x7f, 0xa7, 0xb9, 0x8d, 0x19, 0xae, 0xdc, 0x10,
-	0xf2, 0x7d, 0x9b, 0xe8, 0x1b, 0x58, 0xca, 0x39, 0x95, 0x84, 0x91, 0x73, 0x41, 0x1b, 0xe2, 0xc2,
-	0x78, 0x9f, 0x0b, 0xe8, 0x35, 0xcc, 0x1f, 0xf8, 0x84, 0x86, 0x04, 0x6f, 0xc4, 0x95, 0xd3, 0x1f,
-	0x00, 0xb0, 0x00, 0xbb, 0xcc, 0x64, 0x5d, 0x3f, 0x56, 0x38, 0xc5, 0x77, 0x9a, 0x5d, 0x9f, 0xe8,
-	0x4f, 0x61, 0x82, 0xd7, 0x96, 0xab, 0x9a, 0x5e, 0x5f, 0xa8, 0x89, 0xe2, 0xd6, 0xe2, 0xe2, 0xd6,
-	0x36, 0x68, 0xb7, 0x21, 0x20, 0xe8, 0x5b, 0xa8, 0xbc, 0xf4, 0x2d, 0xcc, 0x88, 0x95, 0xb5, 0x12,
-	0xea, 0x2f, 0x00, 0x12, 0xb6, 0x84, 0x15, 0x6d, 0xa5, 0xb4, 0x36, 0xbd, 0xbe, 0x52, 0xeb, 0x67,
-	0x67, 0x2d, 0x2b, 0xd6, 0x48, 0xc9, 0x20, 0x1f, 0xca, 0xb1, 0xf6, 0xc0, 0x75, 0x5c, 0x1a, 0xa5,
-	0x4b, 0xdf, 0x86, 0x9b, 0x9e, 0x10, 0xe2, 0xae, 0x4f, 0xaf, 0xaf, 0x65, 0x75, 0x16, 0x79, 0xf4,
-	0xf9, 0x58, 0x23, 0x16, 0xdd, 0x5c, 0x84, 0x3b, 0x1d, 0x01, 0x33, 0x3d, 0xae, 0x9b, 0x77, 0x05,
-	0xfa, 0x53, 0x83, 0x7b, 0x7b, 0xa1, 0xf3, 0x05, 0x09, 0x6c, 0x2f, 0x68, 0x6f, 0xb4, 0xa2, 0x36,
-	0xd8, 0xec, 0x6e, 0x58, 0x6d, 0x97, 0x0e, 0xe0, 0xc9, 0xff, 0x38, 0x67, 0xcd, 0x90, 0x17, 0xc4,
-	0x6c, 0x5d, 0x81, 0x29, 0x77, 0x61, 0x12, 0x73, 0x63, 0x92, 0x22, 0x72, 0xa5, 0x2f, 0xc2, 0x64,
-	0x40, 0x6c, 0xd3, 0xb5, 0x2a, 0x13, 0x7c, 0x7f, 0x22, 0x20, 0xf6, 0xae, 0x85, 0x2c, 0x78, 0x58,
-	0xe0, 0x65, 0x42, 0x1c, 0x85, 0x4f, 0x4a, 0xea, 0x2c, 0xc1, 0x2d, 0xee, 0x44, 0x64, 0x23, 0xc3,
-	0x9d, 0x9f, 0x35, 0x98, 0xdb, 0x0b, 0x9d, 0x0d, 0xcb, 0xea, 0x71, 0xa7, 0x38, 0x09, 0x71, 0xc3,
-	0x8d, 0xf7, 0x1a, 0x4e, 0x7f, 0x01, 0xcb, 0x92, 0xeb, 0xe4, 0x94, 0xeb, 0xe8, 0x30, 0xb2, 0x4d,
-	0x6c, 0x22, 0xe6, 0x8b, 0x4c, 0xc2, 0x20, 0x08, 0xfa, 0x49, 0x14, 0x24, 0xed, 0xc3, 0xa0, 0x16,
-	0x8f, 0xf6, 0x28, 0x6e, 0x27, 0x5e, 0x44, 0xdf, 0xfa, 0x73, 0x98, 0xf6, 0x28, 0x1f, 0x7d, 0xbc,
-	0x09, 0x4b, 0x9c, 0x35, 0xcb, 0x39, 0x26, 0xd2, 0xad, 0x18, 0xd2, 0x48, 0xe3, 0xd1, 0x0f, 0xb0,
-	0x20, 0x3c, 0x68, 0x46, 0x79, 0xb9, 0x6a, 0x2a, 0x9e, 0xc1, 0xdd, 0x24, 0xce, 0x9e, 0xa2, 0x0e,
-	0x23, 0x32, 0x0b, 0x05, 0xa7, 0xe8, 0x17, 0x0d, 0xee, 0xab, 0xcc, 0x5f, 0x77, 0x16, 0x6c, 0xb8,
-	0x2d, 0xeb, 0x20, 0x98, 0x39, 0x5a, 0xf4, 0x6b, 0x30, 0xd7, 0xab, 0x72, 0x2b, 0x55, 0xfc, 0xec,
-	0x36, 0xfa, 0x31, 0xce, 0xb6, 0x58, 0x5f, 0x77, 0x98, 0xef, 0x34, 0x7e, 0x5f, 0x1d, 0x12, 0xb6,
-	0xbf, 0xd3, 0xbc, 0x4c, 0xad, 0x2f, 0xdb, 0xfb, 0x9f, 0x81, 0x21, 0x42, 0x35, 0x15, 0xd7, 0xa8,
-	0x4c, 0xc6, 0x3d, 0x99, 0x0c, 0x9b, 0x25, 0x96, 0xbf, 0xe4, 0x63, 0xf6, 0x77, 0x8d, 0xdf, 0x75,
-	0x19, 0xaf, 0x46, 0xee, 0xf5, 0xc7, 0x30, 0xdb, 0x33, 0x9c, 0xca, 0xdc, 0x4c, 0xb2, 0xbb, 0x1f,
-	0xa5, 0xb0, 0x06, 0x77, 0x8a, 0x7d, 0x2c, 0xd3, 0x9c, 0x77, 0xaf, 0x61, 0x46, 0x38, 0x17, 0x5d,
-	0xcc, 0x2f, 0x03, 0x77, 0x44, 0x6e, 0x54, 0x01, 0x28, 0x39, 0x95, 0xb2, 0xd2, 0x4a, 0x6a, 0x07,
-	0x3d, 0x87, 0xc5, 0x3e, 0xf5, 0x03, 0x29, 0x31, 0x0f, 0xa5, 0x4e, 0xe0, 0x4a, 0xfd, 0xd1, 0x27,
-	0xfa, 0x8a, 0x0f, 0xb1, 0xa6, 0xe7, 0x38, 0x27, 0xe4, 0x4a, 0xdc, 0xed, 0xcd, 0xe6, 0x52, 0x7a,
-	0x36, 0xa3, 0x5f, 0xc5, 0x68, 0x4a, 0x6b, 0x1e, 0x99, 0xad, 0xbb, 0x50, 0x4e, 0xb1, 0x2f, 0xd5,
-	0x19, 0x43, 0x38, 0x9b, 0x97, 0x42, 0x01, 0x6f, 0x9c, 0xad, 0x63, 0x4c, 0x1d, 0x22, 0x6a, 0x7e,
-	0x70, 0x4a, 0x49, 0xf0, 0x9f, 0x9f, 0x37, 0x06, 0xdc, 0xa2, 0xe4, 0x94, 0xeb, 0x92, 0x09, 0x48,
-	0xd6, 0xe8, 0x7b, 0x3e, 0x9b, 0x72, 0x36, 0x47, 0x7c, 0xbd, 0xa4, 0x2d, 0x8c, 0x67, 0x2c, 0x04,
-	0xf1, 0x38, 0x38, 0xec, 0x86, 0x8c, 0xc8, 0xbb, 0xee, 0xc3, 0x44, 0x85, 0xa5, 0xae, 0x38, 0xaa,
-	0x78, 0x2d, 0xa3, 0xca, 0xd9, 0x1c, 0x3d, 0xaa, 0xc4, 0xc2, 0x78, 0xc6, 0x42, 0x87, 0x33, 0xa7,
-	0x41, 0xda, 0xde, 0x5b, 0x72, 0x8d, 0x81, 0xb5, 0xf8, 0xb3, 0x41, 0x65, 0xf6, 0xc3, 0xc5, 0xb6,
-	0xfe, 0xc7, 0x14, 0x94, 0xf6, 0x42, 0x47, 0xc7, 0x30, 0x97, 0x7d, 0xf5, 0xa3, 0x2c, 0xa5, 0xf3,
-	0xef, 0x77, 0xe3, 0xe9, 0x70, 0x4c, 0xe2, 0xec, 0x77, 0x30, 0x9b, 0x79, 0xcb, 0x3f, 0x2a, 0x94,
-	0x8e, 0x21, 0xc6, 0xff, 0x87, 0x42, 0x12, 0xfd, 0x3e, 0x2c, 0x28, 0x5f, 0x82, 0x4f, 0x14, 0x2a,
-	0x54, 0x40, 0xa3, 0x7e, 0x49, 0x60, 0x62, 0xf1, 0x15, 0xdc, 0xee, 0x7b, 0x6e, 0x3d, 0x54, 0x28,
-	0x48, 0x03, 0x8c, 0x27, 0x43, 0x00, 0x89, 0x66, 0x07, 0xca, 0xf9, 0x27, 0xcc, 0xaa, 0x5a, 0xba,
-	0x1f, 0x65, 0x7c, 0x74, 0x19, 0x54, 0x62, 0xe8, 0x00, 0xa6, 0x7a, 0xaf, 0x84, 0xfb, 0x05, 0xee,
-	0xf1, 0x53, 0x63, 0x75, 0xd0, 0x69, 0xa2, 0x10, 0xc3, 0x5c, 0xf6, 0x3a, 0x56, 0x11, 0x29, 0x83,
-	0x51, 0x12, 0xa9, 0xe8, 0x02, 0x6d, 0x00, 0xa4, 0xae, 0xaf, 0x07, 0x6a, 0x49, 0x79, 0x6c, 0x3c,
-	0x1e, 0x78, 0x9c, 0x2e, 0x65, 0xdf, 0xa5, 0xa3, 0x2a, 0x65, 0x1a, 0xa0, 0x2c, 0xa5, 0xf2, 0x72,
-	0x71, 0xa0, 0x9c, 0x1f, 0xf3, 0xaa, 0x5c, 0xe6, 0x50, 0xca, 0x52, 0x16, 0x8f, 0x6f, 0xc1, 0x99,
-	0xcc, 0x80, 0x2a, 0x28, 0x5a, 0x3f, 0xaa, 0x88, 0x33, 0x05, 0x53, 0xc7, 0x87, 0x05, 0xe5, 0x30,
-	0x54, 0xa5, 0x44, 0x05, 0x54, 0x36, 0xda, 0xa0, 0x39, 0xb7, 0xb9, 0xfb, 0xd7, 0x79, 0x55, 0x7b,
-	0x7f, 0x5e, 0xd5, 0xfe, 0x39, 0xaf, 0x6a, 0xbf, 0x5d, 0x54, 0xc7, 0xde, 0x5f, 0x54, 0xc7, 0xfe,
-	0xbe, 0xa8, 0x8e, 0x7d, 0x5d, 0x77, 0x5c, 0x76, 0xdc, 0x39, 0xaa, 0xb5, 0xbc, 0x76, 0x9d, 0x1d,
-	0x93, 0x48, 0x2f, 0x61, 0xa7, 0x5e, 0xf0, 0xa6, 0x2e, 0x4c, 0xd4, 0xcf, 0xea, 0xc9, 0x7f, 0x2e,
-	0x5d, 0x9f, 0x84, 0x47, 0x93, 0xfc, 0x87, 0xf1, 0x27, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0xe7,
-	0x16, 0x78, 0xb9, 0x8b, 0x11, 0x00, 0x00,
+	// 1296 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0x5d, 0x6f, 0xdb, 0xe4,
+	0x17, 0xaf, 0x9b, 0x6e, 0x6b, 0x4e, 0x5f, 0xd2, 0xb8, 0xed, 0x7f, 0xa9, 0xdb, 0x7f, 0x28, 0x16,
+	0x4c, 0xa5, 0x88, 0x64, 0x64, 0x6c, 0x30, 0xa6, 0x49, 0xa4, 0xdd, 0x2a, 0xaa, 0xd2, 0x14, 0xb9,
+	0x29, 0x43, 0xa0, 0x29, 0xb8, 0xf1, 0x63, 0xc7, 0xb4, 0x79, 0x1c, 0xd9, 0x4f, 0x96, 0x06, 0x69,
+	0x08, 0x89, 0x4b, 0x10, 0x20, 0xed, 0x0e, 0x6e, 0xf9, 0x30, 0x5c, 0xa1, 0x5d, 0x72, 0x89, 0xda,
+	0x4f, 0xc0, 0x37, 0x40, 0x7e, 0x6c, 0x3f, 0xf1, 0x5b, 0x12, 0xbb, 0x1b, 0x70, 0x67, 0x9f, 0x9c,
+	0x73, 0x7e, 0xe7, 0xfd, 0x1c, 0x07, 0x16, 0xb0, 0x4a, 0xda, 0x58, 0x33, 0xcb, 0xe4, 0xac, 0xd4,
+	0x31, 0x0d, 0x62, 0xf0, 0x6b, 0xa4, 0x85, 0x2c, 0xfd, 0x0c, 0x23, 0xd2, 0x33, 0xcc, 0x93, 0x92,
+	0xfd, 0xa8, 0x92, 0x92, 0xcb, 0x26, 0xac, 0x7a, 0xfc, 0x06, 0x6e, 0x34, 0x5b, 0xb2, 0x8e, 0x1b,
+	0x8a, 0x4c, 0x64, 0x47, 0x54, 0x10, 0xbd, 0x1f, 0x65, 0x42, 0x4c, 0xfd, 0xb8, 0x4b, 0x50, 0x43,
+	0x41, 0xaa, 0x8e, 0x75, 0xa2, 0x1b, 0xd8, 0xe5, 0x79, 0xd5, 0xe3, 0xc1, 0x2a, 0x69, 0x0c, 0xf8,
+	0x9e, 0xc8, 0xa7, 0x5d, 0xe4, 0xb2, 0xac, 0x68, 0x86, 0xa1, 0x9d, 0xa2, 0x32, 0x7d, 0x3b, 0xee,
+	0xaa, 0x65, 0x19, 0xf7, 0x9d, 0x9f, 0xc4, 0x4f, 0x81, 0xdf, 0xb7, 0xb4, 0x6d, 0x13, 0xc9, 0x04,
+	0xd5, 0x76, 0xea, 0x87, 0xcd, 0x16, 0x6a, 0xcb, 0x7c, 0x01, 0xae, 0x35, 0x6d, 0x92, 0x61, 0x16,
+	0xb8, 0x75, 0x6e, 0x23, 0x2b, 0x79, 0xaf, 0xfc, 0x06, 0xe4, 0xb0, 0x4a, 0x1c, 0xb6, 0x2d, 0xd9,
+	0x42, 0x77, 0xde, 0x29, 0x4c, 0x52, 0x8e, 0x30, 0x59, 0xbc, 0x09, 0x42, 0x54, 0xb3, 0x84, 0xac,
+	0x8e, 0x81, 0x2d, 0xc4, 0xf3, 0x30, 0xd5, 0x34, 0x14, 0xe4, 0xaa, 0xa7, 0xcf, 0xe2, 0x33, 0x0e,
+	0xf2, 0x4c, 0x64, 0x1f, 0x11, 0xd9, 0x8e, 0xc4, 0x08, 0x5b, 0x5e, 0x83, 0x39, 0x06, 0xba, 0x6d,
+	0x2b, 0x73, 0x2c, 0x09, 0x12, 0x6d, 0x79, 0x62, 0x9c, 0x20, 0xbc, 0xab, 0x14, 0x32, 0x8e, 0xbc,
+	0xfb, 0x6a, 0xcb, 0x1f, 0x53, 0x5b, 0x6b, 0x3b, 0xf5, 0x07, 0x32, 0x91, 0x0b, 0x53, 0x8e, 0x7c,
+	0x80, 0x28, 0x7e, 0x0e, 0x2b, 0x11, 0xa3, 0x98, 0x1b, 0x11, 0x13, 0xb8, 0x31, 0x26, 0x4c, 0x06,
+	0x4c, 0x10, 0x1f, 0xc3, 0xc2, 0x41, 0x07, 0x61, 0x0b, 0xc9, 0x55, 0x2f, 0x73, 0xfc, 0xff, 0x01,
+	0x88, 0x29, 0xeb, 0xa4, 0x41, 0xfa, 0x1d, 0x4f, 0x61, 0x96, 0x52, 0xea, 0xfd, 0x0e, 0xe2, 0x37,
+	0xe1, 0x0a, 0xcd, 0x2d, 0x55, 0x35, 0x53, 0x59, 0x2a, 0x39, 0xc9, 0x2d, 0x79, 0xc9, 0x2d, 0x55,
+	0x71, 0x5f, 0x72, 0x58, 0xc4, 0x2f, 0xa1, 0x70, 0xd4, 0x51, 0x64, 0x82, 0x94, 0x30, 0x8a, 0xc5,
+	0xd7, 0x00, 0x58, 0xb5, 0x58, 0x05, 0x6e, 0x3d, 0xb3, 0x31, 0x53, 0x29, 0x95, 0x46, 0xd5, 0x6a,
+	0x29, 0xac, 0x44, 0xf2, 0x69, 0x10, 0xbf, 0x86, 0xbc, 0x87, 0x65, 0xea, 0x9a, 0x8e, 0xed, 0xe0,
+	0xf1, 0x12, 0x5c, 0x33, 0x1c, 0x21, 0xea, 0xc8, 0x4c, 0xe5, 0xce, 0x68, 0x84, 0x61, 0xd6, 0x7e,
+	0x38, 0x21, 0x79, 0x8a, 0xb6, 0x96, 0x61, 0xb1, 0xeb, 0xb0, 0x35, 0x0c, 0x8a, 0x44, 0x3b, 0x46,
+	0xfc, 0x95, 0x83, 0xeb, 0xfb, 0x96, 0xf6, 0x31, 0x32, 0x55, 0xc3, 0x6c, 0x57, 0x9b, 0x76, 0x8b,
+	0x6c, 0xf5, 0xab, 0x4a, 0x5b, 0xc7, 0x23, 0x6a, 0xe8, 0x06, 0xad, 0xe7, 0x86, 0x45, 0x93, 0xd5,
+	0x68, 0x5e, 0xa2, 0x8a, 0xfe, 0x07, 0x57, 0x65, 0x0a, 0xe6, 0x96, 0x8f, 0xfb, 0xc6, 0x2f, 0xc3,
+	0x55, 0x13, 0xa9, 0x0d, 0x5d, 0x29, 0x5c, 0xa1, 0xf4, 0x2b, 0x26, 0x52, 0x77, 0x15, 0x51, 0x81,
+	0x57, 0x86, 0x58, 0xc9, 0x8a, 0x2a, 0xc6, 0xa6, 0xd8, 0xb2, 0x5a, 0x81, 0x69, 0x6a, 0x84, 0x8d,
+	0x11, 0xaa, 0xab, 0xdf, 0x39, 0xc8, 0xed, 0x5b, 0x5a, 0x55, 0x51, 0x06, 0x75, 0x35, 0x3c, 0x08,
+	0x5e, 0x33, 0x4e, 0x0e, 0x9a, 0x91, 0xdf, 0x83, 0xe9, 0x53, 0xa3, 0x29, 0x53, 0xc7, 0x6c, 0x8f,
+	0xe7, 0x2b, 0xe5, 0xd1, 0xa9, 0x63, 0x40, 0x1f, 0xb9, 0x62, 0x12, 0x53, 0xc0, 0x7f, 0x00, 0xab,
+	0x6e, 0x53, 0xa1, 0x1e, 0xe5, 0xeb, 0x12, 0xf4, 0x00, 0xa9, 0xc8, 0x19, 0x64, 0x6e, 0xe0, 0x46,
+	0xb1, 0x88, 0x3f, 0x38, 0xd9, 0xf5, 0x3b, 0x34, 0x6a, 0x96, 0xd8, 0x34, 0x2c, 0xb7, 0x99, 0x4b,
+	0xf6, 0x33, 0xbf, 0x07, 0x33, 0x06, 0xa6, 0x33, 0x96, 0x76, 0x7b, 0x86, 0x16, 0xe4, 0x1b, 0x63,
+	0x4a, 0x1e, 0x6f, 0x7b, 0x02, 0x92, 0x5f, 0x5a, 0x54, 0x61, 0xd6, 0xb5, 0xc7, 0x49, 0x77, 0xba,
+	0xe8, 0x6e, 0x40, 0x6e, 0xe0, 0x6d, 0x93, 0x05, 0x39, 0x2b, 0x85, 0xc9, 0xe2, 0x77, 0x1c, 0x2c,
+	0xf9, 0x81, 0xfe, 0x5b, 0xaf, 0x9f, 0x71, 0x74, 0x5f, 0x1c, 0x22, 0x52, 0xdb, 0xa9, 0x27, 0x29,
+	0xad, 0xa4, 0xfd, 0x75, 0x0f, 0x04, 0xc7, 0xf3, 0x46, 0xcc, 0x1a, 0x73, 0x63, 0x73, 0xdd, 0x8d,
+	0x8d, 0x4a, 0x18, 0xf2, 0x27, 0x74, 0xcc, 0xfd, 0xc2, 0xd1, 0x5d, 0x13, 0xb2, 0x2a, 0x75, 0x3f,
+	0xbd, 0x0e, 0xf3, 0x03, 0x60, 0x5f, 0x1c, 0xe7, 0x18, 0xb5, 0x66, 0x07, 0xb4, 0x04, 0x8b, 0xc3,
+	0x6d, 0xcc, 0xe3, 0x88, 0x75, 0x8f, 0x61, 0xce, 0x31, 0xce, 0x5e, 0x8c, 0x47, 0xa6, 0x9e, 0xb2,
+	0x54, 0x8a, 0x00, 0x18, 0xf5, 0x5c, 0x59, 0x17, 0xc5, 0x47, 0x11, 0xef, 0xc3, 0x72, 0x40, 0xfd,
+	0xc8, 0x02, 0x59, 0x80, 0x4c, 0xd7, 0xd4, 0x5d, 0xfd, 0xf6, 0xa3, 0xf8, 0x88, 0x0e, 0x8a, 0xba,
+	0xa1, 0x69, 0xa7, 0xe8, 0x52, 0xa5, 0x3c, 0x98, 0x7f, 0x19, 0xff, 0xfc, 0x13, 0x7f, 0x76, 0x3a,
+	0xd6, 0xaf, 0x39, 0x75, 0xed, 0x3e, 0x82, 0xbc, 0xaf, 0xfa, 0x7c, 0x8d, 0x92, 0xaa, 0x82, 0xa3,
+	0x3a, 0x44, 0x93, 0x36, 0xd5, 0x76, 0x4b, 0xc6, 0x1a, 0x72, 0x2a, 0xe0, 0xa0, 0x87, 0x91, 0xf9,
+	0xc2, 0xc7, 0x86, 0x00, 0xd3, 0x18, 0xf5, 0xa8, 0x2e, 0x37, 0x1c, 0xec, 0x5d, 0xfc, 0x02, 0xd6,
+	0xe2, 0x30, 0x53, 0xde, 0x12, 0x7e, 0x84, 0xc9, 0x10, 0x82, 0xe9, 0x8d, 0x8a, 0xc3, 0xbe, 0x45,
+	0x90, 0xbb, 0x5d, 0x5e, 0x8e, 0x57, 0xb2, 0xab, 0xcb, 0xf3, 0xca, 0x7b, 0x77, 0xbd, 0x8a, 0x60,
+	0xa6, 0xf7, 0x8a, 0x21, 0x4c, 0x86, 0x10, 0xba, 0xb4, 0x8e, 0x24, 0xd4, 0x36, 0x9e, 0xa0, 0x7f,
+	0xd1, 0xb1, 0x26, 0x5d, 0xd4, 0x71, 0xb0, 0x2f, 0xd1, 0xb7, 0x6d, 0x58, 0xa5, 0x20, 0x56, 0x1f,
+	0x37, 0x07, 0xd7, 0x4e, 0x3a, 0x00, 0xf1, 0x47, 0xe7, 0x6e, 0x3e, 0x6c, 0x19, 0x3d, 0xdf, 0x7d,
+	0xf7, 0xa2, 0xb1, 0xe1, 0x61, 0xca, 0x6a, 0x19, 0x3d, 0x1a, 0x97, 0x69, 0x89, 0x3e, 0xf3, 0x37,
+	0x7c, 0x13, 0xd2, 0x9e, 0x85, 0x56, 0x61, 0x6a, 0x3d, 0xb3, 0x91, 0x95, 0x42, 0x54, 0xf1, 0x2e,
+	0xbd, 0x99, 0x83, 0x06, 0x31, 0xa7, 0xd6, 0x20, 0xcb, 0x90, 0xbc, 0xf3, 0x96, 0x11, 0x44, 0x03,
+	0x16, 0x63, 0x22, 0xf2, 0xcf, 0x7d, 0x05, 0x6c, 0xde, 0x83, 0x7c, 0xe4, 0x74, 0xe1, 0xf3, 0x30,
+	0x57, 0xdb, 0xa9, 0x37, 0xaa, 0xf5, 0xba, 0xb4, 0xbb, 0x75, 0x54, 0x7f, 0xb8, 0x30, 0xc1, 0x2f,
+	0x42, 0xae, 0x7e, 0xb0, 0xf7, 0xb0, 0xe6, 0x23, 0x72, 0x95, 0xbf, 0x66, 0x21, 0xb3, 0x6f, 0x69,
+	0xfc, 0x53, 0xc8, 0x85, 0xbf, 0xa1, 0x6e, 0x8e, 0x1e, 0x50, 0xd1, 0x6f, 0x23, 0xe1, 0xbd, 0xb4,
+	0x12, 0x2c, 0xa4, 0x5f, 0xc1, 0x7c, 0xe8, 0xab, 0xa9, 0x9c, 0x50, 0x97, 0x27, 0x20, 0xbc, 0x9b,
+	0x52, 0x80, 0x61, 0x7f, 0xcf, 0xc1, 0x52, 0xec, 0xd1, 0x7d, 0x7b, 0xac, 0xc6, 0x38, 0x31, 0xe1,
+	0xfe, 0xa5, 0xc4, 0x98, 0x39, 0x04, 0x66, 0x03, 0x57, 0xef, 0x5b, 0x63, 0xd5, 0xf9, 0xd9, 0x85,
+	0xdb, 0xa9, 0xd8, 0x19, 0xea, 0x09, 0x64, 0x07, 0xa7, 0xe0, 0x66, 0x22, 0x1d, 0x94, 0x57, 0xa8,
+	0x24, 0xe7, 0x65, 0x60, 0x4f, 0x21, 0x17, 0x3e, 0xc0, 0xc6, 0x17, 0x5b, 0x48, 0x22, 0x41, 0xb1,
+	0x0d, 0x3b, 0xa7, 0x30, 0x80, 0xef, 0x98, 0x79, 0x33, 0x89, 0x1e, 0x97, 0x59, 0xb8, 0x95, 0x82,
+	0xd9, 0x9f, 0xd1, 0xc0, 0x79, 0x32, 0x3e, 0xa3, 0x7e, 0xf6, 0x04, 0x19, 0x8d, 0x3d, 0x51, 0xbe,
+	0xe5, 0x20, 0x1f, 0xbd, 0x0f, 0xc6, 0xa7, 0x2b, 0x22, 0x23, 0xbc, 0x9f, 0x5e, 0x26, 0x60, 0x45,
+	0x74, 0x9f, 0x27, 0x2a, 0x9a, 0xa0, 0x4c, 0x02, 0x2b, 0x86, 0xef, 0x70, 0xbb, 0xc5, 0x63, 0xf7,
+	0xef, 0xf8, 0xd8, 0xc6, 0x89, 0x25, 0x68, 0xf1, 0x91, 0x6b, 0xf7, 0x1b, 0x0e, 0x16, 0x22, 0x0b,
+	0xe2, 0xed, 0x04, 0x3a, 0x83, 0x22, 0xc2, 0xdd, 0xd4, 0x22, 0xfe, 0x81, 0x1b, 0x5a, 0xb7, 0xe3,
+	0x07, 0x6e, 0x50, 0x20, 0xc1, 0xc0, 0x8d, 0xdf, 0x9f, 0x5b, 0xbb, 0xbf, 0x9d, 0x17, 0xb9, 0xe7,
+	0xe7, 0x45, 0xee, 0xcf, 0xf3, 0x22, 0xf7, 0xd3, 0x45, 0x71, 0xe2, 0xf9, 0x45, 0x71, 0xe2, 0x8f,
+	0x8b, 0xe2, 0xc4, 0x67, 0x65, 0x4d, 0x27, 0xad, 0xee, 0x71, 0xa9, 0x69, 0xb4, 0xcb, 0x01, 0xe5,
+	0x65, 0x47, 0x79, 0xf9, 0xac, 0xcc, 0xfe, 0x9d, 0xec, 0x77, 0x90, 0x75, 0x7c, 0x95, 0xfe, 0x69,
+	0x74, 0xeb, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0x33, 0x80, 0xed, 0x78, 0xb5, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1713,7 +1853,6 @@ type MsgClient interface {
 	CreateMetadata(ctx context.Context, in *MsgCreateMetadata, opts ...grpc.CallOption) (*MsgCreateMetadataResponse, error)
 	PerformActionByAdmin(ctx context.Context, in *MsgPerformActionByAdmin, opts ...grpc.CallOption) (*MsgPerformActionByAdminResponse, error)
 	AddAttribute(ctx context.Context, in *MsgAddAttribute, opts ...grpc.CallOption) (*MsgAddAttributeResponse, error)
-	AddTokenAttribute(ctx context.Context, in *MsgAddTokenAttribute, opts ...grpc.CallOption) (*MsgAddTokenAttributeResponse, error)
 	AddAction(ctx context.Context, in *MsgAddAction, opts ...grpc.CallOption) (*MsgAddActionResponse, error)
 	SetNFTAttribute(ctx context.Context, in *MsgSetNFTAttribute, opts ...grpc.CallOption) (*MsgSetNFTAttributeResponse, error)
 	SetBaseUri(ctx context.Context, in *MsgSetBaseUri, opts ...grpc.CallOption) (*MsgSetBaseUriResponse, error)
@@ -1721,6 +1860,8 @@ type MsgClient interface {
 	ChangeSchemaOwner(ctx context.Context, in *MsgChangeSchemaOwner, opts ...grpc.CallOption) (*MsgChangeSchemaOwnerResponse, error)
 	AddSystemActioner(ctx context.Context, in *MsgAddSystemActioner, opts ...grpc.CallOption) (*MsgAddSystemActionerResponse, error)
 	RemoveSystemActioner(ctx context.Context, in *MsgRemoveSystemActioner, opts ...grpc.CallOption) (*MsgRemoveSystemActionerResponse, error)
+	ResyncAttributes(ctx context.Context, in *MsgResyncAttributes, opts ...grpc.CallOption) (*MsgResyncAttributesResponse, error)
+	ShowAttributes(ctx context.Context, in *MsgShowAttributes, opts ...grpc.CallOption) (*MsgShowAttributesResponse, error)
 }
 
 type msgClient struct {
@@ -1733,7 +1874,7 @@ func NewMsgClient(cc grpc1.ClientConn) MsgClient {
 
 func (c *msgClient) CreateNFTSchema(ctx context.Context, in *MsgCreateNFTSchema, opts ...grpc.CallOption) (*MsgCreateNFTSchemaResponse, error) {
 	out := new(MsgCreateNFTSchemaResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/CreateNFTSchema", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/CreateNFTSchema", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1742,7 +1883,7 @@ func (c *msgClient) CreateNFTSchema(ctx context.Context, in *MsgCreateNFTSchema,
 
 func (c *msgClient) CreateMetadata(ctx context.Context, in *MsgCreateMetadata, opts ...grpc.CallOption) (*MsgCreateMetadataResponse, error) {
 	out := new(MsgCreateMetadataResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/CreateMetadata", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/CreateMetadata", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1751,7 +1892,7 @@ func (c *msgClient) CreateMetadata(ctx context.Context, in *MsgCreateMetadata, o
 
 func (c *msgClient) PerformActionByAdmin(ctx context.Context, in *MsgPerformActionByAdmin, opts ...grpc.CallOption) (*MsgPerformActionByAdminResponse, error) {
 	out := new(MsgPerformActionByAdminResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/PerformActionByAdmin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/PerformActionByAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1760,16 +1901,7 @@ func (c *msgClient) PerformActionByAdmin(ctx context.Context, in *MsgPerformActi
 
 func (c *msgClient) AddAttribute(ctx context.Context, in *MsgAddAttribute, opts ...grpc.CallOption) (*MsgAddAttributeResponse, error) {
 	out := new(MsgAddAttributeResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/AddAttribute", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) AddTokenAttribute(ctx context.Context, in *MsgAddTokenAttribute, opts ...grpc.CallOption) (*MsgAddTokenAttributeResponse, error) {
-	out := new(MsgAddTokenAttributeResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/AddTokenAttribute", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/AddAttribute", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1778,7 +1910,7 @@ func (c *msgClient) AddTokenAttribute(ctx context.Context, in *MsgAddTokenAttrib
 
 func (c *msgClient) AddAction(ctx context.Context, in *MsgAddAction, opts ...grpc.CallOption) (*MsgAddActionResponse, error) {
 	out := new(MsgAddActionResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/AddAction", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/AddAction", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1787,7 +1919,7 @@ func (c *msgClient) AddAction(ctx context.Context, in *MsgAddAction, opts ...grp
 
 func (c *msgClient) SetNFTAttribute(ctx context.Context, in *MsgSetNFTAttribute, opts ...grpc.CallOption) (*MsgSetNFTAttributeResponse, error) {
 	out := new(MsgSetNFTAttributeResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/SetNFTAttribute", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/SetNFTAttribute", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1796,7 +1928,7 @@ func (c *msgClient) SetNFTAttribute(ctx context.Context, in *MsgSetNFTAttribute,
 
 func (c *msgClient) SetBaseUri(ctx context.Context, in *MsgSetBaseUri, opts ...grpc.CallOption) (*MsgSetBaseUriResponse, error) {
 	out := new(MsgSetBaseUriResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/SetBaseUri", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/SetBaseUri", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1805,7 +1937,7 @@ func (c *msgClient) SetBaseUri(ctx context.Context, in *MsgSetBaseUri, opts ...g
 
 func (c *msgClient) ToggleAction(ctx context.Context, in *MsgToggleAction, opts ...grpc.CallOption) (*MsgToggleActionResponse, error) {
 	out := new(MsgToggleActionResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/ToggleAction", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/ToggleAction", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1814,7 +1946,7 @@ func (c *msgClient) ToggleAction(ctx context.Context, in *MsgToggleAction, opts 
 
 func (c *msgClient) ChangeSchemaOwner(ctx context.Context, in *MsgChangeSchemaOwner, opts ...grpc.CallOption) (*MsgChangeSchemaOwnerResponse, error) {
 	out := new(MsgChangeSchemaOwnerResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/ChangeSchemaOwner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/ChangeSchemaOwner", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1823,7 +1955,7 @@ func (c *msgClient) ChangeSchemaOwner(ctx context.Context, in *MsgChangeSchemaOw
 
 func (c *msgClient) AddSystemActioner(ctx context.Context, in *MsgAddSystemActioner, opts ...grpc.CallOption) (*MsgAddSystemActionerResponse, error) {
 	out := new(MsgAddSystemActionerResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/AddSystemActioner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/AddSystemActioner", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1832,7 +1964,25 @@ func (c *msgClient) AddSystemActioner(ctx context.Context, in *MsgAddSystemActio
 
 func (c *msgClient) RemoveSystemActioner(ctx context.Context, in *MsgRemoveSystemActioner, opts ...grpc.CallOption) (*MsgRemoveSystemActionerResponse, error) {
 	out := new(MsgRemoveSystemActionerResponse)
-	err := c.cc.Invoke(ctx, "/sixnft.nftmngr.Msg/RemoveSystemActioner", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/RemoveSystemActioner", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ResyncAttributes(ctx context.Context, in *MsgResyncAttributes, opts ...grpc.CallOption) (*MsgResyncAttributesResponse, error) {
+	out := new(MsgResyncAttributesResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/ResyncAttributes", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) ShowAttributes(ctx context.Context, in *MsgShowAttributes, opts ...grpc.CallOption) (*MsgShowAttributesResponse, error) {
+	out := new(MsgShowAttributesResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Msg/ShowAttributes", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1845,7 +1995,6 @@ type MsgServer interface {
 	CreateMetadata(context.Context, *MsgCreateMetadata) (*MsgCreateMetadataResponse, error)
 	PerformActionByAdmin(context.Context, *MsgPerformActionByAdmin) (*MsgPerformActionByAdminResponse, error)
 	AddAttribute(context.Context, *MsgAddAttribute) (*MsgAddAttributeResponse, error)
-	AddTokenAttribute(context.Context, *MsgAddTokenAttribute) (*MsgAddTokenAttributeResponse, error)
 	AddAction(context.Context, *MsgAddAction) (*MsgAddActionResponse, error)
 	SetNFTAttribute(context.Context, *MsgSetNFTAttribute) (*MsgSetNFTAttributeResponse, error)
 	SetBaseUri(context.Context, *MsgSetBaseUri) (*MsgSetBaseUriResponse, error)
@@ -1853,6 +2002,8 @@ type MsgServer interface {
 	ChangeSchemaOwner(context.Context, *MsgChangeSchemaOwner) (*MsgChangeSchemaOwnerResponse, error)
 	AddSystemActioner(context.Context, *MsgAddSystemActioner) (*MsgAddSystemActionerResponse, error)
 	RemoveSystemActioner(context.Context, *MsgRemoveSystemActioner) (*MsgRemoveSystemActionerResponse, error)
+	ResyncAttributes(context.Context, *MsgResyncAttributes) (*MsgResyncAttributesResponse, error)
+	ShowAttributes(context.Context, *MsgShowAttributes) (*MsgShowAttributesResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -1870,9 +2021,6 @@ func (*UnimplementedMsgServer) PerformActionByAdmin(ctx context.Context, req *Ms
 }
 func (*UnimplementedMsgServer) AddAttribute(ctx context.Context, req *MsgAddAttribute) (*MsgAddAttributeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAttribute not implemented")
-}
-func (*UnimplementedMsgServer) AddTokenAttribute(ctx context.Context, req *MsgAddTokenAttribute) (*MsgAddTokenAttributeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddTokenAttribute not implemented")
 }
 func (*UnimplementedMsgServer) AddAction(ctx context.Context, req *MsgAddAction) (*MsgAddActionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAction not implemented")
@@ -1895,6 +2043,12 @@ func (*UnimplementedMsgServer) AddSystemActioner(ctx context.Context, req *MsgAd
 func (*UnimplementedMsgServer) RemoveSystemActioner(ctx context.Context, req *MsgRemoveSystemActioner) (*MsgRemoveSystemActionerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveSystemActioner not implemented")
 }
+func (*UnimplementedMsgServer) ResyncAttributes(ctx context.Context, req *MsgResyncAttributes) (*MsgResyncAttributesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResyncAttributes not implemented")
+}
+func (*UnimplementedMsgServer) ShowAttributes(ctx context.Context, req *MsgShowAttributes) (*MsgShowAttributesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShowAttributes not implemented")
+}
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
 	s.RegisterService(&_Msg_serviceDesc, srv)
@@ -1910,7 +2064,7 @@ func _Msg_CreateNFTSchema_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/CreateNFTSchema",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/CreateNFTSchema",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).CreateNFTSchema(ctx, req.(*MsgCreateNFTSchema))
@@ -1928,7 +2082,7 @@ func _Msg_CreateMetadata_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/CreateMetadata",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/CreateMetadata",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).CreateMetadata(ctx, req.(*MsgCreateMetadata))
@@ -1946,7 +2100,7 @@ func _Msg_PerformActionByAdmin_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/PerformActionByAdmin",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/PerformActionByAdmin",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).PerformActionByAdmin(ctx, req.(*MsgPerformActionByAdmin))
@@ -1964,28 +2118,10 @@ func _Msg_AddAttribute_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/AddAttribute",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/AddAttribute",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).AddAttribute(ctx, req.(*MsgAddAttribute))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_AddTokenAttribute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgAddTokenAttribute)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).AddTokenAttribute(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/AddTokenAttribute",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).AddTokenAttribute(ctx, req.(*MsgAddTokenAttribute))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2000,7 +2136,7 @@ func _Msg_AddAction_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/AddAction",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/AddAction",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).AddAction(ctx, req.(*MsgAddAction))
@@ -2018,7 +2154,7 @@ func _Msg_SetNFTAttribute_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/SetNFTAttribute",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/SetNFTAttribute",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).SetNFTAttribute(ctx, req.(*MsgSetNFTAttribute))
@@ -2036,7 +2172,7 @@ func _Msg_SetBaseUri_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/SetBaseUri",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/SetBaseUri",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).SetBaseUri(ctx, req.(*MsgSetBaseUri))
@@ -2054,7 +2190,7 @@ func _Msg_ToggleAction_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/ToggleAction",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/ToggleAction",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).ToggleAction(ctx, req.(*MsgToggleAction))
@@ -2072,7 +2208,7 @@ func _Msg_ChangeSchemaOwner_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/ChangeSchemaOwner",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/ChangeSchemaOwner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).ChangeSchemaOwner(ctx, req.(*MsgChangeSchemaOwner))
@@ -2090,7 +2226,7 @@ func _Msg_AddSystemActioner_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/AddSystemActioner",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/AddSystemActioner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).AddSystemActioner(ctx, req.(*MsgAddSystemActioner))
@@ -2108,7 +2244,7 @@ func _Msg_RemoveSystemActioner_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/sixnft.nftmngr.Msg/RemoveSystemActioner",
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/RemoveSystemActioner",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MsgServer).RemoveSystemActioner(ctx, req.(*MsgRemoveSystemActioner))
@@ -2116,8 +2252,44 @@ func _Msg_RemoveSystemActioner_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_ResyncAttributes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgResyncAttributes)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ResyncAttributes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/ResyncAttributes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ResyncAttributes(ctx, req.(*MsgResyncAttributes))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_ShowAttributes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgShowAttributes)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).ShowAttributes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Msg/ShowAttributes",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).ShowAttributes(ctx, req.(*MsgShowAttributes))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "sixnft.nftmngr.Msg",
+	ServiceName: "thesixnetwork.sixnft.nftmngr.Msg",
 	HandlerType: (*MsgServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -2135,10 +2307,6 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddAttribute",
 			Handler:    _Msg_AddAttribute_Handler,
-		},
-		{
-			MethodName: "AddTokenAttribute",
-			Handler:    _Msg_AddTokenAttribute_Handler,
 		},
 		{
 			MethodName: "AddAction",
@@ -2167,6 +2335,14 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveSystemActioner",
 			Handler:    _Msg_RemoveSystemActioner_Handler,
+		},
+		{
+			MethodName: "ResyncAttributes",
+			Handler:    _Msg_ResyncAttributes_Handler,
+		},
+		{
+			MethodName: "ShowAttributes",
+			Handler:    _Msg_ShowAttributes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -2580,7 +2756,12 @@ func (m *MsgAddAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Base64NewAttriuteDefenition)
 		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64NewAttriuteDefenition)))
 		i--
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
+	}
+	if m.Location != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Location))
+		i--
+		dAtA[i] = 0x18
 	}
 	if len(m.Code) > 0 {
 		i -= len(m.Code)
@@ -2615,99 +2796,6 @@ func (m *MsgAddAttributeResponse) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *MsgAddAttributeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.OnchainData != nil {
-		{
-			size, err := m.OnchainData.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintTx(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Name) > 0 {
-		i -= len(m.Name)
-		copy(dAtA[i:], m.Name)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Name)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Code) > 0 {
-		i -= len(m.Code)
-		copy(dAtA[i:], m.Code)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Code)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *MsgAddTokenAttribute) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *MsgAddTokenAttribute) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *MsgAddTokenAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Base64NewTokenAttriute) > 0 {
-		i -= len(m.Base64NewTokenAttriute)
-		copy(dAtA[i:], m.Base64NewTokenAttriute)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64NewTokenAttriute)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.Code) > 0 {
-		i -= len(m.Code)
-		copy(dAtA[i:], m.Code)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Code)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Creator) > 0 {
-		i -= len(m.Creator)
-		copy(dAtA[i:], m.Creator)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *MsgAddTokenAttributeResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *MsgAddTokenAttributeResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *MsgAddTokenAttributeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -3339,6 +3427,166 @@ func (m *MsgRemoveSystemActionerResponse) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgResyncAttributesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgResyncAttributesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgResyncAttributesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgShowAttributes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgShowAttributes) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgShowAttributes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.AttributeNames) > 0 {
+		for iNdEx := len(m.AttributeNames) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.AttributeNames[iNdEx])
+			copy(dAtA[i:], m.AttributeNames[iNdEx])
+			i = encodeVarintTx(dAtA, i, uint64(len(m.AttributeNames[iNdEx])))
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if m.Show {
+		i--
+		if m.Show {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgShowAttributesResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgShowAttributesResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgShowAttributesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NftSchema) > 0 {
+		i -= len(m.NftSchema)
+		copy(dAtA[i:], m.NftSchema)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchema)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgResyncAttributes) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgResyncAttributes) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgResyncAttributes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.TokenId) > 0 {
+		i -= len(m.TokenId)
+		copy(dAtA[i:], m.TokenId)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.TokenId)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -3538,6 +3786,9 @@ func (m *MsgAddAttribute) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
+	if m.Location != 0 {
+		n += 1 + sovTx(uint64(m.Location))
+	}
 	l = len(m.Base64NewAttriuteDefenition)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
@@ -3546,48 +3797,6 @@ func (m *MsgAddAttribute) Size() (n int) {
 }
 
 func (m *MsgAddAttributeResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Code)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Name)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	if m.OnchainData != nil {
-		l = m.OnchainData.Size()
-		n += 1 + l + sovTx(uint64(l))
-	}
-	return n
-}
-
-func (m *MsgAddTokenAttribute) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Creator)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Code)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	l = len(m.Base64NewTokenAttriute)
-	if l > 0 {
-		n += 1 + l + sovTx(uint64(l))
-	}
-	return n
-}
-
-func (m *MsgAddTokenAttributeResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -3880,6 +4089,79 @@ func (m *MsgRemoveSystemActionerResponse) Size() (n int) {
 		n += 1 + l + sovTx(uint64(l))
 	}
 	l = len(m.Actioner)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgResyncAttributesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgShowAttributes) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Show {
+		n += 2
+	}
+	if len(m.AttributeNames) > 0 {
+		for _, s := range m.AttributeNames {
+			l = len(s)
+			n += 1 + l + sovTx(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *MsgShowAttributesResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchema)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgResyncAttributes) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.TokenId)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -5085,6 +5367,25 @@ func (m *MsgAddAttribute) Unmarshal(dAtA []byte) error {
 			m.Code = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Location", wireType)
+			}
+			m.Location = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Location |= AttributeLocation(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Base64NewAttriuteDefenition", wireType)
 			}
@@ -5164,302 +5465,6 @@ func (m *MsgAddAttributeResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgAddAttributeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Code = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Name = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field OnchainData", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.OnchainData == nil {
-				m.OnchainData = &OnChainData{}
-			}
-			if err := m.OnchainData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTx(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTx
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *MsgAddTokenAttribute) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTx
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: MsgAddTokenAttribute: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgAddTokenAttribute: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Creator = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Code = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Base64NewTokenAttriute", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowTx
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthTx
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthTx
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Base64NewTokenAttriute = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipTx(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthTx
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *MsgAddTokenAttributeResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowTx
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: MsgAddTokenAttributeResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: MsgAddTokenAttributeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -7485,6 +7490,482 @@ func (m *MsgRemoveSystemActionerResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Actioner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgResyncAttributesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgResyncAttributesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgResyncAttributesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgShowAttributes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgShowAttributes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgShowAttributes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Show", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Show = bool(v != 0)
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AttributeNames", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AttributeNames = append(m.AttributeNames, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgShowAttributesResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgShowAttributesResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgShowAttributesResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchema", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchema = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgResyncAttributes) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgResyncAttributes: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgResyncAttributes: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

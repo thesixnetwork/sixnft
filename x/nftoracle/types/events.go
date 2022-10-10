@@ -22,4 +22,10 @@ const (
 	EventTypeRunAction              = "run_action"
 	AttributeKeyRunActionResult     = "run_action_result"
 	AttributeKeyRunActionChangeList = "run_action_changelist"
+
+	EventTypeVerificationRequestCreated   = "verify_request_created"
+	AttributeKeyVerifyRequestID           = "verify_request_id"
+	AttributeKeyVerificationRequestStatus = "status"
+
+	AttributeRequestorAddress = "requestor_address"
 )

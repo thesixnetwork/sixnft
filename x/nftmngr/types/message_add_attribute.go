@@ -9,10 +9,11 @@ const TypeMsgAddAttribute = "add_attribute"
 
 var _ sdk.Msg = &MsgAddAttribute{}
 
-func NewMsgAddAttribute(creator string, code string, newAttibute string) *MsgAddAttribute {
+func NewMsgAddAttribute(creator string, code string, location AttributeLocation, newAttibute string) *MsgAddAttribute {
 	return &MsgAddAttribute{
 		Creator:                     creator,
 		Code:                        code,
+		Location:                    location,
 		Base64NewAttriuteDefenition: newAttibute,
 	}
 }
