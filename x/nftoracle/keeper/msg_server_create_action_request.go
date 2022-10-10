@@ -52,6 +52,16 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		}
 	}
 
+	oracleConfig, found := k.GetOracleConfig(ctx)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrOracleConfigNotFound, "")
+	}
+
+	// Verify msg.RequiredConfirmations is less than or equal to oracleConfig.MinimumConfirmation
+	if int32(msg.RequiredConfirm) < oracleConfig.MinimumConfirmation {
+		return nil, sdkerrors.Wrap(types.ErrRequiredConfirmTooLess, strconv.Itoa(int(oracleConfig.MinimumConfirmation)))
+	}
+
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
