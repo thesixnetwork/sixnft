@@ -48,6 +48,7 @@ var (
 	ErrNotSameTypeDefaultMintValue     = sdkerrors.Register(ModuleName, 209, "Not same type default mint value")
 	ErrInvalidAccdress                 = sdkerrors.Register(ModuleName, 210, "Invalid address")
 	ErrAttributeAlreadyHidden          = sdkerrors.Register(ModuleName, 211, "Attribute already hidden")
+	ErrDuplicateActionName             = sdkerrors.Register(ModuleName, 212, "Duplicate action name")
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists     = sdkerrors.Register(ModuleName, 300, "RefId already exists")
@@ -58,6 +59,7 @@ var (
 	ErrOrganizationOwner      = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
+	ErrInvalidActionName    = sdkerrors.Register(ModuleName, 501, "Invalid action name")
 
 	ErrSystemActionerAlreadyExists = sdkerrors.Register(ModuleName, 600, "System actioner already exists")
 	ErrSystemActionerDoesNotExists = sdkerrors.Register(ModuleName, 601, "System actioner does not exists")
