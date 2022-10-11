@@ -34608,21 +34608,18 @@ paths:
                     valid_until:
                       type: string
                       format: date-time
-                    origin_tx:
+                    contract_info:
                       type: array
                       items:
                         type: object
                         properties:
-                          transactionOriginDataInfo:
+                          contractOriginDataInfo:
                             type: object
                             properties:
                               chain:
                                 type: string
-                              tx_hash:
+                              contract_address:
                                 type: string
-                              block_number:
-                                type: string
-                                format: uint64
                               deployer_address:
                                 type: string
                           hash:
@@ -34775,21 +34772,18 @@ paths:
                   valid_until:
                     type: string
                     format: date-time
-                  origin_tx:
+                  contract_info:
                     type: array
                     items:
                       type: object
                       properties:
-                        transactionOriginDataInfo:
+                        contractOriginDataInfo:
                           type: object
                           properties:
                             chain:
                               type: string
-                            tx_hash:
+                            contract_address:
                               type: string
-                            block_number:
-                              type: string
-                              format: uint64
                             deployer_address:
                               type: string
                         hash:
@@ -59035,21 +59029,18 @@ definitions:
       valid_until:
         type: string
         format: date-time
-      origin_tx:
+      contract_info:
         type: array
         items:
           type: object
           properties:
-            transactionOriginDataInfo:
+            contractOriginDataInfo:
               type: object
               properties:
                 chain:
                   type: string
-                tx_hash:
+                contract_address:
                   type: string
-                block_number:
-                  type: string
-                  format: uint64
                 deployer_address:
                   type: string
             hash:
@@ -59237,19 +59228,16 @@ definitions:
       minimum_confirmation:
         type: integer
         format: int32
-  thesixnetwork.sixnft.nftoracle.OriginTxInfo:
+  thesixnetwork.sixnft.nftoracle.OriginContractInfo:
     type: object
     properties:
-      transactionOriginDataInfo:
+      contractOriginDataInfo:
         type: object
         properties:
           chain:
             type: string
-          tx_hash:
+          contract_address:
             type: string
-          block_number:
-            type: string
-            format: uint64
           deployer_address:
             type: string
       hash:
@@ -59259,6 +59247,15 @@ definitions:
         type: array
         items:
           type: string
+  thesixnetwork.sixnft.nftoracle.OriginContractParam:
+    type: object
+    properties:
+      chain:
+        type: string
+      contract_address:
+        type: string
+      deployer_address:
+        type: string
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -59419,21 +59416,18 @@ definitions:
             valid_until:
               type: string
               format: date-time
-            origin_tx:
+            contract_info:
               type: array
               items:
                 type: object
                 properties:
-                  transactionOriginDataInfo:
+                  contractOriginDataInfo:
                     type: object
                     properties:
                       chain:
                         type: string
-                      tx_hash:
+                      contract_address:
                         type: string
-                      block_number:
-                        type: string
-                        format: uint64
                       deployer_address:
                         type: string
                   hash:
@@ -59694,21 +59688,18 @@ definitions:
           valid_until:
             type: string
             format: date-time
-          origin_tx:
+          contract_info:
             type: array
             items:
               type: object
               properties:
-                transactionOriginDataInfo:
+                contractOriginDataInfo:
                   type: object
                   properties:
                     chain:
                       type: string
-                    tx_hash:
+                    contract_address:
                       type: string
-                    block_number:
-                      type: string
-                      format: uint64
                     deployer_address:
                       type: string
                 hash:
@@ -59839,16 +59830,4 @@ definitions:
       display_type:
         type: string
       max_value:
-        type: string
-  thesixnetwork.sixnft.nftoracle.TransactionOriginDataInfo:
-    type: object
-    properties:
-      chain:
-        type: string
-      tx_hash:
-        type: string
-      block_number:
-        type: string
-        format: uint64
-      deployer_address:
         type: string

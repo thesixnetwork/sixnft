@@ -57,7 +57,7 @@ export interface NftoracleCollectionOwnerRequest {
 
   /** @format date-time */
   valid_until?: string;
-  origin_tx?: NftoracleOriginTxInfo[];
+  contract_info?: NftoracleOriginContractInfo[];
 
   /** @format int64 */
   expired_height?: string;
@@ -143,12 +143,18 @@ export interface NftoracleOracleConfig {
   minimum_confirmation?: number;
 }
 
-export interface NftoracleOriginTxInfo {
-  transactionOriginDataInfo?: NftoracleTransactionOriginDataInfo;
+export interface NftoracleOriginContractInfo {
+  contractOriginDataInfo?: NftoracleOriginContractParam;
 
   /** @format byte */
   hash?: string;
   confirmers?: string[];
+}
+
+export interface NftoracleOriginContractParam {
+  chain?: string;
+  contract_address?: string;
+  deployer_address?: string;
 }
 
 /**
@@ -243,15 +249,6 @@ export interface NftoracleTrait {
   value?: string;
   display_type?: string;
   max_value?: string;
-}
-
-export interface NftoracleTransactionOriginDataInfo {
-  chain?: string;
-  tx_hash?: string;
-
-  /** @format uint64 */
-  block_number?: string;
-  deployer_address?: string;
 }
 
 export interface ProtobufAny {

@@ -121,74 +121,6 @@ func (m *NftOriginData) GetTraits() []*Trait {
 	return nil
 }
 
-type TransactionOriginDataInfo struct {
-	Chain           string `protobuf:"bytes,1,opt,name=chain,proto3" json:"chain,omitempty"`
-	TxHash          string `protobuf:"bytes,2,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
-	BlockNumber     uint64 `protobuf:"varint,3,opt,name=block_number,json=blockNumber,proto3" json:"block_number,omitempty"`
-	DeployerAddress string `protobuf:"bytes,4,opt,name=deployer_address,json=deployerAddress,proto3" json:"deployer_address,omitempty"`
-}
-
-func (m *TransactionOriginDataInfo) Reset()         { *m = TransactionOriginDataInfo{} }
-func (m *TransactionOriginDataInfo) String() string { return proto.CompactTextString(m) }
-func (*TransactionOriginDataInfo) ProtoMessage()    {}
-func (*TransactionOriginDataInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f60220a52ce49438, []int{1}
-}
-func (m *TransactionOriginDataInfo) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *TransactionOriginDataInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_TransactionOriginDataInfo.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *TransactionOriginDataInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_TransactionOriginDataInfo.Merge(m, src)
-}
-func (m *TransactionOriginDataInfo) XXX_Size() int {
-	return m.Size()
-}
-func (m *TransactionOriginDataInfo) XXX_DiscardUnknown() {
-	xxx_messageInfo_TransactionOriginDataInfo.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_TransactionOriginDataInfo proto.InternalMessageInfo
-
-func (m *TransactionOriginDataInfo) GetChain() string {
-	if m != nil {
-		return m.Chain
-	}
-	return ""
-}
-
-func (m *TransactionOriginDataInfo) GetTxHash() string {
-	if m != nil {
-		return m.TxHash
-	}
-	return ""
-}
-
-func (m *TransactionOriginDataInfo) GetBlockNumber() uint64 {
-	if m != nil {
-		return m.BlockNumber
-	}
-	return 0
-}
-
-func (m *TransactionOriginDataInfo) GetDeployerAddress() string {
-	if m != nil {
-		return m.DeployerAddress
-	}
-	return ""
-}
-
 type DataHash struct {
 	OriginData *NftOriginData `protobuf:"bytes,1,opt,name=origin_data,json=originData,proto3" json:"origin_data,omitempty"`
 	Hash       []byte         `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
@@ -199,7 +131,7 @@ func (m *DataHash) Reset()         { *m = DataHash{} }
 func (m *DataHash) String() string { return proto.CompactTextString(m) }
 func (*DataHash) ProtoMessage()    {}
 func (*DataHash) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f60220a52ce49438, []int{2}
+	return fileDescriptor_f60220a52ce49438, []int{1}
 }
 func (m *DataHash) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -249,114 +181,45 @@ func (m *DataHash) GetConfirmers() []string {
 	return nil
 }
 
-type OriginTxInfo struct {
-	TransactionOriginDataInfo *TransactionOriginDataInfo `protobuf:"bytes,1,opt,name=transactionOriginDataInfo,proto3" json:"transactionOriginDataInfo,omitempty"`
-	Hash                      []byte                     `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
-	Confirmers                []string                   `protobuf:"bytes,3,rep,name=confirmers,proto3" json:"confirmers,omitempty"`
-}
-
-func (m *OriginTxInfo) Reset()         { *m = OriginTxInfo{} }
-func (m *OriginTxInfo) String() string { return proto.CompactTextString(m) }
-func (*OriginTxInfo) ProtoMessage()    {}
-func (*OriginTxInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f60220a52ce49438, []int{3}
-}
-func (m *OriginTxInfo) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *OriginTxInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_OriginTxInfo.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *OriginTxInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OriginTxInfo.Merge(m, src)
-}
-func (m *OriginTxInfo) XXX_Size() int {
-	return m.Size()
-}
-func (m *OriginTxInfo) XXX_DiscardUnknown() {
-	xxx_messageInfo_OriginTxInfo.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_OriginTxInfo proto.InternalMessageInfo
-
-func (m *OriginTxInfo) GetTransactionOriginDataInfo() *TransactionOriginDataInfo {
-	if m != nil {
-		return m.TransactionOriginDataInfo
-	}
-	return nil
-}
-
-func (m *OriginTxInfo) GetHash() []byte {
-	if m != nil {
-		return m.Hash
-	}
-	return nil
-}
-
-func (m *OriginTxInfo) GetConfirmers() []string {
-	if m != nil {
-		return m.Confirmers
-	}
-	return nil
-}
-
 func init() {
 	proto.RegisterEnum("thesixnetwork.sixnft.nftoracle.RequestStatus", RequestStatus_name, RequestStatus_value)
 	proto.RegisterType((*NftOriginData)(nil), "thesixnetwork.sixnft.nftoracle.NftOriginData")
-	proto.RegisterType((*TransactionOriginDataInfo)(nil), "thesixnetwork.sixnft.nftoracle.TransactionOriginDataInfo")
 	proto.RegisterType((*DataHash)(nil), "thesixnetwork.sixnft.nftoracle.DataHash")
-	proto.RegisterType((*OriginTxInfo)(nil), "thesixnetwork.sixnft.nftoracle.OriginTxInfo")
 }
 
 func init() { proto.RegisterFile("nftoracle/request.proto", fileDescriptor_f60220a52ce49438) }
 
 var fileDescriptor_f60220a52ce49438 = []byte{
-	// 570 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x9c, 0x53, 0xcd, 0x6e, 0xd3, 0x4c,
-	0x14, 0xcd, 0x34, 0x69, 0xfb, 0x75, 0xd2, 0x7c, 0x44, 0x43, 0x45, 0xd2, 0x08, 0x99, 0x10, 0xa9,
-	0x52, 0x40, 0xc2, 0x16, 0x65, 0xc5, 0x82, 0x45, 0xeb, 0x18, 0x6a, 0x40, 0x4e, 0x65, 0x3b, 0xa2,
-	0xb0, 0xb1, 0x26, 0xce, 0xf8, 0x47, 0x8d, 0x3d, 0x61, 0x66, 0xa2, 0xa6, 0xcf, 0x80, 0x84, 0x58,
-	0xb2, 0xe0, 0x4d, 0x78, 0x01, 0x96, 0x5d, 0xb2, 0x44, 0xc9, 0x8b, 0x20, 0x8f, 0xdd, 0x26, 0x95,
-	0x28, 0x20, 0x76, 0xf7, 0x9e, 0x7b, 0xef, 0xc9, 0x39, 0x27, 0x1e, 0xd8, 0x48, 0x03, 0x41, 0x19,
-	0xf6, 0xc7, 0x44, 0x63, 0xe4, 0xfd, 0x94, 0x70, 0xa1, 0x4e, 0x18, 0x15, 0x14, 0x29, 0x22, 0x22,
-	0x3c, 0x9e, 0xa5, 0x44, 0x9c, 0x51, 0x76, 0xaa, 0x66, 0x65, 0x20, 0xd4, 0xab, 0xed, 0xd6, 0xca,
-	0x21, 0x9d, 0x90, 0x94, 0x13, 0x9c, 0x1f, 0xb6, 0x76, 0x42, 0x1a, 0x52, 0x59, 0x6a, 0x59, 0x55,
-	0xa0, 0xf7, 0x42, 0x4a, 0xc3, 0x31, 0xd1, 0x64, 0x37, 0x9c, 0x06, 0x9a, 0x88, 0x13, 0xc2, 0x05,
-	0x4e, 0x26, 0xf9, 0x42, 0xe7, 0x03, 0x80, 0x35, 0x2b, 0x10, 0x7d, 0x16, 0x87, 0x71, 0xda, 0xc3,
-	0x02, 0xa3, 0x1d, 0xb8, 0x1e, 0x27, 0x38, 0x24, 0x4d, 0xd0, 0x06, 0xdd, 0x2d, 0x3b, 0x6f, 0xd0,
-	0x1e, 0xfc, 0x3f, 0xa2, 0xe3, 0x11, 0x61, 0x1e, 0x1e, 0x8d, 0x18, 0xe1, 0xbc, 0xb9, 0x26, 0xc7,
-	0xb5, 0x1c, 0x3d, 0xc8, 0x41, 0xf4, 0x0c, 0x6e, 0x08, 0x86, 0x63, 0xc1, 0x9b, 0xe5, 0x76, 0xb9,
-	0x5b, 0xdd, 0xdf, 0x53, 0x7f, 0xef, 0x47, 0x75, 0xb3, 0x6d, 0xbb, 0x38, 0xea, 0x7c, 0x06, 0x70,
-	0xd7, 0x65, 0x38, 0xe5, 0xd8, 0x17, 0x31, 0x4d, 0x97, 0xaa, 0xcc, 0x34, 0xa0, 0x99, 0x32, 0x3f,
-	0xc2, 0x71, 0x7a, 0xa9, 0x4c, 0x36, 0xa8, 0x01, 0x37, 0xc5, 0xcc, 0x8b, 0x30, 0x8f, 0x0a, 0x49,
-	0x1b, 0x62, 0x76, 0x84, 0x79, 0x84, 0xee, 0xc3, 0xed, 0xe1, 0x98, 0xfa, 0xa7, 0x5e, 0x3a, 0x4d,
-	0x86, 0x84, 0x35, 0xcb, 0x6d, 0xd0, 0xad, 0xd8, 0x55, 0x89, 0x59, 0x12, 0x42, 0x0f, 0x60, 0x7d,
-	0x44, 0x26, 0x63, 0x7a, 0xbe, 0xe2, 0xab, 0x22, 0x49, 0x6e, 0x5d, 0xe2, 0x85, 0xb3, 0xce, 0x47,
-	0x00, 0xff, 0xcb, 0x94, 0x48, 0x6a, 0x0b, 0x56, 0xa9, 0xd4, 0xe6, 0x8d, 0xb0, 0xc0, 0x52, 0x4f,
-	0x75, 0xff, 0xd1, 0x9f, 0xbc, 0x5e, 0xcb, 0xd9, 0x86, 0x74, 0x99, 0x39, 0x82, 0x95, 0x2b, 0x03,
-	0xdb, 0xb6, 0xac, 0x91, 0x02, 0xa1, 0x4f, 0xd3, 0x20, 0x66, 0x09, 0x61, 0x79, 0x9c, 0x5b, 0xf6,
-	0x0a, 0xd2, 0xf9, 0x0a, 0xe0, 0x76, 0x4e, 0xe7, 0xce, 0x64, 0x3c, 0x67, 0x70, 0x57, 0xdc, 0x94,
-	0x5d, 0x21, 0xf1, 0xe9, 0x5f, 0xfc, 0x1d, 0xbf, 0x26, 0xb0, 0x6f, 0xe6, 0xfe, 0x17, 0xf5, 0x0f,
-	0xbf, 0x00, 0x58, 0xb3, 0xf3, 0x2f, 0xdf, 0x11, 0x58, 0x4c, 0x39, 0xaa, 0xc2, 0xcd, 0x63, 0xc3,
-	0xea, 0x99, 0xd6, 0x8b, 0x7a, 0x09, 0xb5, 0xe0, 0x1d, 0x67, 0xa0, 0xeb, 0x86, 0xe3, 0x78, 0x6f,
-	0x4c, 0xf7, 0xc8, 0xd3, 0xfb, 0x96, 0x63, 0x58, 0xce, 0xc0, 0xa9, 0x03, 0x74, 0x17, 0x36, 0x9f,
-	0x1f, 0x98, 0xaf, 0x8d, 0x9e, 0x1c, 0xf5, 0x07, 0x6e, 0x36, 0xd5, 0xf3, 0xe9, 0x5a, 0x46, 0x63,
-	0x9c, 0x1c, 0x9b, 0xb6, 0xd1, 0xab, 0x97, 0x51, 0x03, 0xde, 0x2e, 0x56, 0xfb, 0x96, 0x67, 0x9c,
-	0x18, 0xfa, 0xc0, 0x35, 0xfb, 0x56, 0xbd, 0x82, 0x14, 0xd8, 0x2a, 0x06, 0xb6, 0xf1, 0xd2, 0xd0,
-	0x5d, 0xef, 0xf0, 0xed, 0xca, 0x6f, 0xac, 0x1f, 0xbe, 0xfa, 0x36, 0x57, 0xc0, 0xc5, 0x5c, 0x01,
-	0x3f, 0xe6, 0x0a, 0xf8, 0xb4, 0x50, 0x4a, 0x17, 0x0b, 0xa5, 0xf4, 0x7d, 0xa1, 0x94, 0xde, 0x3d,
-	0x0e, 0x63, 0x11, 0x4d, 0x87, 0xaa, 0x4f, 0x13, 0xed, 0x5a, 0x98, 0x5a, 0x1e, 0xa6, 0x36, 0xd3,
-	0x96, 0x4f, 0x54, 0x9c, 0x4f, 0x08, 0x1f, 0x6e, 0xc8, 0xa7, 0xf6, 0xe4, 0x67, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0xe9, 0x4d, 0x04, 0x17, 0xf5, 0x03, 0x00, 0x00,
+	// 452 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0xcd, 0xf6, 0x0b, 0xba, 0x21, 0x28, 0x5a, 0x2a, 0x1a, 0x45, 0x68, 0xa9, 0x2a, 0x55, 0xaa,
+	0x90, 0xb0, 0x45, 0x39, 0x73, 0x68, 0x9d, 0x85, 0x1a, 0x90, 0x5d, 0xd9, 0x8e, 0x28, 0x5c, 0xac,
+	0x4d, 0xb2, 0xfe, 0x10, 0xb1, 0x37, 0xec, 0x4e, 0x44, 0xf9, 0x0d, 0x48, 0x88, 0x1f, 0xc0, 0x0f,
+	0xe2, 0xd8, 0x23, 0x47, 0x94, 0xfc, 0x11, 0xe4, 0xdd, 0x88, 0xa6, 0x17, 0xb8, 0xbd, 0x7d, 0xef,
+	0xcd, 0xf8, 0xcd, 0x78, 0xf0, 0x7e, 0x9d, 0x81, 0x54, 0x7c, 0x3c, 0x15, 0xae, 0x12, 0x9f, 0xe6,
+	0x42, 0x83, 0x33, 0x53, 0x12, 0x24, 0xa1, 0x50, 0x08, 0x5d, 0x5e, 0xd5, 0x02, 0x3e, 0x4b, 0xf5,
+	0xd1, 0x69, 0x60, 0x06, 0xce, 0x5f, 0x77, 0x7f, 0xad, 0x50, 0xce, 0x44, 0xad, 0x05, 0xb7, 0x85,
+	0xfd, 0xbd, 0x5c, 0xe6, 0xd2, 0x40, 0xb7, 0x41, 0x2b, 0xf6, 0x71, 0x2e, 0x65, 0x3e, 0x15, 0xae,
+	0x79, 0x8d, 0xe6, 0x99, 0x0b, 0x65, 0x25, 0x34, 0xf0, 0x6a, 0x66, 0x0d, 0x87, 0x5f, 0x11, 0xee,
+	0x04, 0x19, 0x84, 0xaa, 0xcc, 0xcb, 0x7a, 0xc0, 0x81, 0x93, 0x3d, 0xbc, 0x5d, 0x56, 0x3c, 0x17,
+	0x3d, 0x74, 0x80, 0x8e, 0x77, 0x23, 0xfb, 0x20, 0x47, 0xf8, 0x7e, 0x21, 0xa7, 0x13, 0xa1, 0x52,
+	0x3e, 0x99, 0x28, 0xa1, 0x75, 0x6f, 0xc3, 0xc8, 0x1d, 0xcb, 0x9e, 0x5a, 0x92, 0xbc, 0xc0, 0x3b,
+	0xa0, 0x78, 0x09, 0xba, 0xb7, 0x79, 0xb0, 0x79, 0xdc, 0x3e, 0x39, 0x72, 0xfe, 0x3d, 0x8f, 0x93,
+	0x34, 0xee, 0x68, 0x55, 0x74, 0xf8, 0x0d, 0xe1, 0xbb, 0x4d, 0x88, 0x73, 0xae, 0x0b, 0x12, 0xe0,
+	0xb6, 0x34, 0xb1, 0xd2, 0x09, 0x07, 0x6e, 0xe2, 0xb4, 0x4f, 0x9e, 0xfe, 0xaf, 0xe1, 0xad, 0x61,
+	0x22, 0x2c, 0x6f, 0x06, 0x23, 0x78, 0xab, 0xe0, 0xba, 0x30, 0xc1, 0xef, 0x45, 0x06, 0x13, 0x8a,
+	0xf1, 0x58, 0xd6, 0x59, 0xa9, 0x2a, 0xa1, 0x6c, 0xe6, 0xdd, 0x68, 0x8d, 0x79, 0xf2, 0x03, 0xe1,
+	0x4e, 0x64, 0x7f, 0x50, 0x0c, 0x1c, 0xe6, 0x9a, 0xb4, 0xf1, 0x9d, 0x0b, 0x16, 0x0c, 0xfc, 0xe0,
+	0x55, 0xb7, 0x45, 0xfa, 0xf8, 0x61, 0x3c, 0xf4, 0x3c, 0x16, 0xc7, 0xe9, 0x3b, 0x3f, 0x39, 0x4f,
+	0xbd, 0x30, 0x88, 0x59, 0x10, 0x0f, 0xe3, 0x2e, 0x22, 0x8f, 0x70, 0xef, 0xe5, 0xa9, 0xff, 0x96,
+	0x0d, 0x8c, 0x14, 0x0e, 0x93, 0x46, 0xf5, 0xac, 0xba, 0xd1, 0xb4, 0x61, 0x97, 0x17, 0x7e, 0xc4,
+	0x06, 0xdd, 0x4d, 0xb2, 0x8f, 0x1f, 0xac, 0xac, 0x61, 0x90, 0xb2, 0x4b, 0xe6, 0x0d, 0x13, 0x3f,
+	0x0c, 0xba, 0x5b, 0x84, 0xe2, 0xfe, 0x4a, 0x88, 0xd8, 0x6b, 0xe6, 0x25, 0xe9, 0xd9, 0xfb, 0xb5,
+	0x6f, 0x6c, 0x9f, 0xbd, 0xf9, 0xb9, 0xa0, 0xe8, 0x7a, 0x41, 0xd1, 0xef, 0x05, 0x45, 0xdf, 0x97,
+	0xb4, 0x75, 0xbd, 0xa4, 0xad, 0x5f, 0x4b, 0xda, 0xfa, 0xf0, 0x2c, 0x2f, 0xa1, 0x98, 0x8f, 0x9c,
+	0xb1, 0xac, 0xdc, 0x5b, 0x1b, 0x73, 0xed, 0xc6, 0xdc, 0x2b, 0xf7, 0xe6, 0x92, 0xe0, 0xcb, 0x4c,
+	0xe8, 0xd1, 0x8e, 0xb9, 0x88, 0xe7, 0x7f, 0x02, 0x00, 0x00, 0xff, 0xff, 0x1d, 0x6a, 0x9a, 0x5d,
+	0x9c, 0x02, 0x00, 0x00,
 }
 
 func (m *NftOriginData) Marshal() (dAtA []byte, err error) {
@@ -404,55 +267,6 @@ func (m *NftOriginData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.Image)
 		copy(dAtA[i:], m.Image)
 		i = encodeVarintRequest(dAtA, i, uint64(len(m.Image)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *TransactionOriginDataInfo) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *TransactionOriginDataInfo) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *TransactionOriginDataInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.DeployerAddress) > 0 {
-		i -= len(m.DeployerAddress)
-		copy(dAtA[i:], m.DeployerAddress)
-		i = encodeVarintRequest(dAtA, i, uint64(len(m.DeployerAddress)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.BlockNumber != 0 {
-		i = encodeVarintRequest(dAtA, i, uint64(m.BlockNumber))
-		i--
-		dAtA[i] = 0x18
-	}
-	if len(m.TxHash) > 0 {
-		i -= len(m.TxHash)
-		copy(dAtA[i:], m.TxHash)
-		i = encodeVarintRequest(dAtA, i, uint64(len(m.TxHash)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.Chain) > 0 {
-		i -= len(m.Chain)
-		copy(dAtA[i:], m.Chain)
-		i = encodeVarintRequest(dAtA, i, uint64(len(m.Chain)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -510,57 +324,6 @@ func (m *DataHash) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *OriginTxInfo) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *OriginTxInfo) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *OriginTxInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.Confirmers) > 0 {
-		for iNdEx := len(m.Confirmers) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.Confirmers[iNdEx])
-			copy(dAtA[i:], m.Confirmers[iNdEx])
-			i = encodeVarintRequest(dAtA, i, uint64(len(m.Confirmers[iNdEx])))
-			i--
-			dAtA[i] = 0x1a
-		}
-	}
-	if len(m.Hash) > 0 {
-		i -= len(m.Hash)
-		copy(dAtA[i:], m.Hash)
-		i = encodeVarintRequest(dAtA, i, uint64(len(m.Hash)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.TransactionOriginDataInfo != nil {
-		{
-			size, err := m.TransactionOriginDataInfo.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintRequest(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
 func encodeVarintRequest(dAtA []byte, offset int, v uint64) int {
 	offset -= sovRequest(v)
 	base := offset
@@ -595,30 +358,6 @@ func (m *NftOriginData) Size() (n int) {
 	return n
 }
 
-func (m *TransactionOriginDataInfo) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Chain)
-	if l > 0 {
-		n += 1 + l + sovRequest(uint64(l))
-	}
-	l = len(m.TxHash)
-	if l > 0 {
-		n += 1 + l + sovRequest(uint64(l))
-	}
-	if m.BlockNumber != 0 {
-		n += 1 + sovRequest(uint64(m.BlockNumber))
-	}
-	l = len(m.DeployerAddress)
-	if l > 0 {
-		n += 1 + l + sovRequest(uint64(l))
-	}
-	return n
-}
-
 func (m *DataHash) Size() (n int) {
 	if m == nil {
 		return 0
@@ -627,29 +366,6 @@ func (m *DataHash) Size() (n int) {
 	_ = l
 	if m.OriginData != nil {
 		l = m.OriginData.Size()
-		n += 1 + l + sovRequest(uint64(l))
-	}
-	l = len(m.Hash)
-	if l > 0 {
-		n += 1 + l + sovRequest(uint64(l))
-	}
-	if len(m.Confirmers) > 0 {
-		for _, s := range m.Confirmers {
-			l = len(s)
-			n += 1 + l + sovRequest(uint64(l))
-		}
-	}
-	return n
-}
-
-func (m *OriginTxInfo) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.TransactionOriginDataInfo != nil {
-		l = m.TransactionOriginDataInfo.Size()
 		n += 1 + l + sovRequest(uint64(l))
 	}
 	l = len(m.Hash)
@@ -819,171 +535,6 @@ func (m *NftOriginData) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *TransactionOriginDataInfo) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowRequest
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: TransactionOriginDataInfo: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: TransactionOriginDataInfo: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Chain", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Chain = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TxHash", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TxHash = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field BlockNumber", wireType)
-			}
-			m.BlockNumber = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.BlockNumber |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DeployerAddress", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.DeployerAddress = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipRequest(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *DataHash) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1046,158 +597,6 @@ func (m *DataHash) Unmarshal(dAtA []byte) error {
 				m.OriginData = &NftOriginData{}
 			}
 			if err := m.OriginData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Hash", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Hash = append(m.Hash[:0], dAtA[iNdEx:postIndex]...)
-			if m.Hash == nil {
-				m.Hash = []byte{}
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Confirmers", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Confirmers = append(m.Confirmers, string(dAtA[iNdEx:postIndex]))
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipRequest(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *OriginTxInfo) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowRequest
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: OriginTxInfo: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: OriginTxInfo: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TransactionOriginDataInfo", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowRequest
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthRequest
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthRequest
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.TransactionOriginDataInfo == nil {
-				m.TransactionOriginDataInfo = &TransactionOriginDataInfo{}
-			}
-			if err := m.TransactionOriginDataInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

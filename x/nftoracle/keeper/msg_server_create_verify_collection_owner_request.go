@@ -71,7 +71,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
 		Confirmers:      make(map[string]bool),
-		OriginTx:        make([]*types.OriginTxInfo, 0),
+		ContractInfo:        make([]*types.OriginContractInfo, 0),
 	})
 
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -91,7 +91,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	}, nil
 }
 
-func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.CollectionOwnerSignature) (*types.TxOriginParam, *string, error) {
+func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.CollectionOwnerSignature) (*types.OriginContractParam, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(collectionOwnerSig.Message)), 10) + collectionOwnerSig.Message
 
@@ -101,7 +101,7 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
 
-	collectionOwnerParam := &types.TxOriginParam{}
+	collectionOwnerParam := &types.OriginContractParam{}
 	collectionOwnerTypeBz, err := base64.StdEncoding.DecodeString(collectionOwnerSig.Message)
 	if err != nil {
 		return nil, nil, err
