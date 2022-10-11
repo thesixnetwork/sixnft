@@ -10,16 +10,16 @@ import { util, configure, Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 
-export interface OriginContractInfo {
-  contractOriginDataInfo: OriginContractParam | undefined;
-  hash: Uint8Array;
-  confirmers: string[];
-}
-
 export interface OriginContractParam {
   chain: string;
   contract_address: string;
   deployer_address: string;
+}
+
+export interface OriginContractInfo {
+  contractOriginDataInfo: OriginContractParam | undefined;
+  hash: Uint8Array;
+  confirmers: string[];
 }
 
 export interface CollectionOwnerRequest {
@@ -40,6 +40,116 @@ export interface CollectionOwnerRequest_ConfirmersEntry {
   key: string;
   value: boolean;
 }
+
+const baseOriginContractParam: object = {
+  chain: "",
+  contract_address: "",
+  deployer_address: "",
+};
+
+export const OriginContractParam = {
+  encode(
+    message: OriginContractParam,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.chain !== "") {
+      writer.uint32(10).string(message.chain);
+    }
+    if (message.contract_address !== "") {
+      writer.uint32(18).string(message.contract_address);
+    }
+    if (message.deployer_address !== "") {
+      writer.uint32(26).string(message.deployer_address);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): OriginContractParam {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseOriginContractParam } as OriginContractParam;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.chain = reader.string();
+          break;
+        case 2:
+          message.contract_address = reader.string();
+          break;
+        case 3:
+          message.deployer_address = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): OriginContractParam {
+    const message = { ...baseOriginContractParam } as OriginContractParam;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = String(object.chain);
+    } else {
+      message.chain = "";
+    }
+    if (
+      object.contract_address !== undefined &&
+      object.contract_address !== null
+    ) {
+      message.contract_address = String(object.contract_address);
+    } else {
+      message.contract_address = "";
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = String(object.deployer_address);
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+
+  toJSON(message: OriginContractParam): unknown {
+    const obj: any = {};
+    message.chain !== undefined && (obj.chain = message.chain);
+    message.contract_address !== undefined &&
+      (obj.contract_address = message.contract_address);
+    message.deployer_address !== undefined &&
+      (obj.deployer_address = message.deployer_address);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<OriginContractParam>): OriginContractParam {
+    const message = { ...baseOriginContractParam } as OriginContractParam;
+    if (object.chain !== undefined && object.chain !== null) {
+      message.chain = object.chain;
+    } else {
+      message.chain = "";
+    }
+    if (
+      object.contract_address !== undefined &&
+      object.contract_address !== null
+    ) {
+      message.contract_address = object.contract_address;
+    } else {
+      message.contract_address = "";
+    }
+    if (
+      object.deployer_address !== undefined &&
+      object.deployer_address !== null
+    ) {
+      message.deployer_address = object.deployer_address;
+    } else {
+      message.deployer_address = "";
+    }
+    return message;
+  },
+};
 
 const baseOriginContractInfo: object = { confirmers: "" };
 
@@ -155,116 +265,6 @@ export const OriginContractInfo = {
       for (const e of object.confirmers) {
         message.confirmers.push(e);
       }
-    }
-    return message;
-  },
-};
-
-const baseOriginContractParam: object = {
-  chain: "",
-  contract_address: "",
-  deployer_address: "",
-};
-
-export const OriginContractParam = {
-  encode(
-    message: OriginContractParam,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.chain !== "") {
-      writer.uint32(10).string(message.chain);
-    }
-    if (message.contract_address !== "") {
-      writer.uint32(18).string(message.contract_address);
-    }
-    if (message.deployer_address !== "") {
-      writer.uint32(26).string(message.deployer_address);
-    }
-    return writer;
-  },
-
-  decode(input: Reader | Uint8Array, length?: number): OriginContractParam {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseOriginContractParam } as OriginContractParam;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          message.chain = reader.string();
-          break;
-        case 2:
-          message.contract_address = reader.string();
-          break;
-        case 3:
-          message.deployer_address = reader.string();
-          break;
-        default:
-          reader.skipType(tag & 7);
-          break;
-      }
-    }
-    return message;
-  },
-
-  fromJSON(object: any): OriginContractParam {
-    const message = { ...baseOriginContractParam } as OriginContractParam;
-    if (object.chain !== undefined && object.chain !== null) {
-      message.chain = String(object.chain);
-    } else {
-      message.chain = "";
-    }
-    if (
-      object.contract_address !== undefined &&
-      object.contract_address !== null
-    ) {
-      message.contract_address = String(object.contract_address);
-    } else {
-      message.contract_address = "";
-    }
-    if (
-      object.deployer_address !== undefined &&
-      object.deployer_address !== null
-    ) {
-      message.deployer_address = String(object.deployer_address);
-    } else {
-      message.deployer_address = "";
-    }
-    return message;
-  },
-
-  toJSON(message: OriginContractParam): unknown {
-    const obj: any = {};
-    message.chain !== undefined && (obj.chain = message.chain);
-    message.contract_address !== undefined &&
-      (obj.contract_address = message.contract_address);
-    message.deployer_address !== undefined &&
-      (obj.deployer_address = message.deployer_address);
-    return obj;
-  },
-
-  fromPartial(object: DeepPartial<OriginContractParam>): OriginContractParam {
-    const message = { ...baseOriginContractParam } as OriginContractParam;
-    if (object.chain !== undefined && object.chain !== null) {
-      message.chain = object.chain;
-    } else {
-      message.chain = "";
-    }
-    if (
-      object.contract_address !== undefined &&
-      object.contract_address !== null
-    ) {
-      message.contract_address = object.contract_address;
-    } else {
-      message.contract_address = "";
-    }
-    if (
-      object.deployer_address !== undefined &&
-      object.deployer_address !== null
-    ) {
-      message.deployer_address = object.deployer_address;
-    } else {
-      message.deployer_address = "";
     }
     return message;
   },
