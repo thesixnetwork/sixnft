@@ -36,6 +36,11 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
+	err = ValidateAttributeNames([]*types.AttributeDefinition{&new_add_attribute})
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
+
 	// Swith location of attribute
 	switch msg.Location {
 	case types.AttributeLocation_NFT_ATTRIBUTE:
