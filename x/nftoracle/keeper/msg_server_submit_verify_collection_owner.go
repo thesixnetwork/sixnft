@@ -45,19 +45,19 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	}
 
 	// Convert msg.base64OriginContractInfo to bytes
-	_msgBase64OriginTxInfo, err := base64.StdEncoding.DecodeString(msg.Base64OriginTxInfo)
+	_msgBase64OriginContractInfo, err := base64.StdEncoding.DecodeString(msg.Base64OriginContractInfo)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 
 	contractOrigingParam := types.OriginContractParam{}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(_msgBase64OriginTxInfo, &contractOrigingParam)
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(_msgBase64OriginContractInfo, &contractOrigingParam)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 
 	if verifyRequest.CurrentConfirm == 0 {
-		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
+		dataHash := sha256.Sum256(_msgBase64OriginContractInfo)
 		// hash schema
 		verifyRequest.ContractInfo = append(verifyRequest.ContractInfo, &types.OriginContractInfo{
 			ContractOriginDataInfo: &contractOrigingParam,
@@ -71,7 +71,7 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		}
 
 		// Compare data hash with previous data
-		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
+		dataHash := sha256.Sum256(_msgBase64OriginContractInfo)
 		dataHashMatch := false
 		for _, origin_tx := range verifyRequest.ContractInfo {
 			if res := bytes.Compare(dataHash[:], origin_tx.Hash); res == 0 {

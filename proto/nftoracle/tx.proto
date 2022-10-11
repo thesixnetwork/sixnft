@@ -78,7 +78,7 @@ message MsgSubmitVerifyCollectionOwner {
   string creator = 1;
   uint64 verifyRequestID = 2;
   string nftSchemaCode = 3;
-  string base64OriginTxInfo = 4;
+  string base64OriginContractInfo = 4;
 }
 
 message MsgSubmitVerifyCollectionOwnerResponse {
