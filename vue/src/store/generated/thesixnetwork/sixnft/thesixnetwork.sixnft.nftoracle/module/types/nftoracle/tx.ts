@@ -64,7 +64,7 @@ export interface MsgCreateVerifyCollectionOwnerRequestResponse {
 export interface MsgSubmitVerifyCollectionOwner {
   creator: string;
   verifyRequestID: number;
-  schemaCode: string;
+  nftSchemaCode: string;
   base64OriginTxInfo: string;
 }
 
@@ -1124,7 +1124,7 @@ export const MsgCreateVerifyCollectionOwnerRequestResponse = {
 const baseMsgSubmitVerifyCollectionOwner: object = {
   creator: "",
   verifyRequestID: 0,
-  schemaCode: "",
+  nftSchemaCode: "",
   base64OriginTxInfo: "",
 };
 
@@ -1139,8 +1139,8 @@ export const MsgSubmitVerifyCollectionOwner = {
     if (message.verifyRequestID !== 0) {
       writer.uint32(16).uint64(message.verifyRequestID);
     }
-    if (message.schemaCode !== "") {
-      writer.uint32(26).string(message.schemaCode);
+    if (message.nftSchemaCode !== "") {
+      writer.uint32(26).string(message.nftSchemaCode);
     }
     if (message.base64OriginTxInfo !== "") {
       writer.uint32(34).string(message.base64OriginTxInfo);
@@ -1167,7 +1167,7 @@ export const MsgSubmitVerifyCollectionOwner = {
           message.verifyRequestID = longToNumber(reader.uint64() as Long);
           break;
         case 3:
-          message.schemaCode = reader.string();
+          message.nftSchemaCode = reader.string();
           break;
         case 4:
           message.base64OriginTxInfo = reader.string();
@@ -1197,10 +1197,10 @@ export const MsgSubmitVerifyCollectionOwner = {
     } else {
       message.verifyRequestID = 0;
     }
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = String(object.schemaCode);
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = String(object.nftSchemaCode);
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (
       object.base64OriginTxInfo !== undefined &&
@@ -1218,7 +1218,8 @@ export const MsgSubmitVerifyCollectionOwner = {
     message.creator !== undefined && (obj.creator = message.creator);
     message.verifyRequestID !== undefined &&
       (obj.verifyRequestID = message.verifyRequestID);
-    message.schemaCode !== undefined && (obj.schemaCode = message.schemaCode);
+    message.nftSchemaCode !== undefined &&
+      (obj.nftSchemaCode = message.nftSchemaCode);
     message.base64OriginTxInfo !== undefined &&
       (obj.base64OriginTxInfo = message.base64OriginTxInfo);
     return obj;
@@ -1243,10 +1244,10 @@ export const MsgSubmitVerifyCollectionOwner = {
     } else {
       message.verifyRequestID = 0;
     }
-    if (object.schemaCode !== undefined && object.schemaCode !== null) {
-      message.schemaCode = object.schemaCode;
+    if (object.nftSchemaCode !== undefined && object.nftSchemaCode !== null) {
+      message.nftSchemaCode = object.nftSchemaCode;
     } else {
-      message.schemaCode = "";
+      message.nftSchemaCode = "";
     }
     if (
       object.base64OriginTxInfo !== undefined &&

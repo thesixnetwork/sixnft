@@ -13,7 +13,7 @@ func NewMsgSubmitVerifyCollectionOwner(creator string, verifyRequestID uint64, s
 	return &MsgSubmitVerifyCollectionOwner{
 		Creator:            creator,
 		VerifyRequestID:    verifyRequestID,
-		SchemaCode:         schemaCode,
+		NftSchemaCode:         schemaCode,
 		Base64OriginTxInfo: base64OriginTxInfo,
 	}
 }
