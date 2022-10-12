@@ -30934,16 +30934,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31508,16 +31498,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32366,16 +32346,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -33142,16 +33112,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33923,16 +33883,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   /thesixnetwork/sixnft/nftmngr/nft_fee_config:
@@ -33947,6 +33897,27 @@ paths:
             properties:
               NFTFeeConfig:
                 type: object
+                properties:
+                  schema_fee:
+                    type: object
+                    properties:
+                      fee_amount:
+                        type: string
+                      fee_distributions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            method:
+                              type: string
+                              enum:
+                                - BURN
+                                - REWARD_POOL
+                                - TRANSFER
+                              default: BURN
+                            portion:
+                              type: number
+                              format: float
         default:
           description: An unexpected error response.
           schema:
@@ -56828,6 +56799,46 @@ definitions:
           max_value:
             type: string
             format: uint64
+  thesixnetwork.sixnft.nftmngr.FeeConfig:
+    type: object
+    properties:
+      fee_amount:
+        type: string
+      fee_distributions:
+        type: array
+        items:
+          type: object
+          properties:
+            method:
+              type: string
+              enum:
+                - BURN
+                - REWARD_POOL
+                - TRANSFER
+              default: BURN
+            portion:
+              type: number
+              format: float
+  thesixnetwork.sixnft.nftmngr.FeeDistribution:
+    type: object
+    properties:
+      method:
+        type: string
+        enum:
+          - BURN
+          - REWARD_POOL
+          - TRANSFER
+        default: BURN
+      portion:
+        type: number
+        format: float
+  thesixnetwork.sixnft.nftmngr.FeeDistributionMethod:
+    type: string
+    enum:
+      - BURN
+      - REWARD_POOL
+      - TRANSFER
+    default: BURN
   thesixnetwork.sixnft.nftmngr.FloatAttributeValue:
     type: object
     properties:
@@ -57490,6 +57501,27 @@ definitions:
                       format: double
   thesixnetwork.sixnft.nftmngr.NFTFeeConfig:
     type: object
+    properties:
+      schema_fee:
+        type: object
+        properties:
+          fee_amount:
+            type: string
+          fee_distributions:
+            type: array
+            items:
+              type: object
+              properties:
+                method:
+                  type: string
+                  enum:
+                    - BURN
+                    - REWARD_POOL
+                    - TRANSFER
+                  default: BURN
+                portion:
+                  type: number
+                  format: float
   thesixnetwork.sixnft.nftmngr.NFTSchema:
     type: object
     properties:
@@ -58714,6 +58746,27 @@ definitions:
     properties:
       NFTFeeConfig:
         type: object
+        properties:
+          schema_fee:
+            type: object
+            properties:
+              fee_amount:
+                type: string
+              fee_distributions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    method:
+                      type: string
+                      enum:
+                        - BURN
+                        - REWARD_POOL
+                        - TRANSFER
+                      default: BURN
+                    portion:
+                      type: number
+                      format: float
   thesixnetwork.sixnft.nftmngr.QueryGetNFTSchemaResponse:
     type: object
     properties:

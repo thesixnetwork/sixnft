@@ -23,11 +23,11 @@ func networkWithNFTFeeConfigObjects(t *testing.T) (*network.Network, types.NFTFe
 
 	nFTFeeConfig := &types.NFTFeeConfig{}
 	nullify.Fill(&nFTFeeConfig)
-	state.NFTFeeConfig = nFTFeeConfig
+	state.NftFeeConfig = nFTFeeConfig
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
-	return network.New(t, cfg), *state.NFTFeeConfig
+	return network.New(t, cfg), *state.NftFeeConfig
 }
 
 func TestShowNFTFeeConfig(t *testing.T) {

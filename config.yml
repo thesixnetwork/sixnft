@@ -39,6 +39,15 @@ faucet:
     coins: ["5token", "100000stake"]
 genesis:
     app_state:
+        nftmngr:
+            nft_fee_config:
+              schema_fee:
+                fee_amount: "100000stake"
+                fee_distributions:
+                  - method: "BURN"
+                    portion: 0.5
+                  - method: "REWARD_POOL"
+                    portion: 0.5
         nftoracle:
             oracle_config:
                 minimum_confirmation: 4

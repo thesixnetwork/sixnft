@@ -79,6 +79,24 @@ export interface NftmngrDisplayOption {
   opensea?: NftmngrOpenseaDisplayOption;
 }
 
+export interface NftmngrFeeConfig {
+  fee_amount?: string;
+  fee_distributions?: NftmngrFeeDistribution[];
+}
+
+export interface NftmngrFeeDistribution {
+  method?: NftmngrFeeDistributionMethod;
+
+  /** @format float */
+  portion?: number;
+}
+
+export enum NftmngrFeeDistributionMethod {
+  BURN = "BURN",
+  REWARD_POOL = "REWARD_POOL",
+  TRANSFER = "TRANSFER",
+}
+
 export interface NftmngrFloatAttributeValue {
   /** @format double */
   value?: number;
@@ -150,7 +168,9 @@ export interface NftmngrMsgToggleActionResponse {
   onchainDataAction?: NftmngrOnChainData;
 }
 
-export type NftmngrNFTFeeConfig = object;
+export interface NftmngrNFTFeeConfig {
+  schema_fee?: NftmngrFeeConfig;
+}
 
 export interface NftmngrNFTSchema {
   code?: string;

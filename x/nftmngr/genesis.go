@@ -30,8 +30,8 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetNftCollection(ctx, elem)
 	}
 	// Set if defined
-	if genState.NFTFeeConfig != nil {
-		k.SetNFTFeeConfig(ctx, *genState.NFTFeeConfig)
+	if genState.NftFeeConfig != nil {
+		k.SetNFTFeeConfig(ctx, *genState.NftFeeConfig)
 	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
@@ -50,7 +50,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	// Get all nFTFeeConfig
 	nFTFeeConfig, found := k.GetNFTFeeConfig(ctx)
 	if found {
-		genesis.NFTFeeConfig = &nFTFeeConfig
+		genesis.NftFeeConfig = &nFTFeeConfig
 	}
 	// this line is used by starport scaffolding # genesis/module/export
 

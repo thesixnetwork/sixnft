@@ -19,7 +19,7 @@ export interface GenesisState {
   organizationList: Organization[];
   nftCollectionList: NftCollection[];
   /** this line is used by starport scaffolding # genesis/proto/state */
-  nFTFeeConfig: NFTFeeConfig | undefined;
+  nft_fee_config: NFTFeeConfig | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -44,9 +44,9 @@ export const GenesisState = {
     for (const v of message.nftCollectionList) {
       NftCollection.encode(v!, writer.uint32(50).fork()).ldelim();
     }
-    if (message.nFTFeeConfig !== undefined) {
+    if (message.nft_fee_config !== undefined) {
       NFTFeeConfig.encode(
-        message.nFTFeeConfig,
+        message.nft_fee_config,
         writer.uint32(58).fork()
       ).ldelim();
     }
@@ -90,7 +90,7 @@ export const GenesisState = {
           );
           break;
         case 7:
-          message.nFTFeeConfig = NFTFeeConfig.decode(reader, reader.uint32());
+          message.nft_fee_config = NFTFeeConfig.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -146,10 +146,10 @@ export const GenesisState = {
         message.nftCollectionList.push(NftCollection.fromJSON(e));
       }
     }
-    if (object.nFTFeeConfig !== undefined && object.nFTFeeConfig !== null) {
-      message.nFTFeeConfig = NFTFeeConfig.fromJSON(object.nFTFeeConfig);
+    if (object.nft_fee_config !== undefined && object.nft_fee_config !== null) {
+      message.nft_fee_config = NFTFeeConfig.fromJSON(object.nft_fee_config);
     } else {
-      message.nFTFeeConfig = undefined;
+      message.nft_fee_config = undefined;
     }
     return message;
   },
@@ -193,9 +193,9 @@ export const GenesisState = {
     } else {
       obj.nftCollectionList = [];
     }
-    message.nFTFeeConfig !== undefined &&
-      (obj.nFTFeeConfig = message.nFTFeeConfig
-        ? NFTFeeConfig.toJSON(message.nFTFeeConfig)
+    message.nft_fee_config !== undefined &&
+      (obj.nft_fee_config = message.nft_fee_config
+        ? NFTFeeConfig.toJSON(message.nft_fee_config)
         : undefined);
     return obj;
   },
@@ -246,10 +246,10 @@ export const GenesisState = {
         message.nftCollectionList.push(NftCollection.fromPartial(e));
       }
     }
-    if (object.nFTFeeConfig !== undefined && object.nFTFeeConfig !== null) {
-      message.nFTFeeConfig = NFTFeeConfig.fromPartial(object.nFTFeeConfig);
+    if (object.nft_fee_config !== undefined && object.nft_fee_config !== null) {
+      message.nft_fee_config = NFTFeeConfig.fromPartial(object.nft_fee_config);
     } else {
-      message.nFTFeeConfig = undefined;
+      message.nft_fee_config = undefined;
     }
     return message;
   },

@@ -21,6 +21,6 @@ message GenesisState {
   repeated ActionByRefId actionByRefIdList = 4 [(gogoproto.nullable) = false];
   repeated Organization organizationList = 5 [(gogoproto.nullable) = false];
   repeated NftCollection nftCollectionList = 6 [(gogoproto.nullable) = false];
-  NFTFeeConfig nFTFeeConfig = 7;
+  NFTFeeConfig nft_fee_config = 7;
   // this line is used by starport scaffolding # genesis/proto/state
 }

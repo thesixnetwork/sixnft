@@ -15,7 +15,7 @@ func DefaultGenesis() *GenesisState {
 		ActionByRefIdList: []ActionByRefId{},
 		OrganizationList:  []Organization{},
 		NftCollectionList: []NftCollection{},
-		NFTFeeConfig:      nil,
+		NftFeeConfig:      nil,
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
