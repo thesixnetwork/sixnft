@@ -13,7 +13,7 @@ export const protobufPackage = "thesixnetwork.sixnft.nftoracle";
 export interface OriginContractParam {
   chain: string;
   contract_address: string;
-  deployer_address: string;
+  contract_owner: string;
 }
 
 export interface OriginContractInfo {
@@ -44,7 +44,7 @@ export interface CollectionOwnerRequest_ConfirmersEntry {
 const baseOriginContractParam: object = {
   chain: "",
   contract_address: "",
-  deployer_address: "",
+  contract_owner: "",
 };
 
 export const OriginContractParam = {
@@ -58,8 +58,8 @@ export const OriginContractParam = {
     if (message.contract_address !== "") {
       writer.uint32(18).string(message.contract_address);
     }
-    if (message.deployer_address !== "") {
-      writer.uint32(26).string(message.deployer_address);
+    if (message.contract_owner !== "") {
+      writer.uint32(26).string(message.contract_owner);
     }
     return writer;
   },
@@ -78,7 +78,7 @@ export const OriginContractParam = {
           message.contract_address = reader.string();
           break;
         case 3:
-          message.deployer_address = reader.string();
+          message.contract_owner = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -103,13 +103,10 @@ export const OriginContractParam = {
     } else {
       message.contract_address = "";
     }
-    if (
-      object.deployer_address !== undefined &&
-      object.deployer_address !== null
-    ) {
-      message.deployer_address = String(object.deployer_address);
+    if (object.contract_owner !== undefined && object.contract_owner !== null) {
+      message.contract_owner = String(object.contract_owner);
     } else {
-      message.deployer_address = "";
+      message.contract_owner = "";
     }
     return message;
   },
@@ -119,8 +116,8 @@ export const OriginContractParam = {
     message.chain !== undefined && (obj.chain = message.chain);
     message.contract_address !== undefined &&
       (obj.contract_address = message.contract_address);
-    message.deployer_address !== undefined &&
-      (obj.deployer_address = message.deployer_address);
+    message.contract_owner !== undefined &&
+      (obj.contract_owner = message.contract_owner);
     return obj;
   },
 
@@ -139,13 +136,10 @@ export const OriginContractParam = {
     } else {
       message.contract_address = "";
     }
-    if (
-      object.deployer_address !== undefined &&
-      object.deployer_address !== null
-    ) {
-      message.deployer_address = object.deployer_address;
+    if (object.contract_owner !== undefined && object.contract_owner !== null) {
+      message.contract_owner = object.contract_owner;
     } else {
-      message.deployer_address = "";
+      message.contract_owner = "";
     }
     return message;
   },

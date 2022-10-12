@@ -34640,7 +34640,7 @@ paths:
                                 type: string
                               contract_address:
                                 type: string
-                              deployer_address:
+                              contract_owner:
                                 type: string
                           hash:
                             type: string
@@ -34814,7 +34814,7 @@ paths:
                               type: string
                             contract_address:
                               type: string
-                            deployer_address:
+                            contract_owner:
                               type: string
                         hash:
                           type: string
@@ -59071,7 +59071,7 @@ definitions:
                   type: string
                 contract_address:
                   type: string
-                deployer_address:
+                contract_owner:
                   type: string
             hash:
               type: string
@@ -59268,7 +59268,7 @@ definitions:
             type: string
           contract_address:
             type: string
-          deployer_address:
+          contract_owner:
             type: string
       hash:
         type: string
@@ -59284,7 +59284,7 @@ definitions:
         type: string
       contract_address:
         type: string
-      deployer_address:
+      contract_owner:
         type: string
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
@@ -59458,7 +59458,7 @@ definitions:
                         type: string
                       contract_address:
                         type: string
-                      deployer_address:
+                      contract_owner:
                         type: string
                   hash:
                     type: string
@@ -59730,7 +59730,7 @@ definitions:
                       type: string
                     contract_address:
                       type: string
-                    deployer_address:
+                    contract_owner:
                       type: string
                 hash:
                   type: string

@@ -102,9 +102,9 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	if verifyRequest.CurrentConfirm == verifyRequest.RequiredConfirm {
 
 		// chaek if signer and deployer address is same
-		if verifyRequest.Signer != contractOrigingParam.DeployerAddress {
+		if verifyRequest.Signer != contractOrigingParam.ContractOwner {
 			verifyRequest.Status = types.RequestStatus_FAILED_REJECT_BY_CONSENSUS
-			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer+","+contractOrigingParam.DeployerAddress)
+			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer+","+contractOrigingParam.ContractOwner)
 		} else {
 			verifyRequest.Status = types.RequestStatus_SUCCESS_WITH_CONSENSUS
 		}
