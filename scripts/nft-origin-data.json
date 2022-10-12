@@ -1,0 +1,42 @@
+{
+    "image": "https://nft.sixnetwork.io/metadata/QmaBUdqTctVteajpoMVEpo55XAXe2YVwWDgeNi1UT47UKU/1.png",
+    "holder_address": "0x14003fD4E3B6D3bC043f8753E25104c350C7F358",
+    "traits": [
+        {
+            "trait_type": "Tribe",
+            "value": "THE WANDERER"
+        },
+        {
+            "trait_type": "Facial Expression",
+            "value": "Winks"
+        },
+        {
+            "trait_type": "Cloth",
+            "value": "Hoodie"
+        },
+        {
+            "trait_type": "Skin",
+            "value": "Tanned"
+        },
+        {
+            "trait_type": "Hairstyle",
+            "value": "Emo"
+        },
+        {
+            "trait_type": "Hand Objects",
+            "value": "Diamond"
+        },
+        {
+            "trait_type": "Accessories",
+            "value": "Face paint"
+        },
+        {
+            "trait_type": "Background",
+            "value": "Green"
+        },
+        {
+            "trait_type": "Legendary",
+            "value": "The classic"
+        }
+    ]
+}
