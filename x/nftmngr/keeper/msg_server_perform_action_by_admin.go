@@ -63,6 +63,10 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			break
 		}
 	}
+	// Check if AllowedAction is for system
+	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
+		return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, msg.Action)
+	}
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 
 	err := ProcessAction(meta, &mapAction)

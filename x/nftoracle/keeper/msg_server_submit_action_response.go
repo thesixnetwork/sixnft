@@ -172,6 +172,11 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionReq
 			break
 		}
 	}
+	// Check if AllowedAction is for user
+	if mapAction.GetAllowedActioner() == nftmngrtypes.AllowedActioner_ALLOWED_ACTIONER_SYSTEM_ONLY {
+		return sdkerrors.Wrap(nftmngrtypes.ErrActionIsForSystemOnly, mapAction.Name)
+	}
+
 	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding)
 
 	err := ProcessAction(meta, &mapAction)
