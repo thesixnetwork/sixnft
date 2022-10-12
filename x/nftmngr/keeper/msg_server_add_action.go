@@ -86,6 +86,5 @@ func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) er
 	if len(action.Then) == 0 {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action.Then is empty")
 	}
-
 	return nil
 }

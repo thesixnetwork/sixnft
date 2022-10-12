@@ -32041,6 +32041,13 @@ paths:
                                 type: array
                                 items:
                                   type: string
+                              allowed_actioner:
+                                type: string
+                                enum:
+                                  - ALLOWED_ACTIONER_ALL
+                                  - ALLOWED_ACTIONER_SYSTEM_ONLY
+                                  - ALLOWED_ACTIONER_USER_ONLY
+                                default: ALLOWED_ACTIONER_ALL
                         status:
                           type: object
                           additionalProperties:
@@ -32592,6 +32599,13 @@ paths:
                               type: array
                               items:
                                 type: string
+                            allowed_actioner:
+                              type: string
+                              enum:
+                                - ALLOWED_ACTIONER_ALL
+                                - ALLOWED_ACTIONER_SYSTEM_ONLY
+                                - ALLOWED_ACTIONER_USER_ONLY
+                              default: ALLOWED_ACTIONER_ALL
                       status:
                         type: object
                         additionalProperties:
@@ -56421,6 +56435,13 @@ definitions:
         type: array
         items:
           type: string
+      allowed_actioner:
+        type: string
+        enum:
+          - ALLOWED_ACTIONER_ALL
+          - ALLOWED_ACTIONER_SYSTEM_ONLY
+          - ALLOWED_ACTIONER_USER_ONLY
+        default: ALLOWED_ACTIONER_ALL
   thesixnetwork.sixnft.nftmngr.ActionByRefId:
     type: object
     properties:
@@ -56434,6 +56455,13 @@ definitions:
         type: string
       action:
         type: string
+  thesixnetwork.sixnft.nftmngr.AllowedActioner:
+    type: string
+    enum:
+      - ALLOWED_ACTIONER_ALL
+      - ALLOWED_ACTIONER_SYSTEM_ONLY
+      - ALLOWED_ACTIONER_USER_ONLY
+    default: ALLOWED_ACTIONER_ALL
   thesixnetwork.sixnft.nftmngr.AttributeDefinition:
     type: object
     properties:
@@ -56709,6 +56737,13 @@ definitions:
                   type: array
                   items:
                     type: string
+                allowed_actioner:
+                  type: string
+                  enum:
+                    - ALLOWED_ACTIONER_ALL
+                    - ALLOWED_ACTIONER_SYSTEM_ONLY
+                    - ALLOWED_ACTIONER_USER_ONLY
+                  default: ALLOWED_ACTIONER_ALL
           status:
             type: object
             additionalProperties:
@@ -56898,6 +56933,13 @@ definitions:
                   type: array
                   items:
                     type: string
+                allowed_actioner:
+                  type: string
+                  enum:
+                    - ALLOWED_ACTIONER_ALL
+                    - ALLOWED_ACTIONER_SYSTEM_ONLY
+                    - ALLOWED_ACTIONER_USER_ONLY
+                  default: ALLOWED_ACTIONER_ALL
           status:
             type: object
             additionalProperties:
@@ -57153,6 +57195,13 @@ definitions:
                   type: array
                   items:
                     type: string
+                allowed_actioner:
+                  type: string
+                  enum:
+                    - ALLOWED_ACTIONER_ALL
+                    - ALLOWED_ACTIONER_SYSTEM_ONLY
+                    - ALLOWED_ACTIONER_USER_ONLY
+                  default: ALLOWED_ACTIONER_ALL
           status:
             type: object
             additionalProperties:
@@ -57431,6 +57480,13 @@ definitions:
                   type: array
                   items:
                     type: string
+                allowed_actioner:
+                  type: string
+                  enum:
+                    - ALLOWED_ACTIONER_ALL
+                    - ALLOWED_ACTIONER_SYSTEM_ONLY
+                    - ALLOWED_ACTIONER_USER_ONLY
+                  default: ALLOWED_ACTIONER_ALL
           status:
             type: object
             additionalProperties:
@@ -57727,6 +57783,13 @@ definitions:
               type: array
               items:
                 type: string
+            allowed_actioner:
+              type: string
+              enum:
+                - ALLOWED_ACTIONER_ALL
+                - ALLOWED_ACTIONER_SYSTEM_ONLY
+                - ALLOWED_ACTIONER_USER_ONLY
+              default: ALLOWED_ACTIONER_ALL
       status:
         type: object
         additionalProperties:
@@ -58162,6 +58225,13 @@ definitions:
                         type: array
                         items:
                           type: string
+                      allowed_actioner:
+                        type: string
+                        enum:
+                          - ALLOWED_ACTIONER_ALL
+                          - ALLOWED_ACTIONER_SYSTEM_ONLY
+                          - ALLOWED_ACTIONER_USER_ONLY
+                        default: ALLOWED_ACTIONER_ALL
                 status:
                   type: object
                   additionalProperties:
@@ -58632,6 +58702,13 @@ definitions:
                       type: array
                       items:
                         type: string
+                    allowed_actioner:
+                      type: string
+                      enum:
+                        - ALLOWED_ACTIONER_ALL
+                        - ALLOWED_ACTIONER_SYSTEM_ONLY
+                        - ALLOWED_ACTIONER_USER_ONLY
+                      default: ALLOWED_ACTIONER_ALL
               status:
                 type: object
                 additionalProperties:
