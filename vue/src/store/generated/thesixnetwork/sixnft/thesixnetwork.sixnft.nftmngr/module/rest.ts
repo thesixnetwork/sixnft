@@ -22,6 +22,7 @@ export interface NftmngrAction {
   disable?: boolean;
   when?: string;
   then?: string[];
+  allowed_actioner?: NftmngrAllowedActioner;
 }
 
 export interface NftmngrActionByRefId {
@@ -30,6 +31,12 @@ export interface NftmngrActionByRefId {
   nftSchemaCode?: string;
   tokenId?: string;
   action?: string;
+}
+
+export enum NftmngrAllowedActioner {
+  ALLOWED_ACTIONER_ALL = "ALLOWED_ACTIONER_ALL",
+  ALLOWED_ACTIONER_SYSTEM_ONLY = "ALLOWED_ACTIONER_SYSTEM_ONLY",
+  ALLOWED_ACTIONER_USER_ONLY = "ALLOWED_ACTIONER_USER_ONLY",
 }
 
 export interface NftmngrAttributeDefinition {
@@ -486,6 +493,13 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
+
+  /**
+   * reverse is set to true if results are to be returned in the descending order.
+   *
+   * Since: cosmos-sdk 0.43
+   */
+  reverse?: boolean;
 }
 
 /**
@@ -715,6 +729,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -756,6 +771,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -797,6 +813,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -838,6 +855,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -896,6 +914,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>

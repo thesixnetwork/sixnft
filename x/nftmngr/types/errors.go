@@ -56,7 +56,10 @@ var (
 	ErrActionAlreadyExists    = sdkerrors.Register(ModuleName, 302, "Action already exists")
 	ErrInvalidActionAttribute = sdkerrors.Register(ModuleName, 303, "Invalid action attribute")
 	ErrActionIsDisabled       = sdkerrors.Register(ModuleName, 304, "Action is disabled")
-	ErrOrganizationOwner      = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrActionIsForUserOnly    = sdkerrors.Register(ModuleName, 305, "This action can be done by user only")
+	ErrActionIsForSystemOnly  = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
+
+	ErrOrganizationOwner = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
 	ErrInvalidActionName    = sdkerrors.Register(ModuleName, 501, "Invalid action name")
