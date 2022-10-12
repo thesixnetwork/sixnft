@@ -37,6 +37,32 @@ export function attributeLocationToJSON(object: AttributeLocation): string {
   }
 }
 
+export enum FeeSubject {
+  CREATE_NFT_SCHEMA = 0,
+  UNRECOGNIZED = -1,
+}
+
+export function feeSubjectFromJSON(object: any): FeeSubject {
+  switch (object) {
+    case 0:
+    case "CREATE_NFT_SCHEMA":
+      return FeeSubject.CREATE_NFT_SCHEMA;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return FeeSubject.UNRECOGNIZED;
+  }
+}
+
+export function feeSubjectToJSON(object: FeeSubject): string {
+  switch (object) {
+    case FeeSubject.CREATE_NFT_SCHEMA:
+      return "CREATE_NFT_SCHEMA";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 export interface MsgCreateNFTSchema {
   creator: string;
   nftSchemaBase64: string;
@@ -197,6 +223,14 @@ export interface MsgResyncAttributes {
   nftSchemaCode: string;
   tokenId: string;
 }
+
+export interface MsgSetFeeConfig {
+  creator: string;
+  newFeeConfigBase64: string;
+  feeSubject: FeeSubject;
+}
+
+export interface MsgSetFeeConfigResponse {}
 
 const baseMsgCreateNFTSchema: object = { creator: "", nftSchemaBase64: "" };
 
@@ -2965,6 +2999,153 @@ export const MsgResyncAttributes = {
   },
 };
 
+const baseMsgSetFeeConfig: object = {
+  creator: "",
+  newFeeConfigBase64: "",
+  feeSubject: 0,
+};
+
+export const MsgSetFeeConfig = {
+  encode(message: MsgSetFeeConfig, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.newFeeConfigBase64 !== "") {
+      writer.uint32(18).string(message.newFeeConfigBase64);
+    }
+    if (message.feeSubject !== 0) {
+      writer.uint32(24).int32(message.feeSubject);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetFeeConfig {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetFeeConfig } as MsgSetFeeConfig;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.newFeeConfigBase64 = reader.string();
+          break;
+        case 3:
+          message.feeSubject = reader.int32() as any;
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetFeeConfig {
+    const message = { ...baseMsgSetFeeConfig } as MsgSetFeeConfig;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.newFeeConfigBase64 !== undefined &&
+      object.newFeeConfigBase64 !== null
+    ) {
+      message.newFeeConfigBase64 = String(object.newFeeConfigBase64);
+    } else {
+      message.newFeeConfigBase64 = "";
+    }
+    if (object.feeSubject !== undefined && object.feeSubject !== null) {
+      message.feeSubject = feeSubjectFromJSON(object.feeSubject);
+    } else {
+      message.feeSubject = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetFeeConfig): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.newFeeConfigBase64 !== undefined &&
+      (obj.newFeeConfigBase64 = message.newFeeConfigBase64);
+    message.feeSubject !== undefined &&
+      (obj.feeSubject = feeSubjectToJSON(message.feeSubject));
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSetFeeConfig>): MsgSetFeeConfig {
+    const message = { ...baseMsgSetFeeConfig } as MsgSetFeeConfig;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (
+      object.newFeeConfigBase64 !== undefined &&
+      object.newFeeConfigBase64 !== null
+    ) {
+      message.newFeeConfigBase64 = object.newFeeConfigBase64;
+    } else {
+      message.newFeeConfigBase64 = "";
+    }
+    if (object.feeSubject !== undefined && object.feeSubject !== null) {
+      message.feeSubject = object.feeSubject;
+    } else {
+      message.feeSubject = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgSetFeeConfigResponse: object = {};
+
+export const MsgSetFeeConfigResponse = {
+  encode(_: MsgSetFeeConfigResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetFeeConfigResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgSetFeeConfigResponse,
+    } as MsgSetFeeConfigResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSetFeeConfigResponse {
+    const message = {
+      ...baseMsgSetFeeConfigResponse,
+    } as MsgSetFeeConfigResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSetFeeConfigResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgSetFeeConfigResponse>
+  ): MsgSetFeeConfigResponse {
+    const message = {
+      ...baseMsgSetFeeConfigResponse,
+    } as MsgSetFeeConfigResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateNFTSchema(
@@ -2995,10 +3176,11 @@ export interface Msg {
   ResyncAttributes(
     request: MsgResyncAttributes
   ): Promise<MsgResyncAttributesResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   ShowAttributes(
     request: MsgShowAttributes
   ): Promise<MsgShowAttributesResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SetFeeConfig(request: MsgSetFeeConfig): Promise<MsgSetFeeConfigResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -3177,6 +3359,18 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgShowAttributesResponse.decode(new Reader(data))
+    );
+  }
+
+  SetFeeConfig(request: MsgSetFeeConfig): Promise<MsgSetFeeConfigResponse> {
+    const data = MsgSetFeeConfig.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Msg",
+      "SetFeeConfig",
+      data
+    );
+    return promise.then((data) =>
+      MsgSetFeeConfigResponse.decode(new Reader(data))
     );
   }
 }

@@ -37,4 +37,6 @@ func CollectionkeyPrefix(nftSchemaCode []byte) []byte {
 
 const (
 	NFTFeeConfigKey = "NFTFeeConfig-value-"
+
+	KeyPermissionNftFeeAdmin = "nft_fee_admin"
 )

@@ -97,6 +97,10 @@ export enum NftmngrFeeDistributionMethod {
   TRANSFER = "TRANSFER",
 }
 
+export enum NftmngrFeeSubject {
+  CREATE_NFT_SCHEMA = "CREATE_NFT_SCHEMA",
+}
+
 export interface NftmngrFloatAttributeValue {
   /** @format double */
   value?: number;
@@ -151,6 +155,8 @@ export interface NftmngrMsgSetBaseUriResponse {
   code?: string;
   uri?: string;
 }
+
+export type NftmngrMsgSetFeeConfigResponse = object;
 
 export interface NftmngrMsgSetNFTAttributeResponse {
   nft_schema_code?: string;

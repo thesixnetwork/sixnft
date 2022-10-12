@@ -419,14 +419,6 @@ func New(
 	)
 	evmsupportModule := evmsupportmodule.NewAppModule(appCodec, app.EvmsupportKeeper, app.AccountKeeper, app.BankKeeper)
 
-	app.NftmngrKeeper = *nftmngrmodulekeeper.NewKeeper(
-		appCodec,
-		keys[nftmngrmoduletypes.StoreKey],
-		keys[nftmngrmoduletypes.MemStoreKey],
-		app.GetSubspace(nftmngrmoduletypes.ModuleName),
-		app.EvmsupportKeeper,
-	)
-	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper, app.EvmsupportKeeper)
 	app.AdminKeeper = *nftadminmodulekeeper.NewKeeper(
 		appCodec,
 		keys[nftadminmoduletypes.StoreKey],
@@ -435,6 +427,16 @@ func New(
 
 		app.BankKeeper,
 	)
+	app.NftmngrKeeper = *nftmngrmodulekeeper.NewKeeper(
+		appCodec,
+		keys[nftmngrmoduletypes.StoreKey],
+		keys[nftmngrmoduletypes.MemStoreKey],
+		app.GetSubspace(nftmngrmoduletypes.ModuleName),
+		app.EvmsupportKeeper,
+		app.AdminKeeper,
+	)
+	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper, app.EvmsupportKeeper)
+
 	nftnftadminmodule := nftnftadminmodule.NewAppModule(appCodec, app.AdminKeeper, app.AccountKeeper, app.BankKeeper)
 	app.NftoracleKeeper = *nftoraclemodulekeeper.NewKeeper(
 		appCodec,

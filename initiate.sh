@@ -400,3 +400,9 @@ ignite scaffold single NFTFeeConfig \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold message setFeeConfig new_fee_config_base64:string \
+    --desc "To set fee config" \
+    --response new_fee_config \
+    --no-simulation \
+    --module nftmngr

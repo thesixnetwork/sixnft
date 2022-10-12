@@ -5,6 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
 	evmtypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 )
 
 // AccountKeeper defines the expected account keeper used for simulations (noalias)
@@ -25,4 +26,9 @@ type EvmsupportKeeper interface {
 		ctx sdk.Context,
 		ethAddress string,
 	) (val evmtypes.AddressBinding, found bool)
+}
+
+type AdminKeeper interface {
+	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)
+	HasPermission(ctx sdk.Context, name string, addr sdk.AccAddress) bool
 }

@@ -30934,6 +30934,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31498,6 +31508,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32346,6 +32366,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -33115,6 +33145,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/organization/{name}':
@@ -33880,6 +33920,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -56839,6 +56889,11 @@ definitions:
       - REWARD_POOL
       - TRANSFER
     default: BURN
+  thesixnetwork.sixnft.nftmngr.FeeSubject:
+    type: string
+    enum:
+      - CREATE_NFT_SCHEMA
+    default: CREATE_NFT_SCHEMA
   thesixnetwork.sixnft.nftmngr.FloatAttributeValue:
     type: object
     properties:
@@ -57289,6 +57344,8 @@ definitions:
         type: string
       uri:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgSetFeeConfigResponse:
+    type: object
   thesixnetwork.sixnft.nftmngr.MsgSetNFTAttributeResponse:
     type: object
     properties:

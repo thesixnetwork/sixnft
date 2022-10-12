@@ -60,6 +60,7 @@ func NftmngrKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 				"EvmsupportParams",
 			),
 		),
+		nil,
 	)
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, log.NewNopLogger())

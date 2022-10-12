@@ -68,4 +68,7 @@ var (
 	ErrSystemActionerDoesNotExists = sdkerrors.Register(ModuleName, 601, "System actioner does not exists")
 
 	ErrUnauthorized = sdkerrors.Register(ModuleName, 700, "Unauthorized")
+
+	ErrNoNftFeeAdminPermission = sdkerrors.Register(ModuleName, 800, "No NFT fee admin permission")
+	ErrInvalidFeeAmount        = sdkerrors.Register(ModuleName, 801, "Invalid fee amount")
 )
