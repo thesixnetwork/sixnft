@@ -18,18 +18,18 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Check if nft_schema_code exists
-	_schema, found := k.nftmngrKeeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	schema_, found := k.nftmngrKeeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, msg.NftSchemaCode)
 	}
 
-	// check if creator is owner of the collection
-	if _schema.Owner != msg.Creator {
+	// check if creator is owner of the collectio
+	if schema_.Owner != msg.Creator {
 		return nil, sdkerrors.Wrap(types.ErrNotCollectionOwner, msg.Creator)
 	}
 
 	// Check if nft_schema_code already verified
-	if _schema.IsVerified {
+	if schema_.IsVerified {
 		return nil, sdkerrors.Wrap(types.ErrNFTSchemaAlreadyVerified, msg.NftSchemaCode)
 	}
 
@@ -71,27 +71,29 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
 		Confirmers:      make(map[string]bool),
-		OriginTx:        make([]*types.OriginTxInfo, 0),
+		ContractInfo:        make([]*types.OriginContractInfo, 0),
 	})
+	
+	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, endTime)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeVerificationRequestCreated,
 			sdk.NewAttribute(types.AttributeKeyVerifyRequestID, strconv.FormatUint(id_, 10)),
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeRequestorAddress, *signer),
+			// sdk.NewAttribute(types.AtttibuteKeyVerifyRequestChainOrigin, schema_.OriginData.OriginChain ),
 			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),
 		),
 	})
 
 	return &types.MsgCreateVerifyCollectionOwnerRequestResponse{
 		Id:            id_,
-		NftSchemaCode: _schema.Code,
+		NftSchemaCode: schema_.Code,
 		OwnerAddress:  *signer,
 	}, nil
 }
 
-func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.CollectionOwnerSignature) (*types.TxOriginParam, *string, error) {
+func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.CollectionOwnerSignature) (*types.OriginContractParam, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(collectionOwnerSig.Message)), 10) + collectionOwnerSig.Message
 
@@ -101,7 +103,7 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
 
-	collectionOwnerParam := &types.TxOriginParam{}
+	collectionOwnerParam := &types.OriginContractParam{}
 	collectionOwnerTypeBz, err := base64.StdEncoding.DecodeString(collectionOwnerSig.Message)
 	if err != nil {
 		return nil, nil, err

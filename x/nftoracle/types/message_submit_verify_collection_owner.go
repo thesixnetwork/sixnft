@@ -9,12 +9,12 @@ const TypeMsgSubmitVerifyCollectionOwner = "submit_verify_collection_owner"
 
 var _ sdk.Msg = &MsgSubmitVerifyCollectionOwner{}
 
-func NewMsgSubmitVerifyCollectionOwner(creator string, verifyRequestID uint64, schemaCode string, base64OriginTxInfo string) *MsgSubmitVerifyCollectionOwner {
+func NewMsgSubmitVerifyCollectionOwner(creator string, verifyRequestID uint64, schemaCode string, base64OriginContractInfo string) *MsgSubmitVerifyCollectionOwner {
 	return &MsgSubmitVerifyCollectionOwner{
 		Creator:            creator,
 		VerifyRequestID:    verifyRequestID,
 		NftSchemaCode:         schemaCode,
-		Base64OriginTxInfo: base64OriginTxInfo,
+		Base64OriginContractInfo: base64OriginContractInfo,
 	}
 }
 

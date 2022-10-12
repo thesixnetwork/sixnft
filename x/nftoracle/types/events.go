@@ -27,7 +27,11 @@ const (
 	AttributeKeyVerifyRequestID           = "verify_request_id"
 	AttributeKeyVerificationRequestStatus = "status"
 
+	EventTypeVerificationRequest   = "verify_request"
+	EventTypeVerificationRequestStatus = "status"
+
 	AttributeRequestorAddress       = "requestor_address"
+
 	EventTypeSetMinimumConfirmation = "set_minimum_confirmation"
 	AttributeKeyMinimumConfirmation = "minimum_confirmation"
 )

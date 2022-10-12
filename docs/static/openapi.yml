@@ -30944,16 +30944,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31518,16 +31508,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32376,16 +32356,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/sixnft/nftmngr/nft_schema/{code}':
@@ -33152,16 +33122,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33933,16 +33893,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   /sixnft/nftoracle/action_request:
@@ -34125,6 +34075,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -34421,6 +34381,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/sixnft/nftoracle/mint_request/{id}':
@@ -34622,22 +34592,19 @@ paths:
                     valid_until:
                       type: string
                       format: date-time
-                    origin_tx:
+                    contract_info:
                       type: array
                       items:
                         type: object
                         properties:
-                          transactionOriginDataInfo:
+                          contractOriginDataInfo:
                             type: object
                             properties:
                               chain:
                                 type: string
-                              tx_hash:
+                              contract_address:
                                 type: string
-                              block_number:
-                                type: string
-                                format: uint64
-                              deployer_address:
+                              contract_owner:
                                 type: string
                           hash:
                             type: string
@@ -34741,6 +34708,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/collection_owner_request/{id}':
@@ -34789,22 +34766,19 @@ paths:
                   valid_until:
                     type: string
                     format: date-time
-                  origin_tx:
+                  contract_info:
                     type: array
                     items:
                       type: object
                       properties:
-                        transactionOriginDataInfo:
+                        contractOriginDataInfo:
                           type: object
                           properties:
                             chain:
                               type: string
-                            tx_hash:
+                            contract_address:
                               type: string
-                            block_number:
-                              type: string
-                              format: uint64
-                            deployer_address:
+                            contract_owner:
                               type: string
                         hash:
                           type: string
@@ -59112,22 +59086,19 @@ definitions:
       valid_until:
         type: string
         format: date-time
-      origin_tx:
+      contract_info:
         type: array
         items:
           type: object
           properties:
-            transactionOriginDataInfo:
+            contractOriginDataInfo:
               type: object
               properties:
                 chain:
                   type: string
-                tx_hash:
+                contract_address:
                   type: string
-                block_number:
-                  type: string
-                  format: uint64
-                deployer_address:
+                contract_owner:
                   type: string
             hash:
               type: string
@@ -59314,20 +59285,17 @@ definitions:
       minimum_confirmation:
         type: integer
         format: int32
-  thesixnetwork.sixnft.nftoracle.OriginTxInfo:
+  thesixnetwork.sixnft.nftoracle.OriginContractInfo:
     type: object
     properties:
-      transactionOriginDataInfo:
+      contractOriginDataInfo:
         type: object
         properties:
           chain:
             type: string
-          tx_hash:
+          contract_address:
             type: string
-          block_number:
-            type: string
-            format: uint64
-          deployer_address:
+          contract_owner:
             type: string
       hash:
         type: string
@@ -59336,6 +59304,15 @@ definitions:
         type: array
         items:
           type: string
+  thesixnetwork.sixnft.nftoracle.OriginContractParam:
+    type: object
+    properties:
+      chain:
+        type: string
+      contract_address:
+        type: string
+      contract_owner:
+        type: string
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -59496,22 +59473,19 @@ definitions:
             valid_until:
               type: string
               format: date-time
-            origin_tx:
+            contract_info:
               type: array
               items:
                 type: object
                 properties:
-                  transactionOriginDataInfo:
+                  contractOriginDataInfo:
                     type: object
                     properties:
                       chain:
                         type: string
-                      tx_hash:
+                      contract_address:
                         type: string
-                      block_number:
-                        type: string
-                        format: uint64
-                      deployer_address:
+                      contract_owner:
                         type: string
                   hash:
                     type: string
@@ -59771,22 +59745,19 @@ definitions:
           valid_until:
             type: string
             format: date-time
-          origin_tx:
+          contract_info:
             type: array
             items:
               type: object
               properties:
-                transactionOriginDataInfo:
+                contractOriginDataInfo:
                   type: object
                   properties:
                     chain:
                       type: string
-                    tx_hash:
+                    contract_address:
                       type: string
-                    block_number:
-                      type: string
-                      format: uint64
-                    deployer_address:
+                    contract_owner:
                       type: string
                 hash:
                   type: string
@@ -59916,16 +59887,4 @@ definitions:
       display_type:
         type: string
       max_value:
-        type: string
-  thesixnetwork.sixnft.nftoracle.TransactionOriginDataInfo:
-    type: object
-    properties:
-      chain:
-        type: string
-      tx_hash:
-        type: string
-      block_number:
-        type: string
-        format: uint64
-      deployer_address:
         type: string

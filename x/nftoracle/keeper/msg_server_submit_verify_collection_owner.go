@@ -45,24 +45,24 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	}
 
 	// Convert msg.base64OriginContractInfo to bytes
-	_msgBase64OriginTxInfo, err := base64.StdEncoding.DecodeString(msg.Base64OriginTxInfo)
+	_msgBase64OriginContractInfo, err := base64.StdEncoding.DecodeString(msg.Base64OriginContractInfo)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 
-	transactionOrigin := types.TransactionOriginDataInfo{}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(_msgBase64OriginTxInfo, &transactionOrigin)
+	contractOrigingParam := types.OriginContractParam{}
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(_msgBase64OriginContractInfo, &contractOrigingParam)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 
 	if verifyRequest.CurrentConfirm == 0 {
-		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
+		dataHash := sha256.Sum256(_msgBase64OriginContractInfo)
 		// hash schema
-		verifyRequest.OriginTx = append(verifyRequest.OriginTx, &types.OriginTxInfo{
-			TransactionOriginDataInfo: &transactionOrigin,
-			Hash:                      dataHash[:],
-			Confirmers:                []string{msg.Creator},
+		verifyRequest.ContractInfo = append(verifyRequest.ContractInfo, &types.OriginContractInfo{
+			ContractOriginDataInfo: &contractOrigingParam,
+			Hash:                   dataHash[:],
+			Confirmers:             []string{msg.Creator},
 		})
 	} else {
 		// check if creator has alraedy confirmed
@@ -71,9 +71,9 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 		}
 
 		// Compare data hash with previous data
-		dataHash := sha256.Sum256(_msgBase64OriginTxInfo)
+		dataHash := sha256.Sum256(_msgBase64OriginContractInfo)
 		dataHashMatch := false
-		for _, origin_tx := range verifyRequest.OriginTx {
+		for _, origin_tx := range verifyRequest.ContractInfo {
 			if res := bytes.Compare(dataHash[:], origin_tx.Hash); res == 0 {
 				dataHashMatch = true
 				origin_tx.Confirmers = append(origin_tx.Confirmers, msg.Creator)
@@ -81,10 +81,10 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 			}
 		}
 		if !dataHashMatch {
-			verifyRequest.OriginTx = append(verifyRequest.OriginTx, &types.OriginTxInfo{
-				TransactionOriginDataInfo: &transactionOrigin,
-				Hash:                      dataHash[:],
-				Confirmers:                []string{msg.Creator},
+			verifyRequest.ContractInfo = append(verifyRequest.ContractInfo, &types.OriginContractInfo{
+				ContractOriginDataInfo: &contractOrigingParam,
+				Hash:                   dataHash[:],
+				Confirmers:             []string{msg.Creator},
 			})
 		}
 	}
@@ -102,16 +102,16 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	if verifyRequest.CurrentConfirm == verifyRequest.RequiredConfirm {
 
 		// chaek if signer and deployer address is same
-		if verifyRequest.Signer != transactionOrigin.DeployerAddress {
+		if verifyRequest.Signer != contractOrigingParam.ContractOwner {
 			verifyRequest.Status = types.RequestStatus_FAILED_REJECT_BY_CONSENSUS
-			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer+","+transactionOrigin.DeployerAddress)
+			return nil, sdkerrors.Wrap(types.ErrOracleRejectVerifyRequest, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+verifyRequest.Signer+","+contractOrigingParam.ContractOwner)
 		} else {
 			verifyRequest.Status = types.RequestStatus_SUCCESS_WITH_CONSENSUS
 		}
 
 		// Verify collection owner
 		// Check if there is only one data hash
-		if len(verifyRequest.OriginTx) > 1 {
+		if len(verifyRequest.ContractInfo) > 1 {
 			// Update verifyRequest.Status to be FAILED
 			verifyRequest.Status = types.RequestStatus_FAILED_WITHOUT_CONCENSUS
 		} else {

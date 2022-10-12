@@ -65,7 +65,7 @@ export interface MsgSubmitVerifyCollectionOwner {
   creator: string;
   verifyRequestID: number;
   nftSchemaCode: string;
-  base64OriginTxInfo: string;
+  base64OriginContractInfo: string;
 }
 
 export interface MsgSubmitVerifyCollectionOwnerResponse {
@@ -1125,7 +1125,7 @@ const baseMsgSubmitVerifyCollectionOwner: object = {
   creator: "",
   verifyRequestID: 0,
   nftSchemaCode: "",
-  base64OriginTxInfo: "",
+  base64OriginContractInfo: "",
 };
 
 export const MsgSubmitVerifyCollectionOwner = {
@@ -1142,8 +1142,8 @@ export const MsgSubmitVerifyCollectionOwner = {
     if (message.nftSchemaCode !== "") {
       writer.uint32(26).string(message.nftSchemaCode);
     }
-    if (message.base64OriginTxInfo !== "") {
-      writer.uint32(34).string(message.base64OriginTxInfo);
+    if (message.base64OriginContractInfo !== "") {
+      writer.uint32(34).string(message.base64OriginContractInfo);
     }
     return writer;
   },
@@ -1170,7 +1170,7 @@ export const MsgSubmitVerifyCollectionOwner = {
           message.nftSchemaCode = reader.string();
           break;
         case 4:
-          message.base64OriginTxInfo = reader.string();
+          message.base64OriginContractInfo = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1203,12 +1203,14 @@ export const MsgSubmitVerifyCollectionOwner = {
       message.nftSchemaCode = "";
     }
     if (
-      object.base64OriginTxInfo !== undefined &&
-      object.base64OriginTxInfo !== null
+      object.base64OriginContractInfo !== undefined &&
+      object.base64OriginContractInfo !== null
     ) {
-      message.base64OriginTxInfo = String(object.base64OriginTxInfo);
+      message.base64OriginContractInfo = String(
+        object.base64OriginContractInfo
+      );
     } else {
-      message.base64OriginTxInfo = "";
+      message.base64OriginContractInfo = "";
     }
     return message;
   },
@@ -1220,8 +1222,8 @@ export const MsgSubmitVerifyCollectionOwner = {
       (obj.verifyRequestID = message.verifyRequestID);
     message.nftSchemaCode !== undefined &&
       (obj.nftSchemaCode = message.nftSchemaCode);
-    message.base64OriginTxInfo !== undefined &&
-      (obj.base64OriginTxInfo = message.base64OriginTxInfo);
+    message.base64OriginContractInfo !== undefined &&
+      (obj.base64OriginContractInfo = message.base64OriginContractInfo);
     return obj;
   },
 
@@ -1250,12 +1252,12 @@ export const MsgSubmitVerifyCollectionOwner = {
       message.nftSchemaCode = "";
     }
     if (
-      object.base64OriginTxInfo !== undefined &&
-      object.base64OriginTxInfo !== null
+      object.base64OriginContractInfo !== undefined &&
+      object.base64OriginContractInfo !== null
     ) {
-      message.base64OriginTxInfo = object.base64OriginTxInfo;
+      message.base64OriginContractInfo = object.base64OriginContractInfo;
     } else {
-      message.base64OriginTxInfo = "";
+      message.base64OriginContractInfo = "";
     }
     return message;
   },

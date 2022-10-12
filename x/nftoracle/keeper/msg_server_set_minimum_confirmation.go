@@ -24,6 +24,9 @@ func (k msgServer) SetMinimumConfirmation(goCtx context.Context, msg *types.MsgS
 
 	// convert msg.NewConfirmation into number
 	newConfirmation, err := strconv.ParseUint(msg.NewConfirmation, 10, 64)
+	if err != nil {
+		return nil, err
+	}
 
 	// Retrieve the current oracle configuration
 	var oracleConfig types.OracleConfig
