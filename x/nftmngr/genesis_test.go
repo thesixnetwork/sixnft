@@ -57,6 +57,7 @@ func TestGenesis(t *testing.T) {
 				NftSchemaCode: "1",
 			},
 		},
+		NFTFeeConfig: &types.NFTFeeConfig{},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -73,5 +74,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.ActionByRefIdList, got.ActionByRefIdList)
 	require.ElementsMatch(t, genesisState.OrganizationList, got.OrganizationList)
 	require.ElementsMatch(t, genesisState.NftCollectionList, got.NftCollectionList)
+	require.Equal(t, genesisState.NFTFeeConfig, got.NFTFeeConfig)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

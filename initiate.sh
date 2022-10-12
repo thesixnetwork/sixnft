@@ -395,3 +395,8 @@ ignite scaffold message setMinimumConfirmation new_confirmation \
     --response new_confirmation \
     --no-simulation \
     --module nftoracle
+
+ignite scaffold single NFTFeeConfig \
+    --no-message \
+    --no-simulation \
+    --module nftmngr

@@ -9,6 +9,7 @@ import {
 import { NftData } from "../nftmngr/nft_data";
 import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 import { Organization } from "../nftmngr/organization";
+import { NFTFeeConfig } from "../nftmngr/nft_fee_config";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
@@ -98,6 +99,12 @@ export interface QueryGetNftCollectionRequest {
 export interface QueryGetNftCollectionResponse {
   nftCollection: NftData[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryGetNFTFeeConfigRequest {}
+
+export interface QueryGetNFTFeeConfigResponse {
+  NFTFeeConfig: NFTFeeConfig | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -1648,6 +1655,133 @@ export const QueryGetNftCollectionResponse = {
   },
 };
 
+const baseQueryGetNFTFeeConfigRequest: object = {};
+
+export const QueryGetNFTFeeConfigRequest = {
+  encode(
+    _: QueryGetNFTFeeConfigRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeConfigRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetNFTFeeConfigRequest {
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetNFTFeeConfigRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetNFTFeeConfigRequest>
+  ): QueryGetNFTFeeConfigRequest {
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    return message;
+  },
+};
+
+const baseQueryGetNFTFeeConfigResponse: object = {};
+
+export const QueryGetNFTFeeConfigResponse = {
+  encode(
+    message: QueryGetNFTFeeConfigResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.NFTFeeConfig !== undefined) {
+      NFTFeeConfig.encode(
+        message.NFTFeeConfig,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeConfigResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.NFTFeeConfig = NFTFeeConfig.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetNFTFeeConfigResponse {
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
+      message.NFTFeeConfig = NFTFeeConfig.fromJSON(object.NFTFeeConfig);
+    } else {
+      message.NFTFeeConfig = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetNFTFeeConfigResponse): unknown {
+    const obj: any = {};
+    message.NFTFeeConfig !== undefined &&
+      (obj.NFTFeeConfig = message.NFTFeeConfig
+        ? NFTFeeConfig.toJSON(message.NFTFeeConfig)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetNFTFeeConfigResponse>
+  ): QueryGetNFTFeeConfigResponse {
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
+      message.NFTFeeConfig = NFTFeeConfig.fromPartial(object.NFTFeeConfig);
+    } else {
+      message.NFTFeeConfig = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1684,6 +1818,10 @@ export interface Query {
   NftCollection(
     request: QueryGetNftCollectionRequest
   ): Promise<QueryGetNftCollectionResponse>;
+  /** Queries a NFTFeeConfig by index. */
+  NFTFeeConfig(
+    request: QueryGetNFTFeeConfigRequest
+  ): Promise<QueryGetNFTFeeConfigResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1822,6 +1960,20 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryGetNftCollectionResponse.decode(new Reader(data))
+    );
+  }
+
+  NFTFeeConfig(
+    request: QueryGetNFTFeeConfigRequest
+  ): Promise<QueryGetNFTFeeConfigResponse> {
+    const data = QueryGetNFTFeeConfigRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Query",
+      "NFTFeeConfig",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetNFTFeeConfigResponse.decode(new Reader(data))
     );
   }
 }

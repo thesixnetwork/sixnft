@@ -9,6 +9,7 @@ import "nftmngr/nft_schema.proto";
 import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
 import "nftmngr/nft_collection.proto";
+import "nftmngr/nft_fee_config.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -65,6 +66,10 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
 	}
 
+// Queries a NFTFeeConfig by index.
+	rpc NFTFeeConfig(QueryGetNFTFeeConfigRequest) returns (QueryGetNFTFeeConfigResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_config";
+	}
 // this line is used by starport scaffolding # 2
 }
 
@@ -161,4 +166,9 @@ message QueryGetNftCollectionResponse {
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
+message QueryGetNFTFeeConfigRequest {}
+
+message QueryGetNFTFeeConfigResponse {
+	NFTFeeConfig NFTFeeConfig = 1 [(gogoproto.nullable) = false];
+}
 // this line is used by starport scaffolding # 3
