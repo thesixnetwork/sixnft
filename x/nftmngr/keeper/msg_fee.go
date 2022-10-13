@@ -1,8 +1,6 @@
 package keeper
 
 import (
-	"fmt"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	distribtype "github.com/cosmos/cosmos-sdk/x/distribution/types"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -20,7 +18,6 @@ func (k Keeper) ProcessFeeAmount(ctx sdk.Context, bondedVotes []abci.VoteInfo) e
 	}
 	currentCreateSchemaFeeBalance, err := sdk.ParseCoinNormalized(feeBalances.FeeBalances[int32(types.FeeSubject_CREATE_NFT_SCHEMA)])
 	if err != nil {
-		fmt.Println("########################### err", err.Error())
 		return err
 	}
 	if currentCreateSchemaFeeBalance.Amount.GT(sdk.NewInt(0)) {
@@ -63,8 +60,6 @@ func (k Keeper) ProcessFeeAmount(ctx sdk.Context, bondedVotes []abci.VoteInfo) e
 					} else {
 						remaining = remaining.Sub(toAllocate)
 					}
-					fmt.Println("######################## validator", validator)
-					fmt.Println("######################## toAllocate", toAllocate)
 					k.distributionKeeper.AllocateTokensToValidator(ctx, validator, reward.MulDecTruncate(powerFraction))
 
 				}

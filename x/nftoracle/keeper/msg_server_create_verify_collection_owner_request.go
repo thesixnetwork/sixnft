@@ -3,7 +3,6 @@ package keeper
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -71,9 +70,9 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
 		Confirmers:      make(map[string]bool),
-		ContractInfo:        make([]*types.OriginContractInfo, 0),
+		ContractInfo:    make([]*types.OriginContractInfo, 0),
 	})
-	
+
 	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, endTime)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -96,8 +95,6 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.CollectionOwnerSignature) (*types.OriginContractParam, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(collectionOwnerSig.Message)), 10) + collectionOwnerSig.Message
-
-	fmt.Println("#######################sign_msg", collectionOwnerSig.Signature)
 
 	data := []byte(sign_msg)
 	hash := crypto.Keccak256Hash(data)
@@ -138,6 +135,5 @@ func (k msgServer) ValidateCollectionOwnerSignature(collectionOwnerSig types.Col
 		return nil, nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
 	}
 	signer := eth_address_from_pubkey.Hex()
-	// fmt.Println("######################### signer", signer)
 	return collectionOwnerParam, &signer, nil
 }

@@ -1,8 +1,6 @@
 package nftoracle
 
 import (
-	"fmt"
-
 	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
@@ -21,8 +19,6 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.MintRequestList {
 		k.SetMintRequest(ctx, elem)
 	}
-
-	fmt.Println("############################### mint active duration", genState.Params.MintRequestActiveDuration)
 
 	// Set mintRequest count
 	k.SetMintRequestCount(ctx, genState.MintRequestCount)
