@@ -406,3 +406,8 @@ ignite scaffold message setFeeConfig new_fee_config_base64:string \
     --response new_fee_config \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold single NFTFeeBalance \
+    --no-message \
+    --no-simulation \
+    --module nftmngr

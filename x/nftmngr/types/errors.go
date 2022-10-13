@@ -71,4 +71,6 @@ var (
 
 	ErrNoNftFeeAdminPermission = sdkerrors.Register(ModuleName, 800, "No NFT fee admin permission")
 	ErrInvalidFeeAmount        = sdkerrors.Register(ModuleName, 801, "Invalid fee amount")
+	ErrProcessingFee           = sdkerrors.Register(ModuleName, 802, "Error processing fee")
+	ErrInvalidFeePortion       = sdkerrors.Register(ModuleName, 803, "Invalid fee portion")
 )

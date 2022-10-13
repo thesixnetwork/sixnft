@@ -184,6 +184,8 @@ var (
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		nftadminmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		nftmngrmoduletypes.ModuleName:  {authtypes.Burner},
+
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -434,6 +436,9 @@ func New(
 		app.GetSubspace(nftmngrmoduletypes.ModuleName),
 		app.EvmsupportKeeper,
 		app.AdminKeeper,
+		app.BankKeeper,
+		app.StakingKeeper,
+		app.DistrKeeper,
 	)
 	nftmngrModule := nftmngrmodule.NewAppModule(appCodec, app.NftmngrKeeper, app.AccountKeeper, app.BankKeeper, app.EvmsupportKeeper)
 

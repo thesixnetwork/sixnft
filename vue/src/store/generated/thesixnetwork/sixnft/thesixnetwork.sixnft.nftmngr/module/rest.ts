@@ -174,6 +174,10 @@ export interface NftmngrMsgToggleActionResponse {
   onchainDataAction?: NftmngrOnChainData;
 }
 
+export interface NftmngrNFTFeeBalance {
+  fee_balances?: Record<string, string>;
+}
+
 export interface NftmngrNFTFeeConfig {
   schema_fee?: NftmngrFeeConfig;
 }
@@ -321,6 +325,10 @@ export interface NftmngrQueryAllOrganizationResponse {
 
 export interface NftmngrQueryGetActionByRefIdResponse {
   actionByRefId?: NftmngrActionByRefId;
+}
+
+export interface NftmngrQueryGetNFTFeeBalanceResponse {
+  NFTFeeBalance?: NftmngrNFTFeeBalance;
 }
 
 export interface NftmngrQueryGetNFTFeeConfigResponse {
@@ -954,6 +962,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       path: `/thesixnetwork/sixnft/nftmngr/nft_collection/${nftSchemaCode}`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNftFeeBalance
+   * @summary Queries a NFTFeeBalance by index.
+   * @request GET:/thesixnetwork/sixnft/nftmngr/nft_fee_balance
+   */
+  queryNftFeeBalance = (params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetNFTFeeBalanceResponse, GooglerpcStatus>({
+      path: `/thesixnetwork/sixnft/nftmngr/nft_fee_balance`,
+      method: "GET",
       format: "json",
       ...params,
     });

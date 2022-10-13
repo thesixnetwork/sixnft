@@ -6,6 +6,7 @@ import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 import { Organization } from "../nftmngr/organization";
 import { NftCollection } from "../nftmngr/nft_collection";
 import { NFTFeeConfig } from "../nftmngr/nft_fee_config";
+import { NFTFeeBalance } from "../nftmngr/nft_fee_balance";
 import { Writer, Reader } from "protobufjs/minimal";
 
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
@@ -18,8 +19,9 @@ export interface GenesisState {
   actionByRefIdList: ActionByRefId[];
   organizationList: Organization[];
   nftCollectionList: NftCollection[];
-  /** this line is used by starport scaffolding # genesis/proto/state */
   nft_fee_config: NFTFeeConfig | undefined;
+  /** this line is used by starport scaffolding # genesis/proto/state */
+  nFTFeeBalance: NFTFeeBalance | undefined;
 }
 
 const baseGenesisState: object = {};
@@ -48,6 +50,12 @@ export const GenesisState = {
       NFTFeeConfig.encode(
         message.nft_fee_config,
         writer.uint32(58).fork()
+      ).ldelim();
+    }
+    if (message.nFTFeeBalance !== undefined) {
+      NFTFeeBalance.encode(
+        message.nFTFeeBalance,
+        writer.uint32(66).fork()
       ).ldelim();
     }
     return writer;
@@ -91,6 +99,9 @@ export const GenesisState = {
           break;
         case 7:
           message.nft_fee_config = NFTFeeConfig.decode(reader, reader.uint32());
+          break;
+        case 8:
+          message.nFTFeeBalance = NFTFeeBalance.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -151,6 +162,11 @@ export const GenesisState = {
     } else {
       message.nft_fee_config = undefined;
     }
+    if (object.nFTFeeBalance !== undefined && object.nFTFeeBalance !== null) {
+      message.nFTFeeBalance = NFTFeeBalance.fromJSON(object.nFTFeeBalance);
+    } else {
+      message.nFTFeeBalance = undefined;
+    }
     return message;
   },
 
@@ -196,6 +212,10 @@ export const GenesisState = {
     message.nft_fee_config !== undefined &&
       (obj.nft_fee_config = message.nft_fee_config
         ? NFTFeeConfig.toJSON(message.nft_fee_config)
+        : undefined);
+    message.nFTFeeBalance !== undefined &&
+      (obj.nFTFeeBalance = message.nFTFeeBalance
+        ? NFTFeeBalance.toJSON(message.nFTFeeBalance)
         : undefined);
     return obj;
   },
@@ -250,6 +270,11 @@ export const GenesisState = {
       message.nft_fee_config = NFTFeeConfig.fromPartial(object.nft_fee_config);
     } else {
       message.nft_fee_config = undefined;
+    }
+    if (object.nFTFeeBalance !== undefined && object.nFTFeeBalance !== null) {
+      message.nFTFeeBalance = NFTFeeBalance.fromPartial(object.nFTFeeBalance);
+    } else {
+      message.nFTFeeBalance = undefined;
     }
     return message;
   },

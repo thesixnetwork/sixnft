@@ -40,3 +40,7 @@ const (
 
 	KeyPermissionNftFeeAdmin = "nft_fee_admin"
 )
+
+const (
+	NFTFeeBalanceKey = "NFTFeeBalance-value-"
+)

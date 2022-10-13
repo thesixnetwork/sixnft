@@ -64,7 +64,8 @@ func TestGenesisState_Validate(t *testing.T) {
 						NftSchemaCode: "1",
 					},
 				},
-				NftFeeConfig: &types.NFTFeeConfig{},
+				NftFeeConfig:  &types.NFTFeeConfig{},
+				NFTFeeBalance: &types.NFTFeeBalance{},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
