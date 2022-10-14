@@ -79,6 +79,28 @@ export interface NftmngrDisplayOption {
   opensea?: NftmngrOpenseaDisplayOption;
 }
 
+export interface NftmngrFeeConfig {
+  fee_amount?: string;
+  fee_distributions?: NftmngrFeeDistribution[];
+}
+
+export interface NftmngrFeeDistribution {
+  method?: NftmngrFeeDistributionMethod;
+
+  /** @format float */
+  portion?: number;
+}
+
+export enum NftmngrFeeDistributionMethod {
+  BURN = "BURN",
+  REWARD_POOL = "REWARD_POOL",
+  TRANSFER = "TRANSFER",
+}
+
+export enum NftmngrFeeSubject {
+  CREATE_NFT_SCHEMA = "CREATE_NFT_SCHEMA",
+}
+
 export interface NftmngrFloatAttributeValue {
   /** @format double */
   value?: number;
@@ -134,6 +156,8 @@ export interface NftmngrMsgSetBaseUriResponse {
   uri?: string;
 }
 
+export type NftmngrMsgSetFeeConfigResponse = object;
+
 export interface NftmngrMsgSetNFTAttributeResponse {
   nft_schema_code?: string;
   attribute_name?: string;
@@ -148,6 +172,14 @@ export interface NftmngrMsgToggleActionResponse {
   code?: string;
   name?: string;
   onchainDataAction?: NftmngrOnChainData;
+}
+
+export interface NftmngrNFTFeeBalance {
+  fee_balances?: Record<string, string>;
+}
+
+export interface NftmngrNFTFeeConfig {
+  schema_fee?: NftmngrFeeConfig;
 }
 
 export interface NftmngrNFTSchema {
@@ -293,6 +325,14 @@ export interface NftmngrQueryAllOrganizationResponse {
 
 export interface NftmngrQueryGetActionByRefIdResponse {
   actionByRefId?: NftmngrActionByRefId;
+}
+
+export interface NftmngrQueryGetNFTFeeBalanceResponse {
+  NFTFeeBalance?: NftmngrNFTFeeBalance;
+}
+
+export interface NftmngrQueryGetNFTFeeConfigResponse {
+  NFTFeeConfig?: NftmngrNFTFeeConfig;
 }
 
 export interface NftmngrQueryGetNFTSchemaResponse {
@@ -493,13 +533,6 @@ export interface V1Beta1PageRequest {
    * is set.
    */
   count_total?: boolean;
-
-  /**
-   * reverse is set to true if results are to be returned in the descending order.
-   *
-   * Since: cosmos-sdk 0.43
-   */
-  reverse?: boolean;
 }
 
 /**
@@ -729,7 +762,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -771,7 +803,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -813,7 +844,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -855,7 +885,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -914,7 +943,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       "pagination.offset"?: string;
       "pagination.limit"?: string;
       "pagination.count_total"?: boolean;
-      "pagination.reverse"?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -922,6 +950,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       path: `/thesixnetwork/sixnft/nftmngr/nft_collection/${nftSchemaCode}`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNftFeeBalance
+   * @summary Queries a NFTFeeBalance by index.
+   * @request GET:/thesixnetwork/sixnft/nftmngr/nft_fee_balance
+   */
+  queryNftFeeBalance = (params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetNFTFeeBalanceResponse, GooglerpcStatus>({
+      path: `/thesixnetwork/sixnft/nftmngr/nft_fee_balance`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNftFeeConfig
+   * @summary Queries a NFTFeeConfig by index.
+   * @request GET:/thesixnetwork/sixnft/nftmngr/nft_fee_config
+   */
+  queryNftFeeConfig = (params: RequestParams = {}) =>
+    this.request<NftmngrQueryGetNFTFeeConfigResponse, GooglerpcStatus>({
+      path: `/thesixnetwork/sixnft/nftmngr/nft_fee_config`,
+      method: "GET",
       format: "json",
       ...params,
     });

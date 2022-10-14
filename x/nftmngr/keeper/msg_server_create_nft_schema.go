@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -34,6 +35,10 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
 	schema.Owner = msg.Creator
+	creatorAddress, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
 	// Validate Schema Message and return error if not valid
 	valid, err := k.ValidateNFTSchema(&schema)
 	_ = valid
@@ -67,6 +72,33 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
+
+	feeConfig, found := k.Keeper.GetNFTFeeConfig(ctx)
+	if found {
+		// Get Denom
+		amount, err := sdk.ParseCoinNormalized(feeConfig.SchemaFee.FeeAmount)
+		if err != nil {
+			return nil, sdkerrors.Wrap(types.ErrInvalidFeeAmount, err.Error())
+		}
+		feeBalances, found := k.Keeper.GetNFTFeeBalance(ctx)
+		if !found {
+			feeBalances = types.NFTFeeBalance{
+				FeeBalances: map[int32]string{
+					int32(types.FeeSubject_CREATE_NFT_SCHEMA): "0" + amount.Denom,
+				},
+			}
+		}
+		// check if exists in map
+		if _, ok := feeBalances.FeeBalances[int32(types.FeeSubject_CREATE_NFT_SCHEMA)]; !ok {
+			feeBalances.FeeBalances[int32(types.FeeSubject_CREATE_NFT_SCHEMA)] = "0" + amount.Denom
+		}
+		err = k.processFee(ctx, &feeConfig, &feeBalances, types.FeeSubject_CREATE_NFT_SCHEMA, creatorAddress)
+		if err != nil {
+			return nil, sdkerrors.Wrap(types.ErrProcessingFee, err.Error())
+		}
+		// Set Fee Balance
+		k.Keeper.SetNFTFeeBalance(ctx, feeBalances)
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -210,4 +242,17 @@ func MergeAllSchemaAttributesAndAlterOrderIndex(originAttributes []*types.Attrib
 		index++
 	}
 	return mergedAttributes
+}
+
+func (k msgServer) processFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBalances *types.NFTFeeBalance, feeSubject types.FeeSubject, source sdk.AccAddress) error {
+	currentFeeBalance, _ := sdk.ParseCoinNormalized(feeBalances.FeeBalances[int32(feeSubject)])
+	feeAmount, _ := sdk.ParseCoinNormalized(feeConfig.SchemaFee.FeeAmount)
+	// Plus fee amount to fee balance
+	currentFeeBalance = currentFeeBalance.Add(feeAmount)
+	feeBalances.FeeBalances[int32(feeSubject)] = strconv.FormatInt(currentFeeBalance.Amount.Int64(), 10) + feeAmount.Denom
+
+	err := k.bankKeeper.SendCoinsFromAccountToModule(
+		ctx, source, types.ModuleName, sdk.NewCoins(feeAmount),
+	)
+	return err
 }
