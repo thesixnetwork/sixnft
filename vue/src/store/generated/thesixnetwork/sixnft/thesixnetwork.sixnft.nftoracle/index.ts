@@ -374,18 +374,18 @@ export default {
 		},
 		
 		
-		async sendMsgCreateActionRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateActionRequest(value)
+				const msg = await txClient.msgCreateMintRequest(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateActionRequest:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgCreateMintRequest:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -419,33 +419,18 @@ export default {
 				}
 			}
 		},
-		async sendMsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgSetMinimumConfirmation({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateVerifyCollectionOwnerRequest(value)
+				const msg = await txClient.msgSetMinimumConfirmation(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetMinimumConfirmation:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
-		async sendMsgCreateMintRequest({ rootGetters }, { value, fee = [], memo = '' }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMintRequest(value)
-				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
-	gas: "200000" }, memo})
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgCreateMintRequest:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgSetMinimumConfirmation:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -464,32 +449,47 @@ export default {
 				}
 			}
 		},
-		async sendMsgSetMinimumConfirmation({ rootGetters }, { value, fee = [], memo = '' }) {
+		async sendMsgCreateActionRequest({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetMinimumConfirmation(value)
+				const msg = await txClient.msgCreateActionRequest(value)
 				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
 	gas: "200000" }, memo})
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetMinimumConfirmation:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgSetMinimumConfirmation:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgCreateActionRequest:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateVerifyCollectionOwnerRequest(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
 		
-		async MsgCreateActionRequest({ rootGetters }, { value }) {
+		async MsgCreateMintRequest({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateActionRequest(value)
+				const msg = await txClient.msgCreateMintRequest(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateActionRequest:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -519,29 +519,16 @@ export default {
 				}
 			}
 		},
-		async MsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value }) {
+		async MsgSetMinimumConfirmation({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateVerifyCollectionOwnerRequest(value)
+				const msg = await txClient.msgSetMinimumConfirmation(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgSetMinimumConfirmation:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Create Could not create message: ' + e.message)
-				}
-			}
-		},
-		async MsgCreateMintRequest({ rootGetters }, { value }) {
-			try {
-				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgCreateMintRequest(value)
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateMintRequest:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgCreateMintRequest:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgSetMinimumConfirmation:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -558,16 +545,29 @@ export default {
 				}
 			}
 		},
-		async MsgSetMinimumConfirmation({ rootGetters }, { value }) {
+		async MsgCreateActionRequest({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
-				const msg = await txClient.msgSetMinimumConfirmation(value)
+				const msg = await txClient.msgCreateActionRequest(value)
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgSetMinimumConfirmation:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateActionRequest:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgSetMinimumConfirmation:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateActionRequest:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgCreateVerifyCollectionOwnerRequest({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgCreateVerifyCollectionOwnerRequest(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgCreateVerifyCollectionOwnerRequest:Create Could not create message: ' + e.message)
 				}
 			}
 		},
