@@ -1,5 +1,4 @@
-EVMSIGN=/Users/zatan007/go/src/evmsign/evmsign
-SECRET=PRIVATE_KEY
+EVMSIGN=./evmsign
 default_schema_cdoe=$1
 echo "#############################################"
 echo "##                                         ##"
@@ -19,8 +18,8 @@ echo "##  9. Oracle - Create Action Request      ##"
 echo "##  10. Oracle - Get Action Request        ##"
 echo "##  11. Oracle - Submit Action Response    ##"
 echo "##  12. Oracle - Create Verfify Request    ##"
-echo "##  13. Oracle - Submit Verify Response    ##"
-echo "##  14. Oracle - Get Verify Request        ##"
+echo "##  13. Oracle - Get Verify Request        ##"
+echo "##  14. Oracle - Submit Verify Response    ##"
 echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
@@ -169,18 +168,22 @@ case $choice in
 
         BASE64JSON=`cat verify-collection-owner.json`
         # echo "BASE64JSON: ${BASE64JSON}"
-        BASE64_MESSAGE=`echo  $BASE64JSON | base64 | tr -d '\n'`
+        BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
         # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
-        MESSAGE_SIG=`echo  ${BASE64_MESSAGE} | ./verifysig ${SECRET} ${BASE64_MESSAGE}`
+        MESSAGE_SIG=`echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret`
         # echo "MESSAGE_SIG: ${MESSAGE_SIG}"
 
         BASE64_VERIFY_SIG=`cat verify-signature.json | sed "s/SIGNATURE/${MESSAGE_SIG}/g" | sed "s/MESSAGE/${BASE64_MESSAGE}/g" | base64 | tr -d '\n'`
 
         sixnftd tx nftoracle create-verify-collection-owner-request ${schema_code} ${BASE64_VERIFY_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
         ;;
-    13) echo "Oracle - Submit Verify Response"
-        read -p "Verify Request ID: " verfiry_request_id
+    13) echo "Oracle - Get Verify Request"
+        read -p "Verify Request ID: " verfiry_request_id 
+        sixnftd q nftoracle show-collection-owner-request ${verfiry_request_id} --output json | jq .
+        ;;
+    14) echo "Oracle - Submit Verify Response"
         read -p "Enter Schema Code: " schema_code
+        read -p "Verify Request ID: " verfiry_request_id
         read -p "Oracle : " oracle_key_name
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_cdoe
@@ -188,10 +191,6 @@ case $choice in
         BASE64_ORIGINDATA=`cat verify-collection-owner.json | base64 | tr -d '\n'`
 
         sixnftd tx nftoracle submit-verify-collection-owner ${verfiry_request_id} ${schema_code} ${BASE64_ORIGINDATA} --from ${oracle_key_name} --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
-        ;;
-    14) echo "Oracle - Get Verify Request"
-        read -p "Verify Request ID: " verfiry_request_id 
-        sixnftd q nftoracle show-collection-owner-request ${verfiry_request_id} --output json | jq .
         ;;
     *) echo "Invalid choice"
        ;;
