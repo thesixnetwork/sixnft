@@ -9,6 +9,7 @@ import "nftmngr/nft_schema.proto";
 import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
 import "nftmngr/nft_collection.proto";
+import "nftmngr/nft_schema_by_contract.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -63,6 +64,16 @@ service Query {
 // Queries a NftCollection by index.
 	rpc NftCollection(QueryGetNftCollectionRequest) returns (QueryGetNftCollectionResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
+	}
+
+// Queries a NFTSchemaByContract by index.
+	rpc NFTSchemaByContract(QueryGetNFTSchemaByContractRequest) returns (QueryGetNFTSchemaByContractResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}/{chain}";
+	}
+
+	// Queries a list of NFTSchemaByContract items.
+	rpc NFTSchemaByContractAll(QueryAllNFTSchemaByContractRequest) returns (QueryAllNFTSchemaByContractResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -158,6 +169,25 @@ message QueryGetNftCollectionRequest {
 
 message QueryGetNftCollectionResponse {
 	repeated NftData nftCollection = 1 [(gogoproto.nullable) = true];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetNFTSchemaByContractRequest {
+	  string originContractAddress = 1;
+  string chain = 2;
+
+}
+
+message QueryGetNFTSchemaByContractResponse {
+	NFTSchemaByContract nFTSchemaByContract = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllNFTSchemaByContractRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllNFTSchemaByContractResponse {
+	repeated NFTSchemaByContract nFTSchemaByContract = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

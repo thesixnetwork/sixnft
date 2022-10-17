@@ -10,11 +10,12 @@ const DefaultIndex uint64 = 1
 // DefaultGenesis returns the default Capability genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		NFTSchemaList:     []NFTSchema{},
-		NftDataList:       []NftData{},
-		ActionByRefIdList: []ActionByRefId{},
-		OrganizationList:  []Organization{},
-		NftCollectionList: []NftCollection{},
+		NFTSchemaList:           []NFTSchema{},
+		NftDataList:             []NftData{},
+		ActionByRefIdList:       []ActionByRefId{},
+		OrganizationList:        []Organization{},
+		NftCollectionList:       []NftCollection{},
+		NFTSchemaByContractList: []NFTSchemaByContract{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -72,6 +73,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for nftCollection")
 		}
 		nftCollectionIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in nFTSchemaByContract
+	nFTSchemaByContractIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.NFTSchemaByContractList {
+		index := string(NFTSchemaByContractKey(elem.OriginContractAddress, elem.Chain))
+		if _, ok := nFTSchemaByContractIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for nFTSchemaByContract")
+		}
+		nFTSchemaByContractIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 
