@@ -29,6 +29,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.NftCollectionList {
 		k.SetNftCollection(ctx, elem)
 	}
+	// Set all the nFTSchemaByContract
+	for _, elem := range genState.NFTSchemaByContractList {
+		k.SetNFTSchemaByContract(ctx, elem)
+	}
 	// Set if defined
 	if genState.NftFeeConfig != nil {
 		err := k.ValidateFeeConfig(genState.NftFeeConfig)
@@ -55,6 +59,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.ActionByRefIdList = k.GetAllActionByRefId(ctx)
 	genesis.OrganizationList = k.GetAllOrganization(ctx)
 	genesis.NftCollectionList = k.GetAllNftCollection(ctx)
+	genesis.NFTSchemaByContractList = k.GetAllNFTSchemaByContract(ctx)
 	// Get all nFTFeeConfig
 	nFTFeeConfig, found := k.GetNFTFeeConfig(ctx)
 	if found {

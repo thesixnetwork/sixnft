@@ -64,6 +64,16 @@ func TestGenesisState_Validate(t *testing.T) {
 						NftSchemaCode: "1",
 					},
 				},
+				NFTSchemaByContractList: []types.NFTSchemaByContract{
+					{
+						OriginContractAddress: "0",
+						Chain:                 "0",
+					},
+					{
+						OriginContractAddress: "1",
+						Chain:                 "1",
+					},
+				},
 				NftFeeConfig:  &types.NFTFeeConfig{},
 				NFTFeeBalance: &types.NFTFeeBalance{},
 				// this line is used by starport scaffolding # types/genesis/validField
@@ -137,6 +147,22 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						NftSchemaCode: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated nFTSchemaByContract",
+			genState: &types.GenesisState{
+				NFTSchemaByContractList: []types.NFTSchemaByContract{
+					{
+						OriginContractAddress: "0",
+						Chain:                 "0",
+					},
+					{
+						OriginContractAddress: "0",
+						Chain:                 "0",
 					},
 				},
 			},

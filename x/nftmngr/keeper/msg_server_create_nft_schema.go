@@ -73,6 +73,20 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// Check if schema by contract already exists
+	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema.OriginData.OriginContractAddress, schema.OriginData.OriginChain)
+	if !found {
+		nftSchemaByContract = types.NFTSchemaByContract{
+			OriginContractAddress: schema.OriginData.OriginContractAddress,
+			Chain:                 schema.OriginData.OriginChain,
+			SchemaCodes:           []string{schema.Code},
+		}
+	} else {
+		nftSchemaByContract.SchemaCodes = append(nftSchemaByContract.SchemaCodes, schema.Code)
+	}
+	// Add the schema code to the list of schema codes
+	k.Keeper.SetNFTSchemaByContract(ctx, nftSchemaByContract)
+
 	feeConfig, found := k.Keeper.GetNFTFeeConfig(ctx)
 	if found {
 		// Get Denom
