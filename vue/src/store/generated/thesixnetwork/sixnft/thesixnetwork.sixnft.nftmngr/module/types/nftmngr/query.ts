@@ -9,12 +9,9 @@ import {
 import { NftData } from "../nftmngr/nft_data";
 import { ActionByRefId } from "../nftmngr/action_by_ref_id";
 import { Organization } from "../nftmngr/organization";
-<<<<<<< HEAD
+import { NFTSchemaByContract } from "../nftmngr/nft_schema_by_contract";
 import { NFTFeeConfig } from "../nftmngr/nft_fee_config";
 import { NFTFeeBalance } from "../nftmngr/nft_fee_balance";
-=======
-import { NFTSchemaByContract } from "../nftmngr/nft_schema_by_contract";
->>>>>>> feature/schema-list-by-origin
 
 export const protobufPackage = "thesixnetwork.sixnft.nftmngr";
 
@@ -106,18 +103,6 @@ export interface QueryGetNftCollectionResponse {
   pagination: PageResponse | undefined;
 }
 
-<<<<<<< HEAD
-export interface QueryGetNFTFeeConfigRequest {}
-
-export interface QueryGetNFTFeeConfigResponse {
-  NFTFeeConfig: NFTFeeConfig | undefined;
-}
-
-export interface QueryGetNFTFeeBalanceRequest {}
-
-export interface QueryGetNFTFeeBalanceResponse {
-  NFTFeeBalance: NFTFeeBalance | undefined;
-=======
 export interface QueryGetNFTSchemaByContractRequest {
   originContractAddress: string;
   chain: string;
@@ -134,7 +119,18 @@ export interface QueryAllNFTSchemaByContractRequest {
 export interface QueryAllNFTSchemaByContractResponse {
   nFTSchemaByContract: NFTSchemaByContract[];
   pagination: PageResponse | undefined;
->>>>>>> feature/schema-list-by-origin
+}
+
+export interface QueryGetNFTFeeConfigRequest {}
+
+export interface QueryGetNFTFeeConfigResponse {
+  NFTFeeConfig: NFTFeeConfig | undefined;
+}
+
+export interface QueryGetNFTFeeBalanceRequest {}
+
+export interface QueryGetNFTFeeBalanceResponse {
+  NFTFeeBalance: NFTFeeBalance | undefined;
 }
 
 const baseQueryParamsRequest: object = {};
@@ -1685,15 +1681,6 @@ export const QueryGetNftCollectionResponse = {
   },
 };
 
-<<<<<<< HEAD
-const baseQueryGetNFTFeeConfigRequest: object = {};
-
-export const QueryGetNFTFeeConfigRequest = {
-  encode(
-    _: QueryGetNFTFeeConfigRequest,
-    writer: Writer = Writer.create()
-  ): Writer {
-=======
 const baseQueryGetNFTSchemaByContractRequest: object = {
   originContractAddress: "",
   chain: "",
@@ -1710,24 +1697,12 @@ export const QueryGetNFTSchemaByContractRequest = {
     if (message.chain !== "") {
       writer.uint32(18).string(message.chain);
     }
->>>>>>> feature/schema-list-by-origin
     return writer;
   },
 
   decode(
     input: Reader | Uint8Array,
     length?: number
-<<<<<<< HEAD
-  ): QueryGetNFTFeeConfigRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetNFTFeeConfigRequest,
-    } as QueryGetNFTFeeConfigRequest;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-=======
   ): QueryGetNFTSchemaByContractRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -1743,7 +1718,6 @@ export const QueryGetNFTSchemaByContractRequest = {
         case 2:
           message.chain = reader.string();
           break;
->>>>>>> feature/schema-list-by-origin
         default:
           reader.skipType(tag & 7);
           break;
@@ -1752,17 +1726,6 @@ export const QueryGetNFTSchemaByContractRequest = {
     return message;
   },
 
-<<<<<<< HEAD
-  fromJSON(_: any): QueryGetNFTFeeConfigRequest {
-    const message = {
-      ...baseQueryGetNFTFeeConfigRequest,
-    } as QueryGetNFTFeeConfigRequest;
-    return message;
-  },
-
-  toJSON(_: QueryGetNFTFeeConfigRequest): unknown {
-    const obj: any = {};
-=======
   fromJSON(object: any): QueryGetNFTSchemaByContractRequest {
     const message = {
       ...baseQueryGetNFTSchemaByContractRequest,
@@ -1788,18 +1751,10 @@ export const QueryGetNFTSchemaByContractRequest = {
     message.originContractAddress !== undefined &&
       (obj.originContractAddress = message.originContractAddress);
     message.chain !== undefined && (obj.chain = message.chain);
->>>>>>> feature/schema-list-by-origin
     return obj;
   },
 
   fromPartial(
-<<<<<<< HEAD
-    _: DeepPartial<QueryGetNFTFeeConfigRequest>
-  ): QueryGetNFTFeeConfigRequest {
-    const message = {
-      ...baseQueryGetNFTFeeConfigRequest,
-    } as QueryGetNFTFeeConfigRequest;
-=======
     object: DeepPartial<QueryGetNFTSchemaByContractRequest>
   ): QueryGetNFTSchemaByContractRequest {
     const message = {
@@ -1818,23 +1773,10 @@ export const QueryGetNFTSchemaByContractRequest = {
     } else {
       message.chain = "";
     }
->>>>>>> feature/schema-list-by-origin
     return message;
   },
 };
 
-<<<<<<< HEAD
-const baseQueryGetNFTFeeConfigResponse: object = {};
-
-export const QueryGetNFTFeeConfigResponse = {
-  encode(
-    message: QueryGetNFTFeeConfigResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.NFTFeeConfig !== undefined) {
-      NFTFeeConfig.encode(
-        message.NFTFeeConfig,
-=======
 const baseQueryGetNFTSchemaByContractResponse: object = {};
 
 export const QueryGetNFTSchemaByContractResponse = {
@@ -1845,7 +1787,6 @@ export const QueryGetNFTSchemaByContractResponse = {
     if (message.nFTSchemaByContract !== undefined) {
       NFTSchemaByContract.encode(
         message.nFTSchemaByContract,
->>>>>>> feature/schema-list-by-origin
         writer.uint32(10).fork()
       ).ldelim();
     }
@@ -1855,33 +1796,20 @@ export const QueryGetNFTSchemaByContractResponse = {
   decode(
     input: Reader | Uint8Array,
     length?: number
-<<<<<<< HEAD
-  ): QueryGetNFTFeeConfigResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetNFTFeeConfigResponse,
-    } as QueryGetNFTFeeConfigResponse;
-=======
   ): QueryGetNFTSchemaByContractResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = {
       ...baseQueryGetNFTSchemaByContractResponse,
     } as QueryGetNFTSchemaByContractResponse;
->>>>>>> feature/schema-list-by-origin
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-<<<<<<< HEAD
-          message.NFTFeeConfig = NFTFeeConfig.decode(reader, reader.uint32());
-=======
           message.nFTSchemaByContract = NFTSchemaByContract.decode(
             reader,
             reader.uint32()
           );
->>>>>>> feature/schema-list-by-origin
           break;
         default:
           reader.skipType(tag & 7);
@@ -1891,16 +1819,6 @@ export const QueryGetNFTSchemaByContractResponse = {
     return message;
   },
 
-<<<<<<< HEAD
-  fromJSON(object: any): QueryGetNFTFeeConfigResponse {
-    const message = {
-      ...baseQueryGetNFTFeeConfigResponse,
-    } as QueryGetNFTFeeConfigResponse;
-    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
-      message.NFTFeeConfig = NFTFeeConfig.fromJSON(object.NFTFeeConfig);
-    } else {
-      message.NFTFeeConfig = undefined;
-=======
   fromJSON(object: any): QueryGetNFTSchemaByContractResponse {
     const message = {
       ...baseQueryGetNFTSchemaByContractResponse,
@@ -1914,40 +1832,20 @@ export const QueryGetNFTSchemaByContractResponse = {
       );
     } else {
       message.nFTSchemaByContract = undefined;
->>>>>>> feature/schema-list-by-origin
     }
     return message;
   },
 
-<<<<<<< HEAD
-  toJSON(message: QueryGetNFTFeeConfigResponse): unknown {
-    const obj: any = {};
-    message.NFTFeeConfig !== undefined &&
-      (obj.NFTFeeConfig = message.NFTFeeConfig
-        ? NFTFeeConfig.toJSON(message.NFTFeeConfig)
-=======
   toJSON(message: QueryGetNFTSchemaByContractResponse): unknown {
     const obj: any = {};
     message.nFTSchemaByContract !== undefined &&
       (obj.nFTSchemaByContract = message.nFTSchemaByContract
         ? NFTSchemaByContract.toJSON(message.nFTSchemaByContract)
->>>>>>> feature/schema-list-by-origin
         : undefined);
     return obj;
   },
 
   fromPartial(
-<<<<<<< HEAD
-    object: DeepPartial<QueryGetNFTFeeConfigResponse>
-  ): QueryGetNFTFeeConfigResponse {
-    const message = {
-      ...baseQueryGetNFTFeeConfigResponse,
-    } as QueryGetNFTFeeConfigResponse;
-    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
-      message.NFTFeeConfig = NFTFeeConfig.fromPartial(object.NFTFeeConfig);
-    } else {
-      message.NFTFeeConfig = undefined;
-=======
     object: DeepPartial<QueryGetNFTSchemaByContractResponse>
   ): QueryGetNFTSchemaByContractResponse {
     const message = {
@@ -1962,21 +1860,11 @@ export const QueryGetNFTSchemaByContractResponse = {
       );
     } else {
       message.nFTSchemaByContract = undefined;
->>>>>>> feature/schema-list-by-origin
     }
     return message;
   },
 };
 
-<<<<<<< HEAD
-const baseQueryGetNFTFeeBalanceRequest: object = {};
-
-export const QueryGetNFTFeeBalanceRequest = {
-  encode(
-    _: QueryGetNFTFeeBalanceRequest,
-    writer: Writer = Writer.create()
-  ): Writer {
-=======
 const baseQueryAllNFTSchemaByContractRequest: object = {};
 
 export const QueryAllNFTSchemaByContractRequest = {
@@ -1987,24 +1875,12 @@ export const QueryAllNFTSchemaByContractRequest = {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
->>>>>>> feature/schema-list-by-origin
     return writer;
   },
 
   decode(
     input: Reader | Uint8Array,
     length?: number
-<<<<<<< HEAD
-  ): QueryGetNFTFeeBalanceRequest {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetNFTFeeBalanceRequest,
-    } as QueryGetNFTFeeBalanceRequest;
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-=======
   ): QueryAllNFTSchemaByContractRequest {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -2017,7 +1893,6 @@ export const QueryAllNFTSchemaByContractRequest = {
         case 1:
           message.pagination = PageRequest.decode(reader, reader.uint32());
           break;
->>>>>>> feature/schema-list-by-origin
         default:
           reader.skipType(tag & 7);
           break;
@@ -2026,17 +1901,6 @@ export const QueryAllNFTSchemaByContractRequest = {
     return message;
   },
 
-<<<<<<< HEAD
-  fromJSON(_: any): QueryGetNFTFeeBalanceRequest {
-    const message = {
-      ...baseQueryGetNFTFeeBalanceRequest,
-    } as QueryGetNFTFeeBalanceRequest;
-    return message;
-  },
-
-  toJSON(_: QueryGetNFTFeeBalanceRequest): unknown {
-    const obj: any = {};
-=======
   fromJSON(object: any): QueryAllNFTSchemaByContractRequest {
     const message = {
       ...baseQueryAllNFTSchemaByContractRequest,
@@ -2055,18 +1919,10 @@ export const QueryAllNFTSchemaByContractRequest = {
       (obj.pagination = message.pagination
         ? PageRequest.toJSON(message.pagination)
         : undefined);
->>>>>>> feature/schema-list-by-origin
     return obj;
   },
 
   fromPartial(
-<<<<<<< HEAD
-    _: DeepPartial<QueryGetNFTFeeBalanceRequest>
-  ): QueryGetNFTFeeBalanceRequest {
-    const message = {
-      ...baseQueryGetNFTFeeBalanceRequest,
-    } as QueryGetNFTFeeBalanceRequest;
-=======
     object: DeepPartial<QueryAllNFTSchemaByContractRequest>
   ): QueryAllNFTSchemaByContractRequest {
     const message = {
@@ -2077,24 +1933,10 @@ export const QueryAllNFTSchemaByContractRequest = {
     } else {
       message.pagination = undefined;
     }
->>>>>>> feature/schema-list-by-origin
     return message;
   },
 };
 
-<<<<<<< HEAD
-const baseQueryGetNFTFeeBalanceResponse: object = {};
-
-export const QueryGetNFTFeeBalanceResponse = {
-  encode(
-    message: QueryGetNFTFeeBalanceResponse,
-    writer: Writer = Writer.create()
-  ): Writer {
-    if (message.NFTFeeBalance !== undefined) {
-      NFTFeeBalance.encode(
-        message.NFTFeeBalance,
-        writer.uint32(10).fork()
-=======
 const baseQueryAllNFTSchemaByContractResponse: object = {};
 
 export const QueryAllNFTSchemaByContractResponse = {
@@ -2109,7 +1951,6 @@ export const QueryAllNFTSchemaByContractResponse = {
       PageResponse.encode(
         message.pagination,
         writer.uint32(18).fork()
->>>>>>> feature/schema-list-by-origin
       ).ldelim();
     }
     return writer;
@@ -2118,14 +1959,6 @@ export const QueryAllNFTSchemaByContractResponse = {
   decode(
     input: Reader | Uint8Array,
     length?: number
-<<<<<<< HEAD
-  ): QueryGetNFTFeeBalanceResponse {
-    const reader = input instanceof Uint8Array ? new Reader(input) : input;
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = {
-      ...baseQueryGetNFTFeeBalanceResponse,
-    } as QueryGetNFTFeeBalanceResponse;
-=======
   ): QueryAllNFTSchemaByContractResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
@@ -2133,21 +1966,16 @@ export const QueryAllNFTSchemaByContractResponse = {
       ...baseQueryAllNFTSchemaByContractResponse,
     } as QueryAllNFTSchemaByContractResponse;
     message.nFTSchemaByContract = [];
->>>>>>> feature/schema-list-by-origin
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-<<<<<<< HEAD
-          message.NFTFeeBalance = NFTFeeBalance.decode(reader, reader.uint32());
-=======
           message.nFTSchemaByContract.push(
             NFTSchemaByContract.decode(reader, reader.uint32())
           );
           break;
         case 2:
           message.pagination = PageResponse.decode(reader, reader.uint32());
->>>>>>> feature/schema-list-by-origin
           break;
         default:
           reader.skipType(tag & 7);
@@ -2157,16 +1985,6 @@ export const QueryAllNFTSchemaByContractResponse = {
     return message;
   },
 
-<<<<<<< HEAD
-  fromJSON(object: any): QueryGetNFTFeeBalanceResponse {
-    const message = {
-      ...baseQueryGetNFTFeeBalanceResponse,
-    } as QueryGetNFTFeeBalanceResponse;
-    if (object.NFTFeeBalance !== undefined && object.NFTFeeBalance !== null) {
-      message.NFTFeeBalance = NFTFeeBalance.fromJSON(object.NFTFeeBalance);
-    } else {
-      message.NFTFeeBalance = undefined;
-=======
   fromJSON(object: any): QueryAllNFTSchemaByContractResponse {
     const message = {
       ...baseQueryAllNFTSchemaByContractResponse,
@@ -2184,18 +2002,10 @@ export const QueryAllNFTSchemaByContractResponse = {
       message.pagination = PageResponse.fromJSON(object.pagination);
     } else {
       message.pagination = undefined;
->>>>>>> feature/schema-list-by-origin
     }
     return message;
   },
 
-<<<<<<< HEAD
-  toJSON(message: QueryGetNFTFeeBalanceResponse): unknown {
-    const obj: any = {};
-    message.NFTFeeBalance !== undefined &&
-      (obj.NFTFeeBalance = message.NFTFeeBalance
-        ? NFTFeeBalance.toJSON(message.NFTFeeBalance)
-=======
   toJSON(message: QueryAllNFTSchemaByContractResponse): unknown {
     const obj: any = {};
     if (message.nFTSchemaByContract) {
@@ -2208,23 +2018,11 @@ export const QueryAllNFTSchemaByContractResponse = {
     message.pagination !== undefined &&
       (obj.pagination = message.pagination
         ? PageResponse.toJSON(message.pagination)
->>>>>>> feature/schema-list-by-origin
         : undefined);
     return obj;
   },
 
   fromPartial(
-<<<<<<< HEAD
-    object: DeepPartial<QueryGetNFTFeeBalanceResponse>
-  ): QueryGetNFTFeeBalanceResponse {
-    const message = {
-      ...baseQueryGetNFTFeeBalanceResponse,
-    } as QueryGetNFTFeeBalanceResponse;
-    if (object.NFTFeeBalance !== undefined && object.NFTFeeBalance !== null) {
-      message.NFTFeeBalance = NFTFeeBalance.fromPartial(object.NFTFeeBalance);
-    } else {
-      message.NFTFeeBalance = undefined;
-=======
     object: DeepPartial<QueryAllNFTSchemaByContractResponse>
   ): QueryAllNFTSchemaByContractResponse {
     const message = {
@@ -2243,7 +2041,260 @@ export const QueryAllNFTSchemaByContractResponse = {
       message.pagination = PageResponse.fromPartial(object.pagination);
     } else {
       message.pagination = undefined;
->>>>>>> feature/schema-list-by-origin
+    }
+    return message;
+  },
+};
+
+const baseQueryGetNFTFeeConfigRequest: object = {};
+
+export const QueryGetNFTFeeConfigRequest = {
+  encode(
+    _: QueryGetNFTFeeConfigRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeConfigRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetNFTFeeConfigRequest {
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetNFTFeeConfigRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetNFTFeeConfigRequest>
+  ): QueryGetNFTFeeConfigRequest {
+    const message = {
+      ...baseQueryGetNFTFeeConfigRequest,
+    } as QueryGetNFTFeeConfigRequest;
+    return message;
+  },
+};
+
+const baseQueryGetNFTFeeConfigResponse: object = {};
+
+export const QueryGetNFTFeeConfigResponse = {
+  encode(
+    message: QueryGetNFTFeeConfigResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.NFTFeeConfig !== undefined) {
+      NFTFeeConfig.encode(
+        message.NFTFeeConfig,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeConfigResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.NFTFeeConfig = NFTFeeConfig.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetNFTFeeConfigResponse {
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
+      message.NFTFeeConfig = NFTFeeConfig.fromJSON(object.NFTFeeConfig);
+    } else {
+      message.NFTFeeConfig = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetNFTFeeConfigResponse): unknown {
+    const obj: any = {};
+    message.NFTFeeConfig !== undefined &&
+      (obj.NFTFeeConfig = message.NFTFeeConfig
+        ? NFTFeeConfig.toJSON(message.NFTFeeConfig)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetNFTFeeConfigResponse>
+  ): QueryGetNFTFeeConfigResponse {
+    const message = {
+      ...baseQueryGetNFTFeeConfigResponse,
+    } as QueryGetNFTFeeConfigResponse;
+    if (object.NFTFeeConfig !== undefined && object.NFTFeeConfig !== null) {
+      message.NFTFeeConfig = NFTFeeConfig.fromPartial(object.NFTFeeConfig);
+    } else {
+      message.NFTFeeConfig = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetNFTFeeBalanceRequest: object = {};
+
+export const QueryGetNFTFeeBalanceRequest = {
+  encode(
+    _: QueryGetNFTFeeBalanceRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeBalanceRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeBalanceRequest,
+    } as QueryGetNFTFeeBalanceRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryGetNFTFeeBalanceRequest {
+    const message = {
+      ...baseQueryGetNFTFeeBalanceRequest,
+    } as QueryGetNFTFeeBalanceRequest;
+    return message;
+  },
+
+  toJSON(_: QueryGetNFTFeeBalanceRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<QueryGetNFTFeeBalanceRequest>
+  ): QueryGetNFTFeeBalanceRequest {
+    const message = {
+      ...baseQueryGetNFTFeeBalanceRequest,
+    } as QueryGetNFTFeeBalanceRequest;
+    return message;
+  },
+};
+
+const baseQueryGetNFTFeeBalanceResponse: object = {};
+
+export const QueryGetNFTFeeBalanceResponse = {
+  encode(
+    message: QueryGetNFTFeeBalanceResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.NFTFeeBalance !== undefined) {
+      NFTFeeBalance.encode(
+        message.NFTFeeBalance,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetNFTFeeBalanceResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetNFTFeeBalanceResponse,
+    } as QueryGetNFTFeeBalanceResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.NFTFeeBalance = NFTFeeBalance.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetNFTFeeBalanceResponse {
+    const message = {
+      ...baseQueryGetNFTFeeBalanceResponse,
+    } as QueryGetNFTFeeBalanceResponse;
+    if (object.NFTFeeBalance !== undefined && object.NFTFeeBalance !== null) {
+      message.NFTFeeBalance = NFTFeeBalance.fromJSON(object.NFTFeeBalance);
+    } else {
+      message.NFTFeeBalance = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetNFTFeeBalanceResponse): unknown {
+    const obj: any = {};
+    message.NFTFeeBalance !== undefined &&
+      (obj.NFTFeeBalance = message.NFTFeeBalance
+        ? NFTFeeBalance.toJSON(message.NFTFeeBalance)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetNFTFeeBalanceResponse>
+  ): QueryGetNFTFeeBalanceResponse {
+    const message = {
+      ...baseQueryGetNFTFeeBalanceResponse,
+    } as QueryGetNFTFeeBalanceResponse;
+    if (object.NFTFeeBalance !== undefined && object.NFTFeeBalance !== null) {
+      message.NFTFeeBalance = NFTFeeBalance.fromPartial(object.NFTFeeBalance);
+    } else {
+      message.NFTFeeBalance = undefined;
     }
     return message;
   },
@@ -2285,16 +2336,6 @@ export interface Query {
   NftCollection(
     request: QueryGetNftCollectionRequest
   ): Promise<QueryGetNftCollectionResponse>;
-<<<<<<< HEAD
-  /** Queries a NFTFeeConfig by index. */
-  NFTFeeConfig(
-    request: QueryGetNFTFeeConfigRequest
-  ): Promise<QueryGetNFTFeeConfigResponse>;
-  /** Queries a NFTFeeBalance by index. */
-  NFTFeeBalance(
-    request: QueryGetNFTFeeBalanceRequest
-  ): Promise<QueryGetNFTFeeBalanceResponse>;
-=======
   /** Queries a NFTSchemaByContract by index. */
   NFTSchemaByContract(
     request: QueryGetNFTSchemaByContractRequest
@@ -2303,7 +2344,14 @@ export interface Query {
   NFTSchemaByContractAll(
     request: QueryAllNFTSchemaByContractRequest
   ): Promise<QueryAllNFTSchemaByContractResponse>;
->>>>>>> feature/schema-list-by-origin
+  /** Queries a NFTFeeConfig by index. */
+  NFTFeeConfig(
+    request: QueryGetNFTFeeConfigRequest
+  ): Promise<QueryGetNFTFeeConfigResponse>;
+  /** Queries a NFTFeeBalance by index. */
+  NFTFeeBalance(
+    request: QueryGetNFTFeeBalanceRequest
+  ): Promise<QueryGetNFTFeeBalanceResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -2445,33 +2493,6 @@ export class QueryClientImpl implements Query {
     );
   }
 
-<<<<<<< HEAD
-  NFTFeeConfig(
-    request: QueryGetNFTFeeConfigRequest
-  ): Promise<QueryGetNFTFeeConfigResponse> {
-    const data = QueryGetNFTFeeConfigRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "thesixnetwork.sixnft.nftmngr.Query",
-      "NFTFeeConfig",
-      data
-    );
-    return promise.then((data) =>
-      QueryGetNFTFeeConfigResponse.decode(new Reader(data))
-    );
-  }
-
-  NFTFeeBalance(
-    request: QueryGetNFTFeeBalanceRequest
-  ): Promise<QueryGetNFTFeeBalanceResponse> {
-    const data = QueryGetNFTFeeBalanceRequest.encode(request).finish();
-    const promise = this.rpc.request(
-      "thesixnetwork.sixnft.nftmngr.Query",
-      "NFTFeeBalance",
-      data
-    );
-    return promise.then((data) =>
-      QueryGetNFTFeeBalanceResponse.decode(new Reader(data))
-=======
   NFTSchemaByContract(
     request: QueryGetNFTSchemaByContractRequest
   ): Promise<QueryGetNFTSchemaByContractResponse> {
@@ -2497,7 +2518,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllNFTSchemaByContractResponse.decode(new Reader(data))
->>>>>>> feature/schema-list-by-origin
+    );
+  }
+
+  NFTFeeConfig(
+    request: QueryGetNFTFeeConfigRequest
+  ): Promise<QueryGetNFTFeeConfigResponse> {
+    const data = QueryGetNFTFeeConfigRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Query",
+      "NFTFeeConfig",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetNFTFeeConfigResponse.decode(new Reader(data))
+    );
+  }
+
+  NFTFeeBalance(
+    request: QueryGetNFTFeeBalanceRequest
+  ): Promise<QueryGetNFTFeeBalanceResponse> {
+    const data = QueryGetNFTFeeBalanceRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "thesixnetwork.sixnft.nftmngr.Query",
+      "NFTFeeBalance",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetNFTFeeBalanceResponse.decode(new Reader(data))
     );
   }
 }

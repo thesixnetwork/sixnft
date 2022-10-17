@@ -24,7 +24,7 @@ message GenesisState {
   repeated Organization organizationList = 5 [(gogoproto.nullable) = false];
   repeated NftCollection nftCollectionList = 6 [(gogoproto.nullable) = false];
   repeated NFTSchemaByContract nFTSchemaByContractList = 7 [(gogoproto.nullable) = false];
-  NFTFeeConfig nft_fee_config = 7;
-  NFTFeeBalance nFTFeeBalance = 8;
+  NFTFeeConfig nft_fee_config = 8;
+  NFTFeeBalance nFTFeeBalance = 9;
   // this line is used by starport scaffolding # genesis/proto/state
 }
