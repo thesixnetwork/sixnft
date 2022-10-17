@@ -170,7 +170,26 @@ export default {
 		},
 		
 		
+<<<<<<< HEAD
 		async sendMsgBurn({ rootGetters }, { value, fee = [], memo = '' }) {
+=======
+		async sendMsgRevokePermission({ rootGetters }, { value, fee = [], memo = '' }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgRevokePermission(value)
+				const result = await txClient.signAndBroadcast([msg], {fee: { amount: fee, 
+	gas: "200000" }, memo})
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgRevokePermission:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgRevokePermission:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgMint({ rootGetters }, { value, fee = [], memo = '' }) {
+>>>>>>> feature/schema-list-by-origin
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgBurn(value)
@@ -215,6 +234,7 @@ export default {
 				}
 			}
 		},
+<<<<<<< HEAD
 		async sendMsgGrantPermission({ rootGetters }, { value, fee = [], memo = '' }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -232,6 +252,23 @@ export default {
 		},
 		
 		async MsgBurn({ rootGetters }, { value }) {
+=======
+		
+		async MsgRevokePermission({ rootGetters }, { value }) {
+			try {
+				const txClient=await initTxClient(rootGetters)
+				const msg = await txClient.msgRevokePermission(value)
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgRevokePermission:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgRevokePermission:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgMint({ rootGetters }, { value }) {
+>>>>>>> feature/schema-list-by-origin
 			try {
 				const txClient=await initTxClient(rootGetters)
 				const msg = await txClient.msgBurn(value)
@@ -270,6 +307,7 @@ export default {
 				}
 			}
 		},
+<<<<<<< HEAD
 		async MsgGrantPermission({ rootGetters }, { value }) {
 			try {
 				const txClient=await initTxClient(rootGetters)
@@ -283,6 +321,8 @@ export default {
 				}
 			}
 		},
+=======
+>>>>>>> feature/schema-list-by-origin
 		
 	}
 }

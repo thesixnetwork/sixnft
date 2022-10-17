@@ -25,12 +25,13 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 // GenesisState defines the nftmngr module's genesis state.
 type GenesisState struct {
-	Params            Params          `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
-	NFTSchemaList     []NFTSchema     `protobuf:"bytes,2,rep,name=nFTSchemaList,proto3" json:"nFTSchemaList"`
-	NftDataList       []NftData       `protobuf:"bytes,3,rep,name=nftDataList,proto3" json:"nftDataList"`
-	ActionByRefIdList []ActionByRefId `protobuf:"bytes,4,rep,name=actionByRefIdList,proto3" json:"actionByRefIdList"`
-	OrganizationList  []Organization  `protobuf:"bytes,5,rep,name=organizationList,proto3" json:"organizationList"`
-	NftCollectionList []NftCollection `protobuf:"bytes,6,rep,name=nftCollectionList,proto3" json:"nftCollectionList"`
+	Params                  Params                `protobuf:"bytes,1,opt,name=params,proto3" json:"params"`
+	NFTSchemaList           []NFTSchema           `protobuf:"bytes,2,rep,name=nFTSchemaList,proto3" json:"nFTSchemaList"`
+	NftDataList             []NftData             `protobuf:"bytes,3,rep,name=nftDataList,proto3" json:"nftDataList"`
+	ActionByRefIdList       []ActionByRefId       `protobuf:"bytes,4,rep,name=actionByRefIdList,proto3" json:"actionByRefIdList"`
+	OrganizationList        []Organization        `protobuf:"bytes,5,rep,name=organizationList,proto3" json:"organizationList"`
+	NftCollectionList       []NftCollection       `protobuf:"bytes,6,rep,name=nftCollectionList,proto3" json:"nftCollectionList"`
+	NFTSchemaByContractList []NFTSchemaByContract `protobuf:"bytes,7,rep,name=nFTSchemaByContractList,proto3" json:"nFTSchemaByContractList"`
 	NftFeeConfig      *NFTFeeConfig   `protobuf:"bytes,7,opt,name=nft_fee_config,json=nftFeeConfig,proto3" json:"nft_fee_config,omitempty"`
 	NFTFeeBalance     *NFTFeeBalance  `protobuf:"bytes,8,opt,name=nFTFeeBalance,proto3" json:"nFTFeeBalance,omitempty"`
 }
@@ -110,6 +111,13 @@ func (m *GenesisState) GetNftCollectionList() []NftCollection {
 	return nil
 }
 
+func (m *GenesisState) GetNFTSchemaByContractList() []NFTSchemaByContract {
+	if m != nil {
+		return m.NFTSchemaByContractList
+	}
+	return nil
+}
+
 func (m *GenesisState) GetNftFeeConfig() *NFTFeeConfig {
 	if m != nil {
 		return m.NftFeeConfig
@@ -183,6 +191,20 @@ func (m *GenesisState) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.NFTSchemaByContractList) > 0 {
+		for iNdEx := len(m.NFTSchemaByContractList) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NFTSchemaByContractList[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintGenesis(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
 	if m.NFTFeeBalance != nil {
 		{
 			size, err := m.NFTFeeBalance.MarshalToSizedBuffer(dAtA[:i])
@@ -335,6 +357,12 @@ func (m *GenesisState) Size() (n int) {
 	}
 	if len(m.NftCollectionList) > 0 {
 		for _, e := range m.NftCollectionList {
+			l = e.Size()
+			n += 1 + l + sovGenesis(uint64(l))
+		}
+	}
+	if len(m.NFTSchemaByContractList) > 0 {
+		for _, e := range m.NFTSchemaByContractList {
 			l = e.Size()
 			n += 1 + l + sovGenesis(uint64(l))
 		}
@@ -585,6 +613,40 @@ func (m *GenesisState) Unmarshal(dAtA []byte) error {
 			}
 			m.NftCollectionList = append(m.NftCollectionList, NftCollection{})
 			if err := m.NftCollectionList[len(m.NftCollectionList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NFTSchemaByContractList", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenesis
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthGenesis
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NFTSchemaByContractList = append(m.NFTSchemaByContractList, NFTSchemaByContract{})
+			if err := m.NFTSchemaByContractList[len(m.NFTSchemaByContractList)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

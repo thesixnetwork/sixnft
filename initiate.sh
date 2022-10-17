@@ -396,6 +396,12 @@ ignite scaffold message setMinimumConfirmation new_confirmation \
     --no-simulation \
     --module nftoracle
 
+ignite scaffold map NFTSchemaByContract schema_codes:string \
+    --index origin_contract_address,chain \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
 ignite scaffold single NFTFeeConfig \
     --no-message \
     --no-simulation \
