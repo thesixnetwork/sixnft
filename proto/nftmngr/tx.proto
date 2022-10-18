@@ -25,12 +25,18 @@ service Msg {
   rpc ResyncAttributes(MsgResyncAttributes) returns (MsgResyncAttributesResponse);
   rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
+  rpc SetMintauth(MsgSetMintauth) returns (MsgSetMintauthResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
 enum AttributeLocation {
   NFT_ATTRIBUTE = 0;
   TOKEN_ATTRIBUTE = 1;
+}
+
+enum AuthorizeTo {
+  SYSTEM = 0;
+  ALL = 1;
 }
 
 message MsgCreateNFTSchema {
@@ -205,6 +211,16 @@ message MsgSetFeeConfig {
 }
 
 message MsgSetFeeConfigResponse {
+}
+
+message MsgSetMintauth {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  AuthorizeTo authorizeTo = 3;
+}
+
+message MsgSetMintauthResponse {
+  string nftSchemaCode = 1;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

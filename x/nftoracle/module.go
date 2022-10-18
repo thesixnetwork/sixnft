@@ -202,7 +202,7 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		}
 		return false
 	})
-	am.keeper.IterateActiveVerifyCollectionOwnersQueue(ctx, ctx.BlockHeader().Time,  func(verifyCollectionOwnerRequest types.CollectionOwnerRequest) (stop bool) {
+	am.keeper.IterateActiveVerifyCollectionOwnersQueue(ctx, ctx.BlockHeader().Time, func(verifyCollectionOwnerRequest types.CollectionOwnerRequest) (stop bool) {
 		if verifyCollectionOwnerRequest.Status == types.RequestStatus_PENDING {
 			verifyCollectionOwnerRequest.Status = types.RequestStatus_EXPIRED
 			verifyCollectionOwnerRequest.ExpiredHeight = ctx.BlockHeight()
@@ -217,6 +217,6 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		}
 		return false
 	})
-		
+
 	return []abci.ValidatorUpdate{}
 }

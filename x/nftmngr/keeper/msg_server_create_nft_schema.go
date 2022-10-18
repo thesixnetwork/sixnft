@@ -45,6 +45,10 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingNFTSchema, err.Error())
 	}
+	// if mint_authorization is empty then set system to default
+	if len(schema.MintAuthorization) == 0 || schema.MintAuthorization != types.KeyMintPermissionOnlySystem && schema.MintAuthorization != types.KeyMintPermissionAll {
+		schema.MintAuthorization = types.KeyMintPermissionOnlySystem
+	}
 	// Check if the schema already exists
 	_, found := k.Keeper.GetNFTSchema(ctx, schema.Code)
 	if found {

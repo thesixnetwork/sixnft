@@ -38,6 +38,8 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	cmd.AddCommand(CmdShowNFTSchemaByContract())
 	cmd.AddCommand(CmdShowNFTFeeConfig())
 	cmd.AddCommand(CmdShowNFTFeeBalance())
+	cmd.AddCommand(CmdListMetadataCreator())
+	cmd.AddCommand(CmdShowMetadataCreator())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

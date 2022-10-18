@@ -44,3 +44,8 @@ const (
 const (
 	NFTFeeBalanceKey = "NFTFeeBalance-value-"
 )
+
+const (
+	KeyMintPermissionOnlySystem = "system"
+	KeyMintPermissionAll        = "all"
+)

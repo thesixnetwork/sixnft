@@ -76,6 +76,14 @@ func TestGenesisState_Validate(t *testing.T) {
 				},
 				NftFeeConfig:  &types.NFTFeeConfig{},
 				NFTFeeBalance: &types.NFTFeeBalance{},
+				MetadataCreatorList: []types.MetadataCreator{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -163,6 +171,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						OriginContractAddress: "0",
 						Chain:                 "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated metadataCreator",
+			genState: &types.GenesisState{
+				MetadataCreatorList: []types.MetadataCreator{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "0",
 					},
 				},
 			},
