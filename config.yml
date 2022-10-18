@@ -1,6 +1,6 @@
 accounts:
     - name: alice
-      coins: ["20000token", "200000000stake"]
+      coins: ["20000token", "1200000000stake"]
       mnemonic: glimpse black injury curtain switch immune flip remove bag company speed title they can tennis round fine duck sibling crucial top uncover approve donor
     - name: bob
       coins: ["10000token", "100000000stake"]
@@ -39,7 +39,18 @@ faucet:
     coins: ["5token", "100000stake"]
 genesis:
     app_state:
+        nftmngr:
+            nft_fee_config:
+              schema_fee:
+                fee_amount: "200000000stake"
+                fee_distributions:
+                  - method: "BURN"
+                    portion: 0.5
+                  - method: "REWARD_POOL"
+                    portion: 0.5
         nftoracle:
+            oracle_config:
+                minimum_confirmation: 4
             params:
                 mint_request_active_duration: "120s"
                 action_request_active_duration: "120s"

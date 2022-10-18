@@ -30,8 +30,18 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.GetCode())
 	}
+
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	}
+
 	//validate AttributeDefinition data
 	err = k.ValidateAttributeDefinition(&new_add_attribute, &schema)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
+
+	err = ValidateAttributeNames([]*types.AttributeDefinition{&new_add_attribute})
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}

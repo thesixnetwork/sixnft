@@ -27,6 +27,17 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.MintRequestActiveDuration(ctx))
 
+	// Get Oracle Config
+	oracleConfig, found := k.GetOracleConfig(ctx)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrOracleConfigNotFound, "")
+	}
+
+	// Verify msg.RequiredConfirmations is less than or equal to oracleConfig.MinimumConfirmation
+	if int32(msg.RequiredConfirm) < oracleConfig.MinimumConfirmation {
+		return nil, sdkerrors.Wrap(types.ErrRequiredConfirmTooLess, strconv.Itoa(int(oracleConfig.MinimumConfirmation)))
+	}
+
 	id_ := k.Keeper.AppendMintRequest(ctx, types.MintRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
 		TokenId:         msg.TokenId,

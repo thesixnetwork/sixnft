@@ -34,3 +34,18 @@ func KeyPrefix(p string) []byte {
 func CollectionkeyPrefix(nftSchemaCode []byte) []byte {
 	return append(CollectionPrefix, nftSchemaCode...)
 }
+
+const (
+	NFTFeeConfigKey = "NFTFeeConfig-value-"
+
+	KeyPermissionNftFeeAdmin = "nft_fee_admin"
+)
+
+const (
+	NFTFeeBalanceKey = "NFTFeeBalance-value-"
+)
+
+const (
+	KeyMintPermissionOnlySystem = "system"
+	KeyMintPermissionAll        = "all"
+)

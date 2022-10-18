@@ -42,6 +42,7 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		CollectionOwnerRequestCount: 2,
+		OracleConfig:                &types.OracleConfig{},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -59,5 +60,6 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.ActionRequestCount, got.ActionRequestCount)
 	require.ElementsMatch(t, genesisState.CollectionOwnerRequestList, got.CollectionOwnerRequestList)
 	require.Equal(t, genesisState.CollectionOwnerRequestCount, got.CollectionOwnerRequestCount)
+	require.Equal(t, genesisState.OracleConfig, got.OracleConfig)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

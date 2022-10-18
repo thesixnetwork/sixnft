@@ -17,6 +17,8 @@ const (
 	MemStoreKey = "mem_nftoracle"
 
 	KeyPermissionOracle = "oracle"
+
+	KeyPermissionOracleAdmin = "oracle_admin"
 )
 
 func KeyPrefix(p string) []byte {
@@ -36,4 +38,8 @@ const (
 const (
 	CollectionOwnerRequestKey      = "CollectionOwnerRequest-value-"
 	CollectionOwnerRequestCountKey = "CollectionOwnerRequest-count-"
+)
+
+const (
+	OracleConfigKey = "OracleConfig-value-"
 )

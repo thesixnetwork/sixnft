@@ -21,21 +21,8 @@ message NftOriginData {
   repeated Trait traits = 3;
 }
 
-message TransactionOriginDataInfo {
-  string chain = 1;
-  string tx_hash = 2;
-  uint64 block_number = 3;
-  string deployer_address = 4;
-}
-
 message DataHash {
   NftOriginData origin_data = 1;
-  bytes hash = 2;
-  repeated string confirmers = 3;
-}
-
-message OriginTxInfo {
-  TransactionOriginDataInfo transactionOriginDataInfo = 1;
   bytes hash = 2;
   repeated string confirmers = 3;
 }

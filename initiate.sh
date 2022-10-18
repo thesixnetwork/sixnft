@@ -383,3 +383,37 @@ ignite scaffold message resyncAttributes nft_schema_code:string token_id:string 
     --response nft_schema_code \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold single OracleConfig \
+    --no-message \
+    --no-simulation \
+    --module nftoracle
+
+
+ignite scaffold message setMinimumConfirmation new_confirmation \
+    --desc "To set minimum confirmation" \
+    --response new_confirmation \
+    --no-simulation \
+    --module nftoracle
+
+ignite scaffold map NFTSchemaByContract schema_codes:string \
+    --index origin_contract_address,chain \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
+ignite scaffold single NFTFeeConfig \
+    --no-message \
+    --no-simulation \
+    --module nftmngr
+
+ignite scaffold message setFeeConfig new_fee_config_base64:string \
+    --desc "To set fee config" \
+    --response new_fee_config \
+    --no-simulation \
+    --module nftmngr
+
+ignite scaffold single NFTFeeBalance \
+    --no-message \
+    --no-simulation \
+    --module nftmngr

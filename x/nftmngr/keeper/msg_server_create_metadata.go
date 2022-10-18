@@ -30,10 +30,37 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
 	}
 
-	// Check if creator is the schema owner
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	mapOfMinters, userMintfound := k.Keeper.GetMetadataCreator(ctx, data.NftSchemaCode)
+	// Check mint authorization
+	switch schema.MintAuthorization {
+	case types.KeyMintPermissionOnlySystem:
+		// Check if creator is the schema owner
+		if msg.Creator != schema.Owner {
+			return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+		}
+	case types.KeyMintPermissionAll:
+		// Add creator to minters list
+		if !userMintfound {
+			mapOfMinters = types.MetadataCreator{
+				NftSchemaCode:    schema.Code,
+				MetadataMintedBy: make([]*types.MapTokenToMinter, 0),
+			}
+			mapOfMinters.MetadataMintedBy = append(mapOfMinters.MetadataMintedBy, &types.MapTokenToMinter{
+				TokenId: data.TokenId,
+				Minter:  msg.Creator,
+			})
+		} else {
+			mapOfMinters.MetadataMintedBy = append(mapOfMinters.MetadataMintedBy, &types.MapTokenToMinter{
+				TokenId: data.TokenId,
+				Minter:  msg.Creator,
+			})
+		}
 	}
+
+	// // Check if creator is the schema owner
+	// if msg.Creator != schema.Owner {
+	// 	return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	// }
 
 	// Validate Schema Message and return error if not valid
 	valid, err := k.ValidateNFTData(&data, &schema)
@@ -71,6 +98,10 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		schema.OnchainData.Status[types.KeyNFTStatusFirstMintComplete] = true
 		k.Keeper.SetNFTSchema(ctx, schema)
 	}
+
+	// Add minter to minters list
+	k.Keeper.SetMetadataCreator(ctx, mapOfMinters)
+
 	// Add the data to the store
 	k.Keeper.SetNftData(ctx, data)
 

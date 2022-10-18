@@ -608,10 +608,10 @@ func (m *MsgCreateVerifyCollectionOwnerRequestResponse) GetOwnerAddress() string
 }
 
 type MsgSubmitVerifyCollectionOwner struct {
-	Creator            string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
-	VerifyRequestID    uint64 `protobuf:"varint,2,opt,name=verifyRequestID,proto3" json:"verifyRequestID,omitempty"`
-	SchemaCode         string `protobuf:"bytes,3,opt,name=schemaCode,proto3" json:"schemaCode,omitempty"`
-	Base64OriginTxInfo string `protobuf:"bytes,4,opt,name=base64OriginTxInfo,proto3" json:"base64OriginTxInfo,omitempty"`
+	Creator                  string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	VerifyRequestID          uint64 `protobuf:"varint,2,opt,name=verifyRequestID,proto3" json:"verifyRequestID,omitempty"`
+	NftSchemaCode            string `protobuf:"bytes,3,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Base64OriginContractInfo string `protobuf:"bytes,4,opt,name=base64OriginContractInfo,proto3" json:"base64OriginContractInfo,omitempty"`
 }
 
 func (m *MsgSubmitVerifyCollectionOwner) Reset()         { *m = MsgSubmitVerifyCollectionOwner{} }
@@ -661,16 +661,16 @@ func (m *MsgSubmitVerifyCollectionOwner) GetVerifyRequestID() uint64 {
 	return 0
 }
 
-func (m *MsgSubmitVerifyCollectionOwner) GetSchemaCode() string {
+func (m *MsgSubmitVerifyCollectionOwner) GetNftSchemaCode() string {
 	if m != nil {
-		return m.SchemaCode
+		return m.NftSchemaCode
 	}
 	return ""
 }
 
-func (m *MsgSubmitVerifyCollectionOwner) GetBase64OriginTxInfo() string {
+func (m *MsgSubmitVerifyCollectionOwner) GetBase64OriginContractInfo() string {
 	if m != nil {
-		return m.Base64OriginTxInfo
+		return m.Base64OriginContractInfo
 	}
 	return ""
 }
@@ -721,6 +721,102 @@ func (m *MsgSubmitVerifyCollectionOwnerResponse) GetVerifyRequestID() uint64 {
 	return 0
 }
 
+type MsgSetMinimumConfirmation struct {
+	Creator         string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	NewConfirmation string `protobuf:"bytes,2,opt,name=newConfirmation,proto3" json:"newConfirmation,omitempty"`
+}
+
+func (m *MsgSetMinimumConfirmation) Reset()         { *m = MsgSetMinimumConfirmation{} }
+func (m *MsgSetMinimumConfirmation) String() string { return proto.CompactTextString(m) }
+func (*MsgSetMinimumConfirmation) ProtoMessage()    {}
+func (*MsgSetMinimumConfirmation) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7fb5383b6da1e6e, []int{12}
+}
+func (m *MsgSetMinimumConfirmation) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetMinimumConfirmation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetMinimumConfirmation.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetMinimumConfirmation) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetMinimumConfirmation.Merge(m, src)
+}
+func (m *MsgSetMinimumConfirmation) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetMinimumConfirmation) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetMinimumConfirmation.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetMinimumConfirmation proto.InternalMessageInfo
+
+func (m *MsgSetMinimumConfirmation) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgSetMinimumConfirmation) GetNewConfirmation() string {
+	if m != nil {
+		return m.NewConfirmation
+	}
+	return ""
+}
+
+type MsgSetMinimumConfirmationResponse struct {
+	NewConfirmation string `protobuf:"bytes,1,opt,name=newConfirmation,proto3" json:"newConfirmation,omitempty"`
+}
+
+func (m *MsgSetMinimumConfirmationResponse) Reset()         { *m = MsgSetMinimumConfirmationResponse{} }
+func (m *MsgSetMinimumConfirmationResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgSetMinimumConfirmationResponse) ProtoMessage()    {}
+func (*MsgSetMinimumConfirmationResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b7fb5383b6da1e6e, []int{13}
+}
+func (m *MsgSetMinimumConfirmationResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgSetMinimumConfirmationResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgSetMinimumConfirmationResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgSetMinimumConfirmationResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgSetMinimumConfirmationResponse.Merge(m, src)
+}
+func (m *MsgSetMinimumConfirmationResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgSetMinimumConfirmationResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgSetMinimumConfirmationResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgSetMinimumConfirmationResponse proto.InternalMessageInfo
+
+func (m *MsgSetMinimumConfirmationResponse) GetNewConfirmation() string {
+	if m != nil {
+		return m.NewConfirmation
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgCreateMintRequest)(nil), "thesixnetwork.sixnft.nftoracle.MsgCreateMintRequest")
 	proto.RegisterType((*MsgCreateMintRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.MsgCreateMintRequestResponse")
@@ -734,55 +830,61 @@ func init() {
 	proto.RegisterType((*MsgCreateVerifyCollectionOwnerRequestResponse)(nil), "thesixnetwork.sixnft.nftoracle.MsgCreateVerifyCollectionOwnerRequestResponse")
 	proto.RegisterType((*MsgSubmitVerifyCollectionOwner)(nil), "thesixnetwork.sixnft.nftoracle.MsgSubmitVerifyCollectionOwner")
 	proto.RegisterType((*MsgSubmitVerifyCollectionOwnerResponse)(nil), "thesixnetwork.sixnft.nftoracle.MsgSubmitVerifyCollectionOwnerResponse")
+	proto.RegisterType((*MsgSetMinimumConfirmation)(nil), "thesixnetwork.sixnft.nftoracle.MsgSetMinimumConfirmation")
+	proto.RegisterType((*MsgSetMinimumConfirmationResponse)(nil), "thesixnetwork.sixnft.nftoracle.MsgSetMinimumConfirmationResponse")
 }
 
 func init() { proto.RegisterFile("nftoracle/tx.proto", fileDescriptor_b7fb5383b6da1e6e) }
 
 var fileDescriptor_b7fb5383b6da1e6e = []byte{
-	// 678 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x96, 0xcf, 0x4f, 0x13, 0x41,
-	0x14, 0xc7, 0x99, 0xd2, 0x48, 0x78, 0x51, 0x88, 0x2b, 0x68, 0x53, 0x75, 0x25, 0x1b, 0x35, 0xbd,
-	0xb8, 0xf5, 0x07, 0xe2, 0x45, 0x31, 0x58, 0x20, 0x21, 0xa4, 0x92, 0x2c, 0xc6, 0x83, 0xb7, 0x6d,
-	0x77, 0xb6, 0x4c, 0x60, 0x67, 0x60, 0x66, 0x0a, 0xe5, 0xe0, 0xc9, 0x83, 0xd1, 0xc4, 0x84, 0xb3,
-	0x47, 0xa3, 0xff, 0x81, 0x27, 0xff, 0x02, 0x8f, 0x1c, 0xf5, 0x66, 0xe0, 0x1f, 0x31, 0xdd, 0x59,
-	0x86, 0x6e, 0x19, 0xca, 0xd2, 0x72, 0xeb, 0xbe, 0x99, 0xef, 0xfb, 0x7e, 0xe6, 0xbd, 0xd9, 0xd7,
-	0x05, 0x8b, 0x86, 0x92, 0x71, 0xbf, 0xbe, 0x81, 0xcb, 0xb2, 0xe5, 0x6e, 0x72, 0x26, 0x99, 0x65,
-	0xcb, 0x35, 0x2c, 0x48, 0x8b, 0x62, 0xb9, 0xc3, 0xf8, 0xba, 0xdb, 0xfe, 0x19, 0x4a, 0x57, 0x6f,
-	0x74, 0xbe, 0x22, 0x98, 0xa8, 0x8a, 0x46, 0x85, 0x63, 0x5f, 0xe2, 0x2a, 0xa1, 0xd2, 0xc3, 0x5b,
-	0x4d, 0x2c, 0xa4, 0x55, 0x80, 0x91, 0x7a, 0x3b, 0xc8, 0x78, 0x01, 0x4d, 0xa1, 0xd2, 0xa8, 0x77,
-	0xf4, 0x68, 0xdd, 0x85, 0x2b, 0x34, 0x94, 0xab, 0xf5, 0x35, 0x1c, 0xf9, 0x15, 0x16, 0xe0, 0x42,
-	0x2e, 0x5e, 0x4f, 0x07, 0xdb, 0x7a, 0xc9, 0xd6, 0x31, 0x5d, 0x0a, 0x0a, 0xc3, 0x4a, 0x9f, 0x3c,
-	0x5a, 0x25, 0x18, 0xe7, 0x78, 0xab, 0x49, 0x38, 0x0e, 0x2a, 0x8c, 0x86, 0x84, 0x47, 0x85, 0xfc,
-	0x14, 0x2a, 0xe5, 0xbd, 0xee, 0xb0, 0x43, 0xe1, 0x96, 0x89, 0xcd, 0xc3, 0x62, 0x93, 0x51, 0x81,
-	0xad, 0x31, 0xc8, 0x91, 0x20, 0xc6, 0xcb, 0x7b, 0x39, 0x12, 0x0c, 0x4a, 0xe6, 0xbc, 0x87, 0xc9,
-	0xaa, 0x68, 0xac, 0x36, 0x6b, 0x11, 0x91, 0xca, 0x2f, 0x31, 0xea, 0x59, 0x8c, 0xe8, 0x98, 0x6c,
-	0x69, 0x3e, 0xb6, 0xcc, 0x7b, 0xe9, 0x60, 0x7b, 0x57, 0xcd, 0x17, 0x78, 0x66, 0xfa, 0x75, 0x28,
-	0xe7, 0x7d, 0xe9, 0x27, 0xc6, 0xe9, 0xa0, 0xb3, 0x00, 0xb7, 0x8d, 0xf6, 0x1a, 0xe3, 0x84, 0x99,
-	0x82, 0x49, 0x07, 0x9d, 0x6f, 0x08, 0xae, 0xeb, 0xb2, 0xcd, 0xd5, 0x25, 0x61, 0xf4, 0xec, 0xa6,
-	0x8e, 0x41, 0x6e, 0x3b, 0x4a, 0xea, 0x95, 0xdb, 0x8e, 0xac, 0x69, 0x98, 0x54, 0x70, 0x2a, 0xc1,
-	0x2a, 0x69, 0x50, 0x5f, 0x36, 0x39, 0x4e, 0xc8, 0xcd, 0x8b, 0xe7, 0x68, 0xed, 0x43, 0xb0, 0xcd,
-	0x8c, 0xa7, 0x35, 0xd7, 0xf9, 0x80, 0xe0, 0x86, 0x2e, 0xcf, 0x91, 0xe4, 0xcc, 0xfe, 0x94, 0x60,
-	0xdc, 0xef, 0x4c, 0xaf, 0x3b, 0xd4, 0x1d, 0xce, 0xd8, 0xa3, 0x65, 0xb8, 0x73, 0x0a, 0x84, 0x86,
-	0x31, 0x58, 0x2a, 0xa8, 0xee, 0xb0, 0xf3, 0x17, 0xc1, 0x3d, 0x5d, 0x85, 0xb7, 0x98, 0x93, 0x70,
-	0xb7, 0xc2, 0x36, 0x36, 0x70, 0xbc, 0x6d, 0x65, 0x87, 0x62, 0x7e, 0x51, 0x6f, 0xe3, 0x22, 0xd8,
-	0xea, 0x1c, 0xca, 0x25, 0x49, 0xcb, 0x78, 0x77, 0x5f, 0xcf, 0xd8, 0x75, 0x8e, 0x06, 0x7f, 0x42,
-	0xf0, 0x20, 0xd3, 0xd9, 0x06, 0x7c, 0x9b, 0x1d, 0xb8, 0xcc, 0xda, 0xd9, 0xe6, 0x82, 0x80, 0x63,
-	0x21, 0x92, 0x73, 0xa4, 0x62, 0xce, 0x4f, 0x14, 0xdf, 0x36, 0xd5, 0x35, 0x23, 0x4b, 0xef, 0x1b,
-	0xb4, 0xdd, 0x59, 0x8e, 0xe3, 0x1b, 0xd4, 0x15, 0xb6, 0x6c, 0x00, 0x71, 0x4c, 0xab, 0x40, 0x3a,
-	0x22, 0x96, 0x0b, 0x96, 0x2a, 0xef, 0x0a, 0x27, 0x0d, 0x42, 0xdf, 0xb4, 0x96, 0x68, 0xc8, 0xe2,
-	0xfa, 0x8d, 0x7a, 0x86, 0x15, 0xc7, 0x83, 0xfb, 0xbd, 0xa9, 0x3b, 0xaf, 0x5c, 0x37, 0x23, 0x32,
-	0x32, 0x3e, 0xfe, 0x3e, 0x02, 0xc3, 0x55, 0xd1, 0xb0, 0x3e, 0x22, 0xb8, 0x7a, 0x72, 0xe8, 0x4f,
-	0xbb, 0xbd, 0xff, 0x2e, 0x5c, 0xd3, 0x38, 0x2e, 0x3e, 0xef, 0x47, 0xa5, 0xd9, 0x3f, 0x23, 0xb0,
-	0x0c, 0x23, 0xf7, 0x69, 0x86, 0xa4, 0x27, 0x65, 0xc5, 0x17, 0x7d, 0xc9, 0xb4, 0xeb, 0x17, 0x04,
-	0xd7, 0x4c, 0x83, 0x73, 0x26, 0xf3, 0x11, 0x53, 0xba, 0xe2, 0x6c, 0x7f, 0x3a, 0xcd, 0xb3, 0x87,
-	0x60, 0xc2, 0x38, 0xf1, 0x9e, 0x65, 0x3e, 0x67, 0x5a, 0x58, 0x7c, 0xd9, 0xa7, 0x50, 0x3b, 0xff,
-	0x42, 0xe0, 0x64, 0x98, 0x58, 0x0b, 0x99, 0x4f, 0xde, 0x2b, 0x4d, 0xb1, 0x7a, 0x21, 0x69, 0x34,
-	0xfc, 0x0f, 0x04, 0x37, 0x7b, 0x8d, 0x81, 0xd9, 0xcc, 0xd5, 0x31, 0xea, 0x8b, 0x8b, 0x83, 0xe9,
-	0x8f, 0x38, 0x5f, 0x2d, 0xff, 0x3e, 0xb0, 0xd1, 0xfe, 0x81, 0x8d, 0xfe, 0x1d, 0xd8, 0x68, 0xef,
-	0xd0, 0x1e, 0xda, 0x3f, 0xb4, 0x87, 0xfe, 0x1c, 0xda, 0x43, 0xef, 0x1e, 0x35, 0x88, 0x5c, 0x6b,
-	0xd6, 0xdc, 0x3a, 0x8b, 0xca, 0x29, 0xaf, 0xb2, 0xf2, 0x2a, 0xb7, 0xca, 0x1d, 0x9f, 0x81, 0xbb,
-	0x9b, 0x58, 0xd4, 0x2e, 0xc5, 0x9f, 0x82, 0x4f, 0xfe, 0x07, 0x00, 0x00, 0xff, 0xff, 0xf7, 0xc2,
-	0x2c, 0x08, 0x20, 0x0a, 0x00, 0x00,
+	// 740 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x96, 0xcf, 0x4f, 0x13, 0x4d,
+	0x18, 0xc7, 0x99, 0xd2, 0xbc, 0xef, 0xcb, 0x93, 0x57, 0x88, 0x2b, 0x60, 0x5d, 0x75, 0xc5, 0x8d,
+	0x9a, 0x5e, 0x6c, 0xfd, 0x81, 0x18, 0x8d, 0x62, 0xb0, 0x40, 0x42, 0x48, 0x25, 0x59, 0x12, 0x0f,
+	0x5e, 0xcc, 0xb6, 0x3b, 0x5b, 0x26, 0xb0, 0x33, 0x30, 0x3b, 0xe5, 0xc7, 0xc1, 0x93, 0x07, 0xa3,
+	0x89, 0x09, 0x27, 0x0f, 0x1e, 0x4d, 0xfc, 0x27, 0x4c, 0xbc, 0x1a, 0x8f, 0x1c, 0xf5, 0x66, 0xe0,
+	0x1f, 0x31, 0xfb, 0x83, 0xa1, 0xbb, 0x9d, 0x2e, 0x4b, 0xe1, 0xd6, 0x3e, 0x3b, 0xdf, 0xe7, 0xfb,
+	0x79, 0x9e, 0x67, 0x76, 0x66, 0x41, 0xa3, 0xae, 0x60, 0xdc, 0x6e, 0xae, 0xe1, 0xaa, 0xd8, 0xae,
+	0xac, 0x73, 0x26, 0x98, 0x66, 0x88, 0x15, 0xec, 0x93, 0x6d, 0x8a, 0xc5, 0x16, 0xe3, 0xab, 0x95,
+	0xe0, 0xa7, 0x2b, 0x2a, 0x72, 0xa1, 0xf9, 0x19, 0xc1, 0x68, 0xdd, 0x6f, 0xd5, 0x38, 0xb6, 0x05,
+	0xae, 0x13, 0x2a, 0x2c, 0xbc, 0xd1, 0xc6, 0xbe, 0xd0, 0x4a, 0xf0, 0x6f, 0x33, 0x08, 0x32, 0x5e,
+	0x42, 0x13, 0xa8, 0x3c, 0x64, 0x1d, 0xfe, 0xd5, 0x6e, 0xc0, 0x39, 0xea, 0x8a, 0xe5, 0xe6, 0x0a,
+	0xf6, 0xec, 0x1a, 0x73, 0x70, 0xa9, 0x10, 0x3e, 0x4f, 0x06, 0x03, 0xbd, 0x60, 0xab, 0x98, 0x2e,
+	0x38, 0xa5, 0xc1, 0x48, 0x1f, 0xff, 0xd5, 0xca, 0x30, 0xc2, 0xf1, 0x46, 0x9b, 0x70, 0xec, 0xd4,
+	0x18, 0x75, 0x09, 0xf7, 0x4a, 0xc5, 0x09, 0x54, 0x2e, 0x5a, 0xe9, 0xb0, 0x49, 0xe1, 0x8a, 0x8a,
+	0xcd, 0xc2, 0xfe, 0x3a, 0xa3, 0x3e, 0xd6, 0x86, 0xa1, 0x40, 0x9c, 0x10, 0xaf, 0x68, 0x15, 0x88,
+	0x73, 0x5a, 0x32, 0xf3, 0x0d, 0x8c, 0xd5, 0xfd, 0xd6, 0x72, 0xbb, 0xe1, 0x11, 0x11, 0xf9, 0xc5,
+	0x46, 0x99, 0xcd, 0xf0, 0x8e, 0xc8, 0x16, 0x66, 0x43, 0xcb, 0xa2, 0x95, 0x0c, 0x06, 0xab, 0x1a,
+	0xb6, 0x8f, 0xa7, 0x26, 0x5f, 0xb8, 0x62, 0xd6, 0x16, 0x76, 0x6c, 0x9c, 0x0c, 0x9a, 0x73, 0x70,
+	0x55, 0x69, 0x2f, 0x31, 0xba, 0xcc, 0x22, 0x98, 0x64, 0xd0, 0xfc, 0x82, 0x60, 0x5c, 0xb6, 0x6d,
+	0xa6, 0x29, 0x08, 0xa3, 0xc7, 0x0f, 0x75, 0x18, 0x0a, 0x9b, 0x5e, 0xdc, 0xaf, 0xc2, 0xa6, 0xa7,
+	0x4d, 0xc2, 0x58, 0x04, 0x17, 0x25, 0x58, 0x26, 0x2d, 0x6a, 0x8b, 0x36, 0xc7, 0x31, 0xb9, 0xfa,
+	0xe1, 0x09, 0x46, 0x7b, 0x07, 0x0c, 0x35, 0x63, 0xaf, 0xe1, 0x9a, 0x6f, 0x11, 0x5c, 0x94, 0xed,
+	0x39, 0x94, 0x1c, 0x3b, 0x9f, 0x32, 0x8c, 0xd8, 0x9d, 0xe9, 0xe5, 0x84, 0xd2, 0xe1, 0x9c, 0x33,
+	0x5a, 0x84, 0x6b, 0x3d, 0x20, 0x24, 0x8c, 0xc2, 0x32, 0x82, 0x4a, 0x87, 0xcd, 0xdf, 0x08, 0x6e,
+	0xca, 0x2e, 0xbc, 0xc4, 0x9c, 0xb8, 0x3b, 0x35, 0xb6, 0xb6, 0x86, 0xc3, 0x65, 0x4b, 0x5b, 0x14,
+	0xf3, 0xb3, 0x7a, 0x1b, 0xe7, 0xc1, 0x88, 0xea, 0x88, 0x5c, 0xe2, 0xb4, 0x8c, 0xa7, 0xe7, 0x7a,
+	0xcc, 0xaa, 0x13, 0x0c, 0xf8, 0x3d, 0x82, 0xdb, 0xb9, 0x6a, 0x3b, 0xe5, 0xdb, 0x6c, 0xc2, 0xff,
+	0x2c, 0xc8, 0x36, 0xe3, 0x38, 0x1c, 0xfb, 0x7e, 0x5c, 0x47, 0x22, 0x66, 0xfe, 0x40, 0xe1, 0x6e,
+	0x8b, 0xa6, 0xa6, 0x64, 0xc9, 0xde, 0x41, 0x9b, 0x9d, 0xed, 0x38, 0xda, 0x41, 0xa9, 0x70, 0x37,
+	0xf0, 0xa0, 0x0a, 0xf8, 0x31, 0x94, 0xa2, 0x26, 0x2f, 0x71, 0xd2, 0x22, 0xb4, 0xc6, 0xa8, 0xe0,
+	0x76, 0x53, 0x2c, 0x50, 0x97, 0x85, 0xbd, 0x1c, 0xb2, 0x7a, 0x3e, 0x37, 0x2d, 0xb8, 0x95, 0x5d,
+	0x47, 0xe7, 0x26, 0x4c, 0x53, 0x23, 0x25, 0xb5, 0xf9, 0x1a, 0x2e, 0x05, 0x39, 0x71, 0x70, 0xe4,
+	0x10, 0xaf, 0xed, 0xc5, 0x03, 0xb4, 0x83, 0x9c, 0xd9, 0x6d, 0xa1, 0x78, 0xab, 0x73, 0x71, 0x3c,
+	0x9f, 0x74, 0xd8, 0xac, 0xc3, 0xf5, 0x9e, 0x06, 0x9d, 0xbc, 0xe9, 0x74, 0x48, 0x99, 0xee, 0xde,
+	0xf7, 0xff, 0x60, 0xb0, 0xee, 0xb7, 0xb4, 0x77, 0x08, 0xce, 0x77, 0x5f, 0x5b, 0x93, 0x95, 0xec,
+	0x0b, 0xaf, 0xa2, 0xba, 0x50, 0xf4, 0x27, 0xfd, 0xa8, 0x24, 0xfb, 0x07, 0x04, 0x9a, 0xe2, 0xd2,
+	0x78, 0x90, 0x23, 0x69, 0xb7, 0x4c, 0x7f, 0xda, 0x97, 0x4c, 0xba, 0x7e, 0x44, 0x70, 0x41, 0x75,
+	0xf4, 0x4f, 0xe5, 0x2e, 0x31, 0xa1, 0xd3, 0xa7, 0xfb, 0xd3, 0x49, 0x9e, 0x5d, 0x04, 0xa3, 0xca,
+	0x33, 0xfb, 0x61, 0xee, 0x3a, 0x93, 0x42, 0xfd, 0x59, 0x9f, 0x42, 0xe9, 0xfc, 0x0d, 0x81, 0x99,
+	0xe3, 0xcc, 0x9d, 0xcb, 0x5d, 0x79, 0x56, 0x1a, 0xbd, 0x7e, 0x26, 0x69, 0x24, 0xfc, 0x57, 0x04,
+	0x97, 0xb3, 0x0e, 0xb2, 0xe9, 0xdc, 0xdd, 0x51, 0xea, 0xf5, 0xf9, 0xd3, 0xe9, 0x25, 0xe7, 0x27,
+	0x04, 0xe3, 0x3d, 0x0e, 0x95, 0x47, 0x79, 0x2c, 0x94, 0x52, 0x7d, 0xa6, 0x6f, 0xe9, 0x21, 0xd8,
+	0xf3, 0xc5, 0x9f, 0xfb, 0x06, 0xda, 0xdb, 0x37, 0xd0, 0x9f, 0x7d, 0x03, 0xed, 0x1e, 0x18, 0x03,
+	0x7b, 0x07, 0xc6, 0xc0, 0xaf, 0x03, 0x63, 0xe0, 0xd5, 0xdd, 0x16, 0x11, 0x2b, 0xed, 0x46, 0xa5,
+	0xc9, 0xbc, 0x6a, 0xc2, 0xa6, 0x1a, 0xd9, 0x54, 0xb7, 0xab, 0x1d, 0x5f, 0xd8, 0x3b, 0xeb, 0xd8,
+	0x6f, 0xfc, 0x13, 0x7e, 0x65, 0xdf, 0xff, 0x1b, 0x00, 0x00, 0xff, 0xff, 0xd3, 0x47, 0x56, 0x09,
+	0x7b, 0x0b, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -803,6 +905,7 @@ type MsgClient interface {
 	SubmitActionResponse(ctx context.Context, in *MsgSubmitActionResponse, opts ...grpc.CallOption) (*MsgSubmitActionResponseResponse, error)
 	CreateVerifyCollectionOwnerRequest(ctx context.Context, in *MsgCreateVerifyCollectionOwnerRequest, opts ...grpc.CallOption) (*MsgCreateVerifyCollectionOwnerRequestResponse, error)
 	SubmitVerifyCollectionOwner(ctx context.Context, in *MsgSubmitVerifyCollectionOwner, opts ...grpc.CallOption) (*MsgSubmitVerifyCollectionOwnerResponse, error)
+	SetMinimumConfirmation(ctx context.Context, in *MsgSetMinimumConfirmation, opts ...grpc.CallOption) (*MsgSetMinimumConfirmationResponse, error)
 }
 
 type msgClient struct {
@@ -867,6 +970,15 @@ func (c *msgClient) SubmitVerifyCollectionOwner(ctx context.Context, in *MsgSubm
 	return out, nil
 }
 
+func (c *msgClient) SetMinimumConfirmation(ctx context.Context, in *MsgSetMinimumConfirmation, opts ...grpc.CallOption) (*MsgSetMinimumConfirmationResponse, error) {
+	out := new(MsgSetMinimumConfirmationResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftoracle.Msg/SetMinimumConfirmation", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	CreateMintRequest(context.Context, *MsgCreateMintRequest) (*MsgCreateMintRequestResponse, error)
@@ -875,6 +987,7 @@ type MsgServer interface {
 	SubmitActionResponse(context.Context, *MsgSubmitActionResponse) (*MsgSubmitActionResponseResponse, error)
 	CreateVerifyCollectionOwnerRequest(context.Context, *MsgCreateVerifyCollectionOwnerRequest) (*MsgCreateVerifyCollectionOwnerRequestResponse, error)
 	SubmitVerifyCollectionOwner(context.Context, *MsgSubmitVerifyCollectionOwner) (*MsgSubmitVerifyCollectionOwnerResponse, error)
+	SetMinimumConfirmation(context.Context, *MsgSetMinimumConfirmation) (*MsgSetMinimumConfirmationResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -898,6 +1011,9 @@ func (*UnimplementedMsgServer) CreateVerifyCollectionOwnerRequest(ctx context.Co
 }
 func (*UnimplementedMsgServer) SubmitVerifyCollectionOwner(ctx context.Context, req *MsgSubmitVerifyCollectionOwner) (*MsgSubmitVerifyCollectionOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitVerifyCollectionOwner not implemented")
+}
+func (*UnimplementedMsgServer) SetMinimumConfirmation(ctx context.Context, req *MsgSetMinimumConfirmation) (*MsgSetMinimumConfirmationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetMinimumConfirmation not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -1012,6 +1128,24 @@ func _Msg_SubmitVerifyCollectionOwner_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SetMinimumConfirmation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetMinimumConfirmation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetMinimumConfirmation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftoracle.Msg/SetMinimumConfirmation",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetMinimumConfirmation(ctx, req.(*MsgSetMinimumConfirmation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "thesixnetwork.sixnft.nftoracle.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -1039,6 +1173,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SubmitVerifyCollectionOwner",
 			Handler:    _Msg_SubmitVerifyCollectionOwner_Handler,
+		},
+		{
+			MethodName: "SetMinimumConfirmation",
+			Handler:    _Msg_SetMinimumConfirmation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1468,17 +1606,17 @@ func (m *MsgSubmitVerifyCollectionOwner) MarshalToSizedBuffer(dAtA []byte) (int,
 	_ = i
 	var l int
 	_ = l
-	if len(m.Base64OriginTxInfo) > 0 {
-		i -= len(m.Base64OriginTxInfo)
-		copy(dAtA[i:], m.Base64OriginTxInfo)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64OriginTxInfo)))
+	if len(m.Base64OriginContractInfo) > 0 {
+		i -= len(m.Base64OriginContractInfo)
+		copy(dAtA[i:], m.Base64OriginContractInfo)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Base64OriginContractInfo)))
 		i--
 		dAtA[i] = 0x22
 	}
-	if len(m.SchemaCode) > 0 {
-		i -= len(m.SchemaCode)
-		copy(dAtA[i:], m.SchemaCode)
-		i = encodeVarintTx(dAtA, i, uint64(len(m.SchemaCode)))
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NftSchemaCode)))
 		i--
 		dAtA[i] = 0x1a
 	}
@@ -1521,6 +1659,73 @@ func (m *MsgSubmitVerifyCollectionOwnerResponse) MarshalToSizedBuffer(dAtA []byt
 		i = encodeVarintTx(dAtA, i, uint64(m.VerifyRequestID))
 		i--
 		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetMinimumConfirmation) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetMinimumConfirmation) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetMinimumConfirmation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NewConfirmation) > 0 {
+		i -= len(m.NewConfirmation)
+		copy(dAtA[i:], m.NewConfirmation)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NewConfirmation)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgSetMinimumConfirmationResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgSetMinimumConfirmationResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgSetMinimumConfirmationResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.NewConfirmation) > 0 {
+		i -= len(m.NewConfirmation)
+		copy(dAtA[i:], m.NewConfirmation)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.NewConfirmation)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -1739,11 +1944,11 @@ func (m *MsgSubmitVerifyCollectionOwner) Size() (n int) {
 	if m.VerifyRequestID != 0 {
 		n += 1 + sovTx(uint64(m.VerifyRequestID))
 	}
-	l = len(m.SchemaCode)
+	l = len(m.NftSchemaCode)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
-	l = len(m.Base64OriginTxInfo)
+	l = len(m.Base64OriginContractInfo)
 	if l > 0 {
 		n += 1 + l + sovTx(uint64(l))
 	}
@@ -1758,6 +1963,36 @@ func (m *MsgSubmitVerifyCollectionOwnerResponse) Size() (n int) {
 	_ = l
 	if m.VerifyRequestID != 0 {
 		n += 1 + sovTx(uint64(m.VerifyRequestID))
+	}
+	return n
+}
+
+func (m *MsgSetMinimumConfirmation) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.NewConfirmation)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgSetMinimumConfirmationResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NewConfirmation)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
 	}
 	return n
 }
@@ -3110,7 +3345,7 @@ func (m *MsgSubmitVerifyCollectionOwner) Unmarshal(dAtA []byte) error {
 			}
 		case 3:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SchemaCode", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3138,11 +3373,11 @@ func (m *MsgSubmitVerifyCollectionOwner) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.SchemaCode = string(dAtA[iNdEx:postIndex])
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Base64OriginTxInfo", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Base64OriginContractInfo", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3170,7 +3405,7 @@ func (m *MsgSubmitVerifyCollectionOwner) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Base64OriginTxInfo = string(dAtA[iNdEx:postIndex])
+			m.Base64OriginContractInfo = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -3241,6 +3476,202 @@ func (m *MsgSubmitVerifyCollectionOwnerResponse) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetMinimumConfirmation) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetMinimumConfirmation: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetMinimumConfirmation: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewConfirmation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewConfirmation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgSetMinimumConfirmationResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgSetMinimumConfirmationResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgSetMinimumConfirmationResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NewConfirmation", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NewConfirmation = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipTx(dAtA[iNdEx:])

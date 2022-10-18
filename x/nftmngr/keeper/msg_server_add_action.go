@@ -34,6 +34,10 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.GetCode())
 	}
+	
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	}
 
 	//validate Action data
 	err = k.ValidateAction(&new_action, &schema)
@@ -86,6 +90,5 @@ func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) er
 	if len(action.Then) == 0 {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action.Then is empty")
 	}
-
 	return nil
 }

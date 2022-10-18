@@ -202,5 +202,21 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		}
 		return false
 	})
+	am.keeper.IterateActiveVerifyCollectionOwnersQueue(ctx, ctx.BlockHeader().Time, func(verifyCollectionOwnerRequest types.CollectionOwnerRequest) (stop bool) {
+		if verifyCollectionOwnerRequest.Status == types.RequestStatus_PENDING {
+			verifyCollectionOwnerRequest.Status = types.RequestStatus_EXPIRED
+			verifyCollectionOwnerRequest.ExpiredHeight = ctx.BlockHeight()
+			am.keeper.SetCollectionOwnerRequest(ctx, verifyCollectionOwnerRequest)
+			am.keeper.RemoveFromActiveVerifyCollectionOwnerQueue(ctx, verifyCollectionOwnerRequest.Id, ctx.BlockHeader().Time)
+			ctx.EventManager().EmitEvent(
+				sdk.NewEvent(
+					types.EventTypeVerificationRequest,
+					sdk.NewAttribute(types.AttributeKeyVerificationRequestStatus, types.RequestStatus_EXPIRED.String()),
+				),
+			)
+		}
+		return false
+	})
+
 	return []abci.ValidatorUpdate{}
 }

@@ -8,6 +8,10 @@ import "nftmngr/nft_data.proto";
 import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
 import "nftmngr/nft_collection.proto";
+import "nftmngr/nft_schema_by_contract.proto";
+import "nftmngr/nft_fee_config.proto";
+import "nftmngr/nft_fee_balance.proto";
+import "nftmngr/metadata_creator.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
@@ -20,5 +24,9 @@ message GenesisState {
   repeated ActionByRefId actionByRefIdList = 4 [(gogoproto.nullable) = false];
   repeated Organization organizationList = 5 [(gogoproto.nullable) = false];
   repeated NftCollection nftCollectionList = 6 [(gogoproto.nullable) = false];
+  repeated NFTSchemaByContract nFTSchemaByContractList = 7 [(gogoproto.nullable) = false];
+  NFTFeeConfig nft_fee_config = 8;
+  NFTFeeBalance nFTFeeBalance = 9;
+  repeated MetadataCreator metadataCreatorList = 10 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

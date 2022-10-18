@@ -1,8 +1,6 @@
 package nftoracle
 
 import (
-	"fmt"
-
 	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
@@ -12,12 +10,15 @@ import (
 // InitGenesis initializes the capability module's state from a provided genesis
 // state.
 func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) {
+
+	if genState.OracleConfig != nil {
+		k.SetOracleConfig(ctx, *genState.OracleConfig)
+	}
+
 	// Set all the mintRequest
 	for _, elem := range genState.MintRequestList {
 		k.SetMintRequest(ctx, elem)
 	}
-
-	fmt.Println("############################### mint active duration", genState.Params.MintRequestActiveDuration)
 
 	// Set mintRequest count
 	k.SetMintRequestCount(ctx, genState.MintRequestCount)
@@ -35,6 +36,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set collectionOwnerRequest count
 	k.SetCollectionOwnerRequestCount(ctx, genState.CollectionOwnerRequestCount)
+	// Set if defined
+	if genState.OracleConfig != nil {
+		k.SetOracleConfig(ctx, *genState.OracleConfig)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -50,6 +55,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.ActionRequestCount = k.GetActionRequestCount(ctx)
 	genesis.CollectionOwnerRequestList = k.GetAllCollectionOwnerRequest(ctx)
 	genesis.CollectionOwnerRequestCount = k.GetCollectionOwnerRequestCount(ctx)
+	// Get all oracleConfig
+	oracleConfig, found := k.GetOracleConfig(ctx)
+	if found {
+		genesis.OracleConfig = &oracleConfig
+	}
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

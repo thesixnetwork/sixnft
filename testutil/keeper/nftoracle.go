@@ -77,6 +77,10 @@ func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 				"EvmsupportParams",
 			),
 		),
+		nil,
+		nil,
+		nil,
+		nil,
 	)
 
 	k := keeper.NewKeeper(

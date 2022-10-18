@@ -9,6 +9,10 @@ import "nftmngr/nft_schema.proto";
 import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
 import "nftmngr/nft_collection.proto";
+import "nftmngr/nft_schema_by_contract.proto";
+import "nftmngr/nft_fee_config.proto";
+import "nftmngr/nft_fee_balance.proto";
+import "nftmngr/metadata_creator.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -63,6 +67,34 @@ service Query {
 // Queries a NftCollection by index.
 	rpc NftCollection(QueryGetNftCollectionRequest) returns (QueryGetNftCollectionResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
+	}
+
+// Queries a NFTSchemaByContract by index.
+	rpc NFTSchemaByContract(QueryGetNFTSchemaByContractRequest) returns (QueryGetNFTSchemaByContractResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}/{chain}";
+	}
+
+	// Queries a list of NFTSchemaByContract items.
+	rpc NFTSchemaByContractAll(QueryAllNFTSchemaByContractRequest) returns (QueryAllNFTSchemaByContractResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract";
+	}
+
+// Queries a NFTFeeConfig by index.
+	rpc NFTFeeConfig(QueryGetNFTFeeConfigRequest) returns (QueryGetNFTFeeConfigResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_config";
+	}
+// Queries a NFTFeeBalance by index.
+	rpc NFTFeeBalance(QueryGetNFTFeeBalanceRequest) returns (QueryGetNFTFeeBalanceResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_balance";
+	}
+// Queries a MetadataCreator by index.
+	rpc MetadataCreator(QueryGetMetadataCreatorRequest) returns (QueryGetMetadataCreatorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator/{nftSchemaCode}";
+	}
+
+	// Queries a list of MetadataCreator items.
+	rpc MetadataCreatorAll(QueryAllMetadataCreatorRequest) returns (QueryAllMetadataCreatorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -158,6 +190,53 @@ message QueryGetNftCollectionRequest {
 
 message QueryGetNftCollectionResponse {
 	repeated NftData nftCollection = 1 [(gogoproto.nullable) = true];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetNFTSchemaByContractRequest {
+	  string originContractAddress = 1;
+  string chain = 2;
+
+}
+
+message QueryGetNFTSchemaByContractResponse {
+	NFTSchemaByContract nFTSchemaByContract = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllNFTSchemaByContractRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllNFTSchemaByContractResponse {
+	repeated NFTSchemaByContract nFTSchemaByContract = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetNFTFeeConfigRequest {}
+
+message QueryGetNFTFeeConfigResponse {
+	NFTFeeConfig NFTFeeConfig = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetNFTFeeBalanceRequest {}
+
+message QueryGetNFTFeeBalanceResponse {
+	NFTFeeBalance NFTFeeBalance = 1 [(gogoproto.nullable) = false];
+}
+message QueryGetMetadataCreatorRequest {
+	  string nftSchemaCode = 1;
+
+}
+
+message QueryGetMetadataCreatorResponse {
+	MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllMetadataCreatorRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllMetadataCreatorResponse {
+	repeated MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

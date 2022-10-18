@@ -55,4 +55,12 @@ const (
 	AttributeKeyShowAttributeResult = "show_attribute_result"
 	AttributeKeyTokenId             = "token_id"
 	EventTypeResyncAttributes       = "resync_attributes"
+
+	EventTypeSetFeeConfig  = "set_fee_config"
+	AttributeKeyFeeSubject = "fee_subject"
+	AttributeKeyFeeConfig  = "fee_config"
+
+	EventTypeSetMintAuth          = "set_mint_auth"
+	AttributeAutorizeTo 		 = "authorize_to"
+	AttributeKeySetMinAuthResult = "add_action_result"
 )

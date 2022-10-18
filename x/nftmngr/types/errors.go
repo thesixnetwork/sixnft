@@ -48,6 +48,7 @@ var (
 	ErrNotSameTypeDefaultMintValue     = sdkerrors.Register(ModuleName, 209, "Not same type default mint value")
 	ErrInvalidAccdress                 = sdkerrors.Register(ModuleName, 210, "Invalid address")
 	ErrAttributeAlreadyHidden          = sdkerrors.Register(ModuleName, 211, "Attribute already hidden")
+	ErrDuplicateActionName             = sdkerrors.Register(ModuleName, 212, "Duplicate action name")
 
 	// Action (300-399)
 	ErrRefIdAlreadyExists     = sdkerrors.Register(ModuleName, 300, "RefId already exists")
@@ -55,12 +56,21 @@ var (
 	ErrActionAlreadyExists    = sdkerrors.Register(ModuleName, 302, "Action already exists")
 	ErrInvalidActionAttribute = sdkerrors.Register(ModuleName, 303, "Invalid action attribute")
 	ErrActionIsDisabled       = sdkerrors.Register(ModuleName, 304, "Action is disabled")
-	ErrOrganizationOwner      = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrActionIsForUserOnly    = sdkerrors.Register(ModuleName, 305, "This action can be done by user only")
+	ErrActionIsForSystemOnly  = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
+
+	ErrOrganizationOwner = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
+	ErrInvalidActionName    = sdkerrors.Register(ModuleName, 501, "Invalid action name")
 
 	ErrSystemActionerAlreadyExists = sdkerrors.Register(ModuleName, 600, "System actioner already exists")
 	ErrSystemActionerDoesNotExists = sdkerrors.Register(ModuleName, 601, "System actioner does not exists")
 
 	ErrUnauthorized = sdkerrors.Register(ModuleName, 700, "Unauthorized")
+
+	ErrNoNftFeeAdminPermission = sdkerrors.Register(ModuleName, 800, "No NFT fee admin permission")
+	ErrInvalidFeeAmount        = sdkerrors.Register(ModuleName, 801, "Invalid fee amount")
+	ErrProcessingFee           = sdkerrors.Register(ModuleName, 802, "Error processing fee")
+	ErrInvalidFeePortion       = sdkerrors.Register(ModuleName, 803, "Invalid fee portion")
 )

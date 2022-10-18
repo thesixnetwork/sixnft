@@ -128,12 +128,12 @@ func (k Keeper) IterateActiveVerifyCollectionOwnersQueue(ctx sdk.Context, endTim
 	defer iterator.Close()
 	for ; iterator.Valid(); iterator.Next() {
 		requestID, _ := SplitActiveVerifyCollectionOwnerQueueKey(iterator.Key())
-		mintRequest, found := k.GetCollectionOwnerRequest(ctx, requestID)
+		verifyRequest, found := k.GetCollectionOwnerRequest(ctx, requestID)
 		if !found {
-			panic(fmt.Sprintf("mintRequest %d does not exist", requestID))
+			panic(fmt.Sprintf("verifyRequest %d does not exist", requestID))
 		}
 
-		if cb(mintRequest) {
+		if cb(verifyRequest) {
 			break
 		}
 	}
