@@ -42,14 +42,14 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		// Add creator to minters list
 		if !userMintfound {
 			mapOfMinters = types.MetadataCreator{
-				NftSchemaCode: schema.Code,
+				NftSchemaCode:    schema.Code,
 				MetadataMintedBy: make([]*types.MapTokenToMinter, 0),
 			}
 			mapOfMinters.MetadataMintedBy = append(mapOfMinters.MetadataMintedBy, &types.MapTokenToMinter{
 				TokenId: data.TokenId,
 				Minter:  msg.Creator,
 			})
-		}else {
+		} else {
 			mapOfMinters.MetadataMintedBy = append(mapOfMinters.MetadataMintedBy, &types.MapTokenToMinter{
 				TokenId: data.TokenId,
 				Minter:  msg.Creator,

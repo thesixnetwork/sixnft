@@ -57968,6 +57968,12 @@ definitions:
       - ORIGIN
       - CHAIN
     default: ORIGIN
+  thesixnetwork.sixnft.nftmngr.AuthorizeTo:
+    type: string
+    enum:
+      - SYSTEM
+      - ALL
+    default: SYSTEM
   thesixnetwork.sixnft.nftmngr.BooleanAttributeValue:
     type: object
     properties:
@@ -58533,6 +58539,11 @@ definitions:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgSetFeeConfigResponse:
     type: object
+  thesixnetwork.sixnft.nftmngr.MsgSetMintauthResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgSetNFTAttributeResponse:
     type: object
     properties:
