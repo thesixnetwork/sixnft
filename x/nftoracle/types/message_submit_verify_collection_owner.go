@@ -11,9 +11,9 @@ var _ sdk.Msg = &MsgSubmitVerifyCollectionOwner{}
 
 func NewMsgSubmitVerifyCollectionOwner(creator string, verifyRequestID uint64, schemaCode string, base64OriginContractInfo string) *MsgSubmitVerifyCollectionOwner {
 	return &MsgSubmitVerifyCollectionOwner{
-		Creator:            creator,
-		VerifyRequestID:    verifyRequestID,
-		NftSchemaCode:         schemaCode,
+		Creator:                  creator,
+		VerifyRequestID:          verifyRequestID,
+		NftSchemaCode:            schemaCode,
 		Base64OriginContractInfo: base64OriginContractInfo,
 	}
 }

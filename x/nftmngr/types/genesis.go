@@ -18,6 +18,7 @@ func DefaultGenesis() *GenesisState {
 		NFTSchemaByContractList: []NFTSchemaByContract{},
 		NftFeeConfig:            nil,
 		NFTFeeBalance:           nil,
+		MetadataCreatorList:     []MetadataCreator{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -85,6 +86,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for nFTSchemaByContract")
 		}
 		nFTSchemaByContractIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in metadataCreator
+	metadataCreatorIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.MetadataCreatorList {
+		index := string(MetadataCreatorKey(elem.NftSchemaCode))
+		if _, ok := metadataCreatorIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for metadataCreator")
+		}
+		metadataCreatorIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

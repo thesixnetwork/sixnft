@@ -45,6 +45,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	if genState.NFTFeeBalance != nil {
 		k.SetNFTFeeBalance(ctx, *genState.NFTFeeBalance)
 	}
+	// Set all the metadataCreator
+	for _, elem := range genState.MetadataCreatorList {
+		k.SetMetadataCreator(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -70,6 +74,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	if found {
 		genesis.NFTFeeBalance = &nFTFeeBalance
 	}
+	genesis.MetadataCreatorList = k.GetAllMetadataCreator(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

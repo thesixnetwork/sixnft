@@ -47,5 +47,5 @@ const (
 
 const (
 	KeyMintPermissionOnlySystem = "system"
-	KeyMintPermissionAll = "all"
+	KeyMintPermissionAll        = "all"
 )

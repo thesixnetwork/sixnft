@@ -251,7 +251,7 @@ type App struct {
 	EvmsupportKeeper evmsupportmodulekeeper.Keeper
 
 	NftoracleKeeper nftoraclemodulekeeper.Keeper
-	NftadminKeeper     nftadminmodulekeeper.Keeper
+	NftadminKeeper  nftadminmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager

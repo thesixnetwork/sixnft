@@ -12,6 +12,7 @@ import "nftmngr/nft_collection.proto";
 import "nftmngr/nft_schema_by_contract.proto";
 import "nftmngr/nft_fee_config.proto";
 import "nftmngr/nft_fee_balance.proto";
+import "nftmngr/metadata_creator.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -86,6 +87,16 @@ service Query {
 	rpc NFTFeeBalance(QueryGetNFTFeeBalanceRequest) returns (QueryGetNFTFeeBalanceResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_balance";
 	}
+// Queries a MetadataCreator by index.
+	rpc MetadataCreator(QueryGetMetadataCreatorRequest) returns (QueryGetMetadataCreatorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator/{nftSchemaCode}";
+	}
+
+	// Queries a list of MetadataCreator items.
+	rpc MetadataCreatorAll(QueryAllMetadataCreatorRequest) returns (QueryAllMetadataCreatorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -211,4 +222,22 @@ message QueryGetNFTFeeBalanceRequest {}
 message QueryGetNFTFeeBalanceResponse {
 	NFTFeeBalance NFTFeeBalance = 1 [(gogoproto.nullable) = false];
 }
+message QueryGetMetadataCreatorRequest {
+	  string nftSchemaCode = 1;
+
+}
+
+message QueryGetMetadataCreatorResponse {
+	MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllMetadataCreatorRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllMetadataCreatorResponse {
+	repeated MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
 // this line is used by starport scaffolding # 3
