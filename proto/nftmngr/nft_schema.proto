@@ -15,5 +15,6 @@ message NFTSchema {
   OriginData origin_data = 5;
   OnChainData onchain_data = 6;
   bool isVerified = 7;
+  string mint_authorization = 8;
 }
 

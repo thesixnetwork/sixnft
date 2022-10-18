@@ -30,6 +30,18 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, data.NftSchemaCode)
 	}
 
+	// Check mint authorization
+	switch schema.MintAuthorization {
+	case types.KeyMintPermissionOnlySystem:
+		// Check if creator is the schema owner
+		if msg.Creator != schema.Owner {
+			return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+		}
+	case types.KeyMintPermissionAll:
+		// Do nothing
+	default:
+	}
+
 	// Check if creator is the schema owner
 	if msg.Creator != schema.Owner {
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
