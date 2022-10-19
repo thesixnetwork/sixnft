@@ -12,7 +12,6 @@ func (k Keeper) SetNFTSchemaByContract(ctx sdk.Context, nFTSchemaByContract type
 	b := k.cdc.MustMarshal(&nFTSchemaByContract)
 	store.Set(types.NFTSchemaByContractKey(
 		nFTSchemaByContract.OriginContractAddress,
-		nFTSchemaByContract.Chain,
 	), b)
 }
 
@@ -20,14 +19,12 @@ func (k Keeper) SetNFTSchemaByContract(ctx sdk.Context, nFTSchemaByContract type
 func (k Keeper) GetNFTSchemaByContract(
 	ctx sdk.Context,
 	originContractAddress string,
-	chain string,
 
 ) (val types.NFTSchemaByContract, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NFTSchemaByContractKeyPrefix))
 
 	b := store.Get(types.NFTSchemaByContractKey(
 		originContractAddress,
-		chain,
 	))
 	if b == nil {
 		return val, false
@@ -41,13 +38,11 @@ func (k Keeper) GetNFTSchemaByContract(
 func (k Keeper) RemoveNFTSchemaByContract(
 	ctx sdk.Context,
 	originContractAddress string,
-	chain string,
 
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NFTSchemaByContractKeyPrefix))
 	store.Delete(types.NFTSchemaByContractKey(
 		originContractAddress,
-		chain,
 	))
 }
 
