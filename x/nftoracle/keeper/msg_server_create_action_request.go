@@ -65,6 +65,10 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
+	if len(actionParam.ExpiredAt.String()) == 0 {
+		actionParam.ExpiredAt = endTime
+	}
+
 	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionRequest{
 		NftSchemaCode:   actionParam.NftSchemaCode,
 		TokenId:         actionParam.TokenId,
@@ -75,7 +79,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
-		ValidUntil:      endTime,
+		ValidUntil:      actionParam.ExpiredAt,
 		Confirmers:      make(map[string]bool),
 		DataHashes:      make([]*types.DataHash, 0),
 	})

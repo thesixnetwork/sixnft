@@ -10,12 +10,8 @@ message OriginContractParam {
   string chain = 1;
   string contract_address = 2;
   string contract_owner = 3;
-}
-
-message OriginContractInfo {
-  OriginContractParam contractOriginDataInfo = 1;
-  bytes hash = 2;
-  repeated string confirmers = 3;
+  google.protobuf.Timestamp request_expire = 4
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
 }
 
 message CollectionOwnerRequest {
@@ -33,4 +29,10 @@ message CollectionOwnerRequest {
   repeated OriginContractInfo contract_info = 10;
   int64 expired_height = 11;
   
+}
+
+message OriginContractInfo {
+  OriginContractParam contractOriginDataInfo = 1;
+  bytes hash = 2;
+  repeated string confirmers = 3;
 }
