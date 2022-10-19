@@ -84,7 +84,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 
-	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, endTime)
+	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionParam.ExpiredAt)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

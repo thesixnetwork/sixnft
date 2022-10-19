@@ -77,7 +77,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		ContractInfo:    make([]*types.OriginContractInfo, 0),
 	})
 
-	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, endTime)
+	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, _originContractParam.RequestExpire)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
