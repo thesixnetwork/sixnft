@@ -78,11 +78,10 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	k.Keeper.SetNFTSchema(ctx, schema)
 
 	// Check if schema by contract already exists
-	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema.OriginData.OriginContractAddress, schema.OriginData.OriginChain)
+	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema.OriginData.OriginContractAddress)
 	if !found {
 		nftSchemaByContract = types.NFTSchemaByContract{
 			OriginContractAddress: schema.OriginData.OriginContractAddress,
-			Chain:                 schema.OriginData.OriginChain,
 			SchemaCodes:           []string{schema.Code},
 		}
 	} else {

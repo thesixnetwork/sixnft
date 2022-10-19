@@ -44,20 +44,18 @@ func CmdListNFTSchemaByContract() *cobra.Command {
 
 func CmdShowNFTSchemaByContract() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-nft-schema-by-contract [origin-contract-address] [chain]",
+		Use:   "show-nft-schema-by-contract [origin-contract-address]",
 		Short: "shows a NFTSchemaByContract",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
 			argOriginContractAddress := args[0]
-			argChain := args[1]
 
 			params := &types.QueryGetNFTSchemaByContractRequest{
 				OriginContractAddress: argOriginContractAddress,
-				Chain:                 argChain,
 			}
 
 			res, err := queryClient.NFTSchemaByContract(context.Background(), params)
