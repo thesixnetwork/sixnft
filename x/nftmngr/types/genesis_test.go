@@ -67,11 +67,9 @@ func TestGenesisState_Validate(t *testing.T) {
 				NFTSchemaByContractList: []types.NFTSchemaByContract{
 					{
 						OriginContractAddress: "0",
-						Chain:                 "0",
 					},
 					{
 						OriginContractAddress: "1",
-						Chain:                 "1",
 					},
 				},
 				NftFeeConfig:  &types.NFTFeeConfig{},
@@ -166,11 +164,9 @@ func TestGenesisState_Validate(t *testing.T) {
 				NFTSchemaByContractList: []types.NFTSchemaByContract{
 					{
 						OriginContractAddress: "0",
-						Chain:                 "0",
 					},
 					{
 						OriginContractAddress: "0",
-						Chain:                 "0",
 					},
 				},
 			},

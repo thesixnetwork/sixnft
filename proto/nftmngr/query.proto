@@ -71,7 +71,7 @@ service Query {
 
 // Queries a NFTSchemaByContract by index.
 	rpc NFTSchemaByContract(QueryGetNFTSchemaByContractRequest) returns (QueryGetNFTSchemaByContractResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}/{chain}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}";
 	}
 
 	// Queries a list of NFTSchemaByContract items.
