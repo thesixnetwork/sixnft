@@ -36018,9 +36018,7 @@ paths:
                                 type: string
                               contract_owner:
                                 type: string
-                              ref_id:
-                                type: string
-                              expired_at:
+                              request_expire:
                                 type: string
                                 format: date-time
                           hash:
@@ -36187,9 +36185,7 @@ paths:
                               type: string
                             contract_owner:
                               type: string
-                            ref_id:
-                              type: string
-                            expired_at:
+                            request_expire:
                               type: string
                               format: date-time
                         hash:
@@ -60790,9 +60786,7 @@ definitions:
                   type: string
                 contract_owner:
                   type: string
-                ref_id:
-                  type: string
-                expired_at:
+                request_expire:
                   type: string
                   format: date-time
             hash:
@@ -60992,9 +60986,7 @@ definitions:
             type: string
           contract_owner:
             type: string
-          ref_id:
-            type: string
-          expired_at:
+          request_expire:
             type: string
             format: date-time
       hash:
@@ -61013,9 +61005,7 @@ definitions:
         type: string
       contract_owner:
         type: string
-      ref_id:
-        type: string
-      expired_at:
+      request_expire:
         type: string
         format: date-time
   thesixnetwork.sixnft.nftoracle.Params:
@@ -61192,9 +61182,7 @@ definitions:
                         type: string
                       contract_owner:
                         type: string
-                      ref_id:
-                        type: string
-                      expired_at:
+                      request_expire:
                         type: string
                         format: date-time
                   hash:
@@ -61469,9 +61457,7 @@ definitions:
                       type: string
                     contract_owner:
                       type: string
-                    ref_id:
-                      type: string
-                    expired_at:
+                    request_expire:
                       type: string
                       format: date-time
                 hash:

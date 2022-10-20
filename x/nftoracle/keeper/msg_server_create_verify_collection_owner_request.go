@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"strconv"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -61,10 +62,12 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.VerifyRequestActiveDuration(ctx))
 
-	if len(_originContractParam.RequestExpire.String()) == 0 {
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, _originContractParam.RequestExpire.UTC().Format(time.RFC3339))
+	if err != nil || len(_originContractParam.RequestExpire.String()) == 0 || _originContractParam.RequestExpire.Before(time.Now().UTC()){
 		_originContractParam.RequestExpire = endTime
 	}
-	
+
 	id_ := k.Keeper.AppendCollectionOwnerRequest(ctx, types.CollectionOwnerRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
 		Signer:          *signer,

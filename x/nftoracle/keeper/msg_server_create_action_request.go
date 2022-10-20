@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"strconv"
+	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
@@ -65,7 +66,13 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
-	if len(actionParam.ExpiredAt.String()) == 0 {
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, actionParam.ExpiredAt.UTC().Format(time.RFC3339))
+	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(time.Now().UTC()){
+		actionParam.ExpiredAt = endTime
+	}
+
+	if len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(time.Now().UTC()){
 		actionParam.ExpiredAt = endTime
 	}
 
