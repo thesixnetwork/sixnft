@@ -1,5 +1,6 @@
 EVMSIGN=./evmsign
 default_schema_code=$1
+timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.000z")
 echo "#############################################"
 echo "##                                         ##"
 echo "##  Welcome to the menu script             ##"
@@ -22,7 +23,6 @@ echo "##  13. Oracle - Get Verify Request        ##"
 echo "##  14. Oracle - Submit Verify Response    ##"
 echo "##  15. Add Attribute                      ##"
 echo "##  16. Add Action                         ##"
-echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
 read -p "Your choice: " choice
