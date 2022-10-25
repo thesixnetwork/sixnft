@@ -19,7 +19,6 @@ func createNNFTSchemaByContract(keeper *keeper.Keeper, ctx sdk.Context, n int) [
 	items := make([]types.NFTSchemaByContract, n)
 	for i := range items {
 		items[i].OriginContractAddress = strconv.Itoa(i)
-		items[i].Chain = strconv.Itoa(i)
 
 		keeper.SetNFTSchemaByContract(ctx, items[i])
 	}
@@ -32,7 +31,6 @@ func TestNFTSchemaByContractGet(t *testing.T) {
 	for _, item := range items {
 		rst, found := keeper.GetNFTSchemaByContract(ctx,
 			item.OriginContractAddress,
-			item.Chain,
 		)
 		require.True(t, found)
 		require.Equal(t,
@@ -47,11 +45,9 @@ func TestNFTSchemaByContractRemove(t *testing.T) {
 	for _, item := range items {
 		keeper.RemoveNFTSchemaByContract(ctx,
 			item.OriginContractAddress,
-			item.Chain,
 		)
 		_, found := keeper.GetNFTSchemaByContract(ctx,
 			item.OriginContractAddress,
-			item.Chain,
 		)
 		require.False(t, found)
 	}
