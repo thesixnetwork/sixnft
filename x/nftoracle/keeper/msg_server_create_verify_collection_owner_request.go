@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"strconv"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -43,7 +44,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingCollectionOwnerSignature, err.Error())
 	}
-	_, signer, err := k.ValidateCollectionOwnerSignature(data)
+	_originContractParam, signer, err := k.ValidateCollectionOwnerSignature(data)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
 	}
@@ -61,6 +62,12 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.VerifyRequestActiveDuration(ctx))
 
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, _originContractParam.RequestExpire.UTC().Format(time.RFC3339))
+	if err != nil || len(_originContractParam.RequestExpire.String()) == 0 || _originContractParam.RequestExpire.Before(time.Now().UTC()){
+		_originContractParam.RequestExpire = endTime
+	}
+
 	id_ := k.Keeper.AppendCollectionOwnerRequest(ctx, types.CollectionOwnerRequest{
 		NftSchemaCode:   msg.NftSchemaCode,
 		Signer:          *signer,
@@ -68,12 +75,12 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
-		ValidUntil:      endTime,
+		ValidUntil:      _originContractParam.RequestExpire,
 		Confirmers:      make(map[string]bool),
 		ContractInfo:    make([]*types.OriginContractInfo, 0),
 	})
 
-	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, endTime)
+	k.Keeper.InsertActiveVerifyCollectionOwnerRequestQueue(ctx, id_, _originContractParam.RequestExpire)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
