@@ -14,16 +14,16 @@ option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/sixnft/evmsupport/params";
+    option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/params";
   }
   // Queries a AddressBinding by index.
 	rpc AddressBinding(QueryGetAddressBindingRequest) returns (QueryGetAddressBindingResponse) {
-		option (google.api.http).get = "/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}";
 	}
 
 	// Queries a list of AddressBinding items.
 	rpc AddressBindingAll(QueryAllAddressBindingRequest) returns (QueryAllAddressBindingResponse) {
-		option (google.api.http).get = "/sixnft/evmsupport/address_binding";
+		option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/address_binding";
 	}
 
 // this line is used by starport scaffolding # 2

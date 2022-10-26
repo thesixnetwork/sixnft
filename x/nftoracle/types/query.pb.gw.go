@@ -734,15 +734,15 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftoracle", "params"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftoracle", "params"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_MintRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sixnft", "nftoracle", "mint_request", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_MintRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftoracle", "mint_request", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_MintRequestAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftoracle", "mint_request"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_MintRequestAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftoracle", "mint_request"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_ActionRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sixnft", "nftoracle", "action_request", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_ActionRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftoracle", "action_request", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_ActionRequestAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftoracle", "action_request"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_ActionRequestAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftoracle", "action_request"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Query_CollectionOwnerRequest_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftoracle", "collection_owner_request", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 

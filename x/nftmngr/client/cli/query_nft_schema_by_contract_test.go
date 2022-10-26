@@ -30,7 +30,6 @@ func networkWithNFTSchemaByContractObjects(t *testing.T, n int) (*network.Networ
 	for i := 0; i < n; i++ {
 		nFTSchemaByContract := types.NFTSchemaByContract{
 			OriginContractAddress: strconv.Itoa(i),
-			Chain:                 strconv.Itoa(i),
 		}
 		nullify.Fill(&nFTSchemaByContract)
 		state.NFTSchemaByContractList = append(state.NFTSchemaByContractList, nFTSchemaByContract)
@@ -60,7 +59,6 @@ func TestShowNFTSchemaByContract(t *testing.T) {
 		{
 			desc:                    "found",
 			idOriginContractAddress: objs[0].OriginContractAddress,
-			idChain:                 objs[0].Chain,
 
 			args: common,
 			obj:  objs[0],

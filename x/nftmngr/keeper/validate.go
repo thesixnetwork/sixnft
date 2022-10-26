@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"fmt"
+	// "fmt"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
@@ -68,11 +68,11 @@ func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onch
 	for _, attriVal := range onchainAttributes {
 		attrDef := mapOriginAttributes[attriVal.Name]
 		if attrDef == nil {
-			fmt.Println("Attribute not found: ", attriVal.Name)
+			// fmt.Println("Attribute not found: ", attriVal.Name)
 			continue
 		}
 		if attrDef.DataType != attriVal.DataType {
-			fmt.Println("attrDef.DataType: ", attrDef.DataType)
+			// fmt.Println("attrDef.DataType: ", attrDef.DataType)
 			return false, attrDef.Name
 		}
 	}

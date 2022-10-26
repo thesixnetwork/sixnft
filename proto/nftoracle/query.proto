@@ -17,26 +17,26 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/sixnft/nftoracle/params";
+    option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/params";
   }
   // Queries a MintRequest by id.
 	rpc MintRequest(QueryGetMintRequestRequest) returns (QueryGetMintRequestResponse) {
-		option (google.api.http).get = "/sixnft/nftoracle/mint_request/{id}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/mint_request/{id}";
 	}
 
 	// Queries a list of MintRequest items.
 	rpc MintRequestAll(QueryAllMintRequestRequest) returns (QueryAllMintRequestResponse) {
-		option (google.api.http).get = "/sixnft/nftoracle/mint_request";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/mint_request";
 	}
 
 // Queries a ActionRequest by id.
 	rpc ActionRequest(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponse) {
-		option (google.api.http).get = "/sixnft/nftoracle/action_request/{id}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request/{id}";
 	}
 
 	// Queries a list of ActionRequest items.
 	rpc ActionRequestAll(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponse) {
-		option (google.api.http).get = "/sixnft/nftoracle/action_request";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request";
 	}
 
 // Queries a CollectionOwnerRequest by id.

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"strconv"
+	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
@@ -65,6 +66,16 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, actionParam.ExpiredAt.UTC().Format(time.RFC3339))
+	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(time.Now().UTC()){
+		actionParam.ExpiredAt = endTime
+	}
+
+	if len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(time.Now().UTC()){
+		actionParam.ExpiredAt = endTime
+	}
+
 	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionRequest{
 		NftSchemaCode:   actionParam.NftSchemaCode,
 		TokenId:         actionParam.TokenId,
@@ -75,12 +86,12 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
-		ValidUntil:      endTime,
+		ValidUntil:      actionParam.ExpiredAt,
 		Confirmers:      make(map[string]bool),
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 
-	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, endTime)
+	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionParam.ExpiredAt)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

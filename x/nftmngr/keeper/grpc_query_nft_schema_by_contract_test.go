@@ -32,7 +32,6 @@ func TestNFTSchemaByContractQuerySingle(t *testing.T) {
 			desc: "First",
 			request: &types.QueryGetNFTSchemaByContractRequest{
 				OriginContractAddress: msgs[0].OriginContractAddress,
-				Chain:                 msgs[0].Chain,
 			},
 			response: &types.QueryGetNFTSchemaByContractResponse{NFTSchemaByContract: msgs[0]},
 		},
@@ -40,7 +39,6 @@ func TestNFTSchemaByContractQuerySingle(t *testing.T) {
 			desc: "Second",
 			request: &types.QueryGetNFTSchemaByContractRequest{
 				OriginContractAddress: msgs[1].OriginContractAddress,
-				Chain:                 msgs[1].Chain,
 			},
 			response: &types.QueryGetNFTSchemaByContractResponse{NFTSchemaByContract: msgs[1]},
 		},
@@ -48,7 +46,6 @@ func TestNFTSchemaByContractQuerySingle(t *testing.T) {
 			desc: "KeyNotFound",
 			request: &types.QueryGetNFTSchemaByContractRequest{
 				OriginContractAddress: strconv.Itoa(100000),
-				Chain:                 strconv.Itoa(100000),
 			},
 			err: status.Error(codes.NotFound, "not found"),
 		},

@@ -1,5 +1,6 @@
 EVMSIGN=./evmsign
-default_schema_cdoe=$1
+default_schema_code=$1
+timestamp=$(date -u +"%Y-%m-%dT%H:%M:%S.000z")
 echo "#############################################"
 echo "##                                         ##"
 echo "##  Welcome to the menu script             ##"
@@ -20,7 +21,8 @@ echo "##  11. Oracle - Submit Action Response    ##"
 echo "##  12. Oracle - Create Verfify Request    ##"
 echo "##  13. Oracle - Get Verify Request        ##"
 echo "##  14. Oracle - Submit Verify Response    ##"
-echo "##  Your choice:                           ##"
+echo "##  15. Add Attribute                      ##"
+echo "##  16. Add Action                         ##"
 echo "##                                         ##"
 echo "#############################################"
 read -p "Your choice: " choice
@@ -28,7 +30,7 @@ case $choice in
     1) echo "Showing Schema"
         read -p "Enter Schema Code: " schema_code 
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         sixnftd q nftmngr show-nft-schema ${schema_code} --output json | jq .
         ;;
@@ -36,7 +38,7 @@ case $choice in
         read -p "Enter Schema Code: " schema_code 
         read -p "Enter Token ID: " token_id
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         sixnftd q nftmngr show-nft-data ${schema_code} ${token_id} --output json | jq .
         ;;
@@ -44,7 +46,7 @@ case $choice in
         read -p "Enter Schema Code: " schema_code 
         read -p "Enter Token ID: " token_id
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         BASE64_META=`cat nft-data.json | sed "s/TOKENID/${token_id}/g"  | sed "s/SCHEMA_CODE/${schema_code}/g" | base64 | tr -d '\n'`
         sixnftd tx nftmngr create-metadata "${schema_code}" ${token_id} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
@@ -55,7 +57,7 @@ case $choice in
         read -p "Enter Token ID: " token_id
         read -p "Enter Action: " action
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
         ;;
@@ -63,7 +65,7 @@ case $choice in
         read -p "Enter Schema Code: " schema_code 
         read -p "Enter Value (attribute_name=N[value]): " value
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
 
         ATTRIBUTE_NAME=`echo $value | cut -d'=' -f1`
@@ -110,7 +112,7 @@ case $choice in
         read -p "Enter Token ID: " token_id
         read -p "Require confirmations: " require_confirmations
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         sixnftd tx nftoracle create-mint-request ${schema_code} ${token_id} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
         ;;
@@ -132,7 +134,7 @@ case $choice in
         read -p "Require confirmations: " require_confirmations
         read -p "Reference ID: " reference_id
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
 
         BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g"`
@@ -163,7 +165,7 @@ case $choice in
         read -p "Enter Schema Code: " schema_code
         read -p "Require confirmations: " require_confirmations
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
 
         BASE64JSON=`cat verify-collection-owner.json`
@@ -186,11 +188,30 @@ case $choice in
         read -p "Verify Request ID: " verfiry_request_id
         read -p "Oracle : " oracle_key_name
         if [ -z "$schema_code" ]; then
-            schema_code=$default_schema_cdoe
+            schema_code=$default_schema_code
         fi
         BASE64_ORIGINDATA=`cat verify-collection-owner.json | base64 | tr -d '\n'`
 
         sixnftd tx nftoracle submit-verify-collection-owner ${verfiry_request_id} ${schema_code} ${BASE64_ORIGINDATA} --from ${oracle_key_name} --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
+        ;;
+     15) echo "Add Attribute"
+        read -p "Enter Schema Code: " schema_code 
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        read -p "Location of attribute (0 or 1): " location
+        BASE64_ATTRIBUTE=`cat new-attribute.json | base64 | tr -d '\n'`
+        sixnftd tx nftmngr add-attribute ${schema_code} ${location} ${BASE64_ATTRIBUTE} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+            --chain-id sixnft
+        ;;
+     16) echo "Add Action"
+        read -p "Enter Schema Code: " schema_code 
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        BASE64_ACTION=`cat new-action.json | base64 | tr -d '\n'`
+        sixnftd tx nftmngr add-action ${schema_code} ${BASE64_ACTION} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+            --chain-id sixnft
         ;;
     *) echo "Invalid choice"
        ;;
