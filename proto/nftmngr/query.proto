@@ -22,46 +22,46 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/sixnft/nftmngr/params";
+    option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/params";
   }
   // Queries a NFTSchema by index.
 	rpc NFTSchema(QueryGetNFTSchemaRequest) returns (QueryGetNFTSchemaResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/nft_schema/{code}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema/{code}";
 	}
 
 	// Queries a list of NFTSchema items.
 	rpc NFTSchemaAll(QueryAllNFTSchemaRequest) returns (QueryAllNFTSchemaResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/nft_schema";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema";
 	}
 
 // Queries a NftData by index.
 	rpc NftData(QueryGetNftDataRequest) returns (QueryGetNftDataResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}";
 	}
 
 	// Queries a list of NftData items.
 	rpc NftDataAll(QueryAllNftDataRequest) returns (QueryAllNftDataResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/nft_data";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_data";
 	}
 
 // Queries a ActionByRefId by index.
 	rpc ActionByRefId(QueryGetActionByRefIdRequest) returns (QueryGetActionByRefIdResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/action_by_ref_id/{refId}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_by_ref_id/{refId}";
 	}
 
 	// Queries a list of ActionByRefId items.
 	rpc ActionByRefIdAll(QueryAllActionByRefIdRequest) returns (QueryAllActionByRefIdResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/action_by_ref_id";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_by_ref_id";
 	}
 
 // Queries a Organization by index.
 	rpc Organization(QueryGetOrganizationRequest) returns (QueryGetOrganizationResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/organization/{name}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/organization/{name}";
 	}
 
 	// Queries a list of Organization items.
 	rpc OrganizationAll(QueryAllOrganizationRequest) returns (QueryAllOrganizationResponse) {
-		option (google.api.http).get = "/sixnft/nftmngr/organization";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/organization";
 	}
 
 // Queries a NftCollection by index.

@@ -1460,23 +1460,23 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftmngr", "params"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "params"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NFTSchema_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sixnft", "nftmngr", "nft_schema", "code"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NFTSchema_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_schema", "code"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NFTSchemaAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftmngr", "nft_schema"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NFTSchemaAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_schema"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NftData_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"sixnft", "nftmngr", "nft_data", "nftSchemaCode", "tokenId"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NftData_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_data", "nftSchemaCode", "tokenId"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NftDataAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftmngr", "nft_data"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NftDataAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_data"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_ActionByRefId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sixnft", "nftmngr", "action_by_ref_id", "refId"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_ActionByRefId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "action_by_ref_id", "refId"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_ActionByRefIdAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftmngr", "action_by_ref_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_ActionByRefIdAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "action_by_ref_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Organization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sixnft", "nftmngr", "organization", "name"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Organization_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "organization", "name"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_OrganizationAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sixnft", "nftmngr", "organization"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_OrganizationAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftmngr", "organization"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Query_NftCollection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"thesixnetwork", "sixnft", "nftmngr", "nft_collection", "nftSchemaCode"}, "", runtime.AssumeColonVerbOpt(true)))
 
