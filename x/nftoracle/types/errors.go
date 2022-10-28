@@ -46,4 +46,6 @@ var (
 	ErrNoOracleAdminPermission               = sdkerrors.Register(ModuleName, 33, "No oracle admin permission")
 	ErrOracleConfigNotFound                  = sdkerrors.Register(ModuleName, 34, "Oracle config not found")
 	ErrRequiredConfirmTooLess                = sdkerrors.Register(ModuleName, 35, "Required confirm too less")
+
+	ErrParsingSetSignerSignature = sdkerrors.Register(ModuleName, 36, "Error parsing collection owner signature")
 )

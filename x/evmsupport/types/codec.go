@@ -10,9 +10,6 @@ import (
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgBindAddress{}, "evmsupport/BindAddress", nil)
 	cdc.RegisterConcrete(&MsgRemoveBinding{}, "evmsupport/RemoveBinding", nil)
-	cdc.RegisterConcrete(&MsgCreateActionSigner{}, "evmsupport/CreateActionSigner", nil)
-	cdc.RegisterConcrete(&MsgUpdateActionSigner{}, "evmsupport/UpdateActionSigner", nil)
-	cdc.RegisterConcrete(&MsgDeleteActionSigner{}, "evmsupport/DeleteActionSigner", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -22,11 +19,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgRemoveBinding{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCreateActionSigner{},
-		&MsgUpdateActionSigner{},
-		&MsgDeleteActionSigner{},
 	)
 	// this line is used by starport scaffolding # 3
 

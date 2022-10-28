@@ -1,7 +1,5 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.evmsupport;
-
-import "evmsupport/action_signer.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
@@ -10,9 +8,6 @@ option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 service Msg {
       rpc BindAddress(MsgBindAddress) returns (MsgBindAddressResponse);
   rpc RemoveBinding(MsgRemoveBinding) returns (MsgRemoveBindingResponse);
-  rpc CreateActionSigner(MsgCreateActionSigner) returns (MsgCreateActionSignerResponse);
-  rpc UpdateActionSigner(MsgUpdateActionSigner) returns (MsgUpdateActionSignerResponse);
-  rpc DeleteActionSigner(MsgDeleteActionSigner) returns (MsgDeleteActionSignerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -38,35 +33,6 @@ message MsgRemoveBinding {
 message MsgRemoveBindingResponse {
   string ethAddress = 1;
   string nativeAddress = 2;
-}
-
-message MsgCreateActionSigner {
-  string creator = 1;
-  string base64EncodedSetSignerAction = 2;
-}
-message MsgCreateActionSignerResponse {
-  string ownerAddress = 1;
-  string signerAddress = 2;
-  string expireAt = 3;
-}
-
-message MsgUpdateActionSigner {
-  string creator = 1;
-  string base64EncodedSetSignerAction = 2;
-}
-message MsgUpdateActionSignerResponse {
-  string ownerAddress = 1;
-  string signerAddress = 2;
-  string expireAt = 3;
-}
-
-message MsgDeleteActionSigner {
-  string creator = 1;
-  string base64EncodedSetSignerAction = 2;
-}
-message MsgDeleteActionSignerResponse {
-  string ownerAddress = 1;
-  string signerAddress = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -14,8 +14,8 @@ import (
 
 	"github.com/thesixnetwork/sixnft/testutil/network"
 	"github.com/thesixnetwork/sixnft/testutil/nullify"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/client/cli"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/client/cli"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 // Prevent strconv unused error

@@ -25,8 +25,6 @@ type (
 		storeKey   sdk.StoreKey
 		memKey     sdk.StoreKey
 		paramstore paramtypes.Subspace
-
-		nftadminKeeper types.NftadminKeeper
 	}
 )
 
@@ -35,7 +33,6 @@ func NewKeeper(
 	storeKey,
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
-	nftadminKeeper types.NftadminKeeper,
 
 ) *Keeper {
 	// set KeyTable if it has not already been set
@@ -49,7 +46,6 @@ func NewKeeper(
 		storeKey:       storeKey,
 		memKey:         memKey,
 		paramstore:     ps,
-		nftadminKeeper: nftadminKeeper,
 	}
 }
 

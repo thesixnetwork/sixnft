@@ -9,15 +9,15 @@ import (
 	"github.com/stretchr/testify/require"
 
 	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/keeper"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
 func TestActionSignerMsgServerCreate(t *testing.T) {
-	k, ctx := keepertest.EvmsupportKeeper(t)
+	k, ctx := keepertest.NftoracleKeeper(t)
 	srv := keeper.NewMsgServerImpl(*k)
 	wctx := sdk.WrapSDKContext(ctx)
 	creator := "A"
@@ -28,7 +28,7 @@ func TestActionSignerMsgServerCreate(t *testing.T) {
 		_, err := srv.CreateActionSigner(wctx, expected)
 		require.NoError(t, err)
 		rst, found := k.GetActionSigner(ctx,
-			string(expected.GetSigners()[0]),
+			expected.Base64EncodedSetSignerAction,
 		)
 		require.True(t, found)
 		require.Equal(t, expected.Creator, rst.Creator)
@@ -52,7 +52,7 @@ func TestActionSignerMsgServerUpdate(t *testing.T) {
 		{
 			desc: "Unauthorized",
 			request: &types.MsgUpdateActionSigner{Creator: "B",
-			Base64EncodedSetSignerAction: strconv.Itoa(0),
+				Base64EncodedSetSignerAction: strconv.Itoa(0),
 			},
 			err: sdkerrors.ErrUnauthorized,
 		},
@@ -65,7 +65,7 @@ func TestActionSignerMsgServerUpdate(t *testing.T) {
 		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
-			k, ctx := keepertest.EvmsupportKeeper(t)
+			k, ctx := keepertest.NftoracleKeeper(t)
 			srv := keeper.NewMsgServerImpl(*k)
 			wctx := sdk.WrapSDKContext(ctx)
 			expected := &types.MsgCreateActionSigner{Creator: creator,
@@ -106,7 +106,7 @@ func TestActionSignerMsgServerDelete(t *testing.T) {
 		{
 			desc: "Unauthorized",
 			request: &types.MsgDeleteActionSigner{Creator: "B",
-			Base64EncodedSetSignerAction: strconv.Itoa(0),
+				Base64EncodedSetSignerAction: strconv.Itoa(0),
 			},
 			err: sdkerrors.ErrUnauthorized,
 		},
@@ -119,7 +119,7 @@ func TestActionSignerMsgServerDelete(t *testing.T) {
 		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
-			k, ctx := keepertest.EvmsupportKeeper(t)
+			k, ctx := keepertest.NftoracleKeeper(t)
 			srv := keeper.NewMsgServerImpl(*k)
 			wctx := sdk.WrapSDKContext(ctx)
 

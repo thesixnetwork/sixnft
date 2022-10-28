@@ -27,7 +27,7 @@ type (
 	}
 )
 
-func NewKeeper(
+func  NewKeeper(
 	cdc codec.BinaryCodec,
 	storeKey,
 	memKey sdk.StoreKey,

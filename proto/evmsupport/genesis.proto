@@ -4,7 +4,6 @@ package thesixnetwork.sixnft.evmsupport;
 import "gogoproto/gogo.proto";
 import "evmsupport/params.proto";
 import "evmsupport/address_binding.proto";
-import "evmsupport/action_signer.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
@@ -13,6 +12,5 @@ option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
 message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated AddressBinding addressBindingList = 2 [(gogoproto.nullable) = false];
-  repeated ActionSigner actionSignerList = 3 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

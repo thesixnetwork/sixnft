@@ -13,10 +13,6 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.AddressBindingList {
 		k.SetAddressBinding(ctx, elem)
 	}
-	// Set all the actionSigner
-	for _, elem := range genState.ActionSignerList {
-		k.SetActionSigner(ctx, elem)
-	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -27,7 +23,6 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.Params = k.GetParams(ctx)
 
 	genesis.AddressBindingList = k.GetAllAddressBinding(ctx)
-	genesis.ActionSignerList = k.GetAllActionSigner(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

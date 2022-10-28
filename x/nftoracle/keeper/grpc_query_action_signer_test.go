@@ -12,14 +12,14 @@ import (
 
 	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
 	"github.com/thesixnetwork/sixnft/testutil/nullify"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 // Prevent strconv unused error
 var _ = strconv.IntSize
 
 func TestActionSignerQuerySingle(t *testing.T) {
-	keeper, ctx := keepertest.EvmsupportKeeper(t)
+	keeper, ctx := keepertest.NftoracleKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	msgs := createNActionSigner(keeper, ctx, 2)
 	for _, tc := range []struct {
@@ -70,7 +70,7 @@ func TestActionSignerQuerySingle(t *testing.T) {
 }
 
 func TestActionSignerQueryPaginated(t *testing.T) {
-	keeper, ctx := keepertest.EvmsupportKeeper(t)
+	keeper, ctx := keepertest.NftoracleKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	msgs := createNActionSigner(keeper, ctx, 5)
 

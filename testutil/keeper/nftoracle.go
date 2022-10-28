@@ -76,7 +76,6 @@ func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 				evmSupportMemStoreKey,
 				"EvmsupportParams",
 			),
-			nil,
 		),
 		nil,
 		nil,

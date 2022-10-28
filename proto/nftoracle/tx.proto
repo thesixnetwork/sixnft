@@ -1,6 +1,7 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.nftoracle;
 
+import "nftoracle/action_signer.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -14,6 +15,9 @@ service Msg {
   rpc CreateVerifyCollectionOwnerRequest(MsgCreateVerifyCollectionOwnerRequest) returns (MsgCreateVerifyCollectionOwnerRequestResponse);
   rpc SubmitVerifyCollectionOwner(MsgSubmitVerifyCollectionOwner) returns (MsgSubmitVerifyCollectionOwnerResponse);
   rpc SetMinimumConfirmation(MsgSetMinimumConfirmation) returns (MsgSetMinimumConfirmationResponse);
+  rpc CreateActionSigner(MsgCreateActionSigner) returns (MsgCreateActionSignerResponse);
+  rpc UpdateActionSigner(MsgUpdateActionSigner) returns (MsgUpdateActionSignerResponse);
+  rpc DeleteActionSigner(MsgDeleteActionSigner) returns (MsgDeleteActionSignerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -94,4 +98,32 @@ message MsgSetMinimumConfirmationResponse {
   string newConfirmation = 1;
 }
 
+message MsgCreateActionSigner {
+  string creator = 1;
+  string base64EncodedSetSignerAction = 2;
+}
+message MsgCreateActionSignerResponse {
+  string ownerAddress = 1;
+  string signerAddress = 2;
+  string expireAt = 3;
+}
+
+message MsgUpdateActionSigner {
+  string creator = 1;
+  string base64EncodedSetSignerAction = 2;
+}
+message MsgUpdateActionSignerResponse {
+  string ownerAddress = 1;
+  string signerAddress = 2;
+  string expireAt = 3;
+}
+
+message MsgDeleteActionSigner {
+  string creator = 1;
+  string base64EncodedSetSignerAction = 2;
+}
+message MsgDeleteActionSignerResponse {
+  string ownerAddress = 1;
+  string signerAddress = 2;
+}
 // this line is used by starport scaffolding # proto/tx/message

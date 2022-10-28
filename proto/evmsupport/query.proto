@@ -6,7 +6,6 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "evmsupport/params.proto";
 import "evmsupport/address_binding.proto";
-import "evmsupport/action_signer.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
@@ -25,16 +24,6 @@ service Query {
 	// Queries a list of AddressBinding items.
 	rpc AddressBindingAll(QueryAllAddressBindingRequest) returns (QueryAllAddressBindingResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/address_binding";
-	}
-
-// Queries a ActionSigner by index.
-	rpc ActionSigner(QueryGetActionSignerRequest) returns (QueryGetActionSignerResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/action_signer/{actorAddress}";
-	}
-
-	// Queries a list of ActionSigner items.
-	rpc ActionSignerAll(QueryAllActionSignerRequest) returns (QueryAllActionSignerResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/evmsupport/action_signer";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -65,24 +54,6 @@ message QueryAllAddressBindingRequest {
 
 message QueryAllAddressBindingResponse {
 	repeated AddressBinding addressBinding = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-message QueryGetActionSignerRequest {
-	  string actorAddress = 1;
-
-}
-
-message QueryGetActionSignerResponse {
-	ActionSigner actionSigner = 1 [(gogoproto.nullable) = false];
-}
-
-message QueryAllActionSignerRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
-}
-
-message QueryAllActionSignerResponse {
-	repeated ActionSigner actionSigner = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

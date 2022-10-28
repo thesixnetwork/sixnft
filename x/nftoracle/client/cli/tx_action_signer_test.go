@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/thesixnetwork/sixnft/testutil/network"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/client/cli"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/client/cli"
 )
 
 // Prevent strconv unused error

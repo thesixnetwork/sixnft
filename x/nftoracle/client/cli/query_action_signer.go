@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func CmdListActionSigner() *cobra.Command {

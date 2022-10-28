@@ -23,6 +23,7 @@ echo "##  13. Oracle - Get Verify Request        ##"
 echo "##  14. Oracle - Submit Verify Response    ##"
 echo "##  15. Add Attribute                      ##"
 echo "##  16. Add Action                         ##"
+echo "##  17. Set Signer                         ##"
 echo "##                                         ##"
 echo "#############################################"
 read -p "Your choice: " choice
@@ -212,6 +213,18 @@ case $choice in
         BASE64_ACTION=`cat new-action.json | base64 | tr -d '\n'`
         sixnftd tx nftmngr add-action ${schema_code} ${BASE64_ACTION} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             --chain-id sixnft
+        ;;
+     17) echo "Set Signer"
+        BASE64JSON=`cat set-signer.json`
+        # echo "BASE64JSON: ${BASE64JSON}"
+        BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
+        # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
+        MESSAGE_SIG=`echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret`
+        # echo "MESSAGE_SIG: ${MESSAGE_SIG}"
+
+        BASE64_VERIFY_SIG=`cat verify-signature.json | sed "s/SIGNATURE/${MESSAGE_SIG}/g" | sed "s/MESSAGE/${BASE64_MESSAGE}/g" | base64 | tr -d '\n'`
+
+        sixnftd tx evmsupport create-action-signer ${BASE64_VERIFY_SIG} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
         ;;
     *) echo "Invalid choice"
        ;;

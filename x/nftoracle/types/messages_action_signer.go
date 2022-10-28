@@ -15,12 +15,11 @@ var _ sdk.Msg = &MsgCreateActionSigner{}
 
 func NewMsgCreateActionSigner(
 	creator string,
-	base64EncodedSetSignerAction string,
-
+	bse64EncodedSetSignerAction string,
 ) *MsgCreateActionSigner {
 	return &MsgCreateActionSigner{
 		Creator:      creator,
-		Base64EncodedSetSignerAction: base64EncodedSetSignerAction,
+		Base64EncodedSetSignerAction: bse64EncodedSetSignerAction,
 	}
 }
 

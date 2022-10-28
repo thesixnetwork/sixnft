@@ -11,7 +11,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 )
 
@@ -20,7 +20,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 	binder, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
-		return nil, err
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
 
 	//check if signer is authorized
@@ -37,11 +37,11 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	data := types.SetSignerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(signerActionBz, &data)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerParam, err.Error())
+		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
 	_signerParams, signer, err := k.ValidatesetSignernature(data)
 	if err != nil {
-		return nil, err
+		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
 	}
 
 	// Check if the value already exists
@@ -54,12 +54,14 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
 	}
 
+	createdAt := ctx.BlockTime()
+
 	var actionSigner = types.ActionSigner{
 		Creator:      msg.Creator,
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
-		CreateAt:     _signerParams.CreateAt,
-		ExpireAt:     _signerParams.ExpireAt,
+		CreatedAt:    createdAt,
+		ExpiredAt:    _signerParams.ExpiredAt,
 	}
 
 	k.SetActionSigner(
@@ -91,13 +93,13 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	data := types.SetSignerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(signerActionBz, &data)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerParam, err.Error())
+		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerSignature, err.Error())
 	}
 	_signerParams, signer, err := k.ValidatesetSignernature(data)
 	if err != nil {
 		return nil, err
 	}
-	
+
 	// Check if the value exists
 	valFound, isFound := k.GetActionSigner(
 		ctx,
@@ -112,12 +114,14 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
+	updatedAt := ctx.BlockTime()
+
 	var actionSigner = types.ActionSigner{
 		Creator:      msg.Creator,
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
-		CreateAt:     _signerParams.CreateAt,
-		ExpireAt:     _signerParams.ExpireAt,
+		CreatedAt:    updatedAt,
+		ExpiredAt:    _signerParams.ExpiredAt,
 	}
 
 	k.SetActionSigner(ctx, actionSigner)
@@ -147,7 +151,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	data := types.SetSignerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(signerActionBz, &data)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerParam, err.Error())
+		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerSignature, err.Error())
 	}
 	_signerParams, _, err := k.ValidatesetSignernature(data)
 	if err != nil {
@@ -177,7 +181,6 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	return &types.MsgDeleteActionSignerResponse{}, nil
 }
 
-
 func (k msgServer) ValidatesetSignernature(setSigner types.SetSignerSignature) (*types.SetSignerParams, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(setSigner.Message)), 10) + setSigner.Message
@@ -193,7 +196,7 @@ func (k msgServer) ValidatesetSignernature(setSigner types.SetSignerSignature) (
 	}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(setSignerTypeBz, setSignerParams)
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(types.ErrParsingSetSignerParam, err.Error())
+		return nil, nil, sdkerrors.Wrap(types.ErrParsingSetSignerSignature, err.Error())
 	}
 
 	//validate signature format
