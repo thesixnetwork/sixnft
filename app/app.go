@@ -418,6 +418,7 @@ func New(
 		keys[evmsupportmoduletypes.StoreKey],
 		keys[evmsupportmoduletypes.MemStoreKey],
 		app.GetSubspace(evmsupportmoduletypes.ModuleName),
+		app.NftadminKeeper,
 	)
 	evmsupportModule := evmsupportmodule.NewAppModule(appCodec, app.EvmsupportKeeper, app.AccountKeeper, app.BankKeeper)
 

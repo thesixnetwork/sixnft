@@ -1,0 +1,24 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.evmsupport;
+
+option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";
+
+message ActionSigner {
+  string actorAddress = 1; 
+  string ownerAddress = 2; 
+  string createAt = 3; 
+  string expireAt = 4; 
+  string creator = 5;
+}
+
+message SetSignerSignature {
+  string signature = 1;
+  string message = 2;
+}
+
+
+message SetSignerParams {
+  string actorAddress = 1; 
+  string createAt = 2; 
+  string expireAt = 3; 
+}

@@ -4,8 +4,8 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func (k msgServer) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth) (*types.MsgSetMintauthResponse, error) {

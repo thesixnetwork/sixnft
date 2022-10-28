@@ -32,6 +32,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						NativeAddress: "1",
 					},
 				},
+				ActionSignerList: []types.ActionSigner{
+					{
+						ActorAddress: "0",
+					},
+					{
+						ActorAddress: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -47,6 +55,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						EthAddress:    "0",
 						NativeAddress: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionSigner",
+			genState: &types.GenesisState{
+				ActionSignerList: []types.ActionSigner{
+					{
+						ActorAddress: "0",
+					},
+					{
+						ActorAddress: "0",
 					},
 				},
 			},

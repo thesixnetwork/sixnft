@@ -19,7 +19,7 @@ func (k msgServer) SetFeeConfig(goCtx context.Context, msg *types.MsgSetFeeConfi
 		return nil, err
 	}
 
-	granted := k.adminKeeper.HasPermission(ctx, types.KeyPermissionNftFeeAdmin, creator)
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionNftFeeAdmin, creator)
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoNftFeeAdminPermission, msg.Creator)
 	}

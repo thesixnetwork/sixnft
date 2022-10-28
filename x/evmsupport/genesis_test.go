@@ -25,6 +25,14 @@ func TestGenesis(t *testing.T) {
 				NativeAddress: "1",
 			},
 		},
+		ActionSignerList: []types.ActionSigner{
+			{
+				ActorAddress: "0",
+			},
+			{
+				ActorAddress: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -37,5 +45,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.AddressBindingList, got.AddressBindingList)
+	require.ElementsMatch(t, genesisState.ActionSignerList, got.ActionSignerList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

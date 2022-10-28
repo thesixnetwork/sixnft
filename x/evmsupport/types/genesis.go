@@ -11,6 +11,7 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		AddressBindingList: []AddressBinding{},
+		ActionSignerList:   []ActionSigner{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -28,6 +29,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for addressBinding")
 		}
 		addressBindingIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in actionSigner
+	actionSignerIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.ActionSignerList {
+		index := string(ActionSignerKey(elem.ActorAddress))
+		if _, ok := actionSignerIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for actionSigner")
+		}
+		actionSignerIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

@@ -23,6 +23,15 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgRemoveBinding:
 			res, err := msgServer.RemoveBinding(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateActionSigner:
+			res, err := msgServer.CreateActionSigner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgUpdateActionSigner:
+			res, err := msgServer.UpdateActionSigner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteActionSigner:
+			res, err := msgServer.DeleteActionSigner(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)

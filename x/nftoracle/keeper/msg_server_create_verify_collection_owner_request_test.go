@@ -19,7 +19,6 @@ func TestCollectionOwnerRequestMsgServerCreate(t *testing.T) {
 	}
 }
 
-
 func TestCollectionOwnerRequestMsgServerSubmit(t *testing.T) {
 	srv, ctx := setupMsgServer(t)
 	creator := "A"
