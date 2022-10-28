@@ -11,7 +11,8 @@ message ActionSigner {
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; 
   google.protobuf.Timestamp expired_at = 4
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  string creator = 5;
+  string status = 5;
+  int64 expired_height = 6;
 }
 
 message SetSignerSignature {

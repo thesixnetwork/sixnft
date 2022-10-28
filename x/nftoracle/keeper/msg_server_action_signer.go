@@ -57,7 +57,6 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	createdAt := ctx.BlockTime()
 
 	var actionSigner = types.ActionSigner{
-		Creator:      msg.Creator,
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
 		CreatedAt:    createdAt,
@@ -101,23 +100,18 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	}
 
 	// Check if the value exists
-	valFound, isFound := k.GetActionSigner(
+	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
 	)
+
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
-	}
-
-	// Checks if the the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
 	updatedAt := ctx.BlockTime()
 
 	var actionSigner = types.ActionSigner{
-		Creator:      msg.Creator,
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
 		CreatedAt:    updatedAt,
@@ -159,18 +153,13 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	}
 
 	// Check if the value exists
-	valFound, isFound := k.GetActionSigner(
+	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
 	)
 
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
-	}
-
-	// Checks if the the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
 	k.RemoveActionSigner(

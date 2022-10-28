@@ -31,7 +31,7 @@ func TestActionSignerMsgServerCreate(t *testing.T) {
 			expected.Base64EncodedSetSignerAction,
 		)
 		require.True(t, found)
-		require.Equal(t, expected.Creator, rst.Creator)
+		require.Equal(t, expected.Creator, rst.ActorAddress)
 	}
 }
 
@@ -83,7 +83,7 @@ func TestActionSignerMsgServerUpdate(t *testing.T) {
 					expected.Base64EncodedSetSignerAction,
 				)
 				require.True(t, found)
-				require.Equal(t, expected.Creator, rst.Creator)
+				require.Equal(t, expected.Creator, rst.ActorAddress)
 			}
 		})
 	}

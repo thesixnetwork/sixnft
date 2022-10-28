@@ -50,11 +50,11 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 		Params: types.DefaultParams(),
 		ActionSignerList: []types.ActionSigner{
 			{
-				Creator:      sample.AccAddress(),
+				OwnerAddress:      sample.AccAddress(),
 				ActorAddress: "0",
 			},
 			{
-				Creator:      sample.AccAddress(),
+				OwnerAddress:      sample.AccAddress(),
 				ActorAddress: "1",
 			},
 		},

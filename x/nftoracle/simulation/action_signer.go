@@ -69,7 +69,7 @@ func SimulateMsgUpdateActionSigner(
 			found           = false
 		)
 		for _, obj := range allActionSigner {
-			simAccount, found = FindAccount(accs, obj.Creator)
+			simAccount, found = FindAccount(accs, obj.ActorAddress)
 			if found {
 				actionSigner = obj
 				break
@@ -115,7 +115,7 @@ func SimulateMsgDeleteActionSigner(
 			found           = false
 		)
 		for _, obj := range allActionSigner {
-			simAccount, found = FindAccount(accs, obj.Creator)
+			simAccount, found = FindAccount(accs, obj.ActorAddress)
 			if found {
 				actionSigner = obj
 				break
