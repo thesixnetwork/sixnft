@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"strconv"
+	"time"
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -11,8 +12,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreateActionSigner) (*types.MsgCreateActionSignerResponse, error) {
@@ -55,12 +56,20 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	}
 
 	createdAt := ctx.BlockTime()
+	endTime := createdAt.Add(k.VerifyRequestActiveDuration(ctx))
+
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
+	if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(time.Now().UTC()) {
+		_signerParams.ExpiredAt = endTime
+	}
 
 	var actionSigner = types.ActionSigner{
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
 		CreatedAt:    createdAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
+		Status:		types.RequestStatus_ACTIVE,
 	}
 
 	k.SetActionSigner(

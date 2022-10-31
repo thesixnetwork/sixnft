@@ -35359,6 +35359,7 @@ paths:
                         - EXPIRED
                         - FAILED_ON_EXECUTION
                         - FAILED_REJECT_BY_CONSENSUS
+                        - ACTIVE
                       default: PENDING
                     current_confirm:
                       type: string
@@ -35552,6 +35553,7 @@ paths:
                       - EXPIRED
                       - FAILED_ON_EXECUTION
                       - FAILED_REJECT_BY_CONSENSUS
+                      - ACTIVE
                     default: PENDING
                   current_confirm:
                     type: string
@@ -35654,8 +35656,20 @@ paths:
                     expired_at:
                       type: string
                       format: date-time
-                    creator:
+                    status:
                       type: string
+                      enum:
+                        - PENDING
+                        - SUCCESS_WITH_CONSENSUS
+                        - FAILED_WITHOUT_CONCENSUS
+                        - EXPIRED
+                        - FAILED_ON_EXECUTION
+                        - FAILED_REJECT_BY_CONSENSUS
+                        - ACTIVE
+                      default: PENDING
+                    expired_height:
+                      type: string
+                      format: int64
               pagination:
                 type: object
                 properties:
@@ -35783,8 +35797,20 @@ paths:
                   expired_at:
                     type: string
                     format: date-time
-                  creator:
+                  status:
                     type: string
+                    enum:
+                      - PENDING
+                      - SUCCESS_WITH_CONSENSUS
+                      - FAILED_WITHOUT_CONCENSUS
+                      - EXPIRED
+                      - FAILED_ON_EXECUTION
+                      - FAILED_REJECT_BY_CONSENSUS
+                      - ACTIVE
+                    default: PENDING
+                  expired_height:
+                    type: string
+                    format: int64
         default:
           description: An unexpected error response.
           schema:
@@ -35844,6 +35870,7 @@ paths:
                         - EXPIRED
                         - FAILED_ON_EXECUTION
                         - FAILED_REJECT_BY_CONSENSUS
+                        - ACTIVE
                       default: PENDING
                     current_confirm:
                       type: string
@@ -36021,6 +36048,7 @@ paths:
                       - EXPIRED
                       - FAILED_ON_EXECUTION
                       - FAILED_REJECT_BY_CONSENSUS
+                      - ACTIVE
                     default: PENDING
                   current_confirm:
                     type: string
@@ -36122,6 +36150,7 @@ paths:
                         - EXPIRED
                         - FAILED_ON_EXECUTION
                         - FAILED_REJECT_BY_CONSENSUS
+                        - ACTIVE
                       default: PENDING
                     current_confirm:
                       type: string
@@ -36308,6 +36337,7 @@ paths:
                       - EXPIRED
                       - FAILED_ON_EXECUTION
                       - FAILED_REJECT_BY_CONSENSUS
+                      - ACTIVE
                     default: PENDING
                   current_confirm:
                     type: string
@@ -36438,6 +36468,8 @@ paths:
                   action_request_active_duration:
                     type: string
                   verify_request_active_duration:
+                    type: string
+                  action_signer_active_duration:
                     type: string
                 description: Params defines the parameters for the module.
             description: >-
@@ -60882,6 +60914,7 @@ definitions:
           - EXPIRED
           - FAILED_ON_EXECUTION
           - FAILED_REJECT_BY_CONSENSUS
+          - ACTIVE
         default: PENDING
       current_confirm:
         type: string
@@ -60946,8 +60979,20 @@ definitions:
       expired_at:
         type: string
         format: date-time
-      creator:
+      status:
         type: string
+        enum:
+          - PENDING
+          - SUCCESS_WITH_CONSENSUS
+          - FAILED_WITHOUT_CONCENSUS
+          - EXPIRED
+          - FAILED_ON_EXECUTION
+          - FAILED_REJECT_BY_CONSENSUS
+          - ACTIVE
+        default: PENDING
+      expired_height:
+        type: string
+        format: int64
   thesixnetwork.sixnft.nftoracle.CollectionOwnerRequest:
     type: object
     properties:
@@ -60970,6 +61015,7 @@ definitions:
           - EXPIRED
           - FAILED_ON_EXECUTION
           - FAILED_REJECT_BY_CONSENSUS
+          - ACTIVE
         default: PENDING
       current_confirm:
         type: string
@@ -61063,6 +61109,7 @@ definitions:
           - EXPIRED
           - FAILED_ON_EXECUTION
           - FAILED_REJECT_BY_CONSENSUS
+          - ACTIVE
         default: PENDING
       current_confirm:
         type: string
@@ -61254,6 +61301,8 @@ definitions:
         type: string
       verify_request_active_duration:
         type: string
+      action_signer_active_duration:
+        type: string
     description: Params defines the parameters for the module.
   thesixnetwork.sixnft.nftoracle.QueryAllActionRequestResponse:
     type: object
@@ -61288,6 +61337,7 @@ definitions:
                 - EXPIRED
                 - FAILED_ON_EXECUTION
                 - FAILED_REJECT_BY_CONSENSUS
+                - ACTIVE
               default: PENDING
             current_confirm:
               type: string
@@ -61382,8 +61432,20 @@ definitions:
             expired_at:
               type: string
               format: date-time
-            creator:
+            status:
               type: string
+              enum:
+                - PENDING
+                - SUCCESS_WITH_CONSENSUS
+                - FAILED_WITHOUT_CONCENSUS
+                - EXPIRED
+                - FAILED_ON_EXECUTION
+                - FAILED_REJECT_BY_CONSENSUS
+                - ACTIVE
+              default: PENDING
+            expired_height:
+              type: string
+              format: int64
       pagination:
         type: object
         properties:
@@ -61436,6 +61498,7 @@ definitions:
                 - EXPIRED
                 - FAILED_ON_EXECUTION
                 - FAILED_REJECT_BY_CONSENSUS
+                - ACTIVE
               default: PENDING
             current_confirm:
               type: string
@@ -61529,6 +61592,7 @@ definitions:
                 - EXPIRED
                 - FAILED_ON_EXECUTION
                 - FAILED_REJECT_BY_CONSENSUS
+                - ACTIVE
               default: PENDING
             current_confirm:
               type: string
@@ -61635,6 +61699,7 @@ definitions:
               - EXPIRED
               - FAILED_ON_EXECUTION
               - FAILED_REJECT_BY_CONSENSUS
+              - ACTIVE
             default: PENDING
           current_confirm:
             type: string
@@ -61702,8 +61767,20 @@ definitions:
           expired_at:
             type: string
             format: date-time
-          creator:
+          status:
             type: string
+            enum:
+              - PENDING
+              - SUCCESS_WITH_CONSENSUS
+              - FAILED_WITHOUT_CONCENSUS
+              - EXPIRED
+              - FAILED_ON_EXECUTION
+              - FAILED_REJECT_BY_CONSENSUS
+              - ACTIVE
+            default: PENDING
+          expired_height:
+            type: string
+            format: int64
   thesixnetwork.sixnft.nftoracle.QueryGetCollectionOwnerRequestResponse:
     type: object
     properties:
@@ -61729,6 +61806,7 @@ definitions:
               - EXPIRED
               - FAILED_ON_EXECUTION
               - FAILED_REJECT_BY_CONSENSUS
+              - ACTIVE
             default: PENDING
           current_confirm:
             type: string
@@ -61795,6 +61873,7 @@ definitions:
               - EXPIRED
               - FAILED_ON_EXECUTION
               - FAILED_REJECT_BY_CONSENSUS
+              - ACTIVE
             default: PENDING
           current_confirm:
             type: string
@@ -61866,6 +61945,8 @@ definitions:
             type: string
           verify_request_active_duration:
             type: string
+          action_signer_active_duration:
+            type: string
         description: Params defines the parameters for the module.
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftoracle.RequestStatus:
@@ -61877,6 +61958,7 @@ definitions:
       - EXPIRED
       - FAILED_ON_EXECUTION
       - FAILED_REJECT_BY_CONSENSUS
+      - ACTIVE
     default: PENDING
   thesixnetwork.sixnft.nftoracle.Trait:
     type: object
