@@ -12,7 +12,6 @@ enum RequestStatus {
   EXPIRED = 3;
   FAILED_ON_EXECUTION = 4;
   FAILED_REJECT_BY_CONSENSUS = 5;
-  ACTIVE = 6;
 }
 
 

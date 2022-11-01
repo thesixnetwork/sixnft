@@ -13,7 +13,7 @@ const (
 	DefaultMintRequestActiveDuration   = 120 * time.Second
 	DefaultActionRequestActiveDuration = 120 * time.Second
 	DefaultVerifyRequestActiveDuration = 120 * time.Second
-	DefaultActionSignerActiveDuration = ( 30 * 1440 ) * time.Second // 30 days
+	DefaultActionSignerActiveDuration  = 30 * (24 * time.Hour) // 30 days
 )
  
 var (

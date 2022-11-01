@@ -56,7 +56,8 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	}
 
 	createdAt := ctx.BlockTime()
-	endTime := createdAt.Add(k.VerifyRequestActiveDuration(ctx))
+	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
+
 
 	// validate time given format as RFC3339
 	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
@@ -69,7 +70,6 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 		OwnerAddress: *signer,
 		CreatedAt:    createdAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
-		Status:		types.RequestStatus_ACTIVE,
 	}
 
 	k.SetActionSigner(

@@ -218,21 +218,5 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		return false
 	})
 
-	am.keeper.IterateActiveSignersQueue(ctx, ctx.BlockHeader().Time, func(actionSinger types.ActionSigner) (stop bool) {
-		if actionSinger.Status == types.RequestStatus_ACTIVE {
-			actionSinger.Status = types.RequestStatus_EXPIRED
-			actionSinger.ExpiredHeight = ctx.BlockHeight()
-			am.keeper.SetActionSigner(ctx, actionSinger)
-			am.keeper.RemoveFromActiveSignerQueue(ctx, actionSinger.ActorAddress, ctx.BlockHeader().Time)
-			ctx.EventManager().EmitEvent(
-				sdk.NewEvent(
-					types.EventTypeVerificationRequest,
-					sdk.NewAttribute(types.AttributeKeyVerificationRequestStatus, types.RequestStatus_EXPIRED.String()),
-				),
-			)
-		}
-		return false
-	})
-
 	return []abci.ValidatorUpdate{}
 }
