@@ -48,4 +48,6 @@ var (
 	ErrRequiredConfirmTooLess                = sdkerrors.Register(ModuleName, 35, "Required confirm too less")
 
 	ErrParsingSetSignerSignature = sdkerrors.Register(ModuleName, 36, "Error parsing collection owner signature")
+
+	ErrInvalidSigningOnBehalfOf = sdkerrors.Register(ModuleName, 37, "Invalid signing on behalf of")
 )

@@ -33,10 +33,18 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
 	}
 
-	// check if signer is actionSigner not a owner of nft and not expired
-	_actionSigner, isActionSigner := k.GetActionSigner(ctx ,*signer)
-    if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) {
-		*signer = _actionSigner.OwnerAddress
+	switch {
+	case actionParam.OnBehalfOf == "" :
+		 break
+	case actionParam.OnBehalfOf != "":
+		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer)
+		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionParam.OnBehalfOf == _actionSigner.OwnerAddress {
+			*signer = _actionSigner.OwnerAddress
+		}else if actionParam.OnBehalfOf == *signer {
+			// do nothing
+		}else{
+			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")
+		}
 	}
 
 	// Check if nft_schema_code exists
@@ -81,7 +89,6 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	if len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(time.Now().UTC()) {
 		actionParam.ExpiredAt = endTime
 	}
-
 
 	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionRequest{
 		NftSchemaCode:   actionParam.NftSchemaCode,
