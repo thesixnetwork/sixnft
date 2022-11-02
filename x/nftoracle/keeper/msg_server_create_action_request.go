@@ -30,19 +30,19 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 
 	actionParam, signer, err := k.ValidateActionSignature(data)
 	if err != nil {
-		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
+		return nil, sdkerrors.Wrap(types.ErrValidateSignature, err.Error())
 	}
 
 	switch {
-	case actionParam.OnBehalfOf == "" :
-		 break
+	case actionParam.OnBehalfOf == "":
+		break
 	case actionParam.OnBehalfOf != "":
 		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer)
 		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionParam.OnBehalfOf == _actionSigner.OwnerAddress {
 			*signer = _actionSigner.OwnerAddress
-		}else if actionParam.OnBehalfOf == *signer {
+		} else if actionParam.OnBehalfOf == *signer {
 			// do nothing
-		}else{
+		} else {
 			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")
 		}
 	}
@@ -133,18 +133,18 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 	actionParam := &types.ActionParam{}
 	actionParamBz, err := base64.StdEncoding.DecodeString(actionSig.Message)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, "Error to DecodeString")
 	}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(actionParamBz, actionParam)
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, err.Error())
+		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, "Error to UnmarshalJSON")
 	}
 
 	//validate signature format
 	decode_signature, err := hexutil.Decode(actionSig.Signature)
 	if err != nil {
 		// log.Fatalf("Failed to decode signature: %v", msg.Signature)
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature")
+		return nil, nil, sdkerrors.Wrap(types.ErrHexDecode, "Failed to decode signature")
 	}
 	signature_with_revocery_id := decode_signature
 	// remove last byte coz is is recovery id
@@ -152,14 +152,14 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 	// get pulic key from signature
 	sigPublicKey, err := crypto.Ecrecover(hash_bytes, decode_signature) //recover publickey from signature and hash
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature or message")
+		return nil, nil, sdkerrors.Wrap(types.ErrEcrecover, "invalid signature or message")
 	}
 
 	// fmt.Println("sigPublicKey:", hexutil.Encode(sigPublicKey))
 	// get address from public key
 	pubEDCA, err := crypto.UnmarshalPubkey(sigPublicKey)
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "faild to unmarshal public key")
+		return nil, nil, sdkerrors.Wrap(types.ErrUnmarshalPubkey, "faild to unmarshal public key")
 	}
 	eth_address_from_pubkey := crypto.PubkeyToAddress(*pubEDCA)
 

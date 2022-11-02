@@ -201,19 +201,19 @@ func (k msgServer) ValidatesetSignernature(setSigner types.SetSignerSignature) (
 	decode_signature, err := hexutil.Decode(setSigner.Signature)
 	if err != nil {
 		// log.Fatalf("Failed to decode signature: %v", msg.Signature)
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature")
+		return nil, nil, sdkerrors.Wrap(types.ErrHexDecode, "invalid signature")
 	}
 	signature_with_revocery_id := decode_signature
 
 	// get pulic key from signature
 	sigPublicKey, err := crypto.Ecrecover(hash_bytes, decode_signature) //recover publickey from signature and hash
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid signature or message")
+		return nil, nil, sdkerrors.Wrap(types.ErrEcrecover, "invalid signature or message")
 	}
 	// get address from public key
 	pubEDCA, err := crypto.UnmarshalPubkey(sigPublicKey)
 	if err != nil {
-		return nil, nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "faild to unmarshal public key")
+		return nil, nil, sdkerrors.Wrap(types.ErrUnmarshalPubkey, "faild to unmarshal public key")
 	}
 	eth_address_from_pubkey := crypto.PubkeyToAddress(*pubEDCA)
 
