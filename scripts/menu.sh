@@ -135,14 +135,13 @@ case $choice in
         read -p "Enter Schema Code: " schema_code 
         read -p "Enter Token ID: " token_id
         read -p "Enter Action: " action
-        read -p "Enter OnBehalfOf: " on_behalf_of
         read -p "Require confirmations: " require_confirmations
         read -p "Reference ID: " reference_id
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
 
-        BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g" | sed "s/ONBEHALFOF/${on_behalf_of}/g"`
+        BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g" | sed "s/ONBEHALFOF/""/g"`
         # echo "BASE64JSON: ${BASE64JSON}"
         BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
         # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
