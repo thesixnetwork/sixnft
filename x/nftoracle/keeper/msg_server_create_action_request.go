@@ -87,7 +87,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
 		ValidUntil:      actionParam.ExpiredAt,
-		Confirmers:      make(map[string]bool),
+		Confirmers:      make([]string, 0),
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 

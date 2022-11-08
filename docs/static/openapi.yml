@@ -35364,9 +35364,9 @@ paths:
                       type: string
                       format: uint64
                     confirmers:
-                      type: object
-                      additionalProperties:
-                        type: boolean
+                      type: array
+                      items:
+                        type: string
                     created_at:
                       type: string
                       format: date-time
@@ -35547,9 +35547,9 @@ paths:
                     type: string
                     format: uint64
                   confirmers:
-                    type: object
-                    additionalProperties:
-                      type: boolean
+                    type: array
+                    items:
+                      type: string
                   created_at:
                     type: string
                     format: date-time
@@ -35658,9 +35658,9 @@ paths:
                       type: string
                       format: uint64
                     confirmers:
-                      type: object
-                      additionalProperties:
-                        type: boolean
+                      type: array
+                      items:
+                        type: string
                     created_at:
                       type: string
                       format: date-time
@@ -35825,9 +35825,9 @@ paths:
                     type: string
                     format: uint64
                   confirmers:
-                    type: object
-                    additionalProperties:
-                      type: boolean
+                    type: array
+                    items:
+                      type: string
                   created_at:
                     type: string
                     format: date-time
@@ -35926,9 +35926,9 @@ paths:
                       type: string
                       format: uint64
                     confirmers:
-                      type: object
-                      additionalProperties:
-                        type: boolean
+                      type: array
+                      items:
+                        type: string
                     created_at:
                       type: string
                       format: date-time
@@ -36102,9 +36102,9 @@ paths:
                     type: string
                     format: uint64
                   confirmers:
-                    type: object
-                    additionalProperties:
-                      type: boolean
+                    type: array
+                    items:
+                      type: string
                   created_at:
                     type: string
                     format: date-time
@@ -36220,6 +36220,7 @@ paths:
             type: object
             properties:
               params:
+                description: params holds all the parameters of this module.
                 type: object
                 properties:
                   mint_request_active_duration:
@@ -36228,7 +36229,6 @@ paths:
                     type: string
                   verify_request_active_duration:
                     type: string
-                description: Params defines the parameters for the module.
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -60676,9 +60676,9 @@ definitions:
         type: string
         format: uint64
       confirmers:
-        type: object
-        additionalProperties:
-          type: boolean
+        type: array
+        items:
+          type: string
       created_at:
         type: string
         format: date-time
@@ -60749,9 +60749,9 @@ definitions:
         type: string
         format: uint64
       confirmers:
-        type: object
-        additionalProperties:
-          type: boolean
+        type: array
+        items:
+          type: string
       created_at:
         type: string
         format: date-time
@@ -60842,9 +60842,9 @@ definitions:
         type: string
         format: uint64
       confirmers:
-        type: object
-        additionalProperties:
-          type: boolean
+        type: array
+        items:
+          type: string
       created_at:
         type: string
         format: date-time
@@ -61042,9 +61042,9 @@ definitions:
               type: string
               format: uint64
             confirmers:
-              type: object
-              additionalProperties:
-                type: boolean
+              type: array
+              items:
+                type: string
             created_at:
               type: string
               format: date-time
@@ -61145,9 +61145,9 @@ definitions:
               type: string
               format: uint64
             confirmers:
-              type: object
-              additionalProperties:
-                type: boolean
+              type: array
+              items:
+                type: string
             created_at:
               type: string
               format: date-time
@@ -61238,9 +61238,9 @@ definitions:
               type: string
               format: uint64
             confirmers:
-              type: object
-              additionalProperties:
-                type: boolean
+              type: array
+              items:
+                type: string
             created_at:
               type: string
               format: date-time
@@ -61344,9 +61344,9 @@ definitions:
             type: string
             format: uint64
           confirmers:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: string
           created_at:
             type: string
             format: date-time
@@ -61420,9 +61420,9 @@ definitions:
             type: string
             format: uint64
           confirmers:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: string
           created_at:
             type: string
             format: date-time
@@ -61486,9 +61486,9 @@ definitions:
             type: string
             format: uint64
           confirmers:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: string
           created_at:
             type: string
             format: date-time
@@ -61544,6 +61544,7 @@ definitions:
     type: object
     properties:
       params:
+        description: params holds all the parameters of this module.
         type: object
         properties:
           mint_request_active_duration:
@@ -61552,7 +61553,6 @@ definitions:
             type: string
           verify_request_active_duration:
             type: string
-        description: Params defines the parameters for the module.
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftoracle.RequestStatus:
     type: string

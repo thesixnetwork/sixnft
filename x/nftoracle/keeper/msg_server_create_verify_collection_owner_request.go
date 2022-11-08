@@ -76,7 +76,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
 		ValidUntil:      _originContractParam.RequestExpire,
-		Confirmers:      make(map[string]bool),
+		Confirmers:      make([]string,0),
 		ContractInfo:    make([]*types.OriginContractInfo, 0),
 	})
 

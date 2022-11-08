@@ -65,9 +65,15 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 			Confirmers:             []string{msg.Creator},
 		})
 	} else {
-		// check if creator has alraedy confirmed
-		if _, ok := verifyRequest.Confirmers[msg.Creator]; ok {
-			return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+msg.Creator)
+		// // check if creator has alraedy confirmed
+		// if _, ok := verifyRequest.Confirmers[msg.Creator]; ok {
+		// 	return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.VerifyRequestID, 10)+", "+msg.Creator)
+		// }
+		for _, confirmer := range verifyRequest.Confirmers {
+			if confirmer == msg.Creator {
+				return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.VerifyRequestID, 10))
+			}
+
 		}
 
 		// Compare data hash with previous data
@@ -90,11 +96,12 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	}
 
 	if verifyRequest.Confirmers == nil {
-		verifyRequest.Confirmers = make(map[string]bool)
+		verifyRequest.Confirmers = make([]string, 0)
 	}
 
 	//mark craetor as confirmed
-	verifyRequest.Confirmers[msg.Creator] = true
+	// verifyRequest.Confirmers[msg.Creator] = true
+	verifyRequest.Confirmers = append(verifyRequest.Confirmers, msg.Creator)
 
 	// increase actionRequest.CurrentConfirm
 	verifyRequest.CurrentConfirm++
