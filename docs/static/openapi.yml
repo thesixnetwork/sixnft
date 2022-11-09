@@ -30585,15 +30585,20 @@ paths:
                   permissions:
                     type: object
                     properties:
-                      map_name:
-                        type: object
-                        additionalProperties:
+                      permissions:
+                        type: array
+                        items:
                           type: object
                           properties:
+                            name:
+                              type: string
                             addresses:
-                              type: array
-                              items:
-                                type: string
+                              type: object
+                              properties:
+                                addresses:
+                                  type: array
+                                  items:
+                                    type: string
         default:
           description: An unexpected error response.
           schema:
@@ -57843,15 +57848,20 @@ definitions:
       permissions:
         type: object
         properties:
-          map_name:
-            type: object
-            additionalProperties:
+          permissions:
+            type: array
+            items:
               type: object
               properties:
+                name:
+                  type: string
                 addresses:
-                  type: array
-                  items:
-                    type: string
+                  type: object
+                  properties:
+                    addresses:
+                      type: array
+                      items:
+                        type: string
   thesixnetwork.sixnft.nftadmin.MsgBurnResponse:
     type: object
     properties:
@@ -57879,18 +57889,35 @@ definitions:
   thesixnetwork.sixnft.nftadmin.Params:
     type: object
     description: Params defines the parameters for the module.
+  thesixnetwork.sixnft.nftadmin.Permission:
+    type: object
+    properties:
+      name:
+        type: string
+      addresses:
+        type: object
+        properties:
+          addresses:
+            type: array
+            items:
+              type: string
   thesixnetwork.sixnft.nftadmin.Permissions:
     type: object
     properties:
-      map_name:
-        type: object
-        additionalProperties:
+      permissions:
+        type: array
+        items:
           type: object
           properties:
+            name:
+              type: string
             addresses:
-              type: array
-              items:
-                type: string
+              type: object
+              properties:
+                addresses:
+                  type: array
+                  items:
+                    type: string
   thesixnetwork.sixnft.nftadmin.QueryGetAuthorizationResponse:
     type: object
     properties:
@@ -57902,15 +57929,20 @@ definitions:
           permissions:
             type: object
             properties:
-              map_name:
-                type: object
-                additionalProperties:
+              permissions:
+                type: array
+                items:
                   type: object
                   properties:
+                    name:
+                      type: string
                     addresses:
-                      type: array
-                      items:
-                        type: string
+                      type: object
+                      properties:
+                        addresses:
+                          type: array
+                          items:
+                            type: string
   thesixnetwork.sixnft.nftadmin.QueryParamsResponse:
     type: object
     properties:

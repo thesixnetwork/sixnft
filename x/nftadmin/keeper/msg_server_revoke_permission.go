@@ -27,7 +27,7 @@ func (k msgServer) RevokePermission(goCtx context.Context, msg *types.MsgRevokeP
 		return nil, types.ErrNoPermissions
 	}
 
-	list := auth.Permissions.MapName[msg.Name]
+	list := auth.Permissions.GetPermissionAddressByKey(msg.Name)
 	if list == nil {
 		return nil, sdkerrors.Wrapf(types.ErrNoPermissionsForName, "no permissions for name %s", msg.Name)
 	}
