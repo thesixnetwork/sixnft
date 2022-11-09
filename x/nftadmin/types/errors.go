@@ -14,4 +14,6 @@ var (
 	ErrNoPermissionsForName   = sdkerrors.Register(ModuleName, 4, "no permissions for name")
 	ErrGranteeExists          = sdkerrors.Register(ModuleName, 5, "grantee exists")
 	ErrGranteeNotFoundForName = sdkerrors.Register(ModuleName, 6, "grantee not found for name")
+	ErrInvalidGrantee         = sdkerrors.Register(ModuleName, 7, "invalid grantee format")
+	ErrInvalidRevokee         = sdkerrors.Register(ModuleName, 8, "invalid revokee format")
 )

@@ -22,6 +22,12 @@ func (k msgServer) GrantPermission(goCtx context.Context, msg *types.MsgGrantPer
 		return nil, types.ErrUnauthorized
 	}
 
+	// validate grantee format as 6x0000000000000000 or not
+	_, err := sdk.AccAddressFromBech32(msg.Grantee)
+	if err != nil {
+		return nil, types.ErrInvalidGrantee
+	}
+
 	if auth.Permissions == nil {
 		auth.Permissions = &types.Permissions{
 			Permissions: []*types.Permission{
