@@ -27,6 +27,11 @@ func (k msgServer) RevokePermission(goCtx context.Context, msg *types.MsgRevokeP
 		return nil, types.ErrNoPermissions
 	}
 
+	_, err := sdk.AccAddressFromBech32(msg.Revokee)
+	if err != nil {
+		return nil, types.ErrInvalidGrantee
+	}
+
 	list := auth.Permissions.GetPermissionAddressByKey(msg.Name)
 	if list == nil {
 		return nil, sdkerrors.Wrapf(types.ErrNoPermissionsForName, "no permissions for name %s", msg.Name)
