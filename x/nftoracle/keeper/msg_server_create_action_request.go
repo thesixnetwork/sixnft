@@ -63,7 +63,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		return nil, sdkerrors.Wrap(types.ErrRequiredConfirmTooLess, strconv.Itoa(int(oracleConfig.MinimumConfirmation)))
 	}
 
-	createdAt := ctx.BlockTime()
+	createdAt := ctx.BlockTime() //now time of block
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
 	// validate time given format as RFC3339
