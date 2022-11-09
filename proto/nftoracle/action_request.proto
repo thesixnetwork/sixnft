@@ -26,7 +26,7 @@ message ActionRequest {
   uint64 required_confirm = 7; 
   RequestStatus status = 8;
   uint64 current_confirm = 9;
-  map<string, bool> confirmers = 10;
+  repeated string confirmers = 10;
   google.protobuf.Timestamp created_at = 11
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   google.protobuf.Timestamp valid_until = 12

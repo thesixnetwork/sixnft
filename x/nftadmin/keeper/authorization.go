@@ -44,12 +44,13 @@ func (k Keeper) HasPermission(ctx sdk.Context, name string, addr sdk.AccAddress)
 		return false
 	}
 
-	if auth.Permissions.MapName[name] == nil {
+	addressList := auth.Permissions.GetPermissionAddressByKey(name)
+	if addressList == nil {
 		return false
 	}
 
 	mapAll := make(map[string]string)
-	for _, addr := range auth.Permissions.MapName[name].Addresses {
+	for _, addr := range addressList.Addresses {
 		mapAll[addr] = addr
 	}
 

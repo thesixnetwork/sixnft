@@ -77,9 +77,16 @@ func (k msgServer) SubmitActionResponse(goCtx context.Context, msg *types.MsgSub
 		})
 	} else {
 		// Check if creator has already confirmed this mint request
-		if _, ok := actionRequest.Confirmers[msg.Creator]; ok {
-			return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.ActionRequestID, 10)+", "+msg.Creator)
+		// fetch confirmed data
+		for _, confirmer := range actionRequest.Confirmers {
+			if confirmer == msg.Creator {
+				return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.ActionRequestID, 10))
+			}
+
 		}
+		// if _, ok := actionRequest.Confirmers[msg.Creator]; ok {
+		// 	return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.ActionRequestID, 10)+", "+msg.Creator)
+		// }
 		// Compare data hash with previous data hash
 		dataHash := sha256.Sum256(nftMetadata)
 		dataHashMatch := false
@@ -99,10 +106,11 @@ func (k msgServer) SubmitActionResponse(goCtx context.Context, msg *types.MsgSub
 		}
 	}
 	if actionRequest.Confirmers == nil {
-		actionRequest.Confirmers = make(map[string]bool)
+		actionRequest.Confirmers = make([]string, 0)
 	}
 	// Mark creator as confirmed
-	actionRequest.Confirmers[msg.Creator] = true
+	// actionRequest.Confirmers[msg.Creator] = true
+	actionRequest.Confirmers = append(actionRequest.Confirmers, msg.Creator)
 
 	// increase actionRequest.CurrentConfirm
 	actionRequest.CurrentConfirm++

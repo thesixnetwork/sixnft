@@ -21,7 +21,7 @@ message CollectionOwnerRequest {
   uint64 required_confirm = 4; 
   RequestStatus status = 5;
   uint64 current_confirm = 6;
-  map<string, bool> confirmers = 7;
+  repeated string confirmers = 7;
   google.protobuf.Timestamp created_at = 8
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   google.protobuf.Timestamp valid_until = 9

@@ -335,12 +335,10 @@ func TestCreateSchema(t *testing.T) {
 					]
 				}
 			],
-			"on_off_switch": {
-				"active": true
-			},
-			"status": {
-				"first_mint_complete": false
-			},
+			"status": [{
+				"status_name": "first_mint_complete",
+				"status_value": false
+			}],
 			"nft_attributes_value": [
 				{
 					"name": "expire_date",

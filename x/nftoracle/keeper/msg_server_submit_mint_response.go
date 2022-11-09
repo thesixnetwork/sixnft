@@ -62,6 +62,7 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 		return nil, sdkerrors.Wrap(types.ErrParsingOriginData, "missing required fields")
 	}
 
+	// ! :: Check Deterministic Hash from concurrence response
 	if mintRequest.CurrentConfirm == 0 {
 		// Create sha512 hash of nftMetadata
 		dataHash := sha256.Sum256(nftMetadata)
@@ -72,9 +73,16 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 		})
 	} else {
 		// Check if creator has already confirmed this mint request
-		if _, ok := mintRequest.Confirmers[msg.Creator]; ok {
-			return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.MintRequestID, 10)+", "+msg.Creator)
+		// fetch confirmed data
+		for _, confirmer := range mintRequest.Confirmers {
+			if confirmer == msg.Creator {
+				return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.MintRequestID, 10))
+			}
+
 		}
+		// if _, ok := mintRequest.Confirmers[msg.Creator]; ok {
+		// 	return nil, sdkerrors.Wrap(types.ErrOracleConfirmedAlready, strconv.FormatUint(msg.MintRequestID, 10)+", "+msg.Creator)
+		// }
 		// Compare data hash with previous data hash
 		dataHash := sha256.Sum256(nftMetadata)
 		dataHashMatch := false
@@ -93,11 +101,13 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 			})
 		}
 	}
+
 	if mintRequest.Confirmers == nil {
-		mintRequest.Confirmers = make(map[string]bool)
+		mintRequest.Confirmers = make([]string, 0)
 	}
 	// Mark creator as confirmed
-	mintRequest.Confirmers[msg.Creator] = true
+	// mintRequest.Confirmers[msg.Creator] = true
+	mintRequest.Confirmers = append(mintRequest.Confirmers, msg.Creator)
 
 	// increase mintRequest.CurrentConfirm
 	mintRequest.CurrentConfirm++

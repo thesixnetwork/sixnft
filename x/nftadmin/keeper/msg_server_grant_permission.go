@@ -22,29 +22,55 @@ func (k msgServer) GrantPermission(goCtx context.Context, msg *types.MsgGrantPer
 		return nil, types.ErrUnauthorized
 	}
 
+	// validate grantee format as 6x0000000000000000 or not
+	_, err := sdk.AccAddressFromBech32(msg.Grantee)
+	if err != nil {
+		return nil, types.ErrInvalidGrantee
+	}
+
 	if auth.Permissions == nil {
-		mapAddress := make(map[string]*types.AddressList)
-		mapAddress[msg.Name] = &types.AddressList{
-			Addresses: []string{msg.Grantee},
-		}
 		auth.Permissions = &types.Permissions{
-			MapName: mapAddress,
+			Permissions: []*types.Permission{
+				{
+					Name: msg.Name,
+					Addresses: &types.AddressList{
+						Addresses: []string{msg.Grantee},
+					},
+				},
+			},
 		}
 	} else {
-		if auth.Permissions.MapName[msg.Name] == nil {
-			auth.Permissions.MapName[msg.Name] = &types.AddressList{
-				Addresses: []string{msg.Grantee},
+
+		// check if the permission already exists
+		// if it does, append the address to the list
+		// if it doesn't, create a new permission
+		permissionExists := false
+		for _, v := range auth.Permissions.Permissions {
+			if v.Name == msg.Name {
+				// check if msg.Grantee already exists in the list
+				mapAll := make(map[string]string)
+				for _, addr := range v.Addresses.Addresses {
+					mapAll[addr] = addr
+				}
+				 _, found := mapAll[msg.Grantee]; 
+				if !found {
+					v.Addresses.Addresses = append(v.Addresses.Addresses, msg.Grantee)
+				}else{
+					return nil, types.ErrGranteeAlreadyExists
+				}
+				
+				permissionExists = true
+				break
 			}
-		} else {
-			mapAll := make(map[string]string)
-			for _, addr := range auth.Permissions.MapName[msg.Name].Addresses {
-				mapAll[addr] = addr
-			}
-			if _, found := mapAll[msg.Grantee]; !found {
-				auth.Permissions.MapName[msg.Name].Addresses = append(auth.Permissions.MapName[msg.Name].Addresses, msg.Grantee)
-			} else {
-				return nil, types.ErrGranteeExists
-			}
+		}
+
+		if !permissionExists {
+			auth.Permissions.Permissions = append(auth.Permissions.Permissions, &types.Permission{
+				Name: msg.Name,
+				Addresses: &types.AddressList{
+					Addresses: []string{msg.Grantee},
+				},
+			})
 		}
 	}
 

@@ -66,15 +66,67 @@ func (m *AddressList) GetAddresses() []string {
 	return nil
 }
 
+type Permission struct {
+	Name      string       `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Addresses *AddressList `protobuf:"bytes,2,opt,name=addresses,proto3" json:"addresses,omitempty"`
+}
+
+func (m *Permission) Reset()         { *m = Permission{} }
+func (m *Permission) String() string { return proto.CompactTextString(m) }
+func (*Permission) ProtoMessage()    {}
+func (*Permission) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9fe2704a94f2d0ea, []int{1}
+}
+func (m *Permission) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Permission) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Permission.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Permission) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Permission.Merge(m, src)
+}
+func (m *Permission) XXX_Size() int {
+	return m.Size()
+}
+func (m *Permission) XXX_DiscardUnknown() {
+	xxx_messageInfo_Permission.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Permission proto.InternalMessageInfo
+
+func (m *Permission) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Permission) GetAddresses() *AddressList {
+	if m != nil {
+		return m.Addresses
+	}
+	return nil
+}
+
 type Permissions struct {
-	MapName map[string]*AddressList `protobuf:"bytes,1,rep,name=map_name,json=mapName,proto3" json:"map_name,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Permissions []*Permission `protobuf:"bytes,1,rep,name=permissions,proto3" json:"permissions,omitempty"`
 }
 
 func (m *Permissions) Reset()         { *m = Permissions{} }
 func (m *Permissions) String() string { return proto.CompactTextString(m) }
 func (*Permissions) ProtoMessage()    {}
 func (*Permissions) Descriptor() ([]byte, []int) {
-	return fileDescriptor_9fe2704a94f2d0ea, []int{1}
+	return fileDescriptor_9fe2704a94f2d0ea, []int{2}
 }
 func (m *Permissions) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -103,40 +155,38 @@ func (m *Permissions) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Permissions proto.InternalMessageInfo
 
-func (m *Permissions) GetMapName() map[string]*AddressList {
+func (m *Permissions) GetPermissions() []*Permission {
 	if m != nil {
-		return m.MapName
+		return m.Permissions
 	}
 	return nil
 }
 
 func init() {
 	proto.RegisterType((*AddressList)(nil), "thesixnetwork.sixnft.nftadmin.AddressList")
+	proto.RegisterType((*Permission)(nil), "thesixnetwork.sixnft.nftadmin.Permission")
 	proto.RegisterType((*Permissions)(nil), "thesixnetwork.sixnft.nftadmin.Permissions")
-	proto.RegisterMapType((map[string]*AddressList)(nil), "thesixnetwork.sixnft.nftadmin.Permissions.MapNameEntry")
 }
 
 func init() { proto.RegisterFile("nftadmin/permissions.proto", fileDescriptor_9fe2704a94f2d0ea) }
 
 var fileDescriptor_9fe2704a94f2d0ea = []byte{
-	// 269 bytes of a gzipped FileDescriptorProto
+	// 238 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xca, 0x4b, 0x2b, 0x49,
 	0x4c, 0xc9, 0xcd, 0xcc, 0xd3, 0x2f, 0x48, 0x2d, 0xca, 0xcd, 0x2c, 0x2e, 0xce, 0xcc, 0xcf, 0x2b,
 	0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x92, 0x2d, 0xc9, 0x48, 0x2d, 0xce, 0xac, 0xc8, 0x4b,
 	0x2d, 0x29, 0xcf, 0x2f, 0xca, 0xd6, 0x03, 0x31, 0xd3, 0x4a, 0xf4, 0x60, 0x1a, 0x94, 0xb4, 0xb9,
 	0xb8, 0x1d, 0x53, 0x52, 0x8a, 0x52, 0x8b, 0x8b, 0x7d, 0x32, 0x8b, 0x4b, 0x84, 0x64, 0xb8, 0x38,
-	0x13, 0x21, 0xdc, 0xd4, 0x62, 0x09, 0x46, 0x05, 0x66, 0x0d, 0xce, 0x20, 0x84, 0x80, 0xd2, 0x49,
-	0x46, 0x2e, 0xee, 0x00, 0x84, 0x0d, 0x42, 0x41, 0x5c, 0x1c, 0xb9, 0x89, 0x05, 0xf1, 0x79, 0x89,
-	0xb9, 0xa9, 0x60, 0xc5, 0xdc, 0x46, 0xe6, 0x7a, 0x78, 0xad, 0xd3, 0x43, 0xd2, 0xad, 0xe7, 0x9b,
-	0x58, 0xe0, 0x97, 0x98, 0x9b, 0xea, 0x9a, 0x57, 0x52, 0x54, 0x19, 0xc4, 0x9e, 0x0b, 0xe1, 0x49,
-	0xa5, 0x71, 0xf1, 0x20, 0x4b, 0x08, 0x09, 0x70, 0x31, 0x67, 0xa7, 0x56, 0x4a, 0x30, 0x2a, 0x30,
-	0x6a, 0x70, 0x06, 0x81, 0x98, 0x42, 0x0e, 0x5c, 0xac, 0x65, 0x89, 0x39, 0xa5, 0xa9, 0x12, 0x4c,
-	0x0a, 0x8c, 0x1a, 0xdc, 0x46, 0x5a, 0x04, 0xac, 0x44, 0xf2, 0x5e, 0x10, 0x44, 0xa3, 0x15, 0x93,
-	0x05, 0xa3, 0x93, 0xd7, 0x89, 0x47, 0x72, 0x8c, 0x17, 0x1e, 0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7,
-	0x38, 0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7, 0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x44, 0x19, 0xa4,
-	0x67, 0x96, 0x64, 0x94, 0x26, 0xe9, 0x25, 0xe7, 0xe7, 0xea, 0xa3, 0x18, 0xad, 0x0f, 0x31, 0x5a,
-	0xbf, 0x42, 0x1f, 0x1e, 0xde, 0x25, 0x95, 0x05, 0xa9, 0xc5, 0x49, 0x6c, 0xe0, 0xa0, 0x36, 0x06,
-	0x04, 0x00, 0x00, 0xff, 0xff, 0x91, 0x24, 0x3f, 0xbb, 0x88, 0x01, 0x00, 0x00,
+	0x13, 0x21, 0xdc, 0xd4, 0x62, 0x09, 0x46, 0x05, 0x66, 0x0d, 0xce, 0x20, 0x84, 0x80, 0x52, 0x16,
+	0x17, 0x57, 0x00, 0xdc, 0x02, 0x21, 0x21, 0x2e, 0x96, 0xbc, 0xc4, 0xdc, 0x54, 0x09, 0x46, 0x05,
+	0x46, 0x0d, 0xce, 0x20, 0x30, 0x5b, 0xc8, 0x03, 0x59, 0x3f, 0x93, 0x02, 0xa3, 0x06, 0xb7, 0x91,
+	0x96, 0x1e, 0x5e, 0x17, 0xe8, 0x21, 0x59, 0x8f, 0x6c, 0x57, 0x14, 0x17, 0x37, 0xc2, 0xae, 0x62,
+	0x21, 0x6f, 0x2e, 0x6e, 0x24, 0xbf, 0x81, 0x9d, 0xc6, 0x6d, 0xa4, 0x49, 0xc0, 0x68, 0x84, 0x01,
+	0x41, 0xc8, 0xba, 0x9d, 0xbc, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48, 0x8e, 0xf1, 0xc1, 0x23,
+	0x39, 0xc6, 0x09, 0x8f, 0xe5, 0x18, 0x2e, 0x3c, 0x96, 0x63, 0xb8, 0xf1, 0x58, 0x8e, 0x21, 0xca,
+	0x20, 0x3d, 0xb3, 0x24, 0xa3, 0x34, 0x49, 0x2f, 0x39, 0x3f, 0x57, 0x1f, 0xc5, 0x6c, 0x7d, 0x88,
+	0xd9, 0xfa, 0x15, 0xfa, 0xf0, 0xb0, 0x2e, 0xa9, 0x2c, 0x48, 0x2d, 0x4e, 0x62, 0x03, 0x07, 0xb3,
+	0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0x2e, 0x30, 0xad, 0xb3, 0x84, 0x01, 0x00, 0x00,
 }
 
 func (m *AddressList) Marshal() (dAtA []byte, err error) {
@@ -171,6 +221,48 @@ func (m *AddressList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *Permission) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Permission) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Permission) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Addresses != nil {
+		{
+			size, err := m.Addresses.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintPermissions(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintPermissions(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *Permissions) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -191,28 +283,16 @@ func (m *Permissions) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.MapName) > 0 {
-		for k := range m.MapName {
-			v := m.MapName[k]
-			baseI := i
-			if v != nil {
-				{
-					size, err := v.MarshalToSizedBuffer(dAtA[:i])
-					if err != nil {
-						return 0, err
-					}
-					i -= size
-					i = encodeVarintPermissions(dAtA, i, uint64(size))
+	if len(m.Permissions) > 0 {
+		for iNdEx := len(m.Permissions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Permissions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
 				}
-				i--
-				dAtA[i] = 0x12
+				i -= size
+				i = encodeVarintPermissions(dAtA, i, uint64(size))
 			}
-			i -= len(k)
-			copy(dAtA[i:], k)
-			i = encodeVarintPermissions(dAtA, i, uint64(len(k)))
-			i--
-			dAtA[i] = 0xa
-			i = encodeVarintPermissions(dAtA, i, uint64(baseI-i))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -246,23 +326,33 @@ func (m *AddressList) Size() (n int) {
 	return n
 }
 
+func (m *Permission) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovPermissions(uint64(l))
+	}
+	if m.Addresses != nil {
+		l = m.Addresses.Size()
+		n += 1 + l + sovPermissions(uint64(l))
+	}
+	return n
+}
+
 func (m *Permissions) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if len(m.MapName) > 0 {
-		for k, v := range m.MapName {
-			_ = k
-			_ = v
-			l = 0
-			if v != nil {
-				l = v.Size()
-				l += 1 + sovPermissions(uint64(l))
-			}
-			mapEntrySize := 1 + len(k) + sovPermissions(uint64(len(k))) + l
-			n += mapEntrySize + 1 + sovPermissions(uint64(mapEntrySize))
+	if len(m.Permissions) > 0 {
+		for _, e := range m.Permissions {
+			l = e.Size()
+			n += 1 + l + sovPermissions(uint64(l))
 		}
 	}
 	return n
@@ -356,6 +446,124 @@ func (m *AddressList) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *Permission) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPermissions
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Permission: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Permission: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPermissions
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthPermissions
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPermissions
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Addresses", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPermissions
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthPermissions
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPermissions
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Addresses == nil {
+				m.Addresses = &AddressList{}
+			}
+			if err := m.Addresses.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPermissions(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthPermissions
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Permissions) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -387,7 +595,7 @@ func (m *Permissions) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field MapName", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Permissions", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -414,105 +622,10 @@ func (m *Permissions) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.MapName == nil {
-				m.MapName = make(map[string]*AddressList)
+			m.Permissions = append(m.Permissions, &Permission{})
+			if err := m.Permissions[len(m.Permissions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
 			}
-			var mapkey string
-			var mapvalue *AddressList
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowPermissions
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					var stringLenmapkey uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowPermissions
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapkey |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapkey := int(stringLenmapkey)
-					if intStringLenmapkey < 0 {
-						return ErrInvalidLengthPermissions
-					}
-					postStringIndexmapkey := iNdEx + intStringLenmapkey
-					if postStringIndexmapkey < 0 {
-						return ErrInvalidLengthPermissions
-					}
-					if postStringIndexmapkey > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapkey = string(dAtA[iNdEx:postStringIndexmapkey])
-					iNdEx = postStringIndexmapkey
-				} else if fieldNum == 2 {
-					var mapmsglen int
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowPermissions
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapmsglen |= int(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					if mapmsglen < 0 {
-						return ErrInvalidLengthPermissions
-					}
-					postmsgIndex := iNdEx + mapmsglen
-					if postmsgIndex < 0 {
-						return ErrInvalidLengthPermissions
-					}
-					if postmsgIndex > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = &AddressList{}
-					if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
-						return err
-					}
-					iNdEx = postmsgIndex
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipPermissions(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return ErrInvalidLengthPermissions
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.MapName[mapkey] = mapvalue
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
