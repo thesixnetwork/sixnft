@@ -16,4 +16,5 @@ var (
 	ErrGranteeNotFoundForName = sdkerrors.Register(ModuleName, 6, "grantee not found for name")
 	ErrInvalidGrantee         = sdkerrors.Register(ModuleName, 7, "invalid grantee format")
 	ErrInvalidRevokee         = sdkerrors.Register(ModuleName, 8, "invalid revokee format")
+	ErrGranteeAlreadyExists   = sdkerrors.Register(ModuleName, 9, "grantee already exists")
 )
