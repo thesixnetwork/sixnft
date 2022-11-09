@@ -99,15 +99,16 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 		feeBalances, found := k.Keeper.GetNFTFeeBalance(ctx)
 		if !found {
+
 			feeBalances = types.NFTFeeBalance{
-				FeeBalances: map[int32]string{
-					int32(types.FeeSubject_CREATE_NFT_SCHEMA): "0" + amount.Denom,
+				FeeBalances: []string{
+					"0" + amount.Denom,
 				},
 			}
 		}
-		// check if exists in map
-		if _, ok := feeBalances.FeeBalances[int32(types.FeeSubject_CREATE_NFT_SCHEMA)]; !ok {
-			feeBalances.FeeBalances[int32(types.FeeSubject_CREATE_NFT_SCHEMA)] = "0" + amount.Denom
+
+		if len(feeBalances.FeeBalances) > 0 {
+			feeBalances.FeeBalances[types.FeeSubject_CREATE_NFT_SCHEMA] = "0" + amount.Denom
 		}
 		err = k.processFee(ctx, &feeConfig, &feeBalances, types.FeeSubject_CREATE_NFT_SCHEMA, creatorAddress)
 		if err != nil {

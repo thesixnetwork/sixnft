@@ -23,7 +23,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type NFTFeeBalance struct {
-	FeeBalances map[int32]string `protobuf:"bytes,1,rep,name=fee_balances,json=feeBalances,proto3" json:"fee_balances,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// map<int32, string> fee_balances = 1;
+	FeeBalances []string `protobuf:"bytes,1,rep,name=fee_balances,json=feeBalances,proto3" json:"fee_balances,omitempty"`
 }
 
 func (m *NFTFeeBalance) Reset()         { *m = NFTFeeBalance{} }
@@ -59,7 +60,7 @@ func (m *NFTFeeBalance) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_NFTFeeBalance proto.InternalMessageInfo
 
-func (m *NFTFeeBalance) GetFeeBalances() map[int32]string {
+func (m *NFTFeeBalance) GetFeeBalances() []string {
 	if m != nil {
 		return m.FeeBalances
 	}
@@ -68,28 +69,23 @@ func (m *NFTFeeBalance) GetFeeBalances() map[int32]string {
 
 func init() {
 	proto.RegisterType((*NFTFeeBalance)(nil), "thesixnetwork.sixnft.nftmngr.NFTFeeBalance")
-	proto.RegisterMapType((map[int32]string)(nil), "thesixnetwork.sixnft.nftmngr.NFTFeeBalance.FeeBalancesEntry")
 }
 
 func init() { proto.RegisterFile("nftmngr/nft_fee_balance.proto", fileDescriptor_bd0cce48fb5892cd) }
 
 var fileDescriptor_bd0cce48fb5892cd = []byte{
-	// 233 bytes of a gzipped FileDescriptorProto
+	// 171 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xcd, 0x4b, 0x2b, 0xc9,
 	0xcd, 0x4b, 0x2f, 0xd2, 0xcf, 0x4b, 0x2b, 0x89, 0x4f, 0x4b, 0x4d, 0x8d, 0x4f, 0x4a, 0xcc, 0x49,
 	0xcc, 0x4b, 0x4e, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x92, 0x29, 0xc9, 0x48, 0x2d, 0xce,
 	0xac, 0xc8, 0x4b, 0x2d, 0x29, 0xcf, 0x2f, 0xca, 0xd6, 0x03, 0x31, 0xd3, 0x4a, 0xf4, 0xa0, 0x7a,
-	0x94, 0x36, 0x30, 0x72, 0xf1, 0xfa, 0xb9, 0x85, 0xb8, 0xa5, 0xa6, 0x3a, 0x41, 0x74, 0x09, 0xc5,
-	0x73, 0xf1, 0x20, 0x19, 0x52, 0x2c, 0xc1, 0xa8, 0xc0, 0xac, 0xc1, 0x6d, 0x64, 0xa3, 0x87, 0xcf,
-	0x18, 0x3d, 0x14, 0x23, 0xf4, 0x10, 0xcc, 0x62, 0xd7, 0xbc, 0x92, 0xa2, 0xca, 0x20, 0xee, 0x34,
-	0x84, 0x88, 0x94, 0x1d, 0x97, 0x00, 0xba, 0x02, 0x21, 0x01, 0x2e, 0xe6, 0xec, 0xd4, 0x4a, 0x09,
-	0x46, 0x05, 0x46, 0x0d, 0xd6, 0x20, 0x10, 0x53, 0x48, 0x84, 0x8b, 0xb5, 0x2c, 0x31, 0xa7, 0x34,
-	0x55, 0x82, 0x49, 0x81, 0x51, 0x83, 0x33, 0x08, 0xc2, 0xb1, 0x62, 0xb2, 0x60, 0x74, 0xf2, 0x3c,
-	0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27, 0x3c, 0x96, 0x63,
-	0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0xfd, 0xf4, 0xcc, 0x92, 0x8c, 0xd2,
-	0x24, 0xbd, 0xe4, 0xfc, 0x5c, 0x7d, 0x14, 0xe7, 0xea, 0x43, 0x9c, 0xab, 0x5f, 0xa1, 0x0f, 0x0b,
-	0xab, 0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0x10, 0x19, 0x03, 0x02, 0x00, 0x00, 0xff,
-	0xff, 0xa5, 0x0a, 0xef, 0xd8, 0x43, 0x01, 0x00, 0x00,
+	0x94, 0x8c, 0xb8, 0x78, 0xfd, 0xdc, 0x42, 0xdc, 0x52, 0x53, 0x9d, 0x20, 0x9a, 0x84, 0x14, 0xb9,
+	0x78, 0x90, 0xcc, 0x28, 0x96, 0x60, 0x54, 0x60, 0xd6, 0xe0, 0x0c, 0xe2, 0x4e, 0x83, 0xab, 0x28,
+	0x76, 0xf2, 0x3c, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27,
+	0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0xfd, 0xf4, 0xcc,
+	0x92, 0x8c, 0xd2, 0x24, 0xbd, 0xe4, 0xfc, 0x5c, 0x7d, 0x14, 0x6b, 0xf5, 0x21, 0xd6, 0xea, 0x57,
+	0xe8, 0xc3, 0x1c, 0x5b, 0x52, 0x59, 0x90, 0x5a, 0x9c, 0xc4, 0x06, 0x76, 0xa3, 0x31, 0x20, 0x00,
+	0x00, 0xff, 0xff, 0x50, 0x72, 0xbb, 0x5e, 0xc4, 0x00, 0x00, 0x00,
 }
 
 func (m *NFTFeeBalance) Marshal() (dAtA []byte, err error) {
@@ -113,18 +109,10 @@ func (m *NFTFeeBalance) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	var l int
 	_ = l
 	if len(m.FeeBalances) > 0 {
-		for k := range m.FeeBalances {
-			v := m.FeeBalances[k]
-			baseI := i
-			i -= len(v)
-			copy(dAtA[i:], v)
-			i = encodeVarintNftFeeBalance(dAtA, i, uint64(len(v)))
-			i--
-			dAtA[i] = 0x12
-			i = encodeVarintNftFeeBalance(dAtA, i, uint64(k))
-			i--
-			dAtA[i] = 0x8
-			i = encodeVarintNftFeeBalance(dAtA, i, uint64(baseI-i))
+		for iNdEx := len(m.FeeBalances) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.FeeBalances[iNdEx])
+			copy(dAtA[i:], m.FeeBalances[iNdEx])
+			i = encodeVarintNftFeeBalance(dAtA, i, uint64(len(m.FeeBalances[iNdEx])))
 			i--
 			dAtA[i] = 0xa
 		}
@@ -150,11 +138,9 @@ func (m *NFTFeeBalance) Size() (n int) {
 	var l int
 	_ = l
 	if len(m.FeeBalances) > 0 {
-		for k, v := range m.FeeBalances {
-			_ = k
-			_ = v
-			mapEntrySize := 1 + sovNftFeeBalance(uint64(k)) + 1 + len(v) + sovNftFeeBalance(uint64(len(v)))
-			n += mapEntrySize + 1 + sovNftFeeBalance(uint64(mapEntrySize))
+		for _, s := range m.FeeBalances {
+			l = len(s)
+			n += 1 + l + sovNftFeeBalance(uint64(l))
 		}
 	}
 	return n
@@ -199,7 +185,7 @@ func (m *NFTFeeBalance) Unmarshal(dAtA []byte) error {
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field FeeBalances", wireType)
 			}
-			var msglen int
+			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowNftFeeBalance
@@ -209,104 +195,23 @@ func (m *NFTFeeBalance) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= int(b&0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			if msglen < 0 {
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
 				return ErrInvalidLengthNftFeeBalance
 			}
-			postIndex := iNdEx + msglen
+			postIndex := iNdEx + intStringLen
 			if postIndex < 0 {
 				return ErrInvalidLengthNftFeeBalance
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.FeeBalances == nil {
-				m.FeeBalances = make(map[int32]string)
-			}
-			var mapkey int32
-			var mapvalue string
-			for iNdEx < postIndex {
-				entryPreIndex := iNdEx
-				var wire uint64
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return ErrIntOverflowNftFeeBalance
-					}
-					if iNdEx >= l {
-						return io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					wire |= uint64(b&0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				fieldNum := int32(wire >> 3)
-				if fieldNum == 1 {
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowNftFeeBalance
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						mapkey |= int32(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-				} else if fieldNum == 2 {
-					var stringLenmapvalue uint64
-					for shift := uint(0); ; shift += 7 {
-						if shift >= 64 {
-							return ErrIntOverflowNftFeeBalance
-						}
-						if iNdEx >= l {
-							return io.ErrUnexpectedEOF
-						}
-						b := dAtA[iNdEx]
-						iNdEx++
-						stringLenmapvalue |= uint64(b&0x7F) << shift
-						if b < 0x80 {
-							break
-						}
-					}
-					intStringLenmapvalue := int(stringLenmapvalue)
-					if intStringLenmapvalue < 0 {
-						return ErrInvalidLengthNftFeeBalance
-					}
-					postStringIndexmapvalue := iNdEx + intStringLenmapvalue
-					if postStringIndexmapvalue < 0 {
-						return ErrInvalidLengthNftFeeBalance
-					}
-					if postStringIndexmapvalue > l {
-						return io.ErrUnexpectedEOF
-					}
-					mapvalue = string(dAtA[iNdEx:postStringIndexmapvalue])
-					iNdEx = postStringIndexmapvalue
-				} else {
-					iNdEx = entryPreIndex
-					skippy, err := skipNftFeeBalance(dAtA[iNdEx:])
-					if err != nil {
-						return err
-					}
-					if (skippy < 0) || (iNdEx+skippy) < 0 {
-						return ErrInvalidLengthNftFeeBalance
-					}
-					if (iNdEx + skippy) > postIndex {
-						return io.ErrUnexpectedEOF
-					}
-					iNdEx += skippy
-				}
-			}
-			m.FeeBalances[mapkey] = mapvalue
+			m.FeeBalances = append(m.FeeBalances, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
