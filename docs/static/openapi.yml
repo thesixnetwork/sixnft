@@ -30483,16 +30483,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/evmsupport/address_binding/{ethAddress}/{nativeAddress}':
@@ -30552,8 +30542,8 @@ paths:
             type: object
             properties:
               params:
+                description: params holds all the parameters of this module.
                 type: object
-                description: Params defines the parameters for the module.
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -30635,8 +30625,8 @@ paths:
             type: object
             properties:
               params:
+                description: params holds all the parameters of this module.
                 type: object
-                description: Params defines the parameters for the module.
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -30941,6 +30931,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -31443,6 +31443,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -32018,6 +32028,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /thesixnetwork/sixnft/nftmngr/nft_data:
@@ -32367,6 +32387,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33342,13 +33372,15 @@ paths:
                                   - ALLOWED_ACTIONER_USER_ONLY
                                 default: ALLOWED_ACTIONER_ALL
                         status:
-                          type: object
-                          additionalProperties:
-                            type: boolean
-                        on_off_switch:
-                          type: object
-                          additionalProperties:
-                            type: boolean
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              status_name:
+                                type: string
+                              status_value:
+                                type: boolean
+                          title: 'map<string, bool> status = 6;'
                         nft_attributes_value:
                           type: array
                           items:
@@ -33641,6 +33673,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_schema/{code}':
@@ -33902,13 +33944,15 @@ paths:
                                 - ALLOWED_ACTIONER_USER_ONLY
                               default: ALLOWED_ACTIONER_ALL
                       status:
-                        type: object
-                        additionalProperties:
-                          type: boolean
-                      on_off_switch:
-                        type: object
-                        additionalProperties:
-                          type: boolean
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            status_name:
+                              type: string
+                            status_value:
+                              type: boolean
+                        title: 'map<string, bool> status = 6;'
                       nft_attributes_value:
                         type: array
                         items:
@@ -34414,6 +34458,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}':
@@ -34905,6 +34959,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/organization/{name}':
@@ -35127,8 +35191,8 @@ paths:
             type: object
             properties:
               params:
+                description: params holds all the parameters of this module.
                 type: object
-                description: Params defines the parameters for the module.
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -35502,6 +35566,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_request/{id}':
@@ -35786,6 +35860,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/collection_owner_request/{id}':
@@ -36060,6 +36144,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -57731,8 +57825,8 @@ definitions:
     type: object
     properties:
       params:
+        description: params holds all the parameters of this module.
         type: object
-        description: Params defines the parameters for the module.
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftadmin.AddressList:
     type: object
@@ -57821,8 +57915,8 @@ definitions:
     type: object
     properties:
       params:
+        description: params holds all the parameters of this module.
         type: object
-        description: Params defines the parameters for the module.
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftmngr.Action:
     type: object
@@ -58034,6 +58128,13 @@ definitions:
     enum:
       - CREATE_NFT_SCHEMA
     default: CREATE_NFT_SCHEMA
+  thesixnetwork.sixnft.nftmngr.FlagStatus:
+    type: object
+    properties:
+      status_name:
+        type: string
+      status_value:
+        type: boolean
   thesixnetwork.sixnft.nftmngr.FloatAttributeValue:
     type: object
     properties:
@@ -58221,13 +58322,15 @@ definitions:
                     - ALLOWED_ACTIONER_USER_ONLY
                   default: ALLOWED_ACTIONER_ALL
           status:
-            type: object
-            additionalProperties:
-              type: boolean
-          on_off_switch:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: object
+              properties:
+                status_name:
+                  type: string
+                status_value:
+                  type: boolean
+            title: 'map<string, bool> status = 6;'
           nft_attributes_value:
             type: array
             items:
@@ -58417,13 +58520,15 @@ definitions:
                     - ALLOWED_ACTIONER_USER_ONLY
                   default: ALLOWED_ACTIONER_ALL
           status:
-            type: object
-            additionalProperties:
-              type: boolean
-          on_off_switch:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: object
+              properties:
+                status_name:
+                  type: string
+                status_value:
+                  type: boolean
+            title: 'map<string, bool> status = 6;'
           nft_attributes_value:
             type: array
             items:
@@ -58686,13 +58791,15 @@ definitions:
                     - ALLOWED_ACTIONER_USER_ONLY
                   default: ALLOWED_ACTIONER_ALL
           status:
-            type: object
-            additionalProperties:
-              type: boolean
-          on_off_switch:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: object
+              properties:
+                status_name:
+                  type: string
+                status_value:
+                  type: boolean
+            title: 'map<string, bool> status = 6;'
           nft_attributes_value:
             type: array
             items:
@@ -59001,13 +59108,15 @@ definitions:
                     - ALLOWED_ACTIONER_USER_ONLY
                   default: ALLOWED_ACTIONER_ALL
           status:
-            type: object
-            additionalProperties:
-              type: boolean
-          on_off_switch:
-            type: object
-            additionalProperties:
-              type: boolean
+            type: array
+            items:
+              type: object
+              properties:
+                status_name:
+                  type: string
+                status_value:
+                  type: boolean
+            title: 'map<string, bool> status = 6;'
           nft_attributes_value:
             type: array
             items:
@@ -59315,13 +59424,15 @@ definitions:
                 - ALLOWED_ACTIONER_USER_ONLY
               default: ALLOWED_ACTIONER_ALL
       status:
-        type: object
-        additionalProperties:
-          type: boolean
-      on_off_switch:
-        type: object
-        additionalProperties:
-          type: boolean
+        type: array
+        items:
+          type: object
+          properties:
+            status_name:
+              type: string
+            status_value:
+              type: boolean
+        title: 'map<string, bool> status = 6;'
       nft_attributes_value:
         type: array
         items:
@@ -59840,13 +59951,15 @@ definitions:
                           - ALLOWED_ACTIONER_USER_ONLY
                         default: ALLOWED_ACTIONER_ALL
                 status:
-                  type: object
-                  additionalProperties:
-                    type: boolean
-                on_off_switch:
-                  type: object
-                  additionalProperties:
-                    type: boolean
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      status_name:
+                        type: string
+                      status_value:
+                        type: boolean
+                  title: 'map<string, bool> status = 6;'
                 nft_attributes_value:
                   type: array
                   items:
@@ -60384,13 +60497,15 @@ definitions:
                         - ALLOWED_ACTIONER_USER_ONLY
                       default: ALLOWED_ACTIONER_ALL
               status:
-                type: object
-                additionalProperties:
-                  type: boolean
-              on_off_switch:
-                type: object
-                additionalProperties:
-                  type: boolean
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status_name:
+                      type: string
+                    status_value:
+                      type: boolean
+                title: 'map<string, bool> status = 6;'
               nft_attributes_value:
                 type: array
                 items:
@@ -60629,8 +60744,8 @@ definitions:
     type: object
     properties:
       params:
+        description: params holds all the parameters of this module.
         type: object
-        description: Params defines the parameters for the module.
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftmngr.StringAttributeValue:
     type: object
