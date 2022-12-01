@@ -434,7 +434,6 @@ func New(
 		keys[nftmngrmoduletypes.StoreKey],
 		keys[nftmngrmoduletypes.MemStoreKey],
 		app.GetSubspace(nftmngrmoduletypes.ModuleName),
-		app.EvmsupportKeeper,
 		app.NftadminKeeper,
 		app.BankKeeper,
 		app.StakingKeeper,
