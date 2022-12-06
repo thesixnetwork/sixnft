@@ -5,7 +5,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-	evmtypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
+
 	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 )
 
@@ -24,13 +24,6 @@ type BankKeeper interface {
 	// Methods imported from bank should be defined here
 }
 
-type EvmsupportKeeper interface {
-	SetAddressBinding(ctx sdk.Context, addressBinding evmtypes.AddressBinding)
-	GetAddressBinding(
-		ctx sdk.Context,
-		ethAddress string,
-	) (val evmtypes.AddressBinding, found bool)
-}
 
 type AdminKeeper interface {
 	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)
