@@ -30812,13 +30812,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31318,13 +31311,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
           in: query
           required: false
           type: boolean
@@ -31900,13 +31886,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   /thesixnetwork/sixnft/nftmngr/nft_data:
@@ -32256,13 +32235,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
           in: query
           required: false
           type: boolean
@@ -33223,6 +33195,19 @@ paths:
                                 type: string
                               desc:
                                 type: string
+                              params:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    action_name:
+                                      type: string
+                                    action_desc:
+                                      type: string
+                                    action_disable:
+                                      type: boolean
+                                    default_value:
+                                      type: string
                               disable:
                                 type: boolean
                               when:
@@ -33539,13 +33524,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_schema/{code}':
@@ -33791,6 +33769,19 @@ paths:
                               type: string
                             desc:
                               type: string
+                            params:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  action_name:
+                                    type: string
+                                  action_desc:
+                                    type: string
+                                  action_disable:
+                                    type: boolean
+                                  default_value:
+                                    type: string
                             disable:
                               type: boolean
                             when:
@@ -34320,13 +34311,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}':
@@ -34815,13 +34799,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
           in: query
           required: false
           type: boolean
@@ -57929,6 +57906,19 @@ definitions:
         type: string
       desc:
         type: string
+      params:
+        type: array
+        items:
+          type: object
+          properties:
+            action_name:
+              type: string
+            action_desc:
+              type: string
+            action_disable:
+              type: boolean
+            default_value:
+              type: string
       disable:
         type: boolean
       when:
@@ -57957,6 +57947,14 @@ definitions:
         type: string
       action:
         type: string
+  thesixnetwork.sixnft.nftmngr.ActionParameter:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string
+    title: ActionParameter
   thesixnetwork.sixnft.nftmngr.AllowedActioner:
     type: string
     enum:
@@ -58310,6 +58308,19 @@ definitions:
                   type: string
                 desc:
                   type: string
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action_name:
+                        type: string
+                      action_desc:
+                        type: string
+                      action_disable:
+                        type: boolean
+                      default_value:
+                        type: string
                 disable:
                   type: boolean
                 when:
@@ -58507,6 +58518,19 @@ definitions:
                   type: string
                 desc:
                   type: string
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action_name:
+                        type: string
+                      action_desc:
+                        type: string
+                      action_disable:
+                        type: boolean
+                      default_value:
+                        type: string
                 disable:
                   type: boolean
                 when:
@@ -58777,6 +58801,19 @@ definitions:
                   type: string
                 desc:
                   type: string
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action_name:
+                        type: string
+                      action_desc:
+                        type: string
+                      action_disable:
+                        type: boolean
+                      default_value:
+                        type: string
                 disable:
                   type: boolean
                 when:
@@ -59094,6 +59131,19 @@ definitions:
                   type: string
                 desc:
                   type: string
+                params:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action_name:
+                        type: string
+                      action_desc:
+                        type: string
+                      action_disable:
+                        type: boolean
+                      default_value:
+                        type: string
                 disable:
                   type: boolean
                 when:
@@ -59409,6 +59459,19 @@ definitions:
               type: string
             desc:
               type: string
+            params:
+              type: array
+              items:
+                type: object
+                properties:
+                  action_name:
+                    type: string
+                  action_desc:
+                    type: string
+                  action_disable:
+                    type: boolean
+                  default_value:
+                    type: string
             disable:
               type: boolean
             when:
@@ -59935,6 +59998,19 @@ definitions:
                         type: string
                       desc:
                         type: string
+                      params:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            action_name:
+                              type: string
+                            action_desc:
+                              type: string
+                            action_disable:
+                              type: boolean
+                            default_value:
+                              type: string
                       disable:
                         type: boolean
                       when:
@@ -60481,6 +60557,19 @@ definitions:
                       type: string
                     desc:
                       type: string
+                    params:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          action_name:
+                            type: string
+                          action_desc:
+                            type: string
+                          action_disable:
+                            type: boolean
+                          default_value:
+                            type: string
                     disable:
                       type: boolean
                     when:
@@ -60757,6 +60846,17 @@ definitions:
       - BASE
       - TOKEN
     default: BASE
+  thesixnetwork.sixnft.nftmngr.action_params:
+    type: object
+    properties:
+      action_name:
+        type: string
+      action_desc:
+        type: string
+      action_disable:
+        type: boolean
+      default_value:
+        type: string
   thesixnetwork.sixnft.nftoracle.ActionRequest:
     type: object
     properties:

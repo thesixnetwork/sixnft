@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -9,12 +10,20 @@ const TypeMsgPerformActionByAdmin = "perform_action_by_admin"
 
 var _ sdk.Msg = &MsgPerformActionByAdmin{}
 
-func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId string, action string) *MsgPerformActionByAdmin {
+func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId string, action string, actionPrams string) *MsgPerformActionByAdmin {
+	// string to json object of  []*ActionParameter
+	var actionPrams_ []*ActionParameter
+	err := json.Unmarshal([]byte(actionPrams), &actionPrams)
+	if err != nil {
+		panic(err)
+	}
+
 	return &MsgPerformActionByAdmin{
 		Creator:       creator,
 		NftSchemaCode: nftSchemaCode,
 		TokenId:       tokenId,
 		Action:        action,
+		Parameters:   actionPrams_,
 	}
 }
 

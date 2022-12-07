@@ -69,7 +69,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 
-	err := ProcessAction(meta, &mapAction)
+	err := ProcessAction(meta, &mapAction, msg.Parameters)
 	if err != nil {
 		return nil, err
 	}

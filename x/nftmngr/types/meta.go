@@ -333,3 +333,16 @@ func (m *Metadata) ReplaceAllString(intput string, regexpStr string, replaceStr 
 	reg := regexp.MustCompile(regexpStr)
 	return reg.ReplaceAllString(intput, replaceStr)
 }
+
+func (p *ActionParameter) GetNumber() int64 {
+	// v, err := p.MustGetNumber()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// return v
+	return 0
+}
+
+func (p *ActionParameter) GetString() string {
+	return p.Value
+}
