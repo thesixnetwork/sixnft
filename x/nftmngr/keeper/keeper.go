@@ -19,7 +19,6 @@ type (
 		memKey     sdk.StoreKey
 		paramstore paramtypes.Subspace
 
-		evmsupportKeeper   types.EvmsupportKeeper
 		adminKeeper        types.AdminKeeper
 		bankKeeper         types.BankKeeper
 		stakingKeeper      types.StakingKeeper
@@ -32,7 +31,6 @@ func NewKeeper(
 	storeKey,
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
-	evmsupportKeeper types.EvmsupportKeeper,
 	adminKeeper types.AdminKeeper,
 	bankKeeper types.BankKeeper,
 	stakingKeeper types.StakingKeeper,
@@ -49,7 +47,6 @@ func NewKeeper(
 		storeKey:           storeKey,
 		memKey:             memKey,
 		paramstore:         ps,
-		evmsupportKeeper:   evmsupportKeeper,
 		adminKeeper:        adminKeeper,
 		bankKeeper:         bankKeeper,
 		stakingKeeper:      stakingKeeper,
