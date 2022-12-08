@@ -275,14 +275,14 @@
                         "desc": "Points",
                         "data_type": "number",
                         "required" : true,
-                        "default_value": 0
+                        "default_value": 10
                     },
                     {
                         "name": "minimum_balance",
                         "desc": "Minimum balance before redeem",
                         "data_type": "number",
                         "required" : false,
-                        "default_value": 0
+                        "default_value": 10
                     }
                 ],
                 "when": "meta.GetBoolean('checked_in') == true",
