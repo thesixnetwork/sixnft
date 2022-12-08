@@ -195,6 +195,7 @@
             {
                 "name": "check_in",
                 "desc": "Check In",
+                "params":[],
                 "when": "meta.GetBoolean('checked_in') == false",
                 "then": [
                     "meta.SetBoolean('checked_in', true)",
@@ -205,6 +206,7 @@
             {
                 "name": "claim_bonus_1",
                 "desc": "Claim Bonus 1",
+                "params":[],
                 "when": "meta.GetBoolean('bonus_1') == false",
                 "then": [
                     "meta.SetBoolean('bonus_1', true)",
@@ -214,6 +216,7 @@
             {
                 "name": "claim_bonus_2",
                 "desc": "Claim Bonus 2",
+                "params":[],
                 "when": "meta.GetBoolean('bonus_2') == false",
                 "then": [
                     "meta.SetBoolean('bonus_2', true)",
@@ -223,6 +226,7 @@
             {
                 "name": "redeem_200",
                 "desc": "Redeem gift for 200 points",
+                "params":[],
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 200",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -233,6 +237,7 @@
             {
                 "name": "redeem_400",
                 "desc": "Redeem gift for 400 points",
+                "params":[],
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 400",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -243,6 +248,7 @@
             {
                 "name": "redeem_600",
                 "desc": "Redeem gift for 600 points",
+                "params":[],
                 "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= 600",
                 "then": [
                     "meta.SetBoolean('redeemed', true)",
@@ -253,6 +259,7 @@
             {
                 "name": "transform",
                 "desc": "Transform",
+                "params":[],
                 "when": "meta.GetBoolean('transformed') == false && meta.GetNumber('missions_completed') == 3",
                 "then": [
                     "meta.SetBoolean('transformed', true)",
@@ -275,12 +282,11 @@
                         "desc": "Minimum balance before redeem",
                         "data_type": "number",
                         "required" : false,
-                        "default_value": 1
+                        "default_value": 0
                     }
                 ],
-                "when": "meta.GetBoolean('redeemed') == false && meta.GetNumber('points') >= params['minimum_balance'].GetNumber()",
+                "when": "meta.GetBoolean('checked_in') == true",
                 "then": [
-                    "meta.SetBoolean('redeemed', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') - params['points'].GetNumber())"
                 ]
             }

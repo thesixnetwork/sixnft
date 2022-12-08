@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"time"
@@ -27,7 +28,13 @@ type MetadataAttribute struct {
 	index          int
 }
 
+type ActionParamsS struct {
+	params *ActionParameter
+	index 	int
+}
+
 var mapAllKey = map[string]*MetadataAttribute{}
+var mapAllKeyAction = map[string]*ActionParamsS{}
 
 func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
 	meta := &Metadata{
@@ -334,13 +341,21 @@ func (m *Metadata) ReplaceAllString(intput string, regexpStr string, replaceStr 
 	return reg.ReplaceAllString(intput, replaceStr)
 }
 
+func (p *ActionParameter) MustGetNumber(key string) (int64, error) {
+	v, err := strconv.ParseInt(p.Value, 10, 64)
+	if err != nil {
+		return 0, sdkerrors.Wrap(ErrAttributeTypeNotMatch, key)
+	}
+	return v, nil
+}
+
 func (p *ActionParameter) GetNumber() int64 {
-	// v, err := p.MustGetNumber()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// return v
-	return 0
+	v, err := p.MustGetNumber(p.Name)
+	fmt.Printf("GetNumber %s %d %v", p.Name, v, err)
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
 
 func (p *ActionParameter) GetString() string {

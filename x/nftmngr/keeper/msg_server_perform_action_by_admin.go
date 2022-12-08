@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-
+	"strconv"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -67,6 +67,45 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
 		return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, msg.Action)
 	}
+
+	// Check if action requires parameters
+	param := mapAction.GetParams()
+	// if len(param) != len(msg.Parameters) {
+	// 	return nil, sdkerrors.Wrap(types.ErrInvalidParameter, msg.Action)
+	// }
+
+	// for i, p := range param {
+	// 	if p.Required {
+	// 		if params := msg.Parameters[i];
+	// 			params.Name != p.Name || params.Value == "" {
+	// 			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, p.Name)
+	// 		}
+	// 	}
+	// }
+
+
+	// array of *ActionParams
+	required_param := make([]*types.ActionParams, 0)
+
+	for _, p := range param {
+		if p.Required {
+			required_param = append(required_param, p)
+		}
+	}
+
+	if len(required_param) > len(msg.Parameters) {
+		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
+	}
+
+	for i := 0; i < len(required_param); i++ {
+		if msg.Parameters[i].Name != required_param[i].Name {
+			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
+		}
+		if msg.Parameters[i].Value == "" {
+			msg.Parameters[i].Value = strconv.Itoa(int(required_param[i].DefaultValue))
+		}
+	}
+
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 
 	err := ProcessAction(meta, &mapAction, msg.Parameters)

@@ -68,7 +68,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 
 	// validate time given format as RFC3339
 	_, err = time.Parse(time.RFC3339, actionParam.ExpiredAt.UTC().Format(time.RFC3339))
-	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()){
+	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()) {
 		actionParam.ExpiredAt = endTime
 	}
 

@@ -11,10 +11,11 @@ enum AllowedActioner {
 }
 
 message action_params {
-  string action_name = 1;
-  string action_desc = 2;
-  bool action_disable = 3;
-  string default_value = 4;
+  string name = 1;
+  string desc = 2;
+  string data_type = 3;
+  bool required = 4;
+  uint64 default_value = 5;
 }
 
 message Action {
