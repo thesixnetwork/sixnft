@@ -58673,6 +58673,15 @@ definitions:
         type: string
       actioner:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgChageOrgOwnerResponse:
+    type: object
+    properties:
+      orgName:
+        type: string
+      oldOwner:
+        type: string
+      newOwner:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgChangeSchemaOwnerResponse:
     type: object
     properties:

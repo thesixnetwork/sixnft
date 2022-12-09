@@ -428,7 +428,7 @@ func TestAction(t *testing.T) {
 	actionParams_ := []*types.ActionParameter{}
 	for _, action := range schema.OnchainData.Actions {
 		if action.Name == selectAction {
-			keeper.ProcessAction(meta, action,actionParams_)
+			keeper.ProcessAction(meta, action, actionParams_)
 			break
 		}
 	}

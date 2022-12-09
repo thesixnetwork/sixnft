@@ -25,7 +25,7 @@ func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId st
 		NftSchemaCode: nftSchemaCode,
 		TokenId:       tokenId,
 		Action:        action,
-		Parameters:   actionPrams_,
+		Parameters:    actionPrams_,
 	}
 }
 

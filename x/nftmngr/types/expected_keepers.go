@@ -5,7 +5,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 
-
 	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 )
 
@@ -23,7 +22,6 @@ type BankKeeper interface {
 	BurnCoins(ctx sdk.Context, moduleName string, amt sdk.Coins) error
 	// Methods imported from bank should be defined here
 }
-
 
 type AdminKeeper interface {
 	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)

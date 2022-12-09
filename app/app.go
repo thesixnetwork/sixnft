@@ -241,7 +241,7 @@ type App struct {
 	ScopedTransferKeeper   capabilitykeeper.ScopedKeeper
 	ScopedMonitoringKeeper capabilitykeeper.ScopedKeeper
 
-	NftmngrKeeper nftmngrmodulekeeper.Keeper
+	NftmngrKeeper   nftmngrmodulekeeper.Keeper
 	NftoracleKeeper nftoraclemodulekeeper.Keeper
 	NftadminKeeper  nftadminmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration

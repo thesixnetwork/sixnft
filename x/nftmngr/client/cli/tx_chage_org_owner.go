@@ -12,36 +12,24 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdSetMintauth() *cobra.Command {
+func CmdChageOrgOwner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-mintauth [nft-schema-code] [authorize-to]",
-		Short: "To resync action to minted metadata",
+		Use:   "chage-org-owner [org-name] [to-new-owner]",
+		Short: "Change Organization Owner",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argNftSchemaCode := args[0]
-			argAuthorizeTo := args[1]
-			if err != nil {
-				return err
-			}
-
-			argAuthorizeToInt, err := strconv.Atoi(argAuthorizeTo)
-			if err != nil {
-				return err
-			}
+			argOrgName := args[0]
+			argToNewOwner := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			authrizeTo := types.AuthorizeTo_SYSTEM // 0
-			if argAuthorizeToInt == 1 {
-				authrizeTo = types.AuthorizeTo_ALL
-			}
-			msg := types.NewMsgSetMintauth(
+			msg := types.NewMsgChageOrgOwner(
 				clientCtx.GetFromAddress().String(),
-				argNftSchemaCode,
-				authrizeTo,
+				argOrgName,
+				argToNewOwner,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

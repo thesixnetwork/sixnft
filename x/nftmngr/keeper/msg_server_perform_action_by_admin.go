@@ -3,8 +3,8 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-	"strconv"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

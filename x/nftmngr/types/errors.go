@@ -58,9 +58,10 @@ var (
 	ErrActionIsDisabled       = sdkerrors.Register(ModuleName, 304, "Action is disabled")
 	ErrActionIsForUserOnly    = sdkerrors.Register(ModuleName, 305, "This action can be done by user only")
 	ErrActionIsForSystemOnly  = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
-	ErrInvalidParameter	   	  = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
+	ErrInvalidParameter       = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
 
-	ErrOrganizationOwner = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrOrganizationOwner    = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrOrganizationNotFound = sdkerrors.Register(ModuleName, 401, "Organization not found")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
 	ErrInvalidActionName    = sdkerrors.Register(ModuleName, 501, "Invalid action name")
