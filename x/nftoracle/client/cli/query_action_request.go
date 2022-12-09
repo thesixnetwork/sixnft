@@ -13,7 +13,7 @@ import (
 func CmdListActionRequest() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-action-request",
-		Short: "list all ActionRequest",
+		Short: "list all ActionOracleRequest",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -46,7 +46,7 @@ func CmdListActionRequest() *cobra.Command {
 func CmdShowActionRequest() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show-action-request [id]",
-		Short: "shows a ActionRequest",
+		Short: "shows a ActionOracleRequest",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
@@ -62,7 +62,7 @@ func CmdShowActionRequest() *cobra.Command {
 				Id: id,
 			}
 
-			res, err := queryClient.ActionRequest(context.Background(), params)
+			res, err := queryClient.ActionOracleRequest(context.Background(), params)
 			if err != nil {
 				return err
 			}

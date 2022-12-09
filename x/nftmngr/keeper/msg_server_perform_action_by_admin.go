@@ -70,21 +70,6 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	// Check if action requires parameters
 	param := mapAction.GetParams()
-	// if len(param) != len(msg.Parameters) {
-	// 	return nil, sdkerrors.Wrap(types.ErrInvalidParameter, msg.Action)
-	// }
-
-	// for i, p := range param {
-	// 	if p.Required {
-	// 		if params := msg.Parameters[i];
-	// 			params.Name != p.Name || params.Value == "" {
-	// 			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, p.Name)
-	// 		}
-	// 	}
-	// }
-
-
-	// array of *ActionParams
 	required_param := make([]*types.ActionParams, 0)
 
 	for _, p := range param {

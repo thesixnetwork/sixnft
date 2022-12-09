@@ -28,28 +28,28 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		return nil, sdkerrors.Wrap(types.ErrParsingActionSignature, err.Error())
 	}
 
-	actionParam, signer, err := k.ValidateActionSignature(data)
+	actionOralceParam, signer, err := k.ValidateActionSignature(data)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrVerifyingSignature, err.Error())
 	}
 
 	// Check if nft_schema_code exists
-	_, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionParam.NftSchemaCode)
+	_, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionOralceParam.NftSchemaCode)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionParam.NftSchemaCode)
+		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionOralceParam.NftSchemaCode)
 	}
 	// Check if the token is already Actioned
-	_, found = k.nftmngrKeeper.GetNftData(ctx, actionParam.NftSchemaCode, actionParam.TokenId)
+	_, found = k.nftmngrKeeper.GetNftData(ctx, actionOralceParam.NftSchemaCode, actionOralceParam.TokenId)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrMetadataNotExists, actionParam.NftSchemaCode)
+		return nil, sdkerrors.Wrap(types.ErrMetadataNotExists, actionOralceParam.NftSchemaCode)
 	}
 
 	// Check action with reference exists
-	if actionParam.RefId != "" {
+	if actionOralceParam.RefId != "" {
 
-		_, found := k.nftmngrKeeper.GetActionByRefId(ctx, actionParam.RefId)
+		_, found := k.nftmngrKeeper.GetActionByRefId(ctx, actionOralceParam.RefId)
 		if found {
-			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, actionParam.RefId)
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, actionOralceParam.RefId)
 		}
 	}
 
@@ -67,34 +67,35 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
 	// validate time given format as RFC3339
-	_, err = time.Parse(time.RFC3339, actionParam.ExpiredAt.UTC().Format(time.RFC3339))
-	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()) {
-		actionParam.ExpiredAt = endTime
+	_, err = time.Parse(time.RFC3339, actionOralceParam.ExpiredAt.UTC().Format(time.RFC3339))
+	if err != nil || len(actionOralceParam.ExpiredAt.String()) == 0 || actionOralceParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()) {
+		actionOralceParam.ExpiredAt = endTime
 	}
 
-	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionRequest{
-		NftSchemaCode:   actionParam.NftSchemaCode,
-		TokenId:         actionParam.TokenId,
+	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionOracleRequest{
+		NftSchemaCode:   actionOralceParam.NftSchemaCode,
+		TokenId:         actionOralceParam.TokenId,
 		RequiredConfirm: msg.RequiredConfirm,
 		Caller:          *signer,
-		Action:          actionParam.Action,
-		RefId:           actionParam.RefId,
+		Action:          actionOralceParam.Action,
+		Params:  		actionOralceParam.Params,
+		RefId:           actionOralceParam.RefId,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
-		ValidUntil:      actionParam.ExpiredAt,
+		ValidUntil:      actionOralceParam.ExpiredAt,
 		Confirmers:      make([]string, 0),
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 
-	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionParam.ExpiredAt)
+	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionOralceParam.ExpiredAt)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeActionRequestCreated,
 			sdk.NewAttribute(types.AttributeKeyActionRequestID, strconv.FormatUint(id_, 10)),
-			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, actionParam.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyTokenID, actionParam.TokenId),
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, actionOralceParam.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyTokenID, actionOralceParam.TokenId),
 			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),
 		),
 	})
@@ -104,7 +105,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	}, nil
 }
 
-func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*types.ActionParam, *string, error) {
+func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*types.ActionOracleParam, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(actionSig.Message)), 10) + actionSig.Message
 
@@ -112,12 +113,12 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
 
-	actionParam := &types.ActionParam{}
+	actionOralceParam := &types.ActionOracleParam{}
 	actionParamBz, err := base64.StdEncoding.DecodeString(actionSig.Message)
 	if err != nil {
 		return nil, nil, err
 	}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(actionParamBz, actionParam)
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(actionParamBz, actionOralceParam)
 	if err != nil {
 		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, err.Error())
 	}
@@ -150,5 +151,5 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 		return nil, nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
 	}
 	signer := eth_address_from_pubkey.Hex()
-	return actionParam, &signer, nil
+	return actionOralceParam, &signer, nil
 }

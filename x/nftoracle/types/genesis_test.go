@@ -31,7 +31,7 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				MintRequestCount: 2,
-				ActionRequestList: []types.ActionRequest{
+				ActionRequestList: []types.ActionOracleRequest{
 					{
 						Id: 0,
 					},
@@ -83,7 +83,7 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "duplicated actionRequest",
 			genState: &types.GenesisState{
-				ActionRequestList: []types.ActionRequest{
+				ActionRequestList: []types.ActionOracleRequest{
 					{
 						Id: 0,
 					},
@@ -97,7 +97,7 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "invalid actionRequest count",
 			genState: &types.GenesisState{
-				ActionRequestList: []types.ActionRequest{
+				ActionRequestList: []types.ActionOracleRequest{
 					{
 						Id: 1,
 					},

@@ -24,7 +24,7 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		MintRequestCount: 2,
-		ActionRequestList: []types.ActionRequest{
+		ActionRequestList: []types.ActionOracleRequest{
 			{
 				Id: 0,
 			},

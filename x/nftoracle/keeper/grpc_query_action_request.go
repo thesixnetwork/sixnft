@@ -17,14 +17,14 @@ func (k Keeper) ActionRequestAll(c context.Context, req *types.QueryAllActionReq
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var actionRequests []types.ActionRequest
+	var actionRequests []types.ActionOracleRequest
 	ctx := sdk.UnwrapSDKContext(c)
 
 	store := ctx.KVStore(k.storeKey)
 	actionRequestStore := prefix.NewStore(store, types.KeyPrefix(types.ActionRequestKey))
 
 	pageRes, err := query.Paginate(actionRequestStore, req.Pagination, func(key []byte, value []byte) error {
-		var actionRequest types.ActionRequest
+		var actionRequest types.ActionOracleRequest
 		if err := k.cdc.Unmarshal(value, &actionRequest); err != nil {
 			return err
 		}
@@ -37,10 +37,10 @@ func (k Keeper) ActionRequestAll(c context.Context, req *types.QueryAllActionReq
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryAllActionRequestResponse{ActionRequest: actionRequests, Pagination: pageRes}, nil
+	return &types.QueryAllActionRequestResponse{ActionOracleRequest: actionRequests, Pagination: pageRes}, nil
 }
 
-func (k Keeper) ActionRequest(c context.Context, req *types.QueryGetActionRequestRequest) (*types.QueryGetActionRequestResponse, error) {
+func (k Keeper) ActionOracleRequest(c context.Context, req *types.QueryGetActionRequestRequest) (*types.QueryGetActionRequestResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
@@ -51,5 +51,5 @@ func (k Keeper) ActionRequest(c context.Context, req *types.QueryGetActionReques
 		return nil, sdkerrors.ErrKeyNotFound
 	}
 
-	return &types.QueryGetActionRequestResponse{ActionRequest: actionRequest}, nil
+	return &types.QueryGetActionRequestResponse{ActionOracleRequest: actionRequest}, nil
 }

@@ -35302,7 +35302,7 @@ paths:
           schema:
             type: object
             properties:
-              ActionRequest:
+              ActionOracleRequest:
                 type: array
                 items:
                   type: object
@@ -35316,6 +35316,15 @@ paths:
                       type: string
                     action:
                       type: string
+                    params:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          value:
+                            type: string
                     caller:
                       type: string
                     ref_id:
@@ -35475,26 +35484,19 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_request/{id}':
     get:
       summary: Queries a ActionRequest by id.
-      operationId: ThesixnetworkSixnftNftoracleActionRequest
+      operationId: ThesixnetworkSixnftNftoracleActionOracleRequest
       responses:
         '200':
           description: A successful response.
           schema:
             type: object
             properties:
-              ActionRequest:
+              ActionOracleRequest:
                 type: object
                 properties:
                   id:
@@ -35506,6 +35508,15 @@ paths:
                     type: string
                   action:
                     type: string
+                  params:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        value:
+                          type: string
                   caller:
                     type: string
                   ref_id:
@@ -35763,13 +35774,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
           in: query
           required: false
           type: boolean
@@ -36047,13 +36051,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
           in: query
           required: false
           type: boolean
@@ -60960,7 +60957,7 @@ definitions:
       default_value:
         type: string
         format: uint64
-  thesixnetwork.sixnft.nftoracle.ActionRequest:
+  thesixnetwork.sixnft.nftoracle.ActionOracleRequest:
     type: object
     properties:
       id:
@@ -60972,6 +60969,15 @@ definitions:
         type: string
       action:
         type: string
+      params:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
       caller:
         type: string
       ref_id:
@@ -61038,6 +61044,13 @@ definitions:
         type: string
         format: int64
       execution_error_message:
+        type: string
+  thesixnetwork.sixnft.nftoracle.ActionParameter:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
         type: string
   thesixnetwork.sixnft.nftoracle.CollectionOwnerRequest:
     type: object
@@ -61324,7 +61337,7 @@ definitions:
   thesixnetwork.sixnft.nftoracle.QueryAllActionRequestResponse:
     type: object
     properties:
-      ActionRequest:
+      ActionOracleRequest:
         type: array
         items:
           type: object
@@ -61338,6 +61351,15 @@ definitions:
               type: string
             action:
               type: string
+            params:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  value:
+                    type: string
             caller:
               type: string
             ref_id:
@@ -61628,7 +61650,7 @@ definitions:
   thesixnetwork.sixnft.nftoracle.QueryGetActionRequestResponse:
     type: object
     properties:
-      ActionRequest:
+      ActionOracleRequest:
         type: object
         properties:
           id:
@@ -61640,6 +61662,15 @@ definitions:
             type: string
           action:
             type: string
+          params:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                value:
+                  type: string
           caller:
             type: string
           ref_id:

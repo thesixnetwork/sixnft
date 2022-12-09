@@ -29,8 +29,8 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/mint_request";
 	}
 
-// Queries a ActionRequest by id.
-	rpc ActionRequest(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponse) {
+	// Queries a ActionRequest by id.
+	rpc ActionOracleRequest(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request/{id}";
 	}
 
@@ -87,7 +87,7 @@ message QueryGetActionRequestRequest {
 }
 
 message QueryGetActionRequestResponse {
-	ActionRequest ActionRequest = 1 [(gogoproto.nullable) = false];
+	ActionOracleRequest ActionOracleRequest = 1 [(gogoproto.nullable) = false];
 }
 
 message QueryAllActionRequestRequest {
@@ -95,7 +95,7 @@ message QueryAllActionRequestRequest {
 }
 
 message QueryAllActionRequestResponse {
-	repeated ActionRequest ActionRequest = 1 [(gogoproto.nullable) = false];
+	repeated ActionOracleRequest ActionOracleRequest = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

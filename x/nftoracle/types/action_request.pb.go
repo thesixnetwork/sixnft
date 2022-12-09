@@ -27,26 +27,23 @@ var _ = time.Kitchen
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type ActionParam struct {
-	NftSchemaCode string    `protobuf:"bytes,1,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
-	TokenId       string    `protobuf:"bytes,2,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	Action        string    `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
-	RefId         string    `protobuf:"bytes,4,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
-	ExpiredAt     time.Time `protobuf:"bytes,5,opt,name=expired_at,json=expiredAt,proto3,stdtime" json:"expired_at"`
+type ActionParameter struct {
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (m *ActionParam) Reset()         { *m = ActionParam{} }
-func (m *ActionParam) String() string { return proto.CompactTextString(m) }
-func (*ActionParam) ProtoMessage()    {}
-func (*ActionParam) Descriptor() ([]byte, []int) {
+func (m *ActionParameter) Reset()         { *m = ActionParameter{} }
+func (m *ActionParameter) String() string { return proto.CompactTextString(m) }
+func (*ActionParameter) ProtoMessage()    {}
+func (*ActionParameter) Descriptor() ([]byte, []int) {
 	return fileDescriptor_36b7260720dc8e70, []int{0}
 }
-func (m *ActionParam) XXX_Unmarshal(b []byte) error {
+func (m *ActionParameter) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ActionParam) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ActionParameter) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ActionParam.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ActionParameter.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -56,83 +53,147 @@ func (m *ActionParam) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *ActionParam) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ActionParam.Merge(m, src)
+func (m *ActionParameter) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActionParameter.Merge(m, src)
 }
-func (m *ActionParam) XXX_Size() int {
+func (m *ActionParameter) XXX_Size() int {
 	return m.Size()
 }
-func (m *ActionParam) XXX_DiscardUnknown() {
-	xxx_messageInfo_ActionParam.DiscardUnknown(m)
+func (m *ActionParameter) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActionParameter.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ActionParam proto.InternalMessageInfo
+var xxx_messageInfo_ActionParameter proto.InternalMessageInfo
 
-func (m *ActionParam) GetNftSchemaCode() string {
+func (m *ActionParameter) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ActionParameter) GetValue() string {
+	if m != nil {
+		return m.Value
+	}
+	return ""
+}
+
+type ActionOracleParam struct {
+	NftSchemaCode string             `protobuf:"bytes,1,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
+	TokenId       string             `protobuf:"bytes,2,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
+	Action        string             `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
+	Params        []*ActionParameter `protobuf:"bytes,4,rep,name=params,proto3" json:"params,omitempty"`
+	RefId         string             `protobuf:"bytes,5,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
+	ExpiredAt     time.Time          `protobuf:"bytes,6,opt,name=expired_at,json=expiredAt,proto3,stdtime" json:"expired_at"`
+}
+
+func (m *ActionOracleParam) Reset()         { *m = ActionOracleParam{} }
+func (m *ActionOracleParam) String() string { return proto.CompactTextString(m) }
+func (*ActionOracleParam) ProtoMessage()    {}
+func (*ActionOracleParam) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36b7260720dc8e70, []int{1}
+}
+func (m *ActionOracleParam) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ActionOracleParam) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ActionOracleParam.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ActionOracleParam) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActionOracleParam.Merge(m, src)
+}
+func (m *ActionOracleParam) XXX_Size() int {
+	return m.Size()
+}
+func (m *ActionOracleParam) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActionOracleParam.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ActionOracleParam proto.InternalMessageInfo
+
+func (m *ActionOracleParam) GetNftSchemaCode() string {
 	if m != nil {
 		return m.NftSchemaCode
 	}
 	return ""
 }
 
-func (m *ActionParam) GetTokenId() string {
+func (m *ActionOracleParam) GetTokenId() string {
 	if m != nil {
 		return m.TokenId
 	}
 	return ""
 }
 
-func (m *ActionParam) GetAction() string {
+func (m *ActionOracleParam) GetAction() string {
 	if m != nil {
 		return m.Action
 	}
 	return ""
 }
 
-func (m *ActionParam) GetRefId() string {
+func (m *ActionOracleParam) GetParams() []*ActionParameter {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
+func (m *ActionOracleParam) GetRefId() string {
 	if m != nil {
 		return m.RefId
 	}
 	return ""
 }
 
-func (m *ActionParam) GetExpiredAt() time.Time {
+func (m *ActionOracleParam) GetExpiredAt() time.Time {
 	if m != nil {
 		return m.ExpiredAt
 	}
 	return time.Time{}
 }
 
-type ActionRequest struct {
-	Id                    uint64        `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	NftSchemaCode         string        `protobuf:"bytes,2,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
-	TokenId               string        `protobuf:"bytes,3,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	Action                string        `protobuf:"bytes,4,opt,name=action,proto3" json:"action,omitempty"`
-	Caller                string        `protobuf:"bytes,5,opt,name=caller,proto3" json:"caller,omitempty"`
-	RefId                 string        `protobuf:"bytes,6,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
-	RequiredConfirm       uint64        `protobuf:"varint,7,opt,name=required_confirm,json=requiredConfirm,proto3" json:"required_confirm,omitempty"`
-	Status                RequestStatus `protobuf:"varint,8,opt,name=status,proto3,enum=thesixnetwork.sixnft.nftoracle.RequestStatus" json:"status,omitempty"`
-	CurrentConfirm        uint64        `protobuf:"varint,9,opt,name=current_confirm,json=currentConfirm,proto3" json:"current_confirm,omitempty"`
-	Confirmers            []string      `protobuf:"bytes,10,rep,name=confirmers,proto3" json:"confirmers,omitempty"`
-	CreatedAt             time.Time     `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3,stdtime" json:"created_at"`
-	ValidUntil            time.Time     `protobuf:"bytes,12,opt,name=valid_until,json=validUntil,proto3,stdtime" json:"valid_until"`
-	DataHashes            []*DataHash   `protobuf:"bytes,13,rep,name=data_hashes,json=dataHashes,proto3" json:"data_hashes,omitempty"`
-	ExpiredHeight         int64         `protobuf:"varint,14,opt,name=expired_height,json=expiredHeight,proto3" json:"expired_height,omitempty"`
-	ExecutionErrorMessage string        `protobuf:"bytes,15,opt,name=execution_error_message,json=executionErrorMessage,proto3" json:"execution_error_message,omitempty"`
+type ActionOracleRequest struct {
+	Id                    uint64             `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	NftSchemaCode         string             `protobuf:"bytes,2,opt,name=nft_schema_code,json=nftSchemaCode,proto3" json:"nft_schema_code,omitempty"`
+	TokenId               string             `protobuf:"bytes,3,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
+	Action                string             `protobuf:"bytes,4,opt,name=action,proto3" json:"action,omitempty"`
+	Params                []*ActionParameter `protobuf:"bytes,5,rep,name=params,proto3" json:"params,omitempty"`
+	Caller                string             `protobuf:"bytes,6,opt,name=caller,proto3" json:"caller,omitempty"`
+	RefId                 string             `protobuf:"bytes,7,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
+	RequiredConfirm       uint64             `protobuf:"varint,8,opt,name=required_confirm,json=requiredConfirm,proto3" json:"required_confirm,omitempty"`
+	Status                RequestStatus      `protobuf:"varint,9,opt,name=status,proto3,enum=thesixnetwork.sixnft.nftoracle.RequestStatus" json:"status,omitempty"`
+	CurrentConfirm        uint64             `protobuf:"varint,10,opt,name=current_confirm,json=currentConfirm,proto3" json:"current_confirm,omitempty"`
+	Confirmers            []string           `protobuf:"bytes,11,rep,name=confirmers,proto3" json:"confirmers,omitempty"`
+	CreatedAt             time.Time          `protobuf:"bytes,12,opt,name=created_at,json=createdAt,proto3,stdtime" json:"created_at"`
+	ValidUntil            time.Time          `protobuf:"bytes,13,opt,name=valid_until,json=validUntil,proto3,stdtime" json:"valid_until"`
+	DataHashes            []*DataHash        `protobuf:"bytes,14,rep,name=data_hashes,json=dataHashes,proto3" json:"data_hashes,omitempty"`
+	ExpiredHeight         int64              `protobuf:"varint,15,opt,name=expired_height,json=expiredHeight,proto3" json:"expired_height,omitempty"`
+	ExecutionErrorMessage string             `protobuf:"bytes,16,opt,name=execution_error_message,json=executionErrorMessage,proto3" json:"execution_error_message,omitempty"`
 }
 
-func (m *ActionRequest) Reset()         { *m = ActionRequest{} }
-func (m *ActionRequest) String() string { return proto.CompactTextString(m) }
-func (*ActionRequest) ProtoMessage()    {}
-func (*ActionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_36b7260720dc8e70, []int{1}
+func (m *ActionOracleRequest) Reset()         { *m = ActionOracleRequest{} }
+func (m *ActionOracleRequest) String() string { return proto.CompactTextString(m) }
+func (*ActionOracleRequest) ProtoMessage()    {}
+func (*ActionOracleRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_36b7260720dc8e70, []int{2}
 }
-func (m *ActionRequest) XXX_Unmarshal(b []byte) error {
+func (m *ActionOracleRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *ActionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *ActionOracleRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_ActionRequest.Marshal(b, m, deterministic)
+		return xxx_messageInfo_ActionOracleRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -142,117 +203,124 @@ func (m *ActionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return b[:n], nil
 	}
 }
-func (m *ActionRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ActionRequest.Merge(m, src)
+func (m *ActionOracleRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActionOracleRequest.Merge(m, src)
 }
-func (m *ActionRequest) XXX_Size() int {
+func (m *ActionOracleRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *ActionRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ActionRequest.DiscardUnknown(m)
+func (m *ActionOracleRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActionOracleRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ActionRequest proto.InternalMessageInfo
+var xxx_messageInfo_ActionOracleRequest proto.InternalMessageInfo
 
-func (m *ActionRequest) GetId() uint64 {
+func (m *ActionOracleRequest) GetId() uint64 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *ActionRequest) GetNftSchemaCode() string {
+func (m *ActionOracleRequest) GetNftSchemaCode() string {
 	if m != nil {
 		return m.NftSchemaCode
 	}
 	return ""
 }
 
-func (m *ActionRequest) GetTokenId() string {
+func (m *ActionOracleRequest) GetTokenId() string {
 	if m != nil {
 		return m.TokenId
 	}
 	return ""
 }
 
-func (m *ActionRequest) GetAction() string {
+func (m *ActionOracleRequest) GetAction() string {
 	if m != nil {
 		return m.Action
 	}
 	return ""
 }
 
-func (m *ActionRequest) GetCaller() string {
+func (m *ActionOracleRequest) GetParams() []*ActionParameter {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
+func (m *ActionOracleRequest) GetCaller() string {
 	if m != nil {
 		return m.Caller
 	}
 	return ""
 }
 
-func (m *ActionRequest) GetRefId() string {
+func (m *ActionOracleRequest) GetRefId() string {
 	if m != nil {
 		return m.RefId
 	}
 	return ""
 }
 
-func (m *ActionRequest) GetRequiredConfirm() uint64 {
+func (m *ActionOracleRequest) GetRequiredConfirm() uint64 {
 	if m != nil {
 		return m.RequiredConfirm
 	}
 	return 0
 }
 
-func (m *ActionRequest) GetStatus() RequestStatus {
+func (m *ActionOracleRequest) GetStatus() RequestStatus {
 	if m != nil {
 		return m.Status
 	}
 	return RequestStatus_PENDING
 }
 
-func (m *ActionRequest) GetCurrentConfirm() uint64 {
+func (m *ActionOracleRequest) GetCurrentConfirm() uint64 {
 	if m != nil {
 		return m.CurrentConfirm
 	}
 	return 0
 }
 
-func (m *ActionRequest) GetConfirmers() []string {
+func (m *ActionOracleRequest) GetConfirmers() []string {
 	if m != nil {
 		return m.Confirmers
 	}
 	return nil
 }
 
-func (m *ActionRequest) GetCreatedAt() time.Time {
+func (m *ActionOracleRequest) GetCreatedAt() time.Time {
 	if m != nil {
 		return m.CreatedAt
 	}
 	return time.Time{}
 }
 
-func (m *ActionRequest) GetValidUntil() time.Time {
+func (m *ActionOracleRequest) GetValidUntil() time.Time {
 	if m != nil {
 		return m.ValidUntil
 	}
 	return time.Time{}
 }
 
-func (m *ActionRequest) GetDataHashes() []*DataHash {
+func (m *ActionOracleRequest) GetDataHashes() []*DataHash {
 	if m != nil {
 		return m.DataHashes
 	}
 	return nil
 }
 
-func (m *ActionRequest) GetExpiredHeight() int64 {
+func (m *ActionOracleRequest) GetExpiredHeight() int64 {
 	if m != nil {
 		return m.ExpiredHeight
 	}
 	return 0
 }
 
-func (m *ActionRequest) GetExecutionErrorMessage() string {
+func (m *ActionOracleRequest) GetExecutionErrorMessage() string {
 	if m != nil {
 		return m.ExecutionErrorMessage
 	}
@@ -260,54 +328,59 @@ func (m *ActionRequest) GetExecutionErrorMessage() string {
 }
 
 func init() {
-	proto.RegisterType((*ActionParam)(nil), "thesixnetwork.sixnft.nftoracle.ActionParam")
-	proto.RegisterType((*ActionRequest)(nil), "thesixnetwork.sixnft.nftoracle.ActionRequest")
+	proto.RegisterType((*ActionParameter)(nil), "thesixnetwork.sixnft.nftoracle.ActionParameter")
+	proto.RegisterType((*ActionOracleParam)(nil), "thesixnetwork.sixnft.nftoracle.ActionOracleParam")
+	proto.RegisterType((*ActionOracleRequest)(nil), "thesixnetwork.sixnft.nftoracle.ActionOracleRequest")
 }
 
 func init() { proto.RegisterFile("nftoracle/action_request.proto", fileDescriptor_36b7260720dc8e70) }
 
 var fileDescriptor_36b7260720dc8e70 = []byte{
-	// 585 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xc1, 0x4f, 0xd4, 0x4e,
-	0x14, 0xde, 0xee, 0x42, 0x61, 0xa7, 0xbf, 0xdd, 0xfd, 0x65, 0x22, 0x50, 0x39, 0x94, 0x86, 0x44,
-	0xad, 0x07, 0xdb, 0x88, 0x89, 0x77, 0x40, 0x12, 0x88, 0x31, 0x31, 0x45, 0x2f, 0x5e, 0x9a, 0xa1,
-	0x7d, 0x6d, 0x27, 0xb4, 0x9d, 0x75, 0xe6, 0x55, 0xd7, 0xff, 0x82, 0xb3, 0x7f, 0x8f, 0x07, 0x8e,
-	0x1c, 0x3d, 0xa9, 0x81, 0x7f, 0xc4, 0x74, 0xda, 0x85, 0x25, 0x51, 0x09, 0xb7, 0xf7, 0xbe, 0x37,
-	0xdf, 0xbc, 0xef, 0x7b, 0x6f, 0x86, 0x38, 0x55, 0x8a, 0x42, 0xb2, 0xb8, 0x80, 0x80, 0xc5, 0xc8,
-	0x45, 0x15, 0x49, 0xf8, 0x58, 0x83, 0x42, 0x7f, 0x2a, 0x05, 0x0a, 0xea, 0x60, 0x0e, 0x8a, 0xcf,
-	0x2a, 0xc0, 0xcf, 0x42, 0x9e, 0xfa, 0x4d, 0x98, 0xa2, 0x7f, 0x4d, 0xda, 0xdc, 0xb8, 0xe1, 0x8b,
-	0x29, 0x54, 0x0a, 0x58, 0x4b, 0x5c, 0x2c, 0xdc, 0xba, 0x71, 0xf3, 0x41, 0x26, 0x32, 0xa1, 0xc3,
-	0xa0, 0x89, 0x3a, 0x74, 0x2b, 0x13, 0x22, 0x2b, 0x20, 0xd0, 0xd9, 0x49, 0x9d, 0x06, 0xc8, 0x4b,
-	0x50, 0xc8, 0xca, 0x69, 0x7b, 0x60, 0xfb, 0x9b, 0x41, 0xac, 0x5d, 0xad, 0xf0, 0x2d, 0x93, 0xac,
-	0xa4, 0x8f, 0xc9, 0xa4, 0x4a, 0x31, 0x52, 0x71, 0x0e, 0x25, 0x8b, 0x62, 0x91, 0x80, 0x6d, 0xb8,
-	0x86, 0x37, 0x0c, 0x47, 0x55, 0x8a, 0xc7, 0x1a, 0xdd, 0x17, 0x09, 0xd0, 0x87, 0x64, 0x15, 0xc5,
-	0x29, 0x54, 0x11, 0x4f, 0xec, 0xbe, 0x3e, 0xb0, 0xa2, 0xf3, 0xa3, 0x84, 0xae, 0x13, 0xb3, 0xf5,
-	0x6c, 0x0f, 0x74, 0xa1, 0xcb, 0xe8, 0x1a, 0x31, 0x25, 0xa4, 0x0d, 0x61, 0x49, 0xe3, 0xcb, 0x12,
-	0xd2, 0xa3, 0x84, 0xee, 0x13, 0x02, 0xb3, 0x29, 0x97, 0x90, 0x44, 0x0c, 0xed, 0x65, 0xd7, 0xf0,
-	0xac, 0x9d, 0x4d, 0xbf, 0xd5, 0xed, 0xcf, 0x75, 0xfb, 0xef, 0xe6, 0xba, 0xf7, 0x56, 0xcf, 0x7f,
-	0x6c, 0xf5, 0xce, 0x7e, 0x6e, 0x19, 0xe1, 0xb0, 0xe3, 0xed, 0xe2, 0xf6, 0xd7, 0x65, 0x32, 0x6a,
-	0x6d, 0x84, 0xed, 0x54, 0xe8, 0x98, 0xf4, 0x79, 0xa2, 0xb5, 0x2f, 0x85, 0x7d, 0x9e, 0xfc, 0xc9,
-	0x58, 0xff, 0x2e, 0x63, 0x83, 0xbf, 0x19, 0x5b, 0xba, 0x65, 0x6c, 0x9d, 0x98, 0x31, 0x2b, 0x0a,
-	0x90, 0x5a, 0xfd, 0x30, 0xec, 0xb2, 0x05, 0xc3, 0xe6, 0xa2, 0xe1, 0xa7, 0xe4, 0xff, 0x66, 0x75,
-	0xda, 0x71, 0x2c, 0xaa, 0x94, 0xcb, 0xd2, 0x5e, 0xd1, 0x3a, 0x27, 0x73, 0x7c, 0xbf, 0x85, 0xe9,
-	0x01, 0x31, 0x15, 0x32, 0xac, 0x95, 0xbd, 0xea, 0x1a, 0xde, 0x78, 0xe7, 0x99, 0xff, 0xef, 0x77,
-	0xe3, 0x77, 0xee, 0x8f, 0x35, 0x29, 0xec, 0xc8, 0xf4, 0x09, 0x99, 0xc4, 0xb5, 0x94, 0x50, 0xe1,
-	0x75, 0xc3, 0xa1, 0x6e, 0x38, 0xee, 0xe0, 0x79, 0x3f, 0x87, 0x90, 0xee, 0x00, 0x48, 0x65, 0x13,
-	0x77, 0xe0, 0x0d, 0xc3, 0x05, 0xa4, 0xd9, 0x55, 0x2c, 0x81, 0x61, 0xbb, 0x2b, 0xeb, 0x3e, 0xbb,
-	0xea, 0x78, 0xbb, 0x48, 0x0f, 0x88, 0xf5, 0x89, 0x15, 0x3c, 0x89, 0xea, 0x0a, 0x79, 0x61, 0xff,
-	0x77, 0x8f, 0x5b, 0x88, 0x26, 0xbe, 0x6f, 0x78, 0xf4, 0x88, 0x58, 0x09, 0x43, 0x16, 0xe5, 0x4c,
-	0xe5, 0xa0, 0xec, 0x91, 0x3b, 0xf0, 0xac, 0x1d, 0xef, 0xae, 0x01, 0xbd, 0x62, 0xc8, 0x0e, 0x99,
-	0xca, 0x43, 0x92, 0x74, 0x11, 0x28, 0xfa, 0x88, 0x8c, 0xe7, 0x4f, 0x30, 0x07, 0x9e, 0xe5, 0x68,
-	0x8f, 0x5d, 0xc3, 0x1b, 0x84, 0xa3, 0x0e, 0x3d, 0xd4, 0x20, 0x7d, 0x49, 0x36, 0x60, 0x06, 0x71,
-	0xad, 0xff, 0x33, 0x48, 0x29, 0x64, 0x54, 0x82, 0x52, 0x2c, 0x03, 0x7b, 0xa2, 0x17, 0xbc, 0x76,
-	0x5d, 0x3e, 0x68, 0xaa, 0x6f, 0xda, 0xe2, 0xde, 0xeb, 0xf3, 0x4b, 0xc7, 0xb8, 0xb8, 0x74, 0x8c,
-	0x5f, 0x97, 0x8e, 0x71, 0x76, 0xe5, 0xf4, 0x2e, 0xae, 0x9c, 0xde, 0xf7, 0x2b, 0xa7, 0xf7, 0xe1,
-	0x79, 0xc6, 0x31, 0xaf, 0x4f, 0xfc, 0x58, 0x94, 0xc1, 0x2d, 0xe1, 0x41, 0x2b, 0x3c, 0x98, 0x05,
-	0x37, 0xff, 0x1d, 0xbf, 0x4c, 0x41, 0x9d, 0x98, 0x7a, 0x40, 0x2f, 0x7e, 0x07, 0x00, 0x00, 0xff,
-	0xff, 0x82, 0x21, 0x66, 0x7c, 0x62, 0x04, 0x00, 0x00,
+	// 642 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x94, 0xcf, 0x4f, 0xd4, 0x50,
+	0x10, 0xc7, 0xb7, 0xfb, 0xa3, 0xb0, 0xb3, 0xb2, 0x8b, 0x4f, 0x7e, 0x54, 0x0e, 0x65, 0x43, 0xa2,
+	0xd6, 0x83, 0x6d, 0xc4, 0xc4, 0x8b, 0x27, 0x40, 0x22, 0xc4, 0x18, 0x4d, 0xd1, 0x8b, 0x97, 0xe6,
+	0xd1, 0x4e, 0x7f, 0x84, 0xb6, 0x6f, 0x7d, 0xef, 0x15, 0xd7, 0xff, 0x82, 0xc4, 0x7f, 0x8a, 0x23,
+	0x47, 0x4f, 0x6a, 0xe0, 0xe4, 0x7f, 0x61, 0xfa, 0xda, 0x85, 0xc5, 0x88, 0x1b, 0xe2, 0x6d, 0xe6,
+	0x3b, 0xfd, 0xce, 0x4c, 0x3f, 0xd3, 0x14, 0xcc, 0x3c, 0x94, 0x8c, 0x53, 0x3f, 0x45, 0x87, 0xfa,
+	0x32, 0x61, 0xb9, 0xc7, 0xf1, 0x53, 0x81, 0x42, 0xda, 0x23, 0xce, 0x24, 0x23, 0xa6, 0x8c, 0x51,
+	0x24, 0xe3, 0x1c, 0xe5, 0x67, 0xc6, 0x8f, 0xec, 0x32, 0x0c, 0xa5, 0x7d, 0x69, 0x5a, 0x5b, 0xbd,
+	0xf2, 0xb3, 0x11, 0xe6, 0x02, 0x69, 0x65, 0x9c, 0x2e, 0x5c, 0xeb, 0xb8, 0xb6, 0x14, 0xb1, 0x88,
+	0xa9, 0xd0, 0x29, 0xa3, 0x5a, 0x5d, 0x8f, 0x18, 0x8b, 0x52, 0x74, 0x54, 0x76, 0x58, 0x84, 0x8e,
+	0x4c, 0x32, 0x14, 0x92, 0x66, 0xa3, 0xea, 0x81, 0x8d, 0x17, 0x30, 0xd8, 0x52, 0x0b, 0xbe, 0xa3,
+	0x9c, 0x66, 0x28, 0x91, 0x13, 0x02, 0xed, 0x9c, 0x66, 0x68, 0x68, 0x43, 0xcd, 0xea, 0xba, 0x2a,
+	0x26, 0x4b, 0xd0, 0x39, 0xa6, 0x69, 0x81, 0x46, 0x53, 0x89, 0x55, 0xb2, 0xf1, 0xb5, 0x09, 0x77,
+	0x2b, 0xf7, 0x5b, 0xb5, 0x92, 0xea, 0x41, 0x1e, 0xc2, 0x20, 0x0f, 0xa5, 0x27, 0xfc, 0x18, 0x33,
+	0xea, 0xf9, 0x2c, 0x98, 0xb4, 0x5a, 0xc8, 0x43, 0x79, 0xa0, 0xd4, 0x1d, 0x16, 0x20, 0xb9, 0x0f,
+	0xf3, 0x92, 0x1d, 0x61, 0xee, 0x25, 0x41, 0xdd, 0x76, 0x4e, 0xe5, 0xfb, 0x01, 0x59, 0x01, 0xbd,
+	0xc2, 0x66, 0xb4, 0x54, 0xa1, 0xce, 0xc8, 0x2b, 0xd0, 0x47, 0xe5, 0x0c, 0x61, 0xb4, 0x87, 0x2d,
+	0xab, 0xb7, 0xe9, 0xd8, 0xff, 0xe6, 0x68, 0xff, 0xf1, 0x6e, 0x6e, 0x6d, 0x27, 0xcb, 0xa0, 0x73,
+	0x0c, 0xcb, 0xc9, 0x9d, 0xea, 0x85, 0x38, 0x86, 0xfb, 0x01, 0xd9, 0x01, 0xc0, 0xf1, 0x28, 0xe1,
+	0x18, 0x78, 0x54, 0x1a, 0xfa, 0x50, 0xb3, 0x7a, 0x9b, 0x6b, 0x76, 0xc5, 0xd0, 0x9e, 0x30, 0xb4,
+	0xdf, 0x4f, 0x18, 0x6e, 0xcf, 0x9f, 0x7e, 0x5f, 0x6f, 0x9c, 0xfc, 0x58, 0xd7, 0xdc, 0x6e, 0xed,
+	0xdb, 0x92, 0x1b, 0xbf, 0x3a, 0x70, 0x6f, 0x9a, 0x8a, 0x5b, 0xdd, 0x89, 0xf4, 0xa1, 0x99, 0x04,
+	0x0a, 0x45, 0xdb, 0x6d, 0x26, 0xc1, 0xdf, 0x38, 0x35, 0x67, 0x71, 0x6a, 0xdd, 0xc4, 0xa9, 0x7d,
+	0x03, 0xa7, 0xce, 0xff, 0x71, 0x5a, 0x01, 0xdd, 0xa7, 0x69, 0x8a, 0x5c, 0xc1, 0xe8, 0xba, 0x75,
+	0x36, 0xc5, 0x6f, 0x6e, 0x9a, 0xdf, 0x63, 0x58, 0x2c, 0xbf, 0x4a, 0x05, 0xd0, 0x67, 0x79, 0x98,
+	0xf0, 0xcc, 0x98, 0x57, 0x2f, 0x3c, 0x98, 0xe8, 0x3b, 0x95, 0x4c, 0x76, 0x41, 0x17, 0x92, 0xca,
+	0x42, 0x18, 0xdd, 0xa1, 0x66, 0xf5, 0x37, 0x9f, 0xcc, 0x5a, 0xb1, 0xc6, 0x78, 0xa0, 0x4c, 0x6e,
+	0x6d, 0x26, 0x8f, 0x60, 0xe0, 0x17, 0x9c, 0x63, 0x2e, 0x2f, 0x07, 0x82, 0x1a, 0xd8, 0xaf, 0xe5,
+	0xc9, 0x3c, 0x13, 0xa0, 0x7e, 0x00, 0xb9, 0x30, 0x7a, 0xc3, 0x96, 0xd5, 0x75, 0xa7, 0x94, 0xf2,
+	0xf4, 0x3e, 0x47, 0x2a, 0xab, 0xd3, 0xdf, 0xb9, 0xcd, 0xe9, 0x6b, 0xdf, 0x96, 0x24, 0xbb, 0xd0,
+	0x3b, 0xa6, 0x69, 0x12, 0x78, 0x45, 0x2e, 0x93, 0xd4, 0x58, 0xb8, 0x45, 0x17, 0x50, 0xc6, 0x0f,
+	0xa5, 0x8f, 0xec, 0x43, 0x2f, 0xa0, 0x92, 0x7a, 0x31, 0x15, 0x31, 0x0a, 0xa3, 0xaf, 0x6e, 0x68,
+	0xcd, 0x02, 0xf4, 0x92, 0x4a, 0xba, 0x47, 0x45, 0xec, 0x42, 0x50, 0x47, 0x28, 0xc8, 0x03, 0xe8,
+	0x4f, 0xbe, 0xe8, 0x18, 0x93, 0x28, 0x96, 0xc6, 0x60, 0xa8, 0x59, 0x2d, 0x77, 0xa1, 0x56, 0xf7,
+	0x94, 0x48, 0x9e, 0xc3, 0x2a, 0x8e, 0xd1, 0x2f, 0xd4, 0xaf, 0x0a, 0x39, 0x67, 0xdc, 0xcb, 0x50,
+	0x08, 0x1a, 0xa1, 0xb1, 0xa8, 0x0e, 0xbc, 0x7c, 0x59, 0xde, 0x2d, 0xab, 0x6f, 0xaa, 0xe2, 0xf6,
+	0xeb, 0xd3, 0x73, 0x53, 0x3b, 0x3b, 0x37, 0xb5, 0x9f, 0xe7, 0xa6, 0x76, 0x72, 0x61, 0x36, 0xce,
+	0x2e, 0xcc, 0xc6, 0xb7, 0x0b, 0xb3, 0xf1, 0xf1, 0x69, 0x94, 0xc8, 0xb8, 0x38, 0xb4, 0x7d, 0x96,
+	0x39, 0xd7, 0x16, 0x77, 0xaa, 0xc5, 0x9d, 0xb1, 0x73, 0xf5, 0x2b, 0x93, 0x5f, 0x46, 0x28, 0x0e,
+	0x75, 0x05, 0xe8, 0xd9, 0xef, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd6, 0xbf, 0xb9, 0x74, 0x3d, 0x05,
+	0x00, 0x00,
 }
 
-func (m *ActionParam) Marshal() (dAtA []byte, err error) {
+func (m *ActionParameter) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -317,12 +390,49 @@ func (m *ActionParam) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ActionParam) MarshalTo(dAtA []byte) (int, error) {
+func (m *ActionParameter) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ActionParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ActionParameter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Value) > 0 {
+		i -= len(m.Value)
+		copy(dAtA[i:], m.Value)
+		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.Value)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ActionOracleParam) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ActionOracleParam) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ActionOracleParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -334,13 +444,27 @@ func (m *ActionParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i -= n1
 	i = encodeVarintActionRequest(dAtA, i, uint64(n1))
 	i--
-	dAtA[i] = 0x2a
+	dAtA[i] = 0x32
 	if len(m.RefId) > 0 {
 		i -= len(m.RefId)
 		copy(dAtA[i:], m.RefId)
 		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.RefId)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
+	}
+	if len(m.Params) > 0 {
+		for iNdEx := len(m.Params) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Params[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintActionRequest(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
 	}
 	if len(m.Action) > 0 {
 		i -= len(m.Action)
@@ -366,7 +490,7 @@ func (m *ActionParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *ActionRequest) Marshal() (dAtA []byte, err error) {
+func (m *ActionOracleRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -376,12 +500,12 @@ func (m *ActionRequest) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *ActionRequest) MarshalTo(dAtA []byte) (int, error) {
+func (m *ActionOracleRequest) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *ActionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *ActionOracleRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -391,12 +515,14 @@ func (m *ActionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.ExecutionErrorMessage)
 		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.ExecutionErrorMessage)))
 		i--
-		dAtA[i] = 0x7a
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x82
 	}
 	if m.ExpiredHeight != 0 {
 		i = encodeVarintActionRequest(dAtA, i, uint64(m.ExpiredHeight))
 		i--
-		dAtA[i] = 0x70
+		dAtA[i] = 0x78
 	}
 	if len(m.DataHashes) > 0 {
 		for iNdEx := len(m.DataHashes) - 1; iNdEx >= 0; iNdEx-- {
@@ -409,7 +535,7 @@ func (m *ActionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintActionRequest(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x6a
+			dAtA[i] = 0x72
 		}
 	}
 	n2, err2 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.ValidUntil, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.ValidUntil):])
@@ -419,7 +545,7 @@ func (m *ActionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i -= n2
 	i = encodeVarintActionRequest(dAtA, i, uint64(n2))
 	i--
-	dAtA[i] = 0x62
+	dAtA[i] = 0x6a
 	n3, err3 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CreatedAt, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CreatedAt):])
 	if err3 != nil {
 		return 0, err3
@@ -427,44 +553,58 @@ func (m *ActionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i -= n3
 	i = encodeVarintActionRequest(dAtA, i, uint64(n3))
 	i--
-	dAtA[i] = 0x5a
+	dAtA[i] = 0x62
 	if len(m.Confirmers) > 0 {
 		for iNdEx := len(m.Confirmers) - 1; iNdEx >= 0; iNdEx-- {
 			i -= len(m.Confirmers[iNdEx])
 			copy(dAtA[i:], m.Confirmers[iNdEx])
 			i = encodeVarintActionRequest(dAtA, i, uint64(len(m.Confirmers[iNdEx])))
 			i--
-			dAtA[i] = 0x52
+			dAtA[i] = 0x5a
 		}
 	}
 	if m.CurrentConfirm != 0 {
 		i = encodeVarintActionRequest(dAtA, i, uint64(m.CurrentConfirm))
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x50
 	}
 	if m.Status != 0 {
 		i = encodeVarintActionRequest(dAtA, i, uint64(m.Status))
 		i--
-		dAtA[i] = 0x40
+		dAtA[i] = 0x48
 	}
 	if m.RequiredConfirm != 0 {
 		i = encodeVarintActionRequest(dAtA, i, uint64(m.RequiredConfirm))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x40
 	}
 	if len(m.RefId) > 0 {
 		i -= len(m.RefId)
 		copy(dAtA[i:], m.RefId)
 		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.RefId)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x3a
 	}
 	if len(m.Caller) > 0 {
 		i -= len(m.Caller)
 		copy(dAtA[i:], m.Caller)
 		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.Caller)))
 		i--
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
+	}
+	if len(m.Params) > 0 {
+		for iNdEx := len(m.Params) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Params[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintActionRequest(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
 	}
 	if len(m.Action) > 0 {
 		i -= len(m.Action)
@@ -506,7 +646,24 @@ func encodeVarintActionRequest(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *ActionParam) Size() (n int) {
+func (m *ActionParameter) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovActionRequest(uint64(l))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovActionRequest(uint64(l))
+	}
+	return n
+}
+
+func (m *ActionOracleParam) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -524,6 +681,12 @@ func (m *ActionParam) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovActionRequest(uint64(l))
 	}
+	if len(m.Params) > 0 {
+		for _, e := range m.Params {
+			l = e.Size()
+			n += 1 + l + sovActionRequest(uint64(l))
+		}
+	}
 	l = len(m.RefId)
 	if l > 0 {
 		n += 1 + l + sovActionRequest(uint64(l))
@@ -533,7 +696,7 @@ func (m *ActionParam) Size() (n int) {
 	return n
 }
 
-func (m *ActionRequest) Size() (n int) {
+func (m *ActionOracleRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -553,6 +716,12 @@ func (m *ActionRequest) Size() (n int) {
 	l = len(m.Action)
 	if l > 0 {
 		n += 1 + l + sovActionRequest(uint64(l))
+	}
+	if len(m.Params) > 0 {
+		for _, e := range m.Params {
+			l = e.Size()
+			n += 1 + l + sovActionRequest(uint64(l))
+		}
 	}
 	l = len(m.Caller)
 	if l > 0 {
@@ -592,7 +761,7 @@ func (m *ActionRequest) Size() (n int) {
 	}
 	l = len(m.ExecutionErrorMessage)
 	if l > 0 {
-		n += 1 + l + sovActionRequest(uint64(l))
+		n += 2 + l + sovActionRequest(uint64(l))
 	}
 	return n
 }
@@ -603,7 +772,7 @@ func sovActionRequest(x uint64) (n int) {
 func sozActionRequest(x uint64) (n int) {
 	return sovActionRequest(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
-func (m *ActionParam) Unmarshal(dAtA []byte) error {
+func (m *ActionParameter) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -626,10 +795,124 @@ func (m *ActionParam) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ActionParam: wiretype end group for non-group")
+			return fmt.Errorf("proto: ActionParameter: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ActionParam: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ActionParameter: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Value", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Value = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipActionRequest(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ActionOracleParam) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowActionRequest
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ActionOracleParam: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ActionOracleParam: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -730,6 +1013,40 @@ func (m *ActionParam) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Params", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Params = append(m.Params, &ActionParameter{})
+			if err := m.Params[len(m.Params)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RefId", wireType)
 			}
 			var stringLen uint64
@@ -760,7 +1077,7 @@ func (m *ActionParam) Unmarshal(dAtA []byte) error {
 			}
 			m.RefId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpiredAt", wireType)
 			}
@@ -814,7 +1131,7 @@ func (m *ActionParam) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *ActionRequest) Unmarshal(dAtA []byte) error {
+func (m *ActionOracleRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -837,10 +1154,10 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: ActionRequest: wiretype end group for non-group")
+			return fmt.Errorf("proto: ActionOracleRequest: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ActionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: ActionOracleRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -960,6 +1277,40 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 5:
 			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Params", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Params = append(m.Params, &ActionParameter{})
+			if err := m.Params[len(m.Params)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Caller", wireType)
 			}
 			var stringLen uint64
@@ -990,7 +1341,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Caller = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RefId", wireType)
 			}
@@ -1022,7 +1373,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.RefId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 8:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredConfirm", wireType)
 			}
@@ -1041,7 +1392,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 8:
+		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
@@ -1060,7 +1411,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 9:
+		case 10:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentConfirm", wireType)
 			}
@@ -1079,7 +1430,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 10:
+		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Confirmers", wireType)
 			}
@@ -1111,7 +1462,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Confirmers = append(m.Confirmers, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
-		case 11:
+		case 12:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
@@ -1144,7 +1495,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 12:
+		case 13:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValidUntil", wireType)
 			}
@@ -1177,7 +1528,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 13:
+		case 14:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DataHashes", wireType)
 			}
@@ -1211,7 +1562,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 14:
+		case 15:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpiredHeight", wireType)
 			}
@@ -1230,7 +1581,7 @@ func (m *ActionRequest) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 15:
+		case 16:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExecutionErrorMessage", wireType)
 			}
