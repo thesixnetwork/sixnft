@@ -4,8 +4,8 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func (k msgServer) ChageOrgOwner(goCtx context.Context, msg *types.MsgChageOrgOwner) (*types.MsgChageOrgOwnerResponse, error) {
@@ -33,7 +33,6 @@ func (k msgServer) ChageOrgOwner(goCtx context.Context, msg *types.MsgChageOrgOw
 	//save the organization
 	k.SetOrganization(ctx, organization)
 
-
 	//emit event
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
@@ -45,7 +44,7 @@ func (k msgServer) ChageOrgOwner(goCtx context.Context, msg *types.MsgChageOrgOw
 	)
 
 	return &types.MsgChageOrgOwnerResponse{
-		OrgName: msg.OrgName,
+		OrgName:  msg.OrgName,
 		OldOwner: msg.Creator,
 		NewOwner: msg.ToNewOwner,
 	}, nil

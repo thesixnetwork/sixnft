@@ -16,7 +16,7 @@ var _ = strconv.Itoa(0)
 func CmdAddAttribute() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add-attribute [code] [location] [new-attibute]",
-		Short: "Broadcast message addAttribute",
+		Short: "Broadcast message addAttribute location NFT_ATTRIBUTE=0 TOKEN_ATTRIBUTE=1",
 		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argCode := args[0]

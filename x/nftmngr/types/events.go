@@ -64,7 +64,7 @@ const (
 	AttributeAutorizeTo          = "authorize_to"
 	AttributeKeySetMinAuthResult = "add_action_result"
 
-	EventTypeChangeOrgOwner		  = "change_org_owner"
-	AttributeKeyOrgName			  = "org_name"
-	AttributeKeyOldOwner		  = "old_owner"
+	EventTypeChangeOrgOwner = "change_org_owner"
+	AttributeKeyOrgName     = "org_name"
+	AttributeKeyOldOwner    = "old_owner"
 )

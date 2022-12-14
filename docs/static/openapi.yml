@@ -30812,6 +30812,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31314,6 +31324,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/metadata_creator/{nftSchemaCode}':
@@ -31594,7 +31614,7 @@ paths:
                               value:
                                 type: number
                                 format: double
-                          disabled:
+                          hidden_to_marketplace:
                             type: boolean
                     onchain_attributes:
                       type: array
@@ -31625,7 +31645,7 @@ paths:
                               value:
                                 type: number
                                 format: double
-                          disabled:
+                          hidden_to_marketplace:
                             type: boolean
               pagination:
                 type: object
@@ -31890,6 +31910,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   /thesixnetwork/sixnft/nftmngr/nft_data:
@@ -31954,7 +31984,7 @@ paths:
                               value:
                                 type: number
                                 format: double
-                          disabled:
+                          hidden_to_marketplace:
                             type: boolean
                     onchain_attributes:
                       type: array
@@ -31985,7 +32015,7 @@ paths:
                               value:
                                 type: number
                                 format: double
-                          disabled:
+                          hidden_to_marketplace:
                             type: boolean
               pagination:
                 type: object
@@ -32246,6 +32276,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -32308,7 +32348,7 @@ paths:
                             value:
                               type: number
                               format: double
-                        disabled:
+                        hidden_to_marketplace:
                           type: boolean
                   onchain_attributes:
                     type: array
@@ -32339,7 +32379,7 @@ paths:
                             value:
                               type: number
                               format: double
-                        disabled:
+                        hidden_to_marketplace:
                           type: boolean
         default:
           description: An unexpected error response.
@@ -33276,7 +33316,7 @@ paths:
                                   value:
                                     type: number
                                     format: double
-                              disabled:
+                              hidden_to_marketplace:
                                 type: boolean
                     isVerified:
                       type: boolean
@@ -33538,6 +33578,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33855,7 +33905,7 @@ paths:
                                 value:
                                   type: number
                                   format: double
-                            disabled:
+                            hidden_to_marketplace:
                               type: boolean
                   isVerified:
                     type: boolean
@@ -34330,6 +34380,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -34821,6 +34881,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -58399,7 +58469,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
   thesixnetwork.sixnft.nftmngr.MsgAddAttributeResponse:
     type: object
@@ -58614,7 +58684,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
   thesixnetwork.sixnft.nftmngr.MsgAddSystemActionerResponse:
     type: object
@@ -58697,6 +58767,13 @@ definitions:
     type: object
     properties:
       nftSchema:
+        type: string
+  thesixnetwork.sixnft.nftmngr.MsgShowNftAttributesResponse:
+    type: object
+    properties:
+      nftSchema:
+        type: string
+      tokenId:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgToggleActionResponse:
     type: object
@@ -58911,7 +58988,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
   thesixnetwork.sixnft.nftmngr.NFTFeeBalance:
     type: object
@@ -59246,7 +59323,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
       isVerified:
         type: boolean
@@ -59288,7 +59365,7 @@ definitions:
           value:
             type: number
             format: double
-      disabled:
+      hidden_to_marketplace:
         type: boolean
   thesixnetwork.sixnft.nftmngr.NftData:
     type: object
@@ -59340,7 +59417,7 @@ definitions:
                 value:
                   type: number
                   format: double
-            disabled:
+            hidden_to_marketplace:
               type: boolean
       onchain_attributes:
         type: array
@@ -59371,7 +59448,7 @@ definitions:
                 value:
                   type: number
                   format: double
-            disabled:
+            hidden_to_marketplace:
               type: boolean
   thesixnetwork.sixnft.nftmngr.NumberAttributeValue:
     type: object
@@ -59585,7 +59662,7 @@ definitions:
                 value:
                   type: number
                   format: double
-            disabled:
+            hidden_to_marketplace:
               type: boolean
   thesixnetwork.sixnft.nftmngr.OpenseaDisplayOption:
     type: object
@@ -60129,7 +60206,7 @@ definitions:
                           value:
                             type: number
                             format: double
-                      disabled:
+                      hidden_to_marketplace:
                         type: boolean
             isVerified:
               type: boolean
@@ -60215,7 +60292,7 @@ definitions:
                       value:
                         type: number
                         format: double
-                  disabled:
+                  hidden_to_marketplace:
                     type: boolean
             onchain_attributes:
               type: array
@@ -60246,7 +60323,7 @@ definitions:
                       value:
                         type: number
                         format: double
-                  disabled:
+                  hidden_to_marketplace:
                     type: boolean
       pagination:
         type: object
@@ -60697,7 +60774,7 @@ definitions:
                         value:
                           type: number
                           format: double
-                    disabled:
+                    hidden_to_marketplace:
                       type: boolean
           isVerified:
             type: boolean
@@ -60758,7 +60835,7 @@ definitions:
                       value:
                         type: number
                         format: double
-                  disabled:
+                  hidden_to_marketplace:
                     type: boolean
             onchain_attributes:
               type: array
@@ -60789,7 +60866,7 @@ definitions:
                       value:
                         type: number
                         format: double
-                  disabled:
+                  hidden_to_marketplace:
                     type: boolean
       pagination:
         type: object
@@ -60869,7 +60946,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
           onchain_attributes:
             type: array
@@ -60900,7 +60977,7 @@ definitions:
                     value:
                       type: number
                       format: double
-                disabled:
+                hidden_to_marketplace:
                   type: boolean
   thesixnetwork.sixnft.nftmngr.QueryGetOrganizationResponse:
     type: object

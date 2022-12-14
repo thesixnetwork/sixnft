@@ -27,6 +27,7 @@ service Msg {
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
   rpc SetMintauth(MsgSetMintauth) returns (MsgSetMintauthResponse);
   rpc ChageOrgOwner(MsgChageOrgOwner) returns (MsgChageOrgOwnerResponse);
+  rpc ShowNftAttributes(MsgShowNftAttributes) returns (MsgShowNftAttributesResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -241,6 +242,19 @@ message MsgChageOrgOwnerResponse {
   string orgName = 1;
   string oldOwner = 2;
   string newOwner = 3;
+}
+
+message MsgShowNftAttributes {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+  bool show = 4;
+  string attributeNames = 5;
+}
+
+message MsgShowNftAttributesResponse {
+  string nftSchema = 1;
+  string tokenId = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

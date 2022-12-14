@@ -289,6 +289,28 @@
                 "then": [
                     "meta.SetNumber('points', meta.GetNumber('points') - params['points'].GetNumber())"
                 ]
+            },
+            {
+                "name": "test_hidden",
+                "desc": "Test Dyamic hidden to marketplace",
+                "params" : [
+                    {
+                        "name": "attibute_name",
+                        "desc": "attiubute name",
+                        "data_type": "string",
+                        "required" : true
+                    },
+                    {
+                        "name": "new_value",
+                        "desc": "value",
+                        "data_type": "string",
+                        "required" : true
+                    }
+                ],
+                "when": "meta.GetBoolean('checked_in') == true || meta.GetBoolean('checked_in') == false",
+                "then": [
+                    "meta.SetDisplayArribute(params['attibute_name'].GetString(), params['new_value'].GetString())"
+                ]
             }
         ],
         "nft_attributes_value": []

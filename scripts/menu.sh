@@ -60,11 +60,12 @@ case $choice in
         read -p "Enter Schema Code: " schema_code 
         read -p "Enter Token ID: " token_id
         read -p "Enter Action: " action
+        read -p "Enter Ref ID: " ref_id
         read -p "Enter Params: " params
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
-        sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+        sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             --chain-id sixnft
         ;;
     5) echo "Set NFT Attribute"

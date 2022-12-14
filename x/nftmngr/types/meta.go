@@ -27,13 +27,7 @@ type MetadataAttribute struct {
 	index          int
 }
 
-type ActionParamsS struct {
-	params *ActionParameter
-	index  int
-}
-
 var mapAllKey = map[string]*MetadataAttribute{}
-var mapAllKeyAction = map[string]*ActionParamsS{}
 
 func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
 	meta := &Metadata{
@@ -331,6 +325,34 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 		}
 	} else {
 		return sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.attributeValue.Name)
+	}
+	return nil
+}
+
+func (m *Metadata) SetDisplayArribute(key string, value string) error {
+	bool_val, _ := strconv.ParseBool(value)
+	attri := mapAllKey[key]
+	if attri == nil {
+		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _bool := attri.attributeValue.GetHiddenToMarketplace() == bool_val; _bool {
+		return nil
+	}
+	if attri.from == "chain" {
+		newAttributeValue := &NftAttributeValue{
+			Name: attri.attributeValue.Name,
+			HiddenToMarketplace: bool_val,
+		}
+
+		m.ChangeList = append(m.ChangeList, &MetadataChange{
+			Key:           key,
+			PreviousValue: strconv.FormatBool(attri.attributeValue.GetHiddenToMarketplace()),
+			NewValue:      strconv.FormatBool(bool_val),
+		})
+		mapAllKey[key].attributeValue = newAttributeValue
+		m.nftData.OnchainAttributes[attri.index] = newAttributeValue
+	} else {
+		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 	}
 	return nil
 }

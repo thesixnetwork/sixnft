@@ -12,35 +12,35 @@
         "string_attribute_value": {
           "value": "Blue"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "moon",
         "string_attribute_value": {
           "value": "White"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "plate",
         "string_attribute_value": {
           "value": "Red"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "tail",
         "string_attribute_value": {
           "value": "Red"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "whale",
         "string_attribute_value": {
           "value": "Whale"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       }
     ],
     "onchain_attributes": [
@@ -49,49 +49,49 @@
         "number_attribute_value": {
           "value": "0"
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "missions_completed",
         "number_attribute_value": { 
           "value": "1" 
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "bonus_1",
         "boolean_attribute_value": {
           "value": false
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "bonus_2",
         "boolean_attribute_value": {
           "value": false
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "checked_in",
         "boolean_attribute_value": {
           "value": false
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "redeemed",
         "boolean_attribute_value": {
           "value": false
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       },
       {
         "name": "transformed",
         "boolean_attribute_value": {
           "value": false
         },
-        "disabled": false
+        "hidden_to_marketplace": false
       }
     ]
   }

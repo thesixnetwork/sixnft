@@ -12,7 +12,7 @@ const TypeMsgPerformActionByAdmin = "perform_action_by_admin"
 
 var _ sdk.Msg = &MsgPerformActionByAdmin{}
 
-func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId string, action string, actionPrams string) *MsgPerformActionByAdmin {
+func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId string, action string, refId string, actionPrams string) *MsgPerformActionByAdmin {
 	// string to json object of  []*ActionParameter
 	var actionPrams_ []*ActionParameter
 	err := json.Unmarshal([]byte(actionPrams), &actionPrams_)
@@ -25,6 +25,7 @@ func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId st
 		NftSchemaCode: nftSchemaCode,
 		TokenId:       tokenId,
 		Action:        action,
+		RefId:         refId,
 		Parameters:    actionPrams_,
 	}
 }

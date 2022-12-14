@@ -46,6 +46,7 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdSetFeeConfig())
 	cmd.AddCommand(CmdSetMintauth())
 	cmd.AddCommand(CmdChageOrgOwner())
+	cmd.AddCommand(CmdShowNftAttributes())
 	// this line is used by starport scaffolding # 1
 
 	return cmd
