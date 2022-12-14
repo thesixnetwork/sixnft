@@ -3,8 +3,9 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"strconv"
+
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -92,6 +93,13 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
+	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
+		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
+		if !found {
+			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
+		}
+		return &tokenData, nil
+	})
 
 	err := ProcessAction(meta, &mapAction, msg.Parameters)
 	if err != nil {
@@ -102,7 +110,14 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrEmptyChangeList, msg.Action)
 	}
 
+	// Update back to nftdata
 	k.Keeper.SetNftData(ctx, tokenData)
+
+	// Udpate to target
+	// loop over meta.OtherUpdatedTokenDatas
+	for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
+		k.Keeper.SetNftData(ctx, *otherTokenData)
+	}
 
 	// Check action with reference exists
 	if msg.RefId != "" {
