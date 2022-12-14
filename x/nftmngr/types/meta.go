@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"time"
@@ -351,7 +350,6 @@ func (p *ActionParameter) MustGetNumber(key string) (int64, error) {
 
 func (p *ActionParameter) GetNumber() int64 {
 	v, err := p.MustGetNumber(p.Name)
-	fmt.Printf("GetNumber %s %d %v", p.Name, v, err)
 	if err != nil {
 		panic(err)
 	}
