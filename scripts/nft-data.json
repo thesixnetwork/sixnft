@@ -11,31 +11,36 @@
         "name": "background",
         "string_attribute_value": {
           "value": "Blue"
-        }
+        },
+        "disabled": false
       },
       {
         "name": "moon",
         "string_attribute_value": {
           "value": "White"
-        }
+        },
+        "disabled": false
       },
       {
         "name": "plate",
         "string_attribute_value": {
           "value": "Red"
-        }
+        },
+        "disabled": false
       },
       {
         "name": "tail",
         "string_attribute_value": {
           "value": "Red"
-        }
+        },
+        "disabled": false
       },
       {
         "name": "whale",
         "string_attribute_value": {
           "value": "Whale"
-        }
+        },
+        "disabled": false
       }
     ],
     "onchain_attributes": [
@@ -43,41 +48,50 @@
         "name": "points",
         "number_attribute_value": {
           "value": "0"
-        }
+        },
+        "disabled": false
       },
       {
         "name": "missions_completed",
-        "number_attribute_value": { "value": "1" }
+        "number_attribute_value": { 
+          "value": "1" 
+        },
+        "disabled": false
       },
       {
         "name": "bonus_1",
         "boolean_attribute_value": {
           "value": false
-        }
+        },
+        "disabled": false
       },
       {
         "name": "bonus_2",
         "boolean_attribute_value": {
           "value": false
-        }
+        },
+        "disabled": false
       },
       {
         "name": "checked_in",
         "boolean_attribute_value": {
           "value": false
-        }
+        },
+        "disabled": false
       },
       {
         "name": "redeemed",
         "boolean_attribute_value": {
           "value": false
-        }
+        },
+        "disabled": false
       },
       {
         "name": "transformed",
         "boolean_attribute_value": {
           "value": false
-        }
+        },
+        "disabled": false
       }
     ]
   }

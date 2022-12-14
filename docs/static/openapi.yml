@@ -30812,16 +30812,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/action_by_ref_id/{refId}':
@@ -31324,16 +31314,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/metadata_creator/{nftSchemaCode}':
@@ -31614,6 +31594,8 @@ paths:
                               value:
                                 type: number
                                 format: double
+                          disabled:
+                            type: boolean
                     onchain_attributes:
                       type: array
                       items:
@@ -31643,6 +31625,8 @@ paths:
                               value:
                                 type: number
                                 format: double
+                          disabled:
+                            type: boolean
               pagination:
                 type: object
                 properties:
@@ -31906,16 +31890,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   /thesixnetwork/sixnft/nftmngr/nft_data:
@@ -31980,6 +31954,8 @@ paths:
                               value:
                                 type: number
                                 format: double
+                          disabled:
+                            type: boolean
                     onchain_attributes:
                       type: array
                       items:
@@ -32009,6 +31985,8 @@ paths:
                               value:
                                 type: number
                                 format: double
+                          disabled:
+                            type: boolean
               pagination:
                 type: object
                 properties:
@@ -32268,16 +32246,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftmngr/nft_data/{nftSchemaCode}/{tokenId}':
@@ -32340,6 +32308,8 @@ paths:
                             value:
                               type: number
                               format: double
+                        disabled:
+                          type: boolean
                   onchain_attributes:
                     type: array
                     items:
@@ -32369,6 +32339,8 @@ paths:
                             value:
                               type: number
                               format: double
+                        disabled:
+                          type: boolean
         default:
           description: An unexpected error response.
           schema:
@@ -33304,6 +33276,8 @@ paths:
                                   value:
                                     type: number
                                     format: double
+                              disabled:
+                                type: boolean
                     isVerified:
                       type: boolean
                     mint_authorization:
@@ -33564,16 +33538,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -33891,6 +33855,8 @@ paths:
                                 value:
                                   type: number
                                   format: double
+                            disabled:
+                              type: boolean
                   isVerified:
                     type: boolean
                   mint_authorization:
@@ -34364,16 +34330,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -34865,16 +34821,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -58453,6 +58399,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
   thesixnetwork.sixnft.nftmngr.MsgAddAttributeResponse:
     type: object
     properties:
@@ -58666,6 +58614,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
   thesixnetwork.sixnft.nftmngr.MsgAddSystemActionerResponse:
     type: object
     properties:
@@ -58961,6 +58911,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
   thesixnetwork.sixnft.nftmngr.NFTFeeBalance:
     type: object
     properties:
@@ -59294,6 +59246,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
       isVerified:
         type: boolean
       mint_authorization:
@@ -59334,6 +59288,8 @@ definitions:
           value:
             type: number
             format: double
+      disabled:
+        type: boolean
   thesixnetwork.sixnft.nftmngr.NftData:
     type: object
     properties:
@@ -59384,6 +59340,8 @@ definitions:
                 value:
                   type: number
                   format: double
+            disabled:
+              type: boolean
       onchain_attributes:
         type: array
         items:
@@ -59413,6 +59371,8 @@ definitions:
                 value:
                   type: number
                   format: double
+            disabled:
+              type: boolean
   thesixnetwork.sixnft.nftmngr.NumberAttributeValue:
     type: object
     properties:
@@ -59625,6 +59585,8 @@ definitions:
                 value:
                   type: number
                   format: double
+            disabled:
+              type: boolean
   thesixnetwork.sixnft.nftmngr.OpenseaDisplayOption:
     type: object
     properties:
@@ -60167,6 +60129,8 @@ definitions:
                           value:
                             type: number
                             format: double
+                      disabled:
+                        type: boolean
             isVerified:
               type: boolean
             mint_authorization:
@@ -60251,6 +60215,8 @@ definitions:
                       value:
                         type: number
                         format: double
+                  disabled:
+                    type: boolean
             onchain_attributes:
               type: array
               items:
@@ -60280,6 +60246,8 @@ definitions:
                       value:
                         type: number
                         format: double
+                  disabled:
+                    type: boolean
       pagination:
         type: object
         properties:
@@ -60729,6 +60697,8 @@ definitions:
                         value:
                           type: number
                           format: double
+                    disabled:
+                      type: boolean
           isVerified:
             type: boolean
           mint_authorization:
@@ -60788,6 +60758,8 @@ definitions:
                       value:
                         type: number
                         format: double
+                  disabled:
+                    type: boolean
             onchain_attributes:
               type: array
               items:
@@ -60817,6 +60789,8 @@ definitions:
                       value:
                         type: number
                         format: double
+                  disabled:
+                    type: boolean
       pagination:
         type: object
         properties:
@@ -60895,6 +60869,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
           onchain_attributes:
             type: array
             items:
@@ -60924,6 +60900,8 @@ definitions:
                     value:
                       type: number
                       format: double
+                disabled:
+                  type: boolean
   thesixnetwork.sixnft.nftmngr.QueryGetOrganizationResponse:
     type: object
     properties:
