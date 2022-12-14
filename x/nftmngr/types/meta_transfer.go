@@ -19,10 +19,17 @@ func (m *Metadata) TransferNumber(attributeName string, targetTokenId string, tr
 	}
 
 	numberValue := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue).NumberAttributeValue
-	// Get target NFTData
-	targetNftData, err := m.NftDataFunction(targetTokenId)
-	if err != nil {
-		return err
+	// check if exists in m.OtherUpdatedTokenDatas
+	var targetNftData *NftData
+	if _, ok := m.OtherUpdatedTokenDatas[targetTokenId]; ok {
+		targetNftData = m.OtherUpdatedTokenDatas[targetTokenId]
+	} else {
+		var err error
+		// Get target NFTData
+		targetNftData, err = m.NftDataFunction(targetTokenId)
+		if err != nil {
+			return err
+		}
 	}
 	// check if numberValue.Value > transferValue
 	if numberValue.Value < transferValue {
