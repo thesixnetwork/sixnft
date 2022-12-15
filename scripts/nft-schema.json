@@ -205,6 +205,54 @@
                         "trait_type": "Start Time"
                     }
                 }
+            },
+            {
+                "name": "start_time_local",
+                "default_mint_value": {
+                    "string_attribute_value": {
+                        "value": ""
+                    }
+                },
+                "data_type": "string",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Start Local Time"
+                    }
+                }
+            },
+            {
+                "name": "start_time_london",
+                "default_mint_value": {
+                    "string_attribute_value": {
+                        "value": ""
+                    }
+                },
+                "data_type": "string",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Start London Time"
+                    }
+                }
+            },
+            {
+                "name": "start_block",
+                "default_mint_value": {
+                    "string_attribute_value": {
+                        "value": ""
+                    }
+                },
+                "data_type": "string",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Start Time"
+                    }
+                }
             }
         ],
         "actions": [
@@ -217,7 +265,10 @@
                     "meta.SetBoolean('checked_in', true)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 200)",
-                    "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))"
+                    "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
+                    "meta.SetString('start_time_local',meta.GetLocalBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
+                    "meta.SetString('start_time_london',meta.GetBlockTimestampByZone('Europe/London','2006-01-02T15:04:05Z07:00'))",
+                    "meta.SetString('start_block',meta.GetBlockHeight())"
                 ]
             },
             {
