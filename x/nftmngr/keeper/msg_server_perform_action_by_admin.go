@@ -3,7 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-	"strconv"
+	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
@@ -88,11 +88,15 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
 		}
 		if msg.Parameters[i].Value == "" {
-			msg.Parameters[i].Value = strconv.Itoa(int(required_param[i].DefaultValue))
+			msg.Parameters[i].Value = required_param[i].DefaultValue
 		}
 	}
 
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
+	meta.SetGetBlockTimeFunction(func() time.Time {
+		return ctx.BlockTime()
+	})
+	
 	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
 		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
 		if !found {

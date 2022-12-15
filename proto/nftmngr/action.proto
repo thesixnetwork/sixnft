@@ -15,7 +15,7 @@ message action_params {
   string desc = 2;
   string data_type = 3;
   bool required = 4;
-  uint64 default_value = 5;
+  string default_value = 5;
 }
 
 message Action {

@@ -15,7 +15,6 @@ func (k Keeper) MetadataCreatorAll(c context.Context, req *types.QueryAllMetadat
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
-
 	var metadataCreators []types.MetadataCreator
 	ctx := sdk.UnwrapSDKContext(c)
 

@@ -15,7 +15,7 @@ var _ = strconv.Itoa(0)
 
 func CmdPerformActionByAdmin() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "perform-action-by-nftadmin [nft-schema-code] [token-id] [action] [action-params]]",
+		Use:   "perform-action-by-nftadmin [nft-schema-code] [token-id] [action] [ref-id] [action-params]]",
 		Short: "To do action",
 		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -24,6 +24,10 @@ func CmdPerformActionByAdmin() *cobra.Command {
 			argAction := args[2]
 			argRefId := args[3]
 			argActionParams := args[4]
+			
+			if argActionParams == "" || argActionParams == " "{
+				argActionParams = "[]"
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

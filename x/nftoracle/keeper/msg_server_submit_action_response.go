@@ -204,7 +204,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 			return sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
 		}
 		if actionRequest.Params[i].Value == "" {
-			actionRequest.Params[i].Value = strconv.Itoa(int(required_param[i].DefaultValue))
+			actionRequest.Params[i].Value = required_param[i].DefaultValue
 		}
 	}
 

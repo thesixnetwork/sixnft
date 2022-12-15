@@ -275,14 +275,14 @@
                         "desc": "Points",
                         "data_type": "number",
                         "required" : true,
-                        "default_value": 10
+                        "default_value": "10"
                     },
                     {
                         "name": "minimum_balance",
                         "desc": "Minimum balance before redeem",
                         "data_type": "number",
                         "required" : false,
-                        "default_value": 10
+                        "default_value": "10"
                     }
                 ],
                 "when": "meta.GetBoolean('checked_in') == true",
@@ -310,6 +310,30 @@
                 "when": "meta.GetBoolean('checked_in') == true || meta.GetBoolean('checked_in') == false",
                 "then": [
                     "meta.SetDisplayArribute(params['attibute_name'].GetString(), params['new_value'].GetString())"
+                ]
+            },
+            {
+                "name": "test_transfer",
+                "desc": "Test Transfer",
+                "params" : [
+                    {
+                        "name": "points",
+                        "desc": "Points",
+                        "data_type": "number",
+                        "required" : true,
+                        "default_value": "10"
+                    },
+                    {
+                        "name": "token_id",
+                        "desc": "Token Id",
+                        "data_type": "string",
+                        "required" : true,
+                        "default_value": ""
+                    }
+                ],
+                "when": "meta.GetNumber('points') > 0 && params['points'].GetNumber() > 0 ",
+                "then": [
+                    "meta.TransferNumber('points',params['token_id'].GetString(),params['points'].GetNumber())"
                 ]
             }
         ],

@@ -5,7 +5,6 @@ import (
 )
 
 func (m *Metadata) TransferNumber(attributeName string, targetTokenId string, transferValue uint64) error {
-
 	// Check if attribute exists in m.MapAllKey
 	if _, ok := m.MapAllKey[attributeName]; !ok {
 		return sdkerrors.Wrap(ErrAttributeDoesNotExists, attributeName)

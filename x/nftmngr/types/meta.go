@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	// "context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
@@ -22,6 +24,7 @@ type Metadata struct {
 	MapAllKey              map[string]*MetadataAttribute
 	OtherUpdatedTokenDatas map[string]*NftData
 	NftDataFunction        func(tokenId string) (*NftData, error)
+	GetBlockTimeFunction   func() time.Time
 }
 
 type MetadataAttribute struct {
@@ -79,11 +82,16 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 	return meta
 }
 
+func (m *Metadata) SetGetBlockTimeFunction(f func() time.Time) {
+	m.GetBlockTimeFunction = f
+}
+
 func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-func (m *Metadata) CurrentTimestamp() int64 {
+func (m *Metadata) CurrentTimestamp(f func(ctx sdk.Context)) int64 {
+	// var c context.Context
 	return time.Now().Unix()
 }
 
@@ -348,7 +356,7 @@ func (m *Metadata) SetDisplayArribute(key string, value string) error {
 	}
 	if attri.From == "chain" {
 		newAttributeValue := &NftAttributeValue{
-			Name: attri.AttributeValue.Name,
+			Name:                attri.AttributeValue.Name,
 			HiddenToMarketplace: bool_val,
 		}
 
@@ -370,15 +378,15 @@ func (m *Metadata) ReplaceAllString(intput string, regexpStr string, replaceStr 
 	return reg.ReplaceAllString(intput, replaceStr)
 }
 
-func (p *ActionParameter) MustGetNumber(key string) (int64, error) {
-	v, err := strconv.ParseInt(p.Value, 10, 64)
+func (p *ActionParameter) MustGetNumber(key string) (uint64, error) {
+	v, err := strconv.ParseUint(p.Value, 10, 64)
 	if err != nil {
 		return 0, sdkerrors.Wrap(ErrAttributeTypeNotMatch, key)
 	}
 	return v, nil
 }
 
-func (p *ActionParameter) GetNumber() int64 {
+func (p *ActionParameter) GetNumber() uint64 {
 	v, err := p.MustGetNumber(p.Name)
 	if err != nil {
 		panic(err)
