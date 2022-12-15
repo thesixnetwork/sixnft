@@ -275,7 +275,7 @@
                 "name": "claim_bonus_1",
                 "desc": "Claim Bonus 1",
                 "params":[],
-                "when": "meta.GetBoolean('bonus_1') == false",
+                "when": "meta.GetBoolean('bonus_1') == false && meta.BlockTimeUTCBefore('2022-12-15T18:27:52Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('bonus_1', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 200)"

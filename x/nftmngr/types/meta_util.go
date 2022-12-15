@@ -33,12 +33,24 @@ func (m *Metadata) GetLocalBlockTimestamp(format string) string {
 	return m.getBlockTimestamp().Local().Format(format)
 }
 
-func (m *Metadata) Before(t string, format string) bool {
+func (m *Metadata) BlockTimeUTCBefore(t string, format string) bool {
 	_t, _ := time.Parse(format, t) // to UTC(time.RFC3339, time)
 	return m.getBlockTimestamp().Before(_t)
 }
 
-func (m *Metadata) After(t string, format string) bool {
+func (m *Metadata) BlockTimeUTCAfter(t string, format string) bool {
 	_t, _ := time.Parse(format, t) // to UTC(time.RFC3339, time)
+	return m.getBlockTimestamp().After(_t)
+}
+
+func (m *Metadata) BlockTimeBeforeByZone(t string, zone string, format string) bool {
+	loc, _ := time.LoadLocation(zone)
+	_t, _ := time.ParseInLocation(format, t, loc)
+	return m.getBlockTimestamp().Before(_t)
+}
+
+func (m *Metadata) BlockTimeAfterByZone(t string, zone string, format string) bool {
+	loc, _ := time.LoadLocation(zone)
+	_t, _ := time.ParseInLocation(format, t, loc)
 	return m.getBlockTimestamp().After(_t)
 }
