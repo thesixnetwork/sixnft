@@ -189,6 +189,22 @@
                         "trait_type": "Transformed"
                     }
                 }
+            },
+            {
+                "name": "start_time",
+                "default_mint_value": {
+                    "string_attribute_value": {
+                        "value": ""
+                    }
+                },
+                "data_type": "string",
+                "required": true,
+                "display_value_field": "value",
+                "display_option": {
+                    "opensea": {
+                        "trait_type": "Start Time"
+                    }
+                }
             }
         ],
         "actions": [
@@ -200,7 +216,8 @@
                 "then": [
                     "meta.SetBoolean('checked_in', true)",
                     "meta.SetNumber('missions_completed', meta.GetNumber('missions_completed') + 1)",
-                    "meta.SetNumber('points', meta.GetNumber('points') + 200)"
+                    "meta.SetNumber('points', meta.GetNumber('points') + 200)",
+                    "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))"
                 ]
             },
             {

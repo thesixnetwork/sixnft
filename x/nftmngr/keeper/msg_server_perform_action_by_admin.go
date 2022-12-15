@@ -93,16 +93,17 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
-	meta.SetGetBlockTimeFunction(func() time.Time {
-		return ctx.BlockTime()
-	})
-	
 	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
 		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
 		if !found {
 			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
 		}
 		return &tokenData, nil
+	})
+
+	// utils function
+	meta.SetGetBlockTimeFunction(func() time.Time {
+		return ctx.BlockTime()
 	})
 
 	err := ProcessAction(meta, &mapAction, msg.Parameters)

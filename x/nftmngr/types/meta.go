@@ -5,8 +5,6 @@ import (
 	"strconv"
 	"time"
 
-	// "context"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
@@ -90,8 +88,7 @@ func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-func (m *Metadata) CurrentTimestamp(f func(ctx sdk.Context)) int64 {
-	// var c context.Context
+func (m *Metadata) CurrentTimestamp() int64 {
 	return time.Now().Unix()
 }
 
