@@ -4,5 +4,6 @@
     "action": "ACTION",
     "params":[{"name":"points","value":"10"}],
     "expired_at": "2022-10-31T00:00:00.000Z",
-    "ref_id": "REFID"
+    "ref_id": "REFID",
+    "on_behalf_of": "ONBEHALFOF"
 }

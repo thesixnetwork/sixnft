@@ -26,7 +26,7 @@ func (k msgServer) SubmitMintResponse(goCtx context.Context, msg *types.MsgSubmi
 		return nil, err
 	}
 
-	granted := k.adminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, msg.Creator)
 	}

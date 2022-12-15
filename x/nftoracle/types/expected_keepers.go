@@ -46,7 +46,7 @@ type NftmngrKeep interface {
 	SetActionByRefId(ctx sdk.Context, actionByRefId nftmngrtypes.ActionByRefId)
 }
 
-type AdminKeeper interface {
+type NftadminKeeper interface {
 	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)
 	HasPermission(ctx sdk.Context, name string, addr sdk.AccAddress) bool
 }

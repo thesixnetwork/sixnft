@@ -27,6 +27,7 @@ message ActionOracleParam {
   string ref_id = 5;
   google.protobuf.Timestamp expired_at = 6
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  string on_behalf_of = 7;
 }
 
 message ActionOracleRequest {

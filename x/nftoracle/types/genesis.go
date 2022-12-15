@@ -14,6 +14,7 @@ func DefaultGenesis() *GenesisState {
 		ActionRequestList:          []ActionOracleRequest{},
 		CollectionOwnerRequestList: []CollectionOwnerRequest{},
 		OracleConfig:               nil,
+		ActionSignerList:           []ActionSigner{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -57,6 +58,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("collectionOwnerRequest id should be lower or equal than the last id")
 		}
 		collectionOwnerRequestIdMap[elem.Id] = true
+	}
+	// Check for duplicated index in actionSigner
+	actionSignerIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.ActionSignerList {
+		index := string(ActionSignerKey(elem.ActorAddress))
+		if _, ok := actionSignerIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for actionSigner")
+		}
+		actionSignerIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

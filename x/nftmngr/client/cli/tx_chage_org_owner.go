@@ -26,7 +26,7 @@ func CmdChageOrgOwner() *cobra.Command {
 				return err
 			}
 
-			msg := types.NewMsgChageOrgOwner(
+			msg := types.NewMsgChangeOrgOwner(
 				clientCtx.GetFromAddress().String(),
 				argOrgName,
 				argToNewOwner,

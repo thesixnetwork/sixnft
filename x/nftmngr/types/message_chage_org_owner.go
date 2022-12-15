@@ -5,27 +5,27 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const TypeMsgChageOrgOwner = "chage_org_owner"
+const TypeMsgChangeOrgOwner = "chage_org_owner"
 
-var _ sdk.Msg = &MsgChageOrgOwner{}
+var _ sdk.Msg = &MsgChangeOrgOwner{}
 
-func NewMsgChageOrgOwner(creator string, orgName string, toNewOwner string) *MsgChageOrgOwner {
-	return &MsgChageOrgOwner{
+func NewMsgChangeOrgOwner(creator string, orgName string, toNewOwner string) *MsgChangeOrgOwner {
+	return &MsgChangeOrgOwner{
 		Creator:    creator,
 		OrgName:    orgName,
 		ToNewOwner: toNewOwner,
 	}
 }
 
-func (msg *MsgChageOrgOwner) Route() string {
+func (msg *MsgChangeOrgOwner) Route() string {
 	return RouterKey
 }
 
-func (msg *MsgChageOrgOwner) Type() string {
-	return TypeMsgChageOrgOwner
+func (msg *MsgChangeOrgOwner) Type() string {
+	return TypeMsgChangeOrgOwner
 }
 
-func (msg *MsgChageOrgOwner) GetSigners() []sdk.AccAddress {
+func (msg *MsgChangeOrgOwner) GetSigners() []sdk.AccAddress {
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		panic(err)
@@ -33,12 +33,12 @@ func (msg *MsgChageOrgOwner) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{creator}
 }
 
-func (msg *MsgChageOrgOwner) GetSignBytes() []byte {
+func (msg *MsgChangeOrgOwner) GetSignBytes() []byte {
 	bz := ModuleCdc.MustMarshalJSON(msg)
 	return sdk.MustSortJSON(bz)
 }
 
-func (msg *MsgChageOrgOwner) ValidateBasic() error {
+func (msg *MsgChangeOrgOwner) ValidateBasic() error {
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)

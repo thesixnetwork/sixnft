@@ -50,6 +50,14 @@ func TestGenesisState_Validate(t *testing.T) {
 				},
 				CollectionOwnerRequestCount: 2,
 				OracleConfig:                &types.OracleConfig{},
+				ActionSignerList: []types.ActionSigner{
+					{
+						ActorAddress: "0",
+					},
+					{
+						ActorAddress: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -129,6 +137,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				CollectionOwnerRequestCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionSigner",
+			genState: &types.GenesisState{
+				ActionSignerList: []types.ActionSigner{
+					{
+						ActorAddress: "0",
+					},
+					{
+						ActorAddress: "0",
+					},
+				},
 			},
 			valid: false,
 		},
