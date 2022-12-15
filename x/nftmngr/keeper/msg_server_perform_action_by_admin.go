@@ -56,7 +56,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable { //! <== fix bug that didn't check if action name
+		if action.Name == msg.Action && action.Disable { 
 			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
 		}
 		if action.Name == msg.Action {
@@ -104,6 +104,11 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	// utils function
 	meta.SetGetBlockTimeFunction(func() time.Time {
 		return ctx.BlockTime()
+	})
+
+	// utils function
+	meta.SetGetBlockHeightFunction(func() int64 {
+		return ctx.BlockHeight()
 	})
 
 	err := ProcessAction(meta, &mapAction, msg.Parameters)

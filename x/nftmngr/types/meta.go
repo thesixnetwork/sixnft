@@ -23,6 +23,7 @@ type Metadata struct {
 	OtherUpdatedTokenDatas map[string]*NftData
 	NftDataFunction        func(tokenId string) (*NftData, error)
 	GetBlockTimeFunction   func() time.Time
+	GetBlockHeightFunction func() int64
 }
 
 type MetadataAttribute struct {
@@ -78,6 +79,10 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 
 	}
 	return meta
+}
+
+func (m *Metadata) SetGetBlockHeightFunction(f func() int64) {
+	m.GetBlockHeightFunction = f
 }
 
 func (m *Metadata) SetGetBlockTimeFunction(f func() time.Time) {
