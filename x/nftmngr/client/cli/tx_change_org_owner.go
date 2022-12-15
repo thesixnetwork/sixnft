@@ -12,9 +12,9 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdChageOrgOwner() *cobra.Command {
+func CmdChangeOrgOwner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "chage-org-owner [org-name] [to-new-owner]",
+		Use:   "change-org-owner [org-name] [to-new-owner]",
 		Short: "Change Organization Owner",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
