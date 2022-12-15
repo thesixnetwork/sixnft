@@ -148,6 +148,7 @@ message MsgToggleAction {
   string creator = 1;
   string code = 2;
   string action = 3;
+  bool disable = 4;
 }
 
 message MsgToggleActionResponse {

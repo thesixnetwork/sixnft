@@ -61,10 +61,30 @@ case $choice in
         read -p "Enter Token ID: " token_id
         read -p "Enter Action: " action
         read -p "Enter Ref ID: " ref_id
+        read -p "Enter Params: " required_params
         read -p "Enter Params: " params
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
+        # check if required_params is empty
+        if [ -z "$required_params" ]; then
+            required_params=0
+        fi
+        # check if params is empty
+        if [ -z "$params" ]; then
+            params="[]"
+        fi
+        # # loop through required_params
+        # for ((i=1;i<=required_params;i++)); do
+        #     read -p "Enter Param ${i}: " param
+        #     # check if params is empty
+        #     if [ -z "$params" ]; then
+        #         params="[\"${param}\"]"
+        #     else
+        #         params="${params}, \"${param}\""
+        #     fi
+        # done
+
         sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             --chain-id sixnft
         ;;
