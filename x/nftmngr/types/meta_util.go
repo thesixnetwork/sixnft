@@ -32,3 +32,13 @@ func (m *Metadata) GetBlockTimestampByZone(zone string ,format string) string {
 func (m *Metadata) GetLocalBlockTimestamp(format string) string {
 	return m.getBlockTimestamp().Local().Format(format)
 }
+
+func (m *Metadata) Before(t string, format string) bool {
+	_t, _ := time.Parse(format, t) // to UTC(time.RFC3339, time)
+	return m.getBlockTimestamp().Before(_t)
+}
+
+func (m *Metadata) After(t string, format string) bool {
+	_t, _ := time.Parse(format, t) // to UTC(time.RFC3339, time)
+	return m.getBlockTimestamp().After(_t)
+}
