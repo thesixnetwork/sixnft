@@ -33,6 +33,7 @@ type ActionParam struct {
 	Action        string    `protobuf:"bytes,3,opt,name=action,proto3" json:"action,omitempty"`
 	RefId         string    `protobuf:"bytes,4,opt,name=ref_id,json=refId,proto3" json:"ref_id,omitempty"`
 	ExpiredAt     time.Time `protobuf:"bytes,5,opt,name=expired_at,json=expiredAt,proto3,stdtime" json:"expired_at"`
+	OnBehalfOf    string    `protobuf:"bytes,6,opt,name=on_behalf_of,json=onBehalfOf,proto3" json:"on_behalf_of,omitempty"`
 }
 
 func (m *ActionParam) Reset()         { *m = ActionParam{} }
@@ -101,6 +102,13 @@ func (m *ActionParam) GetExpiredAt() time.Time {
 		return m.ExpiredAt
 	}
 	return time.Time{}
+}
+
+func (m *ActionParam) GetOnBehalfOf() string {
+	if m != nil {
+		return m.OnBehalfOf
+	}
+	return ""
 }
 
 type ActionRequest struct {
@@ -327,6 +335,13 @@ func (m *ActionParam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
+	if len(m.OnBehalfOf) > 0 {
+		i -= len(m.OnBehalfOf)
+		copy(dAtA[i:], m.OnBehalfOf)
+		i = encodeVarintActionRequest(dAtA, i, uint64(len(m.OnBehalfOf)))
+		i--
+		dAtA[i] = 0x32
+	}
 	n1, err1 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.ExpiredAt, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.ExpiredAt):])
 	if err1 != nil {
 		return 0, err1
@@ -530,6 +545,10 @@ func (m *ActionParam) Size() (n int) {
 	}
 	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.ExpiredAt)
 	n += 1 + l + sovActionRequest(uint64(l))
+	l = len(m.OnBehalfOf)
+	if l > 0 {
+		n += 1 + l + sovActionRequest(uint64(l))
+	}
 	return n
 }
 
@@ -792,6 +811,38 @@ func (m *ActionParam) Unmarshal(dAtA []byte) error {
 			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.ExpiredAt, dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OnBehalfOf", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionRequest
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionRequest
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OnBehalfOf = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

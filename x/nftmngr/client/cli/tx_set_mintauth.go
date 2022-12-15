@@ -19,7 +19,7 @@ func CmdSetMintauth() *cobra.Command {
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argNftSchemaCode := args[0]
-			argAuthorizeTo:= args[1]
+			argAuthorizeTo := args[1]
 			if err != nil {
 				return err
 			}
@@ -28,7 +28,7 @@ func CmdSetMintauth() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			
+
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err

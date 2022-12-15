@@ -1,6 +1,5 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.evmsupport;
-
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/evmsupport/types";

@@ -1,0 +1,26 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.nftoracle;
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
+
+message ActionSigner {
+  string actor_address = 1; 
+  string owner_address = 2; 
+  google.protobuf.Timestamp created_at = 3
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; 
+  google.protobuf.Timestamp expired_at = 4
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}
+
+message SetSignerSignature {
+  string signature = 1;
+  string message = 2;
+}
+
+
+message SetSignerParams {
+  string actor_address = 1; 
+  google.protobuf.Timestamp expired_at = 2
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}

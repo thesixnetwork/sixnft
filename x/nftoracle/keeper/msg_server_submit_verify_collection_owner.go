@@ -23,7 +23,7 @@ func (k msgServer) SubmitVerifyCollectionOwner(goCtx context.Context, msg *types
 	}
 
 	// check if creator or oracle has permission
-	granted := k.adminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, msg.Creator)
 	}

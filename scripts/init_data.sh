@@ -19,5 +19,7 @@ grantOracle 6nft1mvw6jk5wuhxmyd0edgj9d3d0nr5amrmxsejcc7
 grantOracle 6nft1d5auhw4hfg49fmzfngpaz98vn4f59yazu6j72s
 grantOracle 6nft1kl7qw9jw0zatph3jc7mdaf3xd5p7aw4edy8svq
 
+sixnftd tx nftadmin grant-permission binder $(sixnftd keys show alice -a) --from alice -y
+
 sixnftd q nftadmin show-authorization \
     --node ${RPC_ENDPOINT}

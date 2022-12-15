@@ -32,7 +32,7 @@ type EvmsupportKeeper interface {
 	) (val evmtypes.AddressBinding, found bool)
 }
 
-type AdminKeeper interface {
+type NftadminKeeper interface {
 	GetAuthorization(ctx sdk.Context) (val nftadmintypes.Authorization, found bool)
 	HasPermission(ctx sdk.Context, name string, addr sdk.AccAddress) bool
 }

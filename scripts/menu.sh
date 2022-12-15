@@ -23,6 +23,10 @@ echo "##  13. Oracle - Get Verify Request        ##"
 echo "##  14. Oracle - Submit Verify Response    ##"
 echo "##  15. Add Attribute                      ##"
 echo "##  16. Add Action                         ##"
+echo "##  17. Set Signer                         ##"
+echo "##  18. Show ActionSigner By Address       ##"
+echo "##  19. Oracle - Action Request By Signer  ##"
+echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
 read -p "Your choice: " choice
@@ -137,7 +141,7 @@ case $choice in
             schema_code=$default_schema_code
         fi
 
-        BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g"`
+        BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g" | sed "s/ONBEHALFOF/""/g"`
         # echo "BASE64JSON: ${BASE64JSON}"
         BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
         # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
@@ -147,7 +151,7 @@ case $choice in
         BASE64_ACTION_SIG=`cat action-signature.json | sed "s/SIGNATURE/${MESSAGE_SIG}/g" | sed "s/MESSAGE/${BASE64_MESSAGE}/g" | base64 | tr -d '\n'`
 
         # echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret 1
-        # echo -n ${BASE64_MESSAGE} | wc -c
+        # echo  ${BASE64_ACTION_SIG} 
         sixnftd tx nftoracle create-action-request ethereum ${BASE64_ACTION_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
         ;;
     10) echo "Oracle - Get Action Request"
@@ -212,6 +216,46 @@ case $choice in
         BASE64_ACTION=`cat new-action.json | base64 | tr -d '\n'`
         sixnftd tx nftmngr add-action ${schema_code} ${BASE64_ACTION} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             --chain-id sixnft
+        ;;
+     17) echo "Set Signer"
+        BASE64JSON=`cat set-signer.json`
+        # echo "BASE64JSON: ${BASE64JSON}"
+        BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
+        # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
+        MESSAGE_SIG=`echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret`
+        # echo "MESSAGE_SIG: ${MESSAGE_SIG}"
+
+        BASE64_VERIFY_SIG=`cat verify-signature.json | sed "s/SIGNATURE/${MESSAGE_SIG}/g" | sed "s/MESSAGE/${BASE64_MESSAGE}/g" | base64 | tr -d '\n'`
+
+        sixnftd tx nftoracle create-action-signer ${BASE64_VERIFY_SIG} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y
+        ;;
+    18) echo "Show Action Signer"
+        read -p "Enter Signer Address (ETH): " signer_address
+        sixnftd q nftoracle show-action-signer ${signer_address}  --chain-id sixnft -o json | jq .
+        ;;
+    19) echo "Oracle - ActionSigner Action Request"
+       read -p "Enter Schema Code: " schema_code 
+        read -p "Enter Token ID: " token_id
+        read -p "Enter Action: " action
+        read -p "Enter OnBehalfOf: " on_behalf_of
+        read -p "Require confirmations: " require_confirmations
+        read -p "Reference ID: " reference_id
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+
+        BASE64JSON=`cat action-param.json | sed "s/ACTION/${action}/g" | sed "s/TOKEN_ID/${token_id}/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | sed "s/REFID/${reference_id}/g" | sed "s/ON_BEHALF_OF/${on_behalf_of}/g"`
+        # echo "BASE64JSON: ${BASE64JSON}"
+        BASE64_MESSAGE=`echo -n $BASE64JSON | base64 | tr -d '\n'`
+        # echo "BASE64_MESSAGE: ${BASE64_MESSAGE}"
+        MESSAGE_SIG=`echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret2`
+        # echo "MESSAGE_SIG: ${MESSAGE_SIG}"
+
+        BASE64_ACTION_SIG=`cat action-signature.json | sed "s/SIGNATURE/${MESSAGE_SIG}/g" | sed "s/MESSAGE/${BASE64_MESSAGE}/g" | base64 | tr -d '\n'`
+
+        # echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret 1
+        # echo  ${BASE64_ACTION_SIG} 
+        sixnftd tx nftoracle create-action-request ethereum ${BASE64_ACTION_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
         ;;
     *) echo "Invalid choice"
        ;;

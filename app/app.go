@@ -429,6 +429,7 @@ func New(
 
 		app.BankKeeper,
 	)
+
 	app.NftmngrKeeper = *nftmngrmodulekeeper.NewKeeper(
 		appCodec,
 		keys[nftmngrmoduletypes.StoreKey],
