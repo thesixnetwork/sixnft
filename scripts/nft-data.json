@@ -45,49 +45,105 @@
     ],
     "onchain_attributes": [
       {
-        "name": "points",
-        "number_attribute_value": {
-          "value": "0"
+        "name": "missions_passed",
+        "number_attribute_value": { 
+          "value": "0" 
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "jan_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "feb_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "mar_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "apr_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "may_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "jun_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "jul_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "aug_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "sep_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "oct_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "nov_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "dec_claim",
+        "boolean_attribute_value": {
+          "value": false
+        },
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "started",
+        "boolean_attribute_value": {
+          "value": false
         },
         "hidden_to_marketplace": false
       },
       {
         "name": "missions_completed",
-        "number_attribute_value": { 
-          "value": "1" 
-        },
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "bonus_1",
-        "boolean_attribute_value": {
-          "value": false
-        },
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "bonus_2",
-        "boolean_attribute_value": {
-          "value": false
-        },
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "checked_in",
-        "boolean_attribute_value": {
-          "value": false
-        },
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "redeemed",
-        "boolean_attribute_value": {
-          "value": false
-        },
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "transformed",
         "boolean_attribute_value": {
           "value": false
         },
