@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"time"
 
 	nftmngrkeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -222,6 +223,24 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 	}
 
 	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding)
+
+	meta.SetGetNFTFunction(func(tokenId string) (*nftmngrtypes.NftData, error) {
+		tokenData, found := k.nftmngrKeeper.GetNftData(ctx, schema.Code, tokenId)
+		if !found {
+			return nil, sdkerrors.Wrap(nftmngrtypes.ErrMetadataDoesNotExists, schema.Code)
+		}
+		return &tokenData, nil
+	})
+
+	// utils function
+	meta.SetGetBlockTimeFunction(func() time.Time {
+		return ctx.BlockTime()
+	})
+
+	// utils function
+	meta.SetGetBlockHeightFunction(func() int64 {
+		return ctx.BlockHeight()
+	})
 
 	err := ProcessAction(meta, &mapAction, input_param)
 	if err != nil {
