@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
+	// nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -40,18 +41,53 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer)
 		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
 			*signer = _actionSigner.OwnerAddress
-		} else if actionOralceParam.OnBehalfOf == *signer {
-			// do nothing
-		} else {
+		}else {
 			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")
 		}
 	}
 
-	// Check if nft_schema_code exists
+	// get schema from action request
 	_, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionOralceParam.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionOralceParam.NftSchemaCode)
 	}
+
+	// mapAction := nftmngrtypes.Action{}
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == actionOralceParam.Action && action.Disable { 
+	// 		return nil, sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == actionOralceParam.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// Check if action requires parameters
+	// param := mapAction.GetParams()
+	// required_param := make([]*nftmngrtypes.ActionParams, 0)
+
+	// for _, p := range param {
+	// 	if p.Required {
+	// 		required_param = append(required_param, p)
+	// 	}
+	// }
+
+	// if len(required_param) > len(actionOralceParam.Params) {
+	// 	return nil, sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
+	// }
+
+	// for i := 0; i < len(required_param); i++ {
+	// 	if actionOralceParam.Params[i].Name != required_param[i].Name {
+	// 		return nil, sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
+	// 	}
+	// 	if actionOralceParam.Params[i].Value == "" {
+	// 		actionOralceParam.Params[i].Value = required_param[i].DefaultValue
+	// 	}
+	// }
+	
+	// var actionRequest types.ActionRequest
+
 	// Check if the token is already Actioned
 	_, found = k.nftmngrKeeper.GetNftData(ctx, actionOralceParam.NftSchemaCode, actionOralceParam.TokenId)
 	if !found {

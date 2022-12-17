@@ -86,19 +86,21 @@
             {
                 "name": "missions_completed",
                 "default_mint_value": {
-                    "number_attribute_value": {
-                        "value": 1
+                    "boolean_attribute_value": {
+                        "value": false
                     }
                 },
-                "data_type": "number",
+                "data_type": "boolean",
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "No",
                     "opensea": {
-                        "trait_type": "Missions Completed",
-                        "max_value": 3
+                        "trait_type": "All Mission is complete"
                     }
-                }
+                },
+                "hidden_to_marketplace": true
             },
             {
                 "name": "started",
@@ -366,25 +368,6 @@
                 "hidden_to_marketplace": true
             },
             {
-                "name": "started",
-                "default_mint_value": {
-                    "boolean_attribute_value": {
-                        "value": false
-                    }
-                },
-                "data_type": "boolean",
-                "required": true,
-                "display_value_field": "value",
-                "display_option": {
-                    "bool_true_value": "Yes",
-                    "bool_false_value": "No",
-                    "opensea": {
-                        "trait_type": "Started"
-                    }
-                },
-                "hidden_to_marketplace": false
-            },
-            {
                 "name": "start_time",
                 "default_mint_value": {
                     "string_attribute_value": {
@@ -453,6 +436,7 @@
             {
                 "name": "start_mission",
                 "desc": "Start Mission",
+                "params":[],
                 "when": "meta.GetBoolean('started') == false",
                 "then": [
                     "meta.SetBoolean('started', true)",
@@ -467,6 +451,7 @@
             {
                 "name": "claim_jan",
                 "desc": "Claim Jan Mission",
+                "params":[],
                 "when": "meta.GetBoolean('jan_claim') == false && meta.BlockTimeUTCBefore('2022-02-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-01-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('jan_claim', true)",
@@ -476,6 +461,7 @@
             {
                 "name": "claim_feb",
                 "desc": "Claim Feb Mission",
+                "params":[],
                 "when": "meta.GetBoolean('feb_claim') == false && meta.BlockTimeUTCBefore('2022-03-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-02-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('feb_claim', true)",
@@ -485,6 +471,7 @@
             {
                 "name": "claim_mar",
                 "desc": "Claim Mar Mission",
+                "params":[],
                 "when": "meta.GetBoolean('mar_claim') == false && meta.BlockTimeUTCBefore('2022-04-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-03-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('mar_claim', true)",
@@ -494,6 +481,7 @@
             {
                 "name": "claim_apr",
                 "desc": "Claim Apr Mission",
+                "params":[],
                 "when": "meta.GetBoolean('apr_claim') == false && meta.BlockTimeUTCBefore('2022-05-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-04-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('apr_claim', true)",
@@ -503,6 +491,7 @@
             {
                 "name": "claim_may",
                 "desc": "Claim May Mission",
+                "params":[],
                 "when": "meta.GetBoolean('may_claim') == false && meta.BlockTimeUTCBefore('2022-06-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-05-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('may_claim', true)",
@@ -512,6 +501,7 @@
             {
                 "name": "claim_jun",
                 "desc": "Claim Jun Mission",
+                "params":[],
                 "when": "meta.GetBoolean('jun_claim') == false && meta.BlockTimeUTCBefore('2022-07-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-06-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('jun_claim', true)",
@@ -521,6 +511,7 @@
             {
                 "name": "claim_jul",
                 "desc": "Claim Jul Mission",
+                "params":[],
                 "when": "meta.GetBoolean('jul_claim') == false && meta.BlockTimeUTCBefore('2022-08-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-07-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('jul_claim', true)",
@@ -530,6 +521,7 @@
             {
                 "name": "claim_aug",
                 "desc": "Claim Aug Mission",
+                "params":[],
                 "when": "meta.GetBoolean('aug_claim') == false && meta.BlockTimeUTCBefore('2022-09-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-08-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('aug_claim', true)",
@@ -539,6 +531,7 @@
             {
                 "name": "claim_sep",
                 "desc": "Claim Sep Mission",
+                "params":[],
                 "when": "meta.GetBoolean('sep_claim') == false && meta.BlockTimeUTCBefore('2022-10-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-09-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('sep_claim', true)",
@@ -548,6 +541,7 @@
             {
                 "name": "claim_oct",
                 "desc": "Claim Oct Mission",
+                "params":[],
                 "when": "meta.GetBoolean('oct_claim') == false && meta.BlockTimeUTCBefore('2022-11-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-10-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('oct_claim', true)",
@@ -557,6 +551,7 @@
             {
                 "name": "claim_nov",
                 "desc": "Claim Nov Mission",
+                "params":[],
                 "when": "meta.GetBoolean('nov_claim') == false && meta.BlockTimeUTCBefore('2022-12-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-11-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('nov_claim', true)",
@@ -566,6 +561,7 @@
             {
                 "name": "claim_dec",
                 "desc": "Claim Dec Mission",
+                "params":[],
                 "when": "meta.GetBoolean('dec_claim') == false && meta.BlockTimeUTCBefore('2023-01-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-12-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
                 "then": [
                     "meta.SetBoolean('dec_claim', true)",
@@ -601,7 +597,7 @@
                         "default_value": "10"
                     }
                 ],
-                "when": "meta.GetBoolean('checked_in') == true && meta.GetNumber('points') >= params['minimum_balance'].GetNumber()",
+                "when": "meta.GetBoolean('started') == true",
                 "then": [
                     "meta.SetNumber('points', meta.GetNumber('points') - params['points'].GetNumber())"
                 ]

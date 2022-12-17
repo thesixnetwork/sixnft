@@ -173,13 +173,18 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 	if actionRequest.Caller != actionRequest.DataHashes[0].OriginData.HolderAddress {
 		return sdkerrors.Wrap(types.ErrUnauthorizedCaller, actionRequest.Caller)
 	}
+
 	mapAction := nftmngrtypes.Action{}
 	for _, action := range schema.OnchainData.Actions {
+		if action.Name == actionRequest.Action && action.Disable {
+			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+		}
 		if action.Name == actionRequest.Action {
 			mapAction = *action
 			break
 		}
 	}
+
 	// Check if AllowedAction is for user
 	if mapAction.GetAllowedActioner() == nftmngrtypes.AllowedActioner_ALLOWED_ACTIONER_SYSTEM_ONLY {
 		return sdkerrors.Wrap(nftmngrtypes.ErrActionIsForSystemOnly, mapAction.Name)
