@@ -60,7 +60,7 @@ var (
 	ErrActionIsForUserOnly    = sdkerrors.Register(ModuleName, 305, "This action can be done by user only")
 	ErrActionIsForSystemOnly  = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
 	ErrInvalidParameter       = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
-	ErrActionAlreadyDisabled  = sdkerrors.Register(ModuleName, 308, "Action already disabled")
+	ErrActionAlreadySetAsInput  = sdkerrors.Register(ModuleName, 308, "Action set as input")
 
 	ErrOrganizationOwner    = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
 	ErrOrganizationNotFound = sdkerrors.Register(ModuleName, 401, "Organization not found")

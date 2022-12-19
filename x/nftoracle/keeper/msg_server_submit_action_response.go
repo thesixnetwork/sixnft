@@ -253,6 +253,12 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 
 	k.nftmngrKeeper.SetNftData(ctx, *tokenData)
 
+	// Udpate to target
+	// loop over meta.OtherUpdatedTokenDatas
+	for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
+		k.nftmngrKeeper.SetNftData(ctx, *otherTokenData)
+	}
+
 	// Check action with reference exists
 	if actionRequest.RefId != "" {
 
