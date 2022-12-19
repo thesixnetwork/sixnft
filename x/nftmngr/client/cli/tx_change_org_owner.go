@@ -7,31 +7,29 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	"github.com/spf13/cobra"
-	"github.com/thesixnetwork/sixnft/x/evmsupport/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 var _ = strconv.Itoa(0)
 
-func CmdBindAddress() *cobra.Command {
+func CmdChangeOrgOwner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "bind-address [eth-address] [signature] [signed-message]",
-		Short: "To bind EVM address with native address",
-		Args:  cobra.ExactArgs(3),
+		Use:   "change-org-owner [org-name] [to-new-owner]",
+		Short: "Change Organization Owner",
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argEthAddress := args[0]
-			argSignature := args[1]
-			argSignedMessage := args[2]
+			argOrgName := args[0]
+			argToNewOwner := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgBindAddress(
+			msg := types.NewMsgChangeOrgOwner(
 				clientCtx.GetFromAddress().String(),
-				argEthAddress,
-				argSignature,
-				argSignedMessage,
+				argOrgName,
+				argToNewOwner,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

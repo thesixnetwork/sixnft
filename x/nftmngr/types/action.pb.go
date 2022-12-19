@@ -51,20 +51,97 @@ func (AllowedActioner) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_4895bbc0baa3e92e, []int{0}
 }
 
+type ActionParams struct {
+	Name         string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Desc         string `protobuf:"bytes,2,opt,name=desc,proto3" json:"desc,omitempty"`
+	DataType     string `protobuf:"bytes,3,opt,name=data_type,json=dataType,proto3" json:"data_type,omitempty"`
+	Required     bool   `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
+	DefaultValue string `protobuf:"bytes,5,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+}
+
+func (m *ActionParams) Reset()         { *m = ActionParams{} }
+func (m *ActionParams) String() string { return proto.CompactTextString(m) }
+func (*ActionParams) ProtoMessage()    {}
+func (*ActionParams) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4895bbc0baa3e92e, []int{0}
+}
+func (m *ActionParams) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ActionParams) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ActionParams.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ActionParams) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ActionParams.Merge(m, src)
+}
+func (m *ActionParams) XXX_Size() int {
+	return m.Size()
+}
+func (m *ActionParams) XXX_DiscardUnknown() {
+	xxx_messageInfo_ActionParams.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ActionParams proto.InternalMessageInfo
+
+func (m *ActionParams) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ActionParams) GetDesc() string {
+	if m != nil {
+		return m.Desc
+	}
+	return ""
+}
+
+func (m *ActionParams) GetDataType() string {
+	if m != nil {
+		return m.DataType
+	}
+	return ""
+}
+
+func (m *ActionParams) GetRequired() bool {
+	if m != nil {
+		return m.Required
+	}
+	return false
+}
+
+func (m *ActionParams) GetDefaultValue() string {
+	if m != nil {
+		return m.DefaultValue
+	}
+	return ""
+}
+
 type Action struct {
 	Name            string          `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Desc            string          `protobuf:"bytes,2,opt,name=desc,proto3" json:"desc,omitempty"`
-	Disable         bool            `protobuf:"varint,3,opt,name=disable,proto3" json:"disable,omitempty"`
-	When            string          `protobuf:"bytes,4,opt,name=when,proto3" json:"when,omitempty"`
-	Then            []string        `protobuf:"bytes,5,rep,name=then,proto3" json:"then,omitempty"`
-	AllowedActioner AllowedActioner `protobuf:"varint,6,opt,name=allowed_actioner,json=allowedActioner,proto3,enum=thesixnetwork.sixnft.nftmngr.AllowedActioner" json:"allowed_actioner,omitempty"`
+	Params          []*ActionParams `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty"`
+	Disable         bool            `protobuf:"varint,4,opt,name=disable,proto3" json:"disable,omitempty"`
+	When            string          `protobuf:"bytes,5,opt,name=when,proto3" json:"when,omitempty"`
+	Then            []string        `protobuf:"bytes,6,rep,name=then,proto3" json:"then,omitempty"`
+	AllowedActioner AllowedActioner `protobuf:"varint,7,opt,name=allowed_actioner,json=allowedActioner,proto3,enum=thesixnetwork.sixnft.nftmngr.AllowedActioner" json:"allowed_actioner,omitempty"`
 }
 
 func (m *Action) Reset()         { *m = Action{} }
 func (m *Action) String() string { return proto.CompactTextString(m) }
 func (*Action) ProtoMessage()    {}
 func (*Action) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4895bbc0baa3e92e, []int{0}
+	return fileDescriptor_4895bbc0baa3e92e, []int{1}
 }
 func (m *Action) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -107,6 +184,13 @@ func (m *Action) GetDesc() string {
 	return ""
 }
 
+func (m *Action) GetParams() []*ActionParams {
+	if m != nil {
+		return m.Params
+	}
+	return nil
+}
+
 func (m *Action) GetDisable() bool {
 	if m != nil {
 		return m.Disable
@@ -137,34 +221,102 @@ func (m *Action) GetAllowedActioner() AllowedActioner {
 
 func init() {
 	proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AllowedActioner", AllowedActioner_name, AllowedActioner_value)
+	proto.RegisterType((*ActionParams)(nil), "thesixnetwork.sixnft.nftmngr.action_params")
 	proto.RegisterType((*Action)(nil), "thesixnetwork.sixnft.nftmngr.Action")
 }
 
 func init() { proto.RegisterFile("nftmngr/action.proto", fileDescriptor_4895bbc0baa3e92e) }
 
 var fileDescriptor_4895bbc0baa3e92e = []byte{
-	// 330 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0x41, 0x6b, 0xf2, 0x30,
-	0x18, 0xc7, 0x1b, 0xf5, 0xf5, 0xdd, 0x72, 0x98, 0x12, 0x3c, 0x04, 0x91, 0xac, 0xec, 0x24, 0x83,
-	0x35, 0xb0, 0x7d, 0x82, 0xb8, 0xf5, 0x20, 0x74, 0x0a, 0xd5, 0x31, 0xdc, 0x61, 0xa5, 0x6a, 0xac,
-	0x65, 0x36, 0x91, 0x36, 0x43, 0xf7, 0x2d, 0xf6, 0xb1, 0x3c, 0xca, 0x4e, 0x3b, 0x8d, 0xa1, 0x5f,
-	0x64, 0xa4, 0xd1, 0x83, 0x13, 0x76, 0xfb, 0xe7, 0xf7, 0xfc, 0x9e, 0xc0, 0x9f, 0x07, 0xd6, 0xc4,
-	0x44, 0x25, 0x22, 0x4a, 0x69, 0x38, 0x52, 0xb1, 0x14, 0xce, 0x3c, 0x95, 0x4a, 0xa2, 0x86, 0x9a,
-	0xf2, 0x2c, 0x5e, 0x0a, 0xae, 0x16, 0x32, 0x7d, 0x71, 0x74, 0x9c, 0x28, 0x67, 0xa7, 0xd6, 0x6b,
-	0x91, 0x8c, 0x64, 0x2e, 0x52, 0x9d, 0xcc, 0xce, 0xc5, 0x07, 0x80, 0x65, 0x96, 0x7f, 0x82, 0x10,
-	0x2c, 0x89, 0x30, 0xe1, 0x18, 0xd8, 0xa0, 0x79, 0xea, 0xe7, 0x59, 0xb3, 0x31, 0xcf, 0x46, 0xb8,
-	0x60, 0x98, 0xce, 0x08, 0xc3, 0xff, 0xe3, 0x38, 0x0b, 0x87, 0x33, 0x8e, 0x8b, 0x36, 0x68, 0x9e,
-	0xf8, 0xfb, 0xa7, 0xb6, 0x17, 0x53, 0x2e, 0x70, 0xc9, 0xd8, 0x3a, 0x6b, 0xa6, 0x34, 0xfb, 0x67,
-	0x17, 0x35, 0xd3, 0x19, 0x3d, 0xc3, 0x6a, 0x38, 0x9b, 0xc9, 0x05, 0x1f, 0x07, 0xa6, 0x00, 0x4f,
-	0x71, 0xd9, 0x06, 0xcd, 0xb3, 0xeb, 0x2b, 0xe7, 0xaf, 0x0e, 0x0e, 0x33, 0x5b, 0x6c, 0xb7, 0xd4,
-	0x2a, 0xad, 0xbe, 0xce, 0x81, 0x5f, 0x09, 0x0f, 0xf1, 0x65, 0x02, 0x2b, 0xbf, 0x4c, 0x84, 0x61,
-	0x8d, 0x79, 0x5e, 0xf7, 0xd1, 0xbd, 0x0b, 0xd8, 0x6d, 0xbf, 0xdd, 0xed, 0xb8, 0x7e, 0xc0, 0x3c,
-	0xaf, 0x6a, 0x21, 0x1b, 0x36, 0x8e, 0x26, 0xbd, 0x41, 0xaf, 0xef, 0xde, 0x07, 0xdd, 0x8e, 0x37,
-	0xa8, 0x02, 0x44, 0x60, 0xfd, 0xc8, 0x78, 0xe8, 0xb9, 0xbe, 0x99, 0x17, 0x5a, 0xed, 0xd5, 0x86,
-	0x80, 0xf5, 0x86, 0x80, 0xef, 0x0d, 0x01, 0xef, 0x5b, 0x62, 0xad, 0xb7, 0xc4, 0xfa, 0xdc, 0x12,
-	0xeb, 0x89, 0x46, 0xb1, 0x9a, 0xbe, 0x0e, 0x9d, 0x91, 0x4c, 0xe8, 0x41, 0x31, 0x6a, 0x8a, 0xd1,
-	0x25, 0xdd, 0x5f, 0x52, 0xbd, 0xcd, 0x79, 0x36, 0x2c, 0xe7, 0x57, 0xb9, 0xf9, 0x09, 0x00, 0x00,
-	0xff, 0xff, 0x2b, 0x4f, 0xa7, 0x62, 0xe1, 0x01, 0x00, 0x00,
+	// 425 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x92, 0x41, 0x8f, 0x93, 0x40,
+	0x14, 0xc7, 0x99, 0x52, 0xd9, 0xee, 0xe8, 0xba, 0xcd, 0xa4, 0x87, 0x49, 0xdd, 0x20, 0x59, 0x2f,
+	0x44, 0x23, 0x24, 0xeb, 0x27, 0x60, 0x57, 0x0e, 0x9b, 0xe0, 0x36, 0xa1, 0x55, 0xb3, 0x1e, 0x24,
+	0xd3, 0x32, 0xa5, 0x44, 0x60, 0x10, 0x06, 0xdb, 0x7e, 0x0b, 0x2f, 0xc6, 0xaf, 0xd4, 0x63, 0x8f,
+	0x9e, 0x8c, 0x69, 0xbf, 0x88, 0x19, 0x86, 0x9a, 0xd4, 0x26, 0xcd, 0xde, 0xfe, 0xf3, 0x7b, 0xef,
+	0xcf, 0xfb, 0x3f, 0xf2, 0x60, 0x2f, 0x9b, 0xf2, 0x34, 0x8b, 0x0a, 0x9b, 0x4c, 0x78, 0xcc, 0x32,
+	0x2b, 0x2f, 0x18, 0x67, 0xe8, 0x82, 0xcf, 0x68, 0x19, 0x2f, 0x32, 0xca, 0xe7, 0xac, 0xf8, 0x62,
+	0x09, 0x39, 0xe5, 0x56, 0xd3, 0xda, 0xef, 0x45, 0x2c, 0x62, 0x75, 0xa3, 0x2d, 0x94, 0xf4, 0x5c,
+	0xfe, 0x00, 0xf0, 0x4c, 0x7e, 0x24, 0xc8, 0x49, 0x41, 0xd2, 0x12, 0x21, 0xd8, 0xce, 0x48, 0x4a,
+	0x31, 0x30, 0x80, 0x79, 0xea, 0xd7, 0x5a, 0xb0, 0x90, 0x96, 0x13, 0xdc, 0x92, 0x4c, 0x68, 0xf4,
+	0x0c, 0x9e, 0x86, 0x84, 0x93, 0x80, 0x2f, 0x73, 0x8a, 0xd5, 0xba, 0xd0, 0x11, 0x60, 0xb4, 0xcc,
+	0x29, 0xea, 0xc3, 0x4e, 0x41, 0xbf, 0x56, 0x71, 0x41, 0x43, 0xdc, 0x36, 0x80, 0xd9, 0xf1, 0xff,
+	0xbd, 0xd1, 0x0b, 0x78, 0x16, 0xd2, 0x29, 0xa9, 0x12, 0x1e, 0x7c, 0x23, 0x49, 0x45, 0xf1, 0xa3,
+	0xda, 0xfc, 0xa4, 0x81, 0x1f, 0x04, 0xbb, 0xfc, 0xd9, 0x82, 0x9a, 0x53, 0xe7, 0x7a, 0x70, 0xa0,
+	0x1b, 0xa8, 0xc9, 0x15, 0xb0, 0x6a, 0xa8, 0xe6, 0xe3, 0xab, 0x57, 0xd6, 0xb1, 0xff, 0x61, 0xed,
+	0x6d, 0xed, 0x37, 0x56, 0x84, 0xe1, 0x49, 0x18, 0x97, 0x64, 0x9c, 0xd0, 0x26, 0xf7, 0xee, 0x29,
+	0x46, 0xce, 0x67, 0x34, 0x6b, 0xd2, 0xd6, 0x5a, 0x30, 0x2e, 0x98, 0x66, 0xa8, 0x82, 0x09, 0x8d,
+	0x3e, 0xc3, 0x2e, 0x49, 0x12, 0x36, 0xa7, 0x61, 0x20, 0x47, 0xd0, 0x02, 0x9f, 0x18, 0xc0, 0x7c,
+	0x7a, 0xf5, 0xfa, 0x78, 0x20, 0x47, 0xba, 0x9c, 0xc6, 0x74, 0xdd, 0x5e, 0xfd, 0x7e, 0x0e, 0xfc,
+	0x73, 0xb2, 0x8f, 0x5f, 0xa6, 0xf0, 0xfc, 0xbf, 0x4e, 0x84, 0x61, 0xcf, 0xf1, 0xbc, 0xc1, 0x47,
+	0xf7, 0x6d, 0xe0, 0xdc, 0x8c, 0x6e, 0x07, 0x77, 0xae, 0x1f, 0x38, 0x9e, 0xd7, 0x55, 0x90, 0x01,
+	0x2f, 0x0e, 0x2a, 0xc3, 0xfb, 0xe1, 0xc8, 0x7d, 0x17, 0x0c, 0xee, 0xbc, 0xfb, 0x2e, 0x40, 0x3a,
+	0xec, 0x1f, 0x74, 0xbc, 0x1f, 0xba, 0xbe, 0xac, 0xb7, 0xae, 0x6f, 0x57, 0x1b, 0x1d, 0xac, 0x37,
+	0x3a, 0xf8, 0xb3, 0xd1, 0xc1, 0xf7, 0xad, 0xae, 0xac, 0xb7, 0xba, 0xf2, 0x6b, 0xab, 0x2b, 0x9f,
+	0xec, 0x28, 0xe6, 0xb3, 0x6a, 0x6c, 0x4d, 0x58, 0x6a, 0xef, 0x2d, 0x66, 0xcb, 0xc5, 0xec, 0x85,
+	0xbd, 0x3b, 0x53, 0x71, 0x23, 0xe5, 0x58, 0xab, 0x4f, 0xee, 0xcd, 0xdf, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0xc9, 0x1f, 0x9a, 0xf8, 0xbe, 0x02, 0x00, 0x00,
+}
+
+func (m *ActionParams) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ActionParams) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ActionParams) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.DefaultValue) > 0 {
+		i -= len(m.DefaultValue)
+		copy(dAtA[i:], m.DefaultValue)
+		i = encodeVarintAction(dAtA, i, uint64(len(m.DefaultValue)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if m.Required {
+		i--
+		if m.Required {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.DataType) > 0 {
+		i -= len(m.DataType)
+		copy(dAtA[i:], m.DataType)
+		i = encodeVarintAction(dAtA, i, uint64(len(m.DataType)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Desc) > 0 {
+		i -= len(m.Desc)
+		copy(dAtA[i:], m.Desc)
+		i = encodeVarintAction(dAtA, i, uint64(len(m.Desc)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintAction(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Action) Marshal() (dAtA []byte, err error) {
@@ -190,7 +342,7 @@ func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.AllowedActioner != 0 {
 		i = encodeVarintAction(dAtA, i, uint64(m.AllowedActioner))
 		i--
-		dAtA[i] = 0x30
+		dAtA[i] = 0x38
 	}
 	if len(m.Then) > 0 {
 		for iNdEx := len(m.Then) - 1; iNdEx >= 0; iNdEx-- {
@@ -198,7 +350,7 @@ func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			copy(dAtA[i:], m.Then[iNdEx])
 			i = encodeVarintAction(dAtA, i, uint64(len(m.Then[iNdEx])))
 			i--
-			dAtA[i] = 0x2a
+			dAtA[i] = 0x32
 		}
 	}
 	if len(m.When) > 0 {
@@ -206,7 +358,7 @@ func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.When)
 		i = encodeVarintAction(dAtA, i, uint64(len(m.When)))
 		i--
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 	}
 	if m.Disable {
 		i--
@@ -216,7 +368,21 @@ func (m *Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0
 		}
 		i--
-		dAtA[i] = 0x18
+		dAtA[i] = 0x20
+	}
+	if len(m.Params) > 0 {
+		for iNdEx := len(m.Params) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Params[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintAction(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
 	}
 	if len(m.Desc) > 0 {
 		i -= len(m.Desc)
@@ -246,6 +412,34 @@ func encodeVarintAction(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *ActionParams) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovAction(uint64(l))
+	}
+	l = len(m.Desc)
+	if l > 0 {
+		n += 1 + l + sovAction(uint64(l))
+	}
+	l = len(m.DataType)
+	if l > 0 {
+		n += 1 + l + sovAction(uint64(l))
+	}
+	if m.Required {
+		n += 2
+	}
+	l = len(m.DefaultValue)
+	if l > 0 {
+		n += 1 + l + sovAction(uint64(l))
+	}
+	return n
+}
+
 func (m *Action) Size() (n int) {
 	if m == nil {
 		return 0
@@ -259,6 +453,12 @@ func (m *Action) Size() (n int) {
 	l = len(m.Desc)
 	if l > 0 {
 		n += 1 + l + sovAction(uint64(l))
+	}
+	if len(m.Params) > 0 {
+		for _, e := range m.Params {
+			l = e.Size()
+			n += 1 + l + sovAction(uint64(l))
+		}
 	}
 	if m.Disable {
 		n += 2
@@ -284,6 +484,204 @@ func sovAction(x uint64) (n int) {
 }
 func sozAction(x uint64) (n int) {
 	return sovAction(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *ActionParams) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAction
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: action_params: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: action_params: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAction
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAction
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Desc", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAction
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAction
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Desc = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DataType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAction
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAction
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DataType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Required", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Required = bool(v != 0)
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DefaultValue", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAction
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAction
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DefaultValue = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAction(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAction
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Action) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -379,6 +777,40 @@ func (m *Action) Unmarshal(dAtA []byte) error {
 			m.Desc = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Params", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAction
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAction
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAction
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Params = append(m.Params, &ActionParams{})
+			if err := m.Params[len(m.Params)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Disable", wireType)
 			}
@@ -398,7 +830,7 @@ func (m *Action) Unmarshal(dAtA []byte) error {
 				}
 			}
 			m.Disable = bool(v != 0)
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field When", wireType)
 			}
@@ -430,7 +862,7 @@ func (m *Action) Unmarshal(dAtA []byte) error {
 			}
 			m.When = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Then", wireType)
 			}
@@ -462,7 +894,7 @@ func (m *Action) Unmarshal(dAtA []byte) error {
 			}
 			m.Then = append(m.Then, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
-		case 6:
+		case 7:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AllowedActioner", wireType)
 			}

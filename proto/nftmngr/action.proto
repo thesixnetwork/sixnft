@@ -10,12 +10,20 @@ enum AllowedActioner {
   ALLOWED_ACTIONER_USER_ONLY = 2;
 }
 
+message action_params {
+  string name = 1;
+  string desc = 2;
+  string data_type = 3;
+  bool required = 4;
+  string default_value = 5;
+}
+
 message Action {
-  
   string name = 1; 
   string desc = 2; 
-  bool disable = 3;
-  string when = 4; 
-  repeated string then = 5; 
-  AllowedActioner allowed_actioner = 6 [(gogoproto.nullable) = true];
+  repeated action_params params = 3;
+  bool disable = 4;
+  string when = 5; 
+  repeated string then = 6; 
+  AllowedActioner allowed_actioner = 7 [(gogoproto.nullable) = true];
 }

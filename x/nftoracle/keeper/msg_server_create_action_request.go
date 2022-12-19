@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
+	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -28,42 +29,77 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		return nil, sdkerrors.Wrap(types.ErrParsingActionSignature, err.Error())
 	}
 
-	actionParam, signer, err := k.ValidateActionSignature(data)
+	actionOralceParam, signer, err := k.ValidateActionSignature(data)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidateSignature, err.Error())
 	}
 
 	switch {
-	case actionParam.OnBehalfOf == "":
+	case actionOralceParam.OnBehalfOf == "":
 		break
-	case actionParam.OnBehalfOf != "":
+	case actionOralceParam.OnBehalfOf != "":
 		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer)
-		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionParam.OnBehalfOf == _actionSigner.OwnerAddress {
+		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
 			*signer = _actionSigner.OwnerAddress
-		} else if actionParam.OnBehalfOf == *signer {
-			// do nothing
-		} else {
+		}else {
 			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")
 		}
 	}
 
-	// Check if nft_schema_code exists
-	_, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionParam.NftSchemaCode)
+	// get schema from action request
+	schema, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionOralceParam.NftSchemaCode)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionParam.NftSchemaCode)
+		return nil, sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionOralceParam.NftSchemaCode)
 	}
+
+	mapAction := nftmngrtypes.Action{}
+	for _, action := range schema.OnchainData.Actions {
+		if action.Name == actionOralceParam.Action && action.Disable { 
+			return nil, sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+		}
+		if action.Name == actionOralceParam.Action {
+			mapAction = *action
+			break
+		}
+	}
+
+	// Check if action requires parameters
+	param := mapAction.GetParams()
+	required_param := make([]*nftmngrtypes.ActionParams, 0)
+
+	for _, p := range param {
+		if p.Required {
+			required_param = append(required_param, p)
+		}
+	}
+
+	if len(required_param) > len(actionOralceParam.Params) {
+		return nil, sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
+	}
+
+	for i := 0; i < len(required_param); i++ {
+		if actionOralceParam.Params[i].Name != required_param[i].Name {
+			return nil, sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
+		}
+		if actionOralceParam.Params[i].Value == "" {
+			actionOralceParam.Params[i].Value = required_param[i].DefaultValue
+		}
+	}
+	
+	// var actionRequest types.ActionRequest
+
 	// Check if the token is already Actioned
-	_, found = k.nftmngrKeeper.GetNftData(ctx, actionParam.NftSchemaCode, actionParam.TokenId)
+	_, found = k.nftmngrKeeper.GetNftData(ctx, actionOralceParam.NftSchemaCode, actionOralceParam.TokenId)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrMetadataNotExists, actionParam.NftSchemaCode)
+		return nil, sdkerrors.Wrap(types.ErrMetadataNotExists, actionOralceParam.NftSchemaCode)
 	}
 
 	// Check action with reference exists
-	if actionParam.RefId != "" {
+	if actionOralceParam.RefId != "" {
 
-		_, found := k.nftmngrKeeper.GetActionByRefId(ctx, actionParam.RefId)
+		_, found := k.nftmngrKeeper.GetActionByRefId(ctx, actionOralceParam.RefId)
 		if found {
-			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, actionParam.RefId)
+			return nil, sdkerrors.Wrap(types.ErrRefIdAlreadyExists, actionOralceParam.RefId)
 		}
 	}
 
@@ -81,34 +117,35 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	endTime := createdAt.Add(k.ActionRequestActiveDuration(ctx))
 
 	// validate time given format as RFC3339
-	_, err = time.Parse(time.RFC3339, actionParam.ExpiredAt.UTC().Format(time.RFC3339))
-	if err != nil || len(actionParam.ExpiredAt.String()) == 0 || actionParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()){
-		actionParam.ExpiredAt = endTime
+	_, err = time.Parse(time.RFC3339, actionOralceParam.ExpiredAt.UTC().Format(time.RFC3339))
+	if err != nil || len(actionOralceParam.ExpiredAt.String()) == 0 || actionOralceParam.ExpiredAt.Before(ctx.BlockHeader().Time.UTC()) {
+		actionOralceParam.ExpiredAt = endTime
 	}
 
-	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionRequest{
-		NftSchemaCode:   actionParam.NftSchemaCode,
-		TokenId:         actionParam.TokenId,
+	id_ := k.Keeper.AppendActionRequest(ctx, types.ActionOracleRequest{
+		NftSchemaCode:   actionOralceParam.NftSchemaCode,
+		TokenId:         actionOralceParam.TokenId,
 		RequiredConfirm: msg.RequiredConfirm,
 		Caller:          *signer,
-		Action:          actionParam.Action,
-		RefId:           actionParam.RefId,
+		Action:          actionOralceParam.Action,
+		Params:          actionOralceParam.Params,
+		RefId:           actionOralceParam.RefId,
 		Status:          types.RequestStatus_PENDING,
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
-		ValidUntil:      actionParam.ExpiredAt,
+		ValidUntil:      actionOralceParam.ExpiredAt,
 		Confirmers:      make([]string, 0),
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 
-	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionParam.ExpiredAt)
+	k.Keeper.InsertActiveActionRequestQueue(ctx, id_, actionOralceParam.ExpiredAt)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeActionRequestCreated,
 			sdk.NewAttribute(types.AttributeKeyActionRequestID, strconv.FormatUint(id_, 10)),
-			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, actionParam.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyTokenID, actionParam.TokenId),
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, actionOralceParam.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyTokenID, actionOralceParam.TokenId),
 			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),
 		),
 	})
@@ -118,7 +155,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	}, nil
 }
 
-func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*types.ActionParam, *string, error) {
+func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*types.ActionOracleParam, *string, error) {
 
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(actionSig.Message)), 10) + actionSig.Message
 
@@ -126,12 +163,12 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
 
-	actionParam := &types.ActionParam{}
+	actionOralceParam := &types.ActionOracleParam{}
 	actionParamBz, err := base64.StdEncoding.DecodeString(actionSig.Message)
 	if err != nil {
 		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, "Error to DecodeString")
 	}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(actionParamBz, actionParam)
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(actionParamBz, actionOralceParam)
 	if err != nil {
 		return nil, nil, sdkerrors.Wrap(types.ErrParsingActionParam, "Error to UnmarshalJSON")
 	}
@@ -164,5 +201,5 @@ func (k msgServer) ValidateActionSignature(actionSig types.ActionSignature) (*ty
 		return nil, nil, sdkerrors.Wrap(types.ErrVerifyingSignature, "invalid signature")
 	}
 	signer := eth_address_from_pubkey.Hex()
-	return actionParam, &signer, nil
+	return actionOralceParam, &signer, nil
 }

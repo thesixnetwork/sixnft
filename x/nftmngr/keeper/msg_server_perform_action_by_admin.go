@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"encoding/json"
+	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
@@ -55,7 +56,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
-		if action.Disable {
+		if action.Name == msg.Action && action.Disable { 
 			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
 		}
 		if action.Name == msg.Action {
@@ -67,9 +68,50 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
 		return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, msg.Action)
 	}
-	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 
-	err := ProcessAction(meta, &mapAction)
+	// Check if action requires parameters
+	param := mapAction.GetParams()
+	required_param := make([]*types.ActionParams, 0)
+
+	for _, p := range param {
+		if p.Required {
+			required_param = append(required_param, p)
+		}
+	}
+
+	if len(required_param) > len(msg.Parameters) {
+		return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
+	}
+
+	for i := 0; i < len(required_param); i++ {
+		if msg.Parameters[i].Name != required_param[i].Name {
+			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
+		}
+		if msg.Parameters[i].Value == "" {
+			msg.Parameters[i].Value = required_param[i].DefaultValue
+		}
+	}
+
+	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
+	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
+		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
+		if !found {
+			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
+		}
+		return &tokenData, nil
+	})
+
+	// utils function
+	meta.SetGetBlockTimeFunction(func() time.Time {
+		return ctx.BlockTime()
+	})
+
+	// utils function
+	meta.SetGetBlockHeightFunction(func() int64 {
+		return ctx.BlockHeight()
+	})
+
+	err := ProcessAction(meta, &mapAction, msg.Parameters)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +120,14 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrEmptyChangeList, msg.Action)
 	}
 
+	// Update back to nftdata
 	k.Keeper.SetNftData(ctx, tokenData)
+
+	// Udpate to target
+	// loop over meta.OtherUpdatedTokenDatas
+	for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
+		k.Keeper.SetNftData(ctx, *otherTokenData)
+	}
 
 	// Check action with reference exists
 	if msg.RefId != "" {

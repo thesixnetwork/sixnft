@@ -18,7 +18,7 @@ import (
 	tmdb "github.com/tendermint/tm-db"
 )
 
-func AdminKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
+func NftAdminKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 	storeKey := sdk.NewKVStoreKey(types.StoreKey)
 	memStoreKey := storetypes.NewMemoryStoreKey(types.MemStoreKey)
 
@@ -35,7 +35,7 @@ func AdminKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		types.Amino,
 		storeKey,
 		memStoreKey,
-		"AdminParams",
+		"NftAdminParams",
 	)
 	k := keeper.NewKeeper(
 		cdc,

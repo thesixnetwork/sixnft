@@ -28,13 +28,10 @@ func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleActio
 	}
 	// Update is_active in schema
 	for i, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action {
-			if schema.OnchainData.Actions[i].Disable {
-				schema.OnchainData.Actions[i].Disable = false
-			} else {
-				schema.OnchainData.Actions[i].Disable = true
-			}
-			break
+		if action.Name == msg.Action && action.Disable != msg.Disable {
+			schema.OnchainData.Actions[i].Disable = msg.Disable
+		}else if action.Name == msg.Action && action.Disable == msg.Disable {
+			return nil, sdkerrors.Wrap(types.ErrActionAlreadySetAsInput, msg.Action)
 		}
 	}
 

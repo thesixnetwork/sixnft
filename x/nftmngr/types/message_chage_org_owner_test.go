@@ -8,21 +8,21 @@ import (
 	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
-func TestMsgRemoveBinding_ValidateBasic(t *testing.T) {
+func TestMsgChangeOrgOwner_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgRemoveBinding
+		msg  MsgChangeOrgOwner
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgRemoveBinding{
+			msg: MsgChangeOrgOwner{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgRemoveBinding{
+			msg: MsgChangeOrgOwner{
 				Creator: sample.AccAddress(),
 			},
 		},

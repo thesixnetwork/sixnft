@@ -29,12 +29,12 @@ func TestActionRequestQuerySingle(t *testing.T) {
 		{
 			desc:     "First",
 			request:  &types.QueryGetActionRequestRequest{Id: msgs[0].Id},
-			response: &types.QueryGetActionRequestResponse{ActionRequest: msgs[0]},
+			response: &types.QueryGetActionRequestResponse{ActionOracleRequest: msgs[0]},
 		},
 		{
 			desc:     "Second",
 			request:  &types.QueryGetActionRequestRequest{Id: msgs[1].Id},
-			response: &types.QueryGetActionRequestResponse{ActionRequest: msgs[1]},
+			response: &types.QueryGetActionRequestResponse{ActionOracleRequest: msgs[1]},
 		},
 		{
 			desc:    "KeyNotFound",
@@ -47,7 +47,7 @@ func TestActionRequestQuerySingle(t *testing.T) {
 		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
-			response, err := keeper.ActionRequest(wctx, tc.request)
+			response, err := keeper.ActionOracleRequest(wctx, tc.request)
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
@@ -81,10 +81,10 @@ func TestActionRequestQueryPaginated(t *testing.T) {
 		for i := 0; i < len(msgs); i += step {
 			resp, err := keeper.ActionRequestAll(wctx, request(nil, uint64(i), uint64(step), false))
 			require.NoError(t, err)
-			require.LessOrEqual(t, len(resp.ActionRequest), step)
+			require.LessOrEqual(t, len(resp.ActionOracleRequest), step)
 			require.Subset(t,
 				nullify.Fill(msgs),
-				nullify.Fill(resp.ActionRequest),
+				nullify.Fill(resp.ActionOracleRequest),
 			)
 		}
 	})
@@ -94,10 +94,10 @@ func TestActionRequestQueryPaginated(t *testing.T) {
 		for i := 0; i < len(msgs); i += step {
 			resp, err := keeper.ActionRequestAll(wctx, request(next, 0, uint64(step), false))
 			require.NoError(t, err)
-			require.LessOrEqual(t, len(resp.ActionRequest), step)
+			require.LessOrEqual(t, len(resp.ActionOracleRequest), step)
 			require.Subset(t,
 				nullify.Fill(msgs),
-				nullify.Fill(resp.ActionRequest),
+				nullify.Fill(resp.ActionOracleRequest),
 			)
 			next = resp.Pagination.NextKey
 		}
@@ -108,7 +108,7 @@ func TestActionRequestQueryPaginated(t *testing.T) {
 		require.Equal(t, len(msgs), int(resp.Pagination.Total))
 		require.ElementsMatch(t,
 			nullify.Fill(msgs),
-			nullify.Fill(resp.ActionRequest),
+			nullify.Fill(resp.ActionOracleRequest),
 		)
 	})
 	t.Run("InvalidRequest", func(t *testing.T) {

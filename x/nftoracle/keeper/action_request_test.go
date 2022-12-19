@@ -19,8 +19,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func createNActionRequest(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.ActionRequest {
-	items := make([]types.ActionRequest, n)
+func createNActionRequest(keeper *keeper.Keeper, ctx sdk.Context, n int) []types.ActionOracleRequest {
+	items := make([]types.ActionOracleRequest, n)
 	for i := range items {
 		items[i].Id = keeper.AppendActionRequest(ctx, items[i])
 	}
@@ -77,14 +77,14 @@ func TestCreateActionRequest(t *testing.T) {
 	require.NoError(t, err)
 }
 
-func ValidateActionSignature(k *keeper.Keeper, actionSig types.ActionSignature) (*types.ActionParam, *string, error) {
+func ValidateActionSignature(k *keeper.Keeper, actionSig types.ActionSignature) (*types.ActionOracleParam, *string, error) {
 	sign_msg := "\x19Ethereum Signed Message:\n" + strconv.FormatInt(int64(len(actionSig.Message)), 10) + actionSig.Message
 
 	data := []byte(sign_msg)
 	hash := crypto.Keccak256Hash(data)
 	var hash_bytes = hash.Bytes()
 
-	actionParam := &types.ActionParam{}
+	actionParam := &types.ActionOracleParam{}
 	actionParamBz, err := base64.StdEncoding.DecodeString(actionSig.Message)
 	if err != nil {
 		return nil, nil, err

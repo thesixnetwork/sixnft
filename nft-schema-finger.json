@@ -1,7 +1,7 @@
 {
-    "code": "sixnetwork.nftexpo",
-    "name": "NFTexpoGoerli",
-    "owner": "0xNFTOWNER",
+    "code": "six_test.claim",
+    "name": "six_monthly_claim",
+    "owner": "6x1nv6vsd0qlkctapll3ad3g5lat3wav48pz53anr",
     "origin_data": {
         "origin_base_uri": "https://dryotus.definix.com/ipfs/QmZc4kPjvz4M4SpNfRZme2gcVzbMQjDt76GsxvLqSexT8R/",
         "uri_retrieval_method": "BASE",
@@ -9,58 +9,7 @@
         "origin_contract_address": "0x9EC14dfF0049F8De41FE106f3221a50313F941aB",
         "attribute_overriding": "CHAIN",
         "metadata_format": "opensea",
-        "origin_attributes": [
-            {
-                "name": "background",
-                "data_type": "string",
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Background"
-                    }
-                }
-            },
-            {
-                "name": "moon",
-                "data_type": "string",
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Moon"
-                    }
-                }
-            },
-            {
-                "name": "plate",
-                "data_type": "string",
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Plate"
-                    }
-                }
-            },
-            {
-                "name": "tail",
-                "data_type": "string",
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Tail"
-                    }
-                }
-            },
-            {
-                "name": "whale",
-                "data_type": "string",
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Whale"
-                    }
-                }
-            }
-        ]
+        "origin_attributes": []
     },
     "onchain_data": {
         "reveal_required": true,
@@ -81,26 +30,8 @@
                     "opensea": {
                         "trait_type": "Points"
                     }
-                }
-            },
-            {
-                "name": "missions_completed",
-                "default_mint_value": {
-                    "boolean_attribute_value": {
-                        "value": false
-                    }
                 },
-                "data_type": "boolean",
-                "required": true,
-                "display_value_field": "value",
-                "display_option": {
-                    "bool_true_value": "Yes",
-                    "bool_false_value": "No",
-                    "opensea": {
-                        "trait_type": "All Mission is complete"
-                    }
-                },
-                "hidden_to_marketplace": true
+                "hidden_to_marketplace": false
             },
             {
                 "name": "started",
@@ -368,91 +299,39 @@
                 "hidden_to_marketplace": true
             },
             {
-                "name": "start_time",
+                "name": "missions_completed",
                 "default_mint_value": {
-                    "string_attribute_value": {
-                        "value": ""
+                    "boolean_attribute_value": {
+                        "value": false
                     }
                 },
-                "data_type": "string",
+                "data_type": "boolean",
                 "required": true,
                 "display_value_field": "value",
                 "display_option": {
+                    "bool_true_value": "Yes",
+                    "bool_false_value": "No",
                     "opensea": {
-                        "trait_type": "Start Time"
-                    }
-                }
-            },
-            {
-                "name": "start_time_local",
-                "default_mint_value": {
-                    "string_attribute_value": {
-                        "value": ""
+                        "trait_type": "All Mission is complete"
                     }
                 },
-                "data_type": "string",
-                "required": true,
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Start Local Time"
-                    }
-                }
-            },
-            {
-                "name": "start_time_bangkok",
-                "default_mint_value": {
-                    "string_attribute_value": {
-                        "value": ""
-                    }
-                },
-                "data_type": "string",
-                "required": true,
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Start Bangkok Time"
-                    }
-                }
-            },
-            {
-                "name": "start_block",
-                "default_mint_value": {
-                    "string_attribute_value": {
-                        "value": ""
-                    }
-                },
-                "data_type": "string",
-                "required": true,
-                "display_value_field": "value",
-                "display_option": {
-                    "opensea": {
-                        "trait_type": "Start Time"
-                    }
-                }
+                "hidden_to_marketplace": true
             }
         ],
         "actions": [
             {
                 "name": "start_mission",
                 "desc": "Start Mission",
-                "params":[],
                 "when": "meta.GetBoolean('started') == false",
                 "then": [
                     "meta.SetBoolean('started', true)",
-                    "meta.SetNumber('missions_passed', meta.GetNumber('missions_passed') + 1)",
-                    "meta.SetNumber('points', meta.GetNumber('points') + 200)",
-                    "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
-                    "meta.SetString('start_time_local',meta.GetLocalBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
-                    "meta.SetString('start_time_bangkok',meta.GetBlockTimestampByZone('Asia/Bangkok','2006-01-02T15:04:05Z07:00'))",
-                    "meta.SetString('start_block',meta.GetBlockHeight())"
+                    "meta.SetNumber('missions_passed', meta.GetNumber('missions_passed') + 1)"
                 ]
             },
             {
                 "name": "claim_jan",
                 "desc": "Claim Jan Mission",
-                "params":[],
-                "when": "meta.GetBoolean('jan_claim') == false && meta.BlockTimeUTCBefore('2022-02-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-01-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('jan_claim') == false",
                 "then": [
                     "meta.SetBoolean('jan_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -461,8 +340,7 @@
             {
                 "name": "claim_feb",
                 "desc": "Claim Feb Mission",
-                "params":[],
-                "when": "meta.GetBoolean('feb_claim') == false && meta.BlockTimeUTCBefore('2022-03-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-02-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('feb_claim') == false",
                 "then": [
                     "meta.SetBoolean('feb_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -471,8 +349,7 @@
             {
                 "name": "claim_mar",
                 "desc": "Claim Mar Mission",
-                "params":[],
-                "when": "meta.GetBoolean('mar_claim') == false && meta.BlockTimeUTCBefore('2022-04-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-03-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('mar_claim') == false",
                 "then": [
                     "meta.SetBoolean('mar_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -481,8 +358,7 @@
             {
                 "name": "claim_apr",
                 "desc": "Claim Apr Mission",
-                "params":[],
-                "when": "meta.GetBoolean('apr_claim') == false && meta.BlockTimeUTCBefore('2022-05-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-04-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('apr_claim') == false",
                 "then": [
                     "meta.SetBoolean('apr_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -491,8 +367,7 @@
             {
                 "name": "claim_may",
                 "desc": "Claim May Mission",
-                "params":[],
-                "when": "meta.GetBoolean('may_claim') == false && meta.BlockTimeUTCBefore('2022-06-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-05-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('may_claim') == false",
                 "then": [
                     "meta.SetBoolean('may_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -501,8 +376,7 @@
             {
                 "name": "claim_jun",
                 "desc": "Claim Jun Mission",
-                "params":[],
-                "when": "meta.GetBoolean('jun_claim') == false && meta.BlockTimeUTCBefore('2022-07-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-06-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('jun_claim') == false",
                 "then": [
                     "meta.SetBoolean('jun_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -511,8 +385,7 @@
             {
                 "name": "claim_jul",
                 "desc": "Claim Jul Mission",
-                "params":[],
-                "when": "meta.GetBoolean('jul_claim') == false && meta.BlockTimeUTCBefore('2022-08-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-07-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('jul_claim') == false",
                 "then": [
                     "meta.SetBoolean('jul_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -521,8 +394,7 @@
             {
                 "name": "claim_aug",
                 "desc": "Claim Aug Mission",
-                "params":[],
-                "when": "meta.GetBoolean('aug_claim') == false && meta.BlockTimeUTCBefore('2022-09-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-08-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('aug_claim') == false",
                 "then": [
                     "meta.SetBoolean('aug_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -531,8 +403,7 @@
             {
                 "name": "claim_sep",
                 "desc": "Claim Sep Mission",
-                "params":[],
-                "when": "meta.GetBoolean('sep_claim') == false && meta.BlockTimeUTCBefore('2022-10-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-09-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('sep_claim') == false",
                 "then": [
                     "meta.SetBoolean('sep_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -541,8 +412,7 @@
             {
                 "name": "claim_oct",
                 "desc": "Claim Oct Mission",
-                "params":[],
-                "when": "meta.GetBoolean('oct_claim') == false && meta.BlockTimeUTCBefore('2022-11-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-10-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('oct_claim') == false",
                 "then": [
                     "meta.SetBoolean('oct_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -551,8 +421,7 @@
             {
                 "name": "claim_nov",
                 "desc": "Claim Nov Mission",
-                "params":[],
-                "when": "meta.GetBoolean('nov_claim') == false && meta.BlockTimeUTCBefore('2022-12-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-11-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('nov_claim') == false",
                 "then": [
                     "meta.SetBoolean('nov_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -561,8 +430,7 @@
             {
                 "name": "claim_dec",
                 "desc": "Claim Dec Mission",
-                "params":[],
-                "when": "meta.GetBoolean('dec_claim') == false && meta.BlockTimeUTCBefore('2023-01-17T00:00:01Z','2006-01-02T15:04:05Z07:00') && meta.BlockTimeUTCAfter('2022-12-01T00:01:00Z','2006-01-02T15:04:05Z07:00')",
+                "when": "meta.GetBoolean('dec_claim') == false",
                 "then": [
                     "meta.SetBoolean('dec_claim', true)",
                     "meta.SetNumber('points', meta.GetNumber('points') + 100)"
@@ -571,85 +439,13 @@
             {
                 "name": "transform",
                 "desc": "Transform",
-                "params":[],
                 "when": "meta.GetBoolean('missions_completed') == false && meta.GetNumber('missions_passed') == 12",
                 "then": [
                     "meta.SetBoolean('missions_completed', true)",
                     "meta.SetImage(meta.ReplaceAllString(meta.GetImage(),'.jpeg','-t.jpeg'))"
                 ]
-            },
-            {
-                "name": "test_param",
-                "desc": "Burn Points",
-                "params" : [
-                    {
-                        "name": "points",
-                        "desc": "Points",
-                        "data_type": "number",
-                        "required" : true,
-                        "default_value": "10"
-                    },
-                    {
-                        "name": "minimum_balance",
-                        "desc": "Minimum balance before redeem",
-                        "data_type": "number",
-                        "required" : false,
-                        "default_value": "10"
-                    }
-                ],
-                "when": "meta.GetBoolean('started') == true",
-                "then": [
-                    "meta.SetNumber('points', meta.GetNumber('points') - params['points'].GetNumber())"
-                ]
-            },
-            {
-                "name": "test_hidden",
-                "desc": "Test Dyamic hidden to marketplace",
-                "params" : [
-                    {
-                        "name": "attibute_name",
-                        "desc": "attiubute name",
-                        "data_type": "string",
-                        "required" : true
-                    },
-                    {
-                        "name": "show",
-                        "desc": "value",
-                        "data_type": "string",
-                        "required" : true
-                    }
-                ],
-                "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
-                "then": [
-                    "meta.SetDisplayArribute(params['attibute_name'].GetString(), params['show'].GetString())"
-                ]
-            },
-            {
-                "name": "test_transfer",
-                "desc": "Test Transfer",
-                "params" : [
-                    {
-                        "name": "points",
-                        "desc": "Points",
-                        "data_type": "number",
-                        "required" : true,
-                        "default_value": "10"
-                    },
-                    {
-                        "name": "token_id",
-                        "desc": "Token Id",
-                        "data_type": "string",
-                        "required" : true,
-                        "default_value": ""
-                    }
-                ],
-                "when": "meta.GetNumber('points') > 0 && params['points'].GetNumber() > 0 ",
-                "then": [
-                    "meta.TransferNumber('points',params['token_id'].GetString(),params['points'].GetNumber())"
-                ]
             }
         ],
         "nft_attributes_value": []
-    },
-    "mint_authorization": "system"
+    }
 }

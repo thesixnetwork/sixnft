@@ -35,6 +35,7 @@ var (
 	ErrOnchainAttributesNotExistsInSchema        = sdkerrors.Register(ModuleName, 115, "Onchain attributes not exists in schema")
 	ErrNftDataDoesNotExists                      = sdkerrors.Register(ModuleName, 116, "NFT data does not exists")
 	ErrNoDefaultValue                            = sdkerrors.Register(ModuleName, 117, "No default value")
+	ErrInsufficientValue                         = sdkerrors.Register(ModuleName, 118, "Insufficient value")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")
@@ -58,8 +59,11 @@ var (
 	ErrActionIsDisabled       = sdkerrors.Register(ModuleName, 304, "Action is disabled")
 	ErrActionIsForUserOnly    = sdkerrors.Register(ModuleName, 305, "This action can be done by user only")
 	ErrActionIsForSystemOnly  = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
+	ErrInvalidParameter       = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
+	ErrActionAlreadySetAsInput  = sdkerrors.Register(ModuleName, 308, "Action set as input")
 
-	ErrOrganizationOwner = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrOrganizationOwner    = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
+	ErrOrganizationNotFound = sdkerrors.Register(ModuleName, 401, "Organization not found")
 
 	ErrInvalidAttributeName = sdkerrors.Register(ModuleName, 500, "Invalid attribute name")
 	ErrInvalidActionName    = sdkerrors.Register(ModuleName, 501, "Invalid action name")

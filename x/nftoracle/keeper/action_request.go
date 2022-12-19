@@ -42,7 +42,7 @@ func (k Keeper) SetActionRequestCount(ctx sdk.Context, count uint64) {
 // AppendActionRequest appends a actionRequest in the store with a new id and update the count
 func (k Keeper) AppendActionRequest(
 	ctx sdk.Context,
-	actionRequest types.ActionRequest,
+	actionRequest types.ActionOracleRequest,
 ) uint64 {
 	// Create the actionRequest
 	count := k.GetActionRequestCount(ctx)
@@ -61,14 +61,14 @@ func (k Keeper) AppendActionRequest(
 }
 
 // SetActionRequest set a specific actionRequest in the store
-func (k Keeper) SetActionRequest(ctx sdk.Context, actionRequest types.ActionRequest) {
+func (k Keeper) SetActionRequest(ctx sdk.Context, actionRequest types.ActionOracleRequest) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
 	b := k.cdc.MustMarshal(&actionRequest)
 	store.Set(GetActionRequestIDBytes(actionRequest.Id), b)
 }
 
 // GetActionRequest returns a actionRequest from its id
-func (k Keeper) GetActionRequest(ctx sdk.Context, id uint64) (val types.ActionRequest, found bool) {
+func (k Keeper) GetActionRequest(ctx sdk.Context, id uint64) (val types.ActionOracleRequest, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
 	b := store.Get(GetActionRequestIDBytes(id))
 	if b == nil {
@@ -85,14 +85,14 @@ func (k Keeper) RemoveActionRequest(ctx sdk.Context, id uint64) {
 }
 
 // GetAllActionRequest returns all actionRequest
-func (k Keeper) GetAllActionRequest(ctx sdk.Context) (list []types.ActionRequest) {
+func (k Keeper) GetAllActionRequest(ctx sdk.Context) (list []types.ActionOracleRequest) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
 	iterator := sdk.KVStorePrefixIterator(store, []byte{})
 
 	defer iterator.Close()
 
 	for ; iterator.Valid(); iterator.Next() {
-		var val types.ActionRequest
+		var val types.ActionOracleRequest
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
 		list = append(list, val)
 	}
@@ -123,18 +123,18 @@ func (k Keeper) RemoveFromActiveActionRequestQueue(ctx sdk.Context, requestID ui
 	store.Delete(ActiveActionRequestQueueKey(requestID, endTime))
 }
 
-func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.Time, cb func(ActionRequest types.ActionRequest) (stop bool)) {
+func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.Time, cb func(ActionOracleRequest types.ActionOracleRequest) (stop bool)) {
 	iterator := k.ActiveActionRequestQueueIterator(ctx, endTime)
 
 	defer iterator.Close()
 	for ; iterator.Valid(); iterator.Next() {
 		requestID, _ := SplitActiveActionRequestQueueKey(iterator.Key())
-		ActionRequest, found := k.GetActionRequest(ctx, requestID)
+		ActionOracleRequest, found := k.GetActionRequest(ctx, requestID)
 		if !found {
-			panic(fmt.Sprintf("ActionRequest %d does not exist", requestID))
+			panic(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
 		}
 
-		if cb(ActionRequest) {
+		if cb(ActionOracleRequest) {
 			break
 		}
 	}

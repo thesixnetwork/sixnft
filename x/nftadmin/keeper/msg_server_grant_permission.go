@@ -52,13 +52,13 @@ func (k msgServer) GrantPermission(goCtx context.Context, msg *types.MsgGrantPer
 				for _, addr := range v.Addresses.Addresses {
 					mapAll[addr] = addr
 				}
-				 _, found := mapAll[msg.Grantee]; 
+				_, found := mapAll[msg.Grantee]
 				if !found {
 					v.Addresses.Addresses = append(v.Addresses.Addresses, msg.Grantee)
-				}else{
+				} else {
 					return nil, types.ErrGranteeAlreadyExists
 				}
-				
+
 				permissionExists = true
 				break
 			}

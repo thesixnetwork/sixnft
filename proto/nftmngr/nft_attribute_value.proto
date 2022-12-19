@@ -13,6 +13,7 @@ message NftAttributeValue {
     BooleanAttributeValue boolean_attribute_value = 4;
     FloatAttributeValue float_attribute_value = 5;
   }
+  bool hidden_to_marketplace = 6;
 }
 
 message NumberAttributeValue {

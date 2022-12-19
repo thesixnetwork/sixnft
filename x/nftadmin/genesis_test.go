@@ -21,7 +21,7 @@ func TestGenesis(t *testing.T) {
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
-	k, ctx := keepertest.AdminKeeper(t)
+	k, ctx := keepertest.NftAdminKeeper(t)
 	nftadmin.InitGenesis(ctx, *k, genesisState)
 	got := nftadmin.ExportGenesis(ctx, *k)
 	require.NotNil(t, got)

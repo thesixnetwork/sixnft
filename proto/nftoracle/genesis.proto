@@ -17,7 +17,7 @@ message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated MintRequest mintRequestList = 2 [(gogoproto.nullable) = false];
   uint64 mintRequestCount = 3;
-  repeated ActionRequest actionRequestList = 4 [(gogoproto.nullable) = false];
+  repeated ActionOracleRequest actionRequestList = 4 [(gogoproto.nullable) = false];
   uint64 actionRequestCount = 5;
   repeated CollectionOwnerRequest collectionOwnerRequestList = 6 [(gogoproto.nullable) = false];
   uint64 collectionOwnerRequestCount = 7;
