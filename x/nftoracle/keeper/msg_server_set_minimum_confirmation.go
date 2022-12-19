@@ -17,7 +17,7 @@ func (k msgServer) SetMinimumConfirmation(goCtx context.Context, msg *types.MsgS
 		return nil, err
 	}
 
-	granted := k.adminKeeper.HasPermission(ctx, types.KeyPermissionOracleAdmin, oracleAdmin)
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionOracleAdmin, oracleAdmin)
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, msg.Creator)
 	}

@@ -187,7 +187,7 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		}
 		return false
 	})
-	am.keeper.IterateActiveActionRequestsQueue(ctx, ctx.BlockHeader().Time, func(actionRequest types.ActionRequest) (stop bool) {
+	am.keeper.IterateActiveActionRequestsQueue(ctx, ctx.BlockHeader().Time, func(actionRequest types.ActionOracleRequest) (stop bool) {
 		if actionRequest.Status == types.RequestStatus_PENDING {
 			actionRequest.Status = types.RequestStatus_EXPIRED
 			actionRequest.ExpiredHeight = ctx.BlockHeight()

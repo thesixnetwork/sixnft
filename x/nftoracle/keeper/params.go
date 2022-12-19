@@ -14,6 +14,7 @@ func (k Keeper) GetParams(ctx sdk.Context) types.Params {
 		k.MintRequestActiveDuration(ctx),
 		k.ActionRequestActiveDuration(ctx),
 		k.VerifyRequestActiveDuration(ctx),
+		k.ActionSignerActiveDuration(ctx),
 	)
 }
 
@@ -34,5 +35,10 @@ func (k Keeper) ActionRequestActiveDuration(ctx sdk.Context) (res time.Duration)
 
 func (k Keeper) VerifyRequestActiveDuration(ctx sdk.Context) (res time.Duration) {
 	k.paramstore.Get(ctx, types.KeyVerifyRequestActiveDuration, &res)
+	return
+}
+
+func (k Keeper) ActionSignerActiveDuration(ctx sdk.Context) (res time.Duration) {
+	k.paramstore.Get(ctx, types.KeyActionSignerActiveDuration, &res)
 	return
 }

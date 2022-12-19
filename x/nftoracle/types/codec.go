@@ -15,6 +15,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateVerifyCollectionOwnerRequest{}, "nftoracle/CreateVerifyCollectionOwnerRequest", nil)
 	cdc.RegisterConcrete(&MsgSubmitVerifyCollectionOwner{}, "nftoracle/SubmitVerifyCollectionOwner", nil)
 	cdc.RegisterConcrete(&MsgSetMinimumConfirmation{}, "nftoracle/SetMinimumConfirmation", nil)
+	cdc.RegisterConcrete(&MsgCreateActionSigner{}, "nftoracle/CreateActionSigner", nil)
+	cdc.RegisterConcrete(&MsgUpdateActionSigner{}, "nftoracle/UpdateActionSigner", nil)
+	cdc.RegisterConcrete(&MsgDeleteActionSigner{}, "nftoracle/DeleteActionSigner", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -39,6 +42,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetMinimumConfirmation{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateActionSigner{},
+		&MsgUpdateActionSigner{},
+		&MsgDeleteActionSigner{},
 	)
 	// this line is used by starport scaffolding # 3
 

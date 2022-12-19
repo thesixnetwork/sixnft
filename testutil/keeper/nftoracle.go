@@ -22,9 +22,6 @@ import (
 
 	adminKeeper "github.com/thesixnetwork/sixnft/x/nftadmin/keeper"
 	admintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
-
-	evmsupportkeeper "github.com/thesixnetwork/sixnft/x/evmsupport/keeper"
-	evmsupporttypes "github.com/thesixnetwork/sixnft/x/evmsupport/types"
 )
 
 func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
@@ -55,9 +52,6 @@ func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		"NftmngrParams",
 	)
 
-	evmSupportStoreKey := sdk.NewKVStoreKey(evmsupporttypes.StoreKey)
-	evmSupportMemStoreKey := storetypes.NewMemoryStoreKey(evmsupporttypes.MemStoreKey)
-
 	adminsupportstoreKey := sdk.NewKVStoreKey(admintypes.StoreKey)
 	adminsupportmemStoreKey := storetypes.NewMemoryStoreKey(admintypes.MemStoreKey)
 
@@ -66,17 +60,6 @@ func NftoracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		nftmngrStoreKey,
 		nftmngrMemStoreKey,
 		nftMngrParamsSubspace,
-		evmsupportkeeper.NewKeeper(
-			cdc,
-			evmSupportStoreKey,
-			evmSupportMemStoreKey,
-			typesparams.NewSubspace(cdc,
-				types.Amino,
-				evmSupportStoreKey,
-				evmSupportMemStoreKey,
-				"EvmsupportParams",
-			),
-		),
 		nil,
 		nil,
 		nil,

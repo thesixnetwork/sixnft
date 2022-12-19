@@ -40,6 +40,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	if genState.OracleConfig != nil {
 		k.SetOracleConfig(ctx, *genState.OracleConfig)
 	}
+	// Set all the actionSigner
+	for _, elem := range genState.ActionSignerList {
+		k.SetActionSigner(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -60,6 +64,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	if found {
 		genesis.OracleConfig = &oracleConfig
 	}
+	genesis.ActionSignerList = k.GetAllActionSigner(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

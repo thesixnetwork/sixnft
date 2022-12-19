@@ -64,7 +64,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 
 	// validate time given format as RFC3339
 	_, err = time.Parse(time.RFC3339, _originContractParam.RequestExpire.UTC().Format(time.RFC3339))
-	if err != nil || len(_originContractParam.RequestExpire.String()) == 0 || _originContractParam.RequestExpire.Before(ctx.BlockHeader().Time.UTC()){
+	if err != nil || len(_originContractParam.RequestExpire.String()) == 0 || _originContractParam.RequestExpire.Before(ctx.BlockHeader().Time.UTC()) {
 		_originContractParam.RequestExpire = endTime
 	}
 
@@ -76,7 +76,7 @@ func (k msgServer) CreateVerifyCollectionOwnerRequest(goCtx context.Context, msg
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
 		ValidUntil:      _originContractParam.RequestExpire,
-		Confirmers:      make([]string,0),
+		Confirmers:      make([]string, 0),
 		ContractInfo:    make([]*types.OriginContractInfo, 0),
 	})
 

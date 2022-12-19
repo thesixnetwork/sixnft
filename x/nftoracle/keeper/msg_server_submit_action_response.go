@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"time"
 
 	nftmngrkeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -31,7 +32,7 @@ func (k msgServer) SubmitActionResponse(goCtx context.Context, msg *types.MsgSub
 		return nil, err
 	}
 
-	granted := k.adminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracle)
 	if !granted {
 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, msg.Creator)
 	}
@@ -164,7 +165,7 @@ func (k msgServer) SubmitActionResponse(goCtx context.Context, msg *types.MsgSub
 	return &types.MsgSubmitActionResponseResponse{}, nil
 }
 
-func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionRequest, tokenData *nftmngrtypes.NftData) error {
+func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOracleRequest, tokenData *nftmngrtypes.NftData) error {
 	schema, found := k.nftmngrKeeper.GetNFTSchema(ctx, actionRequest.NftSchemaCode)
 	if !found {
 		return sdkerrors.Wrap(types.ErrNFTSchemaNotFound, actionRequest.NftSchemaCode)
@@ -173,21 +174,75 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionReq
 	if actionRequest.Caller != actionRequest.DataHashes[0].OriginData.HolderAddress {
 		return sdkerrors.Wrap(types.ErrUnauthorizedCaller, actionRequest.Caller)
 	}
+
 	mapAction := nftmngrtypes.Action{}
 	for _, action := range schema.OnchainData.Actions {
+		if action.Name == actionRequest.Action && action.Disable {
+			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+		}
 		if action.Name == actionRequest.Action {
 			mapAction = *action
 			break
 		}
 	}
+
 	// Check if AllowedAction is for user
 	if mapAction.GetAllowedActioner() == nftmngrtypes.AllowedActioner_ALLOWED_ACTIONER_SYSTEM_ONLY {
 		return sdkerrors.Wrap(nftmngrtypes.ErrActionIsForSystemOnly, mapAction.Name)
 	}
 
+	// Check if action requires parameters
+	param := mapAction.GetParams()
+	required_param := make([]*nftmngrtypes.ActionParams, 0)
+
+	for _, p := range param {
+		if p.Required {
+			required_param = append(required_param, p)
+		}
+	}
+
+	if len(required_param) > len(actionRequest.Params) {
+		return sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
+	}
+
+	for i := 0; i < len(required_param); i++ {
+		if actionRequest.Params[i].Name != required_param[i].Name {
+			return sdkerrors.Wrap(nftmngrtypes.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
+		}
+		if actionRequest.Params[i].Value == "" {
+			actionRequest.Params[i].Value = required_param[i].DefaultValue
+		}
+	}
+
+	input_param := make([]*nftmngrtypes.ActionParameter, 0)
+	for _, p := range actionRequest.Params {
+		input_param = append(input_param, &nftmngrtypes.ActionParameter{
+			Name:  p.Name,
+			Value: p.Value,
+		})
+	}
+
 	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding)
 
-	err := ProcessAction(meta, &mapAction)
+	meta.SetGetNFTFunction(func(tokenId string) (*nftmngrtypes.NftData, error) {
+		tokenData, found := k.nftmngrKeeper.GetNftData(ctx, schema.Code, tokenId)
+		if !found {
+			return nil, sdkerrors.Wrap(nftmngrtypes.ErrMetadataDoesNotExists, schema.Code)
+		}
+		return &tokenData, nil
+	})
+
+	// utils function
+	meta.SetGetBlockTimeFunction(func() time.Time {
+		return ctx.BlockTime()
+	})
+
+	// utils function
+	meta.SetGetBlockHeightFunction(func() int64 {
+		return ctx.BlockHeight()
+	})
+
+	err := ProcessAction(meta, &mapAction, input_param)
 	if err != nil {
 		return err
 	}
@@ -197,6 +252,12 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionReq
 	}
 
 	k.nftmngrKeeper.SetNftData(ctx, *tokenData)
+
+	// Udpate to target
+	// loop over meta.OtherUpdatedTokenDatas
+	for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
+		k.nftmngrKeeper.SetNftData(ctx, *otherTokenData)
+	}
 
 	// Check action with reference exists
 	if actionRequest.RefId != "" {
@@ -229,7 +290,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionReq
 	return nil
 }
 
-func ProcessAction(meta *nftmngrtypes.Metadata, action *nftmngrtypes.Action) (err error) {
+func ProcessAction(meta *nftmngrtypes.Metadata, action *nftmngrtypes.Action, params []*nftmngrtypes.ActionParameter) (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			switch x := r.(type) {
@@ -242,8 +303,18 @@ func ProcessAction(meta *nftmngrtypes.Metadata, action *nftmngrtypes.Action) (er
 			}
 		}
 	}()
+	// Create params map from types.ActionParameter
+	paramsMap := make(map[string]*nftmngrtypes.ActionParameter)
+	for _, param := range params {
+		paramsMap[param.Name] = param
+	}
+
 	dataContext := ast.NewDataContext()
 	err = dataContext.Add("meta", meta)
+	if err != nil {
+		return err
+	}
+	err = dataContext.Add("params", paramsMap)
 	if err != nil {
 		return err
 	}

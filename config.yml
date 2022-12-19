@@ -1,34 +1,34 @@
 accounts:
     - name: alice
-      coins: ["20000token", "1200000000stake"]
+      coins: ["20000token", "12000000000000stake"]
       mnemonic: glimpse black injury curtain switch immune flip remove bag company speed title they can tennis round fine duck sibling crucial top uncover approve donor
     - name: bob
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "12000000000000stake"]
       mnemonic: total guard shrimp clip cruel broccoli cart frown awesome behind sick accident add rival token second prize result love eyebrow sort balcony model poet
     - name: oracle1
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: list split future remain scene cheap pledge forum siren purse bright ivory split morning swing dumb fabric rapid remove worth diary task island donkey
     - name: oracle2
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: achieve rice anger junk delay glove slam find poem feed emerge next core twice kitchen road proof remain notice slice walk super piece father
     - name: oracle3
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: hint expose mix lemon leave genuine host fiction peasant daughter enable region mixture bean soda auction armed turtle iron become bracket wasp drama front
     - name: oracle4
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: clown cabbage clean design mosquito surround citizen virus kite castle sponsor wife lesson coffee alien panel hand together good crazy fabric mouse hat town
     - name: actioner1
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: boost festival prize turn skate inspire alley opinion blush bright month weekend cage village refuse room remind resource legal favorite entire right convince prison
     - name: actioner2
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: oyster green arrange wave elegant oven jaguar pass quote profit miracle interest emotion match express merit clock wrestle reunion punch memory action upper draft
     - name: actioner3
-      coins: ["10000token", "100000000stake"]
+      coins: ["10000token", "2000000000stake"]
       mnemonic: first educate action fee physical seek recipe hub anxiety best mango measure chimney sphere once cabbage strike dizzy near knock correct answer skin inside
 validator:
     name: alice
-    staked: "100000000stake"
+    staked: "2000000000stake"
 client:
     openapi:
         path: "docs/static/openapi.yml"

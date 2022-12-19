@@ -18,6 +18,7 @@ const (
 
 	KeyPermissionMinter = "minter"
 	KeyPermissionBurner = "burner"
+	KeyPermissionBinder = "binder"
 )
 
 func KeyPrefix(p string) []byte {

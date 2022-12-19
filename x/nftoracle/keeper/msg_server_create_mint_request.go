@@ -46,7 +46,7 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 		CurrentConfirm:  0,
 		CreatedAt:       createdAt,
 		ValidUntil:      endTime,
-		Confirmers:      make([]string ,0),
+		Confirmers:      make([]string, 0),
 		DataHashes:      make([]*types.DataHash, 0),
 	})
 

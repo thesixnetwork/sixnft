@@ -19,21 +19,19 @@ type (
 		memKey     sdk.StoreKey
 		paramstore paramtypes.Subspace
 
-		evmsupportKeeper   types.EvmsupportKeeper
-		adminKeeper        types.AdminKeeper
+		nftadminKeeper     types.NftadminKeeper
 		bankKeeper         types.BankKeeper
 		stakingKeeper      types.StakingKeeper
 		distributionKeeper types.DistributionKeeper
 	}
 )
 
-func NewKeeper(
+func  NewKeeper(
 	cdc codec.BinaryCodec,
 	storeKey,
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
-	evmsupportKeeper types.EvmsupportKeeper,
-	adminKeeper types.AdminKeeper,
+	nftadminKeeper types.NftadminKeeper,
 	bankKeeper types.BankKeeper,
 	stakingKeeper types.StakingKeeper,
 	distributionKeeper types.DistributionKeeper,
@@ -49,8 +47,7 @@ func NewKeeper(
 		storeKey:           storeKey,
 		memKey:             memKey,
 		paramstore:         ps,
-		evmsupportKeeper:   evmsupportKeeper,
-		adminKeeper:        adminKeeper,
+		nftadminKeeper:     nftadminKeeper,
 		bankKeeper:         bankKeeper,
 		stakingKeeper:      stakingKeeper,
 		distributionKeeper: distributionKeeper,

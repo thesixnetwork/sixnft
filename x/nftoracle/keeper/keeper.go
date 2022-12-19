@@ -20,7 +20,7 @@ type (
 		paramstore paramtypes.Subspace
 
 		nftmngrKeeper types.NftmngrKeep
-		adminKeeper   types.AdminKeeper
+		nftadminKeeper   types.NftadminKeeper
 		CDC           codec.BinaryCodec
 	}
 )
@@ -31,7 +31,7 @@ func NewKeeper(
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
 	nftmngrKeeper types.NftmngrKeep,
-	adminKeeper types.AdminKeeper,
+	nftadminKeeper types.NftadminKeeper,
 ) *Keeper {
 	// set KeyTable if it has not already been set
 	if !ps.HasKeyTable() {
@@ -45,7 +45,7 @@ func NewKeeper(
 		memKey:        memKey,
 		paramstore:    ps,
 		nftmngrKeeper: nftmngrKeeper,
-		adminKeeper:   adminKeeper,
+		nftadminKeeper:   nftadminKeeper,
 		CDC:           cdc,
 	}
 }

@@ -21,7 +21,7 @@ type RuleAction struct {
 	Then     []string `json:"then"`
 }
 
-func ProcessAction(meta *types.Metadata, action *types.Action) (err error) {
+func ProcessAction(meta *types.Metadata, action *types.Action, params []*types.ActionParameter) (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			switch x := r.(type) {
@@ -34,8 +34,18 @@ func ProcessAction(meta *types.Metadata, action *types.Action) (err error) {
 			}
 		}
 	}()
+	// Create params map from types.ActionParameter
+	paramsMap := make(map[string]*types.ActionParameter)
+	for _, param := range params {
+		paramsMap[param.Name] = param
+	}
+
 	dataContext := ast.NewDataContext()
 	err = dataContext.Add("meta", meta)
+	if err != nil {
+		return err
+	}
+	err = dataContext.Add("params", paramsMap)
 	if err != nil {
 		return err
 	}

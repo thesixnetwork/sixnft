@@ -20,7 +20,7 @@ func createTestAuthorization(keeper *keeper.Keeper, ctx sdk.Context) types.Autho
 }
 
 func TestAuthorizationGet(t *testing.T) {
-	keeper, ctx := keepertest.AdminKeeper(t)
+	keeper, ctx := keepertest.NftAdminKeeper(t)
 	item := createTestAuthorization(keeper, ctx)
 	rst, found := keeper.GetAuthorization(ctx)
 	require.True(t, found)
@@ -31,7 +31,7 @@ func TestAuthorizationGet(t *testing.T) {
 }
 
 func TestAuthorizationRemove(t *testing.T) {
-	keeper, ctx := keepertest.AdminKeeper(t)
+	keeper, ctx := keepertest.NftAdminKeeper(t)
 	createTestAuthorization(keeper, ctx)
 	keeper.RemoveAuthorization(ctx)
 	_, found := keeper.GetAuthorization(ctx)

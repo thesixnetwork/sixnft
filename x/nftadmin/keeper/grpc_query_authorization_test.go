@@ -14,7 +14,7 @@ import (
 )
 
 func TestAuthorizationQuery(t *testing.T) {
-	keeper, ctx := keepertest.AdminKeeper(t)
+	keeper, ctx := keepertest.NftAdminKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
 	item := createTestAuthorization(keeper, ctx)
 	for _, tc := range []struct {

@@ -11,7 +11,7 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
 
 // Msg defines the Msg service.
 service Msg {
-      rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
+  rpc CreateNFTSchema(MsgCreateNFTSchema) returns (MsgCreateNFTSchemaResponse);
   rpc CreateMetadata(MsgCreateMetadata) returns (MsgCreateMetadataResponse);
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
@@ -26,6 +26,7 @@ service Msg {
   rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
   rpc SetMintauth(MsgSetMintauth) returns (MsgSetMintauthResponse);
+  rpc ChangeOrgOwner(MsgChangeOrgOwner) returns (MsgChangeOrgOwnerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -75,12 +76,19 @@ message UpdatedOriginData {
   }
 }
 
+// ActionParameter
+message ActionParameter {
+  string name = 1;
+  string value = 2;
+}
+
 message MsgPerformActionByAdmin {
   string creator = 1;
   string nft_schema_code = 2;
   string tokenId = 3;
   string action = 4;
   string ref_id = 5;
+  repeated ActionParameter parameters = 6;
 }
 
 message MsgPerformActionByAdminResponse {
@@ -140,6 +148,7 @@ message MsgToggleAction {
   string creator = 1;
   string code = 2;
   string action = 3;
+  bool disable = 4;
 }
 
 message MsgToggleActionResponse {
@@ -221,6 +230,18 @@ message MsgSetMintauth {
 
 message MsgSetMintauthResponse {
   string nftSchemaCode = 1;
+}
+
+message MsgChangeOrgOwner {
+  string creator = 1;
+  string orgName = 2;
+  string toNewOwner = 3;
+}
+
+message MsgChangeOrgOwnerResponse {
+  string orgName = 1;
+  string oldOwner = 2;
+  string newOwner = 3;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

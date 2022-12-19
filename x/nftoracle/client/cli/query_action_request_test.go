@@ -17,14 +17,14 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
-func networkWithActionRequestObjects(t *testing.T, n int) (*network.Network, []types.ActionRequest) {
+func networkWithActionRequestObjects(t *testing.T, n int) (*network.Network, []types.ActionOracleRequest) {
 	t.Helper()
 	cfg := network.DefaultConfig()
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 
 	for i := 0; i < n; i++ {
-		actionRequest := types.ActionRequest{
+		actionRequest := types.ActionOracleRequest{
 			Id: uint64(i),
 		}
 		nullify.Fill(&actionRequest)
@@ -48,7 +48,7 @@ func TestShowActionRequest(t *testing.T) {
 		id   string
 		args []string
 		err  error
-		obj  types.ActionRequest
+		obj  types.ActionOracleRequest
 	}{
 		{
 			desc: "found",
@@ -76,10 +76,10 @@ func TestShowActionRequest(t *testing.T) {
 				require.NoError(t, err)
 				var resp types.QueryGetActionRequestResponse
 				require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-				require.NotNil(t, resp.ActionRequest)
+				require.NotNil(t, resp.ActionOracleRequest)
 				require.Equal(t,
 					nullify.Fill(&tc.obj),
-					nullify.Fill(&resp.ActionRequest),
+					nullify.Fill(&resp.ActionOracleRequest),
 				)
 			}
 		})
@@ -113,10 +113,10 @@ func TestListActionRequest(t *testing.T) {
 			require.NoError(t, err)
 			var resp types.QueryAllActionRequestResponse
 			require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-			require.LessOrEqual(t, len(resp.ActionRequest), step)
+			require.LessOrEqual(t, len(resp.ActionOracleRequest), step)
 			require.Subset(t,
 				nullify.Fill(objs),
-				nullify.Fill(resp.ActionRequest),
+				nullify.Fill(resp.ActionOracleRequest),
 			)
 		}
 	})
@@ -129,10 +129,10 @@ func TestListActionRequest(t *testing.T) {
 			require.NoError(t, err)
 			var resp types.QueryAllActionRequestResponse
 			require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-			require.LessOrEqual(t, len(resp.ActionRequest), step)
+			require.LessOrEqual(t, len(resp.ActionOracleRequest), step)
 			require.Subset(t,
 				nullify.Fill(objs),
-				nullify.Fill(resp.ActionRequest),
+				nullify.Fill(resp.ActionOracleRequest),
 			)
 			next = resp.Pagination.NextKey
 		}
@@ -147,7 +147,7 @@ func TestListActionRequest(t *testing.T) {
 		require.Equal(t, len(objs), int(resp.Pagination.Total))
 		require.ElementsMatch(t,
 			nullify.Fill(objs),
-			nullify.Fill(resp.ActionRequest),
+			nullify.Fill(resp.ActionOracleRequest),
 		)
 	})
 }
