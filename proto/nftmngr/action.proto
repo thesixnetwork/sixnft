@@ -27,3 +27,12 @@ message Action {
   AllowedActioner allowed_actioner = 6 [(gogoproto.nullable) = true];
   repeated action_params params = 7 [(gogoproto.nullable) = true];
 }
+
+message ActionV063 {
+  string name = 1; 
+  string desc = 2; 
+  bool disable = 3;
+  string when = 4; 
+  repeated string then = 5; 
+  AllowedActioner allowed_actioner = 6 [(gogoproto.nullable) = true];
+}
