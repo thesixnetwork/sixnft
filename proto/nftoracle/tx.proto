@@ -8,7 +8,7 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 // Msg defines the Msg service.
 service Msg {
-      rpc CreateMintRequest(MsgCreateMintRequest) returns (MsgCreateMintRequestResponse);
+  rpc CreateMintRequest(MsgCreateMintRequest) returns (MsgCreateMintRequestResponse);
   rpc SubmitMintResponse(MsgSubmitMintResponse) returns (MsgSubmitMintResponseResponse);
   rpc CreateActionRequest(MsgCreateActionRequest) returns (MsgCreateActionRequestResponse);
   rpc SubmitActionResponse(MsgSubmitActionResponse) returns (MsgSubmitActionResponseResponse);

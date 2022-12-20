@@ -14,7 +14,7 @@ func NewMsgToggleAction(creator string, code string, action string, disable bool
 		Creator: creator,
 		Code:    code,
 		Action:  action,
-		Disable:  disable,
+		Disable: disable,
 	}
 }
 

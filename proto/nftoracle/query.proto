@@ -134,6 +134,7 @@ message QueryGetOracleConfigResponse {
 }
 message QueryGetActionSignerRequest {
 	  string actorAddress = 1;
+	  string ownerAddress = 2;
 
 }
 

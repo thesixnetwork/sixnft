@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -38,10 +38,10 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	case actionOralceParam.OnBehalfOf == "":
 		break
 	case actionOralceParam.OnBehalfOf != "":
-		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer)
+		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer, actionOralceParam.OnBehalfOf)
 		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
 			*signer = _actionSigner.OwnerAddress
-		}else {
+		} else {
 			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")
 		}
 	}
@@ -54,7 +54,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 
 	mapAction := nftmngrtypes.Action{}
 	for _, action := range schema.OnchainData.Actions {
-		if action.Name == actionOralceParam.Action && action.Disable { 
+		if action.Name == actionOralceParam.Action && action.Disable {
 			return nil, sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
 		}
 		if action.Name == actionOralceParam.Action {
@@ -85,7 +85,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 			actionOralceParam.Params[i].Value = required_param[i].DefaultValue
 		}
 	}
-	
+
 	// var actionRequest types.ActionRequest
 
 	// Check if the token is already Actioned

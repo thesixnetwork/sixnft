@@ -36858,6 +36858,10 @@ paths:
           in: path
           required: true
           type: string
+        - name: ownerAddress
+          in: query
+          required: false
+          type: string
       tags:
         - Query
   /thesixnetwork/sixnft/nftoracle/collection_owner_request:

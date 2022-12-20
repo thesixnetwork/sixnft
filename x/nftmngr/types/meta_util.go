@@ -23,7 +23,7 @@ func (m *Metadata) GetUTCBlockTimestamp(format string) string {
 }
 
 // TZ name is from https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-func (m *Metadata) GetBlockTimestampByZone(zone string ,format string) string {
+func (m *Metadata) GetBlockTimestampByZone(zone string, format string) string {
 	loc, _ := time.LoadLocation(zone)
 	blockTIme := m.getBlockTimestamp().In(loc)
 	return blockTIme.Format(format)

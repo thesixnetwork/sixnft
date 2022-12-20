@@ -15,12 +15,12 @@ const (
 	DefaultVerifyRequestActiveDuration = 120 * time.Second
 	DefaultActionSignerActiveDuration  = 30 * (24 * time.Hour) // 30 days
 )
- 
+
 var (
 	KeyMintRequestActiveDuration   = []byte("MintRequestActiveDuration")
 	KeyActionRequestActiveDuration = []byte("ActionRequestActiveDuration")
 	KeyVerifyRequestActiveDuration = []byte("VerifyRequestActiveDuration")
-	KeyActionSignerActiveDuration = []byte("ActionSignerActiveDuration")
+	KeyActionSignerActiveDuration  = []byte("ActionSignerActiveDuration")
 )
 
 var _ paramtypes.ParamSet = (*Params)(nil)
@@ -36,13 +36,13 @@ func NewParams(mintRequestActiveDuration time.Duration, actionRequestActiveDurat
 		MintRequestActiveDuration:   mintRequestActiveDuration,
 		ActionRequestActiveDuration: actionRequestActiveDuration,
 		VerifyRequestActiveDuration: verifyRequestActiveDuration,
-		ActionSignerActiveDuration: actionSignerActiveDuration,
+		ActionSignerActiveDuration:  actionSignerActiveDuration,
 	}
 }
 
 // DefaultParams returns a default set of parameters
 func DefaultParams() Params {
-	return NewParams(DefaultMintRequestActiveDuration, DefaultActionRequestActiveDuration, DefaultVerifyRequestActiveDuration ,DefaultActionSignerActiveDuration)
+	return NewParams(DefaultMintRequestActiveDuration, DefaultActionRequestActiveDuration, DefaultVerifyRequestActiveDuration, DefaultActionSignerActiveDuration)
 }
 
 // ParamSetPairs get the params.ParamSet

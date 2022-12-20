@@ -19,9 +19,9 @@ type (
 		memKey     sdk.StoreKey
 		paramstore paramtypes.Subspace
 
-		nftmngrKeeper types.NftmngrKeep
-		nftadminKeeper   types.NftadminKeeper
-		CDC           codec.BinaryCodec
+		nftmngrKeeper  types.NftmngrKeep
+		nftadminKeeper types.NftadminKeeper
+		CDC            codec.BinaryCodec
 	}
 )
 
@@ -40,13 +40,13 @@ func NewKeeper(
 
 	return &Keeper{
 
-		cdc:           cdc,
-		storeKey:      storeKey,
-		memKey:        memKey,
-		paramstore:    ps,
-		nftmngrKeeper: nftmngrKeeper,
-		nftadminKeeper:   nftadminKeeper,
-		CDC:           cdc,
+		cdc:            cdc,
+		storeKey:       storeKey,
+		memKey:         memKey,
+		paramstore:     ps,
+		nftmngrKeeper:  nftmngrKeeper,
+		nftadminKeeper: nftadminKeeper,
+		CDC:            cdc,
 	}
 }
 

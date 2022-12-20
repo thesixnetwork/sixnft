@@ -31,6 +31,7 @@ func TestActionSignerGet(t *testing.T) {
 	for _, item := range items {
 		rst, found := keeper.GetActionSigner(ctx,
 			item.ActorAddress,
+			item.OwnerAddress,
 		)
 		require.True(t, found)
 		require.Equal(t,
@@ -45,9 +46,11 @@ func TestActionSignerRemove(t *testing.T) {
 	for _, item := range items {
 		keeper.RemoveActionSigner(ctx,
 			item.ActorAddress,
+			item.OwnerAddress,
 		)
 		_, found := keeper.GetActionSigner(ctx,
 			item.ActorAddress,
+			item.OwnerAddress,
 		)
 		require.False(t, found)
 	}

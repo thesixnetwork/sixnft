@@ -27,11 +27,11 @@ func SimulateMsgCreateActionSigner(
 
 		i := r.Int()
 		msg := &types.MsgCreateActionSigner{
-			Creator:      simAccount.Address.String(),
+			Creator:                      simAccount.Address.String(),
 			Base64EncodedSetSignerAction: strconv.Itoa(i),
 		}
 
-		_, found := k.GetActionSigner(ctx, msg.Base64EncodedSetSignerAction)
+		_, found := k.GetActionSigner(ctx, msg.Base64EncodedSetSignerAction, msg.Creator)
 		if found {
 			return simtypes.NoOpMsg(types.ModuleName, msg.Type(), "ActionSigner already exist"), nil, nil
 		}

@@ -49,6 +49,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
+		_signerParams.OwnerAddress,
 	)
 
 	if isFound {
@@ -57,7 +58,6 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
-
 
 	// validate time given format as RFC3339
 	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
@@ -112,6 +112,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
+		_signerParams.OwnerAddress,
 	)
 
 	if !isFound {
@@ -165,6 +166,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
+		_signerParams.OwnerAddress,
 	)
 
 	if !isFound {
@@ -174,6 +176,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	k.RemoveActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
+		_signerParams.OwnerAddress,
 	)
 
 	return &types.MsgDeleteActionSignerResponse{}, nil

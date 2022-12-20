@@ -48,6 +48,7 @@ func (k Keeper) ActionSigner(c context.Context, req *types.QueryGetActionSignerR
 	val, found := k.GetActionSigner(
 		ctx,
 		req.ActorAddress,
+		req.OwnerAddress,
 	)
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")

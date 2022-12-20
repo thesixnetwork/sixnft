@@ -28,6 +28,7 @@ func TestActionSignerMsgServerCreate(t *testing.T) {
 		_, err := srv.CreateActionSigner(wctx, expected)
 		require.NoError(t, err)
 		rst, found := k.GetActionSigner(ctx,
+			creator,
 			expected.Base64EncodedSetSignerAction,
 		)
 		require.True(t, found)
@@ -80,6 +81,7 @@ func TestActionSignerMsgServerUpdate(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 				rst, found := k.GetActionSigner(ctx,
+					creator,
 					expected.Base64EncodedSetSignerAction,
 				)
 				require.True(t, found)
@@ -133,6 +135,7 @@ func TestActionSignerMsgServerDelete(t *testing.T) {
 			} else {
 				require.NoError(t, err)
 				_, found := k.GetActionSigner(ctx,
+					tc.request.Creator,
 					tc.request.Base64EncodedSetSignerAction,
 				)
 				require.False(t, found)
