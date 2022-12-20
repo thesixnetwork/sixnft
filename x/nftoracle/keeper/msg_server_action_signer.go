@@ -12,23 +12,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	nftadmintypes "github.com/thesixnetwork/sixnft/x/nftadmin/types"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
 func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreateActionSigner) (*types.MsgCreateActionSignerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	binder, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
-	}
-
-	//check if signer is authorized
-	isBinder := k.nftadminKeeper.HasPermission(ctx, nftadmintypes.KeyPermissionBinder, binder)
-	if !isBinder {
-		return nil, nftadmintypes.ErrUnauthorized
-	}
 
 	signerActionBz, err := base64.StdEncoding.DecodeString(msg.Base64EncodedSetSignerAction)
 	if err != nil {
@@ -81,23 +69,12 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdateActionSigner) (*types.MsgUpdateActionSignerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	binder, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		return nil, err
-	}
-
-	//check if signer is authorized
-	isBinder := k.nftadminKeeper.HasPermission(ctx, nftadmintypes.KeyPermissionBinder, binder)
-	if !isBinder {
-		return nil, nftadmintypes.ErrUnauthorized
-	}
-
+	
 	signerActionBz, err := base64.StdEncoding.DecodeString(msg.Base64EncodedSetSignerAction)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidBase64, msg.Base64EncodedSetSignerAction)
 	}
-
+	
 	data := types.SetSignerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(signerActionBz, &data)
 	if err != nil {
@@ -107,16 +84,20 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	if err != nil {
 		return nil, err
 	}
-
+	
 	// Check if the value exists
-	_, isFound := k.GetActionSigner(
+
+	isSigner, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
 		_signerParams.OwnerAddress,
 	)
-
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
+	}
+
+	if msg.Creator != isSigner.Creator {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect creator")
 	}
 
 	updatedAt := ctx.BlockTime()
@@ -126,6 +107,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 		OwnerAddress: *signer,
 		CreatedAt:    updatedAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
+		Creator: 	  msg.Creator,
 	}
 
 	k.SetActionSigner(ctx, actionSigner)
@@ -136,16 +118,6 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDeleteActionSigner) (*types.MsgDeleteActionSignerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	binder, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		return nil, err
-	}
-
-	//check if signer is authorized
-	isBinder := k.nftadminKeeper.HasPermission(ctx, nftadmintypes.KeyPermissionBinder, binder)
-	if !isBinder {
-		return nil, nftadmintypes.ErrUnauthorized
-	}
 
 	signerActionBz, err := base64.StdEncoding.DecodeString(msg.Base64EncodedSetSignerAction)
 	if err != nil {
@@ -163,7 +135,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	}
 
 	// Check if the value exists
-	_, isFound := k.GetActionSigner(
+	isSigner, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
 		_signerParams.OwnerAddress,
@@ -171,6 +143,10 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
+	}
+
+	if msg.Creator != isSigner.Creator {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect creator")
 	}
 
 	k.RemoveActionSigner(
