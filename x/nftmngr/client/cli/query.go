@@ -26,7 +26,9 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 
 	cmd.AddCommand(CmdQueryParams())
 	cmd.AddCommand(CmdListNFTSchema())
+	cmd.AddCommand(CmdListNFTSchemaV063())
 	cmd.AddCommand(CmdShowNFTSchema())
+	cmd.AddCommand(CmdShowNFTSchemaV063())
 	cmd.AddCommand(CmdListNftData())
 	cmd.AddCommand(CmdShowNftData())
 	cmd.AddCommand(CmdListActionByRefId())

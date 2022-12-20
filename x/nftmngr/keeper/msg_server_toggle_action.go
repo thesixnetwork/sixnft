@@ -30,7 +30,7 @@ func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleActio
 	for i, action := range schema.OnchainData.Actions {
 		if action.Name == msg.Action && action.Disable != msg.Disable {
 			schema.OnchainData.Actions[i].Disable = msg.Disable
-		}else if action.Name == msg.Action && action.Disable == msg.Disable {
+		} else if action.Name == msg.Action && action.Disable == msg.Disable {
 			return nil, sdkerrors.Wrap(types.ErrActionAlreadySetAsInput, msg.Action)
 		}
 	}

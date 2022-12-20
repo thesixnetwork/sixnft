@@ -56,7 +56,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable { 
+		if action.Name == msg.Action && action.Disable {
 			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
 		}
 		if action.Name == msg.Action {

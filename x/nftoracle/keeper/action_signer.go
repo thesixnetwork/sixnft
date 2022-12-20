@@ -12,6 +12,7 @@ func (k Keeper) SetActionSigner(ctx sdk.Context, actionSigner types.ActionSigner
 	b := k.cdc.MustMarshal(&actionSigner)
 	store.Set(types.ActionSignerKey(
 		actionSigner.ActorAddress,
+		actionSigner.OwnerAddress,
 	), b)
 }
 
@@ -19,12 +20,14 @@ func (k Keeper) SetActionSigner(ctx sdk.Context, actionSigner types.ActionSigner
 func (k Keeper) GetActionSigner(
 	ctx sdk.Context,
 	actorAddress string,
+	ownerAddress string,
 
 ) (val types.ActionSigner, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionSignerKeyPrefix))
 
 	b := store.Get(types.ActionSignerKey(
 		actorAddress,
+		ownerAddress,
 	))
 	if b == nil {
 		return val, false
@@ -38,11 +41,13 @@ func (k Keeper) GetActionSigner(
 func (k Keeper) RemoveActionSigner(
 	ctx sdk.Context,
 	actorAddress string,
+	ownerAddress string,
 
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionSignerKeyPrefix))
 	store.Delete(types.ActionSignerKey(
 		actorAddress,
+		ownerAddress,
 	))
 }
 
