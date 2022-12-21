@@ -12,11 +12,16 @@ const (
 // ActionSignerKey returns the store key to retrieve a ActionSigner from the index fields
 func ActionSignerKey(
 	actorAddress string,
+	ownerAddress string,
 ) []byte {
 	var key []byte
 
 	actorAddressBytes := []byte(actorAddress)
 	key = append(key, actorAddressBytes...)
+	key = append(key, []byte("/")...)
+
+	ownerAddressBytes := []byte(ownerAddress)
+	key = append(key, ownerAddressBytes...)
 	key = append(key, []byte("/")...)
 
 	return key

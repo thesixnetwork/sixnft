@@ -24,8 +24,8 @@ func CmdPerformActionByAdmin() *cobra.Command {
 			argAction := args[2]
 			argRefId := args[3]
 			argActionParams := args[4]
-			
-			if argActionParams == "" || argActionParams == " "{
+
+			if argActionParams == "" || argActionParams == " " {
 				argActionParams = "[]"
 			}
 

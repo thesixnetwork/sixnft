@@ -63,7 +63,7 @@ func (gs GenesisState) Validate() error {
 	actionSignerIndexMap := make(map[string]struct{})
 
 	for _, elem := range gs.ActionSignerList {
-		index := string(ActionSignerKey(elem.ActorAddress))
+		index := string(ActionSignerKey(elem.ActorAddress, elem.OwnerAddress))
 		if _, ok := actionSignerIndexMap[index]; ok {
 			return fmt.Errorf("duplicated index for actionSigner")
 		}

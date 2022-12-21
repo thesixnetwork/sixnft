@@ -417,3 +417,8 @@ ignite scaffold single NFTFeeBalance \
     --no-message \
     --no-simulation \
     --module nftmngr
+
+ignite scaffold map actionActor \
+    create_at:string expire_at:string \
+    --index actorAddress:string,ownerAddress:string  \
+    --module nftoracle --no-simulation

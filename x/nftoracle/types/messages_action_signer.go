@@ -18,7 +18,7 @@ func NewMsgCreateActionSigner(
 	bse64EncodedSetSignerAction string,
 ) *MsgCreateActionSigner {
 	return &MsgCreateActionSigner{
-		Creator:      creator,
+		Creator:                      creator,
 		Base64EncodedSetSignerAction: bse64EncodedSetSignerAction,
 	}
 }
@@ -60,7 +60,7 @@ func NewMsgUpdateActionSigner(
 
 ) *MsgUpdateActionSigner {
 	return &MsgUpdateActionSigner{
-		Creator:      creator,
+		Creator:                      creator,
 		Base64EncodedSetSignerAction: base64EncodedSetSignerAction,
 	}
 }
@@ -102,7 +102,7 @@ func NewMsgDeleteActionSigner(
 
 ) *MsgDeleteActionSigner {
 	return &MsgDeleteActionSigner{
-		Creator:      creator,
+		Creator:                      creator,
 		Base64EncodedSetSignerAction: base64EncodedSetSignerAction,
 	}
 }
