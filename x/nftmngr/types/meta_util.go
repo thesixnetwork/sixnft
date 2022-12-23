@@ -29,10 +29,6 @@ func (m *Metadata) GetBlockTimestampByZone(zone string, format string) string {
 	return blockTIme.Format(format)
 }
 
-func (m *Metadata) GetLocalBlockTimestamp(format string) string {
-	return m.getBlockTimestamp().Local().Format(format)
-}
-
 func (m *Metadata) BlockTimeUTCBefore(t string, format string) bool {
 	_t, _ := time.Parse(format, t) // to UTC(time.RFC3339, time)
 	return m.getBlockTimestamp().Before(_t)

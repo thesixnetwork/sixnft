@@ -49,7 +49,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 	// validate time given format as RFC3339
 	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
-	if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(time.Now().UTC()) {
+	if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(ctx.BlockTime().UTC()) {
 		_signerParams.ExpiredAt = endTime
 	}
 
