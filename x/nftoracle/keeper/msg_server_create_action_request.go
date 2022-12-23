@@ -39,7 +39,7 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 		break
 	case actionOralceParam.OnBehalfOf != "":
 		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer, actionOralceParam.OnBehalfOf)
-		if isActionSigner && _actionSigner.ExpiredAt.After(time.Now()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
+		if isActionSigner && _actionSigner.ExpiredAt.After(ctx.BlockTime().UTC()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
 			*signer = _actionSigner.OwnerAddress
 		} else {
 			return nil, sdkerrors.Wrap(types.ErrInvalidSigningOnBehalfOf, "invalid onBehalfOf or ActionSigner is expired")

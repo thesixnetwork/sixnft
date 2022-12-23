@@ -93,9 +93,6 @@ func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-func (m *Metadata) CurrentTimestamp() int64 {
-	return time.Now().Unix()
-}
 
 func (m *Metadata) GetBaseURI() string {
 	return m.schema.OriginData.OriginBaseUri
