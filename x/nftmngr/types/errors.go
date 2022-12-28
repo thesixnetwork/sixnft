@@ -13,7 +13,7 @@ var (
 	ErrParsingSchemaMessage   = sdkerrors.Register(ModuleName, 2, "Error parsing schema")
 	ErrParsingMetadataMessage = sdkerrors.Register(ModuleName, 3, "Error parsing metadata")
 	ErrCreatorDoesNotMatch    = sdkerrors.Register(ModuleName, 4, "Only creator can run this action")
-	ErrMetadataDoesNotExists  = sdkerrors.Register(ModuleName, 5, "Metadata of the toekn does not exists")
+	ErrMetadataDoesNotExists  = sdkerrors.Register(ModuleName, 5, "Metadata of the token does not exists")
 	ErrParsingAttributeValue  = sdkerrors.Register(ModuleName, 6, "Error parsing attribute value")
 
 	// Metadata (100-199)
