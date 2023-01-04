@@ -89,6 +89,20 @@ func (k Keeper) GetActionRequestV063(ctx sdk.Context, id uint64) (val types.Acti
 	return val, true
 }
 
+// IsActionRequestOldVersion
+func (k Keeper) IsActionRequestOldVersion(ctx sdk.Context, id uint64) (val types.ActionRequestV063, isOldVersion bool, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	b := store.Get(GetActionRequestIDBytes(id))
+	if b == nil {
+		return val, false, false
+	}
+	err := k.cdc.Unmarshal(b, &val)
+	if err != nil {
+		return val, true, found
+	}
+	return val, false, true
+}
+
 
 // RemoveActionRequest removes a actionRequest from the store
 func (k Keeper) RemoveActionRequest(ctx sdk.Context, id uint64) {
@@ -141,13 +155,44 @@ func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.T
 	defer iterator.Close()
 	for ; iterator.Valid(); iterator.Next() {
 		requestID, _ := SplitActiveActionRequestQueueKey(iterator.Key())
-		ActionOracleRequest, found := k.GetActionRequest(ctx, requestID)
+		ActionOracleRequest, isOldVersion,found := k.IsActionRequestOldVersion(ctx, requestID)
 		if !found {
-			panic(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
+			(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
+			continue
 		}
-
-		if cb(ActionOracleRequest) {
-			break
+		var newAction types.ActionOracleRequest
+		if isOldVersion {
+			// restruct old version
+			newAction = types.ActionOracleRequest{
+				Id: ActionOracleRequest.Id,
+				NftSchemaCode: ActionOracleRequest.NftSchemaCode,
+				TokenId: ActionOracleRequest.TokenId,
+				Action: ActionOracleRequest.Action,
+				Params: make([]*types.ActionParameter, 0),
+				Caller: ActionOracleRequest.Caller,
+				RefId: ActionOracleRequest.RefId,
+				RequiredConfirm: ActionOracleRequest.RequiredConfirm,
+				Status: ActionOracleRequest.Status,
+				CurrentConfirm: ActionOracleRequest.CurrentConfirm,
+				Confirmers: ActionOracleRequest.Confirmers,
+				CreatedAt: ActionOracleRequest.CreatedAt,
+				ValidUntil: ActionOracleRequest.ValidUntil,
+				DataHashes: ActionOracleRequest.DataHashes,
+				ExpiredHeight: ActionOracleRequest.ExpiredHeight,
+				ExecutionErrorMessage: ActionOracleRequest.ExecutionErrorMessage,
+			}
+			if cb(newAction) {
+				break
+			}
+		} else {
+			newAction, found := k.GetActionRequest(ctx, requestID)
+			if !found {
+				(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
+				continue
+			}
+			if cb(newAction) {
+				break
+			}
 		}
 	}
 }
