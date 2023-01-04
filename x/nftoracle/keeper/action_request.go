@@ -78,6 +78,18 @@ func (k Keeper) GetActionRequest(ctx sdk.Context, id uint64) (val types.ActionOr
 	return val, true
 }
 
+// GetActionRequest returns a actionRequest from its id
+func (k Keeper) GetActionRequestV063(ctx sdk.Context, id uint64) (val types.ActionRequestV063, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	b := store.Get(GetActionRequestIDBytes(id))
+	if b == nil {
+		return val, false
+	}
+	k.cdc.MustUnmarshal(b, &val)
+	return val, true
+}
+
+
 // RemoveActionRequest removes a actionRequest from the store
 func (k Keeper) RemoveActionRequest(ctx sdk.Context, id uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
