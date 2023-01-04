@@ -16,11 +16,11 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 // Query defines the gRPC querier service.
 service Query {
-  // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/params";
-  }
-  // Queries a MintRequest by id.
+	// Parameters queries the parameters of the module.
+	rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/params";
+	}
+  	// Queries a MintRequest by id.
 	rpc MintRequest(QueryGetMintRequestRequest) returns (QueryGetMintRequestResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/mint_request/{id}";
 	}
@@ -35,12 +35,22 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request/{id}";
 	}
 
+	// Queries a ActionRequest by id.
+	rpc ActionOracleRequestV063(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponseV063) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request_063/{id}";
+	}
+
 	// Queries a list of ActionRequest items.
 	rpc ActionRequestAll(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request";
 	}
 
-// Queries a CollectionOwnerRequest by id.
+	// Queries a list of ActionRequest items.
+	rpc ActionRequestAllV063(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponseV063) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request_063";
+	}
+
+	// Queries a CollectionOwnerRequest by id.
 	rpc CollectionOwnerRequest(QueryGetCollectionOwnerRequestRequest) returns (QueryGetCollectionOwnerRequestResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/collection_owner_request/{id}";
 	}
@@ -101,12 +111,21 @@ message QueryGetActionRequestResponse {
 	ActionOracleRequest ActionOracleRequest = 1 [(gogoproto.nullable) = false];
 }
 
+message QueryGetActionRequestResponseV063 {
+	ActionRequestV063 ActionRequestV063 = 1 [(gogoproto.nullable) = false];
+}
+
 message QueryAllActionRequestRequest {
 	cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
 message QueryAllActionRequestResponse {
 	repeated ActionOracleRequest ActionOracleRequest = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryAllActionRequestResponseV063 {
+	repeated ActionRequestV063 ActionRequestV063 = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
