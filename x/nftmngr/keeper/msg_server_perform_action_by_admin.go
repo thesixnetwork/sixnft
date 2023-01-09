@@ -105,7 +105,6 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	meta.SetGetBlockTimeFunction(func() time.Time {
 		return ctx.BlockTime()
 	})
-
 	// utils function
 	meta.SetGetBlockHeightFunction(func() int64 {
 		return ctx.BlockHeight()

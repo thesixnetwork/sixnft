@@ -98,7 +98,7 @@ func (k Keeper) IsActionRequestOldVersion(ctx sdk.Context, id uint64) (val types
 	}
 	err := k.cdc.Unmarshal(b, &val)
 	if err != nil {
-		return val, true, found
+		return val, true, false
 	}
 	return val, false, true
 }
@@ -119,6 +119,22 @@ func (k Keeper) GetAllActionRequest(ctx sdk.Context) (list []types.ActionOracleR
 
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.ActionOracleRequest
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		list = append(list, val)
+	}
+
+	return
+}
+
+// GetAllActionRequestV603 returns all ActionRequestV063
+func (k Keeper) GetAllActionRequestV603(ctx sdk.Context) (list []types.ActionRequestV063) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.ActionRequestV063
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
 		list = append(list, val)
 	}
@@ -159,14 +175,14 @@ func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.T
 
 		ActionOracleRequest, isOldVersion, found := k.IsActionRequestOldVersion(ctx, requestID)
 		if !found {
-			(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
+			(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
 			continue
 		}
 
 		if isOldVersion {
 			ActionOracleRequestV063, found := k.GetActionRequestV063(ctx, requestID)
 			if !found {
-				(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
+				(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
 				continue
 			}
 			ActionOracleRequest = types.ActionOracleRequest{
@@ -191,12 +207,6 @@ func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.T
 			// Migrate
 			k.SetActionRequest(ctx, ActionOracleRequest)
 		}
-
-		// ActionOracleRequest, found := k.GetActionRequest(ctx, requestID)
-		// if !found {
-		// 	(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
-		// 	continue
-		// }
 
 		if cb(ActionOracleRequest) {
 			break

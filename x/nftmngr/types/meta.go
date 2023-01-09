@@ -191,6 +191,16 @@ func (m *Metadata) GetString(key string) string {
 	return v
 }
 
+// sub string for GetString function
+func (m *Metadata) SubString(key string, start int, end int) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return v[start:end]
+}
+
+
 func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := m.MapAllKey[key]
 	if attri == nil {
