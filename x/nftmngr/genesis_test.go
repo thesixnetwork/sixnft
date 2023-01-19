@@ -49,14 +49,6 @@ func TestGenesis(t *testing.T) {
 				Name: "1",
 			},
 		},
-		NftCollectionList: []types.NftCollection{
-			{
-				NftSchemaCode: "0",
-			},
-			{
-				NftSchemaCode: "1",
-			},
-		},
 		NFTSchemaByContractList: []types.NFTSchemaByContract{
 			{
 				OriginContractAddress: "0",
@@ -90,7 +82,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.NftDataList, got.NftDataList)
 	require.ElementsMatch(t, genesisState.ActionByRefIdList, got.ActionByRefIdList)
 	require.ElementsMatch(t, genesisState.OrganizationList, got.OrganizationList)
-	require.ElementsMatch(t, genesisState.NftCollectionList, got.NftCollectionList)
 	require.ElementsMatch(t, genesisState.NFTSchemaByContractList, got.NFTSchemaByContractList)
 	require.Equal(t, genesisState.NftFeeConfig, got.NftFeeConfig)
 	require.Equal(t, genesisState.NFTFeeBalance, got.NFTFeeBalance)
