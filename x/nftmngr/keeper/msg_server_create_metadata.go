@@ -101,7 +101,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	k.Keeper.SetNftData(ctx, data)
 
 	// Add the minted of any schema to collection
-	k.Keeper.AddMetadataToCollection(ctx, &data)
+	// k.Keeper.AddMetadataToCollection(ctx, &data)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
