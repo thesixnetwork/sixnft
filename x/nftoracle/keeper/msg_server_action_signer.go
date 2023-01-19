@@ -69,12 +69,12 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdateActionSigner) (*types.MsgUpdateActionSignerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	
+
 	signerActionBz, err := base64.StdEncoding.DecodeString(msg.Base64EncodedSetSignerAction)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrInvalidBase64, msg.Base64EncodedSetSignerAction)
 	}
-	
+
 	data := types.SetSignerSignature{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(signerActionBz, &data)
 	if err != nil {
@@ -84,7 +84,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	if err != nil {
 		return nil, err
 	}
-	
+
 	// Check if the value exists
 
 	isSigner, isFound := k.GetActionSigner(
@@ -107,7 +107,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 		OwnerAddress: *signer,
 		CreatedAt:    updatedAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
-		Creator: 	  msg.Creator,
+		Creator:      msg.Creator,
 	}
 
 	k.SetActionSigner(ctx, actionSigner)
@@ -117,7 +117,6 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 
 func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDeleteActionSigner) (*types.MsgDeleteActionSignerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
 
 	signerActionBz, err := base64.StdEncoding.DecodeString(msg.Base64EncodedSetSignerAction)
 	if err != nil {

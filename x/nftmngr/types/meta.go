@@ -93,7 +93,6 @@ func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-
 func (m *Metadata) GetBaseURI() string {
 	return m.schema.OriginData.OriginBaseUri
 }
@@ -199,7 +198,6 @@ func (m *Metadata) SubString(key string, start int, end int) string {
 	}
 	return v[start:end]
 }
-
 
 func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := m.MapAllKey[key]

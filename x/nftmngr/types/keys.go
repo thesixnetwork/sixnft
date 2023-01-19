@@ -46,3 +46,8 @@ const (
 	KeyMintPermissionOnlySystem = "system"
 	KeyMintPermissionAll        = "all"
 )
+
+const (
+	CollectionKey = "Collection-value-"
+	CollectionCountKey = "Collection-count-"
+)

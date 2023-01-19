@@ -47,7 +47,7 @@ var (
 	ErrSameTypeTokenAttributes         = sdkerrors.Register(ModuleName, 207, "Same type token attributes")
 	ErrAttributeDoesNotExists          = sdkerrors.Register(ModuleName, 208, "Attribute does not exists")
 	ErrNotSameTypeDefaultMintValue     = sdkerrors.Register(ModuleName, 209, "Not same type default mint value")
-	ErrInvalidAddress                 = sdkerrors.Register(ModuleName, 210, "Invalid address")
+	ErrInvalidAddress                  = sdkerrors.Register(ModuleName, 210, "Invalid address")
 	ErrAttributeAlreadyHidden          = sdkerrors.Register(ModuleName, 211, "Attribute already hidden")
 	ErrDuplicateActionName             = sdkerrors.Register(ModuleName, 212, "Duplicate action name")
 	ErrInvalidAttributeName            = sdkerrors.Register(ModuleName, 213, "Invalid attribute name")

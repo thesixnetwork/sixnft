@@ -103,7 +103,6 @@ func (k Keeper) IsActionRequestOldVersion(ctx sdk.Context, id uint64) (val types
 	return val, false, true
 }
 
-
 // RemoveActionRequest removes a actionRequest from the store
 func (k Keeper) RemoveActionRequest(ctx sdk.Context, id uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
@@ -165,7 +164,6 @@ func (k Keeper) RemoveFromActiveActionRequestQueue(ctx sdk.Context, requestID ui
 	store.Delete(ActiveActionRequestQueueKey(requestID, endTime))
 }
 
-
 func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.Time, cb func(ActionOracleRequest types.ActionOracleRequest) (stop bool)) {
 	iterator := k.ActiveActionRequestQueueIterator(ctx, endTime)
 
@@ -186,21 +184,21 @@ func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.T
 				continue
 			}
 			ActionOracleRequest = types.ActionOracleRequest{
-				Id: ActionOracleRequest.Id,
-				NftSchemaCode: ActionOracleRequestV063.NftSchemaCode,
-				TokenId: ActionOracleRequestV063.TokenId,
-				Action: ActionOracleRequestV063.Action,
-				Params: make([]*types.ActionParameter, 0),
-				Caller: ActionOracleRequestV063.Caller,
-				RefId: ActionOracleRequestV063.RefId,
-				RequiredConfirm: ActionOracleRequestV063.RequiredConfirm,
-				Status: ActionOracleRequestV063.Status,
-				CurrentConfirm: ActionOracleRequestV063.CurrentConfirm,
-				Confirmers: ActionOracleRequestV063.Confirmers,
-				CreatedAt: ActionOracleRequestV063.CreatedAt,
-				ValidUntil: ActionOracleRequestV063.ValidUntil,
-				DataHashes: ActionOracleRequestV063.DataHashes,
-				ExpiredHeight: ActionOracleRequestV063.ExpiredHeight,
+				Id:                    ActionOracleRequest.Id,
+				NftSchemaCode:         ActionOracleRequestV063.NftSchemaCode,
+				TokenId:               ActionOracleRequestV063.TokenId,
+				Action:                ActionOracleRequestV063.Action,
+				Params:                make([]*types.ActionParameter, 0),
+				Caller:                ActionOracleRequestV063.Caller,
+				RefId:                 ActionOracleRequestV063.RefId,
+				RequiredConfirm:       ActionOracleRequestV063.RequiredConfirm,
+				Status:                ActionOracleRequestV063.Status,
+				CurrentConfirm:        ActionOracleRequestV063.CurrentConfirm,
+				Confirmers:            ActionOracleRequestV063.Confirmers,
+				CreatedAt:             ActionOracleRequestV063.CreatedAt,
+				ValidUntil:            ActionOracleRequestV063.ValidUntil,
+				DataHashes:            ActionOracleRequestV063.DataHashes,
+				ExpiredHeight:         ActionOracleRequestV063.ExpiredHeight,
 				ExecutionErrorMessage: ActionOracleRequestV063.ExecutionErrorMessage,
 			}
 			/// migrate to new version
