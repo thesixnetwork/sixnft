@@ -382,6 +382,35 @@ func (m *Metadata) SetDisplayArribute(key string, value string) error {
 	return nil
 }
 
+// add for typos
+func (m *Metadata) SetDisplayAttribute(key string, value string) error {
+	bool_val, _ := strconv.ParseBool(value)
+	attri := m.MapAllKey[key]
+	if attri == nil {
+		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
+		return nil
+	}
+	if attri.From == "chain" {
+		newAttributeValue := &NftAttributeValue{
+			Name:                attri.AttributeValue.Name,
+			HiddenToMarketplace: bool_val,
+		}
+
+		m.ChangeList = append(m.ChangeList, &MetadataChange{
+			Key:           key,
+			PreviousValue: strconv.FormatBool(attri.AttributeValue.GetHiddenToMarketplace()),
+			NewValue:      strconv.FormatBool(bool_val),
+		})
+		m.MapAllKey[key].AttributeValue = newAttributeValue
+		m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+	} else {
+		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
+	}
+	return nil
+}
+
 func (m *Metadata) ReplaceAllString(intput string, regexpStr string, replaceStr string) string {
 	reg := regexp.MustCompile(regexpStr)
 	return reg.ReplaceAllString(intput, replaceStr)
