@@ -3,6 +3,7 @@ package types
 import (
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -191,12 +192,30 @@ func (m *Metadata) GetString(key string) string {
 }
 
 // sub string for GetString function
-func (m *Metadata) SubString(key string, start int, end int) string {
+func (m *Metadata) GetSubString(key string, start int, end int) string {
 	v, err := m.MustGetString(key)
 	if err != nil {
 		panic(err)
 	}
 	return v[start:end]
+}
+
+// return Lowercase for GetString function
+func (m *Metadata) GetLowercase(key string) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return strings.ToLower(v)
+}
+
+// return Uppercase for GetString function
+func (m *Metadata) GetUppercase(key string) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return strings.ToUpper(v)
 }
 
 func (m *Metadata) MustGetString(key string) (string, error) {
@@ -432,4 +451,19 @@ func (p *ActionParameter) GetNumber() uint64 {
 
 func (p *ActionParameter) GetString() string {
 	return p.Value
+}
+
+// return substring of string from start to end of parameter
+func (p *ActionParameter) GetSubString(start int, end int) string {
+	return p.Value[start:end]
+}
+
+// return LowerCase of parameter
+func (p *ActionParameter) GetLowerCase() string {
+	return strings.ToLower(p.Value)
+}
+
+// return UpperCase of parameter
+func (p *ActionParameter) GetUpperCase() string {
+	return strings.ToUpper(p.Value)
 }
