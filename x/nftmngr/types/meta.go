@@ -145,11 +145,10 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	if attri == nil {
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	 _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); 
-	if ok {
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		// Number
 		return int64(attri.AttributeValue.GetNumberAttributeValue().Value), nil
-	}else {
+	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -237,8 +236,7 @@ func (m *Metadata) MustGetString(key string) (string, error) {
 	if attri == nil {
 		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	_, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue)
-	if ok {
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
 		return attri.AttributeValue.GetStringAttributeValue().Value, nil
 	} else {
 		// find from schema nft attribute
@@ -304,11 +302,10 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 	if attri == nil {
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	 _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); 
-	 if ok {
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		// Number
 		return attri.AttributeValue.GetFloatAttributeValue().Value, nil
-	}else {
+	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -372,10 +369,9 @@ func (m *Metadata) MustGetBool(key string) (bool, error) {
 	if attri == nil {
 		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	_, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); 
-	if ok {
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		return attri.AttributeValue.GetBooleanAttributeValue().Value, nil
-	}else {
+	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
