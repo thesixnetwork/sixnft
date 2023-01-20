@@ -37,34 +37,12 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	_, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
-		_signerParams.OwnerAddress,
+		*signer,
 	)
 
 	if isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
 	}
-
-	// Get List of binded signers
-	bindedList, found := k.GetBindedSigner(ctx, _signerParams.ActorAddress)
-	if !found {
-		bindedList = types.BindedSigner{
-			OwnerAddress: _signerParams.OwnerAddress,
-			Signers:      make([]*types.XSetSignerParams, 0),
-		}
-	}
-
-	// add the binded signer to the list
-	bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
-		ActorAddress: _signerParams.ActorAddress,
-		ExpiredAt:    _signerParams.ExpiredAt,
-	})
-
-	// set the binded signer
-	k.SetBindedSigner(ctx, types.BindedSigner{
-		OwnerAddress: _signerParams.ActorAddress,
-		Signers:      bindedList.Signers,
-		ActorCount:   uint64(len(bindedList.Signers)),
-	})
 
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
@@ -80,7 +58,30 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 		OwnerAddress: *signer,
 		CreatedAt:    createdAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
+		Creator:      msg.Creator,
 	}
+
+	// Get List of binded signers
+	bindedList, found := k.GetBindedSigner(ctx, *signer)
+	if !found {
+		bindedList = types.BindedSigner{
+			OwnerAddress: *signer,
+			Signers:      make([]*types.XSetSignerParams, 0),
+		}
+	}
+
+	// add the binded signer to the list
+	bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
+		ActorAddress: _signerParams.ActorAddress,
+		ExpiredAt:    _signerParams.ExpiredAt,
+	})
+
+	// set the binded signer
+	k.SetBindedSigner(ctx, types.BindedSigner{
+		OwnerAddress: *signer,
+		Signers:      bindedList.Signers,
+		ActorCount:   uint64(len(bindedList.Signers)),
+	})
 
 	k.SetActionSigner(
 		ctx,
@@ -112,7 +113,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	isSigner, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
-		_signerParams.OwnerAddress,
+		*signer,
 	)
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
@@ -150,7 +151,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingSetSignerSignature, err.Error())
 	}
-	_signerParams, _, err := k.ValidatesetSignernature(data)
+	_signerParams, signer, err := k.ValidatesetSignernature(data)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +160,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	isSigner, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
-		_signerParams.OwnerAddress,
+		*signer,
 	)
 
 	if !isFound {
@@ -173,7 +174,7 @@ func (k msgServer) DeleteActionSigner(goCtx context.Context, msg *types.MsgDelet
 	k.RemoveActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
-		_signerParams.OwnerAddress,
+		*signer,
 	)
 
 	return &types.MsgDeleteActionSignerResponse{}, nil
