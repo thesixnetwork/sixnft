@@ -14,11 +14,11 @@ func DefaultGenesis() *GenesisState {
 		NftDataList:             []NftData{},
 		ActionByRefIdList:       []ActionByRefId{},
 		OrganizationList:        []Organization{},
-		NftCollectionList:       []NftCollection{},
 		NFTSchemaByContractList: []NFTSchemaByContract{},
 		NftFeeConfig:            nil,
 		NFTFeeBalance:           nil,
 		MetadataCreatorList:     []MetadataCreator{},
+		NftCollectionList:       []NftCollection{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -67,16 +67,6 @@ func (gs GenesisState) Validate() error {
 		}
 		organizationIndexMap[index] = struct{}{}
 	}
-	// Check for duplicated index in nftCollection
-	nftCollectionIndexMap := make(map[string]struct{})
-
-	for _, elem := range gs.NftCollectionList {
-		index := string(NftCollectionKey(elem.NftSchemaCode))
-		if _, ok := nftCollectionIndexMap[index]; ok {
-			return fmt.Errorf("duplicated index for nftCollection")
-		}
-		nftCollectionIndexMap[index] = struct{}{}
-	}
 	// Check for duplicated index in nFTSchemaByContract
 	nFTSchemaByContractIndexMap := make(map[string]struct{})
 
@@ -96,6 +86,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for metadataCreator")
 		}
 		metadataCreatorIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in nftCollection
+	nftCollectionIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.NftCollectionList {
+		index := string(NftCollectionKey(elem.NftSchemaCode))
+		if _, ok := nftCollectionIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for nftCollection")
+		}
+		nftCollectionIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

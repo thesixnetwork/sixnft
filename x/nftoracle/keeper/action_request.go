@@ -78,6 +78,31 @@ func (k Keeper) GetActionRequest(ctx sdk.Context, id uint64) (val types.ActionOr
 	return val, true
 }
 
+// GetActionRequest returns a actionRequest from its id
+func (k Keeper) GetActionRequestV063(ctx sdk.Context, id uint64) (val types.ActionRequestV063, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	b := store.Get(GetActionRequestIDBytes(id))
+	if b == nil {
+		return val, false
+	}
+	k.cdc.MustUnmarshal(b, &val)
+	return val, true
+}
+
+// IsActionRequestOldVersion
+func (k Keeper) IsActionRequestOldVersion(ctx sdk.Context, id uint64) (val types.ActionOracleRequest, isOldVersion bool, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	b := store.Get(GetActionRequestIDBytes(id))
+	if b == nil {
+		return val, false, false
+	}
+	err := k.cdc.Unmarshal(b, &val)
+	if err != nil {
+		return val, true, false
+	}
+	return val, false, true
+}
+
 // RemoveActionRequest removes a actionRequest from the store
 func (k Keeper) RemoveActionRequest(ctx sdk.Context, id uint64) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
@@ -93,6 +118,22 @@ func (k Keeper) GetAllActionRequest(ctx sdk.Context) (list []types.ActionOracleR
 
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.ActionOracleRequest
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		list = append(list, val)
+	}
+
+	return
+}
+
+// GetAllActionRequestV603 returns all ActionRequestV063
+func (k Keeper) GetAllActionRequestV603(ctx sdk.Context) (list []types.ActionRequestV063) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.ActionRequestV063
 		k.cdc.MustUnmarshal(iterator.Value(), &val)
 		list = append(list, val)
 	}
@@ -129,9 +170,40 @@ func (k Keeper) IterateActiveActionRequestsQueue(ctx sdk.Context, endTime time.T
 	defer iterator.Close()
 	for ; iterator.Valid(); iterator.Next() {
 		requestID, _ := SplitActiveActionRequestQueueKey(iterator.Key())
-		ActionOracleRequest, found := k.GetActionRequest(ctx, requestID)
+
+		ActionOracleRequest, isOldVersion, found := k.IsActionRequestOldVersion(ctx, requestID)
 		if !found {
-			panic(fmt.Sprintf("ActionOracleRequest %d does not exist", requestID))
+			(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
+			continue
+		}
+
+		if isOldVersion {
+			ActionOracleRequestV063, found := k.GetActionRequestV063(ctx, requestID)
+			if !found {
+				(fmt.Printf("ActionOracleRequest %d does not exist", requestID))
+				continue
+			}
+			ActionOracleRequest = types.ActionOracleRequest{
+				Id:                    ActionOracleRequest.Id,
+				NftSchemaCode:         ActionOracleRequestV063.NftSchemaCode,
+				TokenId:               ActionOracleRequestV063.TokenId,
+				Action:                ActionOracleRequestV063.Action,
+				Params:                make([]*types.ActionParameter, 0),
+				Caller:                ActionOracleRequestV063.Caller,
+				RefId:                 ActionOracleRequestV063.RefId,
+				RequiredConfirm:       ActionOracleRequestV063.RequiredConfirm,
+				Status:                ActionOracleRequestV063.Status,
+				CurrentConfirm:        ActionOracleRequestV063.CurrentConfirm,
+				Confirmers:            ActionOracleRequestV063.Confirmers,
+				CreatedAt:             ActionOracleRequestV063.CreatedAt,
+				ValidUntil:            ActionOracleRequestV063.ValidUntil,
+				DataHashes:            ActionOracleRequestV063.DataHashes,
+				ExpiredHeight:         ActionOracleRequestV063.ExpiredHeight,
+				ExecutionErrorMessage: ActionOracleRequestV063.ExecutionErrorMessage,
+			}
+			/// migrate to new version
+			// Migrate
+			k.SetActionRequest(ctx, ActionOracleRequest)
 		}
 
 		if cb(ActionOracleRequest) {

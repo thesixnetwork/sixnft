@@ -10,6 +10,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
+// create mint request
 func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreateMintRequest) (*types.MsgCreateMintRequestResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -30,7 +31,7 @@ func (k msgServer) CreateMintRequest(goCtx context.Context, msg *types.MsgCreate
 	// Get Oracle Config
 	oracleConfig, found := k.GetOracleConfig(ctx)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrOracleConfigNotFound, "")
+		return nil, sdkerrors.Wrap(types.ErrOracleConfigNotFound, "no oracle config found")
 	}
 
 	// Verify msg.RequiredConfirmations is less than or equal to oracleConfig.MinimumConfirmation

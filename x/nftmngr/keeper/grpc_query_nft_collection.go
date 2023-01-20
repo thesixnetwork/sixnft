@@ -21,7 +21,7 @@ func (k Keeper) NftCollection(c context.Context, req *types.QueryGetNftCollectio
 
 	// store := ctx.KVStore(k.storeKey)
 	// NftcollectionStore := prefix.NewStore(store, types.KeyPrefix(types.NftCollectionKeyPrefix))
-	NftcollectionStore := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix([]byte(req.NftSchemaCode)))
+	NftcollectionStore := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix(req.NftSchemaCode))
 
 	pageRes, err := query.Paginate(NftcollectionStore, req.Pagination, func(key []byte, value []byte) error {
 		var nftData types.NftData

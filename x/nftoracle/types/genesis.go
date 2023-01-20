@@ -15,6 +15,7 @@ func DefaultGenesis() *GenesisState {
 		CollectionOwnerRequestList: []CollectionOwnerRequest{},
 		OracleConfig:               nil,
 		ActionSignerList:           []ActionSigner{},
+		BindedSignerList:           []BindedSigner{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -68,6 +69,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for actionSigner")
 		}
 		actionSignerIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in bindedSigner
+	bindedSignerIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.BindedSignerList {
+		index := string(BindedSignerKey(elem.OwnerAddress))
+		if _, ok := bindedSignerIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for bindedSigner")
+		}
+		bindedSignerIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

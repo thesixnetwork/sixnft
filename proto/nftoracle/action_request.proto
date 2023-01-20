@@ -50,3 +50,31 @@ message ActionOracleRequest {
   int64 expired_height = 15;
   string execution_error_message = 16;
 }
+
+message ActionParamV063 {
+  string nft_schema_code = 1;
+  string token_id = 2;
+  string action = 3;
+  string ref_id = 4;
+  google.protobuf.Timestamp expired_at = 5
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+}
+message ActionRequestV063 {
+  uint64 id = 1;
+  string nft_schema_code = 2; 
+  string token_id = 3; 
+  string action = 4;
+  string caller = 5;
+  string ref_id = 6;
+  uint64 required_confirm = 7; 
+  RequestStatus status = 8;
+  uint64 current_confirm = 9;
+  repeated string confirmers = 10;
+  google.protobuf.Timestamp created_at = 11
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  google.protobuf.Timestamp valid_until = 12
+   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  repeated DataHash data_hashes = 13;
+  int64 expired_height = 14;
+  string execution_error_message = 15;
+}

@@ -21,6 +21,14 @@ func (k msgServer) AddSystemActioner(goCtx context.Context, msg *types.MsgAddSys
 	if msg.Creator != schema.Owner {
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
+
+	//validate that the actioner is a valid address
+	// validate grantee format as 6x0000000000000000 or not
+	_, err := sdk.AccAddressFromBech32(msg.Actioner)
+	if err != nil {
+		return nil, types.ErrInvalidAddress
+	}
+
 	// Create a map of syste actioners
 	mapSystemActioners := make(map[string]bool)
 	for _, systemActioner := range schema.SystemActioners {

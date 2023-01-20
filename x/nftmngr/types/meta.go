@@ -93,7 +93,6 @@ func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-
 func (m *Metadata) GetBaseURI() string {
 	return m.schema.OriginData.OriginBaseUri
 }
@@ -189,6 +188,15 @@ func (m *Metadata) GetString(key string) string {
 		panic(err)
 	}
 	return v
+}
+
+// sub string for GetString function
+func (m *Metadata) SubString(key string, start int, end int) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return v[start:end]
 }
 
 func (m *Metadata) MustGetString(key string) (string, error) {
@@ -345,6 +353,35 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 }
 
 func (m *Metadata) SetDisplayArribute(key string, value string) error {
+	bool_val, _ := strconv.ParseBool(value)
+	attri := m.MapAllKey[key]
+	if attri == nil {
+		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
+		return nil
+	}
+	if attri.From == "chain" {
+		newAttributeValue := &NftAttributeValue{
+			Name:                attri.AttributeValue.Name,
+			HiddenToMarketplace: bool_val,
+		}
+
+		m.ChangeList = append(m.ChangeList, &MetadataChange{
+			Key:           key,
+			PreviousValue: strconv.FormatBool(attri.AttributeValue.GetHiddenToMarketplace()),
+			NewValue:      strconv.FormatBool(bool_val),
+		})
+		m.MapAllKey[key].AttributeValue = newAttributeValue
+		m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+	} else {
+		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
+	}
+	return nil
+}
+
+// add for typos
+func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
 	attri := m.MapAllKey[key]
 	if attri == nil {

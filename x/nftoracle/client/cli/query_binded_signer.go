@@ -9,25 +9,23 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
-func CmdListActionSigner() *cobra.Command {
+func CmdShowBindedSigner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-action-signer",
-		Short: "list all actionSigner",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Use:   "show-binded-signer [owner-address]",
+		Short: "shows a bindedSigner",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
-
-			pageReq, err := client.ReadPageRequest(cmd.Flags())
-			if err != nil {
-				return err
-			}
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllActionSignerRequest{
-				Pagination: pageReq,
+			argOwnerAddress := args[0]
+
+			params := &types.QueryGetBindedSignerRequest{
+				OwnerAddress: argOwnerAddress,
 			}
 
-			res, err := queryClient.ActionSignerAll(context.Background(), params)
+			res, err := queryClient.BindedSigner(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -36,7 +34,6 @@ func CmdListActionSigner() *cobra.Command {
 		},
 	}
 
-	flags.AddPaginationFlagsToCmd(cmd, cmd.Use)
 	flags.AddQueryFlagsToCmd(cmd)
 
 	return cmd
