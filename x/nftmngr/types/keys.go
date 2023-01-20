@@ -15,6 +15,9 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_nftmngr"
+
+	// NFT Collection
+	NftCollectionDataCountKey = "NftCollectionData-count-"
 )
 
 // KVStore keys
@@ -28,8 +31,13 @@ func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
 
-func CollectionkeyPrefix(nftSchemaCode []byte) []byte {
-	return append(CollectionPrefix, nftSchemaCode...)
+
+func CollectionkeyPrefix(nftSchemaCode string) []byte {
+	var key []byte
+	nftSchemaCodeBytes := []byte(nftSchemaCode)
+	key = append(key, nftSchemaCodeBytes...)
+	key = append(key, []byte("/")...)
+	return key
 }
 
 const (
@@ -45,9 +53,4 @@ const (
 const (
 	KeyMintPermissionOnlySystem = "system"
 	KeyMintPermissionAll        = "all"
-)
-
-const (
-	CollectionKey      = "Collection-value-"
-	CollectionCountKey = "Collection-count-"
 )

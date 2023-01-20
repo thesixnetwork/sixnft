@@ -1,10 +1,18 @@
 package keeper
 
 import (
+	"encoding/binary"
+
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
+
+func (k Keeper) AddMetadataToCollection(ctx sdk.Context, data *types.NftData) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix(data.NftSchemaCode))
+	b := k.cdc.MustMarshal(data)
+	store.Set([]byte(data.TokenId), b)
+}
 
 // SetNftCollection set a specific nftCollection in the store from its index
 func (k Keeper) SetNftCollection(ctx sdk.Context, nftCollection types.NftCollection) {
@@ -13,6 +21,26 @@ func (k Keeper) SetNftCollection(ctx sdk.Context, nftCollection types.NftCollect
 	store.Set(types.NftCollectionKey(
 		nftCollection.NftSchemaCode,
 	), b)
+}
+
+// SetNftCollectionDataCount set the total number of nftCollection
+func (k Keeper) SetNftCollectionDataCount(ctx sdk.Context, count uint64) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NftCollectionDataCountKey))
+	byteKey := []byte(types.NftCollectionDataCountKey)
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, count)
+	store.Set(byteKey, bz)
+}
+
+// GetNftCollectionDataCount get the total number of nftCollection
+func (k Keeper) GetNftCollectionDataCount(ctx sdk.Context) uint64 {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NftCollectionDataCountKey))
+	byteKey := []byte(types.NftCollectionDataCountKey)
+	bz := store.Get(byteKey)
+	if bz == nil {
+		return 0
+	}
+	return binary.BigEndian.Uint64(bz)
 }
 
 // GetNftCollection returns a nftCollection from its index

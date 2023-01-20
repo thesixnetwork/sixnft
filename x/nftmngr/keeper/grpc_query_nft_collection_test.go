@@ -33,14 +33,14 @@ func TestNftCollectionQuerySingle(t *testing.T) {
 			request: &types.QueryGetNftCollectionRequest{
 				NftSchemaCode: msgs[0].NftSchemaCode,
 			},
-			response: &types.QueryGetNftCollectionResponse{NftCollection: msgs[0]},
+			response: &types.QueryGetNftCollectionResponse{NftCollection: msgs[0].NftDatas},
 		},
 		{
 			desc: "Second",
 			request: &types.QueryGetNftCollectionRequest{
 				NftSchemaCode: msgs[1].NftSchemaCode,
 			},
-			response: &types.QueryGetNftCollectionResponse{NftCollection: msgs[1]},
+			response: &types.QueryGetNftCollectionResponse{NftCollection: msgs[1].NftDatas},
 		},
 		{
 			desc: "KeyNotFound",
@@ -74,8 +74,8 @@ func TestNftCollectionQueryPaginated(t *testing.T) {
 	wctx := sdk.WrapSDKContext(ctx)
 	msgs := createNNftCollection(keeper, ctx, 5)
 
-	request := func(next []byte, offset, limit uint64, total bool) *types.QueryAllNftCollectionRequest {
-		return &types.QueryAllNftCollectionRequest{
+	request := func(next []byte, offset, limit uint64, total bool) *types.QueryGetNftCollectionRequest {
+		return &types.QueryGetNftCollectionRequest{
 			Pagination: &query.PageRequest{
 				Key:        next,
 				Offset:     offset,
@@ -87,7 +87,7 @@ func TestNftCollectionQueryPaginated(t *testing.T) {
 	t.Run("ByOffset", func(t *testing.T) {
 		step := 2
 		for i := 0; i < len(msgs); i += step {
-			resp, err := keeper.NftCollectionAll(wctx, request(nil, uint64(i), uint64(step), false))
+			resp, err := keeper.NftCollection(wctx, request(nil, uint64(i), uint64(step), false))
 			require.NoError(t, err)
 			require.LessOrEqual(t, len(resp.NftCollection), step)
 			require.Subset(t,
@@ -100,7 +100,7 @@ func TestNftCollectionQueryPaginated(t *testing.T) {
 		step := 2
 		var next []byte
 		for i := 0; i < len(msgs); i += step {
-			resp, err := keeper.NftCollectionAll(wctx, request(next, 0, uint64(step), false))
+			resp, err := keeper.NftCollection(wctx, request(next, 0, uint64(step), false))
 			require.NoError(t, err)
 			require.LessOrEqual(t, len(resp.NftCollection), step)
 			require.Subset(t,
@@ -111,7 +111,7 @@ func TestNftCollectionQueryPaginated(t *testing.T) {
 		}
 	})
 	t.Run("Total", func(t *testing.T) {
-		resp, err := keeper.NftCollectionAll(wctx, request(nil, 0, 0, true))
+		resp, err := keeper.NftCollection(wctx, request(nil, 0, 0, true))
 		require.NoError(t, err)
 		require.Equal(t, len(msgs), int(resp.Pagination.Total))
 		require.ElementsMatch(t,
@@ -120,7 +120,7 @@ func TestNftCollectionQueryPaginated(t *testing.T) {
 		)
 	})
 	t.Run("InvalidRequest", func(t *testing.T) {
-		_, err := keeper.NftCollectionAll(wctx, nil)
+		_, err := keeper.NftCollection(wctx, nil)
 		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
 	})
 }

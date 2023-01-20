@@ -8,11 +8,11 @@ import "nftmngr/params.proto";
 import "nftmngr/nft_schema.proto";
 import "nftmngr/action_by_ref_id.proto";
 import "nftmngr/organization.proto";
+import "nftmngr/nft_collection.proto";
 import "nftmngr/nft_schema_by_contract.proto";
 import "nftmngr/nft_fee_config.proto";
 import "nftmngr/nft_fee_balance.proto";
 import "nftmngr/metadata_creator.proto";
-import "nftmngr/nft_collection.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -74,6 +74,11 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/organization";
 	}
 
+// Queries a NftCollection by index.
+	rpc NftCollection(QueryGetNftCollectionRequest) returns (QueryGetNftCollectionResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
+	}
+
 // Queries a NFTSchemaByContract by index.
 	rpc NFTSchemaByContract(QueryGetNFTSchemaByContractRequest) returns (QueryGetNFTSchemaByContractResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}";
@@ -100,16 +105,6 @@ service Query {
 	// Queries a list of MetadataCreator items.
 	rpc MetadataCreatorAll(QueryAllMetadataCreatorRequest) returns (QueryAllMetadataCreatorResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator";
-	}
-
-// Queries a NftCollection by index.
-	rpc NftCollection(QueryGetNftCollectionRequest) returns (QueryGetNftCollectionResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
-	}
-
-	// Queries a list of NftCollection items.
-	rpc NftCollectionAll(QueryAllNftCollectionRequest) returns (QueryAllNftCollectionResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -205,6 +200,17 @@ message QueryAllOrganizationResponse {
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
+message QueryGetNftCollectionRequest {
+	  string nftSchemaCode = 1;
+	  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+
+}
+
+message QueryGetNftCollectionResponse {
+	repeated NftData nftCollection = 1 [(gogoproto.nullable) = true];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
 message QueryGetNFTSchemaByContractRequest {
 	  string originContractAddress = 1;
 }
@@ -247,24 +253,6 @@ message QueryAllMetadataCreatorRequest {
 
 message QueryAllMetadataCreatorResponse {
 	repeated MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-message QueryGetNftCollectionRequest {
-	  string nftSchemaCode = 1;
-
-}
-
-message QueryGetNftCollectionResponse {
-	NftCollection nftCollection = 1 [(gogoproto.nullable) = false];
-}
-
-message QueryAllNftCollectionRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
-}
-
-message QueryAllNftCollectionResponse {
-	repeated NftCollection nftCollection = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

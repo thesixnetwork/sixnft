@@ -953,6 +953,110 @@ func (m *QueryAllOrganizationResponse) GetPagination() *query.PageResponse {
 	return nil
 }
 
+type QueryGetNftCollectionRequest struct {
+	NftSchemaCode string             `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Pagination    *query.PageRequest `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryGetNftCollectionRequest) Reset()         { *m = QueryGetNftCollectionRequest{} }
+func (m *QueryGetNftCollectionRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetNftCollectionRequest) ProtoMessage()    {}
+func (*QueryGetNftCollectionRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{20}
+}
+func (m *QueryGetNftCollectionRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetNftCollectionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetNftCollectionRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetNftCollectionRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetNftCollectionRequest.Merge(m, src)
+}
+func (m *QueryGetNftCollectionRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetNftCollectionRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetNftCollectionRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetNftCollectionRequest proto.InternalMessageInfo
+
+func (m *QueryGetNftCollectionRequest) GetNftSchemaCode() string {
+	if m != nil {
+		return m.NftSchemaCode
+	}
+	return ""
+}
+
+func (m *QueryGetNftCollectionRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryGetNftCollectionResponse struct {
+	NftCollection []*NftData          `protobuf:"bytes,1,rep,name=nftCollection,proto3" json:"nftCollection,omitempty"`
+	Pagination    *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryGetNftCollectionResponse) Reset()         { *m = QueryGetNftCollectionResponse{} }
+func (m *QueryGetNftCollectionResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetNftCollectionResponse) ProtoMessage()    {}
+func (*QueryGetNftCollectionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1406c74dd8ff3e6a, []int{21}
+}
+func (m *QueryGetNftCollectionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetNftCollectionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetNftCollectionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetNftCollectionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetNftCollectionResponse.Merge(m, src)
+}
+func (m *QueryGetNftCollectionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetNftCollectionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetNftCollectionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetNftCollectionResponse proto.InternalMessageInfo
+
+func (m *QueryGetNftCollectionResponse) GetNftCollection() []*NftData {
+	if m != nil {
+		return m.NftCollection
+	}
+	return nil
+}
+
+func (m *QueryGetNftCollectionResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 type QueryGetNFTSchemaByContractRequest struct {
 	OriginContractAddress string `protobuf:"bytes,1,opt,name=originContractAddress,proto3" json:"originContractAddress,omitempty"`
 }
@@ -961,7 +1065,7 @@ func (m *QueryGetNFTSchemaByContractRequest) Reset()         { *m = QueryGetNFTS
 func (m *QueryGetNFTSchemaByContractRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTSchemaByContractRequest) ProtoMessage()    {}
 func (*QueryGetNFTSchemaByContractRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{20}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{22}
 }
 func (m *QueryGetNFTSchemaByContractRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1005,7 +1109,7 @@ func (m *QueryGetNFTSchemaByContractResponse) Reset()         { *m = QueryGetNFT
 func (m *QueryGetNFTSchemaByContractResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTSchemaByContractResponse) ProtoMessage()    {}
 func (*QueryGetNFTSchemaByContractResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{21}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{23}
 }
 func (m *QueryGetNFTSchemaByContractResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1049,7 +1153,7 @@ func (m *QueryAllNFTSchemaByContractRequest) Reset()         { *m = QueryAllNFTS
 func (m *QueryAllNFTSchemaByContractRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryAllNFTSchemaByContractRequest) ProtoMessage()    {}
 func (*QueryAllNFTSchemaByContractRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{22}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{24}
 }
 func (m *QueryAllNFTSchemaByContractRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1094,7 +1198,7 @@ func (m *QueryAllNFTSchemaByContractResponse) Reset()         { *m = QueryAllNFT
 func (m *QueryAllNFTSchemaByContractResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryAllNFTSchemaByContractResponse) ProtoMessage()    {}
 func (*QueryAllNFTSchemaByContractResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{23}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{25}
 }
 func (m *QueryAllNFTSchemaByContractResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1144,7 +1248,7 @@ func (m *QueryGetNFTFeeConfigRequest) Reset()         { *m = QueryGetNFTFeeConfi
 func (m *QueryGetNFTFeeConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTFeeConfigRequest) ProtoMessage()    {}
 func (*QueryGetNFTFeeConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{24}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{26}
 }
 func (m *QueryGetNFTFeeConfigRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1181,7 +1285,7 @@ func (m *QueryGetNFTFeeConfigResponse) Reset()         { *m = QueryGetNFTFeeConf
 func (m *QueryGetNFTFeeConfigResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTFeeConfigResponse) ProtoMessage()    {}
 func (*QueryGetNFTFeeConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{25}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{27}
 }
 func (m *QueryGetNFTFeeConfigResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1224,7 +1328,7 @@ func (m *QueryGetNFTFeeBalanceRequest) Reset()         { *m = QueryGetNFTFeeBala
 func (m *QueryGetNFTFeeBalanceRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTFeeBalanceRequest) ProtoMessage()    {}
 func (*QueryGetNFTFeeBalanceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{26}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{28}
 }
 func (m *QueryGetNFTFeeBalanceRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1261,7 +1365,7 @@ func (m *QueryGetNFTFeeBalanceResponse) Reset()         { *m = QueryGetNFTFeeBal
 func (m *QueryGetNFTFeeBalanceResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryGetNFTFeeBalanceResponse) ProtoMessage()    {}
 func (*QueryGetNFTFeeBalanceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{27}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{29}
 }
 func (m *QueryGetNFTFeeBalanceResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1305,7 +1409,7 @@ func (m *QueryGetMetadataCreatorRequest) Reset()         { *m = QueryGetMetadata
 func (m *QueryGetMetadataCreatorRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryGetMetadataCreatorRequest) ProtoMessage()    {}
 func (*QueryGetMetadataCreatorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{28}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{30}
 }
 func (m *QueryGetMetadataCreatorRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1349,7 +1453,7 @@ func (m *QueryGetMetadataCreatorResponse) Reset()         { *m = QueryGetMetadat
 func (m *QueryGetMetadataCreatorResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryGetMetadataCreatorResponse) ProtoMessage()    {}
 func (*QueryGetMetadataCreatorResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{29}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{31}
 }
 func (m *QueryGetMetadataCreatorResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1393,7 +1497,7 @@ func (m *QueryAllMetadataCreatorRequest) Reset()         { *m = QueryAllMetadata
 func (m *QueryAllMetadataCreatorRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryAllMetadataCreatorRequest) ProtoMessage()    {}
 func (*QueryAllMetadataCreatorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{30}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{32}
 }
 func (m *QueryAllMetadataCreatorRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1438,7 +1542,7 @@ func (m *QueryAllMetadataCreatorResponse) Reset()         { *m = QueryAllMetadat
 func (m *QueryAllMetadataCreatorResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryAllMetadataCreatorResponse) ProtoMessage()    {}
 func (*QueryAllMetadataCreatorResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{31}
+	return fileDescriptor_1406c74dd8ff3e6a, []int{33}
 }
 func (m *QueryAllMetadataCreatorResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -1481,190 +1585,6 @@ func (m *QueryAllMetadataCreatorResponse) GetPagination() *query.PageResponse {
 	return nil
 }
 
-type QueryGetNftCollectionRequest struct {
-	NftSchemaCode string `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
-}
-
-func (m *QueryGetNftCollectionRequest) Reset()         { *m = QueryGetNftCollectionRequest{} }
-func (m *QueryGetNftCollectionRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryGetNftCollectionRequest) ProtoMessage()    {}
-func (*QueryGetNftCollectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{32}
-}
-func (m *QueryGetNftCollectionRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryGetNftCollectionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryGetNftCollectionRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryGetNftCollectionRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetNftCollectionRequest.Merge(m, src)
-}
-func (m *QueryGetNftCollectionRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryGetNftCollectionRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetNftCollectionRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryGetNftCollectionRequest proto.InternalMessageInfo
-
-func (m *QueryGetNftCollectionRequest) GetNftSchemaCode() string {
-	if m != nil {
-		return m.NftSchemaCode
-	}
-	return ""
-}
-
-type QueryGetNftCollectionResponse struct {
-	NftCollection NftCollection `protobuf:"bytes,1,opt,name=nftCollection,proto3" json:"nftCollection"`
-}
-
-func (m *QueryGetNftCollectionResponse) Reset()         { *m = QueryGetNftCollectionResponse{} }
-func (m *QueryGetNftCollectionResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryGetNftCollectionResponse) ProtoMessage()    {}
-func (*QueryGetNftCollectionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{33}
-}
-func (m *QueryGetNftCollectionResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryGetNftCollectionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryGetNftCollectionResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryGetNftCollectionResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryGetNftCollectionResponse.Merge(m, src)
-}
-func (m *QueryGetNftCollectionResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryGetNftCollectionResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryGetNftCollectionResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryGetNftCollectionResponse proto.InternalMessageInfo
-
-func (m *QueryGetNftCollectionResponse) GetNftCollection() NftCollection {
-	if m != nil {
-		return m.NftCollection
-	}
-	return NftCollection{}
-}
-
-type QueryAllNftCollectionRequest struct {
-	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-}
-
-func (m *QueryAllNftCollectionRequest) Reset()         { *m = QueryAllNftCollectionRequest{} }
-func (m *QueryAllNftCollectionRequest) String() string { return proto.CompactTextString(m) }
-func (*QueryAllNftCollectionRequest) ProtoMessage()    {}
-func (*QueryAllNftCollectionRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{34}
-}
-func (m *QueryAllNftCollectionRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryAllNftCollectionRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryAllNftCollectionRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryAllNftCollectionRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllNftCollectionRequest.Merge(m, src)
-}
-func (m *QueryAllNftCollectionRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryAllNftCollectionRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllNftCollectionRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryAllNftCollectionRequest proto.InternalMessageInfo
-
-func (m *QueryAllNftCollectionRequest) GetPagination() *query.PageRequest {
-	if m != nil {
-		return m.Pagination
-	}
-	return nil
-}
-
-type QueryAllNftCollectionResponse struct {
-	NftCollection []NftCollection     `protobuf:"bytes,1,rep,name=nftCollection,proto3" json:"nftCollection"`
-	Pagination    *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-}
-
-func (m *QueryAllNftCollectionResponse) Reset()         { *m = QueryAllNftCollectionResponse{} }
-func (m *QueryAllNftCollectionResponse) String() string { return proto.CompactTextString(m) }
-func (*QueryAllNftCollectionResponse) ProtoMessage()    {}
-func (*QueryAllNftCollectionResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1406c74dd8ff3e6a, []int{35}
-}
-func (m *QueryAllNftCollectionResponse) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *QueryAllNftCollectionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_QueryAllNftCollectionResponse.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *QueryAllNftCollectionResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryAllNftCollectionResponse.Merge(m, src)
-}
-func (m *QueryAllNftCollectionResponse) XXX_Size() int {
-	return m.Size()
-}
-func (m *QueryAllNftCollectionResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_QueryAllNftCollectionResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_QueryAllNftCollectionResponse proto.InternalMessageInfo
-
-func (m *QueryAllNftCollectionResponse) GetNftCollection() []NftCollection {
-	if m != nil {
-		return m.NftCollection
-	}
-	return nil
-}
-
-func (m *QueryAllNftCollectionResponse) GetPagination() *query.PageResponse {
-	if m != nil {
-		return m.Pagination
-	}
-	return nil
-}
-
 func init() {
 	proto.RegisterType((*QueryParamsRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryParamsRequest")
 	proto.RegisterType((*QueryParamsResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryParamsResponse")
@@ -1686,6 +1606,8 @@ func init() {
 	proto.RegisterType((*QueryGetOrganizationResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetOrganizationResponse")
 	proto.RegisterType((*QueryAllOrganizationRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllOrganizationRequest")
 	proto.RegisterType((*QueryAllOrganizationResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllOrganizationResponse")
+	proto.RegisterType((*QueryGetNftCollectionRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionRequest")
+	proto.RegisterType((*QueryGetNftCollectionResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionResponse")
 	proto.RegisterType((*QueryGetNFTSchemaByContractRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNFTSchemaByContractRequest")
 	proto.RegisterType((*QueryGetNFTSchemaByContractResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNFTSchemaByContractResponse")
 	proto.RegisterType((*QueryAllNFTSchemaByContractRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllNFTSchemaByContractRequest")
@@ -1698,117 +1620,112 @@ func init() {
 	proto.RegisterType((*QueryGetMetadataCreatorResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetMetadataCreatorResponse")
 	proto.RegisterType((*QueryAllMetadataCreatorRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllMetadataCreatorRequest")
 	proto.RegisterType((*QueryAllMetadataCreatorResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllMetadataCreatorResponse")
-	proto.RegisterType((*QueryGetNftCollectionRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionRequest")
-	proto.RegisterType((*QueryGetNftCollectionResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryGetNftCollectionResponse")
-	proto.RegisterType((*QueryAllNftCollectionRequest)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllNftCollectionRequest")
-	proto.RegisterType((*QueryAllNftCollectionResponse)(nil), "thesixnetwork.sixnft.nftmngr.QueryAllNftCollectionResponse")
 }
 
 func init() { proto.RegisterFile("nftmngr/query.proto", fileDescriptor_1406c74dd8ff3e6a) }
 
 var fileDescriptor_1406c74dd8ff3e6a = []byte{
-	// 1614 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x59, 0x5d, 0x6f, 0x1b, 0x45,
-	0x17, 0xce, 0xd4, 0xfd, 0x50, 0xe6, 0x6d, 0xd4, 0x6a, 0x92, 0xb7, 0x04, 0xd3, 0xb8, 0x68, 0x08,
-	0xa5, 0x0a, 0xed, 0x6e, 0xdc, 0xa4, 0x29, 0x4d, 0x43, 0x15, 0x3b, 0x25, 0xa5, 0x02, 0x4a, 0x09,
-	0x11, 0x85, 0x4a, 0x28, 0x5d, 0xdb, 0x63, 0xc7, 0xea, 0x7a, 0x37, 0x5d, 0x6f, 0x4b, 0x43, 0x14,
-	0x09, 0xf1, 0x0b, 0x2a, 0x71, 0xc9, 0x25, 0x57, 0xbd, 0xec, 0x05, 0x57, 0x7c, 0x56, 0xdc, 0xb4,
-	0x37, 0xa8, 0x12, 0x12, 0x02, 0x21, 0x21, 0xd4, 0xf2, 0x03, 0xf8, 0x09, 0x68, 0x67, 0xcf, 0x7a,
-	0x67, 0xd6, 0x63, 0x67, 0xd6, 0x59, 0xee, 0xec, 0x39, 0x73, 0xce, 0x79, 0x9e, 0x73, 0xce, 0x7c,
-	0x9c, 0x59, 0x3c, 0xea, 0xd4, 0xfd, 0x96, 0xd3, 0xf0, 0xcc, 0x5b, 0xb7, 0x99, 0xb7, 0x69, 0x6c,
-	0x78, 0xae, 0xef, 0x92, 0xa3, 0xfe, 0x3a, 0x6b, 0x37, 0xef, 0x3a, 0xcc, 0xff, 0xc4, 0xf5, 0x6e,
-	0x1a, 0xc1, 0xcf, 0xba, 0x6f, 0xc0, 0xcc, 0xfc, 0x58, 0xc3, 0x6d, 0xb8, 0x7c, 0xa2, 0x19, 0xfc,
-	0x0a, 0x75, 0xf2, 0x47, 0x1b, 0xae, 0xdb, 0xb0, 0x99, 0x69, 0x6d, 0x34, 0x4d, 0xcb, 0x71, 0x5c,
-	0xdf, 0xf2, 0x9b, 0xae, 0xd3, 0x06, 0xe9, 0x54, 0xd5, 0x6d, 0xb7, 0xdc, 0xb6, 0x59, 0xb1, 0xda,
-	0x2c, 0x74, 0x65, 0xde, 0x29, 0x56, 0x98, 0x6f, 0x15, 0xcd, 0x0d, 0xab, 0xd1, 0x74, 0xf8, 0x64,
-	0x98, 0x3b, 0x16, 0x41, 0xda, 0xb0, 0x3c, 0xab, 0x15, 0x59, 0x18, 0x8f, 0x46, 0x9d, 0xba, 0xbf,
-	0xd6, 0xae, 0xae, 0xb3, 0x96, 0x05, 0x92, 0x42, 0x24, 0xb1, 0xaa, 0x81, 0x95, 0xb5, 0xca, 0xe6,
-	0x9a, 0xc7, 0xea, 0x6b, 0xcd, 0x1a, 0xc8, 0xf3, 0x91, 0xdc, 0xf5, 0x1a, 0x96, 0xd3, 0xfc, 0x54,
-	0xf4, 0x35, 0xd9, 0x6d, 0x35, 0xd0, 0xaf, 0xba, 0x8e, 0xef, 0x59, 0x55, 0x3f, 0xe2, 0x26, 0xce,
-	0xaa, 0x33, 0x16, 0xc8, 0xeb, 0xcd, 0x06, 0x48, 0x27, 0x92, 0xd2, 0x8a, 0x65, 0x5b, 0x4e, 0x95,
-	0x25, 0xe1, 0xb5, 0x98, 0x6f, 0xd5, 0x2c, 0xdf, 0x5a, 0xab, 0x7a, 0xcc, 0xf2, 0x5d, 0x4f, 0x65,
-	0xbc, 0xea, 0xda, 0x36, 0xab, 0x0a, 0x00, 0x8f, 0x88, 0xd2, 0x40, 0x3b, 0x1c, 0xa7, 0x63, 0x98,
-	0xbc, 0x17, 0x84, 0xf1, 0x2a, 0x8f, 0xd1, 0x0a, 0xbb, 0x75, 0x9b, 0xb5, 0x7d, 0xfa, 0x11, 0x1e,
-	0x95, 0x46, 0xdb, 0x1b, 0xae, 0xd3, 0x66, 0xa4, 0x8c, 0xf7, 0x87, 0xb1, 0x1c, 0x47, 0x2f, 0xa2,
-	0x13, 0xff, 0x3b, 0x3d, 0x69, 0xf4, 0x4b, 0xb0, 0x11, 0x6a, 0x97, 0xf7, 0x3e, 0xfa, 0xf3, 0xd8,
-	0xd0, 0x0a, 0x68, 0x52, 0x03, 0x8f, 0x73, 0xd3, 0x97, 0x98, 0x7f, 0x65, 0x79, 0xf5, 0x7d, 0x1e,
-	0x2a, 0x70, 0x4b, 0x08, 0xde, 0x5b, 0x75, 0x6b, 0x8c, 0x5b, 0x1f, 0x5e, 0xe1, 0xbf, 0xe9, 0x3a,
-	0x7e, 0x5e, 0x31, 0x1f, 0x00, 0xbd, 0x85, 0x87, 0x9d, 0x68, 0x10, 0x30, 0xbd, 0xd2, 0x1f, 0x53,
-	0xc7, 0x06, 0xc0, 0x8a, 0xf5, 0xe9, 0x5d, 0x3c, 0xd1, 0xd3, 0xd3, 0x07, 0xd3, 0x73, 0x33, 0xe4,
-	0x1a, 0x1e, 0xe9, 0xcc, 0x0e, 0x06, 0xc0, 0xe3, 0xab, 0x9a, 0x1e, 0x03, 0x15, 0xf0, 0x2a, 0xdb,
-	0xa1, 0x15, 0x88, 0x49, 0xc9, 0xb6, 0xbb, 0x62, 0xb2, 0x8c, 0x71, 0x5c, 0xd9, 0xe0, 0xf1, 0xb8,
-	0x11, 0x2e, 0x03, 0x23, 0x58, 0x06, 0x46, 0xb8, 0xe2, 0x60, 0x19, 0x18, 0x57, 0xad, 0x06, 0x03,
-	0xdd, 0x15, 0x41, 0x93, 0x3e, 0x40, 0x10, 0x48, 0xd9, 0x89, 0x3a, 0x90, 0xb9, 0xdd, 0x04, 0x92,
-	0x5c, 0x92, 0x20, 0xef, 0x81, 0xb4, 0xec, 0x04, 0x39, 0x44, 0x22, 0x61, 0x7e, 0x88, 0x20, 0x25,
-	0x2a, 0xcc, 0xbd, 0x52, 0x92, 0xcb, 0x22, 0x25, 0xd9, 0x71, 0xf8, 0x10, 0x1f, 0xe9, 0x54, 0x55,
-	0xdd, 0xbf, 0x68, 0xf9, 0x9d, 0xcc, 0x4e, 0xe2, 0x11, 0xa7, 0xee, 0x87, 0x3e, 0x97, 0xe2, 0xb2,
-	0x97, 0x07, 0xc9, 0x38, 0x3e, 0xe0, 0xbb, 0x37, 0x99, 0x73, 0xb9, 0xc6, 0x51, 0x0c, 0xaf, 0x44,
-	0x7f, 0xe9, 0x0d, 0xfc, 0x5c, 0x97, 0x65, 0x48, 0xe7, 0x1b, 0xf8, 0x80, 0x13, 0x0e, 0x41, 0xc5,
-	0xbc, 0xbc, 0x43, 0x40, 0xc2, 0xc9, 0x10, 0x8a, 0x48, 0x97, 0xde, 0x00, 0xec, 0x41, 0xf8, 0x65,
-	0xec, 0x59, 0x55, 0xe5, 0x7d, 0x04, 0x24, 0x44, 0x17, 0x2a, 0x12, 0xb9, 0x41, 0x49, 0x64, 0x97,
-	0xc9, 0x59, 0x7c, 0x34, 0x8a, 0x77, 0x89, 0x6f, 0xad, 0xe5, 0xcd, 0x15, 0x56, 0xbf, 0x5c, 0x8b,
-	0x62, 0x32, 0x86, 0xf7, 0x79, 0xc1, 0x7f, 0xc8, 0x63, 0xf8, 0x47, 0xdc, 0x55, 0x12, 0x5a, 0x40,
-	0xf3, 0x1a, 0x1e, 0xb1, 0x44, 0x81, 0xde, 0xae, 0x22, 0xd9, 0x8a, 0x4a, 0x58, 0xb2, 0x43, 0xeb,
-	0x80, 0xb7, 0x64, 0xdb, 0x4a, 0xbc, 0x59, 0xe5, 0x50, 0x5c, 0xa5, 0xda, 0x14, 0x73, 0x59, 0x50,
-	0xcc, 0x2e, 0xb7, 0x45, 0xfc, 0x42, 0x94, 0xa5, 0x77, 0x85, 0xd3, 0x5d, 0x38, 0x98, 0x1c, 0xab,
-	0xd5, 0x39, 0x98, 0x82, 0xdf, 0xd4, 0x8f, 0xcb, 0x41, 0x56, 0x01, 0xd2, 0xab, 0xf8, 0xa0, 0x78,
-	0x51, 0x80, 0x00, 0x4f, 0xf5, 0xe7, 0x2c, 0x5a, 0x02, 0xca, 0x92, 0x15, 0xca, 0x00, 0x68, 0xc9,
-	0xb6, 0x55, 0x40, 0xb3, 0xca, 0xe9, 0x77, 0x28, 0x2e, 0x1e, 0x4d, 0x76, 0xb9, 0xdd, 0xb3, 0xcb,
-	0x2e, 0x9f, 0xd7, 0x31, 0xed, 0x3a, 0xcb, 0xcb, 0x9b, 0x4b, 0x70, 0x1d, 0x8b, 0xa2, 0x35, 0x8b,
-	0xff, 0xef, 0x7a, 0xcd, 0x46, 0xd3, 0x89, 0x04, 0xa5, 0x5a, 0xcd, 0x63, 0xed, 0x36, 0xe4, 0x59,
-	0x2d, 0xa4, 0xf7, 0x10, 0x7e, 0xa9, 0xaf, 0x71, 0x08, 0x51, 0x13, 0x8f, 0x3a, 0xdd, 0x62, 0x48,
-	0x4a, 0x51, 0xf7, 0x74, 0xed, 0x28, 0x42, 0xc0, 0x54, 0x36, 0xa9, 0x0d, 0x74, 0xc5, 0x73, 0xb2,
-	0x9b, 0x6e, 0x56, 0xc5, 0xf1, 0x7b, 0x14, 0x80, 0x5e, 0xee, 0x76, 0x0a, 0x40, 0x2e, 0xeb, 0x00,
-	0x64, 0x57, 0x38, 0x13, 0xf1, 0x46, 0x70, 0x65, 0x79, 0x75, 0x99, 0xb1, 0x25, 0x7e, 0x45, 0x8f,
-	0x2e, 0xc6, 0xc2, 0xa2, 0x97, 0xc5, 0xf1, 0xb2, 0x10, 0xc7, 0xf5, 0x16, 0xbd, 0xa8, 0x11, 0x2d,
-	0x0b, 0x71, 0x8c, 0x16, 0x92, 0x5e, 0xcb, 0x61, 0x67, 0x10, 0xa1, 0x92, 0x6f, 0xae, 0xa2, 0x3c,
-	0xde, 0x80, 0x25, 0x81, 0xf6, 0xcd, 0x35, 0x56, 0x89, 0x36, 0x60, 0x69, 0x90, 0x2e, 0xe3, 0x42,
-	0xe4, 0xf9, 0x1d, 0x68, 0x4b, 0x96, 0xc2, 0xae, 0x24, 0xd5, 0x2d, 0x87, 0x7e, 0x86, 0xf0, 0xb1,
-	0x9e, 0x86, 0x80, 0xc4, 0xc7, 0xf8, 0x50, 0x4b, 0x16, 0x01, 0x8d, 0x53, 0xfd, 0x69, 0x24, 0xec,
-	0x01, 0x91, 0xa4, 0x2d, 0xba, 0x0e, 0x54, 0x4a, 0xb6, 0xdd, 0x83, 0x4a, 0x56, 0xeb, 0xe7, 0x71,
-	0x44, 0x56, 0xe5, 0xaa, 0x1f, 0xd9, 0x5c, 0x56, 0x64, 0xb3, 0x5b, 0x2f, 0x17, 0x85, 0xd2, 0xac,
-	0xfb, 0x4b, 0x9d, 0xb6, 0x33, 0x5d, 0xfa, 0xc5, 0x02, 0x96, 0xad, 0xc4, 0x05, 0xec, 0x88, 0x02,
-	0xcd, 0x02, 0x16, 0x55, 0x3a, 0xf7, 0x7c, 0x71, 0x50, 0xbc, 0x24, 0x29, 0xf1, 0xff, 0x17, 0x97,
-	0x24, 0x6d, 0x8a, 0xb9, 0x2c, 0x28, 0x66, 0x96, 0xeb, 0xd3, 0x5f, 0x4d, 0xe0, 0x7d, 0x9c, 0x03,
-	0xf9, 0x12, 0xe1, 0xfd, 0x61, 0x77, 0x4f, 0xa6, 0xfb, 0xe3, 0xeb, 0x7e, 0x5c, 0xc8, 0x17, 0x53,
-	0x68, 0x84, 0x28, 0xe8, 0xc9, 0xcf, 0x7f, 0xf9, 0xfb, 0x8b, 0x3d, 0xc7, 0xc9, 0xa4, 0x29, 0xa9,
-	0x9a, 0xa1, 0xaa, 0x29, 0x3f, 0xf4, 0x90, 0xaf, 0x11, 0x1e, 0xee, 0x9c, 0x1f, 0x64, 0x4e, 0xc3,
-	0x9d, 0xe2, 0x31, 0x22, 0x7f, 0x36, 0xb5, 0x1e, 0x80, 0x3d, 0xcb, 0xc1, 0x16, 0x89, 0xd9, 0x1f,
-	0x6c, 0xfc, 0x52, 0x64, 0x6e, 0x55, 0xdd, 0x1a, 0xdb, 0x26, 0x0f, 0x11, 0xdf, 0xa6, 0x85, 0x2e,
-	0x74, 0x50, 0xec, 0xe7, 0x07, 0xc4, 0xce, 0x5f, 0x23, 0xce, 0x73, 0xfc, 0x67, 0xc8, 0x8c, 0x2e,
-	0xfe, 0xb5, 0xe9, 0xb9, 0x99, 0x88, 0xc3, 0x03, 0xc4, 0x4f, 0xc0, 0xd0, 0x6c, 0xc9, 0xb6, 0xb5,
-	0x28, 0x28, 0xde, 0x3d, 0xb4, 0xc2, 0xaf, 0x7a, 0x16, 0xa0, 0xd3, 0x1c, 0xfe, 0x14, 0x39, 0xa1,
-	0x0b, 0x9f, 0x7c, 0x8f, 0xf0, 0x61, 0x11, 0xb3, 0x76, 0xe8, 0x55, 0xb8, 0xcf, 0x0f, 0x88, 0x9b,
-	0x87, 0xfe, 0x0c, 0xc7, 0x6e, 0x92, 0x53, 0xda, 0xa1, 0xbf, 0x13, 0x60, 0xfd, 0x11, 0xe1, 0x03,
-	0xd0, 0xfd, 0x92, 0x59, 0xcd, 0xd4, 0x4b, 0xfd, 0x7c, 0xfe, 0x4c, 0x4a, 0x2d, 0x88, 0xf5, 0x9b,
-	0x1c, 0x6f, 0x99, 0x2c, 0xee, 0x8c, 0x37, 0x38, 0x7d, 0xcc, 0x2d, 0x69, 0xdb, 0xdf, 0x36, 0xb7,
-	0xe0, 0x2d, 0x63, 0x9b, 0xdc, 0x47, 0x18, 0x83, 0xf5, 0xa0, 0x6a, 0x66, 0x35, 0xa3, 0x98, 0x9e,
-	0x45, 0xf7, 0x43, 0x03, 0x35, 0x38, 0x8b, 0x13, 0xe4, 0xb8, 0x1e, 0x0b, 0xf2, 0x08, 0xe1, 0x11,
-	0xa9, 0x39, 0x25, 0xf3, 0x7a, 0xe1, 0x53, 0xb5, 0xe1, 0xba, 0x6b, 0x55, 0xd9, 0x59, 0xd3, 0x0b,
-	0x1c, 0xfa, 0x6b, 0x64, 0xae, 0x3f, 0xf4, 0xe4, 0x8b, 0xb6, 0xb9, 0xc5, 0x1f, 0x27, 0xb6, 0xc9,
-	0x4f, 0x08, 0x1f, 0x96, 0x2c, 0x07, 0xc1, 0x9f, 0xd7, 0x0b, 0xe3, 0xc0, 0x6c, 0x7a, 0xbd, 0x13,
-	0xd0, 0x39, 0xce, 0x66, 0x9a, 0x18, 0xe9, 0xd8, 0x04, 0xf5, 0x7f, 0x50, 0xec, 0x2d, 0xc9, 0x39,
-	0xbd, 0x98, 0x2a, 0x3a, 0xe8, 0xfc, 0xfc, 0x20, 0xaa, 0x80, 0xff, 0x1c, 0xc7, 0x3f, 0x43, 0x8a,
-	0xfd, 0xf1, 0x8b, 0x2d, 0xaf, 0xb9, 0xe5, 0x58, 0x2d, 0xb6, 0x4d, 0xbe, 0x45, 0xf8, 0x90, 0x68,
-	0x33, 0xc8, 0xc3, 0x39, 0xbd, 0x58, 0x0e, 0xca, 0xa2, 0x47, 0x6b, 0x4f, 0x4f, 0x73, 0x16, 0x27,
-	0xc9, 0x94, 0x3e, 0x0b, 0xf2, 0x0f, 0xc2, 0xa3, 0x8a, 0x96, 0x8d, 0x2c, 0xa6, 0x3c, 0x88, 0xba,
-	0x9a, 0xd6, 0x7c, 0x69, 0x17, 0x16, 0x80, 0xd0, 0x2a, 0x27, 0x74, 0x85, 0xbc, 0xad, 0xbd, 0xab,
-	0x0a, 0x9f, 0x6e, 0xcc, 0x2d, 0xe5, 0x2b, 0xc0, 0x36, 0xf9, 0x03, 0xe1, 0x23, 0x0a, 0xaf, 0x41,
-	0xe2, 0x16, 0x53, 0x9e, 0x01, 0x83, 0xb1, 0xee, 0xdf, 0x7d, 0xd3, 0x05, 0xce, 0x7a, 0x8e, 0xcc,
-	0x0e, 0xc2, 0x9a, 0x7c, 0x83, 0xe4, 0x4e, 0x56, 0x77, 0x49, 0x29, 0x9a, 0x66, 0xdd, 0x25, 0xa5,
-	0x6a, 0xa8, 0xe9, 0x2c, 0x67, 0x61, 0x90, 0x93, 0x3b, 0xb3, 0x88, 0x3f, 0xa8, 0x91, 0x1f, 0x50,
-	0xa2, 0xe1, 0x25, 0xa9, 0x30, 0xc8, 0xed, 0x75, 0x8a, 0xdb, 0x54, 0x77, 0xeb, 0x9d, 0xe6, 0x48,
-	0x17, 0xbe, 0xf9, 0x91, 0x5f, 0x11, 0x3e, 0x94, 0xe8, 0xe5, 0xc8, 0x82, 0x1e, 0x0e, 0x75, 0xf7,
-	0x9a, 0x7f, 0x7d, 0x40, 0x6d, 0xe0, 0xb1, 0xcc, 0x79, 0x2c, 0x92, 0x0b, 0xfd, 0x79, 0x24, 0x3f,
-	0x4e, 0x26, 0x8f, 0x7c, 0xf2, 0x18, 0x61, 0x92, 0xf0, 0x11, 0x2c, 0x99, 0x05, 0xbd, 0x82, 0xdf,
-	0x05, 0xb7, 0xde, 0xcd, 0xb6, 0xee, 0xb9, 0x93, 0xe4, 0x46, 0x7e, 0x0e, 0xca, 0x4c, 0xea, 0xb5,
-	0xe6, 0xb5, 0xef, 0x51, 0x5d, 0xad, 0xa6, 0x76, 0x99, 0xa9, 0xba, 0x47, 0x7a, 0x91, 0x53, 0xb8,
-	0x40, 0x16, 0x76, 0x2e, 0xb3, 0xf8, 0xdb, 0x70, 0x57, 0x72, 0x1e, 0x06, 0x37, 0x61, 0xd1, 0x7e,
-	0x8a, 0xeb, 0xc0, 0xc0, 0x9c, 0x7a, 0x75, 0xc4, 0x69, 0xd6, 0x7e, 0xcc, 0xa9, 0x7c, 0xf9, 0xd1,
-	0xd3, 0x02, 0x7a, 0xf2, 0xb4, 0x80, 0xfe, 0x7a, 0x5a, 0x40, 0xf7, 0x9e, 0x15, 0x86, 0x9e, 0x3c,
-	0x2b, 0x0c, 0xfd, 0xf6, 0xac, 0x30, 0x74, 0xdd, 0x6c, 0x34, 0xfd, 0xf5, 0xdb, 0x15, 0xa3, 0xea,
-	0xb6, 0xd4, 0x16, 0xef, 0x76, 0x6c, 0xfa, 0x9b, 0x1b, 0xac, 0x5d, 0xd9, 0xcf, 0xbf, 0x91, 0xcf,
-	0xfc, 0x1b, 0x00, 0x00, 0xff, 0xff, 0x2c, 0x87, 0x21, 0x63, 0xdd, 0x20, 0x00, 0x00,
+	// 1588 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x59, 0x4f, 0x6f, 0x1b, 0x45,
+	0x14, 0xcf, 0xd4, 0xfd, 0xa3, 0x0c, 0x8d, 0x5a, 0x4d, 0x42, 0x09, 0x6e, 0xea, 0xa2, 0x21, 0x94,
+	0x2a, 0xb4, 0xbb, 0x71, 0x93, 0xa6, 0x34, 0x0d, 0x55, 0xec, 0x14, 0x97, 0x0a, 0x08, 0xad, 0x89,
+	0x28, 0x54, 0x42, 0xe9, 0xda, 0x1e, 0x3b, 0x56, 0xd7, 0xbb, 0xa9, 0xbd, 0x2d, 0x0d, 0x51, 0x24,
+	0xc4, 0x99, 0x43, 0x25, 0x8e, 0x7c, 0x82, 0x1e, 0x7b, 0xe0, 0x54, 0xfe, 0x55, 0x5c, 0xda, 0x0b,
+	0xaa, 0x84, 0x84, 0x40, 0x48, 0x80, 0x1a, 0x3e, 0x00, 0x1f, 0x01, 0xed, 0xec, 0x5b, 0xef, 0x8c,
+	0x3d, 0x76, 0x66, 0x9d, 0xbd, 0xd9, 0xf3, 0xf6, 0xbd, 0xf7, 0xfb, 0xbd, 0x99, 0x79, 0x33, 0xbf,
+	0x5d, 0x3c, 0xea, 0x54, 0xbd, 0x86, 0x53, 0x6b, 0x9a, 0xb7, 0xef, 0xb0, 0xe6, 0x86, 0xb1, 0xde,
+	0x74, 0x3d, 0x97, 0x4c, 0x78, 0x6b, 0xac, 0x55, 0xbf, 0xe7, 0x30, 0xef, 0x33, 0xb7, 0x79, 0xcb,
+	0xf0, 0x7f, 0x56, 0x3d, 0x03, 0x9e, 0x4c, 0x8f, 0xd5, 0xdc, 0x9a, 0xcb, 0x1f, 0x34, 0xfd, 0x5f,
+	0x81, 0x4f, 0x7a, 0xa2, 0xe6, 0xba, 0x35, 0x9b, 0x99, 0xd6, 0x7a, 0xdd, 0xb4, 0x1c, 0xc7, 0xf5,
+	0x2c, 0xaf, 0xee, 0x3a, 0x2d, 0xb0, 0x4e, 0x95, 0xdd, 0x56, 0xc3, 0x6d, 0x99, 0x25, 0xab, 0xc5,
+	0x82, 0x54, 0xe6, 0xdd, 0x6c, 0x89, 0x79, 0x56, 0xd6, 0x5c, 0xb7, 0x6a, 0x75, 0x87, 0x3f, 0x0c,
+	0xcf, 0x8e, 0x85, 0x90, 0xd6, 0xad, 0xa6, 0xd5, 0x08, 0x23, 0x8c, 0x87, 0xa3, 0x4e, 0xd5, 0x5b,
+	0x6d, 0x95, 0xd7, 0x58, 0xc3, 0x02, 0x4b, 0x26, 0xb4, 0x58, 0x65, 0x3f, 0xca, 0x6a, 0x69, 0x63,
+	0xb5, 0xc9, 0xaa, 0xab, 0xf5, 0x0a, 0xd8, 0xd3, 0xa1, 0xdd, 0x6d, 0xd6, 0x2c, 0xa7, 0xfe, 0xb9,
+	0x98, 0x6b, 0x42, 0x8c, 0x5a, 0x76, 0x6d, 0x9b, 0x95, 0x05, 0xeb, 0x64, 0x77, 0x4e, 0x3f, 0x7a,
+	0xd9, 0x75, 0xbc, 0xa6, 0x55, 0xf6, 0x54, 0x31, 0xaa, 0x8c, 0xf9, 0xf6, 0x6a, 0xbd, 0x06, 0xd6,
+	0x63, 0x9d, 0xd6, 0x92, 0x65, 0x5b, 0x4e, 0x99, 0x75, 0x82, 0x6f, 0x30, 0xcf, 0xaa, 0x58, 0x9e,
+	0xb5, 0x5a, 0x6e, 0x32, 0xcb, 0x73, 0x9b, 0x60, 0x3f, 0x22, 0xba, 0xfb, 0xf6, 0x60, 0x9c, 0x8e,
+	0x61, 0x72, 0xcd, 0x2f, 0xe3, 0x55, 0x5e, 0xa3, 0x22, 0xbb, 0x7d, 0x87, 0xb5, 0x3c, 0xfa, 0x09,
+	0x1e, 0x95, 0x46, 0x5b, 0xeb, 0xae, 0xd3, 0x62, 0x24, 0x8f, 0xf7, 0x07, 0xb5, 0x1c, 0x47, 0xaf,
+	0xa0, 0x93, 0x2f, 0x9c, 0x99, 0x34, 0xfa, 0x4d, 0xb0, 0x11, 0x78, 0xe7, 0xf7, 0x3e, 0xf9, 0xeb,
+	0xf8, 0x50, 0x11, 0x3c, 0xa9, 0x81, 0xc7, 0x79, 0xe8, 0xcb, 0xcc, 0x5b, 0x2e, 0xac, 0x7c, 0xc8,
+	0x8b, 0x01, 0x69, 0x09, 0xc1, 0x7b, 0xcb, 0x6e, 0x85, 0xf1, 0xe8, 0xc3, 0x45, 0xfe, 0x9b, 0xae,
+	0xe1, 0x97, 0x15, 0xcf, 0x03, 0xa0, 0x77, 0xf1, 0xb0, 0x13, 0x0e, 0x02, 0xa6, 0xd7, 0xfb, 0x63,
+	0x6a, 0xc7, 0x00, 0x58, 0x91, 0x3f, 0xbd, 0x87, 0x8f, 0xf5, 0xcc, 0xf4, 0xd1, 0xf4, 0xdc, 0x0c,
+	0xb9, 0x8e, 0x47, 0xda, 0x4f, 0xfb, 0x03, 0x90, 0xf1, 0x0d, 0xcd, 0x8c, 0xbe, 0x0b, 0x64, 0x95,
+	0xe3, 0xd0, 0x12, 0xd4, 0x24, 0x67, 0xdb, 0x5d, 0x35, 0x29, 0x60, 0x1c, 0xad, 0x6c, 0xc8, 0x78,
+	0xc2, 0x08, 0xb6, 0x81, 0xe1, 0x6f, 0x03, 0x23, 0xd8, 0x71, 0xb0, 0x0d, 0x8c, 0xab, 0x56, 0x8d,
+	0x81, 0x6f, 0x51, 0xf0, 0xa4, 0x0f, 0x11, 0x14, 0x52, 0x4e, 0xa2, 0x2e, 0x64, 0x6a, 0x37, 0x85,
+	0x24, 0x97, 0x25, 0xc8, 0x7b, 0x60, 0x5a, 0x76, 0x82, 0x1c, 0x20, 0x91, 0x30, 0x3f, 0x46, 0x30,
+	0x25, 0x2a, 0xcc, 0xbd, 0xa6, 0x24, 0x95, 0xc4, 0x94, 0x24, 0xc7, 0xe1, 0x63, 0x7c, 0xa4, 0xbd,
+	0xaa, 0xaa, 0xde, 0x25, 0xcb, 0x6b, 0xcf, 0xec, 0x24, 0x1e, 0x71, 0xaa, 0x5e, 0x90, 0x73, 0x29,
+	0x5a, 0xf6, 0xf2, 0x20, 0x19, 0xc7, 0x07, 0x3c, 0xf7, 0x16, 0x73, 0xae, 0x54, 0x38, 0x8a, 0xe1,
+	0x62, 0xf8, 0x97, 0xde, 0xc4, 0x2f, 0x75, 0x45, 0x86, 0xe9, 0x7c, 0x1b, 0x1f, 0x70, 0x82, 0x21,
+	0x58, 0x31, 0xaf, 0xed, 0x50, 0x90, 0xe0, 0x61, 0x28, 0x45, 0xe8, 0x4b, 0x6f, 0x02, 0x76, 0xbf,
+	0xfc, 0x32, 0xf6, 0xa4, 0x56, 0xe5, 0x03, 0x04, 0x24, 0xc4, 0x14, 0x2a, 0x12, 0xa9, 0x41, 0x49,
+	0x24, 0x37, 0x93, 0xb3, 0x78, 0x22, 0xac, 0x77, 0x8e, 0x77, 0xf7, 0xfc, 0x46, 0x91, 0x55, 0xaf,
+	0x54, 0xc2, 0x9a, 0x8c, 0xe1, 0x7d, 0x4d, 0xff, 0x3f, 0xcc, 0x63, 0xf0, 0x47, 0xec, 0x2a, 0x1d,
+	0x5e, 0x40, 0xf3, 0x3a, 0x1e, 0xb1, 0x44, 0x83, 0x5e, 0x57, 0x91, 0x62, 0x85, 0x4b, 0x58, 0x8a,
+	0x43, 0xab, 0x80, 0x37, 0x67, 0xdb, 0x4a, 0xbc, 0x49, 0xcd, 0xa1, 0xb8, 0x4b, 0xb5, 0x29, 0xa6,
+	0x92, 0xa0, 0x98, 0xdc, 0xdc, 0x66, 0xf1, 0xd1, 0x70, 0x96, 0x3e, 0x10, 0x4e, 0x77, 0xe1, 0x60,
+	0x72, 0xac, 0x46, 0xfb, 0x60, 0xf2, 0x7f, 0x53, 0x2f, 0x5a, 0x0e, 0xb2, 0x0b, 0x90, 0x5e, 0xc1,
+	0x07, 0xc5, 0x8b, 0x02, 0x14, 0x78, 0xaa, 0x3f, 0x67, 0x31, 0x12, 0x50, 0x96, 0xa2, 0x50, 0x06,
+	0x40, 0x73, 0xb6, 0xad, 0x02, 0x9a, 0xd4, 0x9c, 0x7e, 0x8f, 0xa2, 0xc5, 0xa3, 0xc9, 0x2e, 0xb5,
+	0x7b, 0x76, 0xc9, 0xcd, 0xe7, 0x57, 0x28, 0x9a, 0x9d, 0xe5, 0xaa, 0xb7, 0xd4, 0xbe, 0x91, 0xc5,
+	0x6b, 0xbe, 0x05, 0x05, 0x9e, 0x41, 0xca, 0xf9, 0x08, 0x09, 0x77, 0x0b, 0x19, 0x0e, 0xd4, 0xf3,
+	0x1a, 0xc7, 0x13, 0x19, 0xe2, 0xb7, 0x3c, 0x54, 0x94, 0x23, 0x24, 0x57, 0xcc, 0x1b, 0x98, 0x76,
+	0x5d, 0x8c, 0xf2, 0x1b, 0x4b, 0x70, 0x7b, 0x0d, 0x2b, 0x3a, 0x8b, 0x5f, 0x74, 0x9b, 0xf5, 0x5a,
+	0xdd, 0x09, 0x0d, 0xb9, 0x4a, 0xa5, 0xc9, 0x5a, 0x2d, 0xa8, 0xac, 0xda, 0x48, 0xef, 0x23, 0xfc,
+	0x6a, 0xdf, 0xe0, 0x50, 0x9f, 0x3a, 0x1e, 0x75, 0xba, 0xcd, 0xb0, 0xc2, 0xb3, 0xba, 0x57, 0x95,
+	0xb6, 0x23, 0xac, 0x3e, 0x55, 0x4c, 0x6a, 0x03, 0x5d, 0xf1, 0xd2, 0xd1, 0x4d, 0x37, 0xa9, 0x9d,
+	0xf6, 0x47, 0x58, 0x80, 0x5e, 0xe9, 0x76, 0x2a, 0x40, 0x2a, 0xe9, 0x02, 0x24, 0xb7, 0x70, 0x8e,
+	0x45, 0x5d, 0x75, 0xb9, 0xb0, 0x52, 0x60, 0x6c, 0x89, 0x2b, 0x9a, 0x50, 0x65, 0x08, 0x1d, 0x54,
+	0x36, 0x47, 0x3d, 0x46, 0x1c, 0xd7, 0xeb, 0xa0, 0xa2, 0x47, 0xd8, 0x63, 0xc4, 0x31, 0x9a, 0xe9,
+	0xcc, 0x9a, 0x0f, 0x84, 0x54, 0x88, 0x4a, 0x96, 0x01, 0xa2, 0x3d, 0x3a, 0xcd, 0x24, 0x83, 0xb6,
+	0x0c, 0x88, 0x5c, 0xc2, 0xd3, 0x4c, 0x1a, 0xa4, 0x05, 0x9c, 0x09, 0x33, 0xbf, 0x0f, 0x2a, 0x6e,
+	0x29, 0x10, 0x71, 0xb1, 0xba, 0x16, 0xfd, 0x02, 0xe1, 0xe3, 0x3d, 0x03, 0x01, 0x89, 0x4f, 0xf1,
+	0xa1, 0x86, 0x6c, 0x02, 0x1a, 0xa7, 0xfb, 0xd3, 0xe8, 0x88, 0x07, 0x44, 0x3a, 0x63, 0xd1, 0x35,
+	0xa0, 0x92, 0xb3, 0xed, 0x1e, 0x54, 0x92, 0xda, 0x3f, 0x4f, 0x43, 0xb2, 0xaa, 0x54, 0xfd, 0xc8,
+	0xa6, 0x92, 0x22, 0x9b, 0xd8, 0x7e, 0x39, 0xf3, 0xf7, 0x51, 0xbc, 0x8f, 0x73, 0x21, 0xdf, 0x20,
+	0xbc, 0x3f, 0x90, 0xcf, 0x64, 0xba, 0x3f, 0xc6, 0x6e, 0xf5, 0x9e, 0xce, 0xc6, 0xf0, 0x08, 0x50,
+	0xd0, 0x53, 0x5f, 0xfe, 0xfa, 0xef, 0xd7, 0x7b, 0x4e, 0x90, 0x49, 0x53, 0x72, 0x35, 0x03, 0x57,
+	0x53, 0x7e, 0x93, 0x42, 0xbe, 0x45, 0x78, 0xb8, 0xdd, 0x53, 0xc8, 0x9c, 0x46, 0x3a, 0x85, 0xda,
+	0x4f, 0x9f, 0x8b, 0xed, 0x07, 0x60, 0xcf, 0x71, 0xb0, 0x59, 0x62, 0xf6, 0x07, 0x1b, 0xbd, 0x6c,
+	0x31, 0x37, 0xcb, 0x6e, 0x85, 0x6d, 0x91, 0xc7, 0x88, 0x6f, 0x5d, 0x41, 0xe6, 0x0d, 0x8a, 0xfd,
+	0xc2, 0x80, 0xd8, 0xb9, 0xdc, 0xbf, 0xc0, 0xf1, 0x9f, 0x25, 0x33, 0xba, 0xf8, 0x57, 0xa7, 0xe7,
+	0x66, 0x42, 0x0e, 0x0f, 0x11, 0xef, 0x8a, 0x41, 0xd8, 0x9c, 0x6d, 0x6b, 0x51, 0x50, 0xbc, 0x58,
+	0xd0, 0x2a, 0xbf, 0x4a, 0x77, 0xd3, 0x69, 0x0e, 0x7f, 0x8a, 0x9c, 0xd4, 0x85, 0x4f, 0x7e, 0x40,
+	0xf8, 0xb0, 0x88, 0x59, 0xbb, 0xf4, 0x2a, 0xdc, 0x17, 0x06, 0xc4, 0xcd, 0x4b, 0x7f, 0x96, 0x63,
+	0x37, 0xc9, 0x69, 0xed, 0xd2, 0xdf, 0xf5, 0xb1, 0xfe, 0x84, 0xf0, 0x01, 0xb8, 0x6b, 0x91, 0x59,
+	0xcd, 0xa9, 0x97, 0x04, 0x73, 0xfa, 0x6c, 0x4c, 0x2f, 0xa8, 0xf5, 0x3b, 0x1c, 0x6f, 0x9e, 0x2c,
+	0xee, 0x8c, 0xd7, 0xef, 0x48, 0xe6, 0xa6, 0x74, 0x12, 0x6c, 0x99, 0x9b, 0xf0, 0xb2, 0x60, 0x8b,
+	0x3c, 0x40, 0x18, 0x43, 0x74, 0x7f, 0xd5, 0xcc, 0x6a, 0x56, 0x31, 0x3e, 0x8b, 0x6e, 0x25, 0x4f,
+	0x0d, 0xce, 0xe2, 0x24, 0x39, 0xa1, 0xc7, 0x82, 0x3c, 0x41, 0x78, 0x44, 0x52, 0x7f, 0x64, 0x5e,
+	0xaf, 0x7c, 0x2a, 0x9d, 0xab, 0xbb, 0x57, 0x95, 0xd2, 0x95, 0x5e, 0xe4, 0xd0, 0xdf, 0x24, 0x73,
+	0xfd, 0xa1, 0x77, 0xbe, 0x32, 0x36, 0x37, 0xb9, 0xfa, 0xdf, 0x22, 0x3f, 0x23, 0x7c, 0x58, 0x8a,
+	0xec, 0x17, 0x7f, 0x5e, 0xaf, 0x8c, 0x03, 0xb3, 0xe9, 0x25, 0xc4, 0xe9, 0x1c, 0x67, 0x33, 0x4d,
+	0x8c, 0x78, 0x6c, 0xfc, 0xf5, 0x7f, 0x50, 0x14, 0x6f, 0xe4, 0xbc, 0x5e, 0x4d, 0x15, 0x12, 0x35,
+	0x3d, 0x3f, 0x88, 0x2b, 0xe0, 0x3f, 0xcf, 0xf1, 0xcf, 0x90, 0x6c, 0x7f, 0xfc, 0xa2, 0xa6, 0x34,
+	0x37, 0x7d, 0xb5, 0xbe, 0x45, 0xbe, 0x43, 0xf8, 0x90, 0x18, 0xd3, 0x9f, 0x87, 0xf3, 0x7a, 0xb5,
+	0x1c, 0x94, 0x45, 0x0f, 0xed, 0x4c, 0xcf, 0x70, 0x16, 0xa7, 0xc8, 0x94, 0x3e, 0x0b, 0xf2, 0x8b,
+	0x7f, 0x74, 0x49, 0xf2, 0x6e, 0x5e, 0xbb, 0xa3, 0x74, 0xa9, 0x5f, 0xed, 0xe3, 0x4b, 0x25, 0x55,
+	0xe9, 0x25, 0x0e, 0xff, 0x22, 0x59, 0xd8, 0x79, 0x37, 0x47, 0x5f, 0x42, 0x3a, 0x3b, 0x13, 0xf9,
+	0x0f, 0xe1, 0x51, 0x85, 0x2e, 0x21, 0x8b, 0x31, 0x4f, 0xd6, 0x2e, 0x65, 0x96, 0xce, 0xed, 0x22,
+	0x02, 0x50, 0x5c, 0xe1, 0x14, 0x97, 0xc9, 0x7b, 0xda, 0xc7, 0x84, 0xf0, 0x39, 0xc7, 0xdc, 0x54,
+	0x4a, 0xdd, 0x2d, 0xf2, 0x27, 0xc2, 0x47, 0x14, 0x59, 0xfd, 0x95, 0xb8, 0x18, 0xf3, 0x50, 0x1b,
+	0x8c, 0x75, 0x7f, 0x89, 0x49, 0x17, 0x38, 0xeb, 0x39, 0x32, 0x3b, 0x08, 0x6b, 0xf2, 0x08, 0xc9,
+	0x72, 0x4d, 0xb7, 0x47, 0x28, 0x94, 0xa1, 0x6e, 0x8f, 0x50, 0xa9, 0x46, 0x3a, 0xcb, 0x59, 0x18,
+	0xe4, 0xd4, 0xce, 0x2c, 0xa2, 0x8f, 0x6c, 0xe4, 0x47, 0xd4, 0xa1, 0xea, 0x48, 0x2c, 0x0c, 0xb2,
+	0x86, 0x8c, 0x71, 0x3d, 0xec, 0xd6, 0x97, 0x71, 0xee, 0x28, 0xc2, 0x77, 0x40, 0xf2, 0x1b, 0xc2,
+	0x87, 0x3a, 0x04, 0x0b, 0x59, 0xd0, 0xc3, 0xa1, 0x96, 0x68, 0xe9, 0xb7, 0x06, 0xf4, 0x06, 0x1e,
+	0x05, 0xce, 0x63, 0x91, 0x5c, 0xec, 0xcf, 0xa3, 0xf3, 0x83, 0x65, 0x57, 0xa7, 0x78, 0x8a, 0x30,
+	0xe9, 0xc8, 0xe1, 0x6f, 0x99, 0x05, 0xbd, 0x05, 0xbf, 0x0b, 0x6e, 0xbd, 0x15, 0xa5, 0xee, 0x41,
+	0xda, 0xc9, 0x2d, 0x7f, 0xe5, 0xc9, 0xf3, 0x0c, 0x7a, 0xf6, 0x3c, 0x83, 0xfe, 0x79, 0x9e, 0x41,
+	0xf7, 0xb7, 0x33, 0x43, 0xcf, 0xb6, 0x33, 0x43, 0xbf, 0x6f, 0x67, 0x86, 0x6e, 0x98, 0xb5, 0xba,
+	0xb7, 0x76, 0xa7, 0x64, 0x94, 0xdd, 0x86, 0x3a, 0xe6, 0xbd, 0x76, 0x54, 0x6f, 0x63, 0x9d, 0xb5,
+	0x4a, 0xfb, 0xf9, 0x07, 0xdc, 0x99, 0xff, 0x03, 0x00, 0x00, 0xff, 0xff, 0xa0, 0xc2, 0x5b, 0x49,
+	0x7a, 0x1f, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1845,6 +1762,8 @@ type QueryClient interface {
 	Organization(ctx context.Context, in *QueryGetOrganizationRequest, opts ...grpc.CallOption) (*QueryGetOrganizationResponse, error)
 	// Queries a list of Organization items.
 	OrganizationAll(ctx context.Context, in *QueryAllOrganizationRequest, opts ...grpc.CallOption) (*QueryAllOrganizationResponse, error)
+	// Queries a NftCollection by index.
+	NftCollection(ctx context.Context, in *QueryGetNftCollectionRequest, opts ...grpc.CallOption) (*QueryGetNftCollectionResponse, error)
 	// Queries a NFTSchemaByContract by index.
 	NFTSchemaByContract(ctx context.Context, in *QueryGetNFTSchemaByContractRequest, opts ...grpc.CallOption) (*QueryGetNFTSchemaByContractResponse, error)
 	// Queries a list of NFTSchemaByContract items.
@@ -1857,10 +1776,6 @@ type QueryClient interface {
 	MetadataCreator(ctx context.Context, in *QueryGetMetadataCreatorRequest, opts ...grpc.CallOption) (*QueryGetMetadataCreatorResponse, error)
 	// Queries a list of MetadataCreator items.
 	MetadataCreatorAll(ctx context.Context, in *QueryAllMetadataCreatorRequest, opts ...grpc.CallOption) (*QueryAllMetadataCreatorResponse, error)
-	// Queries a NftCollection by index.
-	NftCollection(ctx context.Context, in *QueryGetNftCollectionRequest, opts ...grpc.CallOption) (*QueryGetNftCollectionResponse, error)
-	// Queries a list of NftCollection items.
-	NftCollectionAll(ctx context.Context, in *QueryAllNftCollectionRequest, opts ...grpc.CallOption) (*QueryAllNftCollectionResponse, error)
 }
 
 type queryClient struct {
@@ -1970,6 +1885,15 @@ func (c *queryClient) OrganizationAll(ctx context.Context, in *QueryAllOrganizat
 	return out, nil
 }
 
+func (c *queryClient) NftCollection(ctx context.Context, in *QueryGetNftCollectionRequest, opts ...grpc.CallOption) (*QueryGetNftCollectionResponse, error) {
+	out := new(QueryGetNftCollectionResponse)
+	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Query/NftCollection", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *queryClient) NFTSchemaByContract(ctx context.Context, in *QueryGetNFTSchemaByContractRequest, opts ...grpc.CallOption) (*QueryGetNFTSchemaByContractResponse, error) {
 	out := new(QueryGetNFTSchemaByContractResponse)
 	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Query/NFTSchemaByContract", in, out, opts...)
@@ -2024,24 +1948,6 @@ func (c *queryClient) MetadataCreatorAll(ctx context.Context, in *QueryAllMetada
 	return out, nil
 }
 
-func (c *queryClient) NftCollection(ctx context.Context, in *QueryGetNftCollectionRequest, opts ...grpc.CallOption) (*QueryGetNftCollectionResponse, error) {
-	out := new(QueryGetNftCollectionResponse)
-	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Query/NftCollection", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *queryClient) NftCollectionAll(ctx context.Context, in *QueryAllNftCollectionRequest, opts ...grpc.CallOption) (*QueryAllNftCollectionResponse, error) {
-	out := new(QueryAllNftCollectionResponse)
-	err := c.cc.Invoke(ctx, "/thesixnetwork.sixnft.nftmngr.Query/NftCollectionAll", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // QueryServer is the server API for Query service.
 type QueryServer interface {
 	// Parameters queries the parameters of the module.
@@ -2066,6 +1972,8 @@ type QueryServer interface {
 	Organization(context.Context, *QueryGetOrganizationRequest) (*QueryGetOrganizationResponse, error)
 	// Queries a list of Organization items.
 	OrganizationAll(context.Context, *QueryAllOrganizationRequest) (*QueryAllOrganizationResponse, error)
+	// Queries a NftCollection by index.
+	NftCollection(context.Context, *QueryGetNftCollectionRequest) (*QueryGetNftCollectionResponse, error)
 	// Queries a NFTSchemaByContract by index.
 	NFTSchemaByContract(context.Context, *QueryGetNFTSchemaByContractRequest) (*QueryGetNFTSchemaByContractResponse, error)
 	// Queries a list of NFTSchemaByContract items.
@@ -2078,10 +1986,6 @@ type QueryServer interface {
 	MetadataCreator(context.Context, *QueryGetMetadataCreatorRequest) (*QueryGetMetadataCreatorResponse, error)
 	// Queries a list of MetadataCreator items.
 	MetadataCreatorAll(context.Context, *QueryAllMetadataCreatorRequest) (*QueryAllMetadataCreatorResponse, error)
-	// Queries a NftCollection by index.
-	NftCollection(context.Context, *QueryGetNftCollectionRequest) (*QueryGetNftCollectionResponse, error)
-	// Queries a list of NftCollection items.
-	NftCollectionAll(context.Context, *QueryAllNftCollectionRequest) (*QueryAllNftCollectionResponse, error)
 }
 
 // UnimplementedQueryServer can be embedded to have forward compatible implementations.
@@ -2121,6 +2025,9 @@ func (*UnimplementedQueryServer) Organization(ctx context.Context, req *QueryGet
 func (*UnimplementedQueryServer) OrganizationAll(ctx context.Context, req *QueryAllOrganizationRequest) (*QueryAllOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrganizationAll not implemented")
 }
+func (*UnimplementedQueryServer) NftCollection(ctx context.Context, req *QueryGetNftCollectionRequest) (*QueryGetNftCollectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NftCollection not implemented")
+}
 func (*UnimplementedQueryServer) NFTSchemaByContract(ctx context.Context, req *QueryGetNFTSchemaByContractRequest) (*QueryGetNFTSchemaByContractResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method NFTSchemaByContract not implemented")
 }
@@ -2138,12 +2045,6 @@ func (*UnimplementedQueryServer) MetadataCreator(ctx context.Context, req *Query
 }
 func (*UnimplementedQueryServer) MetadataCreatorAll(ctx context.Context, req *QueryAllMetadataCreatorRequest) (*QueryAllMetadataCreatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MetadataCreatorAll not implemented")
-}
-func (*UnimplementedQueryServer) NftCollection(ctx context.Context, req *QueryGetNftCollectionRequest) (*QueryGetNftCollectionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method NftCollection not implemented")
-}
-func (*UnimplementedQueryServer) NftCollectionAll(ctx context.Context, req *QueryAllNftCollectionRequest) (*QueryAllNftCollectionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method NftCollectionAll not implemented")
 }
 
 func RegisterQueryServer(s grpc1.Server, srv QueryServer) {
@@ -2348,6 +2249,24 @@ func _Query_OrganizationAll_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_NftCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetNftCollectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).NftCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/thesixnetwork.sixnft.nftmngr.Query/NftCollection",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).NftCollection(ctx, req.(*QueryGetNftCollectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_NFTSchemaByContract_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryGetNFTSchemaByContractRequest)
 	if err := dec(in); err != nil {
@@ -2456,42 +2375,6 @@ func _Query_MetadataCreatorAll_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_NftCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetNftCollectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).NftCollection(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/thesixnetwork.sixnft.nftmngr.Query/NftCollection",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).NftCollection(ctx, req.(*QueryGetNftCollectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Query_NftCollectionAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllNftCollectionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).NftCollectionAll(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/thesixnetwork.sixnft.nftmngr.Query/NftCollectionAll",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).NftCollectionAll(ctx, req.(*QueryAllNftCollectionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _Query_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "thesixnetwork.sixnft.nftmngr.Query",
 	HandlerType: (*QueryServer)(nil),
@@ -2541,6 +2424,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Query_OrganizationAll_Handler,
 		},
 		{
+			MethodName: "NftCollection",
+			Handler:    _Query_NftCollection_Handler,
+		},
+		{
 			MethodName: "NFTSchemaByContract",
 			Handler:    _Query_NFTSchemaByContract_Handler,
 		},
@@ -2563,14 +2450,6 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MetadataCreatorAll",
 			Handler:    _Query_MetadataCreatorAll_Handler,
-		},
-		{
-			MethodName: "NftCollection",
-			Handler:    _Query_NftCollection_Handler,
-		},
-		{
-			MethodName: "NftCollectionAll",
-			Handler:    _Query_NftCollectionAll_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -3310,6 +3189,97 @@ func (m *QueryAllOrganizationResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 
+func (m *QueryGetNftCollectionRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetNftCollectionRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetNftCollectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftSchemaCode) > 0 {
+		i -= len(m.NftSchemaCode)
+		copy(dAtA[i:], m.NftSchemaCode)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.NftSchemaCode)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetNftCollectionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetNftCollectionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetNftCollectionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.NftCollection) > 0 {
+		for iNdEx := len(m.NftCollection) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NftCollection[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *QueryGetNFTSchemaByContractRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -3716,153 +3686,6 @@ func (m *QueryAllMetadataCreatorResponse) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 
-func (m *QueryGetNftCollectionRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryGetNftCollectionRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryGetNftCollectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.NftSchemaCode) > 0 {
-		i -= len(m.NftSchemaCode)
-		copy(dAtA[i:], m.NftSchemaCode)
-		i = encodeVarintQuery(dAtA, i, uint64(len(m.NftSchemaCode)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryGetNftCollectionResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryGetNftCollectionResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryGetNftCollectionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	{
-		size, err := m.NftCollection.MarshalToSizedBuffer(dAtA[:i])
-		if err != nil {
-			return 0, err
-		}
-		i -= size
-		i = encodeVarintQuery(dAtA, i, uint64(size))
-	}
-	i--
-	dAtA[i] = 0xa
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryAllNftCollectionRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryAllNftCollectionRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryAllNftCollectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Pagination != nil {
-		{
-			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintQuery(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *QueryAllNftCollectionResponse) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *QueryAllNftCollectionResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *QueryAllNftCollectionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.Pagination != nil {
-		{
-			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintQuery(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.NftCollection) > 0 {
-		for iNdEx := len(m.NftCollection) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.NftCollection[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintQuery(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
-}
-
 func encodeVarintQuery(dAtA []byte, offset int, v uint64) int {
 	offset -= sovQuery(v)
 	base := offset
@@ -4152,6 +3975,42 @@ func (m *QueryAllOrganizationResponse) Size() (n int) {
 	return n
 }
 
+func (m *QueryGetNftCollectionRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.NftSchemaCode)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetNftCollectionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.NftCollection) > 0 {
+		for _, e := range m.NftCollection {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
 func (m *QueryGetNFTSchemaByContractRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -4293,62 +4152,6 @@ func (m *QueryAllMetadataCreatorResponse) Size() (n int) {
 	_ = l
 	if len(m.MetadataCreator) > 0 {
 		for _, e := range m.MetadataCreator {
-			l = e.Size()
-			n += 1 + l + sovQuery(uint64(l))
-		}
-	}
-	if m.Pagination != nil {
-		l = m.Pagination.Size()
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	return n
-}
-
-func (m *QueryGetNftCollectionRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.NftSchemaCode)
-	if l > 0 {
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	return n
-}
-
-func (m *QueryGetNftCollectionResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = m.NftCollection.Size()
-	n += 1 + l + sovQuery(uint64(l))
-	return n
-}
-
-func (m *QueryAllNftCollectionRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Pagination != nil {
-		l = m.Pagination.Size()
-		n += 1 + l + sovQuery(uint64(l))
-	}
-	return n
-}
-
-func (m *QueryAllNftCollectionResponse) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if len(m.NftCollection) > 0 {
-		for _, e := range m.NftCollection {
 			l = e.Size()
 			n += 1 + l + sovQuery(uint64(l))
 		}
@@ -6218,6 +6021,244 @@ func (m *QueryAllOrganizationResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *QueryGetNftCollectionRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetNftCollectionRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetNftCollectionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetNftCollectionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetNftCollectionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetNftCollectionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NftCollection", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.NftCollection = append(m.NftCollection, &NftData{})
+			if err := m.NftCollection[len(m.NftCollection)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *QueryGetNFTSchemaByContractRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -7166,377 +7207,6 @@ func (m *QueryAllMetadataCreatorResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.MetadataCreator = append(m.MetadataCreator, MetadataCreator{})
 			if err := m.MetadataCreator[len(m.MetadataCreator)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Pagination == nil {
-				m.Pagination = &query.PageResponse{}
-			}
-			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryGetNftCollectionRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetNftCollectionRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetNftCollectionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftSchemaCode", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryGetNftCollectionResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryGetNftCollectionResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryGetNftCollectionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftCollection", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if err := m.NftCollection.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryAllNftCollectionRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllNftCollectionRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllNftCollectionRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Pagination == nil {
-				m.Pagination = &query.PageRequest{}
-			}
-			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQuery(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *QueryAllNftCollectionResponse) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQuery
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: QueryAllNftCollectionResponse: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: QueryAllNftCollectionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftCollection", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQuery
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthQuery
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthQuery
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftCollection = append(m.NftCollection, NftCollection{})
-			if err := m.NftCollection[len(m.NftCollection)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

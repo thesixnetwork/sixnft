@@ -22,69 +22,17 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type XNftData struct {
-	TokenId    string `protobuf:"bytes,1,opt,name=token_id,json=tokenId,proto3" json:"token_id,omitempty"`
-	TokenOwner string `protobuf:"bytes,2,opt,name=token_owner,json=tokenOwner,proto3" json:"token_owner,omitempty"`
-}
-
-func (m *XNftData) Reset()         { *m = XNftData{} }
-func (m *XNftData) String() string { return proto.CompactTextString(m) }
-func (*XNftData) ProtoMessage()    {}
-func (*XNftData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_512bb9d739eee40d, []int{0}
-}
-func (m *XNftData) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *XNftData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_XNftData.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *XNftData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_XNftData.Merge(m, src)
-}
-func (m *XNftData) XXX_Size() int {
-	return m.Size()
-}
-func (m *XNftData) XXX_DiscardUnknown() {
-	xxx_messageInfo_XNftData.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_XNftData proto.InternalMessageInfo
-
-func (m *XNftData) GetTokenId() string {
-	if m != nil {
-		return m.TokenId
-	}
-	return ""
-}
-
-func (m *XNftData) GetTokenOwner() string {
-	if m != nil {
-		return m.TokenOwner
-	}
-	return ""
-}
-
 type NftCollection struct {
-	NftSchemaCode string      `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
-	NftDatas      []*XNftData `protobuf:"bytes,2,rep,name=nftDatas,proto3" json:"nftDatas,omitempty"`
-	TotalSupply   uint64      `protobuf:"varint,3,opt,name=totalSupply,proto3" json:"totalSupply,omitempty"`
+	NftSchemaCode string     `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Total         uint64     `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	NftDatas      []*NftData `protobuf:"bytes,3,rep,name=nftDatas,proto3" json:"nftDatas,omitempty"`
 }
 
 func (m *NftCollection) Reset()         { *m = NftCollection{} }
 func (m *NftCollection) String() string { return proto.CompactTextString(m) }
 func (*NftCollection) ProtoMessage()    {}
 func (*NftCollection) Descriptor() ([]byte, []int) {
-	return fileDescriptor_512bb9d739eee40d, []int{1}
+	return fileDescriptor_512bb9d739eee40d, []int{0}
 }
 func (m *NftCollection) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -120,84 +68,43 @@ func (m *NftCollection) GetNftSchemaCode() string {
 	return ""
 }
 
-func (m *NftCollection) GetNftDatas() []*XNftData {
+func (m *NftCollection) GetTotal() uint64 {
+	if m != nil {
+		return m.Total
+	}
+	return 0
+}
+
+func (m *NftCollection) GetNftDatas() []*NftData {
 	if m != nil {
 		return m.NftDatas
 	}
 	return nil
 }
 
-func (m *NftCollection) GetTotalSupply() uint64 {
-	if m != nil {
-		return m.TotalSupply
-	}
-	return 0
-}
-
 func init() {
-	proto.RegisterType((*XNftData)(nil), "thesixnetwork.sixnft.nftmngr._NftData")
 	proto.RegisterType((*NftCollection)(nil), "thesixnetwork.sixnft.nftmngr.NftCollection")
 }
 
 func init() { proto.RegisterFile("nftmngr/nft_collection.proto", fileDescriptor_512bb9d739eee40d) }
 
 var fileDescriptor_512bb9d739eee40d = []byte{
-	// 275 bytes of a gzipped FileDescriptorProto
+	// 234 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0xc9, 0x4b, 0x2b, 0xc9,
 	0xcd, 0x4b, 0x2f, 0xd2, 0xcf, 0x4b, 0x2b, 0x89, 0x4f, 0xce, 0xcf, 0xc9, 0x49, 0x4d, 0x2e, 0xc9,
 	0xcc, 0xcf, 0xd3, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x92, 0x29, 0xc9, 0x48, 0x2d, 0xce, 0xac,
-	0xc8, 0x4b, 0x2d, 0x29, 0xcf, 0x2f, 0xca, 0xd6, 0x03, 0x31, 0xd3, 0x4a, 0xf4, 0xa0, 0x5a, 0x94,
-	0xdc, 0xb8, 0x38, 0xe2, 0xfd, 0xd2, 0x4a, 0x5c, 0x12, 0x4b, 0x12, 0x85, 0x24, 0xb9, 0x38, 0x4a,
-	0xf2, 0xb3, 0x53, 0xf3, 0xe2, 0x33, 0x53, 0x24, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0xd8, 0xc1,
-	0x7c, 0xcf, 0x14, 0x21, 0x79, 0x2e, 0x6e, 0x88, 0x54, 0x7e, 0x79, 0x5e, 0x6a, 0x91, 0x04, 0x13,
-	0x58, 0x96, 0x0b, 0x2c, 0xe4, 0x0f, 0x12, 0x51, 0x9a, 0xcd, 0xc8, 0xc5, 0xeb, 0x97, 0x56, 0xe2,
-	0x0c, 0xb7, 0x5d, 0x48, 0x85, 0x8b, 0x37, 0x2f, 0xad, 0x24, 0x38, 0x39, 0x23, 0x35, 0x37, 0xd1,
-	0x39, 0x3f, 0x25, 0x15, 0x6a, 0x24, 0xaa, 0xa0, 0x90, 0x13, 0x17, 0x47, 0x1e, 0xc4, 0xfa, 0x62,
-	0x09, 0x26, 0x05, 0x66, 0x0d, 0x6e, 0x23, 0x35, 0x3d, 0x7c, 0x0e, 0xd6, 0x83, 0xb9, 0x36, 0x08,
-	0xae, 0x4f, 0x48, 0x01, 0xe4, 0xb8, 0x92, 0xc4, 0x9c, 0xe0, 0xd2, 0x82, 0x82, 0x9c, 0x4a, 0x09,
-	0x66, 0x05, 0x46, 0x0d, 0x96, 0x20, 0x64, 0x21, 0x27, 0xcf, 0x13, 0x8f, 0xe4, 0x18, 0x2f, 0x3c,
-	0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5, 0x18, 0x6e,
-	0x3c, 0x96, 0x63, 0x88, 0xd2, 0x4f, 0xcf, 0x2c, 0xc9, 0x28, 0x4d, 0xd2, 0x4b, 0xce, 0xcf, 0xd5,
-	0x47, 0xb1, 0x57, 0x1f, 0x62, 0xaf, 0x7e, 0x85, 0x3e, 0x2c, 0x74, 0x4b, 0x2a, 0x0b, 0x52, 0x8b,
-	0x93, 0xd8, 0xc0, 0xa1, 0x6a, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x1e, 0x81, 0x7e, 0x81, 0x75,
-	0x01, 0x00, 0x00,
-}
-
-func (m *XNftData) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *XNftData) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *XNftData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.TokenOwner) > 0 {
-		i -= len(m.TokenOwner)
-		copy(dAtA[i:], m.TokenOwner)
-		i = encodeVarintNftCollection(dAtA, i, uint64(len(m.TokenOwner)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.TokenId) > 0 {
-		i -= len(m.TokenId)
-		copy(dAtA[i:], m.TokenId)
-		i = encodeVarintNftCollection(dAtA, i, uint64(len(m.TokenId)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
+	0xc8, 0x4b, 0x2d, 0x29, 0xcf, 0x2f, 0xca, 0xd6, 0x03, 0x31, 0xd3, 0x4a, 0xf4, 0xa0, 0x5a, 0xa4,
+	0xc4, 0x90, 0xf5, 0xa6, 0x24, 0x96, 0x24, 0x42, 0x74, 0x29, 0xf5, 0x31, 0x72, 0xf1, 0xfa, 0xa5,
+	0x95, 0x38, 0xc3, 0x4d, 0x13, 0x52, 0xe1, 0xe2, 0xcd, 0x4b, 0x2b, 0x09, 0x4e, 0xce, 0x48, 0xcd,
+	0x4d, 0x74, 0xce, 0x4f, 0x49, 0x95, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x42, 0x15, 0x14, 0x12,
+	0xe1, 0x62, 0x2d, 0xc9, 0x2f, 0x49, 0xcc, 0x91, 0x60, 0x52, 0x60, 0xd4, 0x60, 0x09, 0x82, 0x70,
+	0x84, 0x1c, 0xb9, 0x38, 0xf2, 0xd2, 0x4a, 0x5c, 0x12, 0x4b, 0x12, 0x8b, 0x25, 0x98, 0x15, 0x98,
+	0x35, 0xb8, 0x8d, 0x54, 0xf5, 0xf0, 0x39, 0x4b, 0xcf, 0x0f, 0xa2, 0x3a, 0x08, 0xae, 0xcd, 0xc9,
+	0xf3, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18, 0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58,
+	0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5, 0x18, 0xa2, 0xf4, 0xd3, 0x33, 0x4b, 0x32,
+	0x4a, 0x93, 0xf4, 0x92, 0xf3, 0x73, 0xf5, 0x51, 0x0c, 0xd5, 0x87, 0x18, 0xaa, 0x5f, 0xa1, 0x0f,
+	0xf3, 0x64, 0x49, 0x65, 0x41, 0x6a, 0x71, 0x12, 0x1b, 0xd8, 0x8b, 0xc6, 0x80, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0x61, 0x1b, 0x5c, 0x6e, 0x38, 0x01, 0x00, 0x00,
 }
 
 func (m *NftCollection) Marshal() (dAtA []byte, err error) {
@@ -220,11 +127,6 @@ func (m *NftCollection) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.TotalSupply != 0 {
-		i = encodeVarintNftCollection(dAtA, i, uint64(m.TotalSupply))
-		i--
-		dAtA[i] = 0x18
-	}
 	if len(m.NftDatas) > 0 {
 		for iNdEx := len(m.NftDatas) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -236,8 +138,13 @@ func (m *NftCollection) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintNftCollection(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x12
+			dAtA[i] = 0x1a
 		}
+	}
+	if m.Total != 0 {
+		i = encodeVarintNftCollection(dAtA, i, uint64(m.Total))
+		i--
+		dAtA[i] = 0x10
 	}
 	if len(m.NftSchemaCode) > 0 {
 		i -= len(m.NftSchemaCode)
@@ -260,23 +167,6 @@ func encodeVarintNftCollection(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *XNftData) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.TokenId)
-	if l > 0 {
-		n += 1 + l + sovNftCollection(uint64(l))
-	}
-	l = len(m.TokenOwner)
-	if l > 0 {
-		n += 1 + l + sovNftCollection(uint64(l))
-	}
-	return n
-}
-
 func (m *NftCollection) Size() (n int) {
 	if m == nil {
 		return 0
@@ -287,14 +177,14 @@ func (m *NftCollection) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovNftCollection(uint64(l))
 	}
+	if m.Total != 0 {
+		n += 1 + sovNftCollection(uint64(m.Total))
+	}
 	if len(m.NftDatas) > 0 {
 		for _, e := range m.NftDatas {
 			l = e.Size()
 			n += 1 + l + sovNftCollection(uint64(l))
 		}
-	}
-	if m.TotalSupply != 0 {
-		n += 1 + sovNftCollection(uint64(m.TotalSupply))
 	}
 	return n
 }
@@ -304,120 +194,6 @@ func sovNftCollection(x uint64) (n int) {
 }
 func sozNftCollection(x uint64) (n int) {
 	return sovNftCollection(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *XNftData) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowNftCollection
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: _NftData: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: _NftData: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TokenId", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNftCollection
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthNftCollection
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthNftCollection
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TokenId = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TokenOwner", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNftCollection
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthNftCollection
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthNftCollection
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TokenOwner = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipNftCollection(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthNftCollection
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *NftCollection) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -481,6 +257,25 @@ func (m *NftCollection) Unmarshal(dAtA []byte) error {
 			m.NftSchemaCode = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Total", wireType)
+			}
+			m.Total = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftCollection
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Total |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NftDatas", wireType)
 			}
@@ -509,30 +304,11 @@ func (m *NftCollection) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.NftDatas = append(m.NftDatas, &XNftData{})
+			m.NftDatas = append(m.NftDatas, &NftData{})
 			if err := m.NftDatas[len(m.NftDatas)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TotalSupply", wireType)
-			}
-			m.TotalSupply = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowNftCollection
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.TotalSupply |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipNftCollection(dAtA[iNdEx:])
