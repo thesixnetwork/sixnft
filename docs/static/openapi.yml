@@ -31583,86 +31583,10 @@ paths:
                       items:
                         type: object
                         properties:
-                          nft_schema_code:
-                            type: string
                           token_id:
                             type: string
                           token_owner:
                             type: string
-                          owner_address_type:
-                            type: string
-                            enum:
-                              - ORIGIN_ADDRESS
-                              - INTERNAL_ADDRESS
-                            default: ORIGIN_ADDRESS
-                          origin_image:
-                            type: string
-                          onchain_image:
-                            type: string
-                          token_uri:
-                            type: string
-                          origin_attributes:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                number_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: string
-                                      format: uint64
-                                string_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: string
-                                boolean_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: boolean
-                                float_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: number
-                                      format: double
-                                hidden_to_marketplace:
-                                  type: boolean
-                          onchain_attributes:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                name:
-                                  type: string
-                                number_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: string
-                                      format: uint64
-                                string_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: string
-                                boolean_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: boolean
-                                float_attribute_value:
-                                  type: object
-                                  properties:
-                                    value:
-                                      type: number
-                                      format: double
-                                hidden_to_marketplace:
-                                  type: boolean
                     totalSupply:
                       type: string
                       format: uint64
@@ -31957,86 +31881,10 @@ paths:
                     items:
                       type: object
                       properties:
-                        nft_schema_code:
-                          type: string
                         token_id:
                           type: string
                         token_owner:
                           type: string
-                        owner_address_type:
-                          type: string
-                          enum:
-                            - ORIGIN_ADDRESS
-                            - INTERNAL_ADDRESS
-                          default: ORIGIN_ADDRESS
-                        origin_image:
-                          type: string
-                        onchain_image:
-                          type: string
-                        token_uri:
-                          type: string
-                        origin_attributes:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              number_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                                    format: uint64
-                              string_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                              boolean_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: boolean
-                              float_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: number
-                                    format: double
-                              hidden_to_marketplace:
-                                type: boolean
-                        onchain_attributes:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              number_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                                    format: uint64
-                              string_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: string
-                              boolean_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: boolean
-                              float_attribute_value:
-                                type: object
-                                properties:
-                                  value:
-                                    type: number
-                                    format: double
-                              hidden_to_marketplace:
-                                type: boolean
                   totalSupply:
                     type: string
                     format: uint64
@@ -61583,86 +61431,10 @@ definitions:
         items:
           type: object
           properties:
-            nft_schema_code:
-              type: string
             token_id:
               type: string
             token_owner:
               type: string
-            owner_address_type:
-              type: string
-              enum:
-                - ORIGIN_ADDRESS
-                - INTERNAL_ADDRESS
-              default: ORIGIN_ADDRESS
-            origin_image:
-              type: string
-            onchain_image:
-              type: string
-            token_uri:
-              type: string
-            origin_attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  number_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                        format: uint64
-                  string_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                  boolean_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: boolean
-                  float_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: number
-                        format: double
-                  hidden_to_marketplace:
-                    type: boolean
-            onchain_attributes:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  number_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                        format: uint64
-                  string_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: string
-                  boolean_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: boolean
-                  float_attribute_value:
-                    type: object
-                    properties:
-                      value:
-                        type: number
-                        format: double
-                  hidden_to_marketplace:
-                    type: boolean
       totalSupply:
         type: string
         format: uint64
@@ -63063,86 +62835,10 @@ definitions:
               items:
                 type: object
                 properties:
-                  nft_schema_code:
-                    type: string
                   token_id:
                     type: string
                   token_owner:
                     type: string
-                  owner_address_type:
-                    type: string
-                    enum:
-                      - ORIGIN_ADDRESS
-                      - INTERNAL_ADDRESS
-                    default: ORIGIN_ADDRESS
-                  origin_image:
-                    type: string
-                  onchain_image:
-                    type: string
-                  token_uri:
-                    type: string
-                  origin_attributes:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        number_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              format: uint64
-                        string_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                        boolean_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: boolean
-                        float_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: number
-                              format: double
-                        hidden_to_marketplace:
-                          type: boolean
-                  onchain_attributes:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        number_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                              format: uint64
-                        string_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: string
-                        boolean_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: boolean
-                        float_attribute_value:
-                          type: object
-                          properties:
-                            value:
-                              type: number
-                              format: double
-                        hidden_to_marketplace:
-                          type: boolean
             totalSupply:
               type: string
               format: uint64
@@ -64021,86 +63717,10 @@ definitions:
             items:
               type: object
               properties:
-                nft_schema_code:
-                  type: string
                 token_id:
                   type: string
                 token_owner:
                   type: string
-                owner_address_type:
-                  type: string
-                  enum:
-                    - ORIGIN_ADDRESS
-                    - INTERNAL_ADDRESS
-                  default: ORIGIN_ADDRESS
-                origin_image:
-                  type: string
-                onchain_image:
-                  type: string
-                token_uri:
-                  type: string
-                origin_attributes:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      number_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                            format: uint64
-                      string_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                      boolean_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: boolean
-                      float_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: number
-                            format: double
-                      hidden_to_marketplace:
-                        type: boolean
-                onchain_attributes:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      name:
-                        type: string
-                      number_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                            format: uint64
-                      string_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: string
-                      boolean_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: boolean
-                      float_attribute_value:
-                        type: object
-                        properties:
-                          value:
-                            type: number
-                            format: double
-                      hidden_to_marketplace:
-                        type: boolean
           totalSupply:
             type: string
             format: uint64
@@ -64218,6 +63838,13 @@ definitions:
       - BASE
       - TOKEN
     default: BASE
+  thesixnetwork.sixnft.nftmngr._NftData:
+    type: object
+    properties:
+      token_id:
+        type: string
+      token_owner:
+        type: string
   thesixnetwork.sixnft.nftmngr.action_params:
     type: object
     properties:

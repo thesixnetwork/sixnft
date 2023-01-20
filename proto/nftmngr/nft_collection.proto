@@ -2,10 +2,14 @@ syntax = "proto3";
 package thesixnetwork.sixnft.nftmngr;
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
-import "nftmngr/nft_data.proto"; 
+
+message _NftData{
+  string token_id = 1; 
+  string token_owner = 2; 
+}
 
 message NftCollection {
   string nftSchemaCode = 1; 
-  repeated NftData nftDatas = 2;
+  repeated _NftData nftDatas = 2;
   uint64 totalSupply = 3;
 }

@@ -105,12 +105,15 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	if !found {
 		collection = types.NftCollection{
 			NftSchemaCode: data.NftSchemaCode,
-			NftDatas:      make([]*types.NftData, 0),
+			NftDatas:      make([]*types.XNftData, 0),
 		}
 	}
 
 	// Add the minted of any schema to collection
-	collection.NftDatas = append(collection.NftDatas, &data)
+	collection.NftDatas = append(collection.NftDatas, &types.XNftData{
+		TokenId:       data.TokenId,
+		TokenOwner:    data.TokenOwner,
+	})
 
 	// Add the minted of any schema to collection
 	k.Keeper.SetNftCollection(ctx, types.NftCollection{
