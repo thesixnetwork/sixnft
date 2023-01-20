@@ -9,9 +9,9 @@ import (
 )
 
 func (k Keeper) AddMetadataToCollection(ctx sdk.Context, data *types.NftData) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix(data.NftSchemaCode))
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.CollectionkeyPrefix(data.NftSchemaCode)) // returns KVStore with prefix of SchemaCode + "/"
 	b := k.cdc.MustMarshal(data)
-	store.Set([]byte(data.TokenId), b)
+	store.Set([]byte(data.TokenId), b) // set the value of data to store of SchemaCode + "/" + TokenId as key (value is marshalled data) it will be => SchemaCode/TokenId: data
 }
 
 // SetNftCollection set a specific nftCollection in the store from its index

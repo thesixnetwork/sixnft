@@ -31,7 +31,7 @@ func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
 
-
+// ! Fixed from prefix appent([]byte{0x1} []byte(nftSchemaCode)) because it will return 0x1nftSchemaCode
 func CollectionkeyPrefix(nftSchemaCode string) []byte {
 	var key []byte
 	nftSchemaCodeBytes := []byte(nftSchemaCode)
