@@ -10,6 +10,7 @@ import "nftoracle/action_request.proto";
 import "nftoracle/collection_owner_request.proto";
 import "nftoracle/oracle_config.proto";
 import "nftoracle/action_signer.proto";
+import "nftoracle/binded_signer.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -60,11 +61,11 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/collection_owner_request";
 	}
 
-// Queries a OracleConfig by index.
+	// Queries a OracleConfig by index.
 	rpc OracleConfig(QueryGetOracleConfigRequest) returns (QueryGetOracleConfigResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/oracle_config";
 	}
-// Queries a ActionSigner by index.
+	// Queries a ActionSigner by index.
 	rpc ActionSigner(QueryGetActionSignerRequest) returns (QueryGetActionSignerResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer/{actorAddress}";
 	}
@@ -74,7 +75,12 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer";
 	}
 
-// this line is used by starport scaffolding # 2
+	// Queries a BindedSigner by index.
+	rpc BindedSigner(QueryGetBindedSignerRequest) returns (QueryGetBindedSignerResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/binded_signer/{ownerAddress}";
+	}
+
+	// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -168,6 +174,15 @@ message QueryAllActionSignerRequest {
 message QueryAllActionSignerResponse {
 	repeated ActionSigner actionSigner = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBindedSignerRequest {
+	  string ownerAddress = 1;
+
+}
+
+message QueryGetBindedSignerResponse {
+	BindedSigner bindedSigner = 1 [(gogoproto.nullable) = false];
 }
 
 // this line is used by starport scaffolding # 3

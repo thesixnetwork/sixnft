@@ -48,6 +48,6 @@ const (
 )
 
 const (
-	CollectionKey = "Collection-value-"
+	CollectionKey      = "Collection-value-"
 	CollectionCountKey = "Collection-count-"
 )

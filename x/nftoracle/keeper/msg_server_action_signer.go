@@ -44,6 +44,28 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
 	}
 
+	// Get List of binded signers
+	bindedList, found := k.GetBindedSigner(ctx, _signerParams.ActorAddress)
+	if !found {
+		bindedList = types.BindedSigner{
+			OwnerAddress: _signerParams.OwnerAddress,
+			Signers:      make([]*types.XSetSignerParams, 0),
+		}
+	}
+
+	// add the binded signer to the list
+	bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
+		ActorAddress: _signerParams.ActorAddress,
+		ExpiredAt:    _signerParams.ExpiredAt,
+	})
+
+	// set the binded signer
+	k.SetBindedSigner(ctx, types.BindedSigner{
+		OwnerAddress: _signerParams.ActorAddress,
+		Signers:      bindedList.Signers,
+		ActorCount:   uint64(len(bindedList.Signers)),
+	})
+
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
 
