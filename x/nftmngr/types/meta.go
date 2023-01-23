@@ -203,8 +203,17 @@ func (m *Metadata) GetString(key string) string {
 }
 
 // sub string for GetString function
-func (m *Metadata) GetSubString(key string, start int, end int) string {
+func (m *Metadata) GetSubString(key string, start int64, end int64) string {
 	v, err := m.MustGetString(key)
+	if end > int64(len(v)) {
+		panic(sdkerrors.Wrap(ErrAttributeTypeNotMatch, "end can not be greater than string length"))
+	}
+	if start == end {
+		return ""
+	}
+	if end == -1 {
+		end = int64(len(v))
+	}
 	if err != nil {
 		panic(err)
 	}
@@ -212,7 +221,7 @@ func (m *Metadata) GetSubString(key string, start int, end int) string {
 }
 
 // return Lowercase for GetString function
-func (m *Metadata) GetLowercase(key string) string {
+func (m *Metadata) ToLowercase(key string) string {
 	v, err := m.MustGetString(key)
 	if err != nil {
 		panic(err)
@@ -221,7 +230,7 @@ func (m *Metadata) GetLowercase(key string) string {
 }
 
 // return Uppercase for GetString function
-func (m *Metadata) GetUppercase(key string) string {
+func (m *Metadata) ToUppercase(key string) string {
 	v, err := m.MustGetString(key)
 	if err != nil {
 		panic(err)

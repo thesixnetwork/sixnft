@@ -134,6 +134,54 @@
             "trait_type": "Greeting NFT Attribute"
           }
         }
+      },
+      {
+        "name": "split",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": "not yet"
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Test Split String"
+          }
+        }
+      },
+      {
+        "name": "lowercase",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": "not yet"
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Test Split String"
+          }
+        }
+      },
+      {
+        "name": "uppercase",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": "not yet"
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Test Split String"
+          }
+        }
       }
     ],
     "actions": [
@@ -155,6 +203,36 @@
         "then": [
           "meta.SetNumber('points', meta.GetNumber('points') + 100)",
           "meta.SetString('greeting_nft_attribute',meta.GetString('hello_nft_attribute'))"
+        ]
+      },
+      {
+        "name": "test_split",
+        "desc": "Test Split String",
+        "params": [],
+        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "then": [
+          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
+          "meta.SetString('split',meta.GetSubString('hello_nft_attribute', 3, -1))"
+        ]
+      },
+      {
+        "name": "test_lowercase",
+        "desc": "Test Lowercase String",
+        "params": [],
+        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "then": [
+          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
+          "meta.SetString('lowercase',meta.ToLowercase('hello_nft_attribute'))"
+        ]
+      },
+      {
+        "name": "test_uppercase",
+        "desc": "Test Uppercase String",
+        "params": [],
+        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "then": [
+          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
+          "meta.SetString('uppercase',meta.ToUppercase('hello_nft_attribute'))"
         ]
       },
       {

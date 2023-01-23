@@ -80,7 +80,7 @@ case $choice in
         fi
 
         sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${required_params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y \
-            --chain-id sixnft -o json
+            --chain-id sixnft
         ;;
     5) echo "Set NFT Attribute"
         read -p "Enter Schema Code: " schema_code 
