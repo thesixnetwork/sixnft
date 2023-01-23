@@ -61,32 +61,26 @@ case $choice in
         read -p "Enter Token ID: " token_id
         read -p "Enter Action: " action
         read -p "Enter Ref ID: " ref_id
-        read -p "Enter Required Params: " required_params
-        read -p "Enter Params: " params
+        read -p "Enter Required Params: " num_params
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
         # check if required_params is empty
-        if [ -z "$required_params" ]; then
-            required_params=0
+        if [[ -z "$num_params" || "$num_params" -eq 0 ]]; then
+            required_params="[]"
+        else
+            for ((i=1; i<=num_params; i++)); do
+                read -p "Enter name of param $i: " param_name
+                read -p "Enter value of >> $param_name << : " param_value
+                required_params+=( "{\"name\":\"$param_name\",\"value\":\"$param_value\"}" )
+            done
+            required_params=$(echo ${required_params[@]} | tr ' ' ',')
+            required_params="["$required_params"]"
+            echo $required_params
         fi
-        # check if params is empty
-        if [ -z "$params" ]; then
-            params="[]"
-        fi
-        # # loop through required_params
-        # for ((i=1;i<=required_params;i++)); do
-        #     read -p "Enter Param ${i}: " param
-        #     # check if params is empty
-        #     if [ -z "$params" ]; then
-        #         params="[\"${param}\"]"
-        #     else
-        #         params="${params}, \"${param}\""
-        #     fi
-        # done
 
-        sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
-            --chain-id sixnft
+        sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${required_params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y \
+            --chain-id sixnft -o json
         ;;
     5) echo "Set NFT Attribute"
         read -p "Enter Schema Code: " schema_code 
@@ -142,7 +136,7 @@ case $choice in
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
-        sixnftd tx nftoracle create-mint-request ${schema_code} ${token_id} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+        sixnftd tx nftoracle create-mint-request ${schema_code} ${token_id} ${require_confirmations} --from alice ---gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             --chain-id sixnft
         ;;
     7) echo "Oracle - Get Mint Request"

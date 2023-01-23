@@ -143,12 +143,6 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	attri := m.MapAllKey[key]
 	schema := m.schema
 	if attri == nil {
-		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
-		// Number
-		return int64(attri.AttributeValue.GetNumberAttributeValue().Value), nil
-	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -159,6 +153,11 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 				}
 			}
 		}
+		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
+		// Number
+		return int64(attri.AttributeValue.GetNumberAttributeValue().Value), nil
 	}
 	return 0, sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
@@ -234,11 +233,6 @@ func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := m.MapAllKey[key]
 	schema := m.schema
 	if attri == nil {
-		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
-		return attri.AttributeValue.GetStringAttributeValue().Value, nil
-	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -249,6 +243,10 @@ func (m *Metadata) MustGetString(key string) (string, error) {
 				}
 			}
 		}
+		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
+		return attri.AttributeValue.GetStringAttributeValue().Value, nil
 	}
 
 	return "", sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
@@ -300,12 +298,6 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 	attri := m.MapAllKey[key]
 	schema := m.schema
 	if attri == nil {
-		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
-		// Number
-		return attri.AttributeValue.GetFloatAttributeValue().Value, nil
-	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -316,8 +308,12 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 				}
 			}
 		}
+		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
+		// Number
+		return attri.AttributeValue.GetFloatAttributeValue().Value, nil
+	}
 	return 0, sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
 
@@ -367,11 +363,6 @@ func (m *Metadata) MustGetBool(key string) (bool, error) {
 	attri := m.MapAllKey[key]
 	schema := m.schema
 	if attri == nil {
-		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
-		return attri.AttributeValue.GetBooleanAttributeValue().Value, nil
-	} else {
 		// find from schema nft attribute
 		if schema != nil {
 			for _, attr := range schema.OnchainData.NftAttributes {
@@ -382,6 +373,10 @@ func (m *Metadata) MustGetBool(key string) (bool, error) {
 				}
 			}
 		}
+		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
+		return attri.AttributeValue.GetBooleanAttributeValue().Value, nil
 	}
 	return false, sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
