@@ -206,13 +206,19 @@ func (m *Metadata) GetString(key string) string {
 func (m *Metadata) GetSubString(key string, start int64, end int64) string {
 	v, err := m.MustGetString(key)
 	if end > int64(len(v)) {
-		panic(sdkerrors.Wrap(ErrAttributeTypeNotMatch, "end can not be greater than string length"))
+		panic(sdkerrors.Wrap(ErrInvalidActionInput, "end can not be greater than string length"))
 	}
 	if start == end {
 		return ""
 	}
-	if end == -1 {
-		end = int64(len(v))
+	if start < 0 {
+		start = int64(len(v)) + (start + 1)
+	}
+	if end < 0 {
+		end = int64(len(v)) + (end + 1)
+	}
+	if start > end {
+		panic(sdkerrors.Wrap(ErrInvalidActionInput, "start can not be greater than end"))
 	}
 	if err != nil {
 		panic(err)
@@ -506,16 +512,32 @@ func (p *ActionParameter) GetString() string {
 }
 
 // return substring of string from start to end of parameter
-func (p *ActionParameter) GetSubString(start int, end int) string {
-	return p.Value[start:end]
+func (p *ActionParameter) GetSubString(start int64, end int64) string {
+	val := p.Value
+	if end > int64(len(val)) {
+		panic(sdkerrors.Wrap(ErrInvaliActionParameter, "end can not be greater than string length"))
+	}
+	if start == end {
+		return ""
+	}
+	if start < 0 {
+		start = int64(len(val)) + (start + 1)
+	}
+	if end < 0 {
+		end = int64(len(val)) + (end + 1)
+	}
+	if start > end {
+		panic(sdkerrors.Wrap(ErrInvaliActionParameter, "start can not be greater than end"))
+	}
+	return val[start:end]
 }
 
 // return LowerCase of parameter
-func (p *ActionParameter) GetLowerCase() string {
+func (p *ActionParameter) ToLowerCase() string {
 	return strings.ToLower(p.Value)
 }
 
 // return UpperCase of parameter
-func (p *ActionParameter) GetUpperCase() string {
+func (p *ActionParameter) TtUpperCase() string {
 	return strings.ToUpper(p.Value)
 }
