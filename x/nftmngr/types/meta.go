@@ -435,6 +435,9 @@ func (m *Metadata) SetDisplayArribute(key string, value string) error {
 	if attri == nil {
 		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
+	if !(attri.AttributeValue.HiddenOveride) {
+		return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+	}
 	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
 		return nil
 	}
