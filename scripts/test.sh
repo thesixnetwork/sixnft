@@ -48,3 +48,15 @@ sixnftd tx nftmngr perform-action-by-nftadmin sixnetwork.develop_v073 1 test_upp
     --chain-id sixnft
 echo "Done 🖕"
 echo ""
+
+echo "Test Hide Fail"
+read -p "Press enter to continue"
+sixnftd tx nftmngr perform-action-by-nftadmin sixnetwork.develop_v073 1 test_hidden hidden_fail "[{\"name\":\"attribute_name\",\"value\":\"hide_fail\"},{\"name\":\"show\",\"value\":\"false\"}]" --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y --chain-id sixnft
+echo "Done 🖕"
+echo ""
+
+echo "Test Hide Fail"
+read -p "Press enter to continue"
+sixnftd tx nftmngr perform-action-by-nftadmin sixnetwork.develop_v073 1 test_hidden hidden_pass "[{\"name\":\"attribute_name\",\"value\":\"hide_pass\"},{\"name\":\"show\",\"value\":\"true\"}]" --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y --chain-id sixnft
+echo "Done 🖕"
+echo ""

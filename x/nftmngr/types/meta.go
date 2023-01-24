@@ -433,7 +433,7 @@ func (m *Metadata) SetDisplayArribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
 	attri := m.MapAllKey[key]
 	schema := m.schema
-	
+
 	if attri == nil {
 		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
@@ -477,11 +477,12 @@ func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	if attri == nil {
 		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
-	
-	for _, attr := range schema.OnchainData.NftAttributes {
+
+	for _, attr := range schema.OnchainData.TokenAttributes {
 		if attr.Name == key {
-			if !attr.HiddenOveride {
-				return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+			if !(attr.HiddenOveride) {
+				// return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+				panic(sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden"))
 			}
 		}
 	}

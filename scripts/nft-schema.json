@@ -70,7 +70,7 @@
         "name": "hello_nft_attribute",
         "default_mint_value": {
           "string_attribute_value": {
-            "value": "To Valhalla!"
+            "value": "Will Not Read"
           }
         },
         "data_type": "string",
@@ -80,7 +80,9 @@
           "opensea": {
             "trait_type": "Hello NFT Attribute"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       }
     ],
     "token_attributes": [
@@ -98,7 +100,9 @@
           "opensea": {
             "trait_type": "Points"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       },
       {
         "name": "started",
@@ -117,6 +121,7 @@
             "trait_type": "Started"
           }
         },
+        "hidden_overide": false,
         "hidden_to_marketplace": false
       },
       {
@@ -133,7 +138,9 @@
           "opensea": {
             "trait_type": "Greeting NFT Attribute"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       },
       {
         "name": "split",
@@ -149,7 +156,9 @@
           "opensea": {
             "trait_type": "Test Split String"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       },
       {
         "name": "lowercase",
@@ -165,7 +174,9 @@
           "opensea": {
             "trait_type": "Test Split String"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       },
       {
         "name": "uppercase",
@@ -181,7 +192,49 @@
           "opensea": {
             "trait_type": "Test Split String"
           }
-        }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "hide_pass",
+        "default_mint_value": {
+          "boolean_attribute_value": {
+            "value": false
+          }
+        },
+        "data_type": "boolean",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "bool_true_value": "Yes",
+          "bool_false_value": "No",
+          "opensea": {
+            "trait_type": "Test Hide To Marketplace Pass"
+          }
+        },
+        "hidden_overide": true,
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "hide_fail",
+        "default_mint_value": {
+          "boolean_attribute_value": {
+            "value": false
+          }
+        },
+        "data_type": "boolean",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "bool_true_value": "Yes",
+          "bool_false_value": "No",
+          "opensea": {
+            "trait_type": "Test Hide To Marketplace Fail"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       }
     ],
     "actions": [
@@ -240,8 +293,8 @@
         "desc": "Test Dyamic hidden to marketplace",
         "params": [
           {
-            "name": "attibute_name",
-            "desc": "attiubute name",
+            "name": "attribute_name",
+            "desc": "attriubute name",
             "data_type": "string",
             "required": true
           },
@@ -254,11 +307,19 @@
         ],
         "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
         "then": [
-          "meta.SetDisplayArribute(params['attibute_name'].GetString(), params['show'].GetString())"
+          "meta.SetDisplayAttribute(params['attribute_name'].GetString(), params['show'].GetString())"
         ]
       }
     ],
-    "nft_attributes_value": []
+    "nft_attributes_value": [
+      {
+        "name": "hello_nft_attribute",
+        "string_attribute_value": {
+          "value": "To Valhalla!"
+        },
+        "hidden_to_marketplace": false
+      }
+    ]
   },
   "mint_authorization": "system"
 }
