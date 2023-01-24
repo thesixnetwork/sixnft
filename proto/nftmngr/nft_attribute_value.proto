@@ -13,8 +13,7 @@ message NftAttributeValue {
     BooleanAttributeValue boolean_attribute_value = 4;
     FloatAttributeValue float_attribute_value = 5;
   }
-  bool hidden_overide = 6; // flag that allows action to override hidden
-  bool hidden_to_marketplace = 7;
+  bool hidden_to_marketplace = 6;
 }
 
 message NumberAttributeValue {
