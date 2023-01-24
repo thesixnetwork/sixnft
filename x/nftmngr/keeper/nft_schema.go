@@ -53,6 +53,25 @@ func (k Keeper) GetNFTSchemaV063(
 	return val, true
 }
 
+// GetNFTSchema returns a nFTSchema from its index
+func (k Keeper) GetNFTSchemaV072(
+	ctx sdk.Context,
+	code string,
+
+) (val types.NFTSchemaV072, found bool) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NFTSchemaKeyPrefix))
+
+	b := store.Get(types.NFTSchemaKey(
+		code,
+	))
+	if b == nil {
+		return val, false
+	}
+
+	k.cdc.MustUnmarshal(b, &val)
+	return val, true
+}
+
 // RemoveNFTSchema removes a nFTSchema from the store
 func (k Keeper) RemoveNFTSchema(
 	ctx sdk.Context,
