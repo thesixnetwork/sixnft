@@ -36,6 +36,8 @@ var (
 	ErrNftDataDoesNotExists                      = sdkerrors.Register(ModuleName, 116, "NFT data does not exists")
 	ErrNoDefaultValue                            = sdkerrors.Register(ModuleName, 117, "No default value")
 	ErrInsufficientValue                         = sdkerrors.Register(ModuleName, 118, "Insufficient value")
+	ErrInvalidActionInput                        = sdkerrors.Register(ModuleName, 119, "Invalid input")
+	ErrInvaliActionParameter                     = sdkerrors.Register(ModuleName, 120, "Invalid parameter")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")
