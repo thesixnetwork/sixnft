@@ -429,45 +429,6 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 	return nil
 }
 
-func (m *Metadata) SetDisplayArribute(key string, value string) error {
-	bool_val, _ := strconv.ParseBool(value)
-	attri := m.MapAllKey[key]
-	schema := m.schema
-
-	if attri == nil {
-		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-
-	for _, attr := range schema.OnchainData.NftAttributes {
-		if attr.Name == key {
-			if !attr.HiddenOveride {
-				return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
-			}
-		}
-	}
-
-	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
-		return nil
-	}
-	if attri.From == "chain" {
-		newAttributeValue := &NftAttributeValue{
-			Name:                attri.AttributeValue.Name,
-			HiddenToMarketplace: bool_val,
-		}
-
-		m.ChangeList = append(m.ChangeList, &MetadataChange{
-			Key:           key,
-			PreviousValue: strconv.FormatBool(attri.AttributeValue.GetHiddenToMarketplace()),
-			NewValue:      strconv.FormatBool(bool_val),
-		})
-		m.MapAllKey[key].AttributeValue = newAttributeValue
-		m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
-	} else {
-		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
-	}
-	return nil
-}
-
 // add for typos
 func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
