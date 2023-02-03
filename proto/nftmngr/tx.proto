@@ -27,6 +27,7 @@ service Msg {
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
   rpc SetMintauth(MsgSetMintauth) returns (MsgSetMintauthResponse);
   rpc ChangeOrgOwner(MsgChangeOrgOwner) returns (MsgChangeOrgOwnerResponse);
+  rpc CreateMultiMetadata(MsgCreateMultiMetadata) returns (MsgCreateMultiMetadataResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -242,6 +243,18 @@ message MsgChangeOrgOwnerResponse {
   string orgName = 1;
   string oldOwner = 2;
   string newOwner = 3;
+}
+
+message MsgCreateMultiMetadata {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  repeated string tokenId = 3;
+  string base64NFTData = 4;
+}
+
+message MsgCreateMultiMetadataResponse {
+  string nftSchemaCode = 1;
+  string tokenId = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

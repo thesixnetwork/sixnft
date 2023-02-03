@@ -61570,6 +61570,13 @@ definitions:
         type: string
       tokenId:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgCreateMultiMetadataResponse:
+    type: object
+    properties:
+      nftSchemaCode:
+        type: string
+      tokenId:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgCreateNFTSchemaResponse:
     type: object
     properties:

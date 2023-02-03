@@ -38,6 +38,7 @@ var (
 	ErrInsufficientValue                         = sdkerrors.Register(ModuleName, 118, "Insufficient value")
 	ErrInvalidActionInput                        = sdkerrors.Register(ModuleName, 119, "Invalid input")
 	ErrInvaliActionParameter                     = sdkerrors.Register(ModuleName, 120, "Invalid parameter")
+	ErrInvalidFlagTokenID                        = sdkerrors.Register(ModuleName, 121, "Invalid flag token id(s) of create multiple NFTs TokenID must be 'MULTIMINT'")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")

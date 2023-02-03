@@ -26,6 +26,7 @@ echo "##  16. Add Action                         ##"
 echo "##  17. Set Signer                         ##"
 echo "##  18. Show ActionSigner By Address       ##"
 echo "##  19. Oracle - Action Request By Signer  ##"
+echo "##  20. Mockup Multi Token                 ##"
 echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
@@ -281,6 +282,16 @@ case $choice in
         # echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret 1
         # echo  ${BASE64_ACTION_SIG} 
         sixnftd tx nftoracle create-action-request ethereum ${BASE64_ACTION_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
+        ;;
+    20) echo "Mockup Token"
+        read -p "Enter Schema Code: " schema_code 
+        read -p "Enter Token ID: " token_id
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        BASE64_META=`cat nft-data-multi.json | sed "s/SCHEMA_CODE/${schema_code}/g" | base64 | tr -d '\n'`
+        sixnftd tx nftmngr create-multi-metadata "${schema_code}" ${token_id} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+            ${BASE64_META} --chain-id sixnft
         ;;
     *) echo "Invalid choice"
        ;;

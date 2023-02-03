@@ -422,3 +422,29 @@ ignite scaffold map actionActor \
     create_at:string expire_at:string \
     --index actorAddress:string,ownerAddress:string  \
     --module nftoracle --no-simulation
+
+# create multiple metadatas in one message
+ignite scaffold message createMultiMetadata nft_schema_code token_id base64NFTData \                          
+    --desc "To create Multiple NFT Metadata(s) from Base64 required flag in base64" \
+    --response nft_schema_code,token_id \
+    --no-simulation \
+    --module nftmngr
+
+## modify proto/nftmngr/tx.proto
+## from
+# message MsgCreateMultiMetadata {
+#   string creator = 1;
+#   string nftSchemaCode = 2;
+#   string tokenId = 3;
+#   string base64NFTData = 4;
+# }
+
+## to
+# message MsgCreateMultiMetadata {
+#   string creator = 1;
+#   string nftSchemaCode = 2;
+#   repeated strin tokenId = 3;
+#   string base64NFTData = 4;
+# }
+
+# run ignite g proto-go -y
