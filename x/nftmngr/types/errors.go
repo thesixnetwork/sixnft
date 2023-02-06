@@ -39,6 +39,7 @@ var (
 	ErrInvalidActionInput                        = sdkerrors.Register(ModuleName, 119, "Invalid input")
 	ErrInvaliActionParameter                     = sdkerrors.Register(ModuleName, 120, "Invalid parameter")
 	ErrInvalidFlagTokenID                        = sdkerrors.Register(ModuleName, 121, "Invalid flag token id(s) of create multiple NFTs TokenID must be 'MULTIMINT'")
+	ErrDuplicateInputTokenID                     = sdkerrors.Register(ModuleName, 122, "Duplicate input token id(s)")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")
@@ -66,6 +67,7 @@ var (
 	ErrActionIsForSystemOnly   = sdkerrors.Register(ModuleName, 306, "This action can be done by system only")
 	ErrInvalidParameter        = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
 	ErrActionAlreadySetAsInput = sdkerrors.Register(ModuleName, 308, "Action set as input")
+	ErrActionDoesNotExists     = sdkerrors.Register(ModuleName, 309, "Action does not exists")
 
 	// Organization (400-499)
 	ErrOrganizationOwner    = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")

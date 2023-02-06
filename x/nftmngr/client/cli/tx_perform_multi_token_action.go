@@ -13,29 +13,40 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdCreateMultiMetadata() *cobra.Command {
+func CmdPerformMultiTokenAction() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-multi-metadata [nft-schema-code] [token-id,token-id,token-id,...] [base-64-nft-data]",
-		Short: "To create Multiple NFT Metadata(s) from Base64 required flag in base64",
-		Args:  cobra.ExactArgs(3),
+		Use:   "perform-multi-token-action [nft-schema-code] [token-id,token-id,token-id,...] [action] [ref-id] [params, params, params, ...]",
+		Short: "To do action for multiple NFTs ex: sixnftd performMultiTokenAction schema 1,2,3,4 action ref001 '[ [] ]'",
+		Args:  cobra.ExactArgs(5),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argNftSchemaCode := args[0]
 			argTokenIds := args[1]
-			argBase64NFTData := args[2]
+			argAction := args[2]
+			argRefId := args[3]
+			argParameters := args[4]
+			// arryOfparams := strings.Split(args[4], "],")
+			// for i, params := range arryOfparams {
+			// 	arryOfparams[i] = params + "]"
+			// }
 
 			// Split tokenIds
 			tokenId := strings.Split(argTokenIds, ",")
+
+			// Split actions
+			action := strings.Split(argAction, ",")
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgCreateMultiMetadata(
+			msg := types.NewMsgPerformMultiTokenAction(
 				clientCtx.GetFromAddress().String(),
 				argNftSchemaCode,
 				tokenId,
-				argBase64NFTData,
+				action,
+				argRefId,
+				argParameters,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

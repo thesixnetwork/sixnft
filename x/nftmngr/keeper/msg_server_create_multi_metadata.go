@@ -13,6 +13,16 @@ import (
 
 func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCreateMultiMetadata) (*types.MsgCreateMultiMetadataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	//check if id in msg.TokenId is duplicate
+	mapOfTokenId := make(map[string]bool)
+	for _, tokenId := range msg.TokenId {
+		if _, ok := mapOfTokenId[tokenId]; ok {
+			return nil, sdkerrors.Wrap(types.ErrDuplicateInputTokenID, tokenId)
+		}
+		mapOfTokenId[tokenId] = true
+	}
+	
 	metadata, err := base64.StdEncoding.DecodeString(msg.Base64NFTData)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
@@ -55,17 +65,15 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 	for _, attribute := range schema.OnchainData.NftAttributesValue {
 		data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
 	}
-	
 
 	// validate flag of data.TokenID
 	if data.TokenId != "MULTIMINT" {
 		return nil, sdkerrors.Wrap(types.ErrInvalidFlagTokenID, data.TokenId)
 	}
 
-	
 	// iterate through token_id list
 	for _, tokenId := range msg.TokenId {
-		
+
 		mapOfMinters, userMintfound := k.Keeper.GetMetadataCreator(ctx, data.NftSchemaCode)
 		// Check mint authorization
 		switch schema.MintAuthorization {
@@ -125,14 +133,16 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 		sdk.NewEvent(
 			types.EventTypeCreateMetadata,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyCreateMetaDataTokenID, tokenIdList),
+			sdk.NewAttribute(types.AttributeKeyCreateMetaDataTokenID, "["+tokenIdList+"]"),
 			sdk.NewAttribute(types.AttributeKeyCreateMetaDataResult, "success"),
 		),
 	})
 
-	return &types.MsgCreateMultiMetadataResponse{}, nil
+	return &types.MsgCreateMultiMetadataResponse{
+		NftSchemaCode: msg.NftSchemaCode,
+		TokenId:       msg.TokenId,
+	}, nil
 }
-
 
 // stringfy tokenId list to string token_id1,token_id2,token_id3
 func (k Keeper) StringfyTokenIdList(list []string) string {

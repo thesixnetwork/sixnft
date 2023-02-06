@@ -14,6 +14,8 @@ import (
 func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPerformActionByAdmin) (*types.MsgPerformActionByAdminResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	// ** SCHEMA LAYER **
+	// check if schema exists
 	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
@@ -21,25 +23,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 
 	tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, msg.TokenId)
 	if !found {
-		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode)
-	}
-
-	// Create map of existing attribute in nftdata
-	mapExistingAttributes := make(map[string]bool)
-	for _, attribute := range tokenData.OnchainAttributes {
-		mapExistingAttributes[attribute.Name] = true
-	}
-
-	// Loop over schema.TokenAttributes to check if exists in nftdata
-	for _, attribute := range schema.OnchainData.TokenAttributes {
-		if _, ok := mapExistingAttributes[attribute.Name]; !ok {
-			if attribute.DefaultMintValue == nil {
-				return nil, sdkerrors.Wrap(types.ErrNoDefaultValue, attribute.Name)
-			}
-			// Add attribute to nftdata with default value
-			tokenData.OnchainAttributes = append(tokenData.OnchainAttributes,
-				NewNFTAttributeValueFromDefaultValue(attribute.Name, attribute.DefaultMintValue))
-		}
+		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+msg.TokenId)
 	}
 
 	// Map system actioners
@@ -64,7 +48,13 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			break
 		}
 	}
-	// Check if AllowedAction is for system
+
+	// Check if action exists
+	if mapAction.Name == "" {
+		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	}
+
+	// Check if AllowedAction is for system // if yes whick means only oracle request can perform this action
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
 		return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, msg.Action)
 	}
@@ -92,6 +82,27 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		}
 	}
 
+
+	// ** TOKEN DATA LAYER **
+	// Create map of existing attribute in nftdata
+	mapExistingAttributes := make(map[string]bool)
+	for _, attribute := range tokenData.OnchainAttributes {
+		mapExistingAttributes[attribute.Name] = true
+	}
+
+	// Loop over schema.TokenAttributes to check if exists in nftdata
+	for _, attribute := range schema.OnchainData.TokenAttributes {
+		if _, ok := mapExistingAttributes[attribute.Name]; !ok {
+			if attribute.DefaultMintValue == nil {
+				return nil, sdkerrors.Wrap(types.ErrNoDefaultValue, attribute.Name)
+			}
+			// Add attribute to nftdata with default value
+			tokenData.OnchainAttributes = append(tokenData.OnchainAttributes,
+				NewNFTAttributeValueFromDefaultValue(attribute.Name, attribute.DefaultMintValue))
+		}
+	}
+
+	// ** META path ../types/meta.go **
 	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
 	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
 		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)

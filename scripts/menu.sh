@@ -27,6 +27,7 @@ echo "##  17. Set Signer                         ##"
 echo "##  18. Show ActionSigner By Address       ##"
 echo "##  19. Oracle - Action Request By Signer  ##"
 echo "##  20. Mockup Multi Token                 ##"
+echo "##  21. Do Action Multi Tokens             ##"
 echo "##  Your choice:                           ##"
 echo "##                                         ##"
 echo "#############################################"
@@ -77,7 +78,7 @@ case $choice in
             done
             required_params=$(echo ${required_params[@]} | tr ' ' ',')
             required_params="["$required_params"]"
-            echo $required_params
+            $required_params
         fi
 
         sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${required_params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y \
@@ -281,17 +282,43 @@ case $choice in
 
         # echo -n ${BASE64_MESSAGE} | $EVMSIGN ./.secret 1
         # echo  ${BASE64_ACTION_SIG} 
-        sixnftd tx nftoracle create-action-request ethereum ${BASE64_ACTION_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
+        echo sixnftd tx nftoracle create-action-request ethereum ${BASE64_ACTION_SIG} ${require_confirmations} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y 
         ;;
-    20) echo "Mockup Token"
+    20) echo "Mockup Multi Token"
         read -p "Enter Schema Code: " schema_code 
-        read -p "Enter Token ID: " token_id
+        read -p "Enter Token IDs: " token_id
         if [ -z "$schema_code" ]; then
             schema_code=$default_schema_code
         fi
         BASE64_META=`cat nft-data-multi.json | sed "s/SCHEMA_CODE/${schema_code}/g" | base64 | tr -d '\n'`
         sixnftd tx nftmngr create-multi-metadata "${schema_code}" ${token_id} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
             ${BASE64_META} --chain-id sixnft
+        ;;
+    21) echo "Do Action Multi token"
+        read -p "Enter Schema Code: " schema_code 
+        read -p "Enter Token IDs: " token_id
+        read -p "Enter Action: " action
+        read -p "Enter Ref ID: " ref_id
+        read -p "Enter Required Params: " num_params
+        if [ -z "$schema_code" ]; then
+            schema_code=$default_schema_code
+        fi
+        # check if required_params is empty
+        if [[ -z "$num_params" || "$num_params" -eq 0 ]]; then
+            required_params="[]"
+        else
+            for ((i=1; i<=num_params; i++)); do
+                read -p "Enter name of param $i: " param_name
+                read -p "Enter value of >> $param_name << : " param_value
+                required_params+=( "{\"name\":\"$param_name\",\"value\":\"$param_value\"}" )
+            done
+            required_params=$(echo ${required_params[@]} | tr ' ' ',')
+            required_params="["$required_params"]"
+            echo $required_params
+        fi
+
+        sixnftd tx nftmngr perform-multi-token-action ${schema_code} ${token_id} ${action} ${ref_id} ${required_params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y \
+            --chain-id sixnft
         ;;
     *) echo "Invalid choice"
        ;;
