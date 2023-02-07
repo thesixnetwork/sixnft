@@ -629,7 +629,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 	// ** TOKEN DATA LAYER **
 	// iterate over token ids
-	for index, _ := range msg.Action {
+	for index, msg_ := range msg.Action {
 		// unmarshal parameters
 		var actionPrams_ []*types.ActionParameter
 		err := json.Unmarshal([]byte(msg.Parameters[index]), &actionPrams_)
@@ -694,7 +694,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 		// Emit events on metadata change
 		// Check action with reference exists
-		refId := msg.RefId + mapAction[index].Name + msg.TokenId
+		refId := msg.RefId + mapAction[index].Name + msg_
 		if msg.RefId != "" {
 
 			_, found := k.Keeper.GetActionByRefId(ctx, refId)
