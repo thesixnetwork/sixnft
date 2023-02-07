@@ -154,6 +154,21 @@ message MsgPerformMultiTokenMultiActionResponse {
   repeated string action = 3;
 }
 
+message MsgPerformOneTokenMultiAction {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string tokenId = 3;
+  repeated string action = 4;
+  string refId = 5;
+  repeated string parameters = 6;
+}
+
+message MsgPerformOneTokenMultiActionResponse {
+  string nftSchemaCode = 1;
+  string tokenId = 2;
+  repeated string action = 3;
+}
+
 message MsgAddAttribute {
   string creator = 1;
   string code = 2;
