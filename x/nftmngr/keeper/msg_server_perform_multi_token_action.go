@@ -3,6 +3,9 @@ package keeper
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -13,14 +16,14 @@ import (
 
 func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.MsgPerformMultiTokenAction) (*types.MsgPerformMultiTokenActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	//check if id in msg.TokenId is duplicate
-	mapOfTokenId := make(map[string]bool)
-	for _, tokenId := range msg.TokenId {
-		if _, ok := mapOfTokenId[tokenId]; ok {
-			return nil, sdkerrors.Wrap(types.ErrDuplicateInputTokenID, tokenId)
-		}
-		mapOfTokenId[tokenId] = true
-	}
+	// //check if id in msg.TokenId is duplicate
+	// mapOfTokenId := make(map[string]bool)
+	// for _, tokenId := range msg.TokenId {
+	// 	if _, ok := mapOfTokenId[tokenId]; ok {
+	// 		return nil, sdkerrors.Wrap(types.ErrDuplicateInputTokenID, tokenId)
+	// 	}
+	// 	mapOfTokenId[tokenId] = true
+	// }
 
 	// ** SCHEMA LAYER **
 	// check if schema exists
@@ -36,7 +39,7 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+tokenId)
 		}
 	}
-	
+
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
 	// Map system actioners
 	mapSystemActioners := make(map[string]bool)
@@ -51,6 +54,14 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 		}
 	}
 
+	arryOfparams := strings.Split(msg.Parameters[1:len(msg.Parameters)-1], "],")
+	for i, params := range arryOfparams {
+		if i != len(arryOfparams)-1 {
+			arryOfparams[i] = params + "]"
+		} else {
+			arryOfparams[i] = params
+		}
+	}
 	// switch case for action
 	// case 1 len(action) == 1 && len(tokenid) == 1
 	// case 2 len(action) == 1 && len(tokenid) > 1
@@ -58,36 +69,58 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 	// default len(action) > 1 && len(tokenid) > 1
 	switch {
 	case len(msg.Action) == 1 && len(msg.TokenId) == 1:
+		// string to json object of  []*ActionParameter
+		var actionPrams_ []*types.ActionParameter
+		err := json.Unmarshal([]byte(arryOfparams[0]), &actionPrams_)
+		if err != nil {
+			fmt.Scanln("Error in Unmarshal parameter: ", err)
+		}
 		msg_ := &types.MsgPerformActionByAdmin{
 			Creator:       msg.Creator,
 			NftSchemaCode: msg.NftSchemaCode,
 			TokenId:       msg.TokenId[0],
 			Action:        msg.Action[0],
 			RefId:         msg.RefId,
-			Parameters:    msg.Parameters[0].Parameters,
+			Parameters:    actionPrams_,
 		}
-		k.PerformActionByAdmin(goCtx, msg_)
+		_, success := k.PerformActionByAdmin(goCtx, msg_)
+		if success != nil {
+			return nil, success
+		}
 	case len(msg.Action) == 1 && len(msg.TokenId) > 1:
+		var actionPrams_ []*types.ActionParameter
+		err := json.Unmarshal([]byte(arryOfparams[0]), &actionPrams_)
+		if err != nil {
+			fmt.Scanln("Error in Unmarshal parameter: ", err)
+		}
 		msg_ := &types.MsgPerformMultiTokenOneAction{
 			Creator:       msg.Creator,
 			NftSchemaCode: msg.NftSchemaCode,
 			TokenId:       msg.TokenId,
 			Action:        msg.Action[0],
 			RefId:         msg.RefId,
-			Parameters:    msg.Parameters[0].Parameters,
+			Parameters:    actionPrams_,
 		}
-		k.PerformMultiTokenOneAction(goCtx, msg_)
-	case len(msg.Action) > 1 && len(msg.TokenId) == 1:
+		_, success := k.PerformMultiTokenOneAction(goCtx, msg_)
+		if success != nil {
+			return nil, success
+		}
+	case len(msg.Action) > 1 && len(msg.TokenId) > 1:
 		msg_ := &types.MsgPerformMultiTokenMultiAction{
 			Creator:       msg.Creator,
 			NftSchemaCode: msg.NftSchemaCode,
 			TokenId:       msg.TokenId,
 			Action:        msg.Action,
 			RefId:         msg.RefId,
-			Parameters:    msg.Parameters,
+			Parameters:    arryOfparams,
+		}
+		_, success := k.PerformMultiTokenMultiAction(goCtx, msg_)
+		if success != nil {
+			return nil, success
 		}
 
-		k.PerformMultiTokenMultiAction(goCtx, msg_)
+	default:
+		return nil, sdkerrors.Wrap(types.ErrInvalidActionInput, "Action and TokenId length")
 	}
 
 	return &types.MsgPerformMultiTokenActionResponse{
@@ -96,8 +129,6 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 		Action:        msg.Action,
 	}, nil
 }
-
-
 
 func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.MsgPerformMultiTokenOneAction) (*types.MsgPerformMultiTokenOneActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
@@ -124,7 +155,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+tokenId)
 		}
 	}
-	
+
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
 	// Map system actioners
 	mapSystemActioners := make(map[string]bool)
@@ -137,7 +168,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 		if msg.Creator != schema.Owner {
 			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 		}
-	}	
+	}
 
 	// check if action is disabled
 	mapAction := types.Action{}
@@ -155,7 +186,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 	if mapAction.Name == "" {
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
-	
+
 	// Check if AllowedAction is for system
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
 		return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, msg.Action)
@@ -289,16 +320,11 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 	}, nil
 }
 
-
 func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *types.MsgPerformMultiTokenMultiAction) (*types.MsgPerformMultiTokenMultiActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	//check if id in msg.TokenId is duplicate
-	mapOfTokenId := make(map[string]bool)
-	for _, tokenId := range msg.TokenId {
-		if _, ok := mapOfTokenId[tokenId]; ok {
-			return nil, sdkerrors.Wrap(types.ErrDuplicateInputTokenID, tokenId)
-		}
-		mapOfTokenId[tokenId] = true
+	// check action len and parameters len are suitable
+	if len(msg.Action) != len(msg.Parameters[0]) {
+		return nil, sdkerrors.Wrap(types.ErrActionAndParametersNotMatch, "Action: "+strconv.Itoa(len(msg.Action))+" Parameters: "+strconv.Itoa(len(msg.Parameters[0])))
 	}
 
 	// ** SCHEMA LAYER **
@@ -315,7 +341,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+tokenId)
 		}
 	}
-	
+
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
 	// Map system actioners
 	mapSystemActioners := make(map[string]bool)
@@ -338,7 +364,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, _action.Name)
 			}
 			if _action.Name == action_ {
-				mapAction[index] = *_action
+				mapAction = append(mapAction, *_action)
 				break
 			}
 		}
@@ -347,7 +373,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		if mapAction[index].Name == "" {
 			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, action_)
 		}
-		
+
 		// Check if AllowedAction is for system
 		if mapAction[index].GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
 			return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, action_)
@@ -355,6 +381,12 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 	}
 
 	for index, params_ := range msg.Parameters {
+		// string to json object of  []*ActionParameter
+		var actionPrams_ []*types.ActionParameter
+		err := json.Unmarshal([]byte(params_), &actionPrams_)
+		if err != nil {
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
+		}
 		// Check if action requires parameters
 		param := mapAction[index].GetParams()
 		required_param := make([]*types.ActionParams, 0)
@@ -365,16 +397,16 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 			}
 		}
 
-		if len(required_param) > len(msg.Parameters) {
+		if len(required_param) > len(msg.Parameters[index]) {
 			return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "Input parameters length is not equal to required parameters length")
 		}
 
 		for i := 0; i < len(required_param); i++ {
-			if params_.Parameters[i].Name != required_param[i].Name {
+			if actionPrams_[index].Name != required_param[i].Name {
 				return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
 			}
-			if params_.Parameters[i].Value == "" {
-				params_.Parameters[i].Value = required_param[i].DefaultValue
+			if actionPrams_[index].Value == "" {
+				actionPrams_[index].Value = required_param[i].DefaultValue
 			}
 		}
 
@@ -386,6 +418,13 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
 		if !found {
 			return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, msg.NftSchemaCode) //! This should not happen since we already check if all token exists
+		}
+
+		// unmarshal parameters
+		var actionPrams_ []*types.ActionParameter
+		err := json.Unmarshal([]byte(msg.Parameters[index]), &actionPrams_)
+		if err != nil {
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
 		}
 
 		// Create map of existing attribute in nftdata
@@ -425,7 +464,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 			return ctx.BlockHeight()
 		})
 
-		err := ProcessAction(meta, &mapAction[index], msg.Parameters[index].Parameters)
+		err = ProcessAction(meta, &mapAction[index], actionPrams_)
 		if err != nil {
 			return nil, err
 		}

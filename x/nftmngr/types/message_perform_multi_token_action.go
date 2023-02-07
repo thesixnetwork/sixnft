@@ -1,8 +1,8 @@
 package types
 
 import (
-	"encoding/json"
-	fmt "fmt"
+	// "encoding/json"
+	// fmt "fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -13,12 +13,12 @@ const TypeMsgPerformMultiTokenAction = "perform_multi_token_action"
 var _ sdk.Msg = &MsgPerformMultiTokenAction{}
 
 func NewMsgPerformMultiTokenAction(creator string, nftSchemaCode string, tokenId []string, action []string, refId string, parameters string) *MsgPerformMultiTokenAction {
-	// string to json object of  []*ActionParameter
-	var actionPrams_ []*ArrayOfActionParameter
-	err := json.Unmarshal([]byte(parameters), &actionPrams_)
-	if err != nil {
-		fmt.Println("Error in NewMsgPerformActionByAdmin: ", err)
-	}
+	// // string to json object of  []*ActionParameter
+	// var actionPrams_ []*ActionParameter
+	// err := json.Unmarshal([]byte(parameters), &actionPrams_)
+	// if err != nil {
+	// 	fmt.Println("Error in NewMsgPerformActionByAdmin: ", err)
+	// }
 
 	return &MsgPerformMultiTokenAction{
 		Creator:       creator,
@@ -26,7 +26,7 @@ func NewMsgPerformMultiTokenAction(creator string, nftSchemaCode string, tokenId
 		TokenId:       tokenId,
 		Action:        action,
 		RefId:         refId,
-		Parameters:    actionPrams_,
+		Parameters:    parameters,
 	}
 }
 

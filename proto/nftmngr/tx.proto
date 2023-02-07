@@ -110,17 +110,13 @@ message MsgPerformActionByAdminResponse {
   string token_id = 2;
 }
 
-message ArrayOfActionParameter {
-  repeated ActionParameter parameters = 1;
-}
-
 message MsgPerformMultiTokenAction {
   string creator = 1;
   string nftSchemaCode = 2;
   repeated string tokenId = 3;
   repeated string action = 4;
   string refId = 5;
-  repeated ArrayOfActionParameter parameters = 6;
+  string parameters = 6;
 }
 
 message MsgPerformMultiTokenActionResponse {
@@ -149,7 +145,7 @@ message MsgPerformMultiTokenMultiAction {
   repeated string tokenId = 3;
   repeated string action = 4;
   string refId = 5;
-  repeated ArrayOfActionParameter parameters = 6;
+  repeated string parameters = 6;
 }
 
 message MsgPerformMultiTokenMultiActionResponse {

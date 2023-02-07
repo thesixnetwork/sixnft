@@ -24,10 +24,14 @@ func CmdPerformMultiTokenAction() *cobra.Command {
 			argAction := args[2]
 			argRefId := args[3]
 			argParameters := args[4]
-			// arryOfparams := strings.Split(args[4], "],")
-			// for i, params := range arryOfparams {
-			// 	arryOfparams[i] = params + "]"
-			// }
+			arryOfparams := strings.Split(args[4], "],")
+			for i, params := range arryOfparams {
+				if i != len(arryOfparams)-1 {
+					arryOfparams[i] = params + "]"
+				} else {
+					arryOfparams[i] = params
+				}
+			}
 
 			// Split tokenIds
 			tokenId := strings.Split(argTokenIds, ",")

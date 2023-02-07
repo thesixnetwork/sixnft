@@ -61510,6 +61510,10 @@ definitions:
         type: array
         items:
           type: string
+      action:
+        type: array
+        items:
+          type: string
   thesixnetwork.sixnft.nftmngr.MsgRemoveSystemActionerResponse:
     type: object
     properties:

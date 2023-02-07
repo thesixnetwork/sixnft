@@ -68,6 +68,7 @@ var (
 	ErrInvalidParameter        = sdkerrors.Register(ModuleName, 307, "Invalid parameter")
 	ErrActionAlreadySetAsInput = sdkerrors.Register(ModuleName, 308, "Action set as input")
 	ErrActionDoesNotExists     = sdkerrors.Register(ModuleName, 309, "Action does not exists")
+	ErrActionAndParametersNotMatch = sdkerrors.Register(ModuleName, 310, "Action and parameters not match")
 
 	// Organization (400-499)
 	ErrOrganizationOwner    = sdkerrors.Register(ModuleName, 400, "Unauthorized organization owner")
