@@ -310,8 +310,8 @@ case $choice in
     if [ -z "$schema_code" ]; then
         schema_code=$default_schema_code
     fi
-    BASE64_META=$(cat nft-data-multi.json | sed "s/SCHEMA_CODE/${schema_code}/g" | base64 | tr -d '\n')
-    sixnftd tx nftmngr create-multi-metadata "${schema_code}" ${token_id} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
+    BASE64_META=$(cat nft-data.json | sed "s/TOKENID/MULTIMINT/g" | sed "s/SCHEMA_CODE/${schema_code}/g" | base64 | tr -d '\n')
+    sixnftd tx nftmngr create-multi-metadata ${schema_code} ${token_id} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
         ${BASE64_META} --chain-id sixnft
     ;;
 21)
