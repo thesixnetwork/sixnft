@@ -112,10 +112,10 @@ message MsgPerformActionByAdminResponse {
 
 message MsgPerformMultiTokenAction {
   string creator = 1;
-  string nftSchemaCode = 2;
+  string nft_schema_code = 2;
   repeated string tokenId = 3;
   repeated string action = 4;
-  string refId = 5;
+  string ref_id = 5;
   string parameters = 6;
 }
 
