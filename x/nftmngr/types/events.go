@@ -5,6 +5,7 @@ const (
 	EventTypeRunAction              = "run_action"
 	AttributeKeyRunActionResult     = "run_action_result"
 	AttributeKeyRunActionChangeList = "run_action_changelist"
+	AttributeKeyRunActionRefId      = "run_action_ref_id"
 
 	EventTypeAddAction          = "add_action"
 	AttributeKeyAddActionName   = "add_action_name"

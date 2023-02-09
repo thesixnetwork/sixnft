@@ -262,6 +262,7 @@ func MergeAllSchemaAttributesAndAlterOrderIndex(originAttributes []*types.Attrib
 	return mergedAttributes
 }
 
+// Total amount of fee collected from schema for each block then distribute to validators // ** In the begin block it will set to 0 again
 func (k msgServer) processFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBalances *types.NFTFeeBalance, feeSubject types.FeeSubject, source sdk.AccAddress) error {
 	currentFeeBalance, _ := sdk.ParseCoinNormalized(feeBalances.FeeBalances[int32(feeSubject)])
 	feeAmount, _ := sdk.ParseCoinNormalized(feeConfig.SchemaFee.FeeAmount)

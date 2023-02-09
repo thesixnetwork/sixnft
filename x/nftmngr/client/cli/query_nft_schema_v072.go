@@ -10,10 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// will be deprecated next version (074)
-func CmdListNFTSchemaV063() *cobra.Command {
+func CmdListNFTSchemaV072() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-nft-schemaV063",
+		Use:   "list-nft-schemaV072",
 		Short: "list all NFTSchema",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
@@ -29,7 +28,7 @@ func CmdListNFTSchemaV063() *cobra.Command {
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.NFTSchemaAllV063(context.Background(), params)
+			res, err := queryClient.NFTSchemaAllV072(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -44,10 +43,9 @@ func CmdListNFTSchemaV063() *cobra.Command {
 	return cmd
 }
 
-// will be deprecated next version (074)
-func CmdShowNFTSchemaV063() *cobra.Command {
+func CmdShowNFTSchemaV072() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-nft-schemaV063 [code]",
+		Use:   "show-nft-schemaV072 [code]",
 		Short: "shows a NFTSchema",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
@@ -61,7 +59,7 @@ func CmdShowNFTSchemaV063() *cobra.Command {
 				Code: argCode,
 			}
 
-			res, err := queryClient.NFTSchemaV063(context.Background(), params)
+			res, err := queryClient.NFTSchemaV072(context.Background(), params)
 			if err != nil {
 				return err
 			}

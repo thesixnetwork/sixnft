@@ -126,19 +126,21 @@ func (k Keeper) GetAllActionRequest(ctx sdk.Context) (list []types.ActionOracleR
 }
 
 // GetAllActionRequestV603 returns all ActionRequestV063
-func (k Keeper) GetAllActionRequestV603(ctx sdk.Context) (list []types.ActionRequestV063) {
+func (k Keeper) GetAllActionRequestV603(ctx sdk.Context) (list []types.ActionRequestV063, err error) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionRequestKey))
 	iterator := sdk.KVStorePrefixIterator(store, []byte{})
-
 	defer iterator.Close()
 
 	for ; iterator.Valid(); iterator.Next() {
 		var val types.ActionRequestV063
-		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		err := k.cdc.Unmarshal(iterator.Value(), &val)
+		if err != nil {
+			return nil, err
+		}
 		list = append(list, val)
 	}
 
-	return
+	return list, nil
 }
 
 // GetActionRequestIDBytes returns the byte representation of the ID

@@ -2,19 +2,19 @@ package cli
 
 import (
 	"context"
-
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
+	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
-// will be deprecated next version (074)
-func CmdListNFTSchemaV063() *cobra.Command {
+// legacy query should be removed once all clients have been updated to use gRPC queries
+func CmdListActionRequestV063() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-nft-schemaV063",
-		Short: "list all NFTSchema",
+		Use:   "list-action-request-v063",
+		Short: "list all ActionOracleRequest-v063",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -25,11 +25,11 @@ func CmdListNFTSchemaV063() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllNFTSchemaRequest{
+			params := &types.QueryAllActionRequestRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.NFTSchemaAllV063(context.Background(), params)
+			res, err := queryClient.ActionRequestAllV063(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -44,27 +44,30 @@ func CmdListNFTSchemaV063() *cobra.Command {
 	return cmd
 }
 
-// will be deprecated next version (074)
-func CmdShowNFTSchemaV063() *cobra.Command {
+func CmdShowActionRequestV063() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-nft-schemaV063 [code]",
-		Short: "shows a NFTSchema",
+		Use:   "show-action-request-v063 [id]",
+		Short: "shows a ActionOracleRequest-v063",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			argCode := args[0]
-
-			params := &types.QueryGetNFTSchemaRequest{
-				Code: argCode,
-			}
-
-			res, err := queryClient.NFTSchemaV063(context.Background(), params)
+			id, err := strconv.ParseUint(args[0], 10, 64)
 			if err != nil {
 				return err
 			}
+
+			params := &types.QueryGetActionRequestRequest{
+				Id: id,
+			}
+
+			res, err := queryClient.ActionOracleRequestV063(context.Background(), params)
+			if err != nil {
+				return err
+			}
+
 			return clientCtx.PrintProto(res)
 		},
 	}
