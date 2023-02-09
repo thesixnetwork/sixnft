@@ -17,17 +17,15 @@ import (
 func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.MsgPerformMultiTokenAction) (*types.MsgPerformMultiTokenActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	token_size := len(msg.TokenId)
-	string_token_size := string(rune(token_size))
 
-	if token_size > 1000 {
-		return nil, sdkerrors.Wrap(types.ErrLimitSizeOfInput, string_token_size)
+	if token_size > 500 {
+		return nil, sdkerrors.Wrap(types.ErrLimitSizeOfInput, "should be less than 500")
 	}
 
 	actoion_size := len(msg.Action)
-	string_action_size := string(rune(actoion_size))
 
-	if token_size > 1000 {
-		return nil, sdkerrors.Wrap(types.ErrLimitSizeOfInput, string_action_size)
+	if actoion_size > 500 {
+		return nil, sdkerrors.Wrap(types.ErrLimitSizeOfInput, "should be less than 500")
 	}
 	// //check if id in msg.TokenId is duplicate
 	// mapOfTokenId := make(map[string]bool)
