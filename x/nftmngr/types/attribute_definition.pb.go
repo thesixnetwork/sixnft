@@ -140,8 +140,9 @@ type AttributeDefinition struct {
 	DisplayValueField   string            `protobuf:"bytes,4,opt,name=display_value_field,json=displayValueField,proto3" json:"display_value_field,omitempty"`
 	DisplayOption       *DisplayOption    `protobuf:"bytes,5,opt,name=display_option,json=displayOption,proto3" json:"display_option,omitempty"`
 	DefaultMintValue    *DefaultMintValue `protobuf:"bytes,6,opt,name=default_mint_value,json=defaultMintValue,proto3" json:"default_mint_value,omitempty"`
-	HiddenToMarketplace bool              `protobuf:"varint,7,opt,name=hidden_to_marketplace,json=hiddenToMarketplace,proto3" json:"hidden_to_marketplace,omitempty"`
-	Index               uint64            `protobuf:"varint,8,opt,name=index,proto3" json:"index,omitempty"`
+	HiddenOveride       bool              `protobuf:"varint,7,opt,name=hidden_overide,json=hiddenOveride,proto3" json:"hidden_overide,omitempty"`
+	HiddenToMarketplace bool              `protobuf:"varint,8,opt,name=hidden_to_marketplace,json=hiddenToMarketplace,proto3" json:"hidden_to_marketplace,omitempty"`
+	Index               uint64            `protobuf:"varint,9,opt,name=index,proto3" json:"index,omitempty"`
 }
 
 func (m *AttributeDefinition) Reset()         { *m = AttributeDefinition{} }
@@ -219,6 +220,13 @@ func (m *AttributeDefinition) GetDefaultMintValue() *DefaultMintValue {
 	return nil
 }
 
+func (m *AttributeDefinition) GetHiddenOveride() bool {
+	if m != nil {
+		return m.HiddenOveride
+	}
+	return false
+}
+
 func (m *AttributeDefinition) GetHiddenToMarketplace() bool {
 	if m != nil {
 		return m.HiddenToMarketplace
@@ -233,9 +241,110 @@ func (m *AttributeDefinition) GetIndex() uint64 {
 	return 0
 }
 
+type AttributeDefinitionV072 struct {
+	Name                string            `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	DataType            string            `protobuf:"bytes,2,opt,name=data_type,json=dataType,proto3" json:"data_type,omitempty"`
+	Required            bool              `protobuf:"varint,3,opt,name=required,proto3" json:"required,omitempty"`
+	DisplayValueField   string            `protobuf:"bytes,4,opt,name=display_value_field,json=displayValueField,proto3" json:"display_value_field,omitempty"`
+	DisplayOption       *DisplayOption    `protobuf:"bytes,5,opt,name=display_option,json=displayOption,proto3" json:"display_option,omitempty"`
+	DefaultMintValue    *DefaultMintValue `protobuf:"bytes,6,opt,name=default_mint_value,json=defaultMintValue,proto3" json:"default_mint_value,omitempty"`
+	HiddenToMarketplace bool              `protobuf:"varint,7,opt,name=hidden_to_marketplace,json=hiddenToMarketplace,proto3" json:"hidden_to_marketplace,omitempty"`
+	Index               uint64            `protobuf:"varint,8,opt,name=index,proto3" json:"index,omitempty"`
+}
+
+func (m *AttributeDefinitionV072) Reset()         { *m = AttributeDefinitionV072{} }
+func (m *AttributeDefinitionV072) String() string { return proto.CompactTextString(m) }
+func (*AttributeDefinitionV072) ProtoMessage()    {}
+func (*AttributeDefinitionV072) Descriptor() ([]byte, []int) {
+	return fileDescriptor_92a3bff541821c50, []int{2}
+}
+func (m *AttributeDefinitionV072) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AttributeDefinitionV072) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AttributeDefinitionV072.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AttributeDefinitionV072) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AttributeDefinitionV072.Merge(m, src)
+}
+func (m *AttributeDefinitionV072) XXX_Size() int {
+	return m.Size()
+}
+func (m *AttributeDefinitionV072) XXX_DiscardUnknown() {
+	xxx_messageInfo_AttributeDefinitionV072.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AttributeDefinitionV072 proto.InternalMessageInfo
+
+func (m *AttributeDefinitionV072) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *AttributeDefinitionV072) GetDataType() string {
+	if m != nil {
+		return m.DataType
+	}
+	return ""
+}
+
+func (m *AttributeDefinitionV072) GetRequired() bool {
+	if m != nil {
+		return m.Required
+	}
+	return false
+}
+
+func (m *AttributeDefinitionV072) GetDisplayValueField() string {
+	if m != nil {
+		return m.DisplayValueField
+	}
+	return ""
+}
+
+func (m *AttributeDefinitionV072) GetDisplayOption() *DisplayOption {
+	if m != nil {
+		return m.DisplayOption
+	}
+	return nil
+}
+
+func (m *AttributeDefinitionV072) GetDefaultMintValue() *DefaultMintValue {
+	if m != nil {
+		return m.DefaultMintValue
+	}
+	return nil
+}
+
+func (m *AttributeDefinitionV072) GetHiddenToMarketplace() bool {
+	if m != nil {
+		return m.HiddenToMarketplace
+	}
+	return false
+}
+
+func (m *AttributeDefinitionV072) GetIndex() uint64 {
+	if m != nil {
+		return m.Index
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*DefaultMintValue)(nil), "thesixnetwork.sixnft.nftmngr.DefaultMintValue")
 	proto.RegisterType((*AttributeDefinition)(nil), "thesixnetwork.sixnft.nftmngr.AttributeDefinition")
+	proto.RegisterType((*AttributeDefinitionV072)(nil), "thesixnetwork.sixnft.nftmngr.AttributeDefinitionV072")
 }
 
 func init() {
@@ -243,38 +352,41 @@ func init() {
 }
 
 var fileDescriptor_92a3bff541821c50 = []byte{
-	// 492 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x93, 0x41, 0x6f, 0xd3, 0x30,
-	0x14, 0xc7, 0x1b, 0xda, 0x6e, 0xad, 0x11, 0x68, 0xb8, 0x2b, 0x54, 0x65, 0x8a, 0x46, 0x4f, 0x93,
-	0x90, 0x12, 0xd1, 0x7d, 0x02, 0xaa, 0x6a, 0x82, 0xc3, 0x40, 0x32, 0x13, 0x07, 0x84, 0x14, 0x39,
-	0xb3, 0xd3, 0x9a, 0x25, 0x76, 0x70, 0x5e, 0xa0, 0xfd, 0x12, 0x88, 0x8f, 0x85, 0xc4, 0x65, 0x47,
-	0x8e, 0xa8, 0xfd, 0x22, 0x28, 0x76, 0xd3, 0xb2, 0xa6, 0x2a, 0xdc, 0xe2, 0xf7, 0xcf, 0xff, 0xfd,
-	0xde, 0x7b, 0x7e, 0x46, 0x03, 0x19, 0x41, 0x22, 0x27, 0xda, 0xa7, 0x00, 0x5a, 0x84, 0x39, 0xf0,
-	0x80, 0xf1, 0x48, 0x48, 0x01, 0x42, 0x49, 0x2f, 0xd5, 0x0a, 0x14, 0x3e, 0x81, 0x29, 0xcf, 0xc4,
-	0x4c, 0x72, 0xf8, 0xaa, 0xf4, 0x8d, 0x57, 0x7c, 0x46, 0xe0, 0xad, 0x8c, 0xfd, 0x93, 0x32, 0x03,
-	0x13, 0x59, 0x1a, 0xd3, 0x79, 0xa0, 0xd2, 0x8d, 0xb7, 0xff, 0xac, 0x54, 0x65, 0x04, 0xc1, 0x86,
-	0xf1, 0x85, 0xc6, 0x39, 0xb7, 0xbf, 0x0c, 0x7e, 0xd6, 0xd1, 0xd1, 0x98, 0x47, 0x34, 0x8f, 0xe1,
-	0x52, 0x48, 0x78, 0x5f, 0x48, 0xf8, 0x13, 0x7a, 0x2c, 0xf3, 0x24, 0xe4, 0x7a, 0xdb, 0xd4, 0x73,
-	0x4e, 0x9d, 0xb3, 0xfb, 0xc3, 0xa1, 0xb7, 0xaf, 0x28, 0xef, 0x8d, 0xf1, 0xbe, 0x2c, 0xad, 0x26,
-	0xe7, 0xab, 0x1a, 0x39, 0x96, 0x3b, 0xe2, 0x05, 0x2b, 0x03, 0x2d, 0xe4, 0xa4, 0xc2, 0xba, 0xf7,
-	0x3f, 0xac, 0x77, 0xc6, 0x5b, 0x65, 0x65, 0x3b, 0xe2, 0x38, 0x41, 0x4f, 0x42, 0xa5, 0x62, 0x4e,
-	0x65, 0x05, 0x56, 0x37, 0xb0, 0xf3, 0xfd, 0xb0, 0x91, 0x35, 0x57, 0x68, 0xdd, 0x70, 0x97, 0x80,
-	0x27, 0xa8, 0x1b, 0xc5, 0x8a, 0x56, 0x46, 0xdf, 0x6b, 0x18, 0xd8, 0x8b, 0xfd, 0xb0, 0x8b, 0xc2,
-	0x5a, 0x41, 0x75, 0xa2, 0x6a, 0x78, 0x74, 0x88, 0x9a, 0x26, 0xf1, 0xe0, 0x5b, 0x1d, 0x75, 0xd6,
-	0xda, 0x78, 0xbd, 0x4a, 0x18, 0xa3, 0x86, 0xa4, 0x89, 0xbd, 0xbe, 0x36, 0x31, 0xdf, 0xf8, 0x29,
-	0x6a, 0x33, 0x0a, 0x34, 0x80, 0x79, 0x6a, 0x67, 0xdd, 0x26, 0xad, 0x22, 0x70, 0x35, 0x4f, 0x39,
-	0xee, 0xa3, 0x96, 0xe6, 0x9f, 0x73, 0xa1, 0x39, 0x33, 0xa3, 0x69, 0x91, 0xf5, 0x19, 0x7b, 0xa8,
-	0x53, 0x6e, 0x9b, 0xa1, 0x06, 0x91, 0xe0, 0x31, 0x33, 0x4d, 0xb5, 0xc9, 0xa3, 0x95, 0x64, 0x0a,
-	0xbb, 0x28, 0x04, 0x4c, 0xd0, 0xc3, 0xbb, 0xdb, 0xd9, 0x6b, 0x9a, 0xfe, 0x9f, 0xef, 0xef, 0x7f,
-	0x6c, 0x3d, 0x6f, 0x8d, 0x85, 0x3c, 0x60, 0x7f, 0x1f, 0xf1, 0x47, 0x84, 0x99, 0xdd, 0xda, 0x20,
-	0x11, 0x12, 0x56, 0x73, 0x3d, 0x30, 0x79, 0xbd, 0x7f, 0xe4, 0xdd, 0xda, 0x76, 0x72, 0xc4, 0xb6,
-	0xf7, 0x7f, 0x88, 0xba, 0x53, 0xc1, 0x18, 0x97, 0x01, 0xa8, 0x20, 0xa1, 0xfa, 0x86, 0x43, 0x1a,
-	0xd3, 0x6b, 0xde, 0x3b, 0x34, 0xa3, 0xe8, 0x58, 0xf1, 0x4a, 0x5d, 0x6e, 0x24, 0x7c, 0x8c, 0x9a,
-	0x42, 0x32, 0x3e, 0xeb, 0xb5, 0x4e, 0x9d, 0xb3, 0x06, 0xb1, 0x87, 0xd1, 0xeb, 0x1f, 0x0b, 0xd7,
-	0xb9, 0x5d, 0xb8, 0xce, 0xef, 0x85, 0xeb, 0x7c, 0x5f, 0xba, 0xb5, 0xdb, 0xa5, 0x5b, 0xfb, 0xb5,
-	0x74, 0x6b, 0x1f, 0xfc, 0x89, 0x80, 0x69, 0x1e, 0x7a, 0xd7, 0x2a, 0xf1, 0xef, 0xd4, 0xeb, 0xdb,
-	0x7a, 0xfd, 0x99, 0x5f, 0xbe, 0xde, 0xe2, 0x86, 0xb2, 0xf0, 0xc0, 0x3c, 0xd8, 0xf3, 0x3f, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0x9b, 0xca, 0xc7, 0x70, 0x35, 0x04, 0x00, 0x00,
+	// 544 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x54, 0xd1, 0x6e, 0xd3, 0x3c,
+	0x14, 0x6e, 0xfe, 0xb6, 0x6b, 0xe3, 0x5f, 0x9b, 0x86, 0xbb, 0xb2, 0xa8, 0x4c, 0xd1, 0xa8, 0x84,
+	0x34, 0x09, 0x29, 0x81, 0xee, 0x82, 0x6b, 0xaa, 0x6a, 0x82, 0x8b, 0x31, 0x29, 0x4c, 0xbb, 0x40,
+	0x48, 0x91, 0x33, 0x3b, 0xad, 0x59, 0x62, 0x07, 0xc7, 0x19, 0xed, 0x5b, 0x20, 0xde, 0x85, 0x77,
+	0x40, 0xe2, 0x66, 0x97, 0x5c, 0xa2, 0xf6, 0x45, 0x50, 0xec, 0xa6, 0xdd, 0x9a, 0x52, 0xc6, 0x3d,
+	0x77, 0xf6, 0xf9, 0xfc, 0x9d, 0xef, 0x9c, 0xf3, 0x1d, 0x19, 0x74, 0x59, 0x28, 0x63, 0x36, 0x14,
+	0x2e, 0x92, 0x52, 0xd0, 0x20, 0x93, 0xc4, 0xc7, 0x24, 0xa4, 0x8c, 0x4a, 0xca, 0x99, 0x93, 0x08,
+	0x2e, 0x39, 0x3c, 0x90, 0x23, 0x92, 0xd2, 0x31, 0x23, 0xf2, 0x13, 0x17, 0x57, 0x4e, 0x7e, 0x0c,
+	0xa5, 0x33, 0x27, 0x76, 0x0e, 0x8a, 0x0c, 0x98, 0xa6, 0x49, 0x84, 0x26, 0x3e, 0x4f, 0x96, 0xdc,
+	0xce, 0xe3, 0x02, 0x65, 0xa1, 0xf4, 0x97, 0x1a, 0xd7, 0x28, 0xca, 0x88, 0x7e, 0xd2, 0xfd, 0x5e,
+	0x05, 0xbb, 0x03, 0x12, 0xa2, 0x2c, 0x92, 0xa7, 0x94, 0xc9, 0x8b, 0x1c, 0x82, 0x1f, 0xc0, 0x43,
+	0x96, 0xc5, 0x01, 0x11, 0xab, 0x24, 0xcb, 0x38, 0x34, 0x8e, 0xfe, 0xef, 0xf5, 0x9c, 0x4d, 0x45,
+	0x39, 0x6f, 0x14, 0xf7, 0x65, 0x41, 0x55, 0x39, 0x5f, 0x55, 0xbc, 0x3d, 0xb6, 0x26, 0x9e, 0x6b,
+	0xa5, 0x52, 0x50, 0x36, 0x2c, 0x69, 0xfd, 0x77, 0x1f, 0xad, 0xb7, 0x8a, 0x5b, 0xd6, 0x4a, 0xd7,
+	0xc4, 0x61, 0x0c, 0xf6, 0x03, 0xce, 0x23, 0x82, 0x58, 0x49, 0xac, 0xaa, 0xc4, 0x8e, 0x37, 0x8b,
+	0xf5, 0x35, 0xb9, 0xa4, 0xd6, 0x0e, 0xd6, 0x01, 0x70, 0x08, 0xda, 0x61, 0xc4, 0x51, 0x69, 0xf4,
+	0x56, 0x4d, 0x89, 0x3d, 0xdf, 0x2c, 0x76, 0x92, 0x53, 0x4b, 0x52, 0xad, 0xb0, 0x1c, 0xee, 0x37,
+	0x40, 0x5d, 0x25, 0xee, 0x7e, 0xad, 0x82, 0xd6, 0x02, 0x1b, 0x2c, 0x56, 0x09, 0x42, 0x50, 0x63,
+	0x28, 0xd6, 0xf6, 0x99, 0x9e, 0x3a, 0xc3, 0x47, 0xc0, 0xc4, 0x48, 0x22, 0x5f, 0x4e, 0x12, 0x3d,
+	0x6b, 0xd3, 0x6b, 0xe6, 0x81, 0xf3, 0x49, 0x42, 0x60, 0x07, 0x34, 0x05, 0xf9, 0x98, 0x51, 0x41,
+	0xb0, 0x1a, 0x4d, 0xd3, 0x5b, 0xdc, 0xa1, 0x03, 0x5a, 0xc5, 0xb6, 0x29, 0x55, 0x3f, 0xa4, 0x24,
+	0xc2, 0xaa, 0x29, 0xd3, 0x7b, 0x30, 0x87, 0x54, 0x61, 0x27, 0x39, 0x00, 0x3d, 0xb0, 0x73, 0x77,
+	0x3b, 0xad, 0xba, 0xea, 0xff, 0xe9, 0xe6, 0xfe, 0x07, 0x9a, 0x73, 0xa6, 0x28, 0xde, 0x36, 0xbe,
+	0x7d, 0x85, 0xef, 0x01, 0xc4, 0x7a, 0x6b, 0xfd, 0x98, 0x32, 0x39, 0x9f, 0xeb, 0x96, 0xca, 0xeb,
+	0xfc, 0x21, 0xef, 0xca, 0xb6, 0x7b, 0xbb, 0x78, 0x75, 0xff, 0x9f, 0x80, 0x9d, 0x11, 0xc5, 0x98,
+	0x30, 0x9f, 0x5f, 0x13, 0x41, 0x31, 0xb1, 0x1a, 0x6a, 0x06, 0xdb, 0x3a, 0x7a, 0xa6, 0x83, 0xb0,
+	0x07, 0xda, 0xf3, 0x67, 0x92, 0xfb, 0x31, 0x12, 0x57, 0x44, 0x26, 0x11, 0xba, 0x24, 0x56, 0x53,
+	0xbd, 0x6e, 0x69, 0xf0, 0x9c, 0x9f, 0x2e, 0x21, 0xb8, 0x07, 0xea, 0x94, 0x61, 0x32, 0xb6, 0xcc,
+	0x43, 0xe3, 0xa8, 0xe6, 0xe9, 0x4b, 0xf7, 0x4b, 0x15, 0xec, 0xaf, 0xf1, 0xed, 0xe2, 0xd9, 0x8b,
+	0xde, 0x3f, 0xef, 0xfe, 0xce, 0xbb, 0xdf, 0x9a, 0xd2, 0xb8, 0x87, 0x29, 0xcd, 0x5b, 0xa6, 0xf4,
+	0x5f, 0x7f, 0x9b, 0xda, 0xc6, 0xcd, 0xd4, 0x36, 0x7e, 0x4e, 0x6d, 0xe3, 0xf3, 0xcc, 0xae, 0xdc,
+	0xcc, 0xec, 0xca, 0x8f, 0x99, 0x5d, 0x79, 0xe7, 0x0e, 0xa9, 0x1c, 0x65, 0x81, 0x73, 0xc9, 0x63,
+	0xf7, 0x4e, 0xbd, 0xae, 0xae, 0xd7, 0x1d, 0xbb, 0xc5, 0xcf, 0x9b, 0x3b, 0x94, 0x06, 0x5b, 0xea,
+	0xb3, 0x3d, 0xfe, 0x15, 0x00, 0x00, 0xff, 0xff, 0x8f, 0x5c, 0x15, 0x4b, 0xf1, 0x05, 0x00, 0x00,
 }
 
 func (m *DefaultMintValue) Marshal() (dAtA []byte, err error) {
@@ -409,6 +521,109 @@ func (m *AttributeDefinition) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *AttributeDefinition) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Index != 0 {
+		i = encodeVarintAttributeDefinition(dAtA, i, uint64(m.Index))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.HiddenToMarketplace {
+		i--
+		if m.HiddenToMarketplace {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.HiddenOveride {
+		i--
+		if m.HiddenOveride {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.DefaultMintValue != nil {
+		{
+			size, err := m.DefaultMintValue.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttributeDefinition(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.DisplayOption != nil {
+		{
+			size, err := m.DisplayOption.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttributeDefinition(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.DisplayValueField) > 0 {
+		i -= len(m.DisplayValueField)
+		copy(dAtA[i:], m.DisplayValueField)
+		i = encodeVarintAttributeDefinition(dAtA, i, uint64(len(m.DisplayValueField)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.Required {
+		i--
+		if m.Required {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.DataType) > 0 {
+		i -= len(m.DataType)
+		copy(dAtA[i:], m.DataType)
+		i = encodeVarintAttributeDefinition(dAtA, i, uint64(len(m.DataType)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintAttributeDefinition(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *AttributeDefinitionV072) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AttributeDefinitionV072) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AttributeDefinitionV072) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -558,6 +773,47 @@ func (m *DefaultMintValue_FloatAttributeValue) Size() (n int) {
 	return n
 }
 func (m *AttributeDefinition) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovAttributeDefinition(uint64(l))
+	}
+	l = len(m.DataType)
+	if l > 0 {
+		n += 1 + l + sovAttributeDefinition(uint64(l))
+	}
+	if m.Required {
+		n += 2
+	}
+	l = len(m.DisplayValueField)
+	if l > 0 {
+		n += 1 + l + sovAttributeDefinition(uint64(l))
+	}
+	if m.DisplayOption != nil {
+		l = m.DisplayOption.Size()
+		n += 1 + l + sovAttributeDefinition(uint64(l))
+	}
+	if m.DefaultMintValue != nil {
+		l = m.DefaultMintValue.Size()
+		n += 1 + l + sovAttributeDefinition(uint64(l))
+	}
+	if m.HiddenOveride {
+		n += 2
+	}
+	if m.HiddenToMarketplace {
+		n += 2
+	}
+	if m.Index != 0 {
+		n += 1 + sovAttributeDefinition(uint64(m.Index))
+	}
+	return n
+}
+
+func (m *AttributeDefinitionV072) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -818,6 +1074,303 @@ func (m *AttributeDefinition) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: AttributeDefinition: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DataType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DataType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Required", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Required = bool(v != 0)
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DisplayValueField", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.DisplayValueField = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DisplayOption", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DisplayOption == nil {
+				m.DisplayOption = &DisplayOption{}
+			}
+			if err := m.DisplayOption.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DefaultMintValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.DefaultMintValue == nil {
+				m.DefaultMintValue = &DefaultMintValue{}
+			}
+			if err := m.DefaultMintValue.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HiddenOveride", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.HiddenOveride = bool(v != 0)
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field HiddenToMarketplace", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.HiddenToMarketplace = bool(v != 0)
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
+			}
+			m.Index = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAttributeDefinition
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Index |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAttributeDefinition(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthAttributeDefinition
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AttributeDefinitionV072) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAttributeDefinition
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AttributeDefinitionV072: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AttributeDefinitionV072: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

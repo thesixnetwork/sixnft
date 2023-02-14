@@ -25,10 +25,6 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.OrganizationList {
 		k.SetOrganization(ctx, elem)
 	}
-	// Set all the nftCollection
-	for _, elem := range genState.NftCollectionList {
-		k.SetNftCollection(ctx, elem)
-	}
 	// Set all the nFTSchemaByContract
 	for _, elem := range genState.NFTSchemaByContractList {
 		k.SetNFTSchemaByContract(ctx, elem)
@@ -49,6 +45,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.MetadataCreatorList {
 		k.SetMetadataCreator(ctx, elem)
 	}
+	// Set all the nftCollection
+	for _, elem := range genState.NftCollectionList {
+		k.SetNftCollection(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -62,7 +62,6 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.NftDataList = k.GetAllNftData(ctx)
 	genesis.ActionByRefIdList = k.GetAllActionByRefId(ctx)
 	genesis.OrganizationList = k.GetAllOrganization(ctx)
-	genesis.NftCollectionList = k.GetAllNftCollection(ctx)
 	genesis.NFTSchemaByContractList = k.GetAllNFTSchemaByContract(ctx)
 	// Get all nFTFeeConfig
 	nFTFeeConfig, found := k.GetNFTFeeConfig(ctx)
@@ -75,6 +74,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 		genesis.NFTFeeBalance = &nFTFeeBalance
 	}
 	genesis.MetadataCreatorList = k.GetAllMetadataCreator(ctx)
+	genesis.NftCollectionList = k.GetAllNftCollection(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

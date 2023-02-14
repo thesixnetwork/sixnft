@@ -21,6 +21,19 @@ message AttributeDefinition {
   string display_value_field = 4; 
   DisplayOption display_option = 5; 
   DefaultMintValue default_mint_value = 6;
+  bool hidden_overide = 7; // flag that allows action to override hidden
+  bool hidden_to_marketplace = 8;
+  uint64 index = 9;
+}
+
+message AttributeDefinitionV072 {
+  
+  string name = 1; 
+  string data_type = 2; 
+  bool required = 3;
+  string display_value_field = 4; 
+  DisplayOption display_option = 5; 
+  DefaultMintValue default_mint_value = 6;
   bool hidden_to_marketplace = 7;
   uint64 index = 8;
 }

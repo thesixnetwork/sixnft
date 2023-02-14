@@ -56,14 +56,6 @@ func TestGenesisState_Validate(t *testing.T) {
 						Name: "1",
 					},
 				},
-				NftCollectionList: []types.NftCollection{
-					{
-						NftSchemaCode: "0",
-					},
-					{
-						NftSchemaCode: "1",
-					},
-				},
 				NFTSchemaByContractList: []types.NFTSchemaByContract{
 					{
 						OriginContractAddress: "0",
@@ -75,6 +67,14 @@ func TestGenesisState_Validate(t *testing.T) {
 				NftFeeConfig:  &types.NFTFeeConfig{},
 				NFTFeeBalance: &types.NFTFeeBalance{},
 				MetadataCreatorList: []types.MetadataCreator{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "1",
+					},
+				},
+				NftCollectionList: []types.NftCollection{
 					{
 						NftSchemaCode: "0",
 					},
@@ -145,20 +145,6 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid: false,
 		},
 		{
-			desc: "duplicated nftCollection",
-			genState: &types.GenesisState{
-				NftCollectionList: []types.NftCollection{
-					{
-						NftSchemaCode: "0",
-					},
-					{
-						NftSchemaCode: "0",
-					},
-				},
-			},
-			valid: false,
-		},
-		{
 			desc: "duplicated nFTSchemaByContract",
 			genState: &types.GenesisState{
 				NFTSchemaByContractList: []types.NFTSchemaByContract{
@@ -176,6 +162,20 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "duplicated metadataCreator",
 			genState: &types.GenesisState{
 				MetadataCreatorList: []types.MetadataCreator{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated nftCollection",
+			genState: &types.GenesisState{
+				NftCollectionList: []types.NftCollection{
 					{
 						NftSchemaCode: "0",
 					},

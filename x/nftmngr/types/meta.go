@@ -3,6 +3,7 @@ package types
 import (
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -93,7 +94,6 @@ func (m *Metadata) SetGetNFTFunction(f func(tokenId string) (*NftData, error)) {
 	m.NftDataFunction = f
 }
 
-
 func (m *Metadata) GetBaseURI() string {
 	return m.schema.OriginData.OriginBaseUri
 }
@@ -141,7 +141,18 @@ func (m *Metadata) GetNumber(key string) int64 {
 
 func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	attri := m.MapAllKey[key]
+	schema := m.schema
 	if attri == nil {
+		// find from schema nft attribute
+		if schema != nil {
+			for _, attr := range schema.OnchainData.NftAttributes {
+				if attr.Name == key {
+					if attr.DataType == "number" {
+						return int64(attr.DefaultMintValue.GetNumberAttributeValue().Value), nil
+					}
+				}
+			}
+		}
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
@@ -191,15 +202,68 @@ func (m *Metadata) GetString(key string) string {
 	return v
 }
 
+// sub string for GetString function
+func (m *Metadata) GetSubString(key string, start int64, end int64) string {
+	v, err := m.MustGetString(key)
+	if end > int64(len(v)) {
+		panic(sdkerrors.Wrap(ErrInvalidActionInput, "end can not be greater than string length"))
+	}
+	if start == end {
+		return ""
+	}
+	if start < 0 {
+		start = int64(len(v)) + (start + 1)
+	}
+	if end < 0 {
+		end = int64(len(v)) + (end + 1)
+	}
+	if start > end {
+		panic(sdkerrors.Wrap(ErrInvalidActionInput, "start can not be greater than end"))
+	}
+	if err != nil {
+		panic(err)
+	}
+	return v[start:end]
+}
+
+// return Lowercase for GetString function
+func (m *Metadata) ToLowercase(key string) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return strings.ToLower(v)
+}
+
+// return Uppercase for GetString function
+func (m *Metadata) ToUppercase(key string) string {
+	v, err := m.MustGetString(key)
+	if err != nil {
+		panic(err)
+	}
+	return strings.ToUpper(v)
+}
+
 func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := m.MapAllKey[key]
+	schema := m.schema
 	if attri == nil {
+		// find from schema nft attribute
+		if schema != nil {
+			for _, attr := range schema.OnchainData.NftAttributes {
+				if attr.Name == key {
+					if attr.DataType == "string" {
+						return attr.DefaultMintValue.GetStringAttributeValue().Value, nil
+					}
+				}
+			}
+		}
 		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
-		// Number
 		return attri.AttributeValue.GetStringAttributeValue().Value, nil
 	}
+
 	return "", sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
 
@@ -247,7 +311,18 @@ func (m *Metadata) GetFloat(key string) float64 {
 func (m *Metadata) MustGetFloat(key string) (float64, error) {
 	// return m.mapFloat[key]
 	attri := m.MapAllKey[key]
+	schema := m.schema
 	if attri == nil {
+		// find from schema nft attribute
+		if schema != nil {
+			for _, attr := range schema.OnchainData.NftAttributes {
+				if attr.Name == key {
+					if attr.DataType == "float" {
+						return attr.DefaultMintValue.GetFloatAttributeValue().Value, nil
+					}
+				}
+			}
+		}
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
@@ -301,11 +376,21 @@ func (m *Metadata) GetBoolean(key string) bool {
 func (m *Metadata) MustGetBool(key string) (bool, error) {
 	// return m.mapBool[key]
 	attri := m.MapAllKey[key]
+	schema := m.schema
 	if attri == nil {
+		// find from schema nft attribute
+		if schema != nil {
+			for _, attr := range schema.OnchainData.NftAttributes {
+				if attr.Name == key {
+					if attr.DataType == "boolean" {
+						return attr.DefaultMintValue.GetBooleanAttributeValue().Value, nil
+					}
+				}
+			}
+		}
 		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
-		// Number
 		return attri.AttributeValue.GetBooleanAttributeValue().Value, nil
 	}
 	return false, sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
@@ -344,11 +429,23 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 	return nil
 }
 
-func (m *Metadata) SetDisplayArribute(key string, value string) error {
+// add for typos
+func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
 	attri := m.MapAllKey[key]
+	schema := m.schema
+
 	if attri == nil {
 		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
+	}
+
+	for _, attr := range schema.OnchainData.TokenAttributes {
+		if attr.Name == key {
+			if !(attr.HiddenOveride) {
+				// return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+				panic(sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden"))
+			}
+		}
 	}
 	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
 		return nil
@@ -395,4 +492,35 @@ func (p *ActionParameter) GetNumber() uint64 {
 
 func (p *ActionParameter) GetString() string {
 	return p.Value
+}
+
+// return substring of string from start to end of parameter
+func (p *ActionParameter) GetSubString(start int64, end int64) string {
+	val := p.Value
+	if end > int64(len(val)) {
+		panic(sdkerrors.Wrap(ErrInvaliActionParameter, "end can not be greater than string length"))
+	}
+	if start == end {
+		return ""
+	}
+	if start < 0 {
+		start = int64(len(val)) + (start + 1)
+	}
+	if end < 0 {
+		end = int64(len(val)) + (end + 1)
+	}
+	if start > end {
+		panic(sdkerrors.Wrap(ErrInvaliActionParameter, "start can not be greater than end"))
+	}
+	return val[start:end]
+}
+
+// return LowerCase of parameter
+func (p *ActionParameter) ToLowerCase() string {
+	return strings.ToLower(p.Value)
+}
+
+// return UpperCase of parameter
+func (p *ActionParameter) TtUpperCase() string {
+	return strings.ToUpper(p.Value)
 }

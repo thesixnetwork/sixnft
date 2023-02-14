@@ -58,6 +58,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						ActorAddress: "1",
 					},
 				},
+				BindedSignerList: []types.BindedSigner{
+					{
+						OwnerAddress: "0",
+					},
+					{
+						OwnerAddress: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -149,6 +157,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						ActorAddress: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated bindedSigner",
+			genState: &types.GenesisState{
+				BindedSignerList: []types.BindedSigner{
+					{
+						OwnerAddress: "0",
+					},
+					{
+						OwnerAddress: "0",
 					},
 				},
 			},
