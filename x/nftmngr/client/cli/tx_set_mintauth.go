@@ -14,7 +14,7 @@ var _ = strconv.Itoa(0)
 
 func CmdSetMintauth() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-mintauth [nft-schema-code] [authorize-to]",
+		Use:   "set-mintauth [nft-schema-code] [authorize-to >>0:system, 1:all<< ]",
 		Short: "To resync action to minted metadata",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {

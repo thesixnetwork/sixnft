@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// will be deprecated next version (074)
 func CmdListNFTSchemaV063() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-nft-schemaV063",
@@ -43,6 +44,7 @@ func CmdListNFTSchemaV063() *cobra.Command {
 	return cmd
 }
 
+// will be deprecated next version (074)
 func CmdShowNFTSchemaV063() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "show-nft-schemaV063 [code]",

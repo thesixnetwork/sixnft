@@ -31,8 +31,13 @@ func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
 
-func CollectionkeyPrefix(nftSchemaCode []byte) []byte {
-	return append(CollectionPrefix, nftSchemaCode...)
+// ! Fixed from prefix appent([]byte{0x1} []byte(nftSchemaCode)) because it will return 0x1nftSchemaCode
+func CollectionkeyPrefix(nftSchemaCode string) []byte {
+	var key []byte
+	nftSchemaCodeBytes := []byte(nftSchemaCode)
+	key = append(key, nftSchemaCodeBytes...)
+	key = append(key, []byte("/")...)
+	return key
 }
 
 const (

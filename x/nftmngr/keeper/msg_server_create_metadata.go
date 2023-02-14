@@ -131,6 +131,12 @@ func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema)
 	if !attributesExistsInSchema {
 		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
 	}
+	// Check if origin attributes exist in schema
+	attributesOriginExistsInSchema, err := NFTDataAttributesExistInSchema(mapAttributeDefinition, data.OriginAttributes)
+	if !attributesOriginExistsInSchema {
+		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
+	}
+
 	// Validate required attributes
 	validated, requiredAttributeName := ValidateRequiredAttributes(schema.OnchainData.TokenAttributes, CreateNftAttrValueMap(data.OnchainAttributes))
 	if !validated {

@@ -41,33 +41,3 @@ func CmdListActionSigner() *cobra.Command {
 
 	return cmd
 }
-
-func CmdShowActionSigner() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "show-action-signer [actor-address]",
-		Short: "shows a actionSigner",
-		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			clientCtx := client.GetClientContextFromCmd(cmd)
-
-			queryClient := types.NewQueryClient(clientCtx)
-
-			argActorAddress := args[0]
-
-			params := &types.QueryGetActionSignerRequest{
-				ActorAddress: argActorAddress,
-			}
-
-			res, err := queryClient.ActionSigner(context.Background(), params)
-			if err != nil {
-				return err
-			}
-
-			return clientCtx.PrintProto(res)
-		},
-	}
-
-	flags.AddQueryFlagsToCmd(cmd)
-
-	return cmd
-}

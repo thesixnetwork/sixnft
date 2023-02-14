@@ -9,8 +9,6 @@ import (
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	"github.com/stretchr/testify/require"
 	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
 	"github.com/thesixnetwork/sixnft/testutil/network"
 	"github.com/thesixnetwork/sixnft/testutil/nullify"
@@ -38,60 +36,6 @@ func networkWithActionSignerObjects(t *testing.T, n int) (*network.Network, []ty
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
 	return network.New(t, cfg), state.ActionSignerList
-}
-
-func TestShowActionSigner(t *testing.T) {
-	net, objs := networkWithActionSignerObjects(t, 2)
-
-	ctx := net.Validators[0].ClientCtx
-	common := []string{
-		fmt.Sprintf("--%s=json", tmcli.OutputFlag),
-	}
-	for _, tc := range []struct {
-		desc           string
-		idActorAddress string
-
-		args []string
-		err  error
-		obj  types.ActionSigner
-	}{
-		{
-			desc:           "found",
-			idActorAddress: objs[0].ActorAddress,
-
-			args: common,
-			obj:  objs[0],
-		},
-		{
-			desc:           "not found",
-			idActorAddress: strconv.Itoa(100000),
-
-			args: common,
-			err:  status.Error(codes.NotFound, "not found"),
-		},
-	} {
-		t.Run(tc.desc, func(t *testing.T) {
-			args := []string{
-				tc.idActorAddress,
-			}
-			args = append(args, tc.args...)
-			out, err := clitestutil.ExecTestCLICmd(ctx, cli.CmdShowActionSigner(), args)
-			if tc.err != nil {
-				stat, ok := status.FromError(tc.err)
-				require.True(t, ok)
-				require.ErrorIs(t, stat.Err(), tc.err)
-			} else {
-				require.NoError(t, err)
-				var resp types.QueryGetActionSignerResponse
-				require.NoError(t, net.Config.Codec.UnmarshalJSON(out.Bytes(), &resp))
-				require.NotNil(t, resp.ActionSigner)
-				require.Equal(t,
-					nullify.Fill(&tc.obj),
-					nullify.Fill(&resp.ActionSigner),
-				)
-			}
-		})
-	}
 }
 
 func TestListActionSigner(t *testing.T) {

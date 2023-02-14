@@ -28,6 +28,7 @@ message Action {
   repeated action_params params = 7 [(gogoproto.nullable) = true];
 }
 
+// will be deprecated next version (074)
 message ActionV063 {
   string name = 1; 
   string desc = 2; 

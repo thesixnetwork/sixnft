@@ -219,6 +219,7 @@ func (m *Action) GetParams() []*ActionParams {
 	return nil
 }
 
+// will be deprecated next version (074)
 type ActionV063 struct {
 	Name            string          `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Desc            string          `protobuf:"bytes,2,opt,name=desc,proto3" json:"desc,omitempty"`
