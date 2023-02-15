@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"strings"
 	"time"
 
@@ -304,7 +303,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 
 		// Emit events on metadata change
 		// Check action with reference exists
-		refId := msg.RefId + "token_id_" + tokenId
+		refId := msg.RefId + "_token-id_" + tokenId
 		if msg.RefId != "" {
 
 			_, found := k.Keeper.GetActionByRefId(ctx, refId)
@@ -347,8 +346,8 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *types.MsgPerformMultiTokenMultiAction) (*types.MsgPerformMultiTokenMultiActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	// check action len and parameters len are suitable
-	if len(msg.Action) != len(msg.Parameters[0]) {
-		return nil, sdkerrors.Wrap(types.ErrActionAndParametersNotMatch, "Action: "+strconv.Itoa(len(msg.Action))+" Parameters: "+strconv.Itoa(len(msg.Parameters[0])))
+	if len(msg.Action) != len(msg.Parameters) {
+		return nil, sdkerrors.Wrap(types.ErrActionAndParametersNotMatch, "Action: "+string(int32(len(msg.Action)))+" Parameters: "+string(int32(len(msg.Parameters))))
 	}
 
 	// ** SCHEMA LAYER **
@@ -409,7 +408,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		var actionPrams_ []*types.ActionParameter
 		err := json.Unmarshal([]byte(params_), &actionPrams_)
 		if err != nil {
-			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal required parameters ")
 		}
 		// Check if action requires parameters
 		param := mapAction[index].GetParams()
@@ -426,11 +425,11 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		}
 
 		for i := 0; i < len(required_param); i++ {
-			if actionPrams_[index].Name != required_param[i].Name {
+			if actionPrams_[i].Name != required_param[i].Name {
 				return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
 			}
-			if actionPrams_[index].Value == "" {
-				actionPrams_[index].Value = required_param[i].DefaultValue
+			if actionPrams_[i].Value == "" {
+				actionPrams_[i].Value = required_param[i].DefaultValue
 			}
 		}
 
@@ -448,7 +447,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		var actionPrams_ []*types.ActionParameter
 		err := json.Unmarshal([]byte(msg.Parameters[index]), &actionPrams_)
 		if err != nil {
-			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: TOKEN DATA LAYER cannot unmarshal parameters")
 		}
 
 		// Create map of existing attribute in nftdata
@@ -508,7 +507,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 
 		// Emit events on metadata change
 		// Check action with reference exists
-		refId := msg.RefId + "token_id_" + tokenId
+		refId := msg.RefId + "_token-id_" + tokenId + "_action-id_" + string(rune(index))
 		if msg.RefId != "" {
 
 			_, found := k.Keeper.GetActionByRefId(ctx, refId)
@@ -551,8 +550,8 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.MsgPerformOneTokenMultiAction) (*types.MsgPerformOneTokenMultiActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	// check action len and parameters len are suitable
-	if len(msg.Action) != len(msg.Parameters[0]) {
-		return nil, sdkerrors.Wrap(types.ErrActionAndParametersNotMatch, "Action: "+strconv.Itoa(len(msg.Action))+" Parameters: "+strconv.Itoa(len(msg.Parameters[0])))
+	if len(msg.Action) != len(msg.Parameters) {
+		return nil, sdkerrors.Wrap(types.ErrActionAndParametersNotMatch, "Action: "+string(int32(len(msg.Action)))+" Parameters: "+string(int32(len(msg.Parameters))))
 	}
 
 	// ** SCHEMA LAYER **
@@ -611,7 +610,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 		var actionPrams_ []*types.ActionParameter
 		err := json.Unmarshal([]byte(params_), &actionPrams_)
 		if err != nil {
-			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal parameters index")
 		}
 		// Check if action requires parameters
 		param := mapAction[index].GetParams()
@@ -628,11 +627,11 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 		}
 
 		for i := 0; i < len(required_param); i++ {
-			if actionPrams_[index].Name != required_param[i].Name {
+			if actionPrams_[i].Name != required_param[i].Name {
 				return nil, sdkerrors.Wrap(types.ErrInvalidParameter, "input paramter name is not match to "+required_param[i].Name)
 			}
-			if actionPrams_[index].Value == "" {
-				actionPrams_[index].Value = required_param[i].DefaultValue
+			if actionPrams_[i].Value == "" {
+				actionPrams_[i].Value = required_param[i].DefaultValue
 			}
 		}
 
@@ -640,13 +639,14 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 	// ** TOKEN DATA LAYER **
 	// iterate over token ids
+	count := 0
 	for index, msg_ := range msg.Action {
 		_ = msg_ // unused
 		// unmarshal parameters
 		var actionPrams_ []*types.ActionParameter
 		err := json.Unmarshal([]byte(msg.Parameters[index]), &actionPrams_)
 		if err != nil {
-			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: "+err.Error())
+			sdkerrors.Wrap(types.ErrInvalidParameter, "Error in Unmarshal: TOKEN DATA LAYER  index msg.Action")
 		}
 
 		// Create map of existing attribute in nftdata
@@ -706,7 +706,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 		// Emit events on metadata change
 		// Check action with reference exists
-		refId := msg.RefId + mapAction[index].Name +  msg.TokenId
+		refId := msg.RefId + "_action-id_" + string(int32(count))
 		if msg.RefId != "" {
 
 			_, found := k.Keeper.GetActionByRefId(ctx, refId)
@@ -737,7 +737,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 				sdk.NewAttribute(types.AttributeKeyRunActionChangeList, string(changeList)),
 			),
 		)
-
+		count++
 	}
 
 	return &types.MsgPerformOneTokenMultiActionResponse{
