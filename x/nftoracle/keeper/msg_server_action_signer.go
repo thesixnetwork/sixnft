@@ -40,53 +40,71 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 		*signer,
 	)
 
-	if isFound {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
+	// switch case for found and not found
+	switch isFound {
+		case true:
+			if _signerParams.ExpiredAt.Before(ctx.BlockTime().UTC()) { // if expired
+				// update the action signer
+				updatedAt := ctx.BlockTime()
+
+				var actionSigner = types.ActionSigner{
+					ActorAddress: _signerParams.ActorAddress,
+					OwnerAddress: *signer,
+					CreatedAt:    updatedAt,
+					ExpiredAt:    _signerParams.ExpiredAt,
+					Creator:      msg.Creator,
+				}
+				k.SetActionSigner(ctx, actionSigner)
+			}else{
+				return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action signer already bined and not expired")
+			}
+		case false:
+			// create the action signer
+			createdAt := ctx.BlockTime()
+			endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
+
+			// validate time given format as RFC3339
+			_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
+			if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(ctx.BlockTime().UTC()) {
+				_signerParams.ExpiredAt = endTime
+			}
+
+			var actionSigner = types.ActionSigner{
+				ActorAddress: _signerParams.ActorAddress,
+				OwnerAddress: *signer,
+				CreatedAt:    createdAt,
+				ExpiredAt:    _signerParams.ExpiredAt,
+				Creator:      msg.Creator,
+			}
+
+			// Get List of binded signers
+			bindedList, found := k.GetBindedSigner(ctx, *signer)
+			if !found {
+				bindedList = types.BindedSigner{
+					OwnerAddress: *signer,
+					Signers:      make([]*types.XSetSignerParams, 0),
+				}
+			}
+
+			// add the binded signer to the list
+			bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
+				ActorAddress: _signerParams.ActorAddress,
+				ExpiredAt:    _signerParams.ExpiredAt,
+			})
+
+			// set the binded signer
+			k.SetBindedSigner(ctx, types.BindedSigner{
+				OwnerAddress: *signer,
+				Signers:      bindedList.Signers,
+				ActorCount:   uint64(len(bindedList.Signers)),
+			})
+
+			k.SetActionSigner(
+				ctx,
+				actionSigner,
+			)
 	}
 
-	createdAt := ctx.BlockTime()
-	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx))
-
-	// validate time given format as RFC3339
-	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
-	if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(ctx.BlockTime().UTC()) {
-		_signerParams.ExpiredAt = endTime
-	}
-
-	var actionSigner = types.ActionSigner{
-		ActorAddress: _signerParams.ActorAddress,
-		OwnerAddress: *signer,
-		CreatedAt:    createdAt,
-		ExpiredAt:    _signerParams.ExpiredAt,
-		Creator:      msg.Creator,
-	}
-
-	// Get List of binded signers
-	bindedList, found := k.GetBindedSigner(ctx, *signer)
-	if !found {
-		bindedList = types.BindedSigner{
-			OwnerAddress: *signer,
-			Signers:      make([]*types.XSetSignerParams, 0),
-		}
-	}
-
-	// add the binded signer to the list
-	bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
-		ActorAddress: _signerParams.ActorAddress,
-		ExpiredAt:    _signerParams.ExpiredAt,
-	})
-
-	// set the binded signer
-	k.SetBindedSigner(ctx, types.BindedSigner{
-		OwnerAddress: *signer,
-		Signers:      bindedList.Signers,
-		ActorCount:   uint64(len(bindedList.Signers)),
-	})
-
-	k.SetActionSigner(
-		ctx,
-		actionSigner,
-	)
 	return &types.MsgCreateActionSignerResponse{}, nil
 }
 
