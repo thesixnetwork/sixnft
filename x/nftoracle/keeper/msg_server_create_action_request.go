@@ -37,6 +37,8 @@ func (k msgServer) CreateActionRequest(goCtx context.Context, msg *types.MsgCrea
 	switch {
 	case actionOralceParam.OnBehalfOf == "":
 		break
+	case actionOralceParam.OnBehalfOf != "" && actionOralceParam.OnBehalfOf == *signer:
+		break
 	case actionOralceParam.OnBehalfOf != "":
 		_actionSigner, isActionSigner := k.GetActionSigner(ctx, *signer, actionOralceParam.OnBehalfOf)
 		if isActionSigner && _actionSigner.ExpiredAt.After(ctx.BlockTime().UTC()) && actionOralceParam.OnBehalfOf == _actionSigner.OwnerAddress {
