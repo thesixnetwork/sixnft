@@ -442,7 +442,8 @@ func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	for _, attr := range schema.OnchainData.TokenAttributes {
 		if attr.Name == key {
 			if !(attr.HiddenOveride) {
-				return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+				// return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
+				panic(sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden"))
 			}
 		}
 	}

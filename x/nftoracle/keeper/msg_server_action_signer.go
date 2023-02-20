@@ -44,10 +44,16 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	switch isFound {
 		case true:
 			if binded.ExpiredAt.Before(ctx.BlockTime().UTC()) { // if expired
+				// check if the expired time is same as the given time
+				// prevent replay attack
+				if binded.ExpiredAt.Equal(_signerParams.ExpiredAt) {
+					return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action signer message already sent should change the expired time")
+				}
+
 				// update the action signer
 				updatedAt := ctx.BlockTime()
 				endTime := updatedAt.Add(k.ActionSignerActiveDuration(ctx))
-
+				
 				// validate time given format as RFC3339
 				_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
 
@@ -65,6 +71,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 				k.SetActionSigner(ctx, actionSigner)
 				// set to bined address
 				bindedList, _ := k.GetBindedSigner(ctx, *signer)
+
 				// set to same index
 				for i, bindedIndex := range bindedList.Signers {
 					if bindedIndex.ActorAddress == _signerParams.ActorAddress {
