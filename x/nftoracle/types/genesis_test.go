@@ -66,6 +66,15 @@ func TestGenesisState_Validate(t *testing.T) {
 						OwnerAddress: "1",
 					},
 				},
+				ActionSignerByOracleList: []types.ActionSignerByOracle{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				ActionSignerByOracleCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -173,6 +182,32 @@ func TestGenesisState_Validate(t *testing.T) {
 						OwnerAddress: "0",
 					},
 				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionSignerByOracle",
+			genState: &types.GenesisState{
+				ActionSignerByOracleList: []types.ActionSignerByOracle{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid actionSignerByOracle count",
+			genState: &types.GenesisState{
+				ActionSignerByOracleList: []types.ActionSignerByOracle{
+					{
+						Id: 1,
+					},
+				},
+				ActionSignerByOracleCount: 0,
 			},
 			valid: false,
 		},

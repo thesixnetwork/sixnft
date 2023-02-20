@@ -448,3 +448,8 @@ ignite scaffold message createMultiMetadata nft_schema_code token_id base64NFTDa
 # }
 
 # run ignite g proto-go -y
+
+ignite scaffold list action_signer_by_oracle actorAddress ownerAddress expireAt \
+    caller required_confirm:uint status current_confirm:uint confirmers created_at \
+    valid_until data_hashes expired_height:int execution_error_message \
+    --module nftoracle --no-message --no-simulation -y

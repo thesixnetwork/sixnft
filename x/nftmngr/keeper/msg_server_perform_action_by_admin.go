@@ -82,7 +82,6 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		}
 	}
 
-
 	// ** TOKEN DATA LAYER **
 	// Create map of existing attribute in nftdata
 	mapExistingAttributes := make(map[string]bool)

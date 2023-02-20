@@ -11,6 +11,7 @@ import "nftoracle/collection_owner_request.proto";
 import "nftoracle/oracle_config.proto";
 import "nftoracle/action_signer.proto";
 import "nftoracle/binded_signer.proto";
+import "nftoracle/action_signer_by_oracle.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -78,6 +79,16 @@ service Query {
 	// Queries a BindedSigner by index.
 	rpc BindedSigner(QueryGetBindedSignerRequest) returns (QueryGetBindedSignerResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/binded_signer/{ownerAddress}";
+	}
+
+	// Queries a ActionSignerByOracle by id.
+	rpc ActionSignerByOracle(QueryGetActionSignerByOracleRequest) returns (QueryGetActionSignerByOracleResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_by_oracle/{id}";
+	}
+
+	// Queries a list of ActionSignerByOracle items.
+	rpc ActionSignerByOracleAll(QueryAllActionSignerByOracleRequest) returns (QueryAllActionSignerByOracleResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_by_oracle";
 	}
 
 	// this line is used by starport scaffolding # 2
@@ -183,6 +194,23 @@ message QueryGetBindedSignerRequest {
 
 message QueryGetBindedSignerResponse {
 	BindedSigner bindedSigner = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetActionSignerByOracleRequest {
+	uint64 id = 1;
+}
+
+message QueryGetActionSignerByOracleResponse {
+	ActionSignerByOracle ActionSignerByOracle = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllActionSignerByOracleRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllActionSignerByOracleResponse {
+	repeated ActionSignerByOracle ActionSignerByOracle = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

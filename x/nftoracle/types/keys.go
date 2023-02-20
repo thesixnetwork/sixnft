@@ -43,3 +43,8 @@ const (
 const (
 	OracleConfigKey = "OracleConfig-value-"
 )
+
+const (
+	ActionSignerByOracleKey      = "ActionSignerByOracle-value-"
+	ActionSignerByOracleCountKey = "ActionSignerByOracle-count-"
+)
