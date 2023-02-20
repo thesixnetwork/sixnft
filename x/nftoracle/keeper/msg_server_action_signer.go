@@ -34,7 +34,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	}
 
 	// Check if the value already exists
-	_, isFound := k.GetActionSigner(
+	binded, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
 		*signer,
@@ -43,9 +43,17 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 	// switch case for found and not found
 	switch isFound {
 		case true:
-			if _signerParams.ExpiredAt.Before(ctx.BlockTime().UTC()) { // if expired
+			if binded.ExpiredAt.Before(ctx.BlockTime().UTC()) { // if expired
 				// update the action signer
 				updatedAt := ctx.BlockTime()
+				endTime := updatedAt.Add(k.ActionSignerActiveDuration(ctx))
+
+				// validate time given format as RFC3339
+				_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
+
+				if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(updatedAt) {
+					_signerParams.ExpiredAt = endTime
+				}
 
 				var actionSigner = types.ActionSigner{
 					ActorAddress: _signerParams.ActorAddress,
@@ -55,6 +63,22 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 					Creator:      msg.Creator,
 				}
 				k.SetActionSigner(ctx, actionSigner)
+				// set to bined address
+				bindedList, _ := k.GetBindedSigner(ctx, *signer)
+				// set to same index
+				for i, bindedIndex := range bindedList.Signers {
+					if bindedIndex.ActorAddress == _signerParams.ActorAddress {
+						bindedList.Signers[i].ExpiredAt = _signerParams.ExpiredAt
+					}
+				}
+
+				// set the binded signer
+				k.SetBindedSigner(ctx, types.BindedSigner{
+					OwnerAddress: *signer,
+					Signers:      bindedList.Signers,
+					ActorCount:   uint64(len(bindedList.Signers)),
+				})
+				
 			}else{
 				return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action signer already bined and not expired")
 			}
@@ -103,9 +127,15 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 				ctx,
 				actionSigner,
 			)
+			
 	}
 
-	return &types.MsgCreateActionSignerResponse{}, nil
+	return &types.MsgCreateActionSignerResponse{
+		OwnerAddress: _signerParams.ActorAddress,
+		SignerAddress: _signerParams.OwnerAddress,
+		ExpireAt: _signerParams.ExpiredAt.UTC().Format(time.RFC3339),
+
+	}, nil
 }
 
 func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdateActionSigner) (*types.MsgUpdateActionSignerResponse, error) {

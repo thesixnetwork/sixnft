@@ -37449,6 +37449,60 @@ paths:
                         }
       tags:
         - Query
+  '/thesixnetwork/sixnft/nftoracle/action_actor/{actorAddress}/{ownerAddress}':
+    get:
+      summary: Queries a ActionSigner by index.
+      operationId: ThesixnetworkSixnftNftoracleActionSigner
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              actionSigner:
+                type: object
+                properties:
+                  actor_address:
+                    type: string
+                  owner_address:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  expired_at:
+                    type: string
+                    format: date-time
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: actorAddress
+          in: path
+          required: true
+          type: string
+        - name: ownerAddress
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
   /thesixnetwork/sixnft/nftoracle/action_request:
     get:
       summary: Queries a list of ActionRequest items.
@@ -37638,6 +37692,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -37950,6 +38014,16 @@ paths:
           in: query
           required: false
           type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_request_063/{id}':
@@ -38186,60 +38260,16 @@ paths:
           in: query
           required: false
           type: boolean
-      tags:
-        - Query
-  '/thesixnetwork/sixnft/nftoracle/action_signer/{actorAddress}':
-    get:
-      summary: Queries a ActionSigner by index.
-      operationId: ThesixnetworkSixnftNftoracleActionSigner
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              actionSigner:
-                type: object
-                properties:
-                  actor_address:
-                    type: string
-                  owner_address:
-                    type: string
-                  created_at:
-                    type: string
-                    format: date-time
-                  expired_at:
-                    type: string
-                    format: date-time
-                  creator:
-                    type: string
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: actorAddress
-          in: path
-          required: true
-          type: string
-        - name: ownerAddress
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
-          type: string
+          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/binded_signer/{ownerAddress}':
@@ -38459,6 +38489,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -38736,6 +38776,16 @@ paths:
             when key
 
             is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
