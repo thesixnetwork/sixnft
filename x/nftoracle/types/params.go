@@ -10,17 +10,19 @@ import (
 
 const (
 	// DefaultParamspace default name for parameter store
-	DefaultMintRequestActiveDuration   = 120 * time.Second
-	DefaultActionRequestActiveDuration = 120 * time.Second
-	DefaultVerifyRequestActiveDuration = 120 * time.Second
-	DefaultActionSignerActiveDuration  = 30 * (24 * time.Hour) // 30 days
+	DefaultMintRequestActiveDuration      = 120 * time.Second
+	DefaultActionRequestActiveDuration    = 120 * time.Second
+	DefaultVerifyRequestActiveDuration    = 120 * time.Second
+	DefaultActionSignerActiveDuration     = 30 * (24 * time.Hour) // 30 days
+	DefaultSyncActionSignerActiveDuration = 300 * time.Second
 )
 
 var (
-	KeyMintRequestActiveDuration   = []byte("MintRequestActiveDuration")
-	KeyActionRequestActiveDuration = []byte("ActionRequestActiveDuration")
-	KeyVerifyRequestActiveDuration = []byte("VerifyRequestActiveDuration")
-	KeyActionSignerActiveDuration  = []byte("ActionSignerActiveDuration")
+	KeyMintRequestActiveDuration      = []byte("MintRequestActiveDuration")
+	KeyActionRequestActiveDuration    = []byte("ActionRequestActiveDuration")
+	KeyVerifyRequestActiveDuration    = []byte("VerifyRequestActiveDuration")
+	KeyActionSignerActiveDuration     = []byte("ActionSignerActiveDuration")
+	KeySyncActionSignerActiveDuration = []byte("SyncActionSignerActiveDuration")
 )
 
 var _ paramtypes.ParamSet = (*Params)(nil)
@@ -31,18 +33,19 @@ func ParamKeyTable() paramtypes.KeyTable {
 }
 
 // NewParams creates a new Params instance
-func NewParams(mintRequestActiveDuration time.Duration, actionRequestActiveDuration time.Duration, verifyRequestActiveDuration time.Duration, actionSignerActiveDuration time.Duration) Params {
+func NewParams(mintRequestActiveDuration time.Duration, actionRequestActiveDuration time.Duration, verifyRequestActiveDuration time.Duration, actionSignerActiveDuration time.Duration, syncActionSignerActiveDuration time.Duration) Params {
 	return Params{
-		MintRequestActiveDuration:   mintRequestActiveDuration,
-		ActionRequestActiveDuration: actionRequestActiveDuration,
-		VerifyRequestActiveDuration: verifyRequestActiveDuration,
-		ActionSignerActiveDuration:  actionSignerActiveDuration,
+		MintRequestActiveDuration:      mintRequestActiveDuration,
+		ActionRequestActiveDuration:    actionRequestActiveDuration,
+		VerifyRequestActiveDuration:    verifyRequestActiveDuration,
+		ActionSignerActiveDuration:     actionSignerActiveDuration,
+		SyncActionSignerActiveDuration: syncActionSignerActiveDuration,
 	}
 }
 
 // DefaultParams returns a default set of parameters
 func DefaultParams() Params {
-	return NewParams(DefaultMintRequestActiveDuration, DefaultActionRequestActiveDuration, DefaultVerifyRequestActiveDuration, DefaultActionSignerActiveDuration)
+	return NewParams(DefaultMintRequestActiveDuration, DefaultActionRequestActiveDuration, DefaultVerifyRequestActiveDuration, DefaultActionSignerActiveDuration, DefaultSyncActionSignerActiveDuration)
 }
 
 // ParamSetPairs get the params.ParamSet
@@ -52,6 +55,7 @@ func (p *Params) ParamSetPairs() paramtypes.ParamSetPairs {
 		paramtypes.NewParamSetPair(KeyActionRequestActiveDuration, &p.ActionRequestActiveDuration, validateActionRequestActiveDuration),
 		paramtypes.NewParamSetPair(KeyVerifyRequestActiveDuration, &p.VerifyRequestActiveDuration, validateRequestActiveDuration),
 		paramtypes.NewParamSetPair(KeyActionSignerActiveDuration, &p.ActionSignerActiveDuration, validateRequestActiveDuration),
+		paramtypes.NewParamSetPair(KeySyncActionSignerActiveDuration, &p.SyncActionSignerActiveDuration, validateRequestSyncActiveDuration),
 	}
 }
 
@@ -67,6 +71,9 @@ func (p Params) Validate() error {
 		return err
 	}
 	if err := validateRequestActiveDuration(p.ActionSignerActiveDuration); err != nil {
+		return err
+	}
+	if err := validateRequestActiveDuration(p.SyncActionSignerActiveDuration); err != nil {
 		return err
 	}
 	return nil
@@ -105,6 +112,19 @@ func validateActionRequestActiveDuration(i interface{}) error {
 }
 
 func validateRequestActiveDuration(i interface{}) error {
+	v, ok := i.(time.Duration)
+	if !ok {
+		return fmt.Errorf("invalid parameter type: %T", i)
+	}
+
+	if v <= 0 {
+		return fmt.Errorf("unbonding time must be positive: %d", v)
+	}
+
+	return nil
+}
+
+func validateRequestSyncActiveDuration(i interface{}) error {
 	v, ok := i.(time.Duration)
 	if !ok {
 		return fmt.Errorf("invalid parameter type: %T", i)

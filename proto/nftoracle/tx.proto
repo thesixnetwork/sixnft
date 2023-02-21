@@ -180,6 +180,7 @@ message MsgCreateSyncActionSigner {
   string creator = 1;
   string actorAddress = 2;
   string ownerAddress = 3;
+  uint64 requiredConfirm = 4;
 }
 
 message MsgCreateSyncActionSignerResponse {

@@ -30,6 +30,9 @@ const (
 	EventTypeVerificationRequest       = "verify_request"
 	EventTypeVerificationRequestStatus = "status"
 
+	EventTypeSyncActionSigner       = "sync_signer_request"
+	EventTypeSyncActionSignerRequestStatus = "status"
+
 	AttributeRequestorAddress = "requestor_address"
 
 	EventTypeSetMinimumConfirmation = "set_minimum_confirmation"

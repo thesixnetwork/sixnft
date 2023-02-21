@@ -14,12 +14,13 @@ var _ = strconv.Itoa(0)
 
 func CmdCreateSyncActionSigner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-sync-action-signer [actor-address] [owner-address]",
+		Use:   "create-sync-action-signer [actor-address] [owner-address] [required-confirm]",
 		Short: "Requesting to sync actionSigner with smartcontract",
-		Args:  cobra.ExactArgs(2),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argActorAddress := args[0]
 			argOwnerAddress := args[1]
+			argRequiredConfirm, err := strconv.ParseUint(args[2], 10, 64)
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -30,6 +31,7 @@ func CmdCreateSyncActionSigner() *cobra.Command {
 				clientCtx.GetFromAddress().String(),
 				argActorAddress,
 				argOwnerAddress,
+				argRequiredConfirm,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

@@ -21,7 +21,7 @@ message SyncActionSigner {
   google.protobuf.Timestamp valid_until = 11
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   repeated ContractInfoHash data_hashes = 12; 
-  int32 expired_height = 13; 
+  int64 expired_height = 13; 
   string execution_error_message = 14; 
   
 }

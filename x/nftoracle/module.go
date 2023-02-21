@@ -217,6 +217,21 @@ func (am AppModule) EndBlock(ctx sdk.Context, _ abci.RequestEndBlock) []abci.Val
 		}
 		return false
 	})
+	am.keeper.IterateActiveSyncActionSignerQueue(ctx, ctx.BlockHeader().Time, func(syncRequest types.SyncActionSigner) (stop bool) {
+		if syncRequest.Status == types.RequestStatus_PENDING {
+			syncRequest.Status = types.RequestStatus_EXPIRED
+			syncRequest.ExpiredHeight = ctx.BlockHeight()
+			am.keeper.SetSyncActionSigner(ctx, syncRequest)
+			am.keeper.RemoveFromActiveSyncActionSignerQueue(ctx, syncRequest.Id, ctx.BlockHeader().Time)
+			ctx.EventManager().EmitEvent(
+				sdk.NewEvent(
+					types.EventTypeSyncActionSigner,
+					sdk.NewAttribute(types.EventTypeSyncActionSignerRequestStatus, types.RequestStatus_EXPIRED.String()),
+				),
+			)
+		}
+		return false
+	})
 
 	return []abci.ValidatorUpdate{}
 }
