@@ -8,9 +8,9 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 message SyncActionSigner {
   uint64 id = 1;
-  string actorAddress = 2; 
-  string ownerAddress = 3; 
-  string expireAt = 4; 
+  string actor_address = 2; 
+  string owner_address = 3; 
+  string expire_at = 4; 
   string caller = 5;  // will use as creator when message is success
   uint64 required_confirm = 6; 
   RequestStatus status = 7; 
