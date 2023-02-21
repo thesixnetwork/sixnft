@@ -59,15 +59,6 @@ func TestGenesis(t *testing.T) {
 				OwnerAddress: "1",
 			},
 		},
-		ActionSignerByOracleList: []types.ActionSignerByOracle{
-			{
-				Id: 0,
-			},
-			{
-				Id: 1,
-			},
-		},
-		ActionSignerByOracleCount: 2,
 		ActionSignerConfigList: []types.ActionSignerConfig{
 			{
 				Chain: "0",
@@ -76,6 +67,15 @@ func TestGenesis(t *testing.T) {
 				Chain: "1",
 			},
 		},
+		SyncActionSignerList: []types.SyncActionSigner{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		SyncActionSignerCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -96,8 +96,8 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.OracleConfig, got.OracleConfig)
 	require.ElementsMatch(t, genesisState.ActionSignerList, got.ActionSignerList)
 	require.ElementsMatch(t, genesisState.BindedSignerList, got.BindedSignerList)
-	require.ElementsMatch(t, genesisState.ActionSignerByOracleList, got.ActionSignerByOracleList)
-	require.Equal(t, genesisState.ActionSignerByOracleCount, got.ActionSignerByOracleCount)
 	require.ElementsMatch(t, genesisState.ActionSignerConfigList, got.ActionSignerConfigList)
+	require.ElementsMatch(t, genesisState.SyncActionSignerList, got.SyncActionSignerList)
+	require.Equal(t, genesisState.SyncActionSignerCount, got.SyncActionSignerCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

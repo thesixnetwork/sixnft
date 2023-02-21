@@ -66,15 +66,6 @@ func TestGenesisState_Validate(t *testing.T) {
 						OwnerAddress: "1",
 					},
 				},
-				ActionSignerByOracleList: []types.ActionSignerByOracle{
-					{
-						Id: 0,
-					},
-					{
-						Id: 1,
-					},
-				},
-				ActionSignerByOracleCount: 2,
 				ActionSignerConfigList: []types.ActionSignerConfig{
 					{
 						Chain: "0",
@@ -83,6 +74,15 @@ func TestGenesisState_Validate(t *testing.T) {
 						Chain: "1",
 					},
 				},
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				SyncActionSignerCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -194,32 +194,6 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid: false,
 		},
 		{
-			desc: "duplicated actionSignerByOracle",
-			genState: &types.GenesisState{
-				ActionSignerByOracleList: []types.ActionSignerByOracle{
-					{
-						Id: 0,
-					},
-					{
-						Id: 0,
-					},
-				},
-			},
-			valid: false,
-		},
-		{
-			desc: "invalid actionSignerByOracle count",
-			genState: &types.GenesisState{
-				ActionSignerByOracleList: []types.ActionSignerByOracle{
-					{
-						Id: 1,
-					},
-				},
-				ActionSignerByOracleCount: 0,
-			},
-			valid: false,
-		},
-		{
 			desc: "duplicated actionSignerConfig",
 			genState: &types.GenesisState{
 				ActionSignerConfigList: []types.ActionSignerConfig{
@@ -230,6 +204,32 @@ func TestGenesisState_Validate(t *testing.T) {
 						Chain: "0",
 					},
 				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated syncActionSigner",
+			genState: &types.GenesisState{
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid syncActionSigner count",
+			genState: &types.GenesisState{
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 1,
+					},
+				},
+				SyncActionSignerCount: 0,
 			},
 			valid: false,
 		},

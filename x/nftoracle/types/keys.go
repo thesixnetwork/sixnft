@@ -45,10 +45,10 @@ const (
 )
 
 const (
-	ActionSignerByOracleKey      = "ActionSignerByOracle-value-"
-	ActionSignerByOracleCountKey = "ActionSignerByOracle-count-"
+	KeyPermissionAdminSignerConfig = "admin_signer_config"
 )
 
 const (
-	KeyPermissionAdminSignerConfig = "admin_signer_config"
+	SyncActionSignerKey      = "SyncActionSigner-value-"
+	SyncActionSignerCountKey = "SyncActionSigner-count-"
 )

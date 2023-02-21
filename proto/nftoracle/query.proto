@@ -11,8 +11,8 @@ import "nftoracle/collection_owner_request.proto";
 import "nftoracle/oracle_config.proto";
 import "nftoracle/action_signer.proto";
 import "nftoracle/binded_signer.proto";
-import "nftoracle/action_signer_by_oracle.proto";
 import "nftoracle/action_signer_config.proto";
+import "nftoracle/sync_action_signer.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -82,16 +82,6 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/binded_signer/{ownerAddress}";
 	}
 
-	// Queries a ActionSignerByOracle by id.
-	rpc ActionSignerByOracle(QueryGetActionSignerByOracleRequest) returns (QueryGetActionSignerByOracleResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_by_oracle/{id}";
-	}
-
-	// Queries a list of ActionSignerByOracle items.
-	rpc ActionSignerByOracleAll(QueryAllActionSignerByOracleRequest) returns (QueryAllActionSignerByOracleResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_by_oracle";
-	}
-
 	// Queries a ActionSignerConfig by index.
 	rpc ActionSignerConfig(QueryGetActionSignerConfigRequest) returns (QueryGetActionSignerConfigResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_config/{chain}";
@@ -100,6 +90,16 @@ service Query {
 	// Queries a list of ActionSignerConfig items.
 	rpc ActionSignerConfigAll(QueryAllActionSignerConfigRequest) returns (QueryAllActionSignerConfigResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer_config";
+	}
+
+// Queries a SyncActionSigner by id.
+	rpc SyncActionSigner(QueryGetSyncActionSignerRequest) returns (QueryGetSyncActionSignerResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/sync_action_signer/{id}";
+	}
+
+	// Queries a list of SyncActionSigner items.
+	rpc SyncActionSignerAll(QueryAllSyncActionSignerRequest) returns (QueryAllSyncActionSignerResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/sync_action_signer";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -207,22 +207,6 @@ message QueryGetBindedSignerResponse {
 	BindedSigner bindedSigner = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryGetActionSignerByOracleRequest {
-	uint64 id = 1;
-}
-
-message QueryGetActionSignerByOracleResponse {
-	ActionSignerByOracle ActionSignerByOracle = 1 [(gogoproto.nullable) = false];
-}
-
-message QueryAllActionSignerByOracleRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
-}
-
-message QueryAllActionSignerByOracleResponse {
-	repeated ActionSignerByOracle ActionSignerByOracle = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
 
 message QueryGetActionSignerConfigRequest {
 	  string chain = 1;
@@ -239,6 +223,23 @@ message QueryAllActionSignerConfigRequest {
 
 message QueryAllActionSignerConfigResponse {
 	repeated ActionSignerConfig actionSignerConfig = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetSyncActionSignerRequest {
+	uint64 id = 1;
+}
+
+message QueryGetSyncActionSignerResponse {
+	SyncActionSigner SyncActionSigner = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllSyncActionSignerRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSyncActionSignerResponse {
+	repeated SyncActionSigner SyncActionSigner = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

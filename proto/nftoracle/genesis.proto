@@ -9,8 +9,8 @@ import "nftoracle/collection_owner_request.proto";
 import "nftoracle/oracle_config.proto";
 import "nftoracle/action_signer.proto";
 import "nftoracle/binded_signer.proto";
-import "nftoracle/action_signer_by_oracle.proto";
 import "nftoracle/action_signer_config.proto";
+import "nftoracle/sync_action_signer.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -27,8 +27,8 @@ message GenesisState {
   OracleConfig oracle_config = 8;
   repeated ActionSigner actionSignerList = 9 [(gogoproto.nullable) = false];
   repeated BindedSigner bindedSignerList = 10 [(gogoproto.nullable) = false];
-  repeated ActionSignerByOracle actionSignerByOracleList = 11 [(gogoproto.nullable) = false];
-  uint64 actionSignerByOracleCount = 12;
   repeated ActionSignerConfig actionSignerConfigList = 13 [(gogoproto.nullable) = false];
+  repeated SyncActionSigner syncActionSignerList = 14 [(gogoproto.nullable) = false];
+  uint64 syncActionSignerCount = 15;
   // this line is used by starport scaffolding # genesis/proto/state
 }

@@ -38305,15 +38305,16 @@ paths:
                             properties:
                               chain:
                                 type: string
-                              contract_address:
+                              owner_address:
                                 type: string
-                              contract_name:
+                              actor_address:
                                 type: string
-                              contract_owner:
+                              request_expire:
                                 type: string
-                              request_hash:
-                                type: string
-                                title: origin txHash on the chain
+                                format: date-time
+                                title: >-
+                                  nothing to deal with contract but use for
+                                  oracle request
                           hash:
                             type: string
                             format: byte
@@ -38481,15 +38482,16 @@ paths:
                           properties:
                             chain:
                               type: string
-                            contract_address:
+                            owner_address:
                               type: string
-                            contract_name:
+                            actor_address:
                               type: string
-                            contract_owner:
+                            request_expire:
                               type: string
-                            request_hash:
-                              type: string
-                              title: origin txHash on the chain
+                              format: date-time
+                              title: >-
+                                nothing to deal with contract but use for oracle
+                                request
                         hash:
                           type: string
                           format: byte
@@ -38544,6 +38546,8 @@ paths:
                   type: object
                   properties:
                     chain:
+                      type: string
+                    rpc_endpoint:
                       type: string
                     contractAddress:
                       type: string
@@ -38661,6 +38665,8 @@ paths:
                 type: object
                 properties:
                   chain:
+                    type: string
+                  rpc_endpoint:
                     type: string
                   contractAddress:
                     type: string
@@ -39381,6 +39387,218 @@ paths:
                     '@type':
                       type: string
                   additionalProperties: {}
+      tags:
+        - Query
+  /thesixnetwork/sixnft/nftoracle/sync_action_signer:
+    get:
+      summary: Queries a list of SyncActionSigner items.
+      operationId: ThesixnetworkSixnftNftoracleSyncActionSignerAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              SyncActionSigner:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    actorAddress:
+                      type: string
+                    ownerAddress:
+                      type: string
+                    expireAt:
+                      type: string
+                    caller:
+                      type: string
+                    requiredConfirm:
+                      type: string
+                      format: uint64
+                    status:
+                      type: string
+                    currentConfirm:
+                      type: string
+                      format: uint64
+                    confirmers:
+                      type: string
+                    createdAt:
+                      type: string
+                    validUntil:
+                      type: string
+                    dataHashes:
+                      type: string
+                    expiredHeight:
+                      type: integer
+                      format: int32
+                    executionErrorMessage:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/thesixnetwork/sixnft/nftoracle/sync_action_signer/{id}':
+    get:
+      summary: Queries a SyncActionSigner by id.
+      operationId: ThesixnetworkSixnftNftoracleSyncActionSigner
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              SyncActionSigner:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  actorAddress:
+                    type: string
+                  ownerAddress:
+                    type: string
+                  expireAt:
+                    type: string
+                  caller:
+                    type: string
+                  requiredConfirm:
+                    type: string
+                    format: uint64
+                  status:
+                    type: string
+                  currentConfirm:
+                    type: string
+                    format: uint64
+                  confirmers:
+                    type: string
+                  createdAt:
+                    type: string
+                  validUntil:
+                    type: string
+                  dataHashes:
+                    type: string
+                  expiredHeight:
+                    type: integer
+                    format: int32
+                  executionErrorMessage:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
       tags:
         - Query
 definitions:
@@ -66848,15 +67066,14 @@ definitions:
               properties:
                 chain:
                   type: string
-                contract_address:
+                owner_address:
                   type: string
-                contract_name:
+                actor_address:
                   type: string
-                contract_owner:
+                request_expire:
                   type: string
-                request_hash:
-                  type: string
-                  title: origin txHash on the chain
+                  format: date-time
+                  title: nothing to deal with contract but use for oracle request
             hash:
               type: string
               format: byte
@@ -66873,6 +67090,8 @@ definitions:
     type: object
     properties:
       chain:
+        type: string
+      rpc_endpoint:
         type: string
       contractAddress:
         type: string
@@ -66971,15 +67190,14 @@ definitions:
         properties:
           chain:
             type: string
-          contract_address:
+          owner_address:
             type: string
-          contract_name:
+          actor_address:
             type: string
-          contract_owner:
+          request_expire:
             type: string
-          request_hash:
-            type: string
-            title: origin txHash on the chain
+            format: date-time
+            title: nothing to deal with contract but use for oracle request
       hash:
         type: string
         format: byte
@@ -67193,20 +67411,6 @@ definitions:
       minimum_confirmation:
         type: integer
         format: int32
-  thesixnetwork.sixnft.nftoracle.OriginActionSignerContractInfo:
-    type: object
-    properties:
-      chain:
-        type: string
-      contract_address:
-        type: string
-      contract_name:
-        type: string
-      contract_owner:
-        type: string
-      request_hash:
-        type: string
-        title: origin txHash on the chain
   thesixnetwork.sixnft.nftoracle.OriginContractInfo:
     type: object
     properties:
@@ -67241,6 +67445,19 @@ definitions:
       request_expire:
         type: string
         format: date-time
+  thesixnetwork.sixnft.nftoracle.ParameterSyncSignerByOracle:
+    type: object
+    properties:
+      chain:
+        type: string
+      owner_address:
+        type: string
+      actor_address:
+        type: string
+      request_expire:
+        type: string
+        format: date-time
+        title: nothing to deal with contract but use for oracle request
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -67536,15 +67753,16 @@ definitions:
                     properties:
                       chain:
                         type: string
-                      contract_address:
+                      owner_address:
                         type: string
-                      contract_name:
+                      actor_address:
                         type: string
-                      contract_owner:
+                      request_expire:
                         type: string
-                      request_hash:
-                        type: string
-                        title: origin txHash on the chain
+                        format: date-time
+                        title: >-
+                          nothing to deal with contract but use for oracle
+                          request
                   hash:
                     type: string
                     format: byte
@@ -67591,6 +67809,8 @@ definitions:
           type: object
           properties:
             chain:
+              type: string
+            rpc_endpoint:
               type: string
             contractAddress:
               type: string
@@ -67865,6 +68085,71 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  thesixnetwork.sixnft.nftoracle.QueryAllSyncActionSignerResponse:
+    type: object
+    properties:
+      SyncActionSigner:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            actorAddress:
+              type: string
+            ownerAddress:
+              type: string
+            expireAt:
+              type: string
+            caller:
+              type: string
+            requiredConfirm:
+              type: string
+              format: uint64
+            status:
+              type: string
+            currentConfirm:
+              type: string
+              format: uint64
+            confirmers:
+              type: string
+            createdAt:
+              type: string
+            validUntil:
+              type: string
+            dataHashes:
+              type: string
+            expiredHeight:
+              type: integer
+              format: int32
+            executionErrorMessage:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
   thesixnetwork.sixnft.nftoracle.QueryGetActionRequestResponse:
     type: object
     properties:
@@ -68092,15 +68377,14 @@ definitions:
                   properties:
                     chain:
                       type: string
-                    contract_address:
+                    owner_address:
                       type: string
-                    contract_name:
+                    actor_address:
                       type: string
-                    contract_owner:
+                    request_expire:
                       type: string
-                    request_hash:
-                      type: string
-                      title: origin txHash on the chain
+                      format: date-time
+                      title: nothing to deal with contract but use for oracle request
                 hash:
                   type: string
                   format: byte
@@ -68120,6 +68404,8 @@ definitions:
         type: object
         properties:
           chain:
+            type: string
+          rpc_endpoint:
             type: string
           contractAddress:
             type: string
@@ -68318,6 +68604,44 @@ definitions:
           minimum_confirmation:
             type: integer
             format: int32
+  thesixnetwork.sixnft.nftoracle.QueryGetSyncActionSignerResponse:
+    type: object
+    properties:
+      SyncActionSigner:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          actorAddress:
+            type: string
+          ownerAddress:
+            type: string
+          expireAt:
+            type: string
+          caller:
+            type: string
+          requiredConfirm:
+            type: string
+            format: uint64
+          status:
+            type: string
+          currentConfirm:
+            type: string
+            format: uint64
+          confirmers:
+            type: string
+          createdAt:
+            type: string
+          validUntil:
+            type: string
+          dataHashes:
+            type: string
+          expiredHeight:
+            type: integer
+            format: int32
+          executionErrorMessage:
+            type: string
   thesixnetwork.sixnft.nftoracle.QueryParamsResponse:
     type: object
     properties:
@@ -68344,6 +68668,41 @@ definitions:
       - FAILED_ON_EXECUTION
       - FAILED_REJECT_BY_CONSENSUS
     default: PENDING
+  thesixnetwork.sixnft.nftoracle.SyncActionSigner:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      actorAddress:
+        type: string
+      ownerAddress:
+        type: string
+      expireAt:
+        type: string
+      caller:
+        type: string
+      requiredConfirm:
+        type: string
+        format: uint64
+      status:
+        type: string
+      currentConfirm:
+        type: string
+        format: uint64
+      confirmers:
+        type: string
+      createdAt:
+        type: string
+      validUntil:
+        type: string
+      dataHashes:
+        type: string
+      expiredHeight:
+        type: integer
+        format: int32
+      executionErrorMessage:
+        type: string
   thesixnetwork.sixnft.nftoracle.Trait:
     type: object
     properties:

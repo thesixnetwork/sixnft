@@ -15,29 +15,29 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
-func TestActionSignerByOracleQuerySingle(t *testing.T) {
+func TestSyncActionSignerQuerySingle(t *testing.T) {
 	keeper, ctx := keepertest.NftoracleKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
-	msgs := createNActionSignerByOracle(keeper, ctx, 2)
+	msgs := createNSyncActionSigner(keeper, ctx, 2)
 	for _, tc := range []struct {
 		desc     string
-		request  *types.QueryGetActionSignerByOracleRequest
-		response *types.QueryGetActionSignerByOracleResponse
+		request  *types.QueryGetSyncActionSignerRequest
+		response *types.QueryGetSyncActionSignerResponse
 		err      error
 	}{
 		{
 			desc:     "First",
-			request:  &types.QueryGetActionSignerByOracleRequest{Id: msgs[0].Id},
-			response: &types.QueryGetActionSignerByOracleResponse{ActionSignerByOracle: msgs[0]},
+			request:  &types.QueryGetSyncActionSignerRequest{Id: msgs[0].Id},
+			response: &types.QueryGetSyncActionSignerResponse{SyncActionSigner: msgs[0]},
 		},
 		{
 			desc:     "Second",
-			request:  &types.QueryGetActionSignerByOracleRequest{Id: msgs[1].Id},
-			response: &types.QueryGetActionSignerByOracleResponse{ActionSignerByOracle: msgs[1]},
+			request:  &types.QueryGetSyncActionSignerRequest{Id: msgs[1].Id},
+			response: &types.QueryGetSyncActionSignerResponse{SyncActionSigner: msgs[1]},
 		},
 		{
 			desc:    "KeyNotFound",
-			request: &types.QueryGetActionSignerByOracleRequest{Id: uint64(len(msgs))},
+			request: &types.QueryGetSyncActionSignerRequest{Id: uint64(len(msgs))},
 			err:     sdkerrors.ErrKeyNotFound,
 		},
 		{
@@ -46,7 +46,7 @@ func TestActionSignerByOracleQuerySingle(t *testing.T) {
 		},
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
-			response, err := keeper.ActionSignerByOracle(wctx, tc.request)
+			response, err := keeper.SyncActionSigner(wctx, tc.request)
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
@@ -60,13 +60,13 @@ func TestActionSignerByOracleQuerySingle(t *testing.T) {
 	}
 }
 
-func TestActionSignerByOracleQueryPaginated(t *testing.T) {
+func TestSyncActionSignerQueryPaginated(t *testing.T) {
 	keeper, ctx := keepertest.NftoracleKeeper(t)
 	wctx := sdk.WrapSDKContext(ctx)
-	msgs := createNActionSignerByOracle(keeper, ctx, 5)
+	msgs := createNSyncActionSigner(keeper, ctx, 5)
 
-	request := func(next []byte, offset, limit uint64, total bool) *types.QueryAllActionSignerByOracleRequest {
-		return &types.QueryAllActionSignerByOracleRequest{
+	request := func(next []byte, offset, limit uint64, total bool) *types.QueryAllSyncActionSignerRequest {
+		return &types.QueryAllSyncActionSignerRequest{
 			Pagination: &query.PageRequest{
 				Key:        next,
 				Offset:     offset,
@@ -78,12 +78,12 @@ func TestActionSignerByOracleQueryPaginated(t *testing.T) {
 	t.Run("ByOffset", func(t *testing.T) {
 		step := 2
 		for i := 0; i < len(msgs); i += step {
-			resp, err := keeper.ActionSignerByOracleAll(wctx, request(nil, uint64(i), uint64(step), false))
+			resp, err := keeper.SyncActionSignerAll(wctx, request(nil, uint64(i), uint64(step), false))
 			require.NoError(t, err)
-			require.LessOrEqual(t, len(resp.ActionSignerByOracle), step)
+			require.LessOrEqual(t, len(resp.SyncActionSigner), step)
 			require.Subset(t,
 				nullify.Fill(msgs),
-				nullify.Fill(resp.ActionSignerByOracle),
+				nullify.Fill(resp.SyncActionSigner),
 			)
 		}
 	})
@@ -91,27 +91,27 @@ func TestActionSignerByOracleQueryPaginated(t *testing.T) {
 		step := 2
 		var next []byte
 		for i := 0; i < len(msgs); i += step {
-			resp, err := keeper.ActionSignerByOracleAll(wctx, request(next, 0, uint64(step), false))
+			resp, err := keeper.SyncActionSignerAll(wctx, request(next, 0, uint64(step), false))
 			require.NoError(t, err)
-			require.LessOrEqual(t, len(resp.ActionSignerByOracle), step)
+			require.LessOrEqual(t, len(resp.SyncActionSigner), step)
 			require.Subset(t,
 				nullify.Fill(msgs),
-				nullify.Fill(resp.ActionSignerByOracle),
+				nullify.Fill(resp.SyncActionSigner),
 			)
 			next = resp.Pagination.NextKey
 		}
 	})
 	t.Run("Total", func(t *testing.T) {
-		resp, err := keeper.ActionSignerByOracleAll(wctx, request(nil, 0, 0, true))
+		resp, err := keeper.SyncActionSignerAll(wctx, request(nil, 0, 0, true))
 		require.NoError(t, err)
 		require.Equal(t, len(msgs), int(resp.Pagination.Total))
 		require.ElementsMatch(t,
 			nullify.Fill(msgs),
-			nullify.Fill(resp.ActionSignerByOracle),
+			nullify.Fill(resp.SyncActionSigner),
 		)
 	})
 	t.Run("InvalidRequest", func(t *testing.T) {
-		_, err := keeper.ActionSignerByOracleAll(wctx, nil)
+		_, err := keeper.SyncActionSignerAll(wctx, nil)
 		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
 	})
 }

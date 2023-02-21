@@ -16,8 +16,8 @@ func DefaultGenesis() *GenesisState {
 		OracleConfig:               nil,
 		ActionSignerList:           []ActionSigner{},
 		BindedSignerList:           []BindedSigner{},
-		ActionSignerByOracleList:   []ActionSignerByOracle{},
 		ActionSignerConfigList:     []ActionSignerConfig{},
+		SyncActionSignerList:       []SyncActionSigner{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -82,18 +82,6 @@ func (gs GenesisState) Validate() error {
 		}
 		bindedSignerIndexMap[index] = struct{}{}
 	}
-	// Check for duplicated ID in actionSignerByOracle
-	actionSignerByOracleIdMap := make(map[uint64]bool)
-	actionSignerByOracleCount := gs.GetActionSignerByOracleCount()
-	for _, elem := range gs.ActionSignerByOracleList {
-		if _, ok := actionSignerByOracleIdMap[elem.Id]; ok {
-			return fmt.Errorf("duplicated id for actionSignerByOracle")
-		}
-		if elem.Id >= actionSignerByOracleCount {
-			return fmt.Errorf("actionSignerByOracle id should be lower or equal than the last id")
-		}
-		actionSignerByOracleIdMap[elem.Id] = true
-	}
 	// Check for duplicated index in actionSignerConfig
 	actionSignerConfigIndexMap := make(map[string]struct{})
 
@@ -103,6 +91,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for actionSignerConfig")
 		}
 		actionSignerConfigIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated ID in syncActionSigner
+	syncActionSignerIdMap := make(map[uint64]bool)
+	syncActionSignerCount := gs.GetSyncActionSignerCount()
+	for _, elem := range gs.SyncActionSignerList {
+		if _, ok := syncActionSignerIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for syncActionSigner")
+		}
+		if elem.Id >= syncActionSignerCount {
+			return fmt.Errorf("syncActionSigner id should be lower or equal than the last id")
+		}
+		syncActionSignerIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

@@ -57,6 +57,6 @@ var (
 	ErrRequiredConfirmTooLess                = sdkerrors.Register(ModuleName, 306, "Required confirm too less")
 
 	// 400 - 499
-	ErrParsingSetSignerSignature = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
+	ErrParsingSetSignerSignature     = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
 	ErrNoPermissionAdminSignerConfig = sdkerrors.Register(ModuleName, 401, "No permission admin signer config")
 )

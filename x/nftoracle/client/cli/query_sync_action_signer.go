@@ -10,10 +10,10 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 )
 
-func CmdListActionSignerByOracle() *cobra.Command {
+func CmdListSyncActionSigner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-action-signer-by-oracle",
-		Short: "list all action_signer_by_oracle",
+		Use:   "list-sync-action-signer",
+		Short: "list all sync_action_signer",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -24,11 +24,11 @@ func CmdListActionSignerByOracle() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllActionSignerByOracleRequest{
+			params := &types.QueryAllSyncActionSignerRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.ActionSignerByOracleAll(context.Background(), params)
+			res, err := queryClient.SyncActionSignerAll(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -43,10 +43,10 @@ func CmdListActionSignerByOracle() *cobra.Command {
 	return cmd
 }
 
-func CmdShowActionSignerByOracle() *cobra.Command {
+func CmdShowSyncActionSigner() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-action-signer-by-oracle [id]",
-		Short: "shows a action_signer_by_oracle",
+		Use:   "show-sync-action-signer [id]",
+		Short: "shows a sync_action_signer",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
@@ -58,11 +58,11 @@ func CmdShowActionSignerByOracle() *cobra.Command {
 				return err
 			}
 
-			params := &types.QueryGetActionSignerByOracleRequest{
+			params := &types.QueryGetSyncActionSignerRequest{
 				Id: id,
 			}
 
-			res, err := queryClient.ActionSignerByOracle(context.Background(), params)
+			res, err := queryClient.SyncActionSigner(context.Background(), params)
 			if err != nil {
 				return err
 			}
