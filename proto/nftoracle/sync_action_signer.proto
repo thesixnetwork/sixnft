@@ -27,10 +27,10 @@ message SyncActionSigner {
 
 message ParameterSyncSignerByOracle{
   string chain = 1;
-  string owner_address = 2;
-  string actor_address = 3;
-  google.protobuf.Timestamp request_expire = 4
-  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; // nothing to deal with contract but use for oracle request
+  string owner_address = 2; // get from smart contract
+  string actor_address = 3; // get from smart contract
+  google.protobuf.Timestamp expired_at = 4
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; // get from smart contract
 }
 
 message ContractInfoHash {
