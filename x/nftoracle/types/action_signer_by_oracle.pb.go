@@ -5,16 +5,21 @@ package types
 
 import (
 	fmt "fmt"
+	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
+	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
+	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+	time "time"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -22,29 +27,172 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type OriginActionSignerContractInfo struct {
+	Chain           string `protobuf:"bytes,1,opt,name=chain,proto3" json:"chain,omitempty"`
+	ContractAddress string `protobuf:"bytes,2,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"`
+	ContractName    string `protobuf:"bytes,3,opt,name=contract_name,json=contractName,proto3" json:"contract_name,omitempty"`
+	ContractOwner   string `protobuf:"bytes,4,opt,name=contract_owner,json=contractOwner,proto3" json:"contract_owner,omitempty"`
+	RequestHash     string `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
+}
+
+func (m *OriginActionSignerContractInfo) Reset()         { *m = OriginActionSignerContractInfo{} }
+func (m *OriginActionSignerContractInfo) String() string { return proto.CompactTextString(m) }
+func (*OriginActionSignerContractInfo) ProtoMessage()    {}
+func (*OriginActionSignerContractInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8f0bfb1337d525f7, []int{0}
+}
+func (m *OriginActionSignerContractInfo) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *OriginActionSignerContractInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_OriginActionSignerContractInfo.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *OriginActionSignerContractInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OriginActionSignerContractInfo.Merge(m, src)
+}
+func (m *OriginActionSignerContractInfo) XXX_Size() int {
+	return m.Size()
+}
+func (m *OriginActionSignerContractInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_OriginActionSignerContractInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OriginActionSignerContractInfo proto.InternalMessageInfo
+
+func (m *OriginActionSignerContractInfo) GetChain() string {
+	if m != nil {
+		return m.Chain
+	}
+	return ""
+}
+
+func (m *OriginActionSignerContractInfo) GetContractAddress() string {
+	if m != nil {
+		return m.ContractAddress
+	}
+	return ""
+}
+
+func (m *OriginActionSignerContractInfo) GetContractName() string {
+	if m != nil {
+		return m.ContractName
+	}
+	return ""
+}
+
+func (m *OriginActionSignerContractInfo) GetContractOwner() string {
+	if m != nil {
+		return m.ContractOwner
+	}
+	return ""
+}
+
+func (m *OriginActionSignerContractInfo) GetRequestHash() string {
+	if m != nil {
+		return m.RequestHash
+	}
+	return ""
+}
+
+type ParameterActionSignerByOracle struct {
+	ContractInfo  *OriginActionSignerContractInfo `protobuf:"bytes,1,opt,name=contract_info,json=contractInfo,proto3" json:"contract_info,omitempty"`
+	OwnerAddress  string                          `protobuf:"bytes,2,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	ActorAddress  string                          `protobuf:"bytes,3,opt,name=actor_address,json=actorAddress,proto3" json:"actor_address,omitempty"`
+	RequestExpire time.Time                       `protobuf:"bytes,4,opt,name=request_expire,json=requestExpire,proto3,stdtime" json:"request_expire"`
+}
+
+func (m *ParameterActionSignerByOracle) Reset()         { *m = ParameterActionSignerByOracle{} }
+func (m *ParameterActionSignerByOracle) String() string { return proto.CompactTextString(m) }
+func (*ParameterActionSignerByOracle) ProtoMessage()    {}
+func (*ParameterActionSignerByOracle) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8f0bfb1337d525f7, []int{1}
+}
+func (m *ParameterActionSignerByOracle) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ParameterActionSignerByOracle) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ParameterActionSignerByOracle.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ParameterActionSignerByOracle) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ParameterActionSignerByOracle.Merge(m, src)
+}
+func (m *ParameterActionSignerByOracle) XXX_Size() int {
+	return m.Size()
+}
+func (m *ParameterActionSignerByOracle) XXX_DiscardUnknown() {
+	xxx_messageInfo_ParameterActionSignerByOracle.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ParameterActionSignerByOracle proto.InternalMessageInfo
+
+func (m *ParameterActionSignerByOracle) GetContractInfo() *OriginActionSignerContractInfo {
+	if m != nil {
+		return m.ContractInfo
+	}
+	return nil
+}
+
+func (m *ParameterActionSignerByOracle) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *ParameterActionSignerByOracle) GetActorAddress() string {
+	if m != nil {
+		return m.ActorAddress
+	}
+	return ""
+}
+
+func (m *ParameterActionSignerByOracle) GetRequestExpire() time.Time {
+	if m != nil {
+		return m.RequestExpire
+	}
+	return time.Time{}
+}
+
 type ActionSignerByOracle struct {
-	Id                    uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ActorAddress          string `protobuf:"bytes,2,opt,name=actorAddress,proto3" json:"actorAddress,omitempty"`
-	OwnerAddress          string `protobuf:"bytes,3,opt,name=ownerAddress,proto3" json:"ownerAddress,omitempty"`
-	CreateAt              string `protobuf:"bytes,4,opt,name=createAt,proto3" json:"createAt,omitempty"`
-	ExpireAt              string `protobuf:"bytes,5,opt,name=expireAt,proto3" json:"expireAt,omitempty"`
-	Caller                string `protobuf:"bytes,6,opt,name=caller,proto3" json:"caller,omitempty"`
-	RequiredConfirm       uint64 `protobuf:"varint,7,opt,name=requiredConfirm,proto3" json:"requiredConfirm,omitempty"`
-	Status                string `protobuf:"bytes,8,opt,name=status,proto3" json:"status,omitempty"`
-	CurrentConfirm        uint64 `protobuf:"varint,9,opt,name=currentConfirm,proto3" json:"currentConfirm,omitempty"`
-	Confirmers            string `protobuf:"bytes,10,opt,name=confirmers,proto3" json:"confirmers,omitempty"`
-	CreatedAt             string `protobuf:"bytes,11,opt,name=createdAt,proto3" json:"createdAt,omitempty"`
-	ValidUntil            string `protobuf:"bytes,12,opt,name=validUntil,proto3" json:"validUntil,omitempty"`
-	DataHashes            string `protobuf:"bytes,13,opt,name=dataHashes,proto3" json:"dataHashes,omitempty"`
-	ExpiredHeight         int32  `protobuf:"varint,14,opt,name=expiredHeight,proto3" json:"expiredHeight,omitempty"`
-	ExecutionErrorMessage string `protobuf:"bytes,15,opt,name=executionErrorMessage,proto3" json:"executionErrorMessage,omitempty"`
+	Id                    uint64              `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	ActorAddress          string              `protobuf:"bytes,2,opt,name=actorAddress,proto3" json:"actorAddress,omitempty"`
+	OwnerAddress          string              `protobuf:"bytes,3,opt,name=ownerAddress,proto3" json:"ownerAddress,omitempty"`
+	ExpireAt              string              `protobuf:"bytes,4,opt,name=expireAt,proto3" json:"expireAt,omitempty"`
+	Caller                string              `protobuf:"bytes,5,opt,name=caller,proto3" json:"caller,omitempty"`
+	RequiredConfirm       uint64              `protobuf:"varint,6,opt,name=required_confirm,json=requiredConfirm,proto3" json:"required_confirm,omitempty"`
+	Status                RequestStatus       `protobuf:"varint,7,opt,name=status,proto3,enum=thesixnetwork.sixnft.nftoracle.RequestStatus" json:"status,omitempty"`
+	CurrentConfirm        uint64              `protobuf:"varint,8,opt,name=current_confirm,json=currentConfirm,proto3" json:"current_confirm,omitempty"`
+	Confirmers            []string            `protobuf:"bytes,9,rep,name=confirmers,proto3" json:"confirmers,omitempty"`
+	CreatedAt             time.Time           `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3,stdtime" json:"created_at"`
+	ValidUntil            time.Time           `protobuf:"bytes,11,opt,name=valid_until,json=validUntil,proto3,stdtime" json:"valid_until"`
+	DataHashes            []*ContractInfoHash `protobuf:"bytes,12,rep,name=data_hashes,json=dataHashes,proto3" json:"data_hashes,omitempty"`
+	ExpiredHeight         int32               `protobuf:"varint,13,opt,name=expired_height,json=expiredHeight,proto3" json:"expired_height,omitempty"`
+	ExecutionErrorMessage string              `protobuf:"bytes,14,opt,name=execution_error_message,json=executionErrorMessage,proto3" json:"execution_error_message,omitempty"`
 }
 
 func (m *ActionSignerByOracle) Reset()         { *m = ActionSignerByOracle{} }
 func (m *ActionSignerByOracle) String() string { return proto.CompactTextString(m) }
 func (*ActionSignerByOracle) ProtoMessage()    {}
 func (*ActionSignerByOracle) Descriptor() ([]byte, []int) {
-	return fileDescriptor_8f0bfb1337d525f7, []int{0}
+	return fileDescriptor_8f0bfb1337d525f7, []int{2}
 }
 func (m *ActionSignerByOracle) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -94,13 +242,6 @@ func (m *ActionSignerByOracle) GetOwnerAddress() string {
 	return ""
 }
 
-func (m *ActionSignerByOracle) GetCreateAt() string {
-	if m != nil {
-		return m.CreateAt
-	}
-	return ""
-}
-
 func (m *ActionSignerByOracle) GetExpireAt() string {
 	if m != nil {
 		return m.ExpireAt
@@ -122,11 +263,11 @@ func (m *ActionSignerByOracle) GetRequiredConfirm() uint64 {
 	return 0
 }
 
-func (m *ActionSignerByOracle) GetStatus() string {
+func (m *ActionSignerByOracle) GetStatus() RequestStatus {
 	if m != nil {
 		return m.Status
 	}
-	return ""
+	return RequestStatus_PENDING
 }
 
 func (m *ActionSignerByOracle) GetCurrentConfirm() uint64 {
@@ -136,32 +277,32 @@ func (m *ActionSignerByOracle) GetCurrentConfirm() uint64 {
 	return 0
 }
 
-func (m *ActionSignerByOracle) GetConfirmers() string {
+func (m *ActionSignerByOracle) GetConfirmers() []string {
 	if m != nil {
 		return m.Confirmers
 	}
-	return ""
+	return nil
 }
 
-func (m *ActionSignerByOracle) GetCreatedAt() string {
+func (m *ActionSignerByOracle) GetCreatedAt() time.Time {
 	if m != nil {
 		return m.CreatedAt
 	}
-	return ""
+	return time.Time{}
 }
 
-func (m *ActionSignerByOracle) GetValidUntil() string {
+func (m *ActionSignerByOracle) GetValidUntil() time.Time {
 	if m != nil {
 		return m.ValidUntil
 	}
-	return ""
+	return time.Time{}
 }
 
-func (m *ActionSignerByOracle) GetDataHashes() string {
+func (m *ActionSignerByOracle) GetDataHashes() []*ContractInfoHash {
 	if m != nil {
 		return m.DataHashes
 	}
-	return ""
+	return nil
 }
 
 func (m *ActionSignerByOracle) GetExpiredHeight() int32 {
@@ -178,8 +319,71 @@ func (m *ActionSignerByOracle) GetExecutionErrorMessage() string {
 	return ""
 }
 
+type ContractInfoHash struct {
+	ContractParam *OriginActionSignerContractInfo `protobuf:"bytes,1,opt,name=contract_param,json=contractParam,proto3" json:"contract_param,omitempty"`
+	Hash          []byte                          `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
+	Confirmers    []string                        `protobuf:"bytes,3,rep,name=confirmers,proto3" json:"confirmers,omitempty"`
+}
+
+func (m *ContractInfoHash) Reset()         { *m = ContractInfoHash{} }
+func (m *ContractInfoHash) String() string { return proto.CompactTextString(m) }
+func (*ContractInfoHash) ProtoMessage()    {}
+func (*ContractInfoHash) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8f0bfb1337d525f7, []int{3}
+}
+func (m *ContractInfoHash) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ContractInfoHash) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ContractInfoHash.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ContractInfoHash) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ContractInfoHash.Merge(m, src)
+}
+func (m *ContractInfoHash) XXX_Size() int {
+	return m.Size()
+}
+func (m *ContractInfoHash) XXX_DiscardUnknown() {
+	xxx_messageInfo_ContractInfoHash.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ContractInfoHash proto.InternalMessageInfo
+
+func (m *ContractInfoHash) GetContractParam() *OriginActionSignerContractInfo {
+	if m != nil {
+		return m.ContractParam
+	}
+	return nil
+}
+
+func (m *ContractInfoHash) GetHash() []byte {
+	if m != nil {
+		return m.Hash
+	}
+	return nil
+}
+
+func (m *ContractInfoHash) GetConfirmers() []string {
+	if m != nil {
+		return m.Confirmers
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*OriginActionSignerContractInfo)(nil), "thesixnetwork.sixnft.nftoracle.OriginActionSignerContractInfo")
+	proto.RegisterType((*ParameterActionSignerByOracle)(nil), "thesixnetwork.sixnft.nftoracle.ParameterActionSignerByOracle")
 	proto.RegisterType((*ActionSignerByOracle)(nil), "thesixnetwork.sixnft.nftoracle.ActionSignerByOracle")
+	proto.RegisterType((*ContractInfoHash)(nil), "thesixnetwork.sixnft.nftoracle.ContractInfoHash")
 }
 
 func init() {
@@ -187,33 +391,168 @@ func init() {
 }
 
 var fileDescriptor_8f0bfb1337d525f7 = []byte{
-	// 407 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x92, 0xcf, 0x6a, 0x53, 0x41,
-	0x14, 0x87, 0x73, 0x63, 0x1a, 0x9b, 0xb1, 0x4d, 0x61, 0x50, 0x19, 0x44, 0x86, 0x50, 0x44, 0xb3,
-	0xca, 0x45, 0xf4, 0x05, 0x52, 0x11, 0x0a, 0x22, 0x42, 0xc4, 0x8d, 0x9b, 0x30, 0x99, 0x39, 0x49,
-	0x06, 0x6f, 0x67, 0xe2, 0x99, 0x73, 0x6d, 0xb2, 0xf5, 0x09, 0x7c, 0x2c, 0x97, 0x5d, 0xba, 0x94,
-	0xe4, 0x45, 0x64, 0x66, 0x6c, 0xd2, 0x84, 0xee, 0xce, 0xf9, 0xbe, 0x73, 0x7e, 0xdc, 0x3f, 0x87,
-	0xbd, 0x72, 0x53, 0xf2, 0xa8, 0x74, 0x05, 0xa5, 0xd2, 0x64, 0xbd, 0x1b, 0x07, 0x3b, 0x73, 0x80,
-	0xe3, 0xc9, 0x6a, 0x9c, 0xf9, 0x60, 0x81, 0x9e, 0x3c, 0x97, 0x34, 0x87, 0x60, 0x97, 0x0e, 0xe8,
-	0xda, 0xe3, 0xb7, 0x41, 0x2c, 0xa7, 0x34, 0xd8, 0x6e, 0x9f, 0xff, 0x6c, 0xb1, 0xc7, 0xc3, 0x94,
-	0xf0, 0x39, 0x05, 0x5c, 0xac, 0x3e, 0x25, 0xc1, 0xbb, 0xac, 0x69, 0x8d, 0x28, 0x7a, 0x45, 0xbf,
-	0x35, 0x6a, 0x5a, 0xc3, 0xcf, 0xd9, 0x89, 0xd2, 0xe4, 0x71, 0x68, 0x0c, 0x42, 0x08, 0xa2, 0xd9,
-	0x2b, 0xfa, 0x9d, 0xd1, 0x1e, 0x8b, 0x33, 0xfe, 0xda, 0xc1, 0x76, 0xe6, 0x41, 0x9e, 0xb9, 0xcb,
-	0xf8, 0x33, 0x76, 0xac, 0x11, 0x14, 0xc1, 0x90, 0x44, 0x2b, 0xf9, 0x6d, 0x1f, 0x1d, 0x2c, 0x17,
-	0x16, 0xa3, 0x3b, 0xca, 0xee, 0xb6, 0xe7, 0x4f, 0x59, 0x5b, 0xab, 0xaa, 0x02, 0x14, 0xed, 0x64,
-	0xfe, 0x77, 0xbc, 0xcf, 0xce, 0x10, 0xbe, 0xd7, 0x16, 0xc1, 0xbc, 0xf3, 0x6e, 0x6a, 0xf1, 0x4a,
-	0x3c, 0x4c, 0x0f, 0x7d, 0x88, 0x63, 0x42, 0x20, 0x45, 0x75, 0x10, 0xc7, 0x39, 0x21, 0x77, 0xfc,
-	0x25, 0xeb, 0xea, 0x1a, 0x11, 0x1c, 0xdd, 0x06, 0x74, 0x52, 0xc0, 0x01, 0xe5, 0x92, 0x31, 0x9d,
-	0x4b, 0xc0, 0x20, 0x58, 0xca, 0xb8, 0x43, 0xf8, 0x73, 0xd6, 0xc9, 0x6f, 0x62, 0x86, 0x24, 0x1e,
-	0x25, 0xbd, 0x03, 0x71, 0xfb, 0x87, 0xaa, 0xac, 0xf9, 0xe2, 0xc8, 0x56, 0xe2, 0x24, 0x6f, 0xef,
-	0x48, 0xf4, 0x46, 0x91, 0xba, 0x54, 0x61, 0x0e, 0x41, 0x9c, 0x66, 0xbf, 0x23, 0xfc, 0x05, 0x3b,
-	0xcd, 0xdf, 0xc2, 0x5c, 0x82, 0x9d, 0xcd, 0x49, 0x74, 0x7b, 0x45, 0xff, 0x68, 0xb4, 0x0f, 0xf9,
-	0x5b, 0xf6, 0x04, 0x96, 0xa0, 0xeb, 0xf8, 0x43, 0xdf, 0x23, 0x7a, 0xfc, 0x08, 0x21, 0xa8, 0x19,
-	0x88, 0xb3, 0x14, 0x78, 0xbf, 0xbc, 0xf8, 0xf0, 0x7b, 0x2d, 0x8b, 0x9b, 0xb5, 0x2c, 0xfe, 0xae,
-	0x65, 0xf1, 0x6b, 0x23, 0x1b, 0x37, 0x1b, 0xd9, 0xf8, 0xb3, 0x91, 0x8d, 0xaf, 0xaf, 0x67, 0x96,
-	0xe6, 0xf5, 0x64, 0xa0, 0xfd, 0x55, 0xb9, 0x77, 0x49, 0x65, 0xbe, 0xa4, 0x72, 0x59, 0xee, 0x2e,
-	0x91, 0x56, 0x0b, 0x08, 0x93, 0x76, 0x3a, 0xbc, 0x37, 0xff, 0x02, 0x00, 0x00, 0xff, 0xff, 0x89,
-	0x93, 0xff, 0xb0, 0xa3, 0x02, 0x00, 0x00,
+	// 724 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcb, 0x6e, 0xd3, 0x40,
+	0x14, 0x8d, 0x93, 0x26, 0x34, 0x93, 0x47, 0xab, 0x51, 0xa1, 0x56, 0x24, 0xdc, 0x90, 0x0a, 0x35,
+	0x2c, 0xb0, 0x21, 0x48, 0x2c, 0x91, 0xd2, 0x2a, 0x52, 0x51, 0x05, 0x05, 0x17, 0x36, 0x6c, 0xac,
+	0x89, 0x7d, 0x63, 0x8f, 0x88, 0x3d, 0x61, 0x66, 0x42, 0xd3, 0xbf, 0xe8, 0xbe, 0xdf, 0xc0, 0x7f,
+	0x74, 0xd9, 0x25, 0x2b, 0x40, 0xed, 0x8f, 0x20, 0x8f, 0x1f, 0x79, 0x08, 0xb5, 0xaa, 0xc4, 0x6e,
+	0xe6, 0xf8, 0xdc, 0x99, 0x73, 0xcf, 0xf1, 0x5c, 0xb4, 0x17, 0x8d, 0x24, 0xe3, 0xc4, 0x1d, 0x83,
+	0x45, 0x5c, 0x49, 0x59, 0xe4, 0x08, 0xea, 0x47, 0xc0, 0x9d, 0xe1, 0x99, 0x93, 0xe0, 0xe6, 0x84,
+	0x33, 0xc9, 0xb0, 0x21, 0x03, 0x10, 0x74, 0x16, 0x81, 0x3c, 0x65, 0xfc, 0xab, 0x19, 0x2f, 0x47,
+	0xd2, 0xcc, 0xab, 0x5b, 0xdb, 0xf3, 0x83, 0x38, 0x7c, 0x9b, 0x82, 0x90, 0x49, 0x61, 0x6b, 0xcb,
+	0x67, 0x3e, 0x53, 0x4b, 0x2b, 0x5e, 0xa5, 0xe8, 0x8e, 0xcf, 0x98, 0x3f, 0x06, 0x4b, 0xed, 0x86,
+	0xd3, 0x91, 0x25, 0x69, 0x08, 0x42, 0x92, 0x70, 0x92, 0x10, 0x3a, 0x57, 0x1a, 0x32, 0x8e, 0x39,
+	0xf5, 0x69, 0xd4, 0x57, 0xba, 0x4e, 0x94, 0xac, 0x03, 0x16, 0x49, 0x4e, 0x5c, 0xf9, 0x36, 0x1a,
+	0x31, 0xbc, 0x85, 0xca, 0x6e, 0x40, 0x68, 0xa4, 0x6b, 0x6d, 0xad, 0x5b, 0xb5, 0x93, 0x0d, 0x7e,
+	0x86, 0x36, 0xdd, 0x94, 0xe5, 0x10, 0xcf, 0xe3, 0x20, 0x84, 0x5e, 0x54, 0x84, 0x8d, 0x0c, 0xef,
+	0x27, 0x30, 0xde, 0x45, 0x8d, 0x9c, 0x1a, 0x91, 0x10, 0xf4, 0x92, 0xe2, 0xd5, 0x33, 0xf0, 0x3d,
+	0x09, 0x01, 0x3f, 0x45, 0xcd, 0x9c, 0xc4, 0x4e, 0x23, 0xe0, 0xfa, 0x9a, 0x62, 0xe5, 0xa5, 0xc7,
+	0x31, 0x88, 0x9f, 0xa0, 0x7a, 0xda, 0xb7, 0x13, 0x10, 0x11, 0xe8, 0x65, 0x45, 0xaa, 0xa5, 0xd8,
+	0x21, 0x11, 0x41, 0xe7, 0xa2, 0x88, 0x1e, 0x7f, 0x20, 0x9c, 0x84, 0x20, 0x81, 0x2f, 0x76, 0xb5,
+	0x7f, 0x76, 0xac, 0x9c, 0xc3, 0xee, 0x82, 0x20, 0x1a, 0x8d, 0x98, 0xea, 0xac, 0xd6, 0x7b, 0x63,
+	0xde, 0x6e, 0xbe, 0x79, 0xbb, 0x51, 0xf3, 0x86, 0x94, 0x6d, 0xbb, 0xa8, 0xa1, 0xfa, 0x58, 0x71,
+	0xa7, 0xae, 0xc0, 0x05, 0x6b, 0x88, 0x2b, 0xd9, 0x9c, 0x94, 0x5a, 0xa3, 0xc0, 0x8c, 0x74, 0x84,
+	0x9a, 0x59, 0xcf, 0x30, 0x9b, 0x50, 0x0e, 0xca, 0x9a, 0x5a, 0xaf, 0x65, 0x26, 0xe9, 0x9a, 0x59,
+	0xba, 0xe6, 0xa7, 0x2c, 0xdd, 0xfd, 0xf5, 0xcb, 0x5f, 0x3b, 0x85, 0xf3, 0xdf, 0x3b, 0x9a, 0xdd,
+	0x48, 0x6b, 0x07, 0xaa, 0xb4, 0x73, 0x51, 0x46, 0x5b, 0xff, 0x34, 0xa5, 0x89, 0x8a, 0xd4, 0x53,
+	0x4e, 0xac, 0xd9, 0x45, 0xea, 0xe1, 0x0e, 0x5a, 0x52, 0x91, 0xc9, 0x5f, 0x52, 0xd6, 0x41, 0x4b,
+	0xed, 0x64, 0xea, 0x97, 0x5a, 0x6c, 0xa1, 0xf5, 0x44, 0x75, 0x5f, 0xa6, 0x91, 0xe6, 0x7b, 0xfc,
+	0x08, 0x55, 0x5c, 0x32, 0x1e, 0x03, 0x4f, 0x73, 0x4c, 0x77, 0xf1, 0xcf, 0x15, 0xab, 0xa6, 0x1c,
+	0x3c, 0xc7, 0x65, 0xd1, 0x88, 0xf2, 0x50, 0xaf, 0x28, 0x65, 0x1b, 0x19, 0x7e, 0x90, 0xc0, 0x78,
+	0x80, 0x2a, 0x42, 0x12, 0x39, 0x15, 0xfa, 0x83, 0xb6, 0xd6, 0x6d, 0xf6, 0x9e, 0xdf, 0x15, 0xa2,
+	0x9d, 0xd8, 0x71, 0xa2, 0x8a, 0xec, 0xb4, 0x18, 0xef, 0xa1, 0x0d, 0x77, 0xca, 0x39, 0x44, 0x32,
+	0xbf, 0x70, 0x5d, 0x5d, 0xd8, 0x4c, 0xe1, 0xec, 0x3e, 0x03, 0xa1, 0x94, 0x00, 0x5c, 0xe8, 0xd5,
+	0x76, 0xa9, 0x5b, 0xb5, 0x17, 0x10, 0x7c, 0x80, 0x90, 0xcb, 0x81, 0x48, 0xf0, 0x1c, 0x22, 0x75,
+	0x74, 0x8f, 0xa0, 0xaa, 0x69, 0x5d, 0x5f, 0xe2, 0x01, 0xaa, 0x7d, 0x27, 0x63, 0xea, 0x39, 0xd3,
+	0x48, 0xd2, 0xb1, 0x5e, 0xbb, 0xc7, 0x29, 0x48, 0x15, 0x7e, 0x8e, 0xeb, 0xf0, 0x47, 0x54, 0xf3,
+	0x88, 0x24, 0xea, 0xa5, 0x80, 0xd0, 0xeb, 0xed, 0x52, 0xb7, 0xd6, 0x7b, 0x71, 0x97, 0x41, 0x8b,
+	0xff, 0x74, 0xfc, 0xa0, 0x6c, 0x14, 0x1f, 0x72, 0xa8, 0xce, 0x88, 0x9f, 0x69, 0x92, 0x9e, 0xe7,
+	0x04, 0x40, 0xfd, 0x40, 0xea, 0x8d, 0xb6, 0xd6, 0x2d, 0xdb, 0x8d, 0x14, 0x3d, 0x54, 0x20, 0x7e,
+	0x8d, 0xb6, 0x61, 0x06, 0xee, 0x54, 0x8d, 0x3a, 0xe0, 0x9c, 0x71, 0x27, 0x04, 0x21, 0x88, 0x0f,
+	0x7a, 0x53, 0x25, 0xfd, 0x30, 0xff, 0x3c, 0x88, 0xbf, 0xbe, 0x4b, 0x3e, 0x76, 0x7e, 0x68, 0x68,
+	0x73, 0xf5, 0x7e, 0x0c, 0x0b, 0xa3, 0x61, 0x12, 0x3f, 0xec, 0xff, 0xf4, 0x5e, 0xf3, 0x21, 0xa0,
+	0xa6, 0x05, 0xc6, 0x68, 0x4d, 0x8d, 0x94, 0xf8, 0x47, 0xaf, 0xdb, 0x6a, 0xbd, 0x92, 0x76, 0x69,
+	0x35, 0xed, 0xfd, 0xa3, 0xcb, 0x6b, 0x43, 0xbb, 0xba, 0x36, 0xb4, 0x3f, 0xd7, 0x86, 0x76, 0x7e,
+	0x63, 0x14, 0xae, 0x6e, 0x8c, 0xc2, 0xcf, 0x1b, 0xa3, 0xf0, 0xe5, 0xa5, 0x4f, 0x65, 0x30, 0x1d,
+	0x9a, 0x2e, 0x0b, 0xad, 0x25, 0x99, 0x56, 0x22, 0xd3, 0x9a, 0x59, 0xf3, 0x51, 0x2e, 0xcf, 0x26,
+	0x20, 0x86, 0x15, 0x15, 0xec, 0xab, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff, 0xad, 0x38, 0x4c, 0xd7,
+	0x2d, 0x06, 0x00, 0x00,
+}
+
+func (m *OriginActionSignerContractInfo) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *OriginActionSignerContractInfo) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OriginActionSignerContractInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.RequestHash) > 0 {
+		i -= len(m.RequestHash)
+		copy(dAtA[i:], m.RequestHash)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.RequestHash)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.ContractOwner) > 0 {
+		i -= len(m.ContractOwner)
+		copy(dAtA[i:], m.ContractOwner)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ContractOwner)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.ContractName) > 0 {
+		i -= len(m.ContractName)
+		copy(dAtA[i:], m.ContractName)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ContractName)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.ContractAddress) > 0 {
+		i -= len(m.ContractAddress)
+		copy(dAtA[i:], m.ContractAddress)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ContractAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Chain) > 0 {
+		i -= len(m.Chain)
+		copy(dAtA[i:], m.Chain)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Chain)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ParameterActionSignerByOracle) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ParameterActionSignerByOracle) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ParameterActionSignerByOracle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	n1, err1 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.RequestExpire, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.RequestExpire):])
+	if err1 != nil {
+		return 0, err1
+	}
+	i -= n1
+	i = encodeVarintActionSignerByOracle(dAtA, i, uint64(n1))
+	i--
+	dAtA[i] = 0x22
+	if len(m.ActorAddress) > 0 {
+		i -= len(m.ActorAddress)
+		copy(dAtA[i:], m.ActorAddress)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ActorAddress)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.OwnerAddress) > 0 {
+		i -= len(m.OwnerAddress)
+		copy(dAtA[i:], m.OwnerAddress)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.OwnerAddress)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ContractInfo != nil {
+		{
+			size, err := m.ContractInfo.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintActionSignerByOracle(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *ActionSignerByOracle) Marshal() (dAtA []byte, err error) {
@@ -241,76 +580,78 @@ func (m *ActionSignerByOracle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.ExecutionErrorMessage)
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ExecutionErrorMessage)))
 		i--
-		dAtA[i] = 0x7a
+		dAtA[i] = 0x72
 	}
 	if m.ExpiredHeight != 0 {
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(m.ExpiredHeight))
 		i--
-		dAtA[i] = 0x70
+		dAtA[i] = 0x68
 	}
 	if len(m.DataHashes) > 0 {
-		i -= len(m.DataHashes)
-		copy(dAtA[i:], m.DataHashes)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.DataHashes)))
-		i--
-		dAtA[i] = 0x6a
+		for iNdEx := len(m.DataHashes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.DataHashes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintActionSignerByOracle(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x62
+		}
 	}
-	if len(m.ValidUntil) > 0 {
-		i -= len(m.ValidUntil)
-		copy(dAtA[i:], m.ValidUntil)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ValidUntil)))
-		i--
-		dAtA[i] = 0x62
+	n3, err3 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.ValidUntil, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.ValidUntil):])
+	if err3 != nil {
+		return 0, err3
 	}
-	if len(m.CreatedAt) > 0 {
-		i -= len(m.CreatedAt)
-		copy(dAtA[i:], m.CreatedAt)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.CreatedAt)))
-		i--
-		dAtA[i] = 0x5a
+	i -= n3
+	i = encodeVarintActionSignerByOracle(dAtA, i, uint64(n3))
+	i--
+	dAtA[i] = 0x5a
+	n4, err4 := github_com_gogo_protobuf_types.StdTimeMarshalTo(m.CreatedAt, dAtA[i-github_com_gogo_protobuf_types.SizeOfStdTime(m.CreatedAt):])
+	if err4 != nil {
+		return 0, err4
 	}
+	i -= n4
+	i = encodeVarintActionSignerByOracle(dAtA, i, uint64(n4))
+	i--
+	dAtA[i] = 0x52
 	if len(m.Confirmers) > 0 {
-		i -= len(m.Confirmers)
-		copy(dAtA[i:], m.Confirmers)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Confirmers)))
-		i--
-		dAtA[i] = 0x52
+		for iNdEx := len(m.Confirmers) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Confirmers[iNdEx])
+			copy(dAtA[i:], m.Confirmers[iNdEx])
+			i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Confirmers[iNdEx])))
+			i--
+			dAtA[i] = 0x4a
+		}
 	}
 	if m.CurrentConfirm != 0 {
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(m.CurrentConfirm))
 		i--
-		dAtA[i] = 0x48
+		dAtA[i] = 0x40
 	}
-	if len(m.Status) > 0 {
-		i -= len(m.Status)
-		copy(dAtA[i:], m.Status)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Status)))
+	if m.Status != 0 {
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(m.Status))
 		i--
-		dAtA[i] = 0x42
+		dAtA[i] = 0x38
 	}
 	if m.RequiredConfirm != 0 {
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(m.RequiredConfirm))
 		i--
-		dAtA[i] = 0x38
+		dAtA[i] = 0x30
 	}
 	if len(m.Caller) > 0 {
 		i -= len(m.Caller)
 		copy(dAtA[i:], m.Caller)
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Caller)))
 		i--
-		dAtA[i] = 0x32
+		dAtA[i] = 0x2a
 	}
 	if len(m.ExpireAt) > 0 {
 		i -= len(m.ExpireAt)
 		copy(dAtA[i:], m.ExpireAt)
 		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.ExpireAt)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.CreateAt) > 0 {
-		i -= len(m.CreateAt)
-		copy(dAtA[i:], m.CreateAt)
-		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.CreateAt)))
 		i--
 		dAtA[i] = 0x22
 	}
@@ -336,6 +677,57 @@ func (m *ActionSignerByOracle) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *ContractInfoHash) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ContractInfoHash) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ContractInfoHash) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Confirmers) > 0 {
+		for iNdEx := len(m.Confirmers) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Confirmers[iNdEx])
+			copy(dAtA[i:], m.Confirmers[iNdEx])
+			i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Confirmers[iNdEx])))
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.Hash) > 0 {
+		i -= len(m.Hash)
+		copy(dAtA[i:], m.Hash)
+		i = encodeVarintActionSignerByOracle(dAtA, i, uint64(len(m.Hash)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ContractParam != nil {
+		{
+			size, err := m.ContractParam.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintActionSignerByOracle(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintActionSignerByOracle(dAtA []byte, offset int, v uint64) int {
 	offset -= sovActionSignerByOracle(v)
 	base := offset
@@ -347,6 +739,58 @@ func encodeVarintActionSignerByOracle(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *OriginActionSignerContractInfo) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Chain)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.ContractAddress)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.ContractName)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.ContractOwner)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.RequestHash)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	return n
+}
+
+func (m *ParameterActionSignerByOracle) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ContractInfo != nil {
+		l = m.ContractInfo.Size()
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.OwnerAddress)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.ActorAddress)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.RequestExpire)
+	n += 1 + l + sovActionSignerByOracle(uint64(l))
+	return n
+}
+
 func (m *ActionSignerByOracle) Size() (n int) {
 	if m == nil {
 		return 0
@@ -364,10 +808,6 @@ func (m *ActionSignerByOracle) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovActionSignerByOracle(uint64(l))
 	}
-	l = len(m.CreateAt)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
-	}
 	l = len(m.ExpireAt)
 	if l > 0 {
 		n += 1 + l + sovActionSignerByOracle(uint64(l))
@@ -379,28 +819,27 @@ func (m *ActionSignerByOracle) Size() (n int) {
 	if m.RequiredConfirm != 0 {
 		n += 1 + sovActionSignerByOracle(uint64(m.RequiredConfirm))
 	}
-	l = len(m.Status)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	if m.Status != 0 {
+		n += 1 + sovActionSignerByOracle(uint64(m.Status))
 	}
 	if m.CurrentConfirm != 0 {
 		n += 1 + sovActionSignerByOracle(uint64(m.CurrentConfirm))
 	}
-	l = len(m.Confirmers)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	if len(m.Confirmers) > 0 {
+		for _, s := range m.Confirmers {
+			l = len(s)
+			n += 1 + l + sovActionSignerByOracle(uint64(l))
+		}
 	}
-	l = len(m.CreatedAt)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
-	}
-	l = len(m.ValidUntil)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
-	}
-	l = len(m.DataHashes)
-	if l > 0 {
-		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.CreatedAt)
+	n += 1 + l + sovActionSignerByOracle(uint64(l))
+	l = github_com_gogo_protobuf_types.SizeOfStdTime(m.ValidUntil)
+	n += 1 + l + sovActionSignerByOracle(uint64(l))
+	if len(m.DataHashes) > 0 {
+		for _, e := range m.DataHashes {
+			l = e.Size()
+			n += 1 + l + sovActionSignerByOracle(uint64(l))
+		}
 	}
 	if m.ExpiredHeight != 0 {
 		n += 1 + sovActionSignerByOracle(uint64(m.ExpiredHeight))
@@ -412,11 +851,427 @@ func (m *ActionSignerByOracle) Size() (n int) {
 	return n
 }
 
+func (m *ContractInfoHash) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ContractParam != nil {
+		l = m.ContractParam.Size()
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	l = len(m.Hash)
+	if l > 0 {
+		n += 1 + l + sovActionSignerByOracle(uint64(l))
+	}
+	if len(m.Confirmers) > 0 {
+		for _, s := range m.Confirmers {
+			l = len(s)
+			n += 1 + l + sovActionSignerByOracle(uint64(l))
+		}
+	}
+	return n
+}
+
 func sovActionSignerByOracle(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozActionSignerByOracle(x uint64) (n int) {
 	return sovActionSignerByOracle(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *OriginActionSignerContractInfo) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowActionSignerByOracle
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OriginActionSignerContractInfo: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OriginActionSignerContractInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Chain", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Chain = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContractAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractName", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContractName = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractOwner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ContractOwner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RequestHash", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RequestHash = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipActionSignerByOracle(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ParameterActionSignerByOracle) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowActionSignerByOracle
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ParameterActionSignerByOracle: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ParameterActionSignerByOracle: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractInfo", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ContractInfo == nil {
+				m.ContractInfo = &OriginActionSignerContractInfo{}
+			}
+			if err := m.ContractInfo.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OwnerAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OwnerAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ActorAddress", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ActorAddress = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RequestExpire", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.RequestExpire, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipActionSignerByOracle(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -532,38 +1387,6 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field CreateAt", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowActionSignerByOracle
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthActionSignerByOracle
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthActionSignerByOracle
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.CreateAt = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpireAt", wireType)
 			}
 			var stringLen uint64
@@ -594,7 +1417,7 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 			}
 			m.ExpireAt = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 6:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Caller", wireType)
 			}
@@ -626,7 +1449,7 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 			}
 			m.Caller = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 7:
+		case 6:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RequiredConfirm", wireType)
 			}
@@ -645,11 +1468,11 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 8:
-			if wireType != 2 {
+		case 7:
+			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
 			}
-			var stringLen uint64
+			m.Status = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowActionSignerByOracle
@@ -659,25 +1482,12 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				m.Status |= RequestStatus(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthActionSignerByOracle
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthActionSignerByOracle
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Status = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 9:
+		case 8:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CurrentConfirm", wireType)
 			}
@@ -696,7 +1506,7 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 10:
+		case 9:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Confirmers", wireType)
 			}
@@ -726,13 +1536,13 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Confirmers = string(dAtA[iNdEx:postIndex])
+			m.Confirmers = append(m.Confirmers, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
-		case 11:
+		case 10:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field CreatedAt", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowActionSignerByOracle
@@ -742,29 +1552,30 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.CreatedAt = string(dAtA[iNdEx:postIndex])
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.CreatedAt, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 12:
+		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ValidUntil", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowActionSignerByOracle
@@ -774,29 +1585,30 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.ValidUntil = string(dAtA[iNdEx:postIndex])
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(&m.ValidUntil, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 13:
+		case 12:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field DataHashes", wireType)
 			}
-			var stringLen uint64
+			var msglen int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowActionSignerByOracle
@@ -806,25 +1618,27 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
+			if msglen < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
-			postIndex := iNdEx + intStringLen
+			postIndex := iNdEx + msglen
 			if postIndex < 0 {
 				return ErrInvalidLengthActionSignerByOracle
 			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.DataHashes = string(dAtA[iNdEx:postIndex])
+			m.DataHashes = append(m.DataHashes, &ContractInfoHash{})
+			if err := m.DataHashes[len(m.DataHashes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
 			iNdEx = postIndex
-		case 14:
+		case 13:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExpiredHeight", wireType)
 			}
@@ -843,7 +1657,7 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 15:
+		case 14:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field ExecutionErrorMessage", wireType)
 			}
@@ -874,6 +1688,158 @@ func (m *ActionSignerByOracle) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.ExecutionErrorMessage = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipActionSignerByOracle(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ContractInfoHash) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowActionSignerByOracle
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ContractInfoHash: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ContractInfoHash: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ContractParam", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ContractParam == nil {
+				m.ContractParam = &OriginActionSignerContractInfo{}
+			}
+			if err := m.ContractParam.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Hash", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Hash = append(m.Hash[:0], dAtA[iNdEx:postIndex]...)
+			if m.Hash == nil {
+				m.Hash = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Confirmers", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowActionSignerByOracle
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthActionSignerByOracle
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Confirmers = append(m.Confirmers, string(dAtA[iNdEx:postIndex]))
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
