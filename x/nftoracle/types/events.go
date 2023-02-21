@@ -45,4 +45,10 @@ const (
 	AttributeKeyNewContract = "new_config_contract"
 	AttributeKeyOldContract = "old_config_contract"
 
+	EventTypeSyncActionReqeustCreated = "sync_action_request_created"
+	AttributeKeySyncActionRequestID = "sync_action_request_id"
+	AttributeKeySyncActionRequestOwnerAddress = "sync_action_request_owner_address"
+	AttributeKeySyncActionRequestActorAddress = "sync_action_request_actor_address"
+
+
 )

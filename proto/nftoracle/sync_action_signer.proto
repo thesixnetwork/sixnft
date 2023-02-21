@@ -10,19 +10,18 @@ message SyncActionSigner {
   uint64 id = 1;
   string actor_address = 2; 
   string owner_address = 3; 
-  string expire_at = 4; 
-  string caller = 5;  // will use as creator when message is success
-  uint64 required_confirm = 6; 
-  RequestStatus status = 7; 
-  uint64 current_confirm = 8; 
-  repeated string confirmers = 9; 
-  google.protobuf.Timestamp created_at = 10
+  string caller = 4;  // will use as creator when message is success
+  uint64 required_confirm = 5; 
+  RequestStatus status = 6; 
+  uint64 current_confirm = 7; 
+  repeated string confirmers = 8; 
+  google.protobuf.Timestamp created_at = 9
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  google.protobuf.Timestamp valid_until = 11
+  google.protobuf.Timestamp valid_until = 10
   [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
-  repeated ContractInfoHash data_hashes = 12; 
-  int64 expired_height = 13; 
-  string execution_error_message = 14; 
+  repeated ContractInfoHash data_hashes = 11; 
+  int64 expired_height = 12; 
+  string execution_error_message = 13; 
   
 }
 
