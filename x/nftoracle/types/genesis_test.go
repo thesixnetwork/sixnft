@@ -75,6 +75,14 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ActionSignerByOracleCount: 2,
+				ActionSignerConfigList: []types.ActionSignerConfig{
+					{
+						Chain: "0",
+					},
+					{
+						Chain: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -208,6 +216,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ActionSignerByOracleCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionSignerConfig",
+			genState: &types.GenesisState{
+				ActionSignerConfigList: []types.ActionSignerConfig{
+					{
+						Chain: "0",
+					},
+					{
+						Chain: "0",
+					},
+				},
 			},
 			valid: false,
 		},

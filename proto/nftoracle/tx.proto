@@ -2,6 +2,7 @@ syntax = "proto3";
 package thesixnetwork.sixnft.nftoracle;
 
 import "nftoracle/action_signer.proto";
+import "nftoracle/action_signer_config.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -18,6 +19,9 @@ service Msg {
   rpc CreateActionSigner(MsgCreateActionSigner) returns (MsgCreateActionSignerResponse);
   rpc UpdateActionSigner(MsgUpdateActionSigner) returns (MsgUpdateActionSignerResponse);
   rpc DeleteActionSigner(MsgDeleteActionSigner) returns (MsgDeleteActionSignerResponse);
+  rpc CreateActionSignerConfig(MsgCreateActionSignerConfig) returns (MsgCreateActionSignerConfigResponse);
+  rpc UpdateActionSignerConfig(MsgUpdateActionSignerConfig) returns (MsgUpdateActionSignerConfigResponse);
+  rpc DeleteActionSignerConfig(MsgDeleteActionSignerConfig) returns (MsgDeleteActionSignerConfigResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -126,4 +130,30 @@ message MsgDeleteActionSignerResponse {
   string ownerAddress = 1;
   string signerAddress = 2;
 }
+message MsgCreateActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+  string rpc_endpoint = 3;
+  string contractAddress = 4;
+  string contractName = 5;
+  string contractOwner = 6;
+}
+message MsgCreateActionSignerConfigResponse {}
+
+message MsgUpdateActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+  string rpc_endpoint = 3;
+  string contractAddress = 4;
+  string contractName = 5;
+  string contractOwner = 6;
+}
+message MsgUpdateActionSignerConfigResponse {}
+
+message MsgDeleteActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+}
+message MsgDeleteActionSignerConfigResponse {}
+
 // this line is used by starport scaffolding # proto/tx/message

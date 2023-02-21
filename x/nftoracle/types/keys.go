@@ -48,3 +48,7 @@ const (
 	ActionSignerByOracleKey      = "ActionSignerByOracle-value-"
 	ActionSignerByOracleCountKey = "ActionSignerByOracle-count-"
 )
+
+const (
+	KeyPermissionAdminSignerConfig = "admin_signer_config"
+)

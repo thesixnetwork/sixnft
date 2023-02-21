@@ -7,21 +7,6 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
-message OriginActionSignerContractInfo {
-  string chain = 1;
-  string contract_address = 2;
-  string contract_name = 3;
-  string contract_owner = 4;
-  string request_hash = 5; // origin txHash on the chain
-}
-
-message ParameterActionSignerByOracle{
-  OriginActionSignerContractInfo contract_info = 1;
-  string owner_address = 2;
-  string actor_address = 3;
-  google.protobuf.Timestamp request_expire = 4
-  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; // nothing to deal with contract but use for oracle request
-}
 
 message ActionSignerByOracle {
   uint64 id = 1;
@@ -43,8 +28,16 @@ message ActionSignerByOracle {
   
 }
 
+message ParameterSyncSignerByOracle{
+  string chain = 1;
+  string owner_address = 2;
+  string actor_address = 3;
+  google.protobuf.Timestamp request_expire = 4
+  [(gogoproto.stdtime) = true, (gogoproto.nullable) = false]; // nothing to deal with contract but use for oracle request
+}
+
 message ContractInfoHash {
-  OriginActionSignerContractInfo contract_param = 1;
+  ParameterSyncSignerByOracle contract_param = 1;
   bytes hash = 2;
   repeated string confirmers = 3;
 }

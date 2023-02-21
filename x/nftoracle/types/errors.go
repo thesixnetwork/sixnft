@@ -58,4 +58,5 @@ var (
 
 	// 400 - 499
 	ErrParsingSetSignerSignature = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
+	ErrNoPermissionAdminSignerConfig = sdkerrors.Register(ModuleName, 401, "No permission admin signer config")
 )
