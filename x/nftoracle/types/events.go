@@ -34,4 +34,12 @@ const (
 
 	EventTypeSetMinimumConfirmation = "set_minimum_confirmation"
 	AttributeKeyMinimumConfirmation = "minimum_confirmation"
+
+	EventTypeCreateActionSignerConfig = "create_action_signer_config"
+	EventTypeSetActionSignerConfig = "set_action_signer_config"
+	EventTypeDeleteActionSignerConfig = "delete_action_signer_config"
+	AttributeKeyChain = "chain_name"
+	AttributeKeyNewContract = "new_config_contract"
+	AttributeKeyOldContract = "old_config_contract"
+
 )

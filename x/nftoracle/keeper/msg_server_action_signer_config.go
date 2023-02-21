@@ -7,7 +7,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
 
-	"github.com/ethereum/go-ethereum/common"
+	// "github.com/ethereum/go-ethereum/common"
 )
 
 func (k msgServer) CreateActionSignerConfig(goCtx context.Context, msg *types.MsgCreateActionSignerConfig) (*types.MsgCreateActionSignerConfigResponse, error) {
@@ -33,15 +33,15 @@ func (k msgServer) CreateActionSignerConfig(goCtx context.Context, msg *types.Ms
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
 	}
 
-	// validate ContractOwner address
-	if !common.IsHexAddress(msg.ContractOwner) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract owner address")
-	}
+	// // validate ContractOwner address
+	// if !common.IsHexAddress(msg.ContractOwner) {
+	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract owner address")
+	// }
 
-	// validate ContractAddress address
-	if !common.IsHexAddress(msg.ContractAddress) {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract address")
-	}
+	// // validate ContractAddress address
+	// if !common.IsHexAddress(msg.ContractAddress) {
+	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract address")
+	// }
 
 	var actionSignerConfig = types.ActionSignerConfig{
 		Creator:         msg.Creator,
@@ -56,12 +56,30 @@ func (k msgServer) CreateActionSignerConfig(goCtx context.Context, msg *types.Ms
 		ctx,
 		actionSignerConfig,
 	)
+
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeCreateActionSignerConfig,
+			sdk.NewAttribute(types.AttributeKeyChain, msg.Chain),
+			sdk.NewAttribute(types.AttributeKeyNewContract, msg.ContractAddress),
+		),
+	})
 	return &types.MsgCreateActionSignerConfigResponse{}, nil
 }
 
 func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.MsgUpdateActionSignerConfig) (*types.MsgUpdateActionSignerConfigResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	// Validate if creator has permission to set fee config
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
+
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionAdminSignerConfig, creator)
+	if !granted {
+		return nil, sdkerrors.Wrap(types.ErrNoPermissionAdminSignerConfig, msg.Creator)
+	}
 	// Check if the value exists
 	valFound, isFound := k.GetActionSignerConfig(
 		ctx,
@@ -76,6 +94,16 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
+		// // validate ContractOwner address
+	// if !common.IsHexAddress(msg.ContractOwner) {
+	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract owner address")
+	// }
+
+	// // validate ContractAddress address
+	// if !common.IsHexAddress(msg.ContractAddress) {
+	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract address")
+	// }
+
 	var actionSignerConfig = types.ActionSignerConfig{
 		Creator:         msg.Creator,
 		Chain:           msg.Chain,
@@ -86,12 +114,31 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 
 	k.SetActionSignerConfig(ctx, actionSignerConfig)
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeSetActionSignerConfig,
+			sdk.NewAttribute(types.AttributeKeyChain, msg.Chain),
+			sdk.NewAttribute(types.AttributeKeyOldContract, valFound.ContractAddress),
+			sdk.NewAttribute(types.AttributeKeyNewContract, msg.ContractAddress),
+
+		),
+	})
 	return &types.MsgUpdateActionSignerConfigResponse{}, nil
 }
 
 func (k msgServer) DeleteActionSignerConfig(goCtx context.Context, msg *types.MsgDeleteActionSignerConfig) (*types.MsgDeleteActionSignerConfigResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+	
+	// Validate if creator has permission to set fee config
+	creator, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
 
+	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionAdminSignerConfig, creator)
+	if !granted {
+		return nil, sdkerrors.Wrap(types.ErrNoPermissionAdminSignerConfig, msg.Creator)
+	}
 	// Check if the value exists
 	valFound, isFound := k.GetActionSignerConfig(
 		ctx,
@@ -111,5 +158,11 @@ func (k msgServer) DeleteActionSignerConfig(goCtx context.Context, msg *types.Ms
 		msg.Chain,
 	)
 
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeDeleteActionSignerConfig,
+			sdk.NewAttribute(types.AttributeKeyChain, msg.Chain),
+		),
+	})
 	return &types.MsgDeleteActionSignerConfigResponse{}, nil
 }

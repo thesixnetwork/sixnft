@@ -449,7 +449,17 @@ ignite scaffold message createMultiMetadata nft_schema_code token_id base64NFTDa
 
 # run ignite g proto-go -y
 
-ignite scaffold list action_signer_by_oracle actorAddress ownerAddress expireAt \
+ignite scaffold list sync_action_signer actorAddress ownerAddress expire_at \
     caller required_confirm:uint status current_confirm:uint confirmers created_at \
     valid_until data_hashes expired_height:int execution_error_message \
     --module nftoracle --no-message --no-simulation -y
+
+ignite scaffold message createSyncActionSigner actor_address:string owner_address:string  \
+    --desc "Requesting to sync actionSigner with smartcontract" \
+    --response id:uint,owner_address:string,actor_address:string \
+    --module nftoracle
+
+ignite scaffold message submitSyncActionSigner sync_id:uint actor_address:string owner_address:string expire_at:string \                                                                                                                                                                                                                                                                     ✭ ✱
+    --desc "Submit Verified actionSigner from smartcontract" \
+    --response verifyRequestID:uint,expire_at:string \
+    --no-simulation --module nftoracle
