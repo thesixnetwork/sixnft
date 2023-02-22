@@ -61102,24 +61102,10 @@ definitions:
                       type: array
                       items:
                         type: string
-  thesixnetwork.sixnft.nftadmin.MsgBurnResponse:
-    type: object
-    properties:
-      amount:
-        type: string
-      token:
-        type: string
   thesixnetwork.sixnft.nftadmin.MsgGrantPermissionResponse:
     type: object
     properties:
       grantee:
-        type: string
-  thesixnetwork.sixnft.nftadmin.MsgMintResponse:
-    type: object
-    properties:
-      amount:
-        type: string
-      token:
         type: string
   thesixnetwork.sixnft.nftadmin.MsgRevokePermissionResponse:
     type: object
