@@ -26,6 +26,7 @@ func (k msgServer) CreateSyncActionSigner(goCtx context.Context, msg *types.MsgC
 	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx)) // endtime of request; not expire time of actionSigner and set till now + 5 minutes(300 seconds)
 
 	id := k.AppendSyncActionSigner(ctx, types.SyncActionSigner{
+		Chain:           msg.Chain,
 		ActorAddress:    msg.ActorAddress,
 		OwnerAddress:    msg.OwnerAddress,
 		Caller:          msg.Creator,
@@ -48,7 +49,6 @@ func (k msgServer) CreateSyncActionSigner(goCtx context.Context, msg *types.MsgC
 			sdk.NewAttribute(types.AttributeKeySyncActionRequestOwnerAddress, msg.OwnerAddress),
 			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),
 		),
-		
 	})
 
 	return &types.MsgCreateSyncActionSignerResponse{}, nil

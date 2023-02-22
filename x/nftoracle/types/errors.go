@@ -59,4 +59,12 @@ var (
 	// 400 - 499
 	ErrParsingSetSignerSignature     = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
 	ErrNoPermissionAdminSignerConfig = sdkerrors.Register(ModuleName, 401, "No permission admin signer config")
+	ErrActionSignerNotFound          = sdkerrors.Register(ModuleName, 402, "Action signer not found")
+	ErrDeltedActionSigner         = sdkerrors.Register(ModuleName, 402, "Failed to delete action signer")
+
+	// 500 - 599
+	ErrSyncActionSignerRequestNotFound                 = sdkerrors.Register(ModuleName, 500, "Sync action signer request not found")
+	ErrSyncActionSignerRequestNotPending               = sdkerrors.Register(ModuleName, 501, "Sync action signer request not pending")
+	ErrSyncActionSignerRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 502, "Sync action signer request confirmed already completed")
+	ErrGetQueryActionSigner                        = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
 )

@@ -137,6 +137,15 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 
 	}
 
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeActionSigner,
+			sdk.NewAttribute(types.AttributeKeySignerOwner, _signerParams.OwnerAddress),
+			sdk.NewAttribute(types.AttributeKeySignerActor, _signerParams.ActorAddress),
+			sdk.NewAttribute(types.AttributeKeySginerExpireAt, _signerParams.ExpiredAt.UTC().Format(time.RFC3339)),
+		),
+	)
+
 	return &types.MsgCreateActionSignerResponse{
 		OwnerAddress:  _signerParams.ActorAddress,
 		SignerAddress: _signerParams.OwnerAddress,

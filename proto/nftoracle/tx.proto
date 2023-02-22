@@ -178,23 +178,26 @@ message MsgDeleteActionSignerConfigResponse {
 
 message MsgCreateSyncActionSigner {
   string creator = 1;
-  string actorAddress = 2;
-  string ownerAddress = 3;
-  uint64 requiredConfirm = 4;
+  string chain = 2;
+  string actorAddress = 3;
+  string ownerAddress = 4;
+  uint64 requiredConfirm = 5;
 }
 
 message MsgCreateSyncActionSignerResponse {
   uint64 id = 1;
-  string ownerAddress = 2;
-  string actorAddress = 3;
+  string chain = 2;
+  string ownerAddress = 3;
+  string actorAddress = 4;
 }
 
 message MsgSubmitSyncActionSigner {
   string creator = 1;
   uint64 syncId = 2;
-  string actorAddress = 3;
-  string ownerAddress = 4;
-  string expireAt = 5;
+  string chain = 3;
+  string actorAddress = 4;
+  string ownerAddress = 5;
+  string expireAt = 6;
 }
 
 message MsgSubmitSyncActionSignerResponse {

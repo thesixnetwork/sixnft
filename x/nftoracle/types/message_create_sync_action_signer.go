@@ -9,11 +9,12 @@ const TypeMsgCreateSyncActionSigner = "create_sync_action_signer"
 
 var _ sdk.Msg = &MsgCreateSyncActionSigner{}
 
-func NewMsgCreateSyncActionSigner(creator string, actorAddress string, ownerAddress string, requiredConfirm uint64) *MsgCreateSyncActionSigner {
+func NewMsgCreateSyncActionSigner(creator string, chain string, actorAddress string, ownerAddress string, requiredConfirm uint64) *MsgCreateSyncActionSigner {
 	return &MsgCreateSyncActionSigner{
-		Creator:      creator,
-		ActorAddress: actorAddress,
-		OwnerAddress: ownerAddress,
+		Creator:         creator,
+		Chain:           chain,
+		ActorAddress:    actorAddress,
+		OwnerAddress:    ownerAddress,
 		RequiredConfirm: requiredConfirm,
 	}
 }
