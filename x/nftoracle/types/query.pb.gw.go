@@ -1577,7 +1577,7 @@ var (
 
 	pattern_Query_OracleConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftoracle", "oracle_config"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_ActionSigner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"thesixnetwork", "sixnft", "nftoracle", "action_actor", "actorAddress", "ownerAddress"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_ActionSigner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"thesixnetwork", "sixnft", "nftoracle", "action_signer", "actorAddress", "ownerAddress"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_Query_ActionSignerAll_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"thesixnetwork", "sixnft", "nftoracle", "action_signer"}, "", runtime.AssumeColonVerbOpt(true)))
 

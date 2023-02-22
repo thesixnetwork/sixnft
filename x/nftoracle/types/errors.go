@@ -45,7 +45,7 @@ var (
 	ErrParsingCollectionOwnerSignature = sdkerrors.Register(ModuleName, 200, "Error parsing collection owner signature")
 	ErrNFTSchemaAlreadyVerified        = sdkerrors.Register(ModuleName, 201, "NFTSchema already verified")
 	ErrNotCollectionOwner              = sdkerrors.Register(ModuleName, 202, "Not collection owner")
-	ErrNotContractOwner                = sdkerrors.Register(ModuleName, 203, "Not collection owner")
+	ErrNotContractOwner                = sdkerrors.Register(ModuleName, 203, "Not Contract owner")
 
 	// 300 - 399
 	ErrVerifyRequestNotFound                 = sdkerrors.Register(ModuleName, 300, "Verify request not found")
@@ -60,11 +60,11 @@ var (
 	ErrParsingSetSignerSignature     = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
 	ErrNoPermissionAdminSignerConfig = sdkerrors.Register(ModuleName, 401, "No permission admin signer config")
 	ErrActionSignerNotFound          = sdkerrors.Register(ModuleName, 402, "Action signer not found")
-	ErrDeltedActionSigner         = sdkerrors.Register(ModuleName, 402, "Failed to delete action signer")
+	ErrDeltedActionSigner            = sdkerrors.Register(ModuleName, 403, "Failed to delete action signer")
 
 	// 500 - 599
 	ErrSyncActionSignerRequestNotFound                 = sdkerrors.Register(ModuleName, 500, "Sync action signer request not found")
 	ErrSyncActionSignerRequestNotPending               = sdkerrors.Register(ModuleName, 501, "Sync action signer request not pending")
 	ErrSyncActionSignerRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 502, "Sync action signer request confirmed already completed")
-	ErrGetQueryActionSigner                        = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
+	ErrGetQueryActionSigner                            = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
 )

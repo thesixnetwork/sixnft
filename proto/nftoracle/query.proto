@@ -69,7 +69,7 @@ service Query {
 	}
 	// Queries a ActionSigner by index.
 	rpc ActionSigner(QueryGetActionSignerRequest) returns (QueryGetActionSignerResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_actor/{actorAddress}/{ownerAddress}";
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_signer/{actorAddress}/{ownerAddress}";
 	}
 
 	// Queries a list of ActionSigner items.

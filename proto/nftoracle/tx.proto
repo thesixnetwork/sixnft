@@ -197,7 +197,9 @@ message MsgSubmitSyncActionSigner {
   string chain = 3;
   string actorAddress = 4;
   string ownerAddress = 5;
-  string expireAt = 6;
+  string expire_epoch = 6; 
+  /* usign epoch because the data will came from smart contract
+  and it is easier to make communication between smart contract and cosmos */
 }
 
 message MsgSubmitSyncActionSignerResponse {

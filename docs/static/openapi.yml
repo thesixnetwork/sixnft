@@ -37449,60 +37449,6 @@ paths:
                         }
       tags:
         - Query
-  '/thesixnetwork/sixnft/nftoracle/action_actor/{actorAddress}/{ownerAddress}':
-    get:
-      summary: Queries a ActionSigner by index.
-      operationId: ThesixnetworkSixnftNftoracleActionSigner
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              actionSigner:
-                type: object
-                properties:
-                  actor_address:
-                    type: string
-                  owner_address:
-                    type: string
-                  created_at:
-                    type: string
-                    format: date-time
-                  expired_at:
-                    type: string
-                    format: date-time
-                  creator:
-                    type: string
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      parameters:
-        - name: actorAddress
-          in: path
-          required: true
-          type: string
-        - name: ownerAddress
-          in: path
-          required: true
-          type: string
-      tags:
-        - Query
   /thesixnetwork/sixnft/nftoracle/action_request:
     get:
       summary: Queries a list of ActionRequest items.
@@ -38270,6 +38216,60 @@ paths:
           in: query
           required: false
           type: boolean
+      tags:
+        - Query
+  '/thesixnetwork/sixnft/nftoracle/action_signer/{actorAddress}/{ownerAddress}':
+    get:
+      summary: Queries a ActionSigner by index.
+      operationId: ThesixnetworkSixnftNftoracleActionSigner
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              actionSigner:
+                type: object
+                properties:
+                  actor_address:
+                    type: string
+                  owner_address:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  expired_at:
+                    type: string
+                    format: date-time
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: actorAddress
+          in: path
+          required: true
+          type: string
+        - name: ownerAddress
+          in: path
+          required: true
+          type: string
       tags:
         - Query
   /thesixnetwork/sixnft/nftoracle/action_signer_config:
@@ -39138,6 +39138,8 @@ paths:
                     type: string
                   action_signer_active_duration:
                     type: string
+                  sync_action_signer_active_duration:
+                    type: string
             description: >-
               QueryParamsResponse is response type for the Query/Params RPC
               method.
@@ -39179,11 +39181,11 @@ paths:
                     id:
                       type: string
                       format: uint64
+                    chain:
+                      type: string
                     actor_address:
                       type: string
                     owner_address:
-                      type: string
-                    expire_at:
                       type: string
                     caller:
                       type: string
@@ -39226,14 +39228,14 @@ paths:
                                 type: string
                               owner_address:
                                 type: string
+                                title: get from smart contract
                               actor_address:
                                 type: string
-                              request_expire:
+                                title: get from smart contract
+                              expired_at:
                                 type: string
                                 format: date-time
-                                title: >-
-                                  nothing to deal with contract but use for
-                                  oracle request
+                                title: get from smart contract
                           hash:
                             type: string
                             format: byte
@@ -39242,8 +39244,8 @@ paths:
                             items:
                               type: string
                     expired_height:
-                      type: integer
-                      format: int32
+                      type: string
+                      format: int64
                     execution_error_message:
                       type: string
               pagination:
@@ -39366,11 +39368,11 @@ paths:
                   id:
                     type: string
                     format: uint64
+                  chain:
+                    type: string
                   actor_address:
                     type: string
                   owner_address:
-                    type: string
-                  expire_at:
                     type: string
                   caller:
                     type: string
@@ -39413,14 +39415,14 @@ paths:
                               type: string
                             owner_address:
                               type: string
+                              title: get from smart contract
                             actor_address:
                               type: string
-                            request_expire:
+                              title: get from smart contract
+                            expired_at:
                               type: string
                               format: date-time
-                              title: >-
-                                nothing to deal with contract but use for oracle
-                                request
+                              title: get from smart contract
                         hash:
                           type: string
                           format: byte
@@ -39429,8 +39431,8 @@ paths:
                           items:
                             type: string
                   expired_height:
-                    type: integer
-                    format: int32
+                    type: string
+                    format: int64
                   execution_error_message:
                     type: string
         default:
@@ -66979,12 +66981,14 @@ definitions:
             type: string
           owner_address:
             type: string
+            title: get from smart contract
           actor_address:
             type: string
-          request_expire:
+            title: get from smart contract
+          expired_at:
             type: string
             format: date-time
-            title: nothing to deal with contract but use for oracle request
+            title: get from smart contract
       hash:
         type: string
         format: byte
@@ -67102,6 +67106,17 @@ definitions:
         format: uint64
   thesixnetwork.sixnft.nftoracle.MsgCreateActionSignerConfigResponse:
     type: object
+    properties:
+      chain:
+        type: string
+      rpc_endpoint:
+        type: string
+      contractAddress:
+        type: string
+      contractName:
+        type: string
+      contractOwner:
+        type: string
   thesixnetwork.sixnft.nftoracle.MsgCreateActionSignerResponse:
     type: object
     properties:
@@ -67127,6 +67142,8 @@ definitions:
       id:
         type: string
         format: uint64
+      chain:
+        type: string
       ownerAddress:
         type: string
       actorAddress:
@@ -67143,6 +67160,9 @@ definitions:
         type: string
   thesixnetwork.sixnft.nftoracle.MsgDeleteActionSignerConfigResponse:
     type: object
+    properties:
+      chain:
+        type: string
   thesixnetwork.sixnft.nftoracle.MsgDeleteActionSignerResponse:
     type: object
     properties:
@@ -67181,6 +67201,25 @@ definitions:
         format: uint64
   thesixnetwork.sixnft.nftoracle.MsgUpdateActionSignerConfigResponse:
     type: object
+    properties:
+      chain:
+        type: string
+      rpc_endpoint:
+        type: string
+      new_rpc_endpoint:
+        type: string
+      contractAddress:
+        type: string
+      new_contractAddress:
+        type: string
+      contractName:
+        type: string
+      new_contractName:
+        type: string
+      contractOwner:
+        type: string
+      new_contractOwner:
+        type: string
   thesixnetwork.sixnft.nftoracle.MsgUpdateActionSignerResponse:
     type: object
     properties:
@@ -67257,12 +67296,14 @@ definitions:
         type: string
       owner_address:
         type: string
+        title: get from smart contract
       actor_address:
         type: string
-      request_expire:
+        title: get from smart contract
+      expired_at:
         type: string
         format: date-time
-        title: nothing to deal with contract but use for oracle request
+        title: get from smart contract
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -67273,6 +67314,8 @@ definitions:
       verify_request_active_duration:
         type: string
       action_signer_active_duration:
+        type: string
+      sync_action_signer_active_duration:
         type: string
     description: Params defines the parameters for the module.
   thesixnetwork.sixnft.nftoracle.QueryAllActionRequestResponse:
@@ -67798,11 +67841,11 @@ definitions:
             id:
               type: string
               format: uint64
+            chain:
+              type: string
             actor_address:
               type: string
             owner_address:
-              type: string
-            expire_at:
               type: string
             caller:
               type: string
@@ -67845,14 +67888,14 @@ definitions:
                         type: string
                       owner_address:
                         type: string
+                        title: get from smart contract
                       actor_address:
                         type: string
-                      request_expire:
+                        title: get from smart contract
+                      expired_at:
                         type: string
                         format: date-time
-                        title: >-
-                          nothing to deal with contract but use for oracle
-                          request
+                        title: get from smart contract
                   hash:
                     type: string
                     format: byte
@@ -67861,8 +67904,8 @@ definitions:
                     items:
                       type: string
             expired_height:
-              type: integer
-              format: int32
+              type: string
+              format: int64
             execution_error_message:
               type: string
       pagination:
@@ -68279,11 +68322,11 @@ definitions:
           id:
             type: string
             format: uint64
+          chain:
+            type: string
           actor_address:
             type: string
           owner_address:
-            type: string
-          expire_at:
             type: string
           caller:
             type: string
@@ -68326,12 +68369,14 @@ definitions:
                       type: string
                     owner_address:
                       type: string
+                      title: get from smart contract
                     actor_address:
                       type: string
-                    request_expire:
+                      title: get from smart contract
+                    expired_at:
                       type: string
                       format: date-time
-                      title: nothing to deal with contract but use for oracle request
+                      title: get from smart contract
                 hash:
                   type: string
                   format: byte
@@ -68340,8 +68385,8 @@ definitions:
                   items:
                     type: string
           expired_height:
-            type: integer
-            format: int32
+            type: string
+            format: int64
           execution_error_message:
             type: string
   thesixnetwork.sixnft.nftoracle.QueryParamsResponse:
@@ -68358,6 +68403,8 @@ definitions:
           verify_request_active_duration:
             type: string
           action_signer_active_duration:
+            type: string
+          sync_action_signer_active_duration:
             type: string
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   thesixnetwork.sixnft.nftoracle.RequestStatus:
@@ -68376,11 +68423,11 @@ definitions:
       id:
         type: string
         format: uint64
+      chain:
+        type: string
       actor_address:
         type: string
       owner_address:
-        type: string
-      expire_at:
         type: string
       caller:
         type: string
@@ -68423,12 +68470,14 @@ definitions:
                   type: string
                 owner_address:
                   type: string
+                  title: get from smart contract
                 actor_address:
                   type: string
-                request_expire:
+                  title: get from smart contract
+                expired_at:
                   type: string
                   format: date-time
-                  title: nothing to deal with contract but use for oracle request
+                  title: get from smart contract
             hash:
               type: string
               format: byte
@@ -68437,8 +68486,8 @@ definitions:
               items:
                 type: string
       expired_height:
-        type: integer
-        format: int32
+        type: string
+        format: int64
       execution_error_message:
         type: string
   thesixnetwork.sixnft.nftoracle.Trait:

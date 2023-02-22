@@ -29,6 +29,7 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSyncActionSignerRequestNotFound, strconv.FormatUint(msg.SyncId, 10))
 	}
+
 	// Check if requestId is still pending
 	if SyncRequest.Status != types.RequestStatus_PENDING {
 		return nil, sdkerrors.Wrap(types.ErrSyncActionSignerRequestNotPending, strconv.FormatUint(msg.SyncId, 10))
@@ -38,7 +39,9 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 	if SyncRequest.CurrentConfirm >= SyncRequest.RequiredConfirm {
 		return nil, sdkerrors.Wrap(types.ErrSyncActionSignerRequestConfirmedAlreadyComplete, strconv.FormatUint(msg.SyncId, 10))
 	}
-	paramExpire, err := time.Parse(time.RFC3339, msg.ExpireAt)
+	// paramExpire, err := time.Parse(time.RFC3339, msg.ExpireAt)
+	_ExpireEpoch, err := strconv.ParseInt(msg.ExpireEpoch, 10, 64)
+	paramExpire := time.Unix(_ExpireEpoch, 0)
 
 	param_info := types.ParameterSyncSignerByOracle{}
 	// set param_info
@@ -117,76 +120,9 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 		)
 
 		if SyncRequest.Status == types.RequestStatus_SUCCESS_WITH_CONSENSUS {
-			if msg.ExpireAt == "" || msg.ExpireAt == "0" {
-				_, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
-				if !found {
-					return nil, sdkerrors.Wrap(types.ErrActionSignerNotFound, msg.ActorAddress+","+msg.OwnerAddress)
-				}
-
-				k.RemoveActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
-
-				bindedList, found := k.GetBindedSigner(ctx, msg.OwnerAddress)
-				if found {
-					for _, bindedIndex := range bindedList.Signers {
-						if bindedIndex.ActorAddress == msg.ActorAddress {
-							k.RemoveSignerFromBindedSignerList(ctx, msg.OwnerAddress, bindedIndex.ActorAddress)
-						}
-					}
-				}
-			} else {
-				actionSigner, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
-				if !found {
-					// create new action signer
-					actionSigner := types.ActionSigner{
-						ActorAddress: msg.ActorAddress,
-						OwnerAddress: msg.OwnerAddress,
-						ExpiredAt:    paramExpire,
-						CreatedAt:    ctx.BlockTime(),
-						Creator:      "oracle",
-					}
-					k.SetActionSigner(ctx, actionSigner)
-					// add to binded signer list
-					bindedList, found := k.GetBindedSigner(ctx, msg.OwnerAddress)
-					if !found {
-						bindedList = types.BindedSigner{
-							OwnerAddress: msg.OwnerAddress,
-							Signers:      make([]*types.XSetSignerParams, 0),
-						}
-					}
-
-					// add the binded signer to the list
-					bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
-						ActorAddress: msg.ActorAddress,
-						ExpiredAt:    paramExpire,
-					})
-
-					// set the binded signer
-					k.SetBindedSigner(ctx, types.BindedSigner{
-						OwnerAddress: msg.OwnerAddress,
-						Signers:      bindedList.Signers,
-						ActorCount:   uint64(len(bindedList.Signers)),
-					})
-				} else {
-					// update action signer
-					actionSigner.ExpiredAt = paramExpire
-					actionSigner.Creator = "oracle"
-					actionSigner.ActorAddress = msg.ActorAddress
-					actionSigner.OwnerAddress = msg.OwnerAddress
-					actionSigner.CreatedAt = ctx.BlockTime()
-					k.SetActionSigner(ctx, actionSigner)
-
-					bindedList, _ := k.GetBindedSigner(ctx, msg.OwnerAddress)
-					for _, bindedIndex := range bindedList.Signers {
-						if bindedIndex.ActorAddress == msg.ActorAddress {
-							bindedIndex.ExpiredAt = paramExpire
-						}
-					}
-					k.SetBindedSigner(ctx, types.BindedSigner{
-						OwnerAddress: msg.OwnerAddress,
-						Signers:      bindedList.Signers,
-						ActorCount:   uint64(len(bindedList.Signers)),
-					})
-				}
+			_, err := k.CreateSyncActionSignerByOracle(ctx, msg)
+			if err != nil {
+				return nil, err
 			}
 
 			ctx.EventManager().EmitEvent(
@@ -200,6 +136,105 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 		}
 	}
 
+	k.SetSyncActionSigner(ctx, SyncRequest)
+
+	return &types.MsgSubmitSyncActionSignerResponse{
+		VerifyRequestID: SyncRequest.Id,
+		ExpireAt: SyncRequest.ValidUntil.Format(time.RFC3339),
+	}, nil
+}
+
+
+// CreateSyncActionSignerByOracle
+func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.MsgSubmitSyncActionSigner) (*types.MsgSubmitSyncActionSignerResponse, error) {
+	SyncRequest, found := k.GetSyncActionSigner(ctx, msg.SyncId)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrSyncActionSignerRequestNotFound, strconv.FormatUint(msg.SyncId, 10))
+	}
+
+	_ExpireEpoch, _ := strconv.ParseInt(msg.ExpireEpoch, 10, 64)
+	paramExpire := time.Unix(_ExpireEpoch, 0)
+
+	if msg.ExpireEpoch == "" || msg.ExpireEpoch == "0" || msg.ExpireEpoch == " " {
+		_, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
+		if !found {
+			return nil, sdkerrors.Wrap(types.ErrActionSignerNotFound, msg.ActorAddress+","+msg.OwnerAddress)
+		}
+
+		k.RemoveActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
+
+		bindedList, found := k.GetBindedSigner(ctx, msg.OwnerAddress)
+		if found {
+			for _, bindedIndex := range bindedList.Signers {
+				if bindedIndex.ActorAddress == msg.ActorAddress {
+					k.RemoveSignerFromBindedSignerList(ctx, msg.OwnerAddress, bindedIndex.ActorAddress)
+				}
+			}
+		}
+	} else {
+		actionSigner, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
+		if !found {
+			// create new action signer
+			actionSigner := types.ActionSigner{
+				ActorAddress: msg.ActorAddress,
+				OwnerAddress: msg.OwnerAddress,
+				ExpiredAt:    paramExpire,
+				CreatedAt:    ctx.BlockTime(),
+				Creator:      "oracle",
+			}
+			k.SetActionSigner(ctx, actionSigner)
+			// add to binded signer list
+			bindedList, found := k.GetBindedSigner(ctx, msg.OwnerAddress)
+			if !found {
+				bindedList = types.BindedSigner{
+					OwnerAddress: msg.OwnerAddress,
+					Signers:      make([]*types.XSetSignerParams, 0),
+				}
+			}
+
+			// add the binded signer to the list
+			bindedList.Signers = append(bindedList.Signers, &types.XSetSignerParams{
+				ActorAddress: msg.ActorAddress,
+				ExpiredAt:    paramExpire,
+			})
+
+			// set the binded signer
+			k.SetBindedSigner(ctx, types.BindedSigner{
+				OwnerAddress: msg.OwnerAddress,
+				Signers:      bindedList.Signers,
+				ActorCount:   uint64(len(bindedList.Signers)),
+			})
+		} else {
+			// update action signer
+			actionSigner.ExpiredAt = paramExpire
+			actionSigner.Creator = "oracle"
+			actionSigner.ActorAddress = msg.ActorAddress
+			actionSigner.OwnerAddress = msg.OwnerAddress
+			actionSigner.CreatedAt = ctx.BlockTime()
+			k.SetActionSigner(ctx, actionSigner)
+
+			bindedList, _ := k.GetBindedSigner(ctx, msg.OwnerAddress)
+			for _, bindedIndex := range bindedList.Signers {
+				if bindedIndex.ActorAddress == msg.ActorAddress {
+					bindedIndex.ExpiredAt = paramExpire
+				}
+			}
+			k.SetBindedSigner(ctx, types.BindedSigner{
+				OwnerAddress: msg.OwnerAddress,
+				Signers:      bindedList.Signers,
+				ActorCount:   uint64(len(bindedList.Signers)),
+			})
+		}
+	}
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeActionSigner,
+			sdk.NewAttribute(types.AttributeKeySignerOwner, msg.OwnerAddress),
+			sdk.NewAttribute(types.AttributeKeySignerActor, msg.ActorAddress),
+			sdk.NewAttribute(types.AttributeKeySginerExpireAt, paramExpire.UTC().Format(time.RFC3339)),
+		),
+	)
 	return &types.MsgSubmitSyncActionSignerResponse{
 		VerifyRequestID: SyncRequest.Id,
 		ExpireAt: SyncRequest.ValidUntil.Format(time.RFC3339),

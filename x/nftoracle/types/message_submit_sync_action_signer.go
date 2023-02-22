@@ -9,13 +9,14 @@ const TypeMsgSubmitSyncActionSigner = "submit_sync_action_signer"
 
 var _ sdk.Msg = &MsgSubmitSyncActionSigner{}
 
-func NewMsgSubmitSyncActionSigner(creator string, syncId uint64, actorAddress string, ownerAddress string, expireAt string) *MsgSubmitSyncActionSigner {
+func NewMsgSubmitSyncActionSigner(creator string, chain string, syncId uint64, actorAddress string, ownerAddress string, expireEpoch string) *MsgSubmitSyncActionSigner {
 	return &MsgSubmitSyncActionSigner{
 		Creator:      creator,
 		SyncId:       syncId,
+		Chain:        chain,
 		ActorAddress: actorAddress,
 		OwnerAddress: ownerAddress,
-		ExpireAt:     expireAt,
+		ExpireEpoch:     expireEpoch,
 	}
 }
 
