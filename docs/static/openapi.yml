@@ -37641,16 +37641,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_request/{id}':
@@ -37960,16 +37950,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_request_063/{id}':
@@ -38206,16 +38186,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/action_signer/{actorAddress}/{ownerAddress}':
@@ -38388,16 +38358,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -38670,16 +38630,6 @@ paths:
             when key
 
             is set.
-          in: query
-          required: false
-          type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
           in: query
           required: false
           type: boolean
@@ -38960,16 +38910,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/mint_request/{id}':
@@ -39232,10 +39172,8 @@ paths:
                               actor_address:
                                 type: string
                                 title: get from smart contract
-                              expired_at:
+                              expire_epoch:
                                 type: string
-                                format: date-time
-                                title: get from smart contract
                           hash:
                             type: string
                             format: byte
@@ -39340,16 +39278,6 @@ paths:
           in: query
           required: false
           type: boolean
-        - name: pagination.reverse
-          description: >-
-            reverse is set to true if results are to be returned in the
-            descending order.
-
-
-            Since: cosmos-sdk 0.43
-          in: query
-          required: false
-          type: boolean
       tags:
         - Query
   '/thesixnetwork/sixnft/nftoracle/sync_action_signer/{id}':
@@ -39419,10 +39347,8 @@ paths:
                             actor_address:
                               type: string
                               title: get from smart contract
-                            expired_at:
+                            expire_epoch:
                               type: string
-                              format: date-time
-                              title: get from smart contract
                         hash:
                           type: string
                           format: byte
@@ -66971,10 +66897,8 @@ definitions:
           actor_address:
             type: string
             title: get from smart contract
-          expired_at:
+          expire_epoch:
             type: string
-            format: date-time
-            title: get from smart contract
       hash:
         type: string
         format: byte
@@ -67286,10 +67210,8 @@ definitions:
       actor_address:
         type: string
         title: get from smart contract
-      expired_at:
+      expire_epoch:
         type: string
-        format: date-time
-        title: get from smart contract
   thesixnetwork.sixnft.nftoracle.Params:
     type: object
     properties:
@@ -67878,10 +67800,8 @@ definitions:
                       actor_address:
                         type: string
                         title: get from smart contract
-                      expired_at:
+                      expire_epoch:
                         type: string
-                        format: date-time
-                        title: get from smart contract
                   hash:
                     type: string
                     format: byte
@@ -68359,10 +68279,8 @@ definitions:
                     actor_address:
                       type: string
                       title: get from smart contract
-                    expired_at:
+                    expire_epoch:
                       type: string
-                      format: date-time
-                      title: get from smart contract
                 hash:
                   type: string
                   format: byte
@@ -68460,10 +68378,8 @@ definitions:
                 actor_address:
                   type: string
                   title: get from smart contract
-                expired_at:
+                expire_epoch:
                   type: string
-                  format: date-time
-                  title: get from smart contract
             hash:
               type: string
               format: byte
