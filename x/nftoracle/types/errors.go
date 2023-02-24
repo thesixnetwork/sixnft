@@ -68,4 +68,10 @@ var (
 	ErrSyncActionSignerRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 502, "Sync action signer request confirmed already completed")
 	ErrGetQueryActionSigner                            = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
 	ErrActionSignerConfigNotFound                      = sdkerrors.Register(ModuleName, 504, "Action signer config not found")
+
+	// 1000 - 1099 The error code is reserved for SIXLINK
+	ErrDialToEndpoint    = sdkerrors.Register(ModuleName, 1000, "Dial with endpoint")
+	ErrParseAbi          = sdkerrors.Register(ModuleName, 1001, "Parse abi")
+	ErrConvertingTokenId = sdkerrors.Register(ModuleName, 1002, "Converting token id")
+	ErrCallContract      = sdkerrors.Register(ModuleName, 1003, "Call contract")
 )
