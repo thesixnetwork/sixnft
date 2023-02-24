@@ -38,10 +38,10 @@ const (
 	EventTypeSetMinimumConfirmation = "set_minimum_confirmation"
 	AttributeKeyMinimumConfirmation = "minimum_confirmation"
 
-	EventTypeActionSigner = "set_action_signer"
-	AttributeKeySignerOwner = "action_signer_owner"
-	AttributeKeySignerActor = "action_signer_actor"
-	AttributeKeySginerExpireAt	= "action_signer_expire_at"
+	EventTypeActionSigner      = "set_action_signer"
+	AttributeKeySignerOwner    = "action_signer_owner"
+	AttributeKeySignerActor    = "action_signer_actor"
+	AttributeKeySginerExpireAt = "action_signer_expire_at"
 
 	EventTypeCreateActionSignerConfig = "create_action_signer_config"
 	EventTypeSetActionSignerConfig    = "set_action_signer_config"
@@ -52,10 +52,11 @@ const (
 
 	EventTypeSyncActionReqeustCreated         = "sync_action_request_created"
 	AttributeKeySyncActionRequestID           = "sync_action_request_id"
+	AttributeKeySyncActionRequestChain        = "sync_action_request_chain"
 	AttributeKeySyncActionRequestOwnerAddress = "sync_action_request_owner_address"
 	AttributeKeySyncActionRequestActorAddress = "sync_action_request_actor_address"
 
 	EventTypeSyncRequestConfirmed = "sync_request_confirmed"
-	AttributeKeySyncRequestID   = "sync_request_id"
-	AttributeKeySyncRequestStatus   = "sync_request_status"
+	AttributeKeySyncRequestID     = "sync_request_id"
+	AttributeKeySyncRequestStatus = "sync_request_status"
 )

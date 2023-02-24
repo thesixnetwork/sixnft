@@ -67,4 +67,5 @@ var (
 	ErrSyncActionSignerRequestNotPending               = sdkerrors.Register(ModuleName, 501, "Sync action signer request not pending")
 	ErrSyncActionSignerRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 502, "Sync action signer request confirmed already completed")
 	ErrGetQueryActionSigner                            = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
+	ErrActionSignerConfigNotFound                      = sdkerrors.Register(ModuleName, 504, "Action signer config not found")
 )
