@@ -5,10 +5,7 @@ option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
 message ActionSignerConfig {
   string chain = 1; 
-  string rpc_endpoint = 2;
-  string contractAddress = 3; 
-  string contractName = 4; 
-  string contractOwner = 5; 
-  string creator = 6;
+  string contractAddress = 2; 
+  string creator = 3;
 }
 

@@ -16,19 +16,13 @@ var _ sdk.Msg = &MsgCreateActionSignerConfig{}
 func NewMsgCreateActionSignerConfig(
 	creator string,
 	chain string,
-	rpcEndpoint string,
 	contractAddress string,
-	contractName string,
-	contractOwner string,
 
 ) *MsgCreateActionSignerConfig {
 	return &MsgCreateActionSignerConfig{
 		Creator:         creator,
 		Chain:           chain,
-		RpcEndpoint:     rpcEndpoint,
 		ContractAddress: contractAddress,
-		ContractName:    contractName,
-		ContractOwner:   contractOwner,
 	}
 }
 
@@ -66,19 +60,13 @@ var _ sdk.Msg = &MsgUpdateActionSignerConfig{}
 func NewMsgUpdateActionSignerConfig(
 	creator string,
 	chain string,
-	rpcEndpoint string,
 	contractAddress string,
-	contractName string,
-	contractOwner string,
 
 ) *MsgUpdateActionSignerConfig {
 	return &MsgUpdateActionSignerConfig{
 		Creator:         creator,
 		Chain:           chain,
-		RpcEndpoint:     rpcEndpoint,
 		ContractAddress: contractAddress,
-		ContractName:    contractName,
-		ContractOwner:   contractOwner,
 	}
 }
 

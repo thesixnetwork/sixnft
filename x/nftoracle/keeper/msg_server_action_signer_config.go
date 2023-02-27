@@ -46,10 +46,7 @@ func (k msgServer) CreateActionSignerConfig(goCtx context.Context, msg *types.Ms
 	var actionSignerConfig = types.ActionSignerConfig{
 		Creator:         msg.Creator,
 		Chain:           msg.Chain,
-		RpcEndpoint:     msg.RpcEndpoint,
 		ContractAddress: msg.ContractAddress,
-		ContractName:    msg.ContractName,
-		ContractOwner:   msg.ContractOwner,
 	}
 
 	k.SetActionSignerConfig(
@@ -108,8 +105,6 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 		Creator:         msg.Creator,
 		Chain:           msg.Chain,
 		ContractAddress: msg.ContractAddress,
-		ContractName:    msg.ContractName,
-		ContractOwner:   msg.ContractOwner,
 	}
 
 	k.SetActionSignerConfig(ctx, actionSignerConfig)

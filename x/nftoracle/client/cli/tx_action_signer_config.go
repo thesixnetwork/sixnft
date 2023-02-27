@@ -10,18 +10,15 @@ import (
 
 func CmdCreateActionSignerConfig() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "create-action-signer-config [chain] [rpc-endpoint] [contract-address] [contract-name] [contract-owner]",
+		Use:   "create-action-signer-config [chain] [contract-address]",
 		Short: "Create a new actionSignerConfig",
-		Args:  cobra.ExactArgs(5),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			// Get indexes
 			indexChain := args[0]
 
 			// Get value arguments
-			argRpcEndpoint := args[1]
-			argContractAddress := args[2]
-			argContractName := args[3]
-			argContractOwner := args[4]
+			argContractAddress := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -31,10 +28,7 @@ func CmdCreateActionSignerConfig() *cobra.Command {
 			msg := types.NewMsgCreateActionSignerConfig(
 				clientCtx.GetFromAddress().String(),
 				indexChain,
-				argRpcEndpoint,
 				argContractAddress,
-				argContractName,
-				argContractOwner,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
@@ -50,18 +44,15 @@ func CmdCreateActionSignerConfig() *cobra.Command {
 
 func CmdUpdateActionSignerConfig() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-action-signer-config [chain] [contract-address] [contract-name] [contract-owner]",
+		Use:   "update-action-signer-config [chain] [contract-address]",
 		Short: "Update a actionSignerConfig",
-		Args:  cobra.ExactArgs(4),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			// Get indexes
 			indexChain := args[0]
 
 			// Get value arguments
-			rpcEndpoint := args[1]
-			argContractAddress := args[2]
-			argContractName := args[3]
-			argContractOwner := args[4]
+			argContractAddress := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -71,10 +62,7 @@ func CmdUpdateActionSignerConfig() *cobra.Command {
 			msg := types.NewMsgUpdateActionSignerConfig(
 				clientCtx.GetFromAddress().String(),
 				indexChain,
-				rpcEndpoint,
 				argContractAddress,
-				argContractName,
-				argContractOwner,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

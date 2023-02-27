@@ -22,6 +22,12 @@ func (k msgServer) CreateSyncActionSigner(goCtx context.Context, msg *types.MsgC
 		return nil, sdkerrors.Wrap(types.ErrRequiredConfirmTooLess, strconv.Itoa(int(oracleConfig.MinimumConfirmation)))
 	}
 
+	// check that chain is supported
+	_ , found = k.GetActionSignerConfig(ctx, msg.Chain)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrActionSignerConfigNotFound, msg.Chain)
+	}
+
 	createdAt := ctx.BlockTime()
 	endTime := createdAt.Add(k.ActionSignerActiveDuration(ctx)) // endtime of request; not expire time of actionSigner and set till now + 5 minutes(300 seconds)
 
@@ -45,6 +51,7 @@ func (k msgServer) CreateSyncActionSigner(goCtx context.Context, msg *types.MsgC
 		sdk.NewEvent(
 			types.EventTypeSyncActionReqeustCreated,
 			sdk.NewAttribute(types.AttributeKeySyncActionRequestID, strconv.FormatUint(id, 10)),
+			sdk.NewAttribute(types.AttributeKeySyncActionRequestChain, msg.Chain),
 			sdk.NewAttribute(types.AttributeKeySyncActionRequestActorAddress, msg.ActorAddress),
 			sdk.NewAttribute(types.AttributeKeySyncActionRequestOwnerAddress, msg.OwnerAddress),
 			sdk.NewAttribute(types.AttributeKeyRequiredConfirm, strconv.FormatUint(msg.RequiredConfirm, 10)),

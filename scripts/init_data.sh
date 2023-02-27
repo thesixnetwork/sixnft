@@ -10,6 +10,8 @@ CHAIN_ID=sixnft
 BASE64_SCHEMA=`cat nft-schema.json | base64 | tr -d '\n'`
 
 sixnftd tx nftadmin grant-permission oracle_admin $(sixnftd keys show alice -a) --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID}
+sixnftd tx nftadmin grant-permission admin_signer_config $(sixnftd keys show alice -a) --from alice -y \
+    --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake
 sixnftd tx nftoracle set-minimum-confirmation 1 --from alice --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} -y
 sixnftd tx nftmngr create-nft-schema ${BASE64_SCHEMA} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 0.1stake -y \
     --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} 
@@ -19,6 +21,6 @@ grantOracle $(sixnftd keys show oracle2 -a)
 grantOracle $(sixnftd keys show oracle3 -a)
 grantOracle $(sixnftd keys show oracle4 -a)
 
-sixnftd tx nftadmin grant-permission binder $(sixnftd keys show alice -a) --from alice --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} -y
+sixnftd tx nftoracle create-action-signer-config baobab 0xe2762507764fE0d20bfb490Fc6Eb3EB837042c35 --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake
 
 sixnftd q nftadmin show-authorization --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID}

@@ -48,7 +48,7 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 	param_info.Chain = msg.Chain
 	param_info.ActorAddress = msg.ActorAddress
 	param_info.OwnerAddress = msg.OwnerAddress
-	param_info.ExpiredAt = paramExpire
+	param_info.ExpireEpoch = msg.ExpireEpoch
 
 	// byte of param_info
 	paramDataBytes, err := k.cdc.Marshal(&param_info)
@@ -122,7 +122,8 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 		if SyncRequest.Status == types.RequestStatus_SUCCESS_WITH_CONSENSUS {
 			_, err := k.CreateSyncActionSignerByOracle(ctx, msg)
 			if err != nil {
-				return nil, err
+				SyncRequest.Status = types.RequestStatus_FAILED_ON_EXECUTION
+				SyncRequest.ExecutionErrorMessage = err.Error()
 			}
 
 			ctx.EventManager().EmitEvent(
