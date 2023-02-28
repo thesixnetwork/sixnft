@@ -100,7 +100,7 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 	SyncRequest.CurrentConfirm++
 
 	if SyncRequest.CurrentConfirm == SyncRequest.RequiredConfirm {
-		
+
 		// Check if there is only one data hash
 		if len(SyncRequest.DataHashes) > 1 {
 			// Update SyncRequest.Status to be FAILED
@@ -141,10 +141,9 @@ func (k msgServer) SubmitSyncActionSigner(goCtx context.Context, msg *types.MsgS
 
 	return &types.MsgSubmitSyncActionSignerResponse{
 		VerifyRequestID: SyncRequest.Id,
-		ExpireAt: SyncRequest.ValidUntil.Format(time.RFC3339),
+		ExpireAt:        SyncRequest.ValidUntil.Format(time.RFC3339),
 	}, nil
 }
-
 
 // CreateSyncActionSignerByOracle
 func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.MsgSubmitSyncActionSigner) (*types.MsgSubmitSyncActionSignerResponse, error) {
@@ -173,7 +172,7 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 			}
 		}
 	} else {
-		actionSigner, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
+		_, found := k.GetActionSigner(ctx, msg.ActorAddress, msg.OwnerAddress)
 		if !found {
 			// create new action signer
 			actionSigner := types.ActionSigner{
@@ -181,7 +180,8 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 				OwnerAddress: msg.OwnerAddress,
 				ExpiredAt:    paramExpire,
 				CreatedAt:    ctx.BlockTime(),
-				Creator:      "oracle",
+				Creator:      msg.OwnerAddress,
+				CreationFlow: types.CreationFlow_ORACLE,
 			}
 			k.SetActionSigner(ctx, actionSigner)
 			// add to binded signer list
@@ -207,11 +207,14 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 			})
 		} else {
 			// update action signer
-			actionSigner.ExpiredAt = paramExpire
-			actionSigner.Creator = "oracle"
-			actionSigner.ActorAddress = msg.ActorAddress
-			actionSigner.OwnerAddress = msg.OwnerAddress
-			actionSigner.CreatedAt = ctx.BlockTime()
+			actionSigner := types.ActionSigner{
+				ActorAddress: msg.ActorAddress,
+				OwnerAddress: msg.OwnerAddress,
+				ExpiredAt:    paramExpire,
+				CreatedAt:    ctx.BlockTime(),
+				Creator:      msg.OwnerAddress,
+				CreationFlow: types.CreationFlow_ORACLE,
+			}
 			k.SetActionSigner(ctx, actionSigner)
 
 			bindedList, _ := k.GetBindedSigner(ctx, msg.OwnerAddress)
@@ -238,6 +241,6 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 	)
 	return &types.MsgSubmitSyncActionSignerResponse{
 		VerifyRequestID: SyncRequest.Id,
-		ExpireAt: SyncRequest.ValidUntil.Format(time.RFC3339),
+		ExpireAt:        SyncRequest.ValidUntil.Format(time.RFC3339),
 	}, nil
 }

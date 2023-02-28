@@ -66,7 +66,8 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 				OwnerAddress: *signer,
 				CreatedAt:    updatedAt,
 				ExpiredAt:    _signerParams.ExpiredAt,
-				Creator:      msg.Creator,
+				Creator:      *signer,
+				CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 			}
 			k.SetActionSigner(ctx, actionSigner)
 			// set to bined address
@@ -105,7 +106,8 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 			OwnerAddress: *signer,
 			CreatedAt:    createdAt,
 			ExpiredAt:    _signerParams.ExpiredAt,
-			Creator:      msg.Creator,
+			Creator:      *signer,
+			CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 		}
 
 		// Get List of binded signers
@@ -172,7 +174,6 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 	}
 
 	// Check if the value exists
-
 	isSigner, isFound := k.GetActionSigner(
 		ctx,
 		_signerParams.ActorAddress,
@@ -182,18 +183,46 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-	if msg.Creator != isSigner.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect creator")
+	// prevent replay attack
+	if isSigner.ExpiredAt.Equal(_signerParams.ExpiredAt) {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action signer message already sent should change the expired time")
 	}
 
+	// update the action signer
 	updatedAt := ctx.BlockTime()
+	endTime := updatedAt.Add(k.ActionSignerActiveDuration(ctx))
+
+	// validate time given format as RFC3339
+	_, err = time.Parse(time.RFC3339, _signerParams.ExpiredAt.UTC().Format(time.RFC3339))
+
+	if err != nil || len(_signerParams.ExpiredAt.String()) == 0 || _signerParams.ExpiredAt.Before(updatedAt) {
+		_signerParams.ExpiredAt = endTime
+	}
+
+	// //check if creator is "oracle"
+	// if *signer != isSigner.Creator{
+	// 	oracleAddress, err := sdk.AccAddressFromBech32(isSigner.Creator)
+	// 	if err != nil {
+	// 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, isSigner.Creator)
+	// 	}
+	// 	// get permission of the creator
+	// 	granted := k.nftadminKeeper.HasPermission(ctx, types.KeyPermissionOracle, oracleAddress)
+	// 	if !granted {
+	// 		return nil, sdkerrors.Wrap(types.ErrNoOraclePermission, isSigner.Creator)
+	// 	}
+	// }
+
+	if *signer != isSigner.Creator {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect creator")
+	}
 
 	var actionSigner = types.ActionSigner{
 		ActorAddress: _signerParams.ActorAddress,
 		OwnerAddress: *signer,
 		CreatedAt:    updatedAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
-		Creator:      msg.Creator,
+		Creator:      *signer,
+		CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 	}
 
 	k.SetActionSigner(ctx, actionSigner)
