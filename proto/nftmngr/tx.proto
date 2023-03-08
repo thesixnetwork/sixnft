@@ -32,6 +32,7 @@ service Msg {
   rpc SetUriRetrievalMethod(MsgSetUriRetrievalMethod) returns (MsgSetUriRetrievalMethodResponse);
   rpc SetOriginChain(MsgSetOriginChain) returns (MsgSetOriginChainResponse);
   rpc SetOriginContract(MsgSetOriginContract) returns (MsgSetOriginContractResponse);
+  rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -351,6 +352,17 @@ message MsgSetOriginContract {
 message MsgSetOriginContractResponse {
   string schemaCode = 1;
   string newContractAddress = 2;
+}
+
+message MsgSetAttributeOveriding {
+  string creator = 1;
+  string schemaCode = 2;
+  int32 newOveridingType = 3;
+}
+
+message MsgSetAttributeOveridingResponse {
+  string schemaCode = 1;
+  string newOveriding = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

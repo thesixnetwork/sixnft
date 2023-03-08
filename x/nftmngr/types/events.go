@@ -52,6 +52,11 @@ const (
 	AttributeKeySetOriginContract       = "origin_contract"
 	AttributeKeySetOriginContractResult = "set_origin_contract_result"
 
+	// Set attribute overide
+	EventTypeSetAttributeOveriding          = "set_attribute_override"
+	AttributeKeySetAttributeOverride       = "attribute_override"
+	AttributeKeySetAttributeOverrideResult = "set_attribute_override_result"
+
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
 	AttributeKeySetNFTSchemaValue       = "nft_schema_new_value"

@@ -57,7 +57,7 @@ var (
 	ErrDuplicateActionName             = sdkerrors.Register(ModuleName, 212, "Duplicate action name")
 	ErrInvalidAttributeName            = sdkerrors.Register(ModuleName, 213, "Invalid attribute name")
 	ErrInvalidActionName               = sdkerrors.Register(ModuleName, 214, "Invalid action name")
-
+	ErrAttributeOptionDoesNotExists    = sdkerrors.Register(ModuleName, 215, "Attribute option does not exists")
 	// Action (300-399)
 	ErrRefIdAlreadyExists          = sdkerrors.Register(ModuleName, 300, "RefId already exists")
 	ErrEmptyChangeList             = sdkerrors.Register(ModuleName, 301, "No changes were updated")

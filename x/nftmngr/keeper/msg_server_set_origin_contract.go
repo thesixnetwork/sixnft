@@ -32,7 +32,7 @@ func (k msgServer) SetOriginContract(goCtx context.Context, msg *types.MsgSetOri
 		),
 	})
 	return &types.MsgSetOriginContractResponse{
-		SchemaCode:          msg.SchemaCode,
-		NewContractAddress:  msg.NewContractAddress,
+		SchemaCode:         msg.SchemaCode,
+		NewContractAddress: msg.NewContractAddress,
 	}, nil
 }

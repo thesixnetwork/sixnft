@@ -13,24 +13,27 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdSetUriRetrievalMethod() *cobra.Command {
+func CmdSetAttributeOveriding() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "set-uri-retrieval-method [schema-code] [new-method: 0 or 1]",
-		Short: "Update NewMethod for retrival base URI  ex 0:'BASE', 1:'TOKEN'",
+		Use:   "set-attribute-overiding [schema-code] [new-overiding-type]",
+		Short: "Update New attribute overiding for NFT ex [0: ORIGIN, 1:CHAIN]",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argSchemaCode := args[0]
-			argNewMethod, err := cast.ToInt32E(args[1])
+			argNewOveridingType, err := cast.ToInt32E(args[1])
+			if err != nil {
+				return err
+			}
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgSetUriRetrievalMethod(
+			msg := types.NewMsgSetAttributeOveriding(
 				clientCtx.GetFromAddress().String(),
 				argSchemaCode,
-				argNewMethod,
+				argNewOveridingType,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
