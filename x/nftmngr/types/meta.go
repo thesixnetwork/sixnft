@@ -163,12 +163,43 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 }
 
 func (m *Metadata) SetNumber(key string, value int64) error {
-	// m.mapNumber[key] = value
+	schema := m.schema
 	attri := m.MapAllKey[key]
 	if attri == nil {
-		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
-	}
-	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
+		// panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+		// find from schema nft attribute
+		if schema != nil {
+			for _, nftAttribute := range schema.OnchainData.NftAttributes {
+				if nftAttribute.Name == key {
+					prev := strconv.FormatUint(nftAttribute.DefaultMintValue.GetNumberAttributeValue().Value, 10)
+					index := int(nftAttribute.Index)
+					name := nftAttribute.Name
+					if nftAttribute.DataType == "number" {
+						newAttributeValue := &NftAttributeValue{
+							Name: name,
+							Value: &NftAttributeValue_NumberAttributeValue{
+								NumberAttributeValue: &NumberAttributeValue{
+									Value: uint64(value),
+								},
+							},
+						}
+						m.ChangeList = append(m.ChangeList, &MetadataChange{
+							Key:           key,
+							PreviousValue: prev,
+							NewValue:      strconv.FormatUint(uint64(value), 10),
+						})
+						m.MapAllKey[key] = &MetadataAttribute{
+							AttributeValue: newAttributeValue,
+							From:           "chain",
+							Index:          index,
+						}
+						m.MapAllKey[key].AttributeValue = newAttributeValue
+						m.nftData.OnchainAttributes[index] = newAttributeValue
+					}
+				}
+			}
+		}
+	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
@@ -186,8 +217,6 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
-		} else {
-			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute or nft attribute")
 		}
 	} else {
 		return sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)

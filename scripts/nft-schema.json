@@ -83,6 +83,24 @@
         },
         "hidden_overide": false,
         "hidden_to_marketplace": false
+      },
+      {
+        "name": "dynamic_global_attribute",
+        "default_mint_value": {
+          "number_attribute_value": {
+            "value": "0"
+          }
+        },
+        "data_type": "number",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Dynamic Global NFT Attribute"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       }
     ],
     "token_attributes": [
@@ -286,6 +304,15 @@
         "then": [
           "meta.SetNumber('points', meta.GetNumber('points') + 100)",
           "meta.SetString('uppercase',meta.ToUppercase('hello_nft_attribute'))"
+        ]
+      },
+      {
+        "name": "test_set_global",
+        "desc": "Test Uppercase String",
+        "params": [],
+        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "then": [
+          "meta.SetNumber('dynamic_global_attribute', meta.GetNumber('dynamic_global_attribute') + 100)"
         ]
       },
       {
