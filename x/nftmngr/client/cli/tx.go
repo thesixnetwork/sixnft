@@ -49,6 +49,7 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdCreateMultiMetadata())
 	cmd.AddCommand(CmdPerformMultiTokenAction())
 	cmd.AddCommand(CmdSetUriRetrievalMethod())
+	cmd.AddCommand(CmdSetOriginChain())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

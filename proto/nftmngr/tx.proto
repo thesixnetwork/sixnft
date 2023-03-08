@@ -30,6 +30,7 @@ service Msg {
   rpc CreateMultiMetadata(MsgCreateMultiMetadata) returns (MsgCreateMultiMetadataResponse);
   rpc PerformMultiTokenAction(MsgPerformMultiTokenAction) returns (MsgPerformMultiTokenActionResponse);
   rpc SetUriRetrievalMethod(MsgSetUriRetrievalMethod) returns (MsgSetUriRetrievalMethodResponse);
+  rpc SetOriginChain(MsgSetOriginChain) returns (MsgSetOriginChainResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -327,6 +328,17 @@ message MsgSetUriRetrievalMethod {
 message MsgSetUriRetrievalMethodResponse {
   string schemaCode = 1;
   string newMethod = 2;
+}
+
+message MsgSetOriginChain {
+  string creator = 1;
+  string schemaCode = 2;
+  string newOriginChain = 3;
+}
+
+message MsgSetOriginChainResponse {
+  string schemaCode = 1;
+  string newOriginChain = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

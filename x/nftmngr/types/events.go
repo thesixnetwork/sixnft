@@ -40,7 +40,12 @@ const (
 	//set method retrieval
 	EventTypeSetRetrievalMethod    = "set_retrieval_method"
 	AttributeKeySetRetrievalMethod = "retrieval_method"
-	AttributeKeySetRetrivalResult   = "set_retrieval_method_result"
+	AttributeKeySetRetrivalResult  = "set_retrieval_method_result"
+
+	// set origin chain
+	EventTypeSetOriginChain          = "set_origin_chain"
+	AttributeKeySetOriginChain       = "origin_chain"
+	AttributeKeySetOriginChainResult = "set_origin_chain_result"
 
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
