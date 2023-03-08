@@ -31,6 +31,8 @@ func (k msgServer) SetOriginContract(goCtx context.Context, msg *types.MsgSetOri
 			sdk.NewAttribute(types.AttributeKeySetOriginContractResult, "success"),
 		),
 	})
+
+	k.Keeper.SetNFTSchema(ctx, schema)
 	return &types.MsgSetOriginContractResponse{
 		SchemaCode:         msg.SchemaCode,
 		NewContractAddress: msg.NewContractAddress,

@@ -22,7 +22,7 @@ func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigin
 	}
 
 	// to uppercase
-	chainUpperCase := strings.ToLower(msg.NewOriginChain)
+	chainUpperCase := strings.ToUpper(msg.NewOriginChain)
 	schema.OriginData.OriginChain = chainUpperCase
 
 	// emit events
