@@ -101,6 +101,60 @@
         },
         "hidden_overide": false,
         "hidden_to_marketplace": false
+      },
+      {
+        "name": "string_global_attribute",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": ""
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "String Global NFT Attribute"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "boolean_global_attribute",
+        "default_mint_value": {
+          "boolean_attribute_value": {
+            "value": false
+          }
+        },
+        "data_type": "boolean",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Boolean Global NFT Attribute"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "float_global_attribute",
+        "default_mint_value": {
+          "float_attribute_value": {
+            "value": "1.5"
+          }
+        },
+        "data_type": "float",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Float Global NFT Attribute"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       }
     ],
     "token_attributes": [
@@ -312,7 +366,10 @@
         "params": [],
         "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
         "then": [
-          "meta.SetNumber('dynamic_global_attribute', meta.GetNumber('dynamic_global_attribute') + 100)"
+          "meta.SetNumber('dynamic_global_attribute', meta.GetNumber('dynamic_global_attribute') + 100)",
+          "meta.SetString('string_global_attribute',meta.GetSubString('hello_nft_attribute', 3, -1))",
+          "meta.SetBoolean('boolean_global_attribute', true)",
+          "meta.SetFloat('float_global_attribute', 3.5)"
         ]
       },
       {
