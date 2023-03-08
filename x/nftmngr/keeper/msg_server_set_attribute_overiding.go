@@ -23,7 +23,7 @@ func (k msgServer) SetAttributeOveriding(goCtx context.Context, msg *types.MsgSe
 
 	// int32 to string
 	NewOveridingType := strconv.Itoa(int(msg.NewOveridingType))
-	
+
 	switch msg.NewOveridingType {
 	case 0:
 		schema.OriginData.AttributeOverriding = types.AttributeOverriding_ORIGIN
@@ -42,7 +42,7 @@ func (k msgServer) SetAttributeOveriding(goCtx context.Context, msg *types.MsgSe
 			sdk.NewAttribute(types.AttributeKeySetAttributeOverrideResult, "success"),
 		),
 	})
-	
+
 	k.Keeper.SetNFTSchema(ctx, schema)
 
 	return &types.MsgSetAttributeOveridingResponse{}, nil

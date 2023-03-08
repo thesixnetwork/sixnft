@@ -33,6 +33,7 @@ service Msg {
   rpc SetOriginChain(MsgSetOriginChain) returns (MsgSetOriginChainResponse);
   rpc SetOriginContract(MsgSetOriginContract) returns (MsgSetOriginContractResponse);
   rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
+  rpc SetMetadataFormat(MsgSetMetadataFormat) returns (MsgSetMetadataFormatResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -363,6 +364,17 @@ message MsgSetAttributeOveriding {
 message MsgSetAttributeOveridingResponse {
   string schemaCode = 1;
   string newOveriding = 2;
+}
+
+message MsgSetMetadataFormat {
+  string creator = 1;
+  string schemaCode = 2;
+  string newFormat = 3;
+}
+
+message MsgSetMetadataFormatResponse {
+  string schemaCode = 1;
+  string newFormat = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

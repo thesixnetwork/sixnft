@@ -61985,6 +61985,13 @@ definitions:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgSetFeeConfigResponse:
     type: object
+  thesixnetwork.sixnft.nftmngr.MsgSetMetadataFormatResponse:
+    type: object
+    properties:
+      schemaCode:
+        type: string
+      newFormat:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgSetMintauthResponse:
     type: object
     properties:
