@@ -41,6 +41,7 @@ var (
 	ErrInvalidFlagTokenID                        = sdkerrors.Register(ModuleName, 121, "Invalid flag token id(s) of create multiple NFTs TokenID must be 'MULTIMINT'")
 	ErrDuplicateInputTokenID                     = sdkerrors.Register(ModuleName, 122, "Duplicate input token id(s)")
 	ErrLimitSizeOfInput                          = sdkerrors.Register(ModuleName, 123, "List of input exceed the limit")
+	ErrGlobalAttributeCannotBeHiddenByAction     = sdkerrors.Register(ModuleName, 124, "Global attribute cannot be hidden")
 	// Schema (200-299)
 	ErrSchemaAlreadyExists             = sdkerrors.Register(ModuleName, 200, "Schema already exists")
 	ErrValidatingNFTSchema             = sdkerrors.Register(ModuleName, 201, "Error validating NFT schema")
