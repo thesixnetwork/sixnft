@@ -47,6 +47,11 @@ const (
 	AttributeKeySetOriginChain       = "origin_chain"
 	AttributeKeySetOriginChainResult = "set_origin_chain_result"
 
+	// set origin contract
+	EventTypeSetOriginContract          = "set_origin_contract"
+	AttributeKeySetOriginContract       = "origin_contract"
+	AttributeKeySetOriginContractResult = "set_origin_contract_result"
+
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
 	AttributeKeySetNFTSchemaValue       = "nft_schema_new_value"

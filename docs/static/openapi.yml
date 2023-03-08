@@ -62089,6 +62089,13 @@ definitions:
         type: string
       newOriginChain:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgSetOriginContractResponse:
+    type: object
+    properties:
+      schemaCode:
+        type: string
+      newContractAddress:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgSetUriRetrievalMethodResponse:
     type: object
     properties:

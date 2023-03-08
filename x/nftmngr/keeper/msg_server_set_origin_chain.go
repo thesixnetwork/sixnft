@@ -35,7 +35,7 @@ func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigin
 	k.Keeper.SetNFTSchema(ctx, schema)
 
 	return &types.MsgSetOriginChainResponse{
-		SchemaCode: msg.SchemaCode,
-		NewOriginChain:   msg.NewOriginChain,
+		SchemaCode:     msg.SchemaCode,
+		NewOriginChain: msg.NewOriginChain,
 	}, nil
 }
