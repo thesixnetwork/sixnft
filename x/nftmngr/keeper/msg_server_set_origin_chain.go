@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -20,7 +21,9 @@ func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigin
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-	schema.OriginData.OriginChain = msg.NewOriginChain
+	// to uppercase
+	chainUpperCase := strings.ToLower(msg.NewOriginChain)
+	schema.OriginData.OriginChain = chainUpperCase
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
