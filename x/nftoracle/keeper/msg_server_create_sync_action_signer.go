@@ -23,7 +23,7 @@ func (k msgServer) CreateSyncActionSigner(goCtx context.Context, msg *types.MsgC
 	}
 
 	// check that chain is supported
-	_ , found = k.GetActionSignerConfig(ctx, msg.Chain)
+	_, found = k.GetActionSignerConfig(ctx, msg.Chain)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrActionSignerConfigNotFound, msg.Chain)
 	}

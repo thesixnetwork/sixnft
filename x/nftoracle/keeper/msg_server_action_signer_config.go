@@ -6,7 +6,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
-
 	// "github.com/ethereum/go-ethereum/common"
 )
 
@@ -91,7 +90,7 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-		// // validate ContractOwner address
+	// // validate ContractOwner address
 	// if !common.IsHexAddress(msg.ContractOwner) {
 	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid contract owner address")
 	// }
@@ -115,7 +114,6 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 			sdk.NewAttribute(types.AttributeKeyChain, msg.Chain),
 			sdk.NewAttribute(types.AttributeKeyOldContract, valFound.ContractAddress),
 			sdk.NewAttribute(types.AttributeKeyNewContract, msg.ContractAddress),
-
 		),
 	})
 	return &types.MsgUpdateActionSignerConfigResponse{}, nil
@@ -123,7 +121,7 @@ func (k msgServer) UpdateActionSignerConfig(goCtx context.Context, msg *types.Ms
 
 func (k msgServer) DeleteActionSignerConfig(goCtx context.Context, msg *types.MsgDeleteActionSignerConfig) (*types.MsgDeleteActionSignerConfigResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	
+
 	// Validate if creator has permission to set fee config
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {

@@ -37,6 +37,32 @@ const (
 	AttributeKeySetBaseURI       = "base_uri"
 	AttributeKeySetBaseURIResult = "set_base_uri_result"
 
+	//set method retrieval
+	EventTypeSetRetrievalMethod    = "set_retrieval_method"
+	AttributeKeySetRetrievalMethod = "retrieval_method"
+	AttributeKeySetRetrivalResult  = "set_retrieval_method_result"
+
+	// set origin chain
+	EventTypeSetOriginChain          = "set_origin_chain"
+	AttributeKeySetOriginChain       = "origin_chain"
+	AttributeKeySetOriginChainResult = "set_origin_chain_result"
+
+	// set origin contract
+	EventTypeSetOriginContract          = "set_origin_contract"
+	AttributeKeySetOriginContract       = "origin_contract"
+	AttributeKeySetOriginContractResult = "set_origin_contract_result"
+
+	// set attribute overide
+	EventTypeSetAttributeOveriding         = "set_attribute_override"
+	AttributeKeySetAttributeOverride       = "attribute_override"
+	AttributeKeySetAttributeOverrideResult = "set_attribute_override_result"
+
+	// set metadata format
+	EventTypeSetMetadataFormat          = "set_metadata_format"
+	AttributeKeySetMetadataFormat       = "metadata_format"
+	AttributeKeySetMetadataFormatResult = "set_metadata_format_result"
+	
+
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
 	AttributeKeySetNFTSchemaValue       = "nft_schema_new_value"

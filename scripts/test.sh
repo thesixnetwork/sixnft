@@ -60,3 +60,9 @@ read -p "Press enter to continue"
 sixnftd tx nftmngr perform-action-by-nftadmin sixnetwork.develop_v073 1 test_hidden hidden_pass "[{\"name\":\"attribute_name\",\"value\":\"hide_pass\"},{\"name\":\"show\",\"value\":\"true\"}]" --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y --chain-id sixnft
 echo "Done 🖕"
 echo ""
+
+## test new msg
+sixnftd tx nftmngr set-metadata-format sixnetwork.develop_v073 xclusive --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake | grep -q 'msg_index: 0';
+sixnftd tx nftmngr set-uri-retrieval-method sixnetwork.develop_v073 1 --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake | grep -q 'msg_index: 0';
+sixnftd tx nftmngr set-origin-chain sixnetwork.develop_v073 sixchain --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake | grep -q 'msg_index: 0';
+sixnftd tx nftmngr set-origin-contract sixnetwork.develop_v073 0xe2762507764fE0d20bfb490Fc6Eb3EB837042c35 --from alice --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake | grep -q 'msg_index: 0';

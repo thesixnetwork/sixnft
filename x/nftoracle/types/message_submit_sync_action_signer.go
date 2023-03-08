@@ -16,7 +16,7 @@ func NewMsgSubmitSyncActionSigner(creator string, chain string, syncId uint64, a
 		Chain:        chain,
 		ActorAddress: actorAddress,
 		OwnerAddress: ownerAddress,
-		ExpireEpoch:     expireEpoch,
+		ExpireEpoch:  expireEpoch,
 	}
 }
 
