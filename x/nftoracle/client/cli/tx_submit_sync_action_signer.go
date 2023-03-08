@@ -28,7 +28,6 @@ func CmdSubmitSyncActionSigner() *cobra.Command {
 			argOwnerAddress := args[3]
 			argExpireEpochString := args[4]
 
-
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err

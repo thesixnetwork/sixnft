@@ -61992,6 +61992,13 @@ definitions:
         type: string
       nft_attribute_value:
         type: string
+  thesixnetwork.sixnft.nftmngr.MsgSetUriRetrievalMethodResponse:
+    type: object
+    properties:
+      schemaCode:
+        type: string
+      newMethod:
+        type: string
   thesixnetwork.sixnft.nftmngr.MsgShowAttributesResponse:
     type: object
     properties:

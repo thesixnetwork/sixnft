@@ -37,6 +37,11 @@ const (
 	AttributeKeySetBaseURI       = "base_uri"
 	AttributeKeySetBaseURIResult = "set_base_uri_result"
 
+	//set method retrieval
+	EventTypeSetRetrievalMethod    = "set_retrieval_method"
+	AttributeKeySetRetrievalMethod = "retrieval_method"
+	AttributeKeySetRetrivalResult   = "set_retrieval_method_result"
+
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
 	AttributeKeySetNFTSchemaValue       = "nft_schema_new_value"

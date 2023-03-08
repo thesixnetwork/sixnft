@@ -51,7 +51,7 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 		req.NftSchemaCode,
 		req.TokenId,
 	)
-	
+
 	updateddata := k.updateNftDataAttributes(ctx, val)
 
 	if !found {
@@ -60,7 +60,6 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 
 	return &types.QueryGetNftDataResponse{NftData: updateddata}, nil
 }
-
 
 // function updateNftDataAttributes updates the nft data attributes from the schema
 func (k Keeper) updateNftDataAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
