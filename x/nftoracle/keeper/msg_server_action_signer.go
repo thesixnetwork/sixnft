@@ -66,7 +66,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 				OwnerAddress: *signer,
 				CreatedAt:    updatedAt,
 				ExpiredAt:    _signerParams.ExpiredAt,
-				Creator:      *signer,
+				Creator:      msg.Creator,
 				CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 			}
 			k.SetActionSigner(ctx, actionSigner)
@@ -106,7 +106,7 @@ func (k msgServer) CreateActionSigner(goCtx context.Context, msg *types.MsgCreat
 			OwnerAddress: *signer,
 			CreatedAt:    createdAt,
 			ExpiredAt:    _signerParams.ExpiredAt,
-			Creator:      *signer,
+			Creator:      msg.Creator,
 			CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 		}
 
@@ -221,7 +221,7 @@ func (k msgServer) UpdateActionSigner(goCtx context.Context, msg *types.MsgUpdat
 		OwnerAddress: *signer,
 		CreatedAt:    updatedAt,
 		ExpiredAt:    _signerParams.ExpiredAt,
-		Creator:      *signer,
+		Creator:      msg.Creator,
 		CreationFlow: types.CreationFlow_INTERNAL_OWNER,
 	}
 

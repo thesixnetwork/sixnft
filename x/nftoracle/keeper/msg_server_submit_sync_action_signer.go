@@ -180,7 +180,7 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 				OwnerAddress: msg.OwnerAddress,
 				ExpiredAt:    paramExpire,
 				CreatedAt:    ctx.BlockTime(),
-				Creator:      msg.OwnerAddress,
+				Creator:      msg.Creator,
 				CreationFlow: types.CreationFlow_ORACLE,
 			}
 			k.SetActionSigner(ctx, actionSigner)
@@ -212,7 +212,7 @@ func (k msgServer) CreateSyncActionSignerByOracle(ctx sdk.Context, msg *types.Ms
 				OwnerAddress: msg.OwnerAddress,
 				ExpiredAt:    paramExpire,
 				CreatedAt:    ctx.BlockTime(),
-				Creator:      msg.OwnerAddress,
+				Creator:      msg.Creator,
 				CreationFlow: types.CreationFlow_ORACLE,
 			}
 			k.SetActionSigner(ctx, actionSigner)
