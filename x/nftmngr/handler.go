@@ -71,6 +71,21 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgPerformMultiTokenAction:
 			res, err := msgServer.PerformMultiTokenAction(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetUriRetrievalMethod:
+			res, err := msgServer.SetUriRetrievalMethod(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetOriginChain:
+			res, err := msgServer.SetOriginChain(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetOriginContract:
+			res, err := msgServer.SetOriginContract(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetAttributeOveriding:
+			res, err := msgServer.SetAttributeOveriding(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgSetMetadataFormat:
+			res, err := msgServer.SetMetadataFormat(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:
 			errMsg := fmt.Sprintf("unrecognized %s message type: %T", types.ModuleName, msg)

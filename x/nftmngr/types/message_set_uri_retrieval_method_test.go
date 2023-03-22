@@ -8,21 +8,21 @@ import (
 	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
-func TestMsgBurn_ValidateBasic(t *testing.T) {
+func TestMsgSetUriRetrievalMethod_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgBurn
+		msg  MsgSetUriRetrievalMethod
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgBurn{
+			msg: MsgSetUriRetrievalMethod{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgBurn{
+			msg: MsgSetUriRetrievalMethod{
 				Creator: sample.AccAddress(),
 			},
 		},

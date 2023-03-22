@@ -28,5 +28,10 @@ message Params {
     (gogoproto.nullable)    = false,
     (gogoproto.stdduration) = true,  
     (gogoproto.moretags) = "yaml:\"action_signer_active_duration\""
+  ];
+  google.protobuf.Duration sync_action_signer_active_duration = 5 [
+    (gogoproto.nullable)    = false,
+    (gogoproto.stdduration) = true,  
+    (gogoproto.moretags) = "yaml:\"sync_action_signer_active_duration\""
   ];  
 }

@@ -45,7 +45,7 @@ var (
 	ErrParsingCollectionOwnerSignature = sdkerrors.Register(ModuleName, 200, "Error parsing collection owner signature")
 	ErrNFTSchemaAlreadyVerified        = sdkerrors.Register(ModuleName, 201, "NFTSchema already verified")
 	ErrNotCollectionOwner              = sdkerrors.Register(ModuleName, 202, "Not collection owner")
-	ErrNotContractOwner                = sdkerrors.Register(ModuleName, 203, "Not collection owner")
+	ErrNotContractOwner                = sdkerrors.Register(ModuleName, 203, "Not Contract owner")
 
 	// 300 - 399
 	ErrVerifyRequestNotFound                 = sdkerrors.Register(ModuleName, 300, "Verify request not found")
@@ -57,5 +57,21 @@ var (
 	ErrRequiredConfirmTooLess                = sdkerrors.Register(ModuleName, 306, "Required confirm too less")
 
 	// 400 - 499
-	ErrParsingSetSignerSignature = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
+	ErrParsingSetSignerSignature     = sdkerrors.Register(ModuleName, 400, "Error parsing collection owner signature")
+	ErrNoPermissionAdminSignerConfig = sdkerrors.Register(ModuleName, 401, "No permission admin signer config")
+	ErrActionSignerNotFound          = sdkerrors.Register(ModuleName, 402, "Action signer not found")
+	ErrDeltedActionSigner            = sdkerrors.Register(ModuleName, 403, "Failed to delete action signer")
+
+	// 500 - 599
+	ErrSyncActionSignerRequestNotFound                 = sdkerrors.Register(ModuleName, 500, "Sync action signer request not found")
+	ErrSyncActionSignerRequestNotPending               = sdkerrors.Register(ModuleName, 501, "Sync action signer request not pending")
+	ErrSyncActionSignerRequestConfirmedAlreadyComplete = sdkerrors.Register(ModuleName, 502, "Sync action signer request confirmed already completed")
+	ErrGetQueryActionSigner                            = sdkerrors.Register(ModuleName, 503, "Cannot query action signer")
+	ErrActionSignerConfigNotFound                      = sdkerrors.Register(ModuleName, 504, "Action signer config not found")
+
+	// 1000 - 1099 The error code is reserved for SIXLINK
+	ErrDialToEndpoint    = sdkerrors.Register(ModuleName, 1000, "Dial with endpoint")
+	ErrParseAbi          = sdkerrors.Register(ModuleName, 1001, "Parse abi")
+	ErrConvertingTokenId = sdkerrors.Register(ModuleName, 1002, "Converting token id")
+	ErrCallContract      = sdkerrors.Register(ModuleName, 1003, "Call contract")
 )

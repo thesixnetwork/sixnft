@@ -18,6 +18,11 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateActionSigner{}, "nftoracle/CreateActionSigner", nil)
 	cdc.RegisterConcrete(&MsgUpdateActionSigner{}, "nftoracle/UpdateActionSigner", nil)
 	cdc.RegisterConcrete(&MsgDeleteActionSigner{}, "nftoracle/DeleteActionSigner", nil)
+	cdc.RegisterConcrete(&MsgCreateActionSignerConfig{}, "nftoracle/CreateActionSignerConfig", nil)
+	cdc.RegisterConcrete(&MsgUpdateActionSignerConfig{}, "nftoracle/UpdateActionSignerConfig", nil)
+	cdc.RegisterConcrete(&MsgDeleteActionSignerConfig{}, "nftoracle/DeleteActionSignerConfig", nil)
+	cdc.RegisterConcrete(&MsgCreateSyncActionSigner{}, "nftoracle/CreateSyncActionSigner", nil)
+	cdc.RegisterConcrete(&MsgSubmitSyncActionSigner{}, "nftoracle/SubmitSyncActionSigner", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -47,6 +52,17 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateActionSigner{},
 		&MsgUpdateActionSigner{},
 		&MsgDeleteActionSigner{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateActionSignerConfig{},
+		&MsgUpdateActionSignerConfig{},
+		&MsgDeleteActionSignerConfig{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateSyncActionSigner{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgSubmitSyncActionSigner{},
 	)
 	// this line is used by starport scaffolding # 3
 

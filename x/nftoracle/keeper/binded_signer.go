@@ -46,6 +46,26 @@ func (k Keeper) RemoveBindedSigner(
 	))
 }
 
+// Remove Sepecific Signer fron bindedSignerList
+func (k Keeper) RemoveSignerFromBindedSignerList(
+	ctx sdk.Context,
+	ownerAddress string,
+	signerAddress string,
+) {
+	bindedSigner, found := k.GetBindedSigner(ctx, ownerAddress)
+	if !found {
+		return
+	}
+	for i, signer := range bindedSigner.Signers {
+		if signer.ActorAddress == signerAddress {
+			bindedSigner.Signers = append(bindedSigner.Signers[:i], bindedSigner.Signers[i+1:]...)
+			break
+		}
+	}
+
+	k.SetBindedSigner(ctx, bindedSigner)
+}
+
 // GetAllBindedSigner returns all bindedSigner
 func (k Keeper) GetAllBindedSigner(ctx sdk.Context) (list []types.BindedSigner) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.BindedSignerKeyPrefix))

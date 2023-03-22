@@ -37,6 +37,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteActionSigner int = 100
 
+	opWeightMsgCreateSyncActionSigner = "op_weight_msg_create_sync_action_signer"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateSyncActionSigner int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -112,6 +116,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgDeleteActionSigner,
 		nftoraclesimulation.SimulateMsgDeleteActionSigner(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateSyncActionSigner int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateSyncActionSigner, &weightMsgCreateSyncActionSigner, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateSyncActionSigner = defaultWeightMsgCreateSyncActionSigner
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateSyncActionSigner,
+		nftoraclesimulation.SimulateMsgCreateSyncActionSigner(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

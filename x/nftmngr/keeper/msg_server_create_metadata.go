@@ -69,6 +69,15 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	for _, attr := range data.OnchainAttributes {
 		mapOfTokenAttributeValues[attr.Name] = attr
 	}
+
+	for _, attr := range schema.OnchainData.NftAttributes {
+		if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
+			if attr.DefaultMintValue != nil {
+				data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+			}
+		}
+	}
+
 	for _, attr := range schema.OnchainData.TokenAttributes {
 		if attr.Required {
 			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
@@ -79,10 +88,10 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		}
 	}
 
-	// Add attributes from schema to metadata onchain attributes
-	for _, attribute := range schema.OnchainData.NftAttributesValue {
-		data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
-	}
+	// // Add attributes from schema to metadata onchain attributes
+	// for _, attribute := range schema.OnchainData.NftAttributesValue {
+	// 	data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
+	// }
 	// Check if the data already exists
 	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
 	if dataFound {

@@ -43,3 +43,12 @@ const (
 const (
 	OracleConfigKey = "OracleConfig-value-"
 )
+
+const (
+	KeyPermissionAdminSignerConfig = "admin_signer_config"
+)
+
+const (
+	SyncActionSignerKey      = "SyncActionSigner-value-"
+	SyncActionSignerCountKey = "SyncActionSigner-count-"
+)

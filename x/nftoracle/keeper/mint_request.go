@@ -103,6 +103,18 @@ func (k Keeper) GetAllMintRequest(ctx sdk.Context) (list []types.MintRequest) {
 	return
 }
 
+// GetMintRequestIDBytes returns the byte representation of the ID
+func GetMintRequestIDBytes(id uint64) []byte {
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, id)
+	return bz
+}
+
+// GetMintRequestIDFromBytes returns ID in uint64 format from a byte array
+func GetMintRequestIDFromBytes(bz []byte) uint64 {
+	return binary.BigEndian.Uint64(bz)
+}
+
 func (k Keeper) InsertActiveMintRequestQueue(ctx sdk.Context, requestID uint64, endTime time.Time) {
 	store := ctx.KVStore(k.storeKey)
 	bz := GetMintRequestIDBytes(requestID)
@@ -134,18 +146,6 @@ func (k Keeper) IterateActiveMintRequestsQueue(ctx sdk.Context, endTime time.Tim
 func (k Keeper) ActiveMintRequestQueueIterator(ctx sdk.Context, endTime time.Time) sdk.Iterator {
 	store := ctx.KVStore(k.storeKey)
 	return store.Iterator(ActiveMintRequestQueuePrefix, sdk.PrefixEndBytes(ActiveMintRequestByTimeKey(endTime)))
-}
-
-// GetMintRequestIDBytes returns the byte representation of the ID
-func GetMintRequestIDBytes(id uint64) []byte {
-	bz := make([]byte, 8)
-	binary.BigEndian.PutUint64(bz, id)
-	return bz
-}
-
-// GetMintRequestIDFromBytes returns ID in uint64 format from a byte array
-func GetMintRequestIDFromBytes(bz []byte) uint64 {
-	return binary.BigEndian.Uint64(bz)
 }
 
 func ActiveMintRequestQueueKey(requestID uint64, endTime time.Time) []byte {

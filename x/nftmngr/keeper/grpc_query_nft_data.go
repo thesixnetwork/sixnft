@@ -16,7 +16,7 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var nftDatas []types.NftData
+	var listNFTData []types.NftData
 	ctx := sdk.UnwrapSDKContext(c)
 
 	store := ctx.KVStore(k.storeKey)
@@ -28,7 +28,8 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 			return err
 		}
 
-		nftDatas = append(nftDatas, nftData)
+		updateddata := k.updateNftDataAttributes(ctx, nftData)
+		listNFTData = append(listNFTData, updateddata)
 		return nil
 	})
 
@@ -36,7 +37,7 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryAllNftDataResponse{NftData: nftDatas, Pagination: pageRes}, nil
+	return &types.QueryAllNftDataResponse{NftData: listNFTData, Pagination: pageRes}, nil
 }
 
 func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*types.QueryGetNftDataResponse, error) {
@@ -50,9 +51,45 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 		req.NftSchemaCode,
 		req.TokenId,
 	)
+
+	updateddata := k.updateNftDataAttributes(ctx, val)
+
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")
 	}
 
-	return &types.QueryGetNftDataResponse{NftData: val}, nil
+	return &types.QueryGetNftDataResponse{NftData: updateddata}, nil
+}
+
+// function updateNftDataAttributes updates the nft data attributes from the schema
+func (k Keeper) updateNftDataAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
+	nftSchema, _ := k.GetNFTSchema(ctx, dataOnToken.NftSchemaCode)
+
+	// createa map of nftattributes from schema with its default value
+	mapFromSchemaAttributes := make(map[string]*types.DefaultMintValue)
+	for _, fromSchemaNftAttribute := range nftSchema.OnchainData.NftAttributes {
+		mapFromSchemaAttributes[fromSchemaNftAttribute.Name] = fromSchemaNftAttribute.DefaultMintValue
+	}
+
+	// loop over nftdata attributes and check if exists in mapFromSchemaAttributes
+	// if exists, then update the value
+	for _, attribute := range dataOnToken.OnchainAttributes {
+		if schemaUpdated, ok := mapFromSchemaAttributes[attribute.Name]; ok {
+			switch schemaUpdated.Value.(type) {
+			case *types.DefaultMintValue_NumberAttributeValue:
+				attribute.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: schemaUpdated.GetNumberAttributeValue()}
+
+			case *types.DefaultMintValue_BooleanAttributeValue:
+				attribute.Value = &types.NftAttributeValue_BooleanAttributeValue{BooleanAttributeValue: schemaUpdated.GetBooleanAttributeValue()}
+
+			case *types.DefaultMintValue_FloatAttributeValue:
+				attribute.Value = &types.NftAttributeValue_FloatAttributeValue{FloatAttributeValue: schemaUpdated.GetFloatAttributeValue()}
+
+			case *types.DefaultMintValue_StringAttributeValue:
+				attribute.Value = &types.NftAttributeValue_StringAttributeValue{StringAttributeValue: schemaUpdated.GetStringAttributeValue()}
+			}
+		}
+	}
+
+	return dataOnToken
 }
