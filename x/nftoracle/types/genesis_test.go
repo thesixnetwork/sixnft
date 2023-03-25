@@ -66,6 +66,23 @@ func TestGenesisState_Validate(t *testing.T) {
 						OwnerAddress: "1",
 					},
 				},
+				ActionSignerConfigList: []types.ActionSignerConfig{
+					{
+						Chain: "0",
+					},
+					{
+						Chain: "1",
+					},
+				},
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				SyncActionSignerCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -173,6 +190,46 @@ func TestGenesisState_Validate(t *testing.T) {
 						OwnerAddress: "0",
 					},
 				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionSignerConfig",
+			genState: &types.GenesisState{
+				ActionSignerConfigList: []types.ActionSignerConfig{
+					{
+						Chain: "0",
+					},
+					{
+						Chain: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated syncActionSigner",
+			genState: &types.GenesisState{
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid syncActionSigner count",
+			genState: &types.GenesisState{
+				SyncActionSignerList: []types.SyncActionSigner{
+					{
+						Id: 1,
+					},
+				},
+				SyncActionSignerCount: 0,
 			},
 			valid: false,
 		},

@@ -30,7 +30,7 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 		}
 		mapOfTokenId[tokenId] = true
 	}
-	
+
 	metadata, err := base64.StdEncoding.DecodeString(msg.Base64NFTData)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())

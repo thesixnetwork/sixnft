@@ -2,6 +2,7 @@ syntax = "proto3";
 package thesixnetwork.sixnft.nftoracle;
 
 import "nftoracle/action_signer.proto";
+import "nftoracle/action_signer_config.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
@@ -18,6 +19,11 @@ service Msg {
   rpc CreateActionSigner(MsgCreateActionSigner) returns (MsgCreateActionSignerResponse);
   rpc UpdateActionSigner(MsgUpdateActionSigner) returns (MsgUpdateActionSignerResponse);
   rpc DeleteActionSigner(MsgDeleteActionSigner) returns (MsgDeleteActionSignerResponse);
+  rpc CreateActionSignerConfig(MsgCreateActionSignerConfig) returns (MsgCreateActionSignerConfigResponse);
+  rpc UpdateActionSignerConfig(MsgUpdateActionSignerConfig) returns (MsgUpdateActionSignerConfigResponse);
+  rpc DeleteActionSignerConfig(MsgDeleteActionSignerConfig) returns (MsgDeleteActionSignerConfigResponse);
+  rpc CreateSyncActionSigner(MsgCreateSyncActionSigner) returns (MsgCreateSyncActionSignerResponse);
+  rpc SubmitSyncActionSigner(MsgSubmitSyncActionSigner) returns (MsgSubmitSyncActionSignerResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -126,4 +132,79 @@ message MsgDeleteActionSignerResponse {
   string ownerAddress = 1;
   string signerAddress = 2;
 }
+message MsgCreateActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+  string rpc_endpoint = 3;
+  string contractAddress = 4;
+  string contractName = 5;
+  string contractOwner = 6;
+}
+message MsgCreateActionSignerConfigResponse {
+  string chain = 1;
+  string rpc_endpoint = 2;
+  string contractAddress = 3;
+  string contractName = 4;
+  string contractOwner = 5;
+}
+
+message MsgUpdateActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+  string rpc_endpoint = 3;
+  string contractAddress = 4;
+  string contractName = 5;
+  string contractOwner = 6;
+}
+message MsgUpdateActionSignerConfigResponse {
+  string chain = 1;
+  string rpc_endpoint = 2;
+  string new_rpc_endpoint = 3;
+  string contractAddress = 4;
+  string new_contractAddress = 5;
+  string contractName = 6;
+  string new_contractName = 7;
+  string contractOwner = 8;
+  string new_contractOwner = 9;
+}
+
+message MsgDeleteActionSignerConfig {
+  string creator = 1;
+  string chain = 2;
+}
+message MsgDeleteActionSignerConfigResponse {
+  string chain = 1;
+}
+
+message MsgCreateSyncActionSigner {
+  string creator = 1;
+  string chain = 2;
+  string actorAddress = 3;
+  string ownerAddress = 4;
+  uint64 requiredConfirm = 5;
+}
+
+message MsgCreateSyncActionSignerResponse {
+  uint64 id = 1;
+  string chain = 2;
+  string ownerAddress = 3;
+  string actorAddress = 4;
+}
+
+message MsgSubmitSyncActionSigner {
+  string creator = 1;
+  uint64 syncId = 2;
+  string chain = 3;
+  string actorAddress = 4;
+  string ownerAddress = 5;
+  string expire_epoch = 6; 
+  /* usign epoch because the data will came from smart contract
+  and it is easier to make communication between smart contract and cosmos */
+}
+
+message MsgSubmitSyncActionSignerResponse {
+  uint64 verifyRequestID = 1;
+  string expireAt = 2;
+}
+
 // this line is used by starport scaffolding # proto/tx/message

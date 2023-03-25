@@ -4,6 +4,11 @@ import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
 option go_package = "github.com/thesixnetwork/sixnft/x/nftoracle/types";
 
+enum CreationFlow {
+  ORACLE = 0;
+  INTERNAL_OWNER = 1;
+}
+
 message ActionSigner {
   string actor_address = 1; 
   string owner_address = 2; 
@@ -12,6 +17,7 @@ message ActionSigner {
   google.protobuf.Timestamp expired_at = 4
    [(gogoproto.stdtime) = true, (gogoproto.nullable) = false];
   string creator = 5;
+  CreationFlow creation_flow = 6;
 }
 
 message SetSignerSignature {

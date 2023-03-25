@@ -6,34 +6,30 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
-	"github.com/thesixnetwork/sixnft/x/nftadmin/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 var _ = strconv.Itoa(0)
 
-func CmdBurn() *cobra.Command {
+func CmdSetOriginContract() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "burn [amount] [token]",
-		Short: "To burn token",
+		Use:   "set-origin-contract [schema-code] [new-contract-address]",
+		Short: "Update New Origin contract addresss for NFT",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			argAmount, err := cast.ToUint64E(args[0])
-			if err != nil {
-				return err
-			}
-			argToken := args[1]
+			argSchemaCode := args[0]
+			argNewContractAddress := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 
-			msg := types.NewMsgBurn(
+			msg := types.NewMsgSetOriginContract(
 				clientCtx.GetFromAddress().String(),
-				argAmount,
-				argToken,
+				argSchemaCode,
+				argNewContractAddress,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

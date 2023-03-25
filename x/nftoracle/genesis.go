@@ -48,6 +48,17 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.BindedSignerList {
 		k.SetBindedSigner(ctx, elem)
 	}
+	// Set all the actionSignerConfig
+	for _, elem := range genState.ActionSignerConfigList {
+		k.SetActionSignerConfig(ctx, elem)
+	}
+	// Set all the syncActionSigner
+	for _, elem := range genState.SyncActionSignerList {
+		k.SetSyncActionSigner(ctx, elem)
+	}
+
+	// Set syncActionSigner count
+	k.SetSyncActionSignerCount(ctx, genState.SyncActionSignerCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -70,6 +81,9 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	}
 	genesis.ActionSignerList = k.GetAllActionSigner(ctx)
 	genesis.BindedSignerList = k.GetAllBindedSigner(ctx)
+	genesis.ActionSignerConfigList = k.GetAllActionSignerConfig(ctx)
+	genesis.SyncActionSignerList = k.GetAllSyncActionSigner(ctx)
+	genesis.SyncActionSignerCount = k.GetSyncActionSignerCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

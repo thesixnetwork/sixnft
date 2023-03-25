@@ -29,6 +29,11 @@ service Msg {
   rpc ChangeOrgOwner(MsgChangeOrgOwner) returns (MsgChangeOrgOwnerResponse);
   rpc CreateMultiMetadata(MsgCreateMultiMetadata) returns (MsgCreateMultiMetadataResponse);
   rpc PerformMultiTokenAction(MsgPerformMultiTokenAction) returns (MsgPerformMultiTokenActionResponse);
+  rpc SetUriRetrievalMethod(MsgSetUriRetrievalMethod) returns (MsgSetUriRetrievalMethodResponse);
+  rpc SetOriginChain(MsgSetOriginChain) returns (MsgSetOriginChainResponse);
+  rpc SetOriginContract(MsgSetOriginContract) returns (MsgSetOriginContractResponse);
+  rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
+  rpc SetMetadataFormat(MsgSetMetadataFormat) returns (MsgSetMetadataFormatResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -315,6 +320,61 @@ message MsgChangeOrgOwnerResponse {
   string orgName = 1;
   string oldOwner = 2;
   string newOwner = 3;
+}
+
+message MsgSetUriRetrievalMethod {
+  string creator = 1;
+  string schemaCode = 2;
+  int32 newMethod = 3;
+}
+
+message MsgSetUriRetrievalMethodResponse {
+  string schemaCode = 1;
+  string newMethod = 2;
+}
+
+message MsgSetOriginChain {
+  string creator = 1;
+  string schemaCode = 2;
+  string newOriginChain = 3;
+}
+
+message MsgSetOriginChainResponse {
+  string schemaCode = 1;
+  string newOriginChain = 2;
+}
+
+message MsgSetOriginContract {
+  string creator = 1;
+  string schemaCode = 2;
+  string newContractAddress = 3;
+}
+
+message MsgSetOriginContractResponse {
+  string schemaCode = 1;
+  string newContractAddress = 2;
+}
+
+message MsgSetAttributeOveriding {
+  string creator = 1;
+  string schemaCode = 2;
+  int32 newOveridingType = 3;
+}
+
+message MsgSetAttributeOveridingResponse {
+  string schemaCode = 1;
+  string newOveriding = 2;
+}
+
+message MsgSetMetadataFormat {
+  string creator = 1;
+  string schemaCode = 2;
+  string newFormat = 3;
+}
+
+message MsgSetMetadataFormatResponse {
+  string schemaCode = 1;
+  string newFormat = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

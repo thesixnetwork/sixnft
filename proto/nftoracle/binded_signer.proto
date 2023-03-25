@@ -16,4 +16,3 @@ message BindedSigner {
   repeated _SetSignerParams signers = 2; 
   uint64 actorCount = 3;
 }
-

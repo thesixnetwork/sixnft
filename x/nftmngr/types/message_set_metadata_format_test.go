@@ -8,21 +8,21 @@ import (
 	"github.com/thesixnetwork/sixnft/testutil/sample"
 )
 
-func TestMsgMint_ValidateBasic(t *testing.T) {
+func TestMsgSetMetadataFormat_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgMint
+		msg  MsgSetMetadataFormat
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgMint{
+			msg: MsgSetMetadataFormat{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgMint{
+			msg: MsgSetMetadataFormat{
 				Creator: sample.AccAddress(),
 			},
 		},
