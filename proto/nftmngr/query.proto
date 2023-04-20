@@ -29,31 +29,10 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema/{code}";
 	}
 
-	// will be deprecated next version (074)
-	// Queries a NFTSchema by index.
-	rpc NFTSchemaV063(QueryGetNFTSchemaRequest) returns (QueryGetNFTSchemaResponseV063) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_063/{code}";
-	}
-
-	// Queries a NFTSchema by index.
-	rpc NFTSchemaV072(QueryGetNFTSchemaRequest) returns (QueryGetNFTSchemaResponseV072) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_072/{code}";
-	}
 
 	// Queries a list of NFTSchema items.
 	rpc NFTSchemaAll(QueryAllNFTSchemaRequest) returns (QueryAllNFTSchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema";
-	}
-
-	// will be deprecated next version (074)
-	// Queries a list of NFTSchema items.
-	rpc NFTSchemaAllV063(QueryAllNFTSchemaRequest) returns (QueryAllNFTSchemaResponseV063) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_v063";
-	}
-
-	// Queries a list of NFTSchema items.
-	rpc NFTSchemaAllV072(QueryAllNFTSchemaRequest) returns (QueryAllNFTSchemaResponseV072) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_v072";
 	}
 
 	// Queries a NftData by index.
@@ -139,34 +118,12 @@ message QueryGetNFTSchemaResponse {
 	NFTSchema nFTSchema = 1 [(gogoproto.nullable) = false];
 }
 
-// will be deprecated next version (074)
-message QueryGetNFTSchemaResponseV063 {
-	NFTSchemaV063 nFTSchemaV063 = 1 [(gogoproto.nullable) = false];
-}
-
-// will be deprecated next version (074)
-message QueryGetNFTSchemaResponseV072 {
-	NFTSchemaV072 nFTSchemaV072 = 1 [(gogoproto.nullable) = false];
-}
-
 message QueryAllNFTSchemaRequest {
 	cosmos.base.query.v1beta1.PageRequest pagination = 1;
 }
 
 message QueryAllNFTSchemaResponse {
 	repeated NFTSchema nFTSchema = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-// will be deprecated next version (074)
-message QueryAllNFTSchemaResponseV063 {
-	repeated NFTSchemaV063 nFTSchemaV063 = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-// will be deprecated next version (074)
-message QueryAllNFTSchemaResponseV072 {
-	repeated NFTSchemaV072 nFTSchemaV072 = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
