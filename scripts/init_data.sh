@@ -7,7 +7,7 @@ grantOracle()
 
 RPC_ENDPOINT=http://localhost:26657
 CHAIN_ID=sixnft
-BASE64_SCHEMA=`cat nft-schema.json | base64 | tr -d '\n'`
+BASE64_SCHEMA=`cat ./mock-data/nft-schema.json | base64 | tr -d '\n'`
 
 sixnftd tx nftadmin grant-permission oracle_admin $(sixnftd keys show alice -a) --from alice -y --node ${RPC_ENDPOINT} --chain-id ${CHAIN_ID} | grep -q 'msg_index: 0';
 sixnftd tx nftadmin grant-permission admin_signer_config $(sixnftd keys show alice -a) --from alice -y \
