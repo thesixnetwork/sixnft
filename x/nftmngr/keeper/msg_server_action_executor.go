@@ -11,10 +11,14 @@ import (
 func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCreateActionExecutor) (*types.MsgCreateActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// check if schema exists
-	_, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	// Retrieve the schema
+	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
+	}
+	// Check if the creator is the owner of the schema
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
 	//validate that the actioner is a valid address
@@ -64,8 +68,18 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpdateActionExecutor) (*types.MsgUpdateActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	// Retrieve the schema
+	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
+	}
+	// Check if the creator is the owner of the schema
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	}
+
 	// Check if the value exists
-	valFound, isFound := k.GetActionExecutor(
+	_, isFound := k.GetActionExecutor(
 		ctx,
 		msg.NftSchemaCode,
 		msg.ExecutorAddress,
@@ -74,10 +88,12 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-	// Checks if the the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
-	}
+
+	// ** Validate by creator is schema owner instead
+	// // Checks if the the msg creator is the same as the current owner
+	// if msg.Creator != valFound.Creator {
+	// 	return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	// }
 
 	var actionExecutor = types.ActionExecutor{
 		Creator:         msg.Creator,
@@ -93,8 +109,17 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDeleteActionExecutor) (*types.MsgDeleteActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
+	}
+	// Check if the creator is the owner of the schema
+	if msg.Creator != schema.Owner {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	}
+
 	// Check if the value exists
-	valFound, isFound := k.GetActionExecutor(
+	_, isFound := k.GetActionExecutor(
 		ctx,
 		msg.NftSchemaCode,
 		msg.ExecutorAddress,
@@ -103,10 +128,6 @@ func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDel
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-	// Checks if the the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
-	}
 
 	k.RemoveActionExecutor(
 		ctx,
