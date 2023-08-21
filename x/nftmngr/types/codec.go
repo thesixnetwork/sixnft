@@ -31,6 +31,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetOriginContract{}, "nftmngr/SetOriginContract", nil)
 	cdc.RegisterConcrete(&MsgSetAttributeOveriding{}, "nftmngr/SetAttributeOveriding", nil)
 	cdc.RegisterConcrete(&MsgSetMetadataFormat{}, "nftmngr/SetMetadataFormat", nil)
+	cdc.RegisterConcrete(&MsgCreateActionExecutor{}, "nftmngr/CreateActionExecutor", nil)
+	cdc.RegisterConcrete(&MsgUpdateActionExecutor{}, "nftmngr/UpdateActionExecutor", nil)
+	cdc.RegisterConcrete(&MsgDeleteActionExecutor{}, "nftmngr/DeleteActionExecutor", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -103,6 +106,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetMetadataFormat{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateActionExecutor{},
+		&MsgUpdateActionExecutor{},
+		&MsgDeleteActionExecutor{},
 	)
 	// this line is used by starport scaffolding # 3
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)

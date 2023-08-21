@@ -34,7 +34,6 @@ func (k Keeper) GetNFTSchema(
 	return val, true
 }
 
-
 // RemoveNFTSchema removes a nFTSchema from the store
 func (k Keeper) RemoveNFTSchema(
 	ctx sdk.Context,
@@ -62,4 +61,3 @@ func (k Keeper) GetAllNFTSchema(ctx sdk.Context) (list []types.NFTSchema) {
 
 	return
 }
-

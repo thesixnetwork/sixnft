@@ -1,6 +1,7 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.nftmngr;
 
+import "nftmngr/action_executor.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "nftmngr/on_chain_data.proto";
 import "nftmngr/attribute_definition.proto";
@@ -34,6 +35,9 @@ service Msg {
   rpc SetOriginContract(MsgSetOriginContract) returns (MsgSetOriginContractResponse);
   rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
   rpc SetMetadataFormat(MsgSetMetadataFormat) returns (MsgSetMetadataFormatResponse);
+  rpc CreateActionExecutor(MsgCreateActionExecutor) returns (MsgCreateActionExecutorResponse);
+  rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
+  rpc DeleteActionExecutor(MsgDeleteActionExecutor) returns (MsgDeleteActionExecutorResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -376,5 +380,28 @@ message MsgSetMetadataFormatResponse {
   string schemaCode = 1;
   string newFormat = 2;
 }
+
+message MsgCreateActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+
+}
+message MsgCreateActionExecutorResponse {}
+
+message MsgUpdateActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+
+}
+message MsgUpdateActionExecutorResponse {}
+
+message MsgDeleteActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+}
+message MsgDeleteActionExecutorResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message
