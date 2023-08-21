@@ -44,12 +44,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgChangeSchemaOwner:
 			res, err := msgServer.ChangeSchemaOwner(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgAddSystemActioner:
-			res, err := msgServer.AddSystemActioner(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgRemoveSystemActioner:
-			res, err := msgServer.RemoveSystemActioner(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgResyncAttributes:
 			res, err := msgServer.ResyncAttributes(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)

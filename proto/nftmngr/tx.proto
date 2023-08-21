@@ -21,8 +21,6 @@ service Msg {
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
   rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
-  rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
-  rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
   rpc ResyncAttributes(MsgResyncAttributes) returns (MsgResyncAttributesResponse);
   rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
@@ -250,28 +248,6 @@ message MsgChangeSchemaOwnerResponse {
   string newOwner = 2;
 }
 
-message MsgAddSystemActioner {
-  string creator = 1;
-  string nftSchemaCode = 2;
-  string actioner = 3;
-}
-
-message MsgAddSystemActionerResponse {
-  string nftSchemaCode = 1;
-  string actioner = 2;
-}
-
-message MsgRemoveSystemActioner {
-  string creator = 1;
-  string nftSchemaCode = 2;
-  string actioner = 3;
-}
-
-message MsgRemoveSystemActionerResponse {
-  string nftSchemaCode = 1;
-  string actioner = 2;
-}
-
 message MsgResyncAttributesResponse {
   string nftSchemaCode = 1;
 }
@@ -387,7 +363,10 @@ message MsgCreateActionExecutor {
   string executorAddress = 3;
 
 }
-message MsgCreateActionExecutorResponse {}
+message MsgCreateActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
 
 message MsgUpdateActionExecutor {
   string creator = 1;
@@ -395,13 +374,19 @@ message MsgUpdateActionExecutor {
   string executorAddress = 3;
 
 }
-message MsgUpdateActionExecutorResponse {}
+message MsgUpdateActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
 
 message MsgDeleteActionExecutor {
   string creator = 1;
   string nftSchemaCode = 2;
   string executorAddress = 3;
 }
-message MsgDeleteActionExecutorResponse {}
+message MsgDeleteActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
 
 // this line is used by starport scaffolding # proto/tx/message

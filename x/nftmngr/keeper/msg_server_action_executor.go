@@ -11,14 +11,28 @@ import (
 func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCreateActionExecutor) (*types.MsgCreateActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	// check if schema exists
+	_, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
+	}
+
+	//validate that the actioner is a valid address
+	// validate grantee format as 6x0000000000000000 or not
+	_, err := sdk.AccAddressFromBech32(msg.ExecutorAddress)
+	if err != nil {
+		return nil, types.ErrInvalidAddress
+	}
+
 	// Check if the value already exists
 	_, isFound := k.GetActionExecutor(
 		ctx,
 		msg.NftSchemaCode,
 		msg.ExecutorAddress,
 	)
+
 	if isFound {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action Executor already exists")
 	}
 
 	var actionExecutor = types.ActionExecutor{
@@ -31,7 +45,20 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 		ctx,
 		actionExecutor,
 	)
-	return &types.MsgCreateActionExecutorResponse{}, nil
+
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeAddSystemActioner,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyActioner, msg.ExecutorAddress),
+		),
+	)
+
+	return &types.MsgCreateActionExecutorResponse{
+		NftSchemaCode:   msg.NftSchemaCode,
+		ExecutorAddress: msg.ExecutorAddress,
+	}, nil
 }
 
 func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpdateActionExecutor) (*types.MsgUpdateActionExecutorResponse, error) {

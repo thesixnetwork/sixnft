@@ -11,6 +11,17 @@ message NFTSchema {
   string code = 1; 
   string name = 2; 
   string owner = 3; 
+  OriginData origin_data = 4;
+  OnChainData onchain_data = 5;
+  bool isVerified = 6;
+  string mint_authorization = 7;
+}
+
+
+message NFTSchemaV1 {
+  string code = 1; 
+  string name = 2; 
+  string owner = 3; 
   repeated string system_actioners = 4;
   OriginData origin_data = 5;
   OnChainData onchain_data = 6;

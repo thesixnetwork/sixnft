@@ -17,8 +17,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetBaseUri{}, "nftmngr/SetBaseUri", nil)
 	cdc.RegisterConcrete(&MsgToggleAction{}, "nftmngr/ToggleAction", nil)
 	cdc.RegisterConcrete(&MsgChangeSchemaOwner{}, "nftmngr/ChangeSchemaOwner", nil)
-	cdc.RegisterConcrete(&MsgAddSystemActioner{}, "nftmngr/AddSystemActioner", nil)
-	cdc.RegisterConcrete(&MsgRemoveSystemActioner{}, "nftmngr/RemoveSystemActioner", nil)
 	cdc.RegisterConcrete(&MsgResyncAttributes{}, "nftmngr/ResyncAttributes", nil)
 	cdc.RegisterConcrete(&MsgShowAttributes{}, "nftmngr/ShowAttributes", nil)
 	cdc.RegisterConcrete(&MsgSetFeeConfig{}, "nftmngr/SetFeeConfig", nil)
@@ -64,12 +62,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgChangeSchemaOwner{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgAddSystemActioner{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgRemoveSystemActioner{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgResyncAttributes{},
