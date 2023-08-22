@@ -28,18 +28,17 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+msg.TokenId)
 	}
 
-	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
+	//query action Executor
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		msg.NftSchemaCode,
+		msg.Creator,
+	)
+
+	if !isFound {
+		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 	}
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
-			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-		}
-	}
 	mapAction := types.Action{}
 	for _, action := range schema.OnchainData.Actions {
 		if action.Name == msg.Action && action.Disable {

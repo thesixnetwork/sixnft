@@ -37,7 +37,7 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 
 	// ** SCHEMA LAYER **
 	// check if schema exists
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	_, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
@@ -51,17 +51,15 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
-	}
+	//query action Executor
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		msg.NftSchemaCode,
+		msg.Creator,
+	)
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
-			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-		}
+	if !isFound {
+		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 	}
 
 	arryOfparams := strings.Split(msg.Parameters[1:len(msg.Parameters)-1], "],")
@@ -180,17 +178,15 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
-	}
+	//query action Executor
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		msg.NftSchemaCode,
+		msg.Creator,
+	)
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
-			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-		}
+	if !isFound {
+		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 	}
 
 	// check if action is disabled
@@ -366,17 +362,15 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
-	}
+	//query action Executor
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		msg.NftSchemaCode,
+		msg.Creator,
+	)
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
-			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-		}
+	if !isFound {
+		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 	}
 
 	mapAction := []types.Action{}
@@ -569,16 +563,15 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
 	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
-	}
+	//query action Executor
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		msg.NftSchemaCode,
+		msg.Creator,
+	)
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
-			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-		}
+	if !isFound {
+		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 	}
 
 	mapAction := []types.Action{}

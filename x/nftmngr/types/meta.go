@@ -426,7 +426,7 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 				}
 			}
 		}
-	}else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
+	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
@@ -519,7 +519,7 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 				}
 			}
 		}
-	}else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
+	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,

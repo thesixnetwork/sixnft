@@ -61,7 +61,6 @@ const (
 	EventTypeSetMetadataFormat          = "set_metadata_format"
 	AttributeKeySetMetadataFormat       = "metadata_format"
 	AttributeKeySetMetadataFormatResult = "set_metadata_format_result"
-	
 
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"

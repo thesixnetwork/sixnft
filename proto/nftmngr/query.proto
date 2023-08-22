@@ -13,6 +13,7 @@ import "nftmngr/nft_schema_by_contract.proto";
 import "nftmngr/nft_fee_config.proto";
 import "nftmngr/nft_fee_balance.proto";
 import "nftmngr/metadata_creator.proto";
+import "nftmngr/action_executor.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -96,6 +97,16 @@ service Query {
 	// Queries a list of MetadataCreator items.
 	rpc MetadataCreatorAll(QueryAllMetadataCreatorRequest) returns (QueryAllMetadataCreatorResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator";
+	}
+
+// Queries a ActionExecutor by index.
+	rpc ActionExecutor(QueryGetActionExecutorRequest) returns (QueryGetActionExecutorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_executor/{nftSchemaCode}/{executorAddress}";
+	}
+
+	// Queries a list of ActionExecutor items.
+	rpc ActionExecutorAll(QueryAllActionExecutorRequest) returns (QueryAllActionExecutorResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_executor";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -235,6 +246,25 @@ message QueryAllMetadataCreatorRequest {
 
 message QueryAllMetadataCreatorResponse {
 	repeated MetadataCreator metadataCreator = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetActionExecutorRequest {
+	  string nftSchemaCode = 1;
+  string executorAddress = 2;
+
+}
+
+message QueryGetActionExecutorResponse {
+	ActionExecutor actionExecutor = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllActionExecutorRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllActionExecutorResponse {
+	repeated ActionExecutor actionExecutor = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

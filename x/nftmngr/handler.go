@@ -44,12 +44,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgChangeSchemaOwner:
 			res, err := msgServer.ChangeSchemaOwner(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgAddSystemActioner:
-			res, err := msgServer.AddSystemActioner(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgRemoveSystemActioner:
-			res, err := msgServer.RemoveSystemActioner(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgResyncAttributes:
 			res, err := msgServer.ResyncAttributes(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
@@ -85,6 +79,15 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgSetMetadataFormat:
 			res, err := msgServer.SetMetadataFormat(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCreateActionExecutor:
+			res, err := msgServer.CreateActionExecutor(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgUpdateActionExecutor:
+			res, err := msgServer.UpdateActionExecutor(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgDeleteActionExecutor:
+			res, err := msgServer.DeleteActionExecutor(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 			// this line is used by starport scaffolding # 1
 		default:
