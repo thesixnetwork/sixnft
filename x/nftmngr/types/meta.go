@@ -141,18 +141,7 @@ func (m *Metadata) GetNumber(key string) int64 {
 
 func (m *Metadata) MustGetNumber(key string) (int64, error) {
 	attri := m.MapAllKey[key]
-	schema := m.schema
 	if attri == nil {
-		// find from schema nft attribute
-		if schema != nil {
-			for _, attr := range schema.OnchainData.NftAttributes {
-				if attr.Name == key {
-					if attr.DataType == "number" {
-						return int64(attr.DefaultMintValue.GetNumberAttributeValue().Value), nil
-					}
-				}
-			}
-		}
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
@@ -163,43 +152,12 @@ func (m *Metadata) MustGetNumber(key string) (int64, error) {
 }
 
 func (m *Metadata) SetNumber(key string, value int64) error {
-	schema := m.schema
+	// m.mapNumber[key] = value
 	attri := m.MapAllKey[key]
 	if attri == nil {
-		// panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
-		// find from schema nft attribute
-		if schema != nil {
-			for _, nftAttribute := range schema.OnchainData.NftAttributes {
-				if nftAttribute.Name == key {
-					prev := strconv.FormatUint(nftAttribute.DefaultMintValue.GetNumberAttributeValue().Value, 10)
-					index := int(nftAttribute.Index)
-					name := nftAttribute.Name
-					if nftAttribute.DataType == "number" {
-						newAttributeValue := &NftAttributeValue{
-							Name: name,
-							Value: &NftAttributeValue_NumberAttributeValue{
-								NumberAttributeValue: &NumberAttributeValue{
-									Value: uint64(value),
-								},
-							},
-						}
-						m.ChangeList = append(m.ChangeList, &MetadataChange{
-							Key:           key,
-							PreviousValue: prev,
-							NewValue:      strconv.FormatUint(uint64(value), 10),
-						})
-						m.MapAllKey[key] = &MetadataAttribute{
-							AttributeValue: newAttributeValue,
-							From:           "chain",
-							Index:          index,
-						}
-						m.MapAllKey[key].AttributeValue = newAttributeValue
-						m.nftData.OnchainAttributes[index] = newAttributeValue
-					}
-				}
-			}
-		}
-	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_NumberAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
@@ -217,6 +175,8 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+		} else {
+			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute or nft attribute")
 		}
 	} else {
 		return sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
@@ -275,66 +235,24 @@ func (m *Metadata) ToUppercase(key string) string {
 
 func (m *Metadata) MustGetString(key string) (string, error) {
 	attri := m.MapAllKey[key]
-	schema := m.schema
 	if attri == nil {
-		// find from schema nft attribute
-		if schema != nil {
-			for _, attr := range schema.OnchainData.NftAttributes {
-				if attr.Name == key {
-					if attr.DataType == "string" {
-						return attr.DefaultMintValue.GetStringAttributeValue().Value, nil
-					}
-				}
-			}
-		}
 		return "", sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
+		// Number
 		return attri.AttributeValue.GetStringAttributeValue().Value, nil
 	}
-
 	return "", sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
 
 func (m *Metadata) SetString(key string, value string) error {
-	schema := m.schema
+	// m.mapString[key] = value
 	attri := m.MapAllKey[key]
 	if attri == nil {
-		if attri == nil {
-			if schema != nil {
-				for _, nftAttribute := range schema.OnchainData.NftAttributes {
-					if nftAttribute.Name == key {
-						prev := nftAttribute.DefaultMintValue.GetStringAttributeValue().Value
-						index := int(nftAttribute.Index)
-						name := nftAttribute.Name
-						if nftAttribute.DataType == "string" {
-							newAttributeValue := &NftAttributeValue{
-								Name: name,
-								Value: &NftAttributeValue_StringAttributeValue{
-									StringAttributeValue: &StringAttributeValue{
-										Value: value,
-									},
-								},
-							}
-							m.ChangeList = append(m.ChangeList, &MetadataChange{
-								Key:           key,
-								PreviousValue: prev,
-								NewValue:      value,
-							})
-							m.MapAllKey[key] = &MetadataAttribute{
-								AttributeValue: newAttributeValue,
-								From:           "chain",
-								Index:          index,
-							}
-							m.MapAllKey[key].AttributeValue = newAttributeValue
-							m.nftData.OnchainAttributes[index] = newAttributeValue
-						}
-					}
-				}
-			}
-		}
-	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
-		// String
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_StringAttributeValue); ok {
+		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
 			Value: &NftAttributeValue_StringAttributeValue{
@@ -369,19 +287,9 @@ func (m *Metadata) GetFloat(key string) float64 {
 }
 
 func (m *Metadata) MustGetFloat(key string) (float64, error) {
+	// return m.mapFloat[key]
 	attri := m.MapAllKey[key]
-	schema := m.schema
 	if attri == nil {
-		// find from schema nft attribute
-		if schema != nil {
-			for _, attr := range schema.OnchainData.NftAttributes {
-				if attr.Name == key {
-					if attr.DataType == "float" {
-						return attr.DefaultMintValue.GetFloatAttributeValue().Value, nil
-					}
-				}
-			}
-		}
 		return 0, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
@@ -392,41 +300,12 @@ func (m *Metadata) MustGetFloat(key string) (float64, error) {
 }
 
 func (m *Metadata) SetFloat(key string, value float64) error {
-	schema := m.schema
+	// m.mapFloat[key] = value
 	attri := m.MapAllKey[key]
 	if attri == nil {
-		if schema != nil {
-			for _, nftAttribute := range schema.OnchainData.NftAttributes {
-				if nftAttribute.Name == key {
-					prev := strconv.FormatFloat(nftAttribute.DefaultMintValue.GetFloatAttributeValue().Value, 'f', -1, 64)
-					index := int(nftAttribute.Index)
-					name := nftAttribute.Name
-					if nftAttribute.DataType == "float" {
-						newAttributeValue := &NftAttributeValue{
-							Name: name,
-							Value: &NftAttributeValue_FloatAttributeValue{
-								FloatAttributeValue: &FloatAttributeValue{
-									Value: value,
-								},
-							},
-						}
-						m.ChangeList = append(m.ChangeList, &MetadataChange{
-							Key:           key,
-							PreviousValue: prev,
-							NewValue:      strconv.FormatFloat(value, 'f', -1, 64),
-						})
-						m.MapAllKey[key] = &MetadataAttribute{
-							AttributeValue: newAttributeValue,
-							From:           "chain",
-							Index:          index,
-						}
-						m.MapAllKey[key].AttributeValue = newAttributeValue
-						m.nftData.OnchainAttributes[index] = newAttributeValue
-					}
-				}
-			}
-		}
-	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_FloatAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
@@ -464,62 +343,23 @@ func (m *Metadata) GetBoolean(key string) bool {
 func (m *Metadata) MustGetBool(key string) (bool, error) {
 	// return m.mapBool[key]
 	attri := m.MapAllKey[key]
-	schema := m.schema
 	if attri == nil {
-		// find from schema nft attribute
-		if schema != nil {
-			for _, attr := range schema.OnchainData.NftAttributes {
-				if attr.Name == key {
-					if attr.DataType == "boolean" {
-						return attr.DefaultMintValue.GetBooleanAttributeValue().Value, nil
-					}
-				}
-			}
-		}
 		return false, sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
 	}
 	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
+		// Number
 		return attri.AttributeValue.GetBooleanAttributeValue().Value, nil
 	}
 	return false, sdkerrors.Wrap(ErrAttributeTypeNotMatch, attri.AttributeValue.Name)
 }
 
 func (m *Metadata) SetBoolean(key string, value bool) error {
-	schema := m.schema
+	// m.mapBool[key] = value
 	attri := m.MapAllKey[key]
 	if attri == nil {
-		if schema != nil {
-			for _, nftAttribute := range schema.OnchainData.NftAttributes {
-				if nftAttribute.Name == key {
-					prev := strconv.FormatBool(nftAttribute.DefaultMintValue.GetBooleanAttributeValue().Value)
-					index := int(nftAttribute.Index)
-					name := nftAttribute.Name
-					if nftAttribute.DataType == "boolean" {
-						newAttributeValue := &NftAttributeValue{
-							Name: name,
-							Value: &NftAttributeValue_BooleanAttributeValue{
-								BooleanAttributeValue: &BooleanAttributeValue{
-									Value: value,
-								},
-							},
-						}
-						m.ChangeList = append(m.ChangeList, &MetadataChange{
-							Key:           key,
-							PreviousValue: prev,
-							NewValue:      strconv.FormatBool(value),
-						})
-						m.MapAllKey[key] = &MetadataAttribute{
-							AttributeValue: newAttributeValue,
-							From:           "chain",
-							Index:          index,
-						}
-						m.MapAllKey[key].AttributeValue = newAttributeValue
-						m.nftData.OnchainAttributes[index] = newAttributeValue
-					}
-				}
-			}
-		}
-	} else if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
+		panic(sdkerrors.Wrap(ErrAttributeNotFoundForAction, key))
+	}
+	if _, ok := attri.AttributeValue.GetValue().(*NftAttributeValue_BooleanAttributeValue); ok {
 		// Number
 		newAttributeValue := &NftAttributeValue{
 			Name: attri.AttributeValue.Name,
@@ -546,29 +386,11 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 	return nil
 }
 
-// SetDisplayAttribute set display attribute can be hidden only token attribute and nft attribute forbidden
-func (m *Metadata) SetDisplayAttribute(key string, value string) error {
+func (m *Metadata) SetDisplayArribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
 	attri := m.MapAllKey[key]
-	schema := m.schema
-
 	if attri == nil {
 		return sdkerrors.Wrap(ErrAttributeNotFoundForAction, key)
-	}
-
-	for _, attr := range schema.OnchainData.NftAttributes {
-		if attr.Name == key {
-			panic(sdkerrors.Wrap(ErrGlobalAttributeCannotBeHiddenByAction, key+" is a global attribute"))
-		}
-	}
-
-	for _, attr := range schema.OnchainData.TokenAttributes {
-		if attr.Name == key {
-			if !(attr.HiddenOveride) {
-				// return sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden")
-				panic(sdkerrors.Wrap(ErrAttributeOverriding, "The selected attribute is not allowed to be hidden"))
-			}
-		}
 	}
 	if _bool := attri.AttributeValue.GetHiddenToMarketplace() == bool_val; _bool {
 		return nil
