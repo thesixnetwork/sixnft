@@ -75,6 +75,16 @@ func TestGenesis(t *testing.T) {
 				NftSchemaCode: "1",
 			},
 		},
+		ActionExecutorList: []types.ActionExecutor{
+			{
+				NftSchemaCode:   "0",
+				ExecutorAddress: "0",
+			},
+			{
+				NftSchemaCode:   "1",
+				ExecutorAddress: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -95,5 +105,6 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.NFTFeeBalance, got.NFTFeeBalance)
 	require.ElementsMatch(t, genesisState.MetadataCreatorList, got.MetadataCreatorList)
 	require.ElementsMatch(t, genesisState.NftCollectionList, got.NftCollectionList)
+	require.ElementsMatch(t, genesisState.ActionExecutorList, got.ActionExecutorList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

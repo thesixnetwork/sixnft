@@ -2,19 +2,17 @@ package cli
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
-	"github.com/thesixnetwork/sixnft/x/nftoracle/types"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-// legacy query should be removed once all clients have been updated to use gRPC queries
-func CmdListActionRequestV063() *cobra.Command {
+func CmdListActionExecutor() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-action-request-v063",
-		Short: "list all ActionOracleRequest-v063",
+		Use:   "list-action-executor",
+		Short: "list all actionExecutor",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -25,11 +23,11 @@ func CmdListActionRequestV063() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllActionRequestRequest{
+			params := &types.QueryAllActionExecutorRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.ActionRequestAllV063(context.Background(), params)
+			res, err := queryClient.ActionExecutorAll(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -44,26 +42,25 @@ func CmdListActionRequestV063() *cobra.Command {
 	return cmd
 }
 
-func CmdShowActionRequestV063() *cobra.Command {
+func CmdShowActionExecutor() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-action-request-v063 [id]",
-		Short: "shows a ActionOracleRequest-v063",
-		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Use:   "show-action-executor [nft-schema-code] [executor-address]",
+		Short: "shows a actionExecutor",
+		Args:  cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			id, err := strconv.ParseUint(args[0], 10, 64)
-			if err != nil {
-				return err
+			argNftSchemaCode := args[0]
+			argExecutorAddress := args[1]
+
+			params := &types.QueryGetActionExecutorRequest{
+				NftSchemaCode:   argNftSchemaCode,
+				ExecutorAddress: argExecutorAddress,
 			}
 
-			params := &types.QueryGetActionRequestRequest{
-				Id: id,
-			}
-
-			res, err := queryClient.ActionOracleRequestV063(context.Background(), params)
+			res, err := queryClient.ActionExecutor(context.Background(), params)
 			if err != nil {
 				return err
 			}

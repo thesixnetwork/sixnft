@@ -17,8 +17,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetBaseUri{}, "nftmngr/SetBaseUri", nil)
 	cdc.RegisterConcrete(&MsgToggleAction{}, "nftmngr/ToggleAction", nil)
 	cdc.RegisterConcrete(&MsgChangeSchemaOwner{}, "nftmngr/ChangeSchemaOwner", nil)
-	cdc.RegisterConcrete(&MsgAddSystemActioner{}, "nftmngr/AddSystemActioner", nil)
-	cdc.RegisterConcrete(&MsgRemoveSystemActioner{}, "nftmngr/RemoveSystemActioner", nil)
 	cdc.RegisterConcrete(&MsgResyncAttributes{}, "nftmngr/ResyncAttributes", nil)
 	cdc.RegisterConcrete(&MsgShowAttributes{}, "nftmngr/ShowAttributes", nil)
 	cdc.RegisterConcrete(&MsgSetFeeConfig{}, "nftmngr/SetFeeConfig", nil)
@@ -31,6 +29,9 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgSetOriginContract{}, "nftmngr/SetOriginContract", nil)
 	cdc.RegisterConcrete(&MsgSetAttributeOveriding{}, "nftmngr/SetAttributeOveriding", nil)
 	cdc.RegisterConcrete(&MsgSetMetadataFormat{}, "nftmngr/SetMetadataFormat", nil)
+	cdc.RegisterConcrete(&MsgCreateActionExecutor{}, "nftmngr/CreateActionExecutor", nil)
+	cdc.RegisterConcrete(&MsgUpdateActionExecutor{}, "nftmngr/UpdateActionExecutor", nil)
+	cdc.RegisterConcrete(&MsgDeleteActionExecutor{}, "nftmngr/DeleteActionExecutor", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -61,12 +62,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgChangeSchemaOwner{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgAddSystemActioner{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgRemoveSystemActioner{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgResyncAttributes{},
@@ -103,6 +98,11 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetMetadataFormat{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateActionExecutor{},
+		&MsgUpdateActionExecutor{},
+		&MsgDeleteActionExecutor{},
 	)
 	// this line is used by starport scaffolding # 3
 	msgservice.RegisterMsgServiceDesc(registry, &_Msg_serviceDesc)
