@@ -59,8 +59,7 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 		),
 	)
 
-	return &types.MsgCreateActionExecutorResponse{
-	}, nil
+	return &types.MsgCreateActionExecutorResponse{}, nil
 }
 
 func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpdateActionExecutor) (*types.MsgUpdateActionExecutorResponse, error) {
