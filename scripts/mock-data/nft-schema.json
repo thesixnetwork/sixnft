@@ -1,12 +1,12 @@
 {
-"code": "sixnetwork.develop_v073",
-"name": "NFTexpoGoerli",
+  "code": "sixnetwork.develop_v073",
+  "name": "EXAMPLE_SCHEMA",
   "owner": "0xNFTOWNER",
   "origin_data": {
-    "origin_base_uri": "https://dryotus.definix.com/ipfs/QmZc4kPjvz4M4SpNfRZme2gcVzbMQjDt76GsxvLqSexT8R/",
+    "origin_base_uri": "",
     "uri_retrieval_method": "BASE",
-    "origin_chain": "GOERLI",
-    "origin_contract_address": "0x9EC14dfF0049F8De41FE106f3221a50313F941aB",
+    "origin_chain": "FIVENET",
+    "origin_contract_address": "0x40df0C834CE7549e9234D11525aD1f7E7CF48E88",
     "attribute_overriding": "CHAIN",
     "metadata_format": "opensea",
     "origin_attributes": [
@@ -21,42 +21,12 @@
         }
       },
       {
-        "name": "moon",
+        "name": "tier",
         "data_type": "string",
         "display_value_field": "value",
         "display_option": {
           "opensea": {
-            "trait_type": "Moon"
-          }
-        }
-      },
-      {
-        "name": "plate",
-        "data_type": "string",
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Plate"
-          }
-        }
-      },
-      {
-        "name": "tail",
-        "data_type": "string",
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Tail"
-          }
-        }
-      },
-      {
-        "name": "whale",
-        "data_type": "string",
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Whale"
+            "trait_type": "Tier"
           }
         }
       }
@@ -66,44 +36,10 @@
     "reveal_required": true,
     "reveal_secret": "",
     "nft_attributes": [
+    ],
+    "token_attributes": [
       {
-        "name": "hello_nft_attribute",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": "To Valhalla!"
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Hello NFT Attribute"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "dynamic_global_attribute",
-        "default_mint_value": {
-          "number_attribute_value": {
-            "value": "0"
-          }
-        },
-        "data_type": "number",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Dynamic Global NFT Attribute"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "string_global_attribute",
+        "name": "tier",
         "default_mint_value": {
           "string_attribute_value": {
             "value": ""
@@ -114,58 +50,20 @@
         "display_value_field": "value",
         "display_option": {
           "opensea": {
-            "trait_type": "String Global NFT Attribute"
+            "trait_type": "Tier"
           }
         },
         "hidden_overide": false,
         "hidden_to_marketplace": false
       },
-      {
-        "name": "boolean_global_attribute",
-        "default_mint_value": {
-          "boolean_attribute_value": {
-            "value": false
-          }
-        },
-        "data_type": "boolean",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Boolean Global NFT Attribute"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "float_global_attribute",
-        "default_mint_value": {
-          "float_attribute_value": {
-            "value": "1.5"
-          }
-        },
-        "data_type": "float",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Float Global NFT Attribute"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      }
-    ],
-    "token_attributes": [
       {
         "name": "points",
         "default_mint_value": {
-          "number_attribute_value": {
+          "float_attribute_value": {
             "value": 0
           }
         },
-        "data_type": "number",
+        "data_type": "float",
         "required": true,
         "display_value_field": "value",
         "display_option": {
@@ -177,7 +75,7 @@
         "hidden_to_marketplace": false
       },
       {
-        "name": "started",
+        "name": "is_checked_in",
         "default_mint_value": {
           "boolean_attribute_value": {
             "value": false
@@ -190,119 +88,7 @@
           "bool_true_value": "Yes",
           "bool_false_value": "No",
           "opensea": {
-            "trait_type": "Started"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "greeting_nft_attribute",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": ""
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Greeting NFT Attribute"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "split",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": "not yet"
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Test Split String"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "lowercase",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": "not yet"
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Test Split String"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "uppercase",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": "not yet"
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Test Split String"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "hide_pass",
-        "default_mint_value": {
-          "boolean_attribute_value": {
-            "value": false
-          }
-        },
-        "data_type": "boolean",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "bool_true_value": "Yes",
-          "bool_false_value": "No",
-          "opensea": {
-            "trait_type": "Test Hide To Marketplace Pass"
-          }
-        },
-        "hidden_overide": true,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "hide_fail",
-        "default_mint_value": {
-          "boolean_attribute_value": {
-            "value": false
-          }
-        },
-        "data_type": "boolean",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "bool_true_value": "Yes",
-          "bool_false_value": "No",
-          "opensea": {
-            "trait_type": "Test Hide To Marketplace Fail"
+            "trait_type": "Checked In"
           }
         },
         "hidden_overide": false,
@@ -311,116 +97,36 @@
     ],
     "actions": [
       {
-        "name": "start_mission",
-        "desc": "Start Mission",
+        "name": "check_in",
+        "desc": "Check In to Event",
         "params": [],
-        "when": "meta.GetBoolean('started') == false",
+        "when": "meta.GetBoolean('is_checked_in') == false",
         "then": [
-          "meta.SetBoolean('started', true)",
-          "meta.SetNumber('points', meta.GetNumber('points') + 200)"
+          "meta.SetFloat('points', meta.GetFloat('points') + 50.0)",
+          "meta.SetBoolean('is_checked_in', true)"
         ]
       },
       {
-        "name": "test_read_nft",
-        "desc": "Test NFT attribute",
+        "name": "mission",
+        "desc": "Do mission",
         "params": [],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "when": "meta.GetBoolean('is_checked_in') == true",
         "then": [
-          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
-          "meta.SetString('greeting_nft_attribute',meta.GetString('hello_nft_attribute'))"
+          "meta.SetFloat('points', meta.GetFloat('points') + 70.0)"
         ]
       },
       {
-        "name": "test_split",
-        "desc": "Test Split String",
-        "params": [],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
-        "then": [
-          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
-          "meta.SetString('split',meta.GetSubString('hello_nft_attribute', 3, -1))"
-        ]
-      },
-      {
-        "name": "test_lowercase",
-        "desc": "Test Lowercase String",
-        "params": [],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
-        "then": [
-          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
-          "meta.SetString('lowercase',meta.ToLowercase('hello_nft_attribute'))"
-        ]
-      },
-      {
-        "name": "test_uppercase",
-        "desc": "Test Uppercase String",
-        "params": [],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
-        "then": [
-          "meta.SetNumber('points', meta.GetNumber('points') + 100)",
-          "meta.SetString('uppercase',meta.ToUppercase('hello_nft_attribute'))"
-        ]
-      },
-      {
-        "name": "test_set_global",
-        "desc": "Test Uppercase String",
-        "params": [],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
-        "then": [
-          "meta.SetNumber('dynamic_global_attribute', meta.GetNumber('dynamic_global_attribute') + 100)",
-          "meta.SetString('string_global_attribute',meta.GetSubString('hello_nft_attribute', 3, -1))",
-          "meta.SetBoolean('boolean_global_attribute', true)",
-          "meta.SetFloat('float_global_attribute', 3.5)"
-        ]
-      },
-      {
-        "name": "test_hidden",
-        "desc": "Test Dyamic hidden to marketplace",
+        "name": "change_tier",
+        "desc": "Change Tier",
         "params": [
-          {
-            "name": "attribute_name",
-            "desc": "attriubute name",
-            "data_type": "string",
-            "required": true
-          },
-          {
-            "name": "show",
-            "desc": "value",
-            "data_type": "string",
-            "required": true
-          }
         ],
-        "when": "meta.GetBoolean('started') == true || meta.GetBoolean('started') == false",
+        "when": "meta.GetBoolean('is_checked_in') == true",
         "then": [
-          "meta.SetDisplayAttribute(params['attribute_name'].GetString(), params['show'].GetString())"
-        ]
-      },
-      {
-        "name": "transfer",
-        "desc": "Test Transfer",
-        "params": [
-          {
-            "name": "points",
-            "desc": "Points",
-            "data_type": "number",
-            "required": true,
-            "default_value": "10"
-          },
-          {
-            "name": "token_id",
-            "desc": "Token Id",
-            "data_type": "string",
-            "required": true,
-            "default_value": ""
-          }
-        ],
-        "when": "meta.GetNumber('points') > 0 && params['points'].GetNumber() > 0 ",
-        "then": [
-          "meta.TransferNumber('points',params['token_id'].GetString(),params['points'].GetNumber())"
+          "meta.SetString('tier', 'gold')"
         ]
       }
     ],
-    "nft_attributes_value": [
-    ]
+    "nft_attributes_value": []
   },
   "mint_authorization": "system"
 }
