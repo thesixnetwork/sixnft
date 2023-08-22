@@ -88,7 +88,6 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-
 	// ** Validate by creator is schema owner instead
 	// // Checks if the the msg creator is the same as the current owner
 	// if msg.Creator != valFound.Creator {
@@ -127,7 +126,6 @@ func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDel
 	if !isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
-
 
 	k.RemoveActionExecutor(
 		ctx,

@@ -18,18 +18,18 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 			app.NftmngrKeeper.SetActionExecutor(ctx, nftmngrtypes.ActionExecutor{
 				NftSchemaCode:   nftSchemaV1.Code,
 				ExecutorAddress: systemActioner,
-				Creator: nftSchemaV1.Owner,
+				Creator:         nftSchemaV1.Owner,
 			})
 		}
 
 		// migrate schema to new schema
 		app.NftmngrKeeper.SetNFTSchema(ctx, nftmngrtypes.NFTSchema{
-			Code: 		  nftSchemaV1.Code,
-			Name: 		  nftSchemaV1.Name,
-			Owner: 		  nftSchemaV1.Owner,
-			OriginData:  nftSchemaV1.OriginData,
-			OnchainData: nftSchemaV1.OnchainData,
-			IsVerified: nftSchemaV1.IsVerified,
+			Code:              nftSchemaV1.Code,
+			Name:              nftSchemaV1.Name,
+			Owner:             nftSchemaV1.Owner,
+			OriginData:        nftSchemaV1.OriginData,
+			OnchainData:       nftSchemaV1.OnchainData,
+			IsVerified:        nftSchemaV1.IsVerified,
 			MintAuthorization: nftSchemaV1.MintAuthorization,
 		})
 	}

@@ -9,3 +9,7 @@ message ActionExecutor {
   string creator = 3;
 }
 
+message ActionExecutorBySchema {
+  string nftSchemaCode = 1; 
+  repeated string executorAddress = 2; 
+}
