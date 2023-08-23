@@ -142,7 +142,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	// get schema index from change list
 	for _, change := range meta.ChangeList {
 		// append key to list_of_keychang when name is match
-		for _, attribute := range schema.OnchainData.NftAttributes {
+		for _, attribute := range schema.OnchainData.SchemaAttributes {
 			if attribute.Name == change.Key {
 				switch attribute.DataType {
 				case "string":

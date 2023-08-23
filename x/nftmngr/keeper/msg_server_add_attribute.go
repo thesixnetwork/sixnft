@@ -36,7 +36,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	}
 
 	//validate AttributeDefinition data
-	err = k.ValidateAttributeDefinition(&new_add_attribute, &schema)
+	err = ValidateAttributeDefinition(&new_add_attribute, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -48,16 +48,16 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 
 	// Swith location of attribute
 	switch msg.Location {
-	case types.AttributeLocation_NFT_ATTRIBUTE:
+	case types.AttributeLocation_ATTRIBUTE_OF_SCHEMA:
 		// append new nft_attributes to array of OnchainData.NftAttributes
-		schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
-	case types.AttributeLocation_TOKEN_ATTRIBUTE:
+		schema.OnchainData.SchemaAttributes = append(schema.OnchainData.SchemaAttributes, &new_add_attribute)
+	case types.AttributeLocation_ATTRIBUTE_OF_TOKEN:
 		// append new token_attributes to array of OnchainData.TokenAttributes
 		schema.OnchainData.TokenAttributes = append(schema.OnchainData.TokenAttributes, &new_add_attribute)
 		// end the case
 	}
 	// count the index of new attribute
-	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
 	// set new index to new attribute
 	new_add_attribute.Index = uint64(count - 1)
 
@@ -84,22 +84,22 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 }
 
 // validate AttributeDefinition data
-func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+func ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
 	// Onchain Data Nft Attributes Map
-	mapNftOnchainAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
-	mapNftTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
-	mapNFTOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapOriginAttributes := CreateOriginAttrDefMap(schema.OriginData.OriginAttributes)
+	mapSchemaAttributes := CreateOnchainAttrDefMap(schema.OnchainData.SchemaAttributes)
+	mapTokenAttributes := CreateOnchainAttrDefMap(schema.OnchainData.TokenAttributes)
 	// check if attribute name is unique
-	if _, found := mapNftOnchainAttributes[attribute.Name]; found {
+	if _, found := mapOriginAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-	if _, found := mapNftTokenAttributes[attribute.Name]; found {
+	if _, found := mapSchemaAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-	if _, found := mapNFTOriginAttributes[attribute.Name]; found {
+	if _, found := mapTokenAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-
+	
 	// // validate struct data
 	// if attribute.Name == "" {
 	// 	return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute name is empty")
@@ -135,15 +135,15 @@ func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition
 }
 
 // merge all attributes and count the index
-func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) int {
+func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, schemaAttributes []*types.AttributeDefinition, tokenAttributes []*types.AttributeDefinition) int {
 	// length or originAttributes
 	length_originAttributes := len(originAttributes)
 	// length or onchainNFTAttributes
-	length_onchainNFTAttributes := len(onchainNFTAttributes)
+	length_schemaAttributes := len(schemaAttributes)
 	// length or onchainTokenAttribute
-	length_onchainTokenAttribute := len(onchainTokenAttribute)
+	length_onchainTokenAttribute := len(tokenAttributes)
 
 	// length of all attributes
-	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
+	length_allAttributes := length_originAttributes + length_schemaAttributes + length_onchainTokenAttribute
 	return length_allAttributes
 }

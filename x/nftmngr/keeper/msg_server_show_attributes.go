@@ -10,7 +10,7 @@ import (
 
 type ReadAttribute struct {
 	AttributeName       string
-	AttributeDefinition *types.AttributeDefinition
+	OnchainAttributeDefinition *types.AttributeDefinition
 	AttributeLocation   types.AttributeLocation
 	AttrributeIndex     int
 }
@@ -31,11 +31,11 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 
 	// Create map of nftattributes and tokenattributes ni ReadAttribute struct
 	mapReadAttribute := make(map[string]ReadAttribute)
-	for i, nftAttribute := range schema.OnchainData.NftAttributes {
+	for i, nftAttribute := range schema.OnchainData.SchemaAttributes {
 		mapReadAttribute[nftAttribute.Name] = ReadAttribute{
 			AttributeName:       nftAttribute.Name,
-			AttributeDefinition: nftAttribute,
-			AttributeLocation:   types.AttributeLocation_NFT_ATTRIBUTE,
+			OnchainAttributeDefinition: nftAttribute,
+			AttributeLocation:   types.AttributeLocation_ATTRIBUTE_OF_SCHEMA,
 			AttrributeIndex:     i,
 		}
 	}
@@ -43,8 +43,8 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 	for i, tokenAttribute := range schema.OnchainData.TokenAttributes {
 		mapReadAttribute[tokenAttribute.Name] = ReadAttribute{
 			AttributeName:       tokenAttribute.Name,
-			AttributeDefinition: tokenAttribute,
-			AttributeLocation:   types.AttributeLocation_TOKEN_ATTRIBUTE,
+			OnchainAttributeDefinition: tokenAttribute,
+			AttributeLocation:   types.AttributeLocation_ATTRIBUTE_OF_TOKEN,
 			AttrributeIndex:     i,
 		}
 	}
@@ -56,8 +56,8 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 			return nil, sdkerrors.Wrap(types.ErrAttributeDoesNotExists, attributeName)
 		}
 		readAttributeDef := mapReadAttribute[attributeName]
-		if readAttributeDef.AttributeLocation == types.AttributeLocation_NFT_ATTRIBUTE {
-			schema.OnchainData.NftAttributes[readAttributeDef.AttrributeIndex].HiddenToMarketplace = !msg.Show
+		if readAttributeDef.AttributeLocation == types.AttributeLocation_ATTRIBUTE_OF_SCHEMA {
+			schema.OnchainData.SchemaAttributes[readAttributeDef.AttrributeIndex].HiddenToMarketplace = !msg.Show
 		} else {
 			schema.OnchainData.TokenAttributes[readAttributeDef.AttrributeIndex].HiddenToMarketplace = !msg.Show
 		}

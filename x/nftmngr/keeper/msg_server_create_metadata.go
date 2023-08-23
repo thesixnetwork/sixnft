@@ -70,7 +70,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		mapOfTokenAttributeValues[attr.Name] = attr
 	}
 
-	for _, attr := range schema.OnchainData.NftAttributes {
+	for _, attr := range schema.OnchainData.SchemaAttributes {
 		if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
 			if attr.DefaultMintValue != nil {
 				data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
@@ -131,11 +131,13 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 // Validate NFT Data
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
-	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapAttributeDefinition := CreateOriginAttrDefMap(schema.OriginData.OriginAttributes)
 	
-	// Merge Origin Attributes and Onchain Attributes together
+	// Merge Origin Attributes and Onchain Token Attributes together
+	// NOTE: No need to merge schema attributes because we will retrieve the attributes value from its directly
+	// WE WILL NOT CHANGE SCHEMA VALUE IN THIS FUNCTION
 	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	mergedMap := CreateAttrDefMap(mergedAttributes)
+	mergedMap := CreateOnchainAttrDefMap(mergedAttributes)
 	
 	// Check if attributes exist in schema
 	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)

@@ -65,9 +65,10 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 func (k Keeper) updateNftDataAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
 	nftSchema, _ := k.GetNFTSchema(ctx, dataOnToken.NftSchemaCode)
 
+	// !!! BUG !!! ==> Using actual value from schema instead of default value
 	// createa map of nftattributes from schema with its default value
 	mapFromSchemaAttributes := make(map[string]*types.DefaultMintValue)
-	for _, fromSchemaNftAttribute := range nftSchema.OnchainData.NftAttributes {
+	for _, fromSchemaNftAttribute := range nftSchema.OnchainData.SchemaAttributes {
 		mapFromSchemaAttributes[fromSchemaNftAttribute.Name] = fromSchemaNftAttribute.DefaultMintValue
 	}
 

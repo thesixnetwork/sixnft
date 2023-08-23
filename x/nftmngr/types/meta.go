@@ -46,14 +46,15 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 	meta.MapAllKey = map[string]*MetadataAttribute{}
 	meta.OtherUpdatedTokenDatas = map[string]*NftData{}
 
+	// TODO:: REMOVE NftAttributesValue from schema
 	// Parse the metadata
-	for i, attri := range schema.GetOnchainData().NftAttributesValue {
-		meta.MapAllKey[attri.Name] = &MetadataAttribute{
-			AttributeValue: attri,
-			From:           "nft",
-			Index:          i,
-		}
-	}
+	// for i, attri := range schema.GetOnchainData().NftAttributesValue {
+	// 	meta.MapAllKey[attri.Name] = &MetadataAttribute{
+	// 		AttributeValue: attri,
+	// 		From:           "nft",
+	// 		Index:          i,
+	// 	}
+	// }
 	for i, attri := range tokenData.OriginAttributes {
 		meta.MapAllKey[attri.Name] = &MetadataAttribute{
 			AttributeValue: attri,
@@ -386,7 +387,7 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 	return nil
 }
 
-func (m *Metadata) SetDisplayArribute(key string, value string) error {
+func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 	bool_val, _ := strconv.ParseBool(value)
 	attri := m.MapAllKey[key]
 	if attri == nil {

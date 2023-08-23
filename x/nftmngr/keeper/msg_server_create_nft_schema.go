@@ -12,12 +12,12 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-const (
-	// AttributeName regular expression
-	RegxAttributeName = `^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`
-	RegxActionName    = `^[A-Za-z]{1}[A-Za-z0-9_]*[A-Za-z0-9]{1}$`
-	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
-)
+// const (
+// 	// AttributeName regular expression
+// 	RegxAttributeName = `^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`
+// 	RegxActionName    = `^[A-Za-z]{1}[A-Za-z0-9_]*[A-Za-z0-9]{1}$`
+// 	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
+// )
 
 func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
@@ -69,10 +69,13 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 
 	}
-	_ = MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	_ = MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
 
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
+
+
+	// **** ENHANCEMENT ****
 
 	// Check if schema by contract already exists
 	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema.OriginData.OriginContractAddress)
@@ -87,6 +90,8 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema code to the list of schema codes
 	k.Keeper.SetNFTSchemaByContract(ctx, nftSchemaByContract)
 
+
+	// **** SCHEMA FEE ****
 	feeConfig, found := k.Keeper.GetNFTFeeConfig(ctx)
 	if found {
 		// Get Denom
@@ -114,6 +119,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		// Set Fee Balance
 		k.Keeper.SetNFTFeeBalance(ctx, feeBalances)
 	}
+	// **** END SCHEMA FEE ****
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

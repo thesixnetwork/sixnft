@@ -367,7 +367,7 @@ func TestCreateSchema(t *testing.T) {
 	}
 
 	// merge all attributes and label with index
-	_ = keeper.MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	_ = keeper.MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
 
 	fmt.Println("Valid: ", valid)
 	// print data output to console as json and formatted

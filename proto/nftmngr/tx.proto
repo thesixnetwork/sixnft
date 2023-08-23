@@ -39,9 +39,16 @@ service Msg {
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
-enum AttributeLocation {
+enum AttributeLocationV1 {
   NFT_ATTRIBUTE = 0;
   TOKEN_ATTRIBUTE = 1;
+}
+
+// cannot use TOKEN_ATTRIBUTE because it is already used in AttributeLocationV1
+// that is why we use ATTRIBUTE_OF_TOKEN
+enum AttributeLocation {
+  ATTRIBUTE_OF_SCHEMA = 0;
+  ATTRIBUTE_OF_TOKEN = 1;
 }
 
 enum AuthorizeTo {
