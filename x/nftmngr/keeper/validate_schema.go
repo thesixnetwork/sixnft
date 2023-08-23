@@ -1,10 +1,10 @@
 package keeper
 
 import (
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"regexp"
 	"fmt"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	"regexp"
 	"strings"
 )
 
@@ -16,7 +16,6 @@ const (
 	RegxActionName    = `^[A-Za-z]{1}[A-Za-z0-9_]*[A-Za-z0-9]{1}$`
 	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
 )
-
 
 // Validate NFT Schema
 func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {

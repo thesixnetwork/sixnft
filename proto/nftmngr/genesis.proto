@@ -13,6 +13,7 @@ import "nftmngr/nft_fee_balance.proto";
 import "nftmngr/metadata_creator.proto";
 import "nftmngr/nft_collection.proto";
 import "nftmngr/action_executor.proto";
+import "nftmngr/schema_attribute.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
@@ -30,5 +31,6 @@ message GenesisState {
   repeated MetadataCreator metadataCreatorList = 10 [(gogoproto.nullable) = false];
   repeated NftCollection nftCollectionList = 11 [(gogoproto.nullable) = false];
   repeated ActionExecutor actionExecutorList = 12 [(gogoproto.nullable) = false];
+  repeated SchemaAttribute schemaAttributeList = 13 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

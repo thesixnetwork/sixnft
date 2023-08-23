@@ -99,7 +99,7 @@ func ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *t
 	if _, found := mapTokenAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-	
+
 	// // validate struct data
 	// if attribute.Name == "" {
 	// 	return sdkerrors.Wrap(types.ErrInvalidAttribute, "Attribute name is empty")

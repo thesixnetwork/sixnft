@@ -87,7 +87,7 @@ func HasDuplicateOnchainAttributes(schemaAttributes []*types.AttributeDefinition
 		}
 		mapAttributes[attriDef.Name] = attriDef
 	}
-	
+
 	return false, ""
 }
 

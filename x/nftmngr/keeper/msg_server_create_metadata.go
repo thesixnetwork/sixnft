@@ -132,19 +132,19 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := CreateOriginAttrDefMap(schema.OriginData.OriginAttributes)
-	
+
 	// Merge Origin Attributes and Onchain Token Attributes together
 	// NOTE: No need to merge schema attributes because we will retrieve the attributes value from its directly
 	// WE WILL NOT CHANGE SCHEMA VALUE IN THIS FUNCTION
 	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
 	mergedMap := CreateOnchainAttrDefMap(mergedAttributes)
-	
+
 	// Check if attributes exist in schema
 	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)
 	if !attributesExistsInSchema {
 		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
 	}
-	
+
 	// Check if origin attributes exist in schema
 	attributesOriginExistsInSchema, err := NFTDataAttributesExistInSchema(mapAttributeDefinition, data.OriginAttributes)
 	if !attributesOriginExistsInSchema {
@@ -156,25 +156,25 @@ func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema)
 	if !validated {
 		return false, sdkerrors.Wrap(types.ErrRequiredAttributeMissing, requiredAttributeName)
 	}
-	
+
 	// Validate Onchain Attributes Value
 	duplicated, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	
+
 	// Validate Origin Attributes Value
 	duplicated, err = HasDuplicateNftAttributesValue(data.OriginAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
-	
+
 	// Validate Origin Attributes Exist in Schema
 	hasSameType, err := HasSameTypeAsSchema(mapAttributeDefinition, data.OriginAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s", err))
 	}
-	
+
 	// Validate Onchain Attributes Exist in Schema
 	hasSameType, err = HasSameTypeAsSchema(mergedMap, data.OnchainAttributes)
 	if !hasSameType {

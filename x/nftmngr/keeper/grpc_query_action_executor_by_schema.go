@@ -36,8 +36,7 @@ func (k Keeper) ActionExecutorbySchema(c context.Context, req *types.QueryAction
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-
-	var executorAddresses []string 
+	var executorAddresses []string
 	// find all actionExecutors by schema
 	for _, actionExecutor := range actionExecutors {
 		if actionExecutor.NftSchemaCode == req.NftSchemaCode {
@@ -45,6 +44,5 @@ func (k Keeper) ActionExecutorbySchema(c context.Context, req *types.QueryAction
 		}
 	}
 
-
-	return &types.QueryActionExecutorbySchemaResponse{NftSchemaCode: req.NftSchemaCode,ExecutorAddress: executorAddresses}, nil
+	return &types.QueryActionExecutorbySchemaResponse{NftSchemaCode: req.NftSchemaCode, ExecutorAddress: executorAddresses}, nil
 }

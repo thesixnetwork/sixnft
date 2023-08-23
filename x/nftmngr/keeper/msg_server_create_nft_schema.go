@@ -74,7 +74,6 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-
 	// **** ENHANCEMENT ****
 
 	// Check if schema by contract already exists
@@ -89,7 +88,6 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	}
 	// Add the schema code to the list of schema codes
 	k.Keeper.SetNFTSchemaByContract(ctx, nftSchemaByContract)
-
 
 	// **** SCHEMA FEE ****
 	feeConfig, found := k.Keeper.GetNFTFeeConfig(ctx)

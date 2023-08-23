@@ -1,0 +1,21 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.nftmngr;
+import "nftmngr/display_option.proto";
+import "nftmngr/nft_attribute_value.proto";
+import "nftmngr/attribute_definition.proto";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
+
+message SchemaAttribute {
+  string nftSchemaCode = 1; 
+  string name = 2; 
+  string data_type = 3; 
+  bool required = 4;
+  string display_value_field = 5; 
+  DisplayOption display_option = 6; 
+  DefaultMintValue default_mint_value = 7;
+  bool hidden_overide = 8; // flag that allows action to override hidden
+  bool hidden_to_marketplace = 9;
+  uint64 index = 10;
+  string creator = 11;
+}
+

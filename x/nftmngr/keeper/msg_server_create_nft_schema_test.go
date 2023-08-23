@@ -399,7 +399,6 @@ func CreateNftAttrValueMap(nftAttrValues []*types.NftAttributeValue) map[string]
 	return nftAttrValueMap
 }
 
-
 func HasDuplicateAttributes(attributes []*types.AttributeDefinition) (bool, string) {
 	mapAttributes := map[string]*types.AttributeDefinition{}
 	for _, attriDef := range attributes {

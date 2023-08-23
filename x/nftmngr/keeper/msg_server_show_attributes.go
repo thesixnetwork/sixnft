@@ -9,10 +9,10 @@ import (
 )
 
 type ReadAttribute struct {
-	AttributeName       string
+	AttributeName              string
 	OnchainAttributeDefinition *types.AttributeDefinition
-	AttributeLocation   types.AttributeLocation
-	AttrributeIndex     int
+	AttributeLocation          types.AttributeLocation
+	AttrributeIndex            int
 }
 
 func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
@@ -33,19 +33,19 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 	mapReadAttribute := make(map[string]ReadAttribute)
 	for i, nftAttribute := range schema.OnchainData.SchemaAttributes {
 		mapReadAttribute[nftAttribute.Name] = ReadAttribute{
-			AttributeName:       nftAttribute.Name,
+			AttributeName:              nftAttribute.Name,
 			OnchainAttributeDefinition: nftAttribute,
-			AttributeLocation:   types.AttributeLocation_ATTRIBUTE_OF_SCHEMA,
-			AttrributeIndex:     i,
+			AttributeLocation:          types.AttributeLocation_ATTRIBUTE_OF_SCHEMA,
+			AttrributeIndex:            i,
 		}
 	}
 
 	for i, tokenAttribute := range schema.OnchainData.TokenAttributes {
 		mapReadAttribute[tokenAttribute.Name] = ReadAttribute{
-			AttributeName:       tokenAttribute.Name,
+			AttributeName:              tokenAttribute.Name,
 			OnchainAttributeDefinition: tokenAttribute,
-			AttributeLocation:   types.AttributeLocation_ATTRIBUTE_OF_TOKEN,
-			AttrributeIndex:     i,
+			AttributeLocation:          types.AttributeLocation_ATTRIBUTE_OF_TOKEN,
+			AttrributeIndex:            i,
 		}
 	}
 
