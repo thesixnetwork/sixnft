@@ -145,5 +145,12 @@
       }
     ]
   },
+  "system_actioners": [
+    "6x1y7lhzzum3nu77nz0pcwqth42yxm84zg3d957mr",
+    "6x1pmktx7s530v89zqey823m74aayx7w2932puayq",
+    "6x1l83jjk2ylhxhgy35hz6e3k2phxsapl0cft36hh",
+    "6x1m53akq8td5tc9gq6wge47gqglaaq649q3l7jlm",
+    "6x1tt59zm6rak6hh0fmr97vuyjd0hste7622p3upu"
+  ],
   "mint_authorization": "system"
 }

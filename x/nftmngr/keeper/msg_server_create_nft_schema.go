@@ -113,6 +113,22 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema_input to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
+	// set action executor
+	for _, actionExecutor := range schema_input.SystemActioners {
+		// check if actionExecutor already exists
+		_, isFound := k.Keeper.GetActionExecutor(ctx, schema_input.Code, actionExecutor)
+		if isFound {
+			continue
+		}
+
+		// set actionExecutor
+		k.SetActionExecutor(ctx, types.ActionExecutor{
+			Creator:         msg.Creator,
+			NftSchemaCode:   schema_input.Code,
+			ExecutorAddress: actionExecutor,
+		})
+	}
+
 	// **** ENHANCEMENT ****
 
 	// Check if schema_input by contract already exists
