@@ -162,7 +162,7 @@ message QueryAllNFTSchemaResponse {
 message QueryGetNftDataRequest {
 	string nftSchemaCode = 1;
   	string tokenId = 2;
-
+	bool withGlobal = 3;
 }
 
 message QueryGetNftDataResponse {
@@ -170,7 +170,8 @@ message QueryGetNftDataResponse {
 }
 
 message QueryAllNftDataRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+	bool withGlobal = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryAllNftDataResponse {

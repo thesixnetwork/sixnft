@@ -28,8 +28,13 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 			return err
 		}
 
-		updateddata := k.appendDataWithSchemaAttributes(ctx, nftData)
-		listNFTData = append(listNFTData, updateddata)
+		if req.WithGlobal {
+			updateddata := k.appendDataWithSchemaAttributes(ctx, nftData)
+			listNFTData = append(listNFTData, updateddata)
+		}else{
+			listNFTData = append(listNFTData, nftData)
+		}
+
 		return nil
 	})
 
@@ -56,7 +61,10 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 		return nil, status.Error(codes.NotFound, "not found")
 	}
 
-	updateddata := k.appendDataWithSchemaAttributes(ctx, val)
+	updateddata := val
+	if req.WithGlobal {
+		updateddata = k.appendDataWithSchemaAttributes(ctx, val)
+	}
 
 	return &types.QueryGetNftDataResponse{NftData: updateddata}, nil
 }
