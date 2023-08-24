@@ -2,6 +2,7 @@ syntax = "proto3";
 package thesixnetwork.sixnft.nftmngr;
 
 import "nftmngr/action_executor.proto";
+import "nftmngr/schema_attribute.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "nftmngr/on_chain_data.proto";
 import "nftmngr/attribute_definition.proto";
@@ -36,12 +37,22 @@ service Msg {
   rpc CreateActionExecutor(MsgCreateActionExecutor) returns (MsgCreateActionExecutorResponse);
   rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
   rpc DeleteActionExecutor(MsgDeleteActionExecutor) returns (MsgDeleteActionExecutorResponse);
+  rpc CreateSchemaAttribute(MsgCreateSchemaAttribute) returns (MsgCreateSchemaAttributeResponse);
+  rpc UpdateSchemaAttribute(MsgUpdateSchemaAttribute) returns (MsgUpdateSchemaAttributeResponse);
+  rpc DeleteSchemaAttribute(MsgDeleteSchemaAttribute) returns (MsgDeleteSchemaAttributeResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
-enum AttributeLocation {
+enum AttributeLocationV1 {
   NFT_ATTRIBUTE = 0;
   TOKEN_ATTRIBUTE = 1;
+}
+
+// cannot use TOKEN_ATTRIBUTE because it is already used in AttributeLocationV1
+// that is why we use ATTRIBUTE_OF_TOKEN
+enum AttributeLocation {
+  ATTRIBUTE_OF_SCHEMA = 0;
+  ATTRIBUTE_OF_TOKEN = 1;
 }
 
 enum AuthorizeTo {
@@ -387,6 +398,40 @@ message MsgDeleteActionExecutor {
 message MsgDeleteActionExecutorResponse {
   string nftSchemaCode = 1;
   string executorAddress = 2;
+}
+
+message MsgCreateSchemaAttribute {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string name = 3;
+  string Base64NewAttriuteDefenition = 4;
+}
+message MsgCreateSchemaAttributeResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
+  SchemaAttribute new_attribute = 3;
+}
+
+message MsgUpdateSchemaAttribute {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string name = 3;
+  string Base64NewAttriuteDefenition = 4;
+}
+message MsgUpdateSchemaAttributeResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
+  SchemaAttribute new_attribute = 3;
+}
+
+message MsgDeleteSchemaAttribute {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string name = 3;
+}
+message MsgDeleteSchemaAttributeResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

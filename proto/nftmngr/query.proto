@@ -14,6 +14,7 @@ import "nftmngr/nft_fee_config.proto";
 import "nftmngr/nft_fee_balance.proto";
 import "nftmngr/metadata_creator.proto";
 import "nftmngr/action_executor.proto";
+import "nftmngr/schema_attribute.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -114,6 +115,21 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_executorby_schema/{nftSchemaCode}";
 	}
 
+// Queries a SchemaAttribute by index.
+	rpc SchemaAttribute(QueryGetSchemaAttributeRequest) returns (QueryGetSchemaAttributeResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/schema_attribute/{nftSchemaCode}/{name}";
+	}
+
+	// Queries a list of SchemaAttribute items.
+	rpc SchemaAttributeAll(QueryAllSchemaAttributeRequest) returns (QueryAllSchemaAttributeResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/schema_attribute";
+	}
+
+// Queries a list of ListAttributeBySchema items.
+	rpc ListAttributeBySchema(QueryListAttributeBySchemaRequest) returns (QueryListAttributeBySchemaResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/list_attribute_by_schema/{nftSchemaCode}";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -146,7 +162,7 @@ message QueryAllNFTSchemaResponse {
 message QueryGetNftDataRequest {
 	string nftSchemaCode = 1;
   	string tokenId = 2;
-
+	bool withGlobal = 3;
 }
 
 message QueryGetNftDataResponse {
@@ -154,7 +170,8 @@ message QueryGetNftDataResponse {
 }
 
 message QueryAllNftDataRequest {
-	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+	bool withGlobal = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryAllNftDataResponse {
@@ -282,6 +299,34 @@ message QueryActionExecutorbySchemaResponse {
   string nftSchemaCode = 1;
   repeated string executorAddress = 2;
   cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryGetSchemaAttributeRequest {
+	string nftSchemaCode = 1;
+  	string name = 2;
+}
+
+message QueryGetSchemaAttributeResponse {
+	SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllSchemaAttributeRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSchemaAttributeResponse {
+	repeated SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryListAttributeBySchemaRequest {
+	string nftSchemaCode = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryListAttributeBySchemaResponse {
+	repeated SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

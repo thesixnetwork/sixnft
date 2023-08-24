@@ -2,7 +2,6 @@ package cli
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -10,11 +9,10 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func CmdListNftData() *cobra.Command {
+func CmdListSchemaAttribute() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "list-nft-data",
-		Short: "list all NftData",
-		Args:  cobra.RangeArgs(0, 1),
+		Use:   "list-schema-attribute",
+		Short: "list all schema_attribute",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
@@ -23,21 +21,13 @@ func CmdListNftData() *cobra.Command {
 				return err
 			}
 
-			withGlobal := false
-			if len(args) > 0 {
-				argGlobal := args[0]
-				_withGlobal, _ := strconv.ParseBool(argGlobal)
-				withGlobal = _withGlobal
-			}
-
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryAllNftDataRequest{
-				WithGlobal: withGlobal,
+			params := &types.QueryAllSchemaAttributeRequest{
 				Pagination: pageReq,
 			}
 
-			res, err := queryClient.NftDataAll(context.Background(), params)
+			res, err := queryClient.SchemaAttributeAll(context.Background(), params)
 			if err != nil {
 				return err
 			}
@@ -52,33 +42,25 @@ func CmdListNftData() *cobra.Command {
 	return cmd
 }
 
-func CmdShowNftData() *cobra.Command {
+func CmdShowSchemaAttribute() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "show-nft-data [nft-schema-code] [token-id]",
-		Short: "shows a NftData",
-		Args:  cobra.RangeArgs(2, 3),
+		Use:   "show-schema-attribute [nft-schema-code] [name]",
+		Short: "shows a schema_attribute",
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
 			argNftSchemaCode := args[0]
-			argTokenId := args[1]
+			argName := args[1]
 
-			withGlobal := false
-			if len(args) > 2 {
-				argGlobal := args[2]
-				_withGlobal, _ := strconv.ParseBool(argGlobal)
-				withGlobal = _withGlobal
-			}
-
-			params := &types.QueryGetNftDataRequest{
+			params := &types.QueryGetSchemaAttributeRequest{
 				NftSchemaCode: argNftSchemaCode,
-				TokenId:       argTokenId,
-				WithGlobal:   withGlobal,
+				Name:          argName,
 			}
 
-			res, err := queryClient.NftData(context.Background(), params)
+			res, err := queryClient.SchemaAttribute(context.Background(), params)
 			if err != nil {
 				return err
 			}

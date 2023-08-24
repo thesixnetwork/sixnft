@@ -35,7 +35,25 @@
   "onchain_data": {
     "reveal_required": true,
     "reveal_secret": "",
-    "nft_attributes": [
+    "schema_attributes": [
+      {
+        "name": "tumbler_stock",
+        "default_mint_value": {
+          "float_attribute_value": {
+            "value": 600.0
+          }
+        },
+        "data_type": "float",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Tumbler Price"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": true
+      }
     ],
     "token_attributes": [
       {
@@ -125,8 +143,14 @@
           "meta.SetString('tier', 'gold')"
         ]
       }
-    ],
-    "nft_attributes_value": []
+    ]
   },
+  "system_actioners": [
+    "6x1y7lhzzum3nu77nz0pcwqth42yxm84zg3d957mr",
+    "6x1pmktx7s530v89zqey823m74aayx7w2932puayq",
+    "6x1l83jjk2ylhxhgy35hz6e3k2phxsapl0cft36hh",
+    "6x1m53akq8td5tc9gq6wge47gqglaaq649q3l7jlm",
+    "6x1tt59zm6rak6hh0fmr97vuyjd0hste7622p3upu"
+  ],
   "mint_authorization": "system"
 }

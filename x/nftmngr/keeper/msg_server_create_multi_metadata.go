@@ -69,10 +69,11 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 		}
 	}
 
-	// Add attributes from schema to metadata onchain attributes
-	for _, attribute := range schema.OnchainData.NftAttributesValue {
-		data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
-	}
+	// TODO:: RECHCK THIS
+	// // Add attributes from schema to metadata onchain attributes
+	// for _, attribute := range schema.OnchainData.NftAttributesValue {
+	// 	data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
+	// }
 
 	// validate flag of data.TokenID
 	if data.TokenId != "MULTIMINT" {

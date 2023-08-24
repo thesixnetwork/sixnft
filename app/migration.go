@@ -28,7 +28,13 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 			Name:              nftSchemaV1.Name,
 			Owner:             nftSchemaV1.Owner,
 			OriginData:        nftSchemaV1.OriginData,
-			OnchainData:       nftSchemaV1.OnchainData,
+			OnchainData:       &nftmngrtypes.OnChainData{
+				RevealRequired: nftSchemaV1.OnchainData.RevealRequired,
+				TokenAttributes: nftSchemaV1.OnchainData.TokenAttributes,
+				RevealSecret:   nftSchemaV1.OnchainData.RevealSecret,
+				Actions: 	  nftSchemaV1.OnchainData.Actions,
+				Status: 	  nftSchemaV1.OnchainData.Status,
+			},
 			IsVerified:        nftSchemaV1.IsVerified,
 			MintAuthorization: nftSchemaV1.MintAuthorization,
 		})

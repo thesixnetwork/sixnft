@@ -36,7 +36,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	}
 
 	//validate AttributeDefinition data
-	err = k.ValidateAttributeDefinition(&new_add_attribute, &schema)
+	err = k.ValidateAttributeDefinition(ctx, &new_add_attribute, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -48,21 +48,35 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 
 	// Swith location of attribute
 	switch msg.Location {
-	case types.AttributeLocation_NFT_ATTRIBUTE:
-		// append new nft_attributes to array of OnchainData.NftAttributes
-		schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
-	case types.AttributeLocation_TOKEN_ATTRIBUTE:
+	case types.AttributeLocation_ATTRIBUTE_OF_SCHEMA:
+		schemaAttibuteConverted, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
+		if err != nil {
+			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
+		}
+		// this case will use Msg.CreateSchemaAtribute
+		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
+			NftSchemaCode:       msg.Code,
+			Name:                new_add_attribute.Name,
+			DataType:            new_add_attribute.DataType,
+			Required:            new_add_attribute.Required,
+			DisplayOption:       new_add_attribute.DisplayOption,
+			CurrentValue:        schemaAttibuteConverted,
+			HiddenToMarketplace: new_add_attribute.HiddenToMarketplace,
+			DisplayValueField:   new_add_attribute.DisplayValueField,
+			HiddenOveride:       new_add_attribute.HiddenOveride,
+			Creator:             msg.Creator,
+		})
+	case types.AttributeLocation_ATTRIBUTE_OF_TOKEN:
 		// append new token_attributes to array of OnchainData.TokenAttributes
 		schema.OnchainData.TokenAttributes = append(schema.OnchainData.TokenAttributes, &new_add_attribute)
 		// end the case
+		// count the index of new attribute
+		count := MergeAndCountTokenAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+		// set new index to new attribute
+		new_add_attribute.Index = uint64(count - 1)
+		// set schema
+		k.Keeper.SetNFTSchema(ctx, schema)
 	}
-	// count the index of new attribute
-	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
-	// set new index to new attribute
-	new_add_attribute.Index = uint64(count - 1)
-
-	// set schema
-	k.Keeper.SetNFTSchema(ctx, schema)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -84,19 +98,20 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 }
 
 // validate AttributeDefinition data
-func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+func (k msgServer) ValidateAttributeDefinition(ctx sdk.Context, attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+
+	valFound, found := k.GetSchemaAttribute(ctx, schema.Code, attribute.Name)
+	if found {
+		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, valFound.Name)
+	}
 	// Onchain Data Nft Attributes Map
-	mapNftOnchainAttributes := CreateAttrDefMap(schema.OnchainData.NftAttributes)
-	mapNftTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
-	mapNFTOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
 	// check if attribute name is unique
-	if _, found := mapNftOnchainAttributes[attribute.Name]; found {
+	if _, found := mapOriginAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
-	if _, found := mapNftTokenAttributes[attribute.Name]; found {
-		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
-	}
-	if _, found := mapNFTOriginAttributes[attribute.Name]; found {
+	if _, found := mapTokenAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
 	}
 
@@ -135,15 +150,13 @@ func (k Keeper) ValidateAttributeDefinition(attribute *types.AttributeDefinition
 }
 
 // merge all attributes and count the index
-func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) int {
+func MergeAndCountTokenAttributes(originAttributes []*types.AttributeDefinition, tokenAttributes []*types.AttributeDefinition) int {
 	// length or originAttributes
 	length_originAttributes := len(originAttributes)
-	// length or onchainNFTAttributes
-	length_onchainNFTAttributes := len(onchainNFTAttributes)
 	// length or onchainTokenAttribute
-	length_onchainTokenAttribute := len(onchainTokenAttribute)
+	length_onchainTokenAttribute := len(tokenAttributes)
 
 	// length of all attributes
-	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
+	length_allAttributes := length_originAttributes + length_onchainTokenAttribute
 	return length_allAttributes
 }

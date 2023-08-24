@@ -53,6 +53,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.ActionExecutorList {
 		k.SetActionExecutor(ctx, elem)
 	}
+	// Set all the schemaAttribute
+	for _, elem := range genState.SchemaAttributeList {
+		k.SetSchemaAttribute(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -80,6 +84,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.MetadataCreatorList = k.GetAllMetadataCreator(ctx)
 	genesis.NftCollectionList = k.GetAllNftCollection(ctx)
 	genesis.ActionExecutorList = k.GetAllActionExecutor(ctx)
+	genesis.SchemaAttributeList = k.GetAllSchemaAttribute(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis
