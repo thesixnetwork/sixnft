@@ -319,11 +319,13 @@ message QueryAllSchemaAttributeResponse {
 }
 
 message QueryListAttributeBySchemaRequest {
-  string nftSchemaCode = 1;
+	string nftSchemaCode = 1;
+	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryListAttributeBySchemaResponse {
-	SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
+	repeated SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

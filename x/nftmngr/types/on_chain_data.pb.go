@@ -75,12 +75,11 @@ func (m *FlagStatus) GetStatusValue() bool {
 }
 
 type OnChainData struct {
-	RevealRequired   bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
-	RevealSecret     []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
-	SchemaAttributes []*AttributeDefinition `protobuf:"bytes,3,rep,name=schema_attributes,json=schemaAttributes,proto3" json:"schema_attributes,omitempty"`
-	TokenAttributes  []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions          []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
-	Status           []*FlagStatus          `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
+	RevealRequired  bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
+	RevealSecret    []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
+	TokenAttributes []*AttributeDefinition `protobuf:"bytes,3,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions         []*Action              `protobuf:"bytes,4,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status          []*FlagStatus          `protobuf:"bytes,5,rep,name=status,proto3" json:"status,omitempty"`
 }
 
 func (m *OnChainData) Reset()         { *m = OnChainData{} }
@@ -130,13 +129,6 @@ func (m *OnChainData) GetRevealSecret() []byte {
 	return nil
 }
 
-func (m *OnChainData) GetSchemaAttributes() []*AttributeDefinition {
-	if m != nil {
-		return m.SchemaAttributes
-	}
-	return nil
-}
-
 func (m *OnChainData) GetTokenAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.TokenAttributes
@@ -158,6 +150,90 @@ func (m *OnChainData) GetStatus() []*FlagStatus {
 	return nil
 }
 
+type OnChainDataInput struct {
+	RevealRequired   bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
+	RevealSecret     []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
+	SchemaAttributes []*AttributeDefinition `protobuf:"bytes,3,rep,name=schema_attributes,json=schemaAttributes,proto3" json:"schema_attributes,omitempty"`
+	TokenAttributes  []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions          []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status           []*FlagStatus          `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
+}
+
+func (m *OnChainDataInput) Reset()         { *m = OnChainDataInput{} }
+func (m *OnChainDataInput) String() string { return proto.CompactTextString(m) }
+func (*OnChainDataInput) ProtoMessage()    {}
+func (*OnChainDataInput) Descriptor() ([]byte, []int) {
+	return fileDescriptor_35d167410338c830, []int{2}
+}
+func (m *OnChainDataInput) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *OnChainDataInput) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_OnChainDataInput.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *OnChainDataInput) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OnChainDataInput.Merge(m, src)
+}
+func (m *OnChainDataInput) XXX_Size() int {
+	return m.Size()
+}
+func (m *OnChainDataInput) XXX_DiscardUnknown() {
+	xxx_messageInfo_OnChainDataInput.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_OnChainDataInput proto.InternalMessageInfo
+
+func (m *OnChainDataInput) GetRevealRequired() bool {
+	if m != nil {
+		return m.RevealRequired
+	}
+	return false
+}
+
+func (m *OnChainDataInput) GetRevealSecret() []byte {
+	if m != nil {
+		return m.RevealSecret
+	}
+	return nil
+}
+
+func (m *OnChainDataInput) GetSchemaAttributes() []*AttributeDefinition {
+	if m != nil {
+		return m.SchemaAttributes
+	}
+	return nil
+}
+
+func (m *OnChainDataInput) GetTokenAttributes() []*AttributeDefinition {
+	if m != nil {
+		return m.TokenAttributes
+	}
+	return nil
+}
+
+func (m *OnChainDataInput) GetActions() []*Action {
+	if m != nil {
+		return m.Actions
+	}
+	return nil
+}
+
+func (m *OnChainDataInput) GetStatus() []*FlagStatus {
+	if m != nil {
+		return m.Status
+	}
+	return nil
+}
+
 type OnChainDataV1 struct {
 	RevealRequired     bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
 	RevealSecret       []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
@@ -172,7 +248,7 @@ func (m *OnChainDataV1) Reset()         { *m = OnChainDataV1{} }
 func (m *OnChainDataV1) String() string { return proto.CompactTextString(m) }
 func (*OnChainDataV1) ProtoMessage()    {}
 func (*OnChainDataV1) Descriptor() ([]byte, []int) {
-	return fileDescriptor_35d167410338c830, []int{2}
+	return fileDescriptor_35d167410338c830, []int{3}
 }
 func (m *OnChainDataV1) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -253,42 +329,44 @@ func (m *OnChainDataV1) GetNftAttributesValue() []*NftAttributeValue {
 func init() {
 	proto.RegisterType((*FlagStatus)(nil), "thesixnetwork.sixnft.nftmngr.FlagStatus")
 	proto.RegisterType((*OnChainData)(nil), "thesixnetwork.sixnft.nftmngr.OnChainData")
+	proto.RegisterType((*OnChainDataInput)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataInput")
 	proto.RegisterType((*OnChainDataV1)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV1")
 }
 
 func init() { proto.RegisterFile("nftmngr/on_chain_data.proto", fileDescriptor_35d167410338c830) }
 
 var fileDescriptor_35d167410338c830 = []byte{
-	// 450 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x94, 0x4f, 0x6f, 0xd3, 0x30,
-	0x18, 0xc6, 0x1b, 0x0a, 0xa5, 0xbc, 0x6d, 0xb7, 0x61, 0xed, 0x10, 0x0d, 0x14, 0xba, 0x82, 0x44,
-	0x4f, 0x89, 0x06, 0x77, 0xc4, 0x9f, 0x09, 0x89, 0xcb, 0x40, 0x9e, 0x34, 0x21, 0x84, 0x88, 0xdc,
-	0xf4, 0x4d, 0x1b, 0xad, 0x71, 0x86, 0xfd, 0x66, 0x8c, 0x6f, 0xc1, 0x9d, 0x2f, 0xc4, 0xb1, 0x47,
-	0x8e, 0xa8, 0xfd, 0x16, 0x9c, 0x50, 0xed, 0xa4, 0x4d, 0x2e, 0x45, 0x02, 0x6e, 0xdc, 0xac, 0x27,
-	0xef, 0xf3, 0xb3, 0xfc, 0x3c, 0xb1, 0xe1, 0x8e, 0x8c, 0x29, 0x95, 0x13, 0x15, 0x64, 0x32, 0x8c,
-	0xa6, 0x22, 0x91, 0xe1, 0x58, 0x90, 0xf0, 0x2f, 0x54, 0x46, 0x19, 0xbb, 0x4b, 0x53, 0xd4, 0xc9,
-	0x95, 0x44, 0xfa, 0x94, 0xa9, 0x73, 0x7f, 0xb5, 0x8c, 0xc9, 0x2f, 0x1c, 0x07, 0x83, 0xd2, 0x2a,
-	0x88, 0x54, 0x32, 0xca, 0x09, 0xc3, 0x31, 0xc6, 0x89, 0x4c, 0x28, 0xc9, 0xa4, 0x25, 0x1c, 0xec,
-	0xaf, 0x67, 0xa2, 0x8a, 0x7a, 0x58, 0xaa, 0x32, 0xa6, 0x70, 0xe3, 0xbe, 0x14, 0xb3, 0x1c, 0xed,
-	0xc8, 0xe0, 0x0d, 0xc0, 0xcb, 0x99, 0x98, 0x9c, 0x92, 0xa0, 0x5c, 0xb3, 0x7b, 0xd0, 0xd1, 0x66,
-	0x15, 0x4a, 0x91, 0xa2, 0xeb, 0xf4, 0x9d, 0xe1, 0x2d, 0x0e, 0x56, 0x3a, 0x11, 0x29, 0xb2, 0x43,
-	0xe8, 0x16, 0x03, 0x06, 0xe2, 0x5e, 0xeb, 0x3b, 0xc3, 0x36, 0x2f, 0x4c, 0x67, 0x2b, 0x69, 0xf0,
-	0xb5, 0x09, 0x9d, 0xd7, 0xf2, 0xc5, 0xea, 0x8c, 0xc7, 0x82, 0x04, 0x7b, 0x08, 0xbb, 0x0a, 0x2f,
-	0x51, 0xcc, 0x42, 0x85, 0x1f, 0xf3, 0x44, 0xe1, 0xd8, 0x70, 0xdb, 0x7c, 0xc7, 0xca, 0xbc, 0x50,
-	0xd9, 0x7d, 0xe8, 0x15, 0x83, 0x1a, 0x23, 0x85, 0x64, 0xe0, 0x5d, 0xde, 0xb5, 0xe2, 0xa9, 0xd1,
-	0xd8, 0x07, 0xb8, 0xad, 0xa3, 0x29, 0xa6, 0x62, 0x73, 0x1e, 0xed, 0x36, 0xfb, 0xcd, 0x61, 0xe7,
-	0xd1, 0x91, 0xbf, 0x2d, 0x46, 0xff, 0x59, 0x39, 0x7f, 0xbc, 0x0e, 0x8f, 0xef, 0x59, 0xd6, 0xfa,
-	0x93, 0x66, 0xef, 0x61, 0x8f, 0xb2, 0x73, 0x94, 0x55, 0xfc, 0xf5, 0x3f, 0xc5, 0xef, 0x1a, 0x54,
-	0x85, 0xfe, 0x04, 0x6e, 0xda, 0x82, 0xb4, 0x7b, 0xc3, 0x40, 0x1f, 0xfc, 0x06, 0x6a, 0x86, 0x79,
-	0x69, 0x62, 0x4f, 0xa1, 0x65, 0xa3, 0x76, 0x5b, 0xc6, 0x3e, 0xdc, 0x6e, 0xdf, 0x34, 0xcb, 0x0b,
-	0xdf, 0xe0, 0x67, 0x13, 0x7a, 0x95, 0x76, 0xce, 0x8e, 0xfe, 0x71, 0x3f, 0x6f, 0x61, 0xa7, 0xf6,
-	0xb3, 0xfd, 0x45, 0x39, 0x3d, 0x19, 0xd3, 0xff, 0xd3, 0x0c, 0x13, 0xb0, 0x5f, 0x4f, 0xae, 0xb8,
-	0x62, 0x6d, 0xc3, 0x0b, 0xb6, 0xf3, 0x4e, 0x2a, 0x51, 0x99, 0x6b, 0xc8, 0x59, 0x2d, 0x3d, 0xa3,
-	0x3d, 0x7f, 0xf5, 0x6d, 0xe1, 0x39, 0xf3, 0x85, 0xe7, 0xfc, 0x58, 0x78, 0xce, 0x97, 0xa5, 0xd7,
-	0x98, 0x2f, 0xbd, 0xc6, 0xf7, 0xa5, 0xd7, 0x78, 0x17, 0x4c, 0x12, 0x9a, 0xe6, 0x23, 0x3f, 0xca,
-	0xd2, 0xa0, 0xb6, 0x51, 0x60, 0x37, 0x0a, 0xae, 0x82, 0xf2, 0x2d, 0xa1, 0xcf, 0x17, 0xa8, 0x47,
-	0x2d, 0xf3, 0x7c, 0x3c, 0xfe, 0x15, 0x00, 0x00, 0xff, 0xff, 0x8a, 0x0d, 0x17, 0x17, 0xd8, 0x04,
-	0x00, 0x00,
+	// 478 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x94, 0xcd, 0x6e, 0xd3, 0x40,
+	0x14, 0x85, 0xe3, 0xa6, 0x0d, 0xe1, 0x26, 0x69, 0xc3, 0xa8, 0x0b, 0xab, 0x20, 0x93, 0x06, 0x24,
+	0xb2, 0xb2, 0x55, 0xd8, 0x23, 0x7e, 0x2a, 0xa4, 0x6e, 0x0a, 0x9a, 0x4a, 0x15, 0x42, 0x08, 0x6b,
+	0xe2, 0x8c, 0x13, 0xab, 0xf1, 0x38, 0xcc, 0x5c, 0x97, 0xf2, 0x16, 0x3c, 0x02, 0xef, 0xc1, 0x0b,
+	0xb0, 0xec, 0x92, 0x25, 0x4a, 0xde, 0x82, 0x15, 0xca, 0x8c, 0x9d, 0xd8, 0x12, 0x0a, 0x12, 0x09,
+	0xab, 0xee, 0x46, 0xc7, 0xf7, 0x9c, 0xd1, 0x7c, 0x47, 0xbe, 0x70, 0x57, 0x84, 0x18, 0x8b, 0xa1,
+	0xf4, 0x12, 0xe1, 0x07, 0x23, 0x16, 0x09, 0x7f, 0xc0, 0x90, 0xb9, 0x13, 0x99, 0x60, 0x42, 0xee,
+	0xe1, 0x88, 0xab, 0xe8, 0x4a, 0x70, 0xfc, 0x94, 0xc8, 0x0b, 0x77, 0x7e, 0x0c, 0xd1, 0xcd, 0x1c,
+	0x07, 0xdd, 0xdc, 0xca, 0x10, 0x65, 0xd4, 0x4f, 0x91, 0xfb, 0x03, 0x1e, 0x46, 0x22, 0xc2, 0x28,
+	0x11, 0x26, 0xe1, 0x60, 0x7f, 0x31, 0x13, 0x14, 0xd4, 0xc3, 0x5c, 0x15, 0x21, 0xfa, 0x4b, 0xf7,
+	0x25, 0x1b, 0xa7, 0xdc, 0x8c, 0x74, 0xdf, 0x00, 0xbc, 0x1a, 0xb3, 0xe1, 0x19, 0x32, 0x4c, 0x15,
+	0xb9, 0x0f, 0x0d, 0xa5, 0x4f, 0xbe, 0x60, 0x31, 0xb7, 0xad, 0x8e, 0xd5, 0xbb, 0x4d, 0xc1, 0x48,
+	0xa7, 0x2c, 0xe6, 0xe4, 0x10, 0x9a, 0xd9, 0x80, 0x0e, 0xb1, 0xb7, 0x3a, 0x56, 0xaf, 0x4e, 0x33,
+	0xd3, 0xf9, 0x5c, 0xea, 0x7e, 0xdb, 0x82, 0xc6, 0x6b, 0xf1, 0x72, 0xfe, 0xc6, 0x63, 0x86, 0x8c,
+	0x3c, 0x82, 0x3d, 0xc9, 0x2f, 0x39, 0x1b, 0xfb, 0x92, 0x7f, 0x4c, 0x23, 0xc9, 0x07, 0x3a, 0xb7,
+	0x4e, 0x77, 0x8d, 0x4c, 0x33, 0x95, 0x3c, 0x80, 0x56, 0x36, 0xa8, 0x78, 0x20, 0x39, 0xea, 0xf0,
+	0x26, 0x6d, 0x1a, 0xf1, 0x4c, 0x6b, 0xe4, 0x3d, 0xb4, 0x31, 0xb9, 0xe0, 0x62, 0xf9, 0x1c, 0x65,
+	0x57, 0x3b, 0xd5, 0x5e, 0xe3, 0xf1, 0x91, 0xbb, 0x8a, 0xa2, 0xfb, 0x3c, 0x9f, 0x3f, 0x5e, 0xb0,
+	0xa3, 0x7b, 0x3a, 0x6a, 0xf1, 0x45, 0x91, 0xa7, 0x70, 0xcb, 0x00, 0x54, 0xf6, 0xb6, 0x0e, 0x7d,
+	0xf8, 0x97, 0x50, 0x3d, 0x4c, 0x73, 0x13, 0x79, 0x06, 0x35, 0x83, 0xc2, 0xde, 0xd1, 0xf6, 0xde,
+	0x6a, 0xfb, 0x92, 0x3c, 0xcd, 0x7c, 0xdd, 0xaf, 0x55, 0x68, 0x17, 0xe8, 0x9d, 0x88, 0x49, 0x8a,
+	0x1b, 0x46, 0xf8, 0x01, 0xee, 0xa8, 0x60, 0xc4, 0x63, 0xb6, 0x11, 0x86, 0x6d, 0x93, 0x55, 0x80,
+	0xf8, 0xa7, 0x8a, 0xb6, 0xff, 0x47, 0x45, 0x3b, 0xeb, 0x55, 0x54, 0xfb, 0xc7, 0x8a, 0x7e, 0x55,
+	0xa1, 0x55, 0xa8, 0xe8, 0xfc, 0x68, 0xc3, 0xfd, 0xbc, 0x85, 0xdd, 0xd2, 0xff, 0xba, 0x46, 0x39,
+	0x2d, 0x11, 0xe2, 0xcd, 0x69, 0x86, 0x30, 0xd8, 0x2f, 0x93, 0xcb, 0xb6, 0x54, 0x5d, 0xe7, 0x79,
+	0xab, 0xf3, 0x4e, 0x0b, 0xa8, 0xf4, 0x26, 0xa3, 0xa4, 0x44, 0x4f, 0x6b, 0x2f, 0x4e, 0xbe, 0x4f,
+	0x1d, 0xeb, 0x7a, 0xea, 0x58, 0x3f, 0xa7, 0x8e, 0xf5, 0x65, 0xe6, 0x54, 0xae, 0x67, 0x4e, 0xe5,
+	0xc7, 0xcc, 0xa9, 0xbc, 0xf3, 0x86, 0x11, 0x8e, 0xd2, 0xbe, 0x1b, 0x24, 0xb1, 0x57, 0xba, 0xc8,
+	0x33, 0x17, 0x79, 0x57, 0x5e, 0xbe, 0x8e, 0xf1, 0xf3, 0x84, 0xab, 0x7e, 0x4d, 0x6f, 0xe0, 0x27,
+	0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0xda, 0x9c, 0xbb, 0x58, 0x1b, 0x06, 0x00, 0x00,
 }
 
 func (m *FlagStatus) Marshal() (dAtA []byte, err error) {
@@ -347,6 +425,88 @@ func (m *OnChainData) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Status) > 0 {
+		for iNdEx := len(m.Status) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Status[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.Actions) > 0 {
+		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Actions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if len(m.TokenAttributes) > 0 {
+		for iNdEx := len(m.TokenAttributes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.TokenAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x1a
+		}
+	}
+	if len(m.RevealSecret) > 0 {
+		i -= len(m.RevealSecret)
+		copy(dAtA[i:], m.RevealSecret)
+		i = encodeVarintOnChainData(dAtA, i, uint64(len(m.RevealSecret)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.RevealRequired {
+		i--
+		if m.RevealRequired {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *OnChainDataInput) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *OnChainDataInput) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OnChainDataInput) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -577,6 +737,40 @@ func (m *OnChainData) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovOnChainData(uint64(l))
 	}
+	if len(m.TokenAttributes) > 0 {
+		for _, e := range m.TokenAttributes {
+			l = e.Size()
+			n += 1 + l + sovOnChainData(uint64(l))
+		}
+	}
+	if len(m.Actions) > 0 {
+		for _, e := range m.Actions {
+			l = e.Size()
+			n += 1 + l + sovOnChainData(uint64(l))
+		}
+	}
+	if len(m.Status) > 0 {
+		for _, e := range m.Status {
+			l = e.Size()
+			n += 1 + l + sovOnChainData(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *OnChainDataInput) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.RevealRequired {
+		n += 2
+	}
+	l = len(m.RevealSecret)
+	if l > 0 {
+		n += 1 + l + sovOnChainData(uint64(l))
+	}
 	if len(m.SchemaAttributes) > 0 {
 		for _, e := range m.SchemaAttributes {
 			l = e.Size()
@@ -785,6 +979,212 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: OnChainData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.RevealRequired = bool(v != 0)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealSecret", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RevealSecret = append(m.RevealSecret[:0], dAtA[iNdEx:postIndex]...)
+			if m.RevealSecret == nil {
+				m.RevealSecret = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenAttributes = append(m.TokenAttributes, &AttributeDefinition{})
+			if err := m.TokenAttributes[len(m.TokenAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Actions = append(m.Actions, &Action{})
+			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Status = append(m.Status, &FlagStatus{})
+			if err := m.Status[len(m.Status)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOnChainData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *OnChainDataInput) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOnChainData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OnChainDataInput: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OnChainDataInput: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

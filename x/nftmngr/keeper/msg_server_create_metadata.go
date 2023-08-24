@@ -69,15 +69,6 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	for _, attr := range data.OnchainAttributes {
 		mapOfTokenAttributeValues[attr.Name] = attr
 	}
-
-	for _, attr := range schema.OnchainData.SchemaAttributes {
-		if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
-			if attr.DefaultMintValue != nil {
-				data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
-			}
-		}
-	}
-
 	for _, attr := range schema.OnchainData.TokenAttributes {
 		if attr.Required {
 			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
@@ -88,10 +79,6 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		}
 	}
 
-	// // Add attributes from schema to metadata onchain attributes
-	// for _, attribute := range schema.OnchainData.NftAttributesValue {
-	// 	data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
-	// }
 	// Check if the data already exists
 	_, dataFound := k.Keeper.GetNftData(ctx, data.NftSchemaCode, data.TokenId)
 	if dataFound {
@@ -131,13 +118,13 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 // Validate NFT Data
 func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
-	mapAttributeDefinition := CreateOriginAttrDefMap(schema.OriginData.OriginAttributes)
+	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
 
 	// Merge Origin Attributes and Onchain Token Attributes together
 	// NOTE: No need to merge schema attributes because we will retrieve the attributes value from its directly
 	// WE WILL NOT CHANGE SCHEMA VALUE IN THIS FUNCTION
 	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	mergedMap := CreateOnchainAttrDefMap(mergedAttributes)
+	mergedMap := CreateAttrDefMap(mergedAttributes)
 
 	// Check if attributes exist in schema
 	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)

@@ -26,33 +26,33 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
-	schema := types.NFTSchema{}
-	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(jsonSchema, &schema)
+	schema_input := types.NFTSchemaINPUT{}
+	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(jsonSchema, &schema_input)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
-	schema.Owner = msg.Creator
+	schema_input.Owner = msg.Creator
 	creatorAddress, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
 	}
 	// Validate Schema Message and return error if not valid
-	valid, err := ValidateNFTSchema(&schema)
+	valid, err := ValidateNFTSchema(&schema_input)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingNFTSchema, err.Error())
 	}
 	// if mint_authorization is empty then set system to default
-	if len(schema.MintAuthorization) == 0 || schema.MintAuthorization != types.KeyMintPermissionOnlySystem && schema.MintAuthorization != types.KeyMintPermissionAll {
-		schema.MintAuthorization = types.KeyMintPermissionOnlySystem
+	if len(schema_input.MintAuthorization) == 0 || schema_input.MintAuthorization != types.KeyMintPermissionOnlySystem && schema_input.MintAuthorization != types.KeyMintPermissionAll {
+		schema_input.MintAuthorization = types.KeyMintPermissionOnlySystem
 	}
-	// Check if the schema already exists
-	_, found := k.Keeper.GetNFTSchema(ctx, schema.Code)
+	// Check if the schema_input already exists
+	_, found := k.Keeper.GetNFTSchema(ctx, schema_input.Code)
 	if found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaAlreadyExists, schema.Code)
+		return nil, sdkerrors.Wrap(types.ErrSchemaAlreadyExists, schema_input.Code)
 	}
-	foundOrganization, organizationName := GetOrganizationFromSchemaCode(schema.Code)
-	// If there is organization in schema code, check if the organization exists
+	foundOrganization, organizationName := GetOrganizationFromSchemaCode(schema_input.Code)
+	// If there is organization in schema_input code, check if the organization exists
 	if foundOrganization {
 		storedOrganization, found := k.Keeper.GetOrganization(ctx, organizationName)
 		if found {
@@ -69,24 +69,63 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 
 	}
-	_ = MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
+	_ = MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.TokenAttributes)
 
-	// Add the schema to the store
+	// parse schema_input to NFTSchema
+	schema := types.NFTSchema{
+		Code:       schema_input.Code,
+		Name:       schema_input.Name,
+		Owner:      schema_input.Owner,
+		OriginData: schema_input.OriginData,
+		OnchainData: &types.OnChainData{
+			RevealRequired:  schema_input.OnchainData.RevealRequired,
+			RevealSecret:    schema_input.OnchainData.RevealSecret,
+			TokenAttributes: schema_input.OnchainData.TokenAttributes,
+			Actions:         schema_input.OnchainData.Actions,
+			Status:          schema_input.OnchainData.Status,
+		},
+		IsVerified:        schema_input.IsVerified,
+		MintAuthorization: schema_input.MintAuthorization,
+	}
+
+	// loop over SchemaAttribute and add to nftmngr/code/name
+	for _, scheamDefaultMintAttribute := range schema_input.OnchainData.SchemaAttributes {
+		// parse DefaultMintValue to SchemaAttributeValue
+		schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(scheamDefaultMintAttribute.DefaultMintValue)
+		if err != nil {
+			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
+		}
+
+		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
+			NftSchemaCode:       schema_input.Code,
+			Name:                scheamDefaultMintAttribute.Name,
+			DataType:            scheamDefaultMintAttribute.DataType,
+			Required:            scheamDefaultMintAttribute.Required,
+			DisplayValueField:   scheamDefaultMintAttribute.DisplayValueField,
+			DisplayOption:       scheamDefaultMintAttribute.DisplayOption,
+			CurrentValue:        schmaAttributeValue,
+			HiddenOveride:       scheamDefaultMintAttribute.HiddenOveride,
+			HiddenToMarketplace: scheamDefaultMintAttribute.HiddenToMarketplace,
+			Creator:             msg.Creator,
+		})
+	}
+
+	// Add the schema_input to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
 	// **** ENHANCEMENT ****
 
-	// Check if schema by contract already exists
-	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema.OriginData.OriginContractAddress)
+	// Check if schema_input by contract already exists
+	nftSchemaByContract, found := k.Keeper.GetNFTSchemaByContract(ctx, schema_input.OriginData.OriginContractAddress)
 	if !found {
 		nftSchemaByContract = types.NFTSchemaByContract{
-			OriginContractAddress: schema.OriginData.OriginContractAddress,
-			SchemaCodes:           []string{schema.Code},
+			OriginContractAddress: schema_input.OriginData.OriginContractAddress,
+			SchemaCodes:           []string{schema_input.Code},
 		}
 	} else {
-		nftSchemaByContract.SchemaCodes = append(nftSchemaByContract.SchemaCodes, schema.Code)
+		nftSchemaByContract.SchemaCodes = append(nftSchemaByContract.SchemaCodes, schema_input.Code)
 	}
-	// Add the schema code to the list of schema codes
+	// Add the schema_input code to the list of schema_input codes
 	k.Keeper.SetNFTSchemaByContract(ctx, nftSchemaByContract)
 
 	// **** SCHEMA FEE ****
@@ -123,17 +162,17 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeCreateSchema,
-			sdk.NewAttribute(types.AttributeKeyCreateSchemaCode, schema.Code),
+			sdk.NewAttribute(types.AttributeKeyCreateSchemaCode, schema_input.Code),
 			sdk.NewAttribute(types.AttributeKeyCreateSchemaResult, "success"),
 		),
 	})
 
 	return &types.MsgCreateNFTSchemaResponse{
-		Code: schema.Code,
+		Code: schema_input.Code,
 	}, nil
 }
 
-// Total amount of fee collected from schema for each block then distribute to validators // ** In the begin block it will set to 0 again
+// Total amount of fee collected from schema_input for each block then distribute to validators // ** In the begin block it will set to 0 again
 func (k msgServer) processFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBalances *types.NFTFeeBalance, feeSubject types.FeeSubject, source sdk.AccAddress) error {
 	currentFeeBalance, _ := sdk.ParseCoinNormalized(feeBalances.FeeBalances[int32(feeSubject)])
 	feeAmount, _ := sdk.ParseCoinNormalized(feeConfig.SchemaFee.FeeAmount)

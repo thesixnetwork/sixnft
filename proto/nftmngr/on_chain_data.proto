@@ -13,6 +13,14 @@ message FlagStatus {
 message OnChainData {
   bool reveal_required = 1;
   bytes reveal_secret = 2;
+  repeated AttributeDefinition token_attributes = 3; 
+  repeated Action actions = 4; 
+  repeated FlagStatus status = 5;
+}
+
+message OnChainDataInput {
+  bool reveal_required = 1;
+  bytes reveal_secret = 2;
   repeated AttributeDefinition schema_attributes = 3; 
   repeated AttributeDefinition token_attributes = 4; 
   repeated Action actions = 5; 

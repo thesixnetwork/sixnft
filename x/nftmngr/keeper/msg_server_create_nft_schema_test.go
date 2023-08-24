@@ -352,27 +352,27 @@ func TestCreateSchema(t *testing.T) {
 	}
 	
 	`
-	schema := types.NFTSchema{}
+	schema_input := types.NFTSchemaINPUT{}
 	// err := k.GetCodec().(*codec.ProtoCodec).UnmarshalJSON([]byte(intput_nft_schema), &data)
-	err := jsonpb.UnmarshalString(intput_nft_schema, &schema)
+	err := jsonpb.UnmarshalString(intput_nft_schema, &schema_input)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	valid, err := keeper.ValidateNFTSchema(&schema)
+	valid, err := keeper.ValidateNFTSchema(&schema_input)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
 	// merge all attributes and label with index
-	_ = keeper.MergeAllSchemaAttributesAndAlterOrderIndex(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
+	_ = keeper.MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.TokenAttributes)
 
 	fmt.Println("Valid: ", valid)
 	// print data output to console as json and formatted
 	marshaler := jsonpb.Marshaler{Indent: "  "}
-	json, err := marshaler.MarshalToString(&schema)
+	json, err := marshaler.MarshalToString(&schema_input)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -445,6 +445,24 @@ func DefaultMintValueHasSameTypeAs(attributes []*types.AttributeDefinition) (boo
 }
 
 func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
+	// Check if onchain attribute s value exist for each attribute
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_BooleanAttributeValue); ok {
+		return ok, "boolean"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_StringAttributeValue); ok {
+		return ok, "string"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_NumberAttributeValue); ok {
+		return ok, "number"
+	}
+	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_FloatAttributeValue); ok {
+		return ok, "float"
+	}
+	return false, "default"
+}
+
+
+func SchemaAttributeHasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 	// Check if onchain attribute s value exist for each attribute
 	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_BooleanAttributeValue); ok {
 		return ok, "boolean"

@@ -19,11 +19,11 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 		msg.NftSchemaCode,
 		msg.Name,
 	)
-	
+
 	if isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
 	}
-	
+
 	var new_add_attribute types.AttributeDefinition
 	input_addribute, err := base64.StdEncoding.DecodeString(msg.Base64NewAttriuteDefenition)
 	if err != nil {
@@ -44,7 +44,7 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 	}
 
 	//validate AttributeDefinition data
-	err = ValidateAttributeDefinition(&new_add_attribute, &schema)
+	err = k.ValidateAttributeDefinition(ctx, &new_add_attribute, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -54,10 +54,11 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
-	// count the index of new attribute
-	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
-	// set new index to new attribute
-	new_add_attribute.Index = uint64(count - 1)
+	// parse DefaultMintValue to SchemaAttributeValue
+	schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
+	}
 
 	var schemaAttribute = types.SchemaAttribute{
 		Creator:             msg.Creator,
@@ -67,10 +68,9 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 		Required:            new_add_attribute.Required,
 		DisplayValueField:   new_add_attribute.DisplayValueField,
 		DisplayOption:       new_add_attribute.DisplayOption,
-		DefaultMintValue:    new_add_attribute.DefaultMintValue,
+		CurrentValue:        schmaAttributeValue,
 		HiddenOveride:       new_add_attribute.HiddenOveride,
 		HiddenToMarketplace: new_add_attribute.HiddenToMarketplace,
-		Index:               new_add_attribute.Index,
 	}
 
 	k.SetSchemaAttribute(
@@ -81,7 +81,7 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 	return &types.MsgCreateSchemaAttributeResponse{
 		NftSchemaCode: msg.NftSchemaCode,
 		Name:          msg.Name,
-		NewAttribute: &schemaAttribute,
+		NewAttribute:  &schemaAttribute,
 	}, nil
 }
 
@@ -118,7 +118,7 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 	}
 
 	//validate AttributeDefinition data
-	err = ValidateAttributeDefinition(&new_add_attribute, &schema)
+	err = k.ValidateAttributeDefinition(ctx, &new_add_attribute, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -128,18 +128,23 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
+	// parse DefaultMintValue to SchemaAttributeValue
+	schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
+	if err != nil {
+		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
+	}
+
 	var schemaAttribute = types.SchemaAttribute{
 		Creator:             msg.Creator,
-		NftSchemaCode:       msg.NftSchemaCode,
-		Name:                msg.Name,
+		NftSchemaCode:       valFound.NftSchemaCode,
+		Name:                valFound.Name,
 		DataType:            new_add_attribute.DataType,
 		Required:            new_add_attribute.Required,
 		DisplayValueField:   new_add_attribute.DisplayValueField,
 		DisplayOption:       new_add_attribute.DisplayOption,
-		DefaultMintValue:    new_add_attribute.DefaultMintValue,
+		CurrentValue:        schmaAttributeValue,
 		HiddenOveride:       new_add_attribute.HiddenOveride,
 		HiddenToMarketplace: new_add_attribute.HiddenToMarketplace,
-		Index:               valFound.Index, // keep the index persistent
 	}
 
 	k.SetSchemaAttribute(ctx, schemaAttribute)
@@ -147,7 +152,7 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 	return &types.MsgUpdateSchemaAttributeResponse{
 		NftSchemaCode: msg.NftSchemaCode,
 		Name:          msg.Name,
-		NewAttribute: &schemaAttribute,
+		NewAttribute:  &schemaAttribute,
 	}, nil
 }
 

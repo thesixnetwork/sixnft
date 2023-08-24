@@ -52,24 +52,27 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 		req.TokenId,
 	)
 
-	updateddata := k.updateNftDataAttributes(ctx, val)
-
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")
 	}
+	
+	updateddata := k.updateNftDataAttributes(ctx, val)
 
 	return &types.QueryGetNftDataResponse{NftData: updateddata}, nil
 }
 
 // function updateNftDataAttributes updates the nft data attributes from the schema
 func (k Keeper) updateNftDataAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
-	nftSchema, _ := k.GetNFTSchema(ctx, dataOnToken.NftSchemaCode)
+	// nftSchema, _ := k.GetNFTSchema(ctx, dataOnToken.NftSchemaCode)
+	listOfAllschemaAttributeValue := k.GetAllSchemaAttribute(ctx)
 
-	// !!! BUG !!! ==> Using actual value from schema instead of default value
-	// createa map of nftattributes from schema with its default value
+	// create a map of schema attributes
 	mapFromSchemaAttributes := make(map[string]*types.DefaultMintValue)
-	for _, fromSchemaNftAttribute := range nftSchema.OnchainData.SchemaAttributes {
-		mapFromSchemaAttributes[fromSchemaNftAttribute.Name] = fromSchemaNftAttribute.DefaultMintValue
+	for _, schemaAttribute := range listOfAllschemaAttributeValue {
+		if schemaAttribute.NftSchemaCode == dataOnToken.NftSchemaCode {
+			covertBackToDefaultMintValue, _ := ConvertSchemaAttributeValueToDefaultMintValue(schemaAttribute.CurrentValue)
+			mapFromSchemaAttributes[schemaAttribute.Name] = covertBackToDefaultMintValue
+		}
 	}
 
 	// loop over nftdata attributes and check if exists in mapFromSchemaAttributes

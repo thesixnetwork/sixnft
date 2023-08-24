@@ -18,12 +18,15 @@ const (
 )
 
 // Validate NFT Schema
-func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
+func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 	// Origin Data Origin Attributes Map
-	mapAttributeOriginDefinition := CreateOriginAttrDefMap(schema.OriginData.OriginAttributes)
+	mapAttributeOriginDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
 	for _, attriDef := range mapAttributeOriginDefinition {
 		mapAttributeOriginDefinition[attriDef.Name] = attriDef
 	}
+
+	mapAttributeSchemaDefinition := CreateAttrDefMap(schema.OnchainData.SchemaAttributes)
+
 	// Check for duplicate origin attributes
 	duplicated, errString := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
 	if duplicated {
@@ -35,10 +38,17 @@ func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 		return false, err
 	}
 	// Validate Onchain Data Onchain Attributes
-	err = ValidateAttributeNames(append(schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes...))
+	err = ValidateAttributeNames(schema.OnchainData.TokenAttributes)
 	if err != nil {
 		return false, err
 	}
+
+	// Validate Onchain Data Onchain Attributes
+	err = ValidateAttributeNames(schema.OnchainData.SchemaAttributes)
+	if err != nil {
+		return false, err
+	}
+
 	// Loop over actions to validate action name
 	for _, action := range schema.OnchainData.Actions {
 		// Validate action name
@@ -70,10 +80,11 @@ func ValidateNFTSchema(schema *types.NFTSchema) (bool, error) {
 	}
 
 	// Validate if attributes have the same type
-	hasSameType, errString := HasSameType(mapAttributeOriginDefinition, schema.OnchainData.SchemaAttributes)
+	hasSameType, errString := HasSameType(mapAttributeSchemaDefinition, schema.OnchainData.SchemaAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}
+
 	hasSameType, errString = HasSameType(mapAttributeOriginDefinition, schema.OnchainData.TokenAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeTokenAttributes, fmt.Sprintf("Attribute type not the same: %s", errString))
@@ -131,23 +142,14 @@ func GetOrganizationFromSchemaCode(nftSchemaCode string) (bool, string) {
 	return true, organizationName
 }
 
-func MergeAllSchemaAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, onChainSchemaAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
+func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	var index uint64 = 0
-	for _, originAttribute := range originAttributes {
-		originAttribute.Index = index
-		mergedAttributes = append(append(mergedAttributes, originAttribute), onChainSchemaAttributes...)
-		index++
-	}
-	for _, _onchainNFTAttribute := range onChainSchemaAttributes {
-		_onchainNFTAttribute.Index = index
-		mergedAttributes = append(append(mergedAttributes, _onchainNFTAttribute), onChainSchemaAttributes...)
-		index++
-	}
-	for _, _onchainTokenAttribute := range onchainTokenAttribute {
-		_onchainTokenAttribute.Index = index
-		mergedAttributes = append(append(mergedAttributes, _onchainTokenAttribute), onchainTokenAttribute...)
-		index++
-	}
+	for _, attribute := range append(originAttributes, onchainTokenAttribute...) {
+        attribute.Index = index
+        mergedAttributes = append(mergedAttributes, attribute)
+        index++
+    }
+
 	return mergedAttributes
 }

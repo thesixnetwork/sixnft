@@ -3,8 +3,8 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"strconv"
+	// "fmt"
+	// "strconv"
 	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -139,57 +139,58 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		k.Keeper.SetNftData(ctx, *otherTokenData)
 	}
 
+	// TODO:: FIX ACTION EXECUTOR UPDATE ON SHEMA ATTRIBUTE INSTED OF TOKEN ATTRIBUTE
 	// get schema index from change list
-	for _, change := range meta.ChangeList {
-		// append key to list_of_keychang when name is match
-		for _, attribute := range schema.OnchainData.SchemaAttributes {
-			if attribute.Name == change.Key {
-				switch attribute.DataType {
-				case "string":
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
-						StringAttributeValue: &types.StringAttributeValue{
-							Value: change.NewValue,
-						},
-					}
-				case "boolean":
-					boolValue, err := strconv.ParseBool(change.NewValue)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
-						BooleanAttributeValue: &types.BooleanAttributeValue{
-							Value: boolValue,
-						},
-					}
-				case "number":
-					fmt.Println("#################number", "number")
-					uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
-						NumberAttributeValue: &types.NumberAttributeValue{
-							Value: uintValue,
-						},
-					}
-				case "float":
-					floatValue, err := strconv.ParseFloat(change.NewValue, 64)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
-						FloatAttributeValue: &types.FloatAttributeValue{
-							Value: floatValue,
-						},
-					}
-				default:
-					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, attribute.DataType)
-				}
-			}
-		}
-	}
+	// for _, change := range meta.ChangeList {
+	// 	// // append key to list_of_keychang when name is match
+	// 	// for _, attribute := range schema.OnchainData.NftAttributes { //<<==
+	// 	// 	if attribute.Name == change.Key {
+	// 	// 		switch attribute.DataType {
+	// 	// 		case "string":
+	// 	// 			attribute.DefaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
+	// 	// 				StringAttributeValue: &types.StringAttributeValue{
+	// 	// 					Value: change.NewValue,
+	// 	// 				},
+	// 	// 			}
+	// 	// 		case "boolean":
+	// 	// 			boolValue, err := strconv.ParseBool(change.NewValue)
+	// 	// 			if err != nil {
+	// 	// 				return nil, err
+	// 	// 			}
+	// 	// 			attribute.DefaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
+	// 	// 				BooleanAttributeValue: &types.BooleanAttributeValue{
+	// 	// 					Value: boolValue,
+	// 	// 				},
+	// 	// 			}
+	// 	// 		case "number":
+	// 	// 			fmt.Println("#################number", "number")
+	// 	// 			uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+	// 	// 			if err != nil {
+	// 	// 				return nil, err
+	// 	// 			}
+	// 	// 			attribute.DefaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
+	// 	// 				NumberAttributeValue: &types.NumberAttributeValue{
+	// 	// 					Value: uintValue,
+	// 	// 				},
+	// 	// 			}
+	// 	// 		case "float":
+	// 	// 			floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+	// 	// 			if err != nil {
+	// 	// 				return nil, err
+	// 	// 			}
+	// 	// 			attribute.DefaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
+	// 	// 				FloatAttributeValue: &types.FloatAttributeValue{
+	// 	// 					Value: floatValue,
+	// 	// 				},
+	// 	// 			}
+	// 	// 		default:
+	// 	// 			return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, attribute.DataType)
+	// 	// 		}
+	// 	// 	}
+	// 	// }
+	// }
 	// Update schema
-	k.Keeper.SetNFTSchema(ctx, schema)
+	// k.Keeper.SetNFTSchema(ctx, schema)
 	// Check action with reference exists
 	if msg.RefId != "" {
 

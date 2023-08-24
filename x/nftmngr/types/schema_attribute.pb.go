@@ -23,17 +23,16 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type SchemaAttribute struct {
-	NftSchemaCode       string            `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
-	Name                string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	DataType            string            `protobuf:"bytes,3,opt,name=data_type,json=dataType,proto3" json:"data_type,omitempty"`
-	Required            bool              `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
-	DisplayValueField   string            `protobuf:"bytes,5,opt,name=display_value_field,json=displayValueField,proto3" json:"display_value_field,omitempty"`
-	DisplayOption       *DisplayOption    `protobuf:"bytes,6,opt,name=display_option,json=displayOption,proto3" json:"display_option,omitempty"`
-	DefaultMintValue    *DefaultMintValue `protobuf:"bytes,7,opt,name=default_mint_value,json=defaultMintValue,proto3" json:"default_mint_value,omitempty"`
-	HiddenOveride       bool              `protobuf:"varint,8,opt,name=hidden_overide,json=hiddenOveride,proto3" json:"hidden_overide,omitempty"`
-	HiddenToMarketplace bool              `protobuf:"varint,9,opt,name=hidden_to_marketplace,json=hiddenToMarketplace,proto3" json:"hidden_to_marketplace,omitempty"`
-	Index               uint64            `protobuf:"varint,10,opt,name=index,proto3" json:"index,omitempty"`
-	Creator             string            `protobuf:"bytes,11,opt,name=creator,proto3" json:"creator,omitempty"`
+	NftSchemaCode       string                `protobuf:"bytes,1,opt,name=nftSchemaCode,proto3" json:"nftSchemaCode,omitempty"`
+	Name                string                `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	DataType            string                `protobuf:"bytes,3,opt,name=data_type,json=dataType,proto3" json:"data_type,omitempty"`
+	Required            bool                  `protobuf:"varint,4,opt,name=required,proto3" json:"required,omitempty"`
+	DisplayValueField   string                `protobuf:"bytes,5,opt,name=display_value_field,json=displayValueField,proto3" json:"display_value_field,omitempty"`
+	DisplayOption       *DisplayOption        `protobuf:"bytes,6,opt,name=display_option,json=displayOption,proto3" json:"display_option,omitempty"`
+	CurrentValue        *SchemaAttributeValue `protobuf:"bytes,7,opt,name=current_value,json=currentValue,proto3" json:"current_value,omitempty"`
+	HiddenOveride       bool                  `protobuf:"varint,8,opt,name=hidden_overide,json=hiddenOveride,proto3" json:"hidden_overide,omitempty"`
+	HiddenToMarketplace bool                  `protobuf:"varint,9,opt,name=hidden_to_marketplace,json=hiddenToMarketplace,proto3" json:"hidden_to_marketplace,omitempty"`
+	Creator             string                `protobuf:"bytes,10,opt,name=creator,proto3" json:"creator,omitempty"`
 }
 
 func (m *SchemaAttribute) Reset()         { *m = SchemaAttribute{} }
@@ -111,9 +110,9 @@ func (m *SchemaAttribute) GetDisplayOption() *DisplayOption {
 	return nil
 }
 
-func (m *SchemaAttribute) GetDefaultMintValue() *DefaultMintValue {
+func (m *SchemaAttribute) GetCurrentValue() *SchemaAttributeValue {
 	if m != nil {
-		return m.DefaultMintValue
+		return m.CurrentValue
 	}
 	return nil
 }
@@ -132,13 +131,6 @@ func (m *SchemaAttribute) GetHiddenToMarketplace() bool {
 	return false
 }
 
-func (m *SchemaAttribute) GetIndex() uint64 {
-	if m != nil {
-		return m.Index
-	}
-	return 0
-}
-
 func (m *SchemaAttribute) GetCreator() string {
 	if m != nil {
 		return m.Creator
@@ -146,42 +138,161 @@ func (m *SchemaAttribute) GetCreator() string {
 	return ""
 }
 
+type SchemaAttributeValue struct {
+	// Types that are valid to be assigned to Value:
+	//
+	//	*SchemaAttributeValue_NumberAttributeValue
+	//	*SchemaAttributeValue_StringAttributeValue
+	//	*SchemaAttributeValue_BooleanAttributeValue
+	//	*SchemaAttributeValue_FloatAttributeValue
+	Value isSchemaAttributeValue_Value `protobuf_oneof:"value"`
+}
+
+func (m *SchemaAttributeValue) Reset()         { *m = SchemaAttributeValue{} }
+func (m *SchemaAttributeValue) String() string { return proto.CompactTextString(m) }
+func (*SchemaAttributeValue) ProtoMessage()    {}
+func (*SchemaAttributeValue) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8228233d6832e497, []int{1}
+}
+func (m *SchemaAttributeValue) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SchemaAttributeValue) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SchemaAttributeValue.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SchemaAttributeValue) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SchemaAttributeValue.Merge(m, src)
+}
+func (m *SchemaAttributeValue) XXX_Size() int {
+	return m.Size()
+}
+func (m *SchemaAttributeValue) XXX_DiscardUnknown() {
+	xxx_messageInfo_SchemaAttributeValue.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SchemaAttributeValue proto.InternalMessageInfo
+
+type isSchemaAttributeValue_Value interface {
+	isSchemaAttributeValue_Value()
+	MarshalTo([]byte) (int, error)
+	Size() int
+}
+
+type SchemaAttributeValue_NumberAttributeValue struct {
+	NumberAttributeValue *NumberAttributeValue `protobuf:"bytes,1,opt,name=number_attribute_value,json=numberAttributeValue,proto3,oneof" json:"number_attribute_value,omitempty"`
+}
+type SchemaAttributeValue_StringAttributeValue struct {
+	StringAttributeValue *StringAttributeValue `protobuf:"bytes,2,opt,name=string_attribute_value,json=stringAttributeValue,proto3,oneof" json:"string_attribute_value,omitempty"`
+}
+type SchemaAttributeValue_BooleanAttributeValue struct {
+	BooleanAttributeValue *BooleanAttributeValue `protobuf:"bytes,3,opt,name=boolean_attribute_value,json=booleanAttributeValue,proto3,oneof" json:"boolean_attribute_value,omitempty"`
+}
+type SchemaAttributeValue_FloatAttributeValue struct {
+	FloatAttributeValue *FloatAttributeValue `protobuf:"bytes,4,opt,name=float_attribute_value,json=floatAttributeValue,proto3,oneof" json:"float_attribute_value,omitempty"`
+}
+
+func (*SchemaAttributeValue_NumberAttributeValue) isSchemaAttributeValue_Value()  {}
+func (*SchemaAttributeValue_StringAttributeValue) isSchemaAttributeValue_Value()  {}
+func (*SchemaAttributeValue_BooleanAttributeValue) isSchemaAttributeValue_Value() {}
+func (*SchemaAttributeValue_FloatAttributeValue) isSchemaAttributeValue_Value()   {}
+
+func (m *SchemaAttributeValue) GetValue() isSchemaAttributeValue_Value {
+	if m != nil {
+		return m.Value
+	}
+	return nil
+}
+
+func (m *SchemaAttributeValue) GetNumberAttributeValue() *NumberAttributeValue {
+	if x, ok := m.GetValue().(*SchemaAttributeValue_NumberAttributeValue); ok {
+		return x.NumberAttributeValue
+	}
+	return nil
+}
+
+func (m *SchemaAttributeValue) GetStringAttributeValue() *StringAttributeValue {
+	if x, ok := m.GetValue().(*SchemaAttributeValue_StringAttributeValue); ok {
+		return x.StringAttributeValue
+	}
+	return nil
+}
+
+func (m *SchemaAttributeValue) GetBooleanAttributeValue() *BooleanAttributeValue {
+	if x, ok := m.GetValue().(*SchemaAttributeValue_BooleanAttributeValue); ok {
+		return x.BooleanAttributeValue
+	}
+	return nil
+}
+
+func (m *SchemaAttributeValue) GetFloatAttributeValue() *FloatAttributeValue {
+	if x, ok := m.GetValue().(*SchemaAttributeValue_FloatAttributeValue); ok {
+		return x.FloatAttributeValue
+	}
+	return nil
+}
+
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*SchemaAttributeValue) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
+		(*SchemaAttributeValue_NumberAttributeValue)(nil),
+		(*SchemaAttributeValue_StringAttributeValue)(nil),
+		(*SchemaAttributeValue_BooleanAttributeValue)(nil),
+		(*SchemaAttributeValue_FloatAttributeValue)(nil),
+	}
+}
+
 func init() {
 	proto.RegisterType((*SchemaAttribute)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttribute")
+	proto.RegisterType((*SchemaAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttributeValue")
 }
 
 func init() { proto.RegisterFile("nftmngr/schema_attribute.proto", fileDescriptor_8228233d6832e497) }
 
 var fileDescriptor_8228233d6832e497 = []byte{
-	// 442 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xdf, 0x6a, 0x13, 0x41,
-	0x14, 0xc6, 0xb3, 0x36, 0x6d, 0x93, 0x29, 0xa9, 0x3a, 0x55, 0x18, 0x62, 0x59, 0x62, 0x51, 0x08,
-	0x08, 0xb3, 0x50, 0x9f, 0xc0, 0x3f, 0x08, 0x5e, 0x94, 0xc2, 0x5a, 0xbc, 0x10, 0x61, 0x98, 0x64,
-	0xce, 0x36, 0x43, 0x77, 0x67, 0xd6, 0xc9, 0xd9, 0x9a, 0xbc, 0x85, 0x8f, 0xe5, 0x65, 0x2e, 0xbd,
-	0x94, 0xe4, 0x09, 0x7c, 0x03, 0xd9, 0x99, 0xac, 0x6b, 0xbc, 0xb0, 0x77, 0x7b, 0xbe, 0xdf, 0xf9,
-	0x3e, 0xce, 0x39, 0x3b, 0x24, 0x36, 0x19, 0x16, 0xe6, 0xda, 0x25, 0xf3, 0xe9, 0x0c, 0x0a, 0x29,
-	0x24, 0xa2, 0xd3, 0x93, 0x0a, 0x81, 0x97, 0xce, 0xa2, 0xa5, 0xa7, 0x38, 0x83, 0xb9, 0x5e, 0x18,
-	0xc0, 0xaf, 0xd6, 0xdd, 0xf0, 0xfa, 0x33, 0x43, 0xbe, 0x35, 0x0d, 0x4f, 0x1b, 0xb7, 0xd2, 0xf3,
-	0x32, 0x97, 0x4b, 0x61, 0x4b, 0xd4, 0xd6, 0x04, 0xef, 0xf0, 0x69, 0x43, 0x4d, 0x86, 0x6d, 0xb0,
-	0xb8, 0x95, 0x79, 0xb5, 0x8d, 0x1f, 0x9e, 0x35, 0x2d, 0x2d, 0x56, 0x90, 0x69, 0xa3, 0xdb, 0x98,
-	0xb3, 0x5f, 0x7b, 0xe4, 0xfe, 0x07, 0x3f, 0xdd, 0xab, 0xa6, 0x89, 0x3e, 0x23, 0x03, 0x93, 0x61,
-	0x50, 0xdf, 0x58, 0x05, 0x2c, 0x1a, 0x45, 0xe3, 0x7e, 0xba, 0x2b, 0x52, 0x4a, 0xba, 0x46, 0x16,
-	0xc0, 0xee, 0x79, 0xe8, 0xbf, 0xe9, 0x13, 0xd2, 0x57, 0x12, 0xa5, 0xc0, 0x65, 0x09, 0x6c, 0xcf,
-	0x83, 0x5e, 0x2d, 0x5c, 0x2d, 0x4b, 0xa0, 0x43, 0xd2, 0x73, 0xf0, 0xa5, 0xd2, 0x0e, 0x14, 0xeb,
-	0x8e, 0xa2, 0x71, 0x2f, 0xfd, 0x53, 0x53, 0x4e, 0x4e, 0x9a, 0x2d, 0xfd, 0x06, 0x22, 0xd3, 0x90,
-	0x2b, 0xb6, 0xef, 0x23, 0x1e, 0x6e, 0xd1, 0xc7, 0x9a, 0xbc, 0xab, 0x01, 0x4d, 0xc9, 0xf1, 0xee,
-	0x55, 0xd8, 0xc1, 0x28, 0x1a, 0x1f, 0x9d, 0xbf, 0xe0, 0xff, 0x3b, 0x29, 0x7f, 0x1b, 0x3c, 0x97,
-	0xde, 0x92, 0x0e, 0xd4, 0xdf, 0x25, 0xfd, 0x4c, 0xa8, 0x82, 0x4c, 0x56, 0x39, 0x8a, 0x42, 0x1b,
-	0x0c, 0x83, 0xb0, 0x43, 0x9f, 0xcb, 0xef, 0xc8, 0x0d, 0xbe, 0x0b, 0x6d, 0xd0, 0x0f, 0x99, 0x3e,
-	0x50, 0xff, 0x28, 0xf4, 0x39, 0x39, 0x9e, 0x69, 0xa5, 0xc0, 0x08, 0x7b, 0x0b, 0x4e, 0x2b, 0x60,
-	0x3d, 0x7f, 0x83, 0x41, 0x50, 0x2f, 0x83, 0x48, 0xcf, 0xc9, 0xe3, 0x6d, 0x1b, 0x5a, 0x51, 0x48,
-	0x77, 0x03, 0x58, 0xe6, 0x72, 0x0a, 0xac, 0xef, 0xbb, 0x4f, 0x02, 0xbc, 0xb2, 0x17, 0x2d, 0xa2,
-	0x8f, 0xc8, 0xbe, 0x36, 0x0a, 0x16, 0x8c, 0x8c, 0xa2, 0x71, 0x37, 0x0d, 0x05, 0x65, 0xe4, 0x70,
-	0xea, 0x40, 0xa2, 0x75, 0xec, 0xc8, 0x9f, 0xb1, 0x29, 0x5f, 0xbf, 0xff, 0xbe, 0x8e, 0xa3, 0xd5,
-	0x3a, 0x8e, 0x7e, 0xae, 0xe3, 0xe8, 0xdb, 0x26, 0xee, 0xac, 0x36, 0x71, 0xe7, 0xc7, 0x26, 0xee,
-	0x7c, 0x4a, 0xae, 0x35, 0xce, 0xaa, 0x09, 0x9f, 0xda, 0x22, 0xd9, 0x59, 0x38, 0x09, 0x0b, 0x27,
-	0x8b, 0xa4, 0x79, 0x53, 0xf5, 0x2f, 0x9e, 0x4f, 0x0e, 0xfc, 0x2b, 0x7a, 0xf9, 0x3b, 0x00, 0x00,
-	0xff, 0xff, 0x56, 0x8b, 0xa2, 0x9d, 0xea, 0x02, 0x00, 0x00,
+	// 530 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x54, 0x5d, 0x6f, 0xd3, 0x30,
+	0x14, 0x6d, 0xd6, 0x7d, 0xb4, 0x1e, 0x1d, 0xc2, 0x5d, 0xc1, 0x2a, 0x53, 0x54, 0x2a, 0x90, 0x2a,
+	0x21, 0x25, 0xa2, 0xfb, 0x05, 0x14, 0x34, 0xc1, 0x03, 0x4c, 0x0a, 0x13, 0x48, 0xbc, 0x44, 0x4e,
+	0x7d, 0xd3, 0x9a, 0x25, 0x76, 0x70, 0x9c, 0xb1, 0xfe, 0x0b, 0x7e, 0x16, 0x6f, 0xec, 0x09, 0xf1,
+	0x88, 0xda, 0x3f, 0x82, 0xe2, 0x34, 0x94, 0x2e, 0x55, 0xe1, 0x2d, 0x3e, 0xe7, 0x9e, 0x73, 0xee,
+	0xbd, 0xb5, 0x8b, 0x6c, 0x11, 0xea, 0x58, 0x4c, 0x94, 0x9b, 0x8e, 0xa7, 0x10, 0x53, 0x9f, 0x6a,
+	0xad, 0x78, 0x90, 0x69, 0x70, 0x12, 0x25, 0xb5, 0xc4, 0x27, 0x7a, 0x0a, 0x29, 0xbf, 0x16, 0xa0,
+	0xbf, 0x48, 0x75, 0xe9, 0xe4, 0x9f, 0xa1, 0x76, 0x96, 0xa2, 0xee, 0x49, 0xa9, 0x66, 0x3c, 0x4d,
+	0x22, 0x3a, 0xf3, 0x65, 0xa2, 0xb9, 0x14, 0x85, 0xb6, 0xfb, 0xa8, 0x64, 0x45, 0xa8, 0x57, 0xc6,
+	0xfe, 0x15, 0x8d, 0xb2, 0xa5, 0x7d, 0xb7, 0x5f, 0x96, 0xac, 0x68, 0x06, 0x21, 0x17, 0x7c, 0x65,
+	0xd3, 0xff, 0x51, 0x47, 0x77, 0xdf, 0x99, 0xee, 0x9e, 0x97, 0x45, 0xf8, 0x31, 0x6a, 0x89, 0x50,
+	0x17, 0xe8, 0x0b, 0xc9, 0x80, 0x58, 0x3d, 0x6b, 0xd0, 0xf4, 0xd6, 0x41, 0x8c, 0xd1, 0xae, 0xa0,
+	0x31, 0x90, 0x1d, 0x43, 0x9a, 0x6f, 0xfc, 0x10, 0x35, 0x19, 0xd5, 0xd4, 0xd7, 0xb3, 0x04, 0x48,
+	0xdd, 0x10, 0x8d, 0x1c, 0xb8, 0x98, 0x25, 0x80, 0xbb, 0xa8, 0xa1, 0xe0, 0x73, 0xc6, 0x15, 0x30,
+	0xb2, 0xdb, 0xb3, 0x06, 0x0d, 0xef, 0xcf, 0x19, 0x3b, 0xa8, 0x5d, 0x4e, 0x69, 0x26, 0xf0, 0x43,
+	0x0e, 0x11, 0x23, 0x7b, 0xc6, 0xe2, 0xde, 0x92, 0x7a, 0x9f, 0x33, 0x67, 0x39, 0x81, 0x3d, 0x74,
+	0xb4, 0xbe, 0x15, 0xb2, 0xdf, 0xb3, 0x06, 0x87, 0xc3, 0xa7, 0xce, 0xb6, 0x95, 0x3a, 0x2f, 0x0b,
+	0xcd, 0xb9, 0x91, 0x78, 0x2d, 0xf6, 0xf7, 0x11, 0x7f, 0x40, 0xad, 0x71, 0xa6, 0x14, 0x08, 0x5d,
+	0xf4, 0x40, 0x0e, 0x8c, 0xe5, 0x70, 0xbb, 0xe5, 0xad, 0xe5, 0x99, 0x1e, 0xbd, 0x3b, 0x4b, 0x23,
+	0x73, 0xc2, 0x4f, 0xd0, 0xd1, 0x94, 0x33, 0x06, 0xc2, 0x97, 0x57, 0xa0, 0x38, 0x03, 0xd2, 0x30,
+	0xe3, 0xb7, 0x0a, 0xf4, 0xbc, 0x00, 0xf1, 0x10, 0x75, 0x96, 0x65, 0x5a, 0xfa, 0x31, 0x55, 0x97,
+	0xa0, 0x93, 0x88, 0x8e, 0x81, 0x34, 0x4d, 0x75, 0xbb, 0x20, 0x2f, 0xe4, 0x9b, 0x15, 0x85, 0x09,
+	0x3a, 0x18, 0x2b, 0xa0, 0x5a, 0x2a, 0x82, 0xcc, 0xae, 0xca, 0x63, 0xff, 0x7b, 0x1d, 0x1d, 0x6f,
+	0xea, 0x0d, 0x7f, 0x42, 0xf7, 0x45, 0x16, 0x07, 0xa0, 0x6e, 0xdf, 0x1a, 0xf3, 0x33, 0xff, 0x73,
+	0xde, 0xb7, 0x46, 0xbb, 0xee, 0xf9, 0xaa, 0xe6, 0x1d, 0x8b, 0x0d, 0x78, 0x9e, 0x95, 0x6a, 0xc5,
+	0xc5, 0xa4, 0x92, 0xb5, 0xf3, 0x5f, 0xbb, 0x35, 0xda, 0x6a, 0x56, 0xba, 0x01, 0xc7, 0x31, 0x7a,
+	0x10, 0x48, 0x19, 0x01, 0x15, 0x95, 0xb0, 0xba, 0x09, 0x3b, 0xdd, 0x1e, 0x36, 0x2a, 0xc4, 0x95,
+	0xb4, 0x4e, 0xb0, 0x89, 0xc0, 0x13, 0xd4, 0x09, 0x23, 0x49, 0x2b, 0x6f, 0xcf, 0x5c, 0xed, 0xc3,
+	0xe1, 0xb3, 0xed, 0x61, 0x67, 0xb9, 0xb4, 0x12, 0xd5, 0x0e, 0xab, 0xf0, 0xe8, 0x00, 0xed, 0x19,
+	0xe3, 0xd1, 0xeb, 0x6f, 0x73, 0xdb, 0xba, 0x99, 0xdb, 0xd6, 0xaf, 0xb9, 0x6d, 0x7d, 0x5d, 0xd8,
+	0xb5, 0x9b, 0x85, 0x5d, 0xfb, 0xb9, 0xb0, 0x6b, 0x1f, 0xdd, 0x09, 0xd7, 0xd3, 0x2c, 0x70, 0xc6,
+	0x32, 0x76, 0xd7, 0x62, 0xdd, 0x22, 0xd6, 0xbd, 0x76, 0xcb, 0xbf, 0x82, 0xfc, 0x65, 0xa6, 0xc1,
+	0xbe, 0x79, 0xfc, 0xa7, 0xbf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x1b, 0x0b, 0xa5, 0x72, 0xa1, 0x04,
+	0x00, 0x00,
 }
 
 func (m *SchemaAttribute) Marshal() (dAtA []byte, err error) {
@@ -209,12 +320,7 @@ func (m *SchemaAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		copy(dAtA[i:], m.Creator)
 		i = encodeVarintSchemaAttribute(dAtA, i, uint64(len(m.Creator)))
 		i--
-		dAtA[i] = 0x5a
-	}
-	if m.Index != 0 {
-		i = encodeVarintSchemaAttribute(dAtA, i, uint64(m.Index))
-		i--
-		dAtA[i] = 0x50
+		dAtA[i] = 0x52
 	}
 	if m.HiddenToMarketplace {
 		i--
@@ -236,9 +342,9 @@ func (m *SchemaAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x40
 	}
-	if m.DefaultMintValue != nil {
+	if m.CurrentValue != nil {
 		{
-			size, err := m.DefaultMintValue.MarshalToSizedBuffer(dAtA[:i])
+			size, err := m.CurrentValue.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
@@ -301,6 +407,122 @@ func (m *SchemaAttribute) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SchemaAttributeValue) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SchemaAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SchemaAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Value != nil {
+		{
+			size := m.Value.Size()
+			i -= size
+			if _, err := m.Value.MarshalTo(dAtA[i:]); err != nil {
+				return 0, err
+			}
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SchemaAttributeValue_NumberAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SchemaAttributeValue_NumberAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.NumberAttributeValue != nil {
+		{
+			size, err := m.NumberAttributeValue.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchemaAttribute(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+func (m *SchemaAttributeValue_StringAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SchemaAttributeValue_StringAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.StringAttributeValue != nil {
+		{
+			size, err := m.StringAttributeValue.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchemaAttribute(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	return len(dAtA) - i, nil
+}
+func (m *SchemaAttributeValue_BooleanAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SchemaAttributeValue_BooleanAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.BooleanAttributeValue != nil {
+		{
+			size, err := m.BooleanAttributeValue.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchemaAttribute(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x1a
+	}
+	return len(dAtA) - i, nil
+}
+func (m *SchemaAttributeValue_FloatAttributeValue) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SchemaAttributeValue_FloatAttributeValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	if m.FloatAttributeValue != nil {
+		{
+			size, err := m.FloatAttributeValue.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintSchemaAttribute(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	return len(dAtA) - i, nil
+}
 func encodeVarintSchemaAttribute(dAtA []byte, offset int, v uint64) int {
 	offset -= sovSchemaAttribute(v)
 	base := offset
@@ -341,8 +563,8 @@ func (m *SchemaAttribute) Size() (n int) {
 		l = m.DisplayOption.Size()
 		n += 1 + l + sovSchemaAttribute(uint64(l))
 	}
-	if m.DefaultMintValue != nil {
-		l = m.DefaultMintValue.Size()
+	if m.CurrentValue != nil {
+		l = m.CurrentValue.Size()
 		n += 1 + l + sovSchemaAttribute(uint64(l))
 	}
 	if m.HiddenOveride {
@@ -351,11 +573,69 @@ func (m *SchemaAttribute) Size() (n int) {
 	if m.HiddenToMarketplace {
 		n += 2
 	}
-	if m.Index != 0 {
-		n += 1 + sovSchemaAttribute(uint64(m.Index))
-	}
 	l = len(m.Creator)
 	if l > 0 {
+		n += 1 + l + sovSchemaAttribute(uint64(l))
+	}
+	return n
+}
+
+func (m *SchemaAttributeValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Value != nil {
+		n += m.Value.Size()
+	}
+	return n
+}
+
+func (m *SchemaAttributeValue_NumberAttributeValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.NumberAttributeValue != nil {
+		l = m.NumberAttributeValue.Size()
+		n += 1 + l + sovSchemaAttribute(uint64(l))
+	}
+	return n
+}
+func (m *SchemaAttributeValue_StringAttributeValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.StringAttributeValue != nil {
+		l = m.StringAttributeValue.Size()
+		n += 1 + l + sovSchemaAttribute(uint64(l))
+	}
+	return n
+}
+func (m *SchemaAttributeValue_BooleanAttributeValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.BooleanAttributeValue != nil {
+		l = m.BooleanAttributeValue.Size()
+		n += 1 + l + sovSchemaAttribute(uint64(l))
+	}
+	return n
+}
+func (m *SchemaAttributeValue_FloatAttributeValue) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.FloatAttributeValue != nil {
+		l = m.FloatAttributeValue.Size()
 		n += 1 + l + sovSchemaAttribute(uint64(l))
 	}
 	return n
@@ -582,7 +862,7 @@ func (m *SchemaAttribute) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field DefaultMintValue", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field CurrentValue", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -609,10 +889,10 @@ func (m *SchemaAttribute) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.DefaultMintValue == nil {
-				m.DefaultMintValue = &DefaultMintValue{}
+			if m.CurrentValue == nil {
+				m.CurrentValue = &SchemaAttributeValue{}
 			}
-			if err := m.DefaultMintValue.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			if err := m.CurrentValue.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
@@ -657,25 +937,6 @@ func (m *SchemaAttribute) Unmarshal(dAtA []byte) error {
 			}
 			m.HiddenToMarketplace = bool(v != 0)
 		case 10:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
-			}
-			m.Index = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowSchemaAttribute
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Index |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 11:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
 			}
@@ -706,6 +967,196 @@ func (m *SchemaAttribute) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipSchemaAttribute(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SchemaAttributeValue) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowSchemaAttribute
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SchemaAttributeValue: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SchemaAttributeValue: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field NumberAttributeValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchemaAttribute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &NumberAttributeValue{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Value = &SchemaAttributeValue_NumberAttributeValue{v}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StringAttributeValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchemaAttribute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &StringAttributeValue{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Value = &SchemaAttributeValue_StringAttributeValue{v}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BooleanAttributeValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchemaAttribute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &BooleanAttributeValue{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Value = &SchemaAttributeValue_BooleanAttributeValue{v}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FloatAttributeValue", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowSchemaAttribute
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthSchemaAttribute
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			v := &FloatAttributeValue{}
+			if err := v.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			m.Value = &SchemaAttributeValue_FloatAttributeValue{v}
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
