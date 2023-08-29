@@ -53,6 +53,24 @@
         },
         "hidden_overide": false,
         "hidden_to_marketplace": true
+      },
+      {
+        "name": "all_check_in",
+        "default_mint_value": {
+          "number_attribute_value": {
+            "value": 0
+          }
+        },
+        "data_type": "number",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "All Check In"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": true
       }
     ],
     "token_attributes": [
@@ -121,6 +139,7 @@
         "when": "meta.GetBoolean('is_checked_in') == false",
         "then": [
           "meta.SetFloat('points', meta.GetFloat('points') + 50.0)",
+          "meta.SetNumber('all_check_in', meta.GetNumber('all_check_in') + 1)",
           "meta.SetBoolean('is_checked_in', true)"
         ]
       },
@@ -146,11 +165,10 @@
     ]
   },
   "system_actioners": [
-    "6x1y7lhzzum3nu77nz0pcwqth42yxm84zg3d957mr",
-    "6x1pmktx7s530v89zqey823m74aayx7w2932puayq",
-    "6x1l83jjk2ylhxhgy35hz6e3k2phxsapl0cft36hh",
-    "6x1m53akq8td5tc9gq6wge47gqglaaq649q3l7jlm",
-    "6x1tt59zm6rak6hh0fmr97vuyjd0hste7622p3upu"
+    "6nft1u2sfj9h99mcrdzgvak2zz22g96a4qe5l4cxjmv",
+    "6nft1fra02rs0864jmw8z3kj2tf7njfdlq0yuaux3ye",
+    "6nft1kj9tl6pavd4825atx0e959unjt7g2l35curqqc",
+    "6nft1kj9tl6pavd4825atx0e959unjt7g2l35curqqc"
   ],
   "mint_authorization": "system"
 }

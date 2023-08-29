@@ -48,7 +48,7 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 	}
 
 	// Validate Schema Message and return error if not valid
-	valid, err := k.ValidateNFTData(&data, &schema)
+	valid, err := ValidateNFTData(&data, &schema)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())

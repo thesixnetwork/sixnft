@@ -115,6 +115,13 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 
 	// set action executor
 	for _, actionExecutor := range schema_input.SystemActioners {
+
+		//validate address
+		_, err := sdk.AccAddressFromBech32(actionExecutor)
+		if err != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, actionExecutor)
+		}
+
 		// check if actionExecutor already exists
 		_, isFound := k.Keeper.GetActionExecutor(ctx, schema_input.Code, actionExecutor)
 		if isFound {

@@ -58,7 +58,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 	}
 
 	// Validate Schema Message and return error if not valid
-	valid, err := k.ValidateNFTData(&data, &schema)
+	valid, err := ValidateNFTData(&data, &schema)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
@@ -116,7 +116,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 }
 
 // Validate NFT Data
-func (k msgServer) ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
+func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
 	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
 

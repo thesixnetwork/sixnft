@@ -1,6 +1,7 @@
 package types
 
 import (
+	// "fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -35,26 +36,16 @@ type MetadataAttribute struct {
 
 // var MapAllKey = map[string]*MetadataAttribute{}
 
-func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding) *Metadata {
+func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring AttributeOverriding, schemaAttributesValue []*NftAttributeValue) *Metadata {
 	meta := &Metadata{
 		nftData:           tokenData,
-		schema:            schema,
 		attributeOverring: attributeOverring,
 		ChangeList:        []*MetadataChange{},
 	}
 
 	meta.MapAllKey = map[string]*MetadataAttribute{}
 	meta.OtherUpdatedTokenDatas = map[string]*NftData{}
-
-	// TODO:: REMOVE NftAttributesValue from schema
-	// Parse the metadata
-	// for i, attri := range schema.GetOnchainData().NftAttributesValue {
-	// 	meta.MapAllKey[attri.Name] = &MetadataAttribute{
-	// 		AttributeValue: attri,
-	// 		From:           "nft",
-	// 		Index:          i,
-	// 	}
-	// }
+	
 	for i, attri := range tokenData.OriginAttributes {
 		meta.MapAllKey[attri.Name] = &MetadataAttribute{
 			AttributeValue: attri,
@@ -80,6 +71,20 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 		}
 
 	}
+
+	for i, attri := range schemaAttributesValue {
+		meta.MapAllKey[attri.Name] = &MetadataAttribute{
+			AttributeValue: attri,
+			From:           "schema",
+			Index:          i,
+		}
+	}
+
+	// // print out the metadata
+	// for key, attri := range meta.MapAllKey {
+	// 	fmt.Println(key, *attri)
+	// }
+
 	return meta
 }
 
@@ -176,6 +181,14 @@ func (m *Metadata) SetNumber(key string, value int64) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+		} else if attri.From == "schema" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatUint(attri.AttributeValue.GetNumberAttributeValue().Value, 10),
+				NewValue:      strconv.FormatUint(uint64(value), 10),
+			})
+			m.MapAllKey[key].AttributeValue = newAttributeValue
+
 		} else {
 			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute or nft attribute")
 		}
@@ -270,6 +283,14 @@ func (m *Metadata) SetString(key string, value string) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+		} else if attri.From == "schema" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: attri.AttributeValue.GetStringAttributeValue().Value,
+				NewValue:      value,
+			})
+			m.MapAllKey[key].AttributeValue = newAttributeValue
+
 		} else {
 			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 		}
@@ -324,6 +345,14 @@ func (m *Metadata) SetFloat(key string, value float64) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+		} else if attri.From == "schema" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatFloat(attri.AttributeValue.GetFloatAttributeValue().Value, 'f', -1, 64),
+				NewValue:      strconv.FormatFloat(value, 'f', -1, 64),
+			})
+			m.MapAllKey[key].AttributeValue = newAttributeValue
+
 		} else {
 			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 		}
@@ -378,6 +407,14 @@ func (m *Metadata) SetBoolean(key string, value bool) error {
 			})
 			m.MapAllKey[key].AttributeValue = newAttributeValue
 			m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+		} else if attri.From == "schema" {
+			m.ChangeList = append(m.ChangeList, &MetadataChange{
+				Key:           key,
+				PreviousValue: strconv.FormatBool(attri.AttributeValue.GetBooleanAttributeValue().Value),
+				NewValue:      strconv.FormatBool(value),
+			})
+			m.MapAllKey[key].AttributeValue = newAttributeValue
+
 		} else {
 			return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 		}
@@ -409,6 +446,18 @@ func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 		})
 		m.MapAllKey[key].AttributeValue = newAttributeValue
 		m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
+	} else if attri.From == "schema" {
+		newAttributeValue := &NftAttributeValue{
+			Name:                attri.AttributeValue.Name,
+			HiddenToMarketplace: bool_val,
+		}
+		m.ChangeList = append(m.ChangeList, &MetadataChange{
+			Key:           key,
+			PreviousValue: strconv.FormatBool(attri.AttributeValue.GetHiddenToMarketplace()),
+			NewValue:      strconv.FormatBool(bool_val),
+		})
+		m.MapAllKey[key].AttributeValue = newAttributeValue
+
 	} else {
 		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 	}

@@ -269,6 +269,38 @@ func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttr
 	}
 }
 
+
+func ConverAttributeDefinitionToNFTAttributeValue(attributeDefinition *types.AttributeDefinition) (*types.NftAttributeValue) {
+	nftAttributeValue := &types.NftAttributeValue{}
+
+	switch value := attributeDefinition.DefaultMintValue.Value.(type) {
+	case *types.DefaultMintValue_NumberAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.DefaultMintValue_StringAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.DefaultMintValue_BooleanAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.DefaultMintValue_FloatAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil
+	}
+
+	return &types.NftAttributeValue{
+		Name: attributeDefinition.Name,
+		Value: nftAttributeValue.Value,
+		HiddenToMarketplace: attributeDefinition.HiddenToMarketplace,
+	}
+}
+
 // Check if NFT data attributes exists in schema
 func NFTDataAttributesExistInSchema(mapAttributes map[string]*types.AttributeDefinition, dataAttributes []*types.NftAttributeValue) (bool, string) {
 	// Check if dataAttributes exist in schema

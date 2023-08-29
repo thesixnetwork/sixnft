@@ -82,6 +82,9 @@ case $choice in
     if [ -z "$schema_code" ]; then
         schema_code=$default_schema_code
     fi
+    if [ -z "$ref_id" ]; then
+        ref_id=$timestamp
+    fi
     # check if required_params is empty
     if [[ -z "$num_params" || "$num_params" -eq 0 ]]; then
         required_params="[]"
@@ -97,7 +100,7 @@ case $choice in
     fi
 
     sixnftd tx nftmngr perform-action-by-nftadmin ${schema_code} ${token_id} ${action} ${ref_id} ${required_params} --from alice --gas auto --gas-adjustment 1.5 --gas-prices 1.25stake -y \
-        --chain-id sixnft -o json | grep -q 'Error:'
+        --chain-id sixnft -o json | jq .
     ;;
 6) echo "Do Action Multi token"
     read -p "Enter Schema Code: " schema_code 

@@ -19,7 +19,7 @@ type (
 		memKey     sdk.StoreKey
 		paramstore paramtypes.Subspace
 
-		nftmngrKeeper  types.NftmngrKeep
+		nftmngrKeeper  types.NftmngrKeeper
 		nftadminKeeper types.NftadminKeeper
 		CDC            codec.BinaryCodec
 	}
@@ -30,7 +30,7 @@ func NewKeeper(
 	storeKey,
 	memKey sdk.StoreKey,
 	ps paramtypes.Subspace,
-	nftmngrKeeper types.NftmngrKeep,
+	nftmngrKeeper types.NftmngrKeeper,
 	nftadminKeeper types.NftadminKeeper,
 ) *Keeper {
 	// set KeyTable if it has not already been set

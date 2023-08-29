@@ -222,7 +222,19 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 		})
 	}
 
-	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding)
+	var list_schema_attributes_ []*nftmngrtypes.SchemaAttribute
+	// get schema attributes and convert to NFtAttributeValue
+	list_schema_attributes := k.nftmngrKeeper.GetAllSchemaAttribute(ctx)
+
+	var map_converted_schema_attributes []*nftmngrtypes.NftAttributeValue
+	for _, schema_attribute := range list_schema_attributes {
+		list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
+		nftAttributeValue_ := nftmngrkeeper.ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
+		map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
+	}
+
+	// TODO:: FIX THIS ERROR
+	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding,map_converted_schema_attributes)
 
 	meta.SetGetNFTFunction(func(tokenId string) (*nftmngrtypes.NftData, error) {
 		tokenData, found := k.nftmngrKeeper.GetNftData(ctx, schema.Code, tokenId)
