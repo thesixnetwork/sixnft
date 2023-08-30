@@ -31,7 +31,7 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 		if req.WithGlobal {
 			updateddata := k.appendDataWithSchemaAttributes(ctx, nftData)
 			listNFTData = append(listNFTData, updateddata)
-		}else{
+		} else {
 			listNFTData = append(listNFTData, nftData)
 		}
 

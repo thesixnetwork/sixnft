@@ -146,10 +146,10 @@ func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDef
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	var index uint64 = 0
 	for _, attribute := range append(originAttributes, onchainTokenAttribute...) {
-        attribute.Index = index
-        mergedAttributes = append(mergedAttributes, attribute)
-        index++
-    }
+		attribute.Index = index
+		mergedAttributes = append(mergedAttributes, attribute)
+		index++
+	}
 
 	return mergedAttributes
 }

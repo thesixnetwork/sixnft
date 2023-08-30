@@ -248,7 +248,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 		map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
 	}
 
-	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding,map_converted_schema_attributes)
+	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding, map_converted_schema_attributes)
 	meta.SetGetNFTFunction(func(tokenId string) (*nftmngrtypes.NftData, error) {
 		tokenData, found := k.nftmngrKeeper.GetNftData(ctx, schema.Code, tokenId)
 		if !found {
@@ -297,7 +297,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 			case "boolean":
 				boolValue, err := strconv.ParseBool(change.NewValue)
 				if err != nil {
-					return  err
+					return err
 				}
 				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_BooleanAttributeValue{
 					BooleanAttributeValue: &nftmngrtypes.BooleanAttributeValue{
@@ -307,7 +307,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 			case "number":
 				uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
 				if err != nil {
-					return  err
+					return err
 				}
 				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_NumberAttributeValue{
 					NumberAttributeValue: &nftmngrtypes.NumberAttributeValue{
@@ -317,7 +317,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 			case "float":
 				floatValue, err := strconv.ParseFloat(change.NewValue, 64)
 				if err != nil {
-					return  err
+					return err
 				}
 				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_FloatAttributeValue{
 					FloatAttributeValue: &nftmngrtypes.FloatAttributeValue{

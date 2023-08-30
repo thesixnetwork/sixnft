@@ -33,7 +33,6 @@ func TestAction(t *testing.T) {
 
 	// Simulate create metadata
 	schema_, data_, globalAttributeSchema_ := sim.SimulateCreateMetadata(schemaInput, metaInput)
-	
 
 	// ** START: NOTHING TO CARE ABOUT THIS PART **
 
@@ -51,15 +50,14 @@ func TestAction(t *testing.T) {
 	// Create metadata object with initial attributes
 	keeper_.SetNftData(ctx, data_)
 
-	if val, found := keeper_.GetNftData(ctx, schema_.Code, "1") ; !found {
+	if val, found := keeper_.GetNftData(ctx, schema_.Code, "1"); !found {
 		fmt.Println("Metadata not found")
-	}else {
+	} else {
 		require.True(t, found)
 		require.NoError(t, err)
 		require.Equal(t, data_, val)
 	}
 	// ** END: NOTHING TO CARE ABOUT THIS PART **
-
 
 	// ** START: ACTUAL TEST **
 	// Define the action to be processed
@@ -91,7 +89,6 @@ func TestAction(t *testing.T) {
 	allCheckInNumber, err := meta.MustGetNumber("all_check_in")
 	require.NoError(t, err)
 	require.Equal(t, int64(1), allCheckInNumber)
-
 
 	fmt.Printf("CASE 1 SUCCESS WITH UPDATE VALUE \n newPoints: %v\n isCheckIn :%v\n allCheckInNumber: %v\n", newPoints, isCheckIn, allCheckInNumber)
 	// ** END: ACTUAL TEST **

@@ -75,7 +75,7 @@ func CmdShowNftData() *cobra.Command {
 			params := &types.QueryGetNftDataRequest{
 				NftSchemaCode: argNftSchemaCode,
 				TokenId:       argTokenId,
-				WithGlobal:   withGlobal,
+				WithGlobal:    withGlobal,
 			}
 
 			res, err := queryClient.NftData(context.Background(), params)

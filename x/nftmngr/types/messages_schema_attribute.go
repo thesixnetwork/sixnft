@@ -21,9 +21,9 @@ func NewMsgCreateSchemaAttribute(
 
 ) *MsgCreateSchemaAttribute {
 	return &MsgCreateSchemaAttribute{
-		Creator:             creator,
-		NftSchemaCode:       nftSchemaCode,
-		Name:                name,
+		Creator:                     creator,
+		NftSchemaCode:               nftSchemaCode,
+		Name:                        name,
 		Base64NewAttriuteDefenition: base64NewAttriuteDefenition,
 	}
 }
@@ -67,9 +67,9 @@ func NewMsgUpdateSchemaAttribute(
 
 ) *MsgUpdateSchemaAttribute {
 	return &MsgUpdateSchemaAttribute{
-		Creator:             creator,
-		NftSchemaCode:       nftSchemaCode,
-		Name:                name,
+		Creator:                     creator,
+		NftSchemaCode:               nftSchemaCode,
+		Name:                        name,
 		Base64NewAttriuteDefenition: base64NewAttriuteDefenition,
 	}
 }

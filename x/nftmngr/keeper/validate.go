@@ -73,13 +73,13 @@ func HasDuplicateOnchainAttributes(schemaAttributes []*types.AttributeDefinition
 			return true, attriDef.Name
 		}
 		mapAttributes[attriDef.Name] = &types.AttributeDefinition{
-			Name: attriDef.Name,
-			DataType: attriDef.DataType,
-			Required: attriDef.Required,
-			DisplayValueField: attriDef.DisplayValueField,
-			DisplayOption: attriDef.DisplayOption,
-			DefaultMintValue: attriDef.DefaultMintValue,
-			HiddenOveride: attriDef.HiddenOveride,
+			Name:                attriDef.Name,
+			DataType:            attriDef.DataType,
+			Required:            attriDef.Required,
+			DisplayValueField:   attriDef.DisplayValueField,
+			DisplayOption:       attriDef.DisplayOption,
+			DefaultMintValue:    attriDef.DefaultMintValue,
+			HiddenOveride:       attriDef.HiddenOveride,
 			HiddenToMarketplace: attriDef.HiddenToMarketplace,
 		}
 	}
@@ -108,7 +108,6 @@ func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onch
 	}
 	return true, ""
 }
-
 
 func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
@@ -153,7 +152,6 @@ func GetTypeFromAttributeValue(attribute *types.NftAttributeValue) string {
 	}
 	return "default"
 }
-
 
 func DefaultMintValueHasSameType(attributes []*types.AttributeDefinition) (bool, string) {
 	for _, attriDef := range attributes {
@@ -209,36 +207,34 @@ func ConvertDefaultMintValueToSchemaAttributeValue(defaultMintValue *types.Defau
 	return schemaAttributeValue, nil
 }
 
-
-
 func ConvertSchemaAttributeValueToDefaultMintValue(schemaAttributeValue *types.SchemaAttributeValue) (*types.DefaultMintValue, error) {
-    defaultMintValue := &types.DefaultMintValue{}
+	defaultMintValue := &types.DefaultMintValue{}
 
-    switch value := schemaAttributeValue.Value.(type) {
-    case *types.SchemaAttributeValue_NumberAttributeValue:
-        defaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
-            NumberAttributeValue: value.NumberAttributeValue,
-        }
-    case *types.SchemaAttributeValue_StringAttributeValue:
-        defaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
-            StringAttributeValue: value.StringAttributeValue,
-        }
-    case *types.SchemaAttributeValue_BooleanAttributeValue:
-        defaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
-            BooleanAttributeValue: value.BooleanAttributeValue,
-        }
-    case *types.SchemaAttributeValue_FloatAttributeValue:
-        defaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
-            FloatAttributeValue: value.FloatAttributeValue,
-        }
-    default:
-        return nil, fmt.Errorf("unknown value type: %T", value)
-    }
+	switch value := schemaAttributeValue.Value.(type) {
+	case *types.SchemaAttributeValue_NumberAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.SchemaAttributeValue_StringAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.SchemaAttributeValue_BooleanAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.SchemaAttributeValue_FloatAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil, fmt.Errorf("unknown value type: %T", value)
+	}
 
-    return defaultMintValue, nil
+	return defaultMintValue, nil
 }
 
-func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttribute) (*types.NftAttributeValue) {
+func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttribute) *types.NftAttributeValue {
 	nftAttributeValue := &types.NftAttributeValue{}
 
 	switch value := schemaAttributes.CurrentValue.Value.(type) {
@@ -263,14 +259,13 @@ func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttr
 	}
 
 	return &types.NftAttributeValue{
-		Name: schemaAttributes.Name,
-		Value: nftAttributeValue.Value,
+		Name:                schemaAttributes.Name,
+		Value:               nftAttributeValue.Value,
 		HiddenToMarketplace: schemaAttributes.HiddenToMarketplace,
 	}
 }
 
-
-func ConverAttributeDefinitionToNFTAttributeValue(attributeDefinition *types.AttributeDefinition) (*types.NftAttributeValue) {
+func ConverAttributeDefinitionToNFTAttributeValue(attributeDefinition *types.AttributeDefinition) *types.NftAttributeValue {
 	nftAttributeValue := &types.NftAttributeValue{}
 
 	switch value := attributeDefinition.DefaultMintValue.Value.(type) {
@@ -295,8 +290,8 @@ func ConverAttributeDefinitionToNFTAttributeValue(attributeDefinition *types.Att
 	}
 
 	return &types.NftAttributeValue{
-		Name: attributeDefinition.Name,
-		Value: nftAttributeValue.Value,
+		Name:                attributeDefinition.Name,
+		Value:               nftAttributeValue.Value,
 		HiddenToMarketplace: attributeDefinition.HiddenToMarketplace,
 	}
 }

@@ -3,8 +3,8 @@ package app
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	NftmngrKeeper "github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
+	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
@@ -43,16 +43,16 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 		for _, nftAttribute := range nftSchemaV1.OnchainData.NftAttributes {
 			schemaAttibuteConverted, _ := NftmngrKeeper.ConvertDefaultMintValueToSchemaAttributeValue(nftAttribute.DefaultMintValue)
 			app.NftmngrKeeper.SetSchemaAttribute(ctx, nftmngrtypes.SchemaAttribute{
-				NftSchemaCode: 	 nftSchemaV1.Code,
-				Name:              nftSchemaV1.Name,
-				DataType: 		nftAttribute.DataType,
-				Required: 		nftAttribute.Required,
-				DisplayValueField: 	nftAttribute.DisplayValueField,
-				DisplayOption: 		nftAttribute.DisplayOption,
-				CurrentValue: 		schemaAttibuteConverted,
-				HiddenOveride: 		nftAttribute.HiddenOveride,
-				HiddenToMarketplace: 	nftAttribute.HiddenToMarketplace,
-				Creator: 		nftSchemaV1.Owner,
+				NftSchemaCode:       nftSchemaV1.Code,
+				Name:                nftSchemaV1.Name,
+				DataType:            nftAttribute.DataType,
+				Required:            nftAttribute.Required,
+				DisplayValueField:   nftAttribute.DisplayValueField,
+				DisplayOption:       nftAttribute.DisplayOption,
+				CurrentValue:        schemaAttibuteConverted,
+				HiddenOveride:       nftAttribute.HiddenOveride,
+				HiddenToMarketplace: nftAttribute.HiddenToMarketplace,
+				Creator:             nftSchemaV1.Owner,
 			})
 		}
 	}

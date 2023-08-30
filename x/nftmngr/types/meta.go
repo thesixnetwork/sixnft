@@ -45,7 +45,7 @@ func NewMetadata(schema *NFTSchema, tokenData *NftData, attributeOverring Attrib
 
 	meta.MapAllKey = map[string]*MetadataAttribute{}
 	meta.OtherUpdatedTokenDatas = map[string]*NftData{}
-	
+
 	for i, attri := range tokenData.OriginAttributes {
 		meta.MapAllKey[attri.Name] = &MetadataAttribute{
 			AttributeValue: attri,

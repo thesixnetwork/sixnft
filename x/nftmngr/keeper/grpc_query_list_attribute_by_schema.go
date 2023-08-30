@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/cosmos/cosmos-sdk/store/prefix"
-	"github.com/cosmos/cosmos-sdk/types/query"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,7 +18,7 @@ func (k Keeper) ListAttributeBySchema(goCtx context.Context, req *types.QueryLis
 
 	var schemaAttributes []types.SchemaAttribute
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	
+
 	store := ctx.KVStore(k.storeKey)
 	schemaAttributesStore := prefix.NewStore(store, types.KeyPrefix(types.SchemaAttributeKeyPrefix))
 
@@ -46,16 +46,12 @@ func (k Keeper) ListAttributeBySchema(goCtx context.Context, req *types.QueryLis
 
 	pagination.Total = uint64(len(listOfSchemaAttibutes))
 
-	return &types.QueryListAttributeBySchemaResponse{SchemaAttribute: listOfSchemaAttibutes,Pagination: pagination,}, nil
+	return &types.QueryListAttributeBySchemaResponse{SchemaAttribute: listOfSchemaAttibutes, Pagination: pagination}, nil
 }
-
-
-
-
 
 // func (k Keeper) ListAttributeBySchemaUsingCtx(ctx sdk.Context, req Pagination *query.PageRequest) ([]*types.SchemaAttribute, error) {
 // 	var schemaAttributes []types.SchemaAttribute
-	
+
 // 	store := ctx.KVStore(k.storeKey)
 // 	schemaAttributesStore := prefix.NewStore(store, types.KeyPrefix(types.SchemaAttributeKeyPrefix))
 
