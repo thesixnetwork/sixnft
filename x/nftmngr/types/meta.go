@@ -447,17 +447,7 @@ func (m *Metadata) SetDisplayAttribute(key string, value string) error {
 		m.MapAllKey[key].AttributeValue = newAttributeValue
 		m.nftData.OnchainAttributes[attri.Index] = newAttributeValue
 	} else if attri.From == "schema" {
-		newAttributeValue := &NftAttributeValue{
-			Name:                attri.AttributeValue.Name,
-			HiddenToMarketplace: bool_val,
-		}
-		m.ChangeList = append(m.ChangeList, &MetadataChange{
-			Key:           key,
-			PreviousValue: strconv.FormatBool(attri.AttributeValue.GetHiddenToMarketplace()),
-			NewValue:      strconv.FormatBool(bool_val),
-		})
-		m.MapAllKey[key].AttributeValue = newAttributeValue
-
+		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the schema attribute, use message set schema attribute instead")
 	} else {
 		return sdkerrors.Wrap(ErrAttributeOverriding, "can not override the origin attribute")
 	}

@@ -110,6 +110,9 @@ case $choice in
     if [ -z "$schema_code" ]; then
         schema_code=$default_schema_code
     fi
+    if [ -z "$ref_id" ]; then
+        ref_id=$timestamp
+    fi
     # array from action
     arrAction=(${action//,/ })
     all_required_params=()

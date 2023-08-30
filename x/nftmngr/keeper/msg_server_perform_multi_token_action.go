@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
@@ -37,7 +38,7 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 
 	// ** SCHEMA LAYER **
 	// check if schema exists
-	_, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
@@ -51,15 +52,24 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	//query action Executor
-	_, isFound := k.GetActionExecutor(
-		ctx,
-		msg.NftSchemaCode,
-		msg.Creator,
-	)
+	// check if executor is authorized to perform action
+	var isOwner bool
+	if msg.Creator == schema.Owner {
+		isOwner = true
+	}
 
-	if !isFound {
-		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+	// if not owner, check if executor is authorized to perform action
+	if !isOwner {
+
+		_, isFound := k.GetActionExecutor(
+			ctx,
+			msg.NftSchemaCode,
+			msg.Creator,
+		)
+
+		if !isFound {
+			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+		}
 	}
 
 	arryOfparams := strings.Split(msg.Parameters[1:len(msg.Parameters)-1], "],")
@@ -178,15 +188,24 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	//query action Executor
-	_, isFound := k.GetActionExecutor(
-		ctx,
-		msg.NftSchemaCode,
-		msg.Creator,
-	)
+	// check if executor is authorized to perform action
+	var isOwner bool
+	if msg.Creator == schema.Owner {
+		isOwner = true
+	}
 
-	if !isFound {
-		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+	// if not owner, check if executor is authorized to perform action
+	if !isOwner {
+
+		_, isFound := k.GetActionExecutor(
+			ctx,
+			msg.NftSchemaCode,
+			msg.Creator,
+		)
+
+		if !isFound {
+			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+		}
 	}
 
 	// check if action is disabled
@@ -277,10 +296,10 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 			}
 			// Add the attribute to the list of schema attributes
 			list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
-	
+
 			// Add the attribute to the map
 			attributeMap[schema_attribute.Name] = true
-	
+
 			nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
 			map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
 		}
@@ -320,6 +339,54 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 		// loop over meta.OtherUpdatedTokenDatas
 		for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
 			k.Keeper.SetNftData(ctx, *otherTokenData)
+		}
+
+		for _, change := range meta.ChangeList {
+			val, found := k.Keeper.GetSchemaAttribute(ctx, msg.NftSchemaCode, change.Key)
+			if found {
+				switch val.DataType {
+				case "string":
+					val.CurrentValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+						StringAttributeValue: &types.StringAttributeValue{
+							Value: change.NewValue,
+						},
+					}
+				case "boolean":
+					boolValue, err := strconv.ParseBool(change.NewValue)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+						BooleanAttributeValue: &types.BooleanAttributeValue{
+							Value: boolValue,
+						},
+					}
+				case "number":
+					uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+						NumberAttributeValue: &types.NumberAttributeValue{
+							Value: uintValue,
+						},
+					}
+				case "float":
+					floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+						FloatAttributeValue: &types.FloatAttributeValue{
+							Value: floatValue,
+						},
+					}
+				default:
+					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
+				}
+
+				k.SetSchemaAttribute(ctx, val)
+			}
 		}
 
 		// Emit events on metadata change
@@ -387,15 +454,24 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	//query action Executor
-	_, isFound := k.GetActionExecutor(
-		ctx,
-		msg.NftSchemaCode,
-		msg.Creator,
-	)
+	// check if executor is authorized to perform action
+	var isOwner bool
+	if msg.Creator == schema.Owner {
+		isOwner = true
+	}
 
-	if !isFound {
-		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+	// if not owner, check if executor is authorized to perform action
+	if !isOwner {
+
+		_, isFound := k.GetActionExecutor(
+			ctx,
+			msg.NftSchemaCode,
+			msg.Creator,
+		)
+
+		if !isFound {
+			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+		}
 	}
 
 	mapAction := []types.Action{}
@@ -504,10 +580,10 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 			}
 			// Add the attribute to the list of schema attributes
 			list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
-	
+
 			// Add the attribute to the map
 			attributeMap[schema_attribute.Name] = true
-	
+
 			nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
 			map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
 		}
@@ -547,6 +623,54 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		// loop over meta.OtherUpdatedTokenDatas
 		for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
 			k.Keeper.SetNftData(ctx, *otherTokenData)
+		}
+
+		for _, change := range meta.ChangeList {
+			val, found := k.Keeper.GetSchemaAttribute(ctx, msg.NftSchemaCode, change.Key)
+			if found {
+				switch val.DataType {
+				case "string":
+					val.CurrentValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+						StringAttributeValue: &types.StringAttributeValue{
+							Value: change.NewValue,
+						},
+					}
+				case "boolean":
+					boolValue, err := strconv.ParseBool(change.NewValue)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+						BooleanAttributeValue: &types.BooleanAttributeValue{
+							Value: boolValue,
+						},
+					}
+				case "number":
+					uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+						NumberAttributeValue: &types.NumberAttributeValue{
+							Value: uintValue,
+						},
+					}
+				case "float":
+					floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+						FloatAttributeValue: &types.FloatAttributeValue{
+							Value: floatValue,
+						},
+					}
+				default:
+					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
+				}
+
+				k.SetSchemaAttribute(ctx, val)
+			}
 		}
 
 		// Emit events on metadata change
@@ -612,16 +736,24 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 	}
 
 	// ** This might be different from PerformActionByAdmin but to prevent time consuming process, we will use the same code out of iteration process **
-	// Map system actioners
-	//query action Executor
-	_, isFound := k.GetActionExecutor(
-		ctx,
-		msg.NftSchemaCode,
-		msg.Creator,
-	)
+	// check if executor is authorized to perform action
+	var isOwner bool
+	if msg.Creator == schema.Owner {
+		isOwner = true
+	}
 
-	if !isFound {
-		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+	// if not owner, check if executor is authorized to perform action
+	if !isOwner {
+
+		_, isFound := k.GetActionExecutor(
+			ctx,
+			msg.NftSchemaCode,
+			msg.Creator,
+		)
+
+		if !isFound {
+			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
+		}
 	}
 
 	mapAction := []types.Action{}
@@ -727,10 +859,10 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 			}
 			// Add the attribute to the list of schema attributes
 			list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
-	
+
 			// Add the attribute to the map
 			attributeMap[schema_attribute.Name] = true
-	
+
 			nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
 			map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
 		}
@@ -770,6 +902,54 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 		// loop over meta.OtherUpdatedTokenDatas
 		for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
 			k.Keeper.SetNftData(ctx, *otherTokenData)
+		}
+
+		for _, change := range meta.ChangeList {
+			val, found := k.Keeper.GetSchemaAttribute(ctx, msg.NftSchemaCode, change.Key)
+			if found {
+				switch val.DataType {
+				case "string":
+					val.CurrentValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+						StringAttributeValue: &types.StringAttributeValue{
+							Value: change.NewValue,
+						},
+					}
+				case "boolean":
+					boolValue, err := strconv.ParseBool(change.NewValue)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+						BooleanAttributeValue: &types.BooleanAttributeValue{
+							Value: boolValue,
+						},
+					}
+				case "number":
+					uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+						NumberAttributeValue: &types.NumberAttributeValue{
+							Value: uintValue,
+						},
+					}
+				case "float":
+					floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+					if err != nil {
+						return nil, err
+					}
+					val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+						FloatAttributeValue: &types.FloatAttributeValue{
+							Value: floatValue,
+						},
+					}
+				default:
+					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
+				}
+
+				k.SetSchemaAttribute(ctx, val)
+			}
 		}
 
 		// Emit events on metadata change

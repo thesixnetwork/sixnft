@@ -145,42 +145,6 @@
             "trait_type": "Check In At"
           }
         }
-      },
-      {
-        "name": "start_time",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": ""
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Start Time"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
-      },
-      {
-        "name": "start_block",
-        "default_mint_value": {
-          "string_attribute_value": {
-            "value": ""
-          }
-        },
-        "data_type": "string",
-        "required": true,
-        "display_value_field": "value",
-        "display_option": {
-          "opensea": {
-            "trait_type": "Start Block"
-          }
-        },
-        "hidden_overide": false,
-        "hidden_to_marketplace": false
       }
     ],
     "actions": [
@@ -194,9 +158,7 @@
           "meta.SetNumber('all_check_in', meta.GetNumber('all_check_in') + 1)",
           "meta.SetBoolean('is_checked_in', true)",
           "check_in_at = meta.GetNumber('all_check_in') + 1",
-          "meta.SetNumber('check_in_at', check_in_at)",
-          "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
-          "meta.SetString('start_block',meta.GetBlockHeight())"
+          "meta.SetNumber('check_in_at', check_in_at)"
         ]
       },
       {
