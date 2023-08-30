@@ -20,12 +20,13 @@ type BankKeeper interface {
 	// Methods imported from bank should be defined here
 }
 
-type NftmngrKeep interface {
+type NftmngrKeeper interface {
 	GetNFTSchema(
 		ctx sdk.Context,
 		code string,
 
 	) (val nftmngrtypes.NFTSchema, found bool)
+	GetAllSchemaAttribute(ctx sdk.Context) (list []nftmngrtypes.SchemaAttribute)
 
 	SetNFTSchema(ctx sdk.Context, nFTSchema nftmngrtypes.NFTSchema)
 
@@ -44,6 +45,9 @@ type NftmngrKeep interface {
 
 	) (val nftmngrtypes.ActionByRefId, found bool)
 	SetActionByRefId(ctx sdk.Context, actionByRefId nftmngrtypes.ActionByRefId)
+
+	GetSchemaAttribute(ctx sdk.Context, nftSchemaCode string, name string) (val nftmngrtypes.SchemaAttribute, found bool)
+	SetSchemaAttribute(ctx sdk.Context, schemaAttribute nftmngrtypes.SchemaAttribute)
 }
 
 type NftadminKeeper interface {

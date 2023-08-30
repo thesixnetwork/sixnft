@@ -461,7 +461,6 @@ func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 	return false, "default"
 }
 
-
 func SchemaAttributeHasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 	// Check if onchain attribute s value exist for each attribute
 	if _, ok := attribute.DefaultMintValue.GetValue().(*types.DefaultMintValue_BooleanAttributeValue); ok {

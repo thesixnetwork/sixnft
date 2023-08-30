@@ -33170,6 +33170,8 @@ paths:
                       type: string
                     owner:
                       type: string
+                    description:
+                      type: string
                     origin_data:
                       type: object
                       properties:
@@ -33668,6 +33670,8 @@ paths:
                   name:
                     type: string
                   owner:
+                    type: string
+                  description:
                     type: string
                   origin_data:
                     type: object
@@ -58615,6 +58619,8 @@ definitions:
         type: string
       owner:
         type: string
+      description:
+        type: string
       origin_data:
         type: object
         properties:
@@ -59428,6 +59434,8 @@ definitions:
               type: string
             owner:
               type: string
+            description:
+              type: string
             origin_data:
               type: object
               properties:
@@ -60009,6 +60017,8 @@ definitions:
           name:
             type: string
           owner:
+            type: string
+          description:
             type: string
           origin_data:
             type: object

@@ -43,10 +43,10 @@ func (k Keeper) ListAttributeBySchema(goCtx context.Context, req *types.QueryLis
 			listOfSchemaAttibutes = append(listOfSchemaAttibutes, attribute)
 		}
 	}
-	return &types.QueryListAttributeBySchemaResponse{
-		SchemaAttribute: listOfSchemaAttibutes,
-		Pagination: pagination,
-	}, nil
+
+	pagination.Total = uint64(len(listOfSchemaAttibutes))
+
+	return &types.QueryListAttributeBySchemaResponse{SchemaAttribute: listOfSchemaAttibutes,Pagination: pagination,}, nil
 }
 
 

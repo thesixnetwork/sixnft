@@ -2,6 +2,7 @@
   "code": "sixnetwork.develop_v073",
   "name": "EXAMPLE_SCHEMA",
   "owner": "0xNFTOWNER",
+  "description": "THIS IS EXAMPLE SCHEMA BLAH BLAH BLAH",
   "origin_data": {
     "origin_base_uri": "",
     "uri_retrieval_method": "BASE",
@@ -49,6 +50,24 @@
         "display_option": {
           "opensea": {
             "trait_type": "Tumbler Price"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": true
+      },
+      {
+        "name": "all_check_in",
+        "default_mint_value": {
+          "number_attribute_value": {
+            "value": 0
+          }
+        },
+        "data_type": "number",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "All Check In"
           }
         },
         "hidden_overide": false,
@@ -111,6 +130,58 @@
         },
         "hidden_overide": false,
         "hidden_to_marketplace": false
+      },
+      {
+        "name": "check_in_at",
+        "default_mint_value": {
+          "number_attribute_value": {
+            "value": 0
+          }
+        },
+        "data_type": "number",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Check In At"
+          }
+        }
+      },
+      {
+        "name": "start_time",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": ""
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Start Time"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
+      },
+      {
+        "name": "start_block",
+        "default_mint_value": {
+          "string_attribute_value": {
+            "value": ""
+          }
+        },
+        "data_type": "string",
+        "required": true,
+        "display_value_field": "value",
+        "display_option": {
+          "opensea": {
+            "trait_type": "Start Block"
+          }
+        },
+        "hidden_overide": false,
+        "hidden_to_marketplace": false
       }
     ],
     "actions": [
@@ -118,10 +189,15 @@
         "name": "check_in",
         "desc": "Check In to Event",
         "params": [],
-        "when": "meta.GetBoolean('is_checked_in') == false",
+        "when": "meta.GetBoolean('is_checked_in') == false && meta.GetNumber('all_check_in') < 2",
         "then": [
           "meta.SetFloat('points', meta.GetFloat('points') + 50.0)",
-          "meta.SetBoolean('is_checked_in', true)"
+          "meta.SetNumber('all_check_in', meta.GetNumber('all_check_in') + 1)",
+          "meta.SetBoolean('is_checked_in', true)",
+          "check_in_at = meta.GetNumber('all_check_in') + 1",
+          "meta.SetNumber('check_in_at', check_in_at)",
+          "meta.SetString('start_time',meta.GetUTCBlockTimestamp('2006-01-02T15:04:05Z07:00'))",
+          "meta.SetString('start_block',meta.GetBlockHeight())"
         ]
       },
       {
@@ -136,8 +212,7 @@
       {
         "name": "change_tier",
         "desc": "Change Tier",
-        "params": [
-        ],
+        "params": [],
         "when": "meta.GetBoolean('is_checked_in') == true",
         "then": [
           "meta.SetString('tier', 'gold')"
@@ -146,11 +221,10 @@
     ]
   },
   "system_actioners": [
-    "6x1y7lhzzum3nu77nz0pcwqth42yxm84zg3d957mr",
-    "6x1pmktx7s530v89zqey823m74aayx7w2932puayq",
-    "6x1l83jjk2ylhxhgy35hz6e3k2phxsapl0cft36hh",
-    "6x1m53akq8td5tc9gq6wge47gqglaaq649q3l7jlm",
-    "6x1tt59zm6rak6hh0fmr97vuyjd0hste7622p3upu"
+    "6nft1u2sfj9h99mcrdzgvak2zz22g96a4qe5l4cxjmv",
+    "6nft1fra02rs0864jmw8z3kj2tf7njfdlq0yuaux3ye",
+    "6nft1kj9tl6pavd4825atx0e959unjt7g2l35curqqc",
+    "6nft1kj9tl6pavd4825atx0e959unjt7g2l35curqqc"
   ],
   "mint_authorization": "system"
 }

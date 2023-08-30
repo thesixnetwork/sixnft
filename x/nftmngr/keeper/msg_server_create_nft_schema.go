@@ -73,13 +73,12 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 
 	// parse schema_input to NFTSchema
 	schema := types.NFTSchema{
-		Code:       schema_input.Code,
-		Name:       schema_input.Name,
-		Owner:      schema_input.Owner,
-		OriginData: schema_input.OriginData,
+		Code:        schema_input.Code,
+		Name:        schema_input.Name,
+		Owner:       schema_input.Owner,
+		Description: schema_input.Description,
+		OriginData:  schema_input.OriginData,
 		OnchainData: &types.OnChainData{
-			RevealRequired:  schema_input.OnchainData.RevealRequired,
-			RevealSecret:    schema_input.OnchainData.RevealSecret,
 			TokenAttributes: schema_input.OnchainData.TokenAttributes,
 			Actions:         schema_input.OnchainData.Actions,
 			Status:          schema_input.OnchainData.Status,
@@ -115,6 +114,13 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 
 	// set action executor
 	for _, actionExecutor := range schema_input.SystemActioners {
+
+		//validate address
+		_, err := sdk.AccAddressFromBech32(actionExecutor)
+		if err != nil {
+			return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, actionExecutor)
+		}
+
 		// check if actionExecutor already exists
 		_, isFound := k.Keeper.GetActionExecutor(ctx, schema_input.Code, actionExecutor)
 		if isFound {
