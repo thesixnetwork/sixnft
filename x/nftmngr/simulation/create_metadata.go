@@ -16,8 +16,6 @@ func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.Nf
 		Description: schemaInput.Description,
 		OriginData:  schemaInput.OriginData,
 		OnchainData: &types.OnChainData{
-			RevealRequired:  schemaInput.OnchainData.RevealRequired,
-			RevealSecret:    schemaInput.OnchainData.RevealSecret,
 			TokenAttributes: schemaInput.OnchainData.TokenAttributes,
 			Actions:         schemaInput.OnchainData.Actions,
 			Status:          schemaInput.OnchainData.Status,

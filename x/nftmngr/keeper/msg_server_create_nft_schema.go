@@ -79,8 +79,6 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		Description: schema_input.Description,
 		OriginData:  schema_input.OriginData,
 		OnchainData: &types.OnChainData{
-			RevealRequired:  schema_input.OnchainData.RevealRequired,
-			RevealSecret:    schema_input.OnchainData.RevealSecret,
 			TokenAttributes: schema_input.OnchainData.TokenAttributes,
 			Actions:         schema_input.OnchainData.Actions,
 			Status:          schema_input.OnchainData.Status,
