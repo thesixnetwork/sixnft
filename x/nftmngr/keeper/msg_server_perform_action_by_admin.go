@@ -50,20 +50,32 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	}
 
 	mapAction := types.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable {
-			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// Check if action is disabled
+	action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, msg.Action)
+	if found {
+		action := schema.OnchainData.Actions[action_.Index]
+		if action.Disable {
+			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, msg.Action)
 		}
-		if action.Name == msg.Action {
-			mapAction = *action
-			break
-		}
-	}
-
-	// Check if action exists
-	if mapAction.Name == "" {
+		mapAction = *action
+	}else{
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
+
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == msg.Action && action.Disable {
+	// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == msg.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// // Check if action exists
+	// if mapAction.Name == "" {
+	// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	// }
 
 	// Check if AllowedAction is for system // if yes whick means only oracle request can perform this action
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {

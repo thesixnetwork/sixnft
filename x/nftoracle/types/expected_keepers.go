@@ -48,6 +48,8 @@ type NftmngrKeeper interface {
 
 	GetSchemaAttribute(ctx sdk.Context, nftSchemaCode string, name string) (val nftmngrtypes.SchemaAttribute, found bool)
 	SetSchemaAttribute(ctx sdk.Context, schemaAttribute nftmngrtypes.SchemaAttribute)
+
+	GetActionOfSchema(tx sdk.Context, nftSchemaCode string, name string) (val nftmngrtypes.ActionOfSchema, found bool)
 }
 
 type NftadminKeeper interface {

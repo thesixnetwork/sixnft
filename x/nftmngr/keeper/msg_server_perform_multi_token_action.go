@@ -208,22 +208,33 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 		}
 	}
 
-	// check if action is disabled
 	mapAction := types.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable {
-			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// Check if action is disabled
+	action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, msg.Action)
+	if found {
+		action := schema.OnchainData.Actions[action_.Index]
+		if action.Disable {
+			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, msg.Action)
 		}
-		if action.Name == msg.Action {
-			mapAction = *action
-			break
-		}
-	}
-
-	// Check if action exists
-	if mapAction.Name == "" {
+		mapAction = *action
+	}else{
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
+
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == msg.Action && action.Disable {
+	// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == msg.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// // Check if action exists
+	// if mapAction.Name == "" {
+	// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	// }
 
 	// Check if AllowedAction is for system
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
@@ -475,26 +486,37 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 	}
 
 	mapAction := []types.Action{}
-	for index, action_ := range msg.Action {
-		// check if action is disabled
-		for _, _action := range schema.OnchainData.Actions {
-			if _action.Name == action_ && _action.Disable {
-				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, _action.Name)
+	for index, actionIter := range msg.Action {
+			// Check if action is disabled
+		action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, actionIter)
+		if found {
+			action := schema.OnchainData.Actions[action_.Index]
+			if action.Disable {
+				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, actionIter)
 			}
-			if _action.Name == action_ {
-				mapAction = append(mapAction, *_action)
-				break
-			}
+			mapAction = append(mapAction, *action)
+		}else{
+			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
 		}
 
-		// Check if action exists
-		if mapAction[index].Name == "" {
-			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, action_)
-		}
+		// for _, _action := range schema.OnchainData.Actions {
+		// 	if _action.Name == actionIter && _action.Disable {
+		// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, _action.Name)
+		// 	}
+		// 	if _action.Name == actionIter {
+		// 		mapAction = append(mapAction, *_action)
+		// 		break
+		// 	}
+		// }
+
+		// // Check if action exists
+		// if mapAction[index].Name == "" {
+		// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
+		// }
 
 		// Check if AllowedAction is for system
 		if mapAction[index].GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
-			return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, action_)
+			return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, actionIter)
 		}
 	}
 
@@ -757,26 +779,37 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 	}
 
 	mapAction := []types.Action{}
-	for index, action_ := range msg.Action {
-		// check if action is disabled
-		for _, _action := range schema.OnchainData.Actions {
-			if _action.Name == action_ && _action.Disable {
-				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, _action.Name)
+	for index, actionIter := range msg.Action {
+			// Check if action is disabled
+		action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, actionIter)
+		if found {
+			action := schema.OnchainData.Actions[action_.Index]
+			if action.Disable {
+				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, actionIter)
 			}
-			if _action.Name == action_ {
-				mapAction = append(mapAction, *_action)
-				break
-			}
+			mapAction = append(mapAction, *action)
+		}else{
+			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
 		}
 
-		// Check if action exists
-		if mapAction[index].Name == "" {
-			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, action_)
-		}
+		// for _, _action := range schema.OnchainData.Actions {
+		// 	if _action.Name == actionIter && _action.Disable {
+		// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, _action.Name)
+		// 	}
+		// 	if _action.Name == actionIter {
+		// 		mapAction = append(mapAction, *_action)
+		// 		break
+		// 	}
+		// }
+
+		// // Check if action exists
+		// if mapAction[index].Name == "" {
+		// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
+		// }
 
 		// Check if AllowedAction is for system
 		if mapAction[index].GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
-			return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, action_)
+			return nil, sdkerrors.Wrap(types.ErrActionIsForUserOnly, actionIter)
 		}
 	}
 

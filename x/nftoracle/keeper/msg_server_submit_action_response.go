@@ -176,15 +176,32 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 	}
 
 	mapAction := nftmngrtypes.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == actionRequest.Action && action.Disable {
-			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+	// Check if action is disabled
+	action_, found := k.nftmngrKeeper.GetActionOfSchema(ctx, actionRequest.NftSchemaCode, actionRequest.Action)
+	if found {
+		action := schema.OnchainData.Actions[action_.Index]
+		if action.Disable {
+			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, actionRequest.Action)
 		}
-		if action.Name == actionRequest.Action {
-			mapAction = *action
-			break
-		}
+		mapAction = *action
+	}else{
+		return sdkerrors.Wrap(nftmngrtypes.ErrActionDoesNotExists, actionRequest.Action)
 	}
+
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == msg.Action && action.Disable {
+	// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == msg.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// // Check if action exists
+	// if mapAction.Name == "" {
+	// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	// }
 
 	// Check if AllowedAction is for user
 	if mapAction.GetAllowedActioner() == nftmngrtypes.AllowedActioner_ALLOWED_ACTIONER_SYSTEM_ONLY {
