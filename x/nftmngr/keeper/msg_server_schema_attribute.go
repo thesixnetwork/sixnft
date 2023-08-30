@@ -78,6 +78,15 @@ func (k msgServer) CreateSchemaAttribute(goCtx context.Context, msg *types.MsgCr
 		schemaAttribute,
 	)
 
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeAddAttribute,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.EventTypeAddAttribute, msg.Name),
+		),
+	)
+
 	return &types.MsgCreateSchemaAttributeResponse{
 		NftSchemaCode: msg.NftSchemaCode,
 		Name:          msg.Name,
@@ -149,6 +158,15 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 
 	k.SetSchemaAttribute(ctx, schemaAttribute)
 
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeUpdateAttribute,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.EventTypeAddAttribute, msg.Name),
+		),
+	)
+
 	return &types.MsgUpdateSchemaAttributeResponse{
 		NftSchemaCode: msg.NftSchemaCode,
 		Name:          msg.Name,
@@ -178,6 +196,15 @@ func (k msgServer) DeleteSchemaAttribute(goCtx context.Context, msg *types.MsgDe
 		ctx,
 		msg.NftSchemaCode,
 		msg.Name,
+	)
+
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeRemoveAttribute,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.EventTypeAddAttribute, msg.Name),
+		),
 	)
 
 	return &types.MsgDeleteSchemaAttributeResponse{

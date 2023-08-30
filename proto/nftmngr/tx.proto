@@ -438,8 +438,7 @@ message MsgDeleteSchemaAttributeResponse {
 message MsgUpdateAction {
   string creator = 1;
   string nftSchemaCode = 2;
-  string name = 3;
-  string base64UpdateAction = 4;
+  string base64UpdateAction = 3;
 }
 
 message MsgUpdateActionResponse {

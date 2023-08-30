@@ -9,11 +9,10 @@ const TypeMsgUpdateAction = "update_action"
 
 var _ sdk.Msg = &MsgUpdateAction{}
 
-func NewMsgUpdateAction(creator string, nftSchemaCode string, name string, base64UpdateAction string) *MsgUpdateAction {
+func NewMsgUpdateAction(creator string, nftSchemaCode string, base64UpdateAction string) *MsgUpdateAction {
 	return &MsgUpdateAction{
 		Creator:            creator,
 		NftSchemaCode:      nftSchemaCode,
-		Name:               name,
 		Base64UpdateAction: base64UpdateAction,
 	}
 }

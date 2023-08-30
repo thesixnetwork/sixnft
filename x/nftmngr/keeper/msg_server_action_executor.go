@@ -53,9 +53,9 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 	// emit events
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
-			types.EventTypeAddSystemActioner,
+			types.EventTypeAddActionExecutor,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyActioner, msg.ExecutorAddress),
+			sdk.NewAttribute(types.AttributeKeyActionExecutor, msg.ExecutorAddress),
 		),
 	)
 
@@ -102,6 +102,16 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 
 	k.SetActionExecutor(ctx, actionExecutor)
 
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeUpdateActionExecutor,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyActionExecutor, msg.ExecutorAddress),
+		),
+	)
+
+
 	return &types.MsgUpdateActionExecutorResponse{}, nil
 }
 
@@ -131,6 +141,15 @@ func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDel
 		ctx,
 		msg.NftSchemaCode,
 		msg.ExecutorAddress,
+	)
+
+	// emit events
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(
+			types.EventTypeRemoveActionExecutor,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyActionExecutor, msg.ExecutorAddress),
+		),
 	)
 
 	return &types.MsgDeleteActionExecutorResponse{}, nil

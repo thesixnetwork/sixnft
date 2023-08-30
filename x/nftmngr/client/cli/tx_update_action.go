@@ -16,11 +16,10 @@ func CmdUpdateAction() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "update-action [nft-schema-code] [name] [base-64-update-action]",
 		Short: "Update action of selected schema",
-		Args:  cobra.ExactArgs(3),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argNftSchemaCode := args[0]
-			argName := args[1]
-			argBase64UpdateAction := args[2]
+			argBase64UpdateAction := args[1]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -30,7 +29,6 @@ func CmdUpdateAction() *cobra.Command {
 			msg := types.NewMsgUpdateAction(
 				clientCtx.GetFromAddress().String(),
 				argNftSchemaCode,
-				argName,
 				argBase64UpdateAction,
 			)
 			if err := msg.ValidateBasic(); err != nil {
