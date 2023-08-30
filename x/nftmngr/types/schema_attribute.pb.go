@@ -140,7 +140,6 @@ func (m *SchemaAttribute) GetCreator() string {
 
 type SchemaAttributeValue struct {
 	// Types that are valid to be assigned to Value:
-	//
 	//	*SchemaAttributeValue_NumberAttributeValue
 	//	*SchemaAttributeValue_StringAttributeValue
 	//	*SchemaAttributeValue_BooleanAttributeValue

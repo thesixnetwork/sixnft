@@ -10,10 +10,11 @@ import (
 func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.NftData) (schema_ types.NFTSchema, metadata_ types.NftData, schemaAttributesValue []*types.NftAttributeValue) {
 
 	_schema := types.NFTSchema{
-		Code:       schemaInput.Code,
-		Name:       schemaInput.Name,
-		Owner:      schemaInput.Owner,
-		OriginData: schemaInput.OriginData,
+		Code:        schemaInput.Code,
+		Name:        schemaInput.Name,
+		Owner:       schemaInput.Owner,
+		Description: schemaInput.Description,
+		OriginData:  schemaInput.OriginData,
 		OnchainData: &types.OnChainData{
 			RevealRequired:  schemaInput.OnchainData.RevealRequired,
 			RevealSecret:    schemaInput.OnchainData.RevealSecret,
