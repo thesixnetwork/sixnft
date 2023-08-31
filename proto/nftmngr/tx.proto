@@ -18,7 +18,6 @@ service Msg {
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
-  rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
   rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
@@ -37,7 +36,6 @@ service Msg {
   rpc CreateActionExecutor(MsgCreateActionExecutor) returns (MsgCreateActionExecutorResponse);
   rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
   rpc DeleteActionExecutor(MsgDeleteActionExecutor) returns (MsgDeleteActionExecutorResponse);
-  rpc CreateSchemaAttribute(MsgCreateSchemaAttribute) returns (MsgCreateSchemaAttributeResponse);
   rpc UpdateSchemaAttribute(MsgUpdateSchemaAttribute) returns (MsgUpdateSchemaAttributeResponse);
   rpc DeleteSchemaAttribute(MsgDeleteSchemaAttribute) returns (MsgDeleteSchemaAttributeResponse);
   rpc UpdateAction(MsgUpdateAction) returns (MsgUpdateActionResponse);
@@ -213,17 +211,6 @@ message MsgAddActionResponse {
   OnChainData onchainData = 3;
 }
 
-message MsgSetNFTAttribute {
-  string creator = 1;
-  string nft_schema_code = 2;
-  string base64_nft_attribute_value = 3;
-}
-
-message MsgSetNFTAttributeResponse {
-  string nft_schema_code = 1;
-  string attribute_name = 2;
-  string nft_attribute_value = 3;
-}
 
 message MsgSetBaseUri {
   string creator = 1;
@@ -401,24 +388,12 @@ message MsgDeleteActionExecutorResponse {
   string executorAddress = 2;
 }
 
-message MsgCreateSchemaAttribute {
-  string creator = 1;
-  string nftSchemaCode = 2;
-  string name = 3;
-  string Base64NewAttriuteDefenition = 4;
-}
-message MsgCreateSchemaAttributeResponse {
-  string nftSchemaCode = 1;
-  string name = 2;
-  SchemaAttribute new_attribute = 3;
-}
-
 message MsgUpdateSchemaAttribute {
   string creator = 1;
   string nftSchemaCode = 2;
-  string name = 3;
-  string Base64NewAttriuteDefenition = 4;
+  string Base64UpdateAttriuteDefenition = 3;
 }
+
 message MsgUpdateSchemaAttributeResponse {
   string nftSchemaCode = 1;
   string name = 2;

@@ -59004,75 +59004,6 @@ definitions:
     properties:
       code:
         type: string
-  thesixnetwork.sixnft.nftmngr.MsgCreateSchemaAttributeResponse:
-    type: object
-    properties:
-      nftSchemaCode:
-        type: string
-      name:
-        type: string
-      new_attribute:
-        type: object
-        properties:
-          nftSchemaCode:
-            type: string
-          name:
-            type: string
-          data_type:
-            type: string
-          required:
-            type: boolean
-          display_value_field:
-            type: string
-          display_option:
-            type: object
-            properties:
-              bool_true_value:
-                type: string
-              bool_false_value:
-                type: string
-              opensea:
-                type: object
-                properties:
-                  display_type:
-                    type: string
-                  trait_type:
-                    type: string
-                  max_value:
-                    type: string
-                    format: uint64
-          current_value:
-            type: object
-            properties:
-              number_attribute_value:
-                type: object
-                properties:
-                  value:
-                    type: string
-                    format: uint64
-              string_attribute_value:
-                type: object
-                properties:
-                  value:
-                    type: string
-              boolean_attribute_value:
-                type: object
-                properties:
-                  value:
-                    type: boolean
-              float_attribute_value:
-                type: object
-                properties:
-                  value:
-                    type: number
-                    format: double
-          hidden_overide:
-            type: boolean
-            title: flag that allows action to override hidden
-          hidden_to_marketplace:
-            type: boolean
-          creator:
-            type: string
   thesixnetwork.sixnft.nftmngr.MsgDeleteActionExecutorResponse:
     type: object
     properties:
@@ -59139,15 +59070,6 @@ definitions:
     type: object
     properties:
       nftSchemaCode:
-        type: string
-  thesixnetwork.sixnft.nftmngr.MsgSetNFTAttributeResponse:
-    type: object
-    properties:
-      nft_schema_code:
-        type: string
-      attribute_name:
-        type: string
-      nft_attribute_value:
         type: string
   thesixnetwork.sixnft.nftmngr.MsgSetOriginChainResponse:
     type: object

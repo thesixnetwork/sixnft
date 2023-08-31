@@ -32,9 +32,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgAddAction:
 			res, err := msgServer.AddAction(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgSetNFTAttribute:
-			res, err := msgServer.SetNFTAttribute(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgSetBaseUri:
 			res, err := msgServer.SetBaseUri(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
@@ -88,9 +85,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgDeleteActionExecutor:
 			res, err := msgServer.DeleteActionExecutor(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgCreateSchemaAttribute:
-			res, err := msgServer.CreateSchemaAttribute(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgUpdateSchemaAttribute:
 			res, err := msgServer.UpdateSchemaAttribute(sdk.WrapSDKContext(ctx), msg)

@@ -13,7 +13,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgPerformActionByAdmin{}, "nftmngr/PerformActionByAdmin", nil)
 	cdc.RegisterConcrete(&MsgAddAttribute{}, "nftmngr/AddAttribute", nil)
 	cdc.RegisterConcrete(&MsgAddAction{}, "nftmngr/AddAction", nil)
-	cdc.RegisterConcrete(&MsgSetNFTAttribute{}, "nftmngr/SetNFTAttribute", nil)
 	cdc.RegisterConcrete(&MsgSetBaseUri{}, "nftmngr/SetBaseUri", nil)
 	cdc.RegisterConcrete(&MsgToggleAction{}, "nftmngr/ToggleAction", nil)
 	cdc.RegisterConcrete(&MsgChangeSchemaOwner{}, "nftmngr/ChangeSchemaOwner", nil)
@@ -32,7 +31,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateActionExecutor{}, "nftmngr/CreateActionExecutor", nil)
 	cdc.RegisterConcrete(&MsgUpdateActionExecutor{}, "nftmngr/UpdateActionExecutor", nil)
 	cdc.RegisterConcrete(&MsgDeleteActionExecutor{}, "nftmngr/DeleteActionExecutor", nil)
-	cdc.RegisterConcrete(&MsgCreateSchemaAttribute{}, "nftmngr/CreateSchemaAttribute", nil)
 	cdc.RegisterConcrete(&MsgUpdateSchemaAttribute{}, "nftmngr/UpdateSchemaAttribute", nil)
 	cdc.RegisterConcrete(&MsgDeleteSchemaAttribute{}, "nftmngr/DeleteSchemaAttribute", nil)
 	cdc.RegisterConcrete(&MsgUpdateAction{}, "nftmngr/UpdateAction", nil)
@@ -54,9 +52,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgAddAction{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgSetNFTAttribute{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgToggleAction{},
@@ -109,7 +104,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgDeleteActionExecutor{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCreateSchemaAttribute{},
 		&MsgUpdateSchemaAttribute{},
 		&MsgDeleteSchemaAttribute{},
 	)
