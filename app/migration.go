@@ -55,6 +55,15 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 				Creator:             nftSchemaV1.Owner,
 			})
 		}
+
+		// migrate NFT actions to new schema actions
+		for i, nftAction := range nftSchemaV1.OnchainData.Actions {
+			app.NftmngrKeeper.SetActionOfSchema(ctx, nftmngrtypes.ActionOfSchema{
+				NftSchemaCode: nftSchemaV1.Code,
+				Name: 		nftAction.Name,
+				Index: 		uint64(i),
+			})
+		}
 	}
 
 }
