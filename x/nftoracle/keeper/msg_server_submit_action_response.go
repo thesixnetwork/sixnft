@@ -184,7 +184,7 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, actionRequest.Action)
 		}
 		mapAction = *action
-	}else{
+	} else {
 		return sdkerrors.Wrap(nftmngrtypes.ErrActionDoesNotExists, actionRequest.Action)
 	}
 

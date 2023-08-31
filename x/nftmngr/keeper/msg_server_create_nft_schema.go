@@ -112,7 +112,6 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// Add the schema_input to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-
 	// **** ACTION ****
 	// set action
 	for i, action := range schema_input.OnchainData.Actions {
@@ -122,9 +121,9 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 			continue
 		}
 		k.Keeper.SetActionOfSchema(ctx, types.ActionOfSchema{
-			Name: 	  action.Name,
+			Name:          action.Name,
 			NftSchemaCode: schema_input.Code,
-			Index: 	  uint64(i),
+			Index:         uint64(i),
 		})
 	}
 

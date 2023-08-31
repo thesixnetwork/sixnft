@@ -23,8 +23,7 @@ func (k msgServer) UpdateAction(goCtx context.Context, msg *types.MsgUpdateActio
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-
-	// get existing action 
+	// get existing action
 	actionOfSchema, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, updateAction.Name)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, updateAction.Name)
@@ -47,18 +46,17 @@ func (k msgServer) UpdateAction(goCtx context.Context, msg *types.MsgUpdateActio
 	// update schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-		// emit events
-		ctx.EventManager().EmitEvents(sdk.Events{
-			sdk.NewEvent(
-				types.EventTypeUpdateAction,
-				sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-				sdk.NewAttribute(types.AttributeKeyUpdateActionName, updateAction.Name),
-			),
-		})
-	
+	// emit events
+	ctx.EventManager().EmitEvents(sdk.Events{
+		sdk.NewEvent(
+			types.EventTypeUpdateAction,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
+			sdk.NewAttribute(types.AttributeKeyUpdateActionName, updateAction.Name),
+		),
+	})
 
 	return &types.MsgUpdateActionResponse{
 		NftSchemaCode: msg.NftSchemaCode,
-		Name: updateAction.Name,
+		Name:          updateAction.Name,
 	}, nil
 }

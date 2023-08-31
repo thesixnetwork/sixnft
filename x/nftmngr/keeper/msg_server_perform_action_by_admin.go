@@ -58,7 +58,7 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, msg.Action)
 		}
 		mapAction = *action
-	}else{
+	} else {
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
 

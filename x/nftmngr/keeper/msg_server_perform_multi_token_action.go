@@ -217,7 +217,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, msg.Action)
 		}
 		mapAction = *action
-	}else{
+	} else {
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
 
@@ -487,7 +487,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 
 	mapAction := []types.Action{}
 	for index, actionIter := range msg.Action {
-			// Check if action is disabled
+		// Check if action is disabled
 		action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, actionIter)
 		if found {
 			action := schema.OnchainData.Actions[action_.Index]
@@ -495,7 +495,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, actionIter)
 			}
 			mapAction = append(mapAction, *action)
-		}else{
+		} else {
 			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
 		}
 
@@ -780,7 +780,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 
 	mapAction := []types.Action{}
 	for index, actionIter := range msg.Action {
-			// Check if action is disabled
+		// Check if action is disabled
 		action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, actionIter)
 		if found {
 			action := schema.OnchainData.Actions[action_.Index]
@@ -788,7 +788,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 				return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, actionIter)
 			}
 			mapAction = append(mapAction, *action)
-		}else{
+		} else {
 			return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, actionIter)
 		}
 
