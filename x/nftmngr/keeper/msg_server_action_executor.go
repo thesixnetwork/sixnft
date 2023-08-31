@@ -111,7 +111,6 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 		),
 	)
 
-
 	return &types.MsgUpdateActionExecutorResponse{}, nil
 }
 

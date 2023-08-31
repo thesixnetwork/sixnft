@@ -12,7 +12,7 @@ func CmdCreateSchemaAttribute() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create-schema-attribute [nft-schema-code] [name] [base64NewAttriuteDefenition]",
 		Short: "Create a new schema_attribute",
-		Args:  cobra.ExactArgs(10),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			// Get indexes
 			indexNftSchemaCode := args[0]
@@ -45,9 +45,9 @@ func CmdCreateSchemaAttribute() *cobra.Command {
 
 func CmdUpdateSchemaAttribute() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "update-schema-attribute [nft-schema-code] [name] [data-type] [required] [display-value-field] [display-option] [default-mint-value] [hidden-overide] [hidden-to-marketplace] [index]",
+		Use:   "update-schema-attribute [nft-schema-code] [name] [base66UpdateAttriuteDefenition]",
 		Short: "Update a schema_attribute",
-		Args:  cobra.ExactArgs(10),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			indexNftSchemaCode := args[0]
 			indexName := args[1]
