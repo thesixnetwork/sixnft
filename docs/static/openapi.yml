@@ -31350,8 +31350,18 @@ paths:
             properties:
               nftSchemaCode:
                 type: string
-              name:
-                type: string
+              actionOfSchema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nftSchemaCode:
+                      type: string
+                    name:
+                      type: string
+                    index:
+                      type: string
+                      format: uint64
               pagination:
                 type: object
                 properties:
@@ -61331,8 +61341,18 @@ definitions:
     properties:
       nftSchemaCode:
         type: string
-      name:
-        type: string
+      actionOfSchema:
+        type: array
+        items:
+          type: object
+          properties:
+            nftSchemaCode:
+              type: string
+            name:
+              type: string
+            index:
+              type: string
+              format: uint64
       pagination:
         type: object
         properties:
