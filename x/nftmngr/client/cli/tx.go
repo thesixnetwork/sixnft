@@ -35,12 +35,9 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdPerformActionByAdmin())
 	cmd.AddCommand(CmdAddAttribute())
 	cmd.AddCommand(CmdAddAction())
-	cmd.AddCommand(CmdSetNFTAttribute())
 	cmd.AddCommand(CmdSetBaseUri())
 	cmd.AddCommand(CmdToggleAction())
 	cmd.AddCommand(CmdChangeSchemaOwner())
-	cmd.AddCommand(CmdAddSystemActioner())
-	cmd.AddCommand(CmdRemoveSystemActioner())
 	cmd.AddCommand(CmdResyncAttributes())
 	cmd.AddCommand(CmdShowAttributes())
 	cmd.AddCommand(CmdSetFeeConfig())
@@ -53,6 +50,12 @@ func GetTxCmd() *cobra.Command {
 	cmd.AddCommand(CmdSetOriginContract())
 	cmd.AddCommand(CmdSetAttributeOveriding())
 	cmd.AddCommand(CmdSetMetadataFormat())
+	cmd.AddCommand(CmdCreateActionExecutor())
+	cmd.AddCommand(CmdUpdateActionExecutor())
+	cmd.AddCommand(CmdDeleteActionExecutor())
+	cmd.AddCommand(CmdUpdateSchemaAttribute())
+	cmd.AddCommand(CmdDeleteSchemaAttribute())
+	cmd.AddCommand(CmdUpdateAction())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

@@ -11,32 +11,33 @@ message NFTSchema {
   string code = 1; 
   string name = 2; 
   string owner = 3; 
-  repeated string system_actioners = 4;
+  string description = 4;
   OriginData origin_data = 5;
   OnChainData onchain_data = 6;
   bool isVerified = 7;
   string mint_authorization = 8;
 }
 
-message NFTSchemaV072 {
+message NFTSchemaINPUT {
   string code = 1; 
   string name = 2; 
   string owner = 3; 
-  repeated string system_actioners = 4;
-  OriginData origin_data = 5;
-  OnChainDataV072 onchain_data = 6;
-  bool isVerified = 7;
-  string mint_authorization = 8;
+  string description = 4;
+  repeated string system_actioners = 5;
+  OriginData origin_data = 6;
+  OnChainDataInput onchain_data = 7;
+  bool isVerified = 8;
+  string mint_authorization = 9;
 }
 
-// will be deprecated next version (074)
-message NFTSchemaV063 {
+
+message NFTSchemaV1 {
   string code = 1; 
   string name = 2; 
   string owner = 3; 
   repeated string system_actioners = 4;
   OriginData origin_data = 5;
-  OnChainDataV063 onchain_data = 6;
+  OnChainDataV1 onchain_data = 6;
   bool isVerified = 7;
   string mint_authorization = 8;
 }

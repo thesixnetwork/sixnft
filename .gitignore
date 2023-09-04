@@ -17,9 +17,9 @@
 
 .DS_Store
 .vscode/
-test/
+./test/
 ts-client/*
 vue/node_modules/
 build/
-vue/
+vue/src/store/*
 scripts/secrets/*

@@ -1,6 +1,8 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.nftmngr;
 
+import "nftmngr/action_executor.proto";
+import "nftmngr/schema_attribute.proto";
 // this line is used by starport scaffolding # proto/tx/import
 import "nftmngr/on_chain_data.proto";
 import "nftmngr/attribute_definition.proto";
@@ -16,12 +18,9 @@ service Msg {
   rpc PerformActionByAdmin(MsgPerformActionByAdmin) returns (MsgPerformActionByAdminResponse);
   rpc AddAttribute(MsgAddAttribute) returns (MsgAddAttributeResponse);
   rpc AddAction(MsgAddAction) returns (MsgAddActionResponse);
-  rpc SetNFTAttribute(MsgSetNFTAttribute) returns (MsgSetNFTAttributeResponse);
   rpc SetBaseUri(MsgSetBaseUri) returns (MsgSetBaseUriResponse);
   rpc ToggleAction(MsgToggleAction) returns (MsgToggleActionResponse);
   rpc ChangeSchemaOwner(MsgChangeSchemaOwner) returns (MsgChangeSchemaOwnerResponse);
-  rpc AddSystemActioner(MsgAddSystemActioner) returns (MsgAddSystemActionerResponse);
-  rpc RemoveSystemActioner(MsgRemoveSystemActioner) returns (MsgRemoveSystemActionerResponse);
   rpc ResyncAttributes(MsgResyncAttributes) returns (MsgResyncAttributesResponse);
   rpc ShowAttributes(MsgShowAttributes) returns (MsgShowAttributesResponse);
   rpc SetFeeConfig(MsgSetFeeConfig) returns (MsgSetFeeConfigResponse);
@@ -34,12 +33,25 @@ service Msg {
   rpc SetOriginContract(MsgSetOriginContract) returns (MsgSetOriginContractResponse);
   rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
   rpc SetMetadataFormat(MsgSetMetadataFormat) returns (MsgSetMetadataFormatResponse);
+  rpc CreateActionExecutor(MsgCreateActionExecutor) returns (MsgCreateActionExecutorResponse);
+  rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
+  rpc DeleteActionExecutor(MsgDeleteActionExecutor) returns (MsgDeleteActionExecutorResponse);
+  rpc UpdateSchemaAttribute(MsgUpdateSchemaAttribute) returns (MsgUpdateSchemaAttributeResponse);
+  rpc DeleteSchemaAttribute(MsgDeleteSchemaAttribute) returns (MsgDeleteSchemaAttributeResponse);
+  rpc UpdateAction(MsgUpdateAction) returns (MsgUpdateActionResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
-enum AttributeLocation {
+enum AttributeLocationV1 {
   NFT_ATTRIBUTE = 0;
   TOKEN_ATTRIBUTE = 1;
+}
+
+// cannot use TOKEN_ATTRIBUTE because it is already used in AttributeLocationV1
+// that is why we use ATTRIBUTE_OF_TOKEN
+enum AttributeLocation {
+  ATTRIBUTE_OF_SCHEMA = 0;
+  ATTRIBUTE_OF_TOKEN = 1;
 }
 
 enum AuthorizeTo {
@@ -199,17 +211,6 @@ message MsgAddActionResponse {
   OnChainData onchainData = 3;
 }
 
-message MsgSetNFTAttribute {
-  string creator = 1;
-  string nft_schema_code = 2;
-  string base64_nft_attribute_value = 3;
-}
-
-message MsgSetNFTAttributeResponse {
-  string nft_schema_code = 1;
-  string attribute_name = 2;
-  string nft_attribute_value = 3;
-}
 
 message MsgSetBaseUri {
   string creator = 1;
@@ -244,28 +245,6 @@ message MsgChangeSchemaOwner {
 message MsgChangeSchemaOwnerResponse {
   string nftSchemaCode = 1;
   string newOwner = 2;
-}
-
-message MsgAddSystemActioner {
-  string creator = 1;
-  string nftSchemaCode = 2;
-  string actioner = 3;
-}
-
-message MsgAddSystemActionerResponse {
-  string nftSchemaCode = 1;
-  string actioner = 2;
-}
-
-message MsgRemoveSystemActioner {
-  string creator = 1;
-  string nftSchemaCode = 2;
-  string actioner = 3;
-}
-
-message MsgRemoveSystemActionerResponse {
-  string nftSchemaCode = 1;
-  string actioner = 2;
 }
 
 message MsgResyncAttributesResponse {
@@ -375,6 +354,71 @@ message MsgSetMetadataFormat {
 message MsgSetMetadataFormatResponse {
   string schemaCode = 1;
   string newFormat = 2;
+}
+
+message MsgCreateActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+
+}
+message MsgCreateActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
+
+message MsgUpdateActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+
+}
+message MsgUpdateActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
+
+message MsgDeleteActionExecutor {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string executorAddress = 3;
+}
+message MsgDeleteActionExecutorResponse {
+  string nftSchemaCode = 1;
+  string executorAddress = 2;
+}
+
+message MsgUpdateSchemaAttribute {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string Base64UpdateAttriuteDefenition = 3;
+}
+
+message MsgUpdateSchemaAttributeResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
+  SchemaAttribute new_attribute = 3;
+}
+
+message MsgDeleteSchemaAttribute {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string name = 3;
+}
+message MsgDeleteSchemaAttributeResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
+}
+
+message MsgUpdateAction {
+  string creator = 1;
+  string nftSchemaCode = 2;
+  string base64UpdateAction = 3;
+}
+
+message MsgUpdateActionResponse {
+  string nftSchemaCode = 1;
+  string name = 2;
 }
 
 // this line is used by starport scaffolding # proto/tx/message

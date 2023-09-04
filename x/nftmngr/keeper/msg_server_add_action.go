@@ -48,6 +48,13 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	// append new action
 	schema.OnchainData.Actions = append(schema.OnchainData.Actions, &new_action)
 
+	// save index of action
+	k.Keeper.SetActionOfSchema(ctx,types.ActionOfSchema{
+		Name: new_action.Name,
+		NftSchemaCode: schema.Code,
+		Index: uint64(len(schema.OnchainData.Actions) - 1),
+	})
+
 	// save schema
 	k.Keeper.SetNFTSchema(ctx, schema)
 

@@ -82,6 +82,36 @@ func TestGenesisState_Validate(t *testing.T) {
 						NftSchemaCode: "1",
 					},
 				},
+				ActionExecutorList: []types.ActionExecutor{
+					{
+						NftSchemaCode:   "0",
+						ExecutorAddress: "0",
+					},
+					{
+						NftSchemaCode:   "1",
+						ExecutorAddress: "1",
+					},
+				},
+				SchemaAttributeList: []types.SchemaAttribute{
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
+					},
+					{
+						NftSchemaCode: "1",
+						Name:          "1",
+					},
+				},
+				ActionOfSchemaList: []types.ActionOfSchema{
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
+					},
+					{
+						NftSchemaCode: "1",
+						Name:          "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -181,6 +211,54 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						NftSchemaCode: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionExecutor",
+			genState: &types.GenesisState{
+				ActionExecutorList: []types.ActionExecutor{
+					{
+						NftSchemaCode:   "0",
+						ExecutorAddress: "0",
+					},
+					{
+						NftSchemaCode:   "0",
+						ExecutorAddress: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated schemaAttribute",
+			genState: &types.GenesisState{
+				SchemaAttributeList: []types.SchemaAttribute{
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
+					},
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated actionOfSchema",
+			genState: &types.GenesisState{
+				ActionOfSchemaList: []types.ActionOfSchema{
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
+					},
+					{
+						NftSchemaCode: "0",
+						Name:          "0",
 					},
 				},
 			},

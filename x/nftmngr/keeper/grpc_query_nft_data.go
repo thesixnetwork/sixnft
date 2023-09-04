@@ -28,8 +28,13 @@ func (k Keeper) NftDataAll(c context.Context, req *types.QueryAllNftDataRequest)
 			return err
 		}
 
-		updateddata := k.updateNftDataAttributes(ctx, nftData)
-		listNFTData = append(listNFTData, updateddata)
+		if req.WithGlobal {
+			updateddata := k.appendDataWithSchemaAttributes(ctx, nftData)
+			listNFTData = append(listNFTData, updateddata)
+		} else {
+			listNFTData = append(listNFTData, nftData)
+		}
+
 		return nil
 	})
 
@@ -52,43 +57,28 @@ func (k Keeper) NftData(c context.Context, req *types.QueryGetNftDataRequest) (*
 		req.TokenId,
 	)
 
-	updateddata := k.updateNftDataAttributes(ctx, val)
-
 	if !found {
 		return nil, status.Error(codes.NotFound, "not found")
+	}
+
+	updateddata := val
+	if req.WithGlobal {
+		updateddata = k.appendDataWithSchemaAttributes(ctx, val)
 	}
 
 	return &types.QueryGetNftDataResponse{NftData: updateddata}, nil
 }
 
-// function updateNftDataAttributes updates the nft data attributes from the schema
-func (k Keeper) updateNftDataAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
-	nftSchema, _ := k.GetNFTSchema(ctx, dataOnToken.NftSchemaCode)
+// function appendDataWithSchemaAttributes is used to append the data with schema attributes coz schema attributes are not stored in nftdata
+func (k Keeper) appendDataWithSchemaAttributes(ctx sdk.Context, dataOnToken types.NftData) (updatedData types.NftData) {
+	listOfAllschemaAttributeValue := k.GetAllSchemaAttribute(ctx)
 
-	// createa map of nftattributes from schema with its default value
-	mapFromSchemaAttributes := make(map[string]*types.DefaultMintValue)
-	for _, fromSchemaNftAttribute := range nftSchema.OnchainData.NftAttributes {
-		mapFromSchemaAttributes[fromSchemaNftAttribute.Name] = fromSchemaNftAttribute.DefaultMintValue
-	}
-
-	// loop over nftdata attributes and check if exists in mapFromSchemaAttributes
-	// if exists, then update the value
-	for _, attribute := range dataOnToken.OnchainAttributes {
-		if schemaUpdated, ok := mapFromSchemaAttributes[attribute.Name]; ok {
-			switch schemaUpdated.Value.(type) {
-			case *types.DefaultMintValue_NumberAttributeValue:
-				attribute.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: schemaUpdated.GetNumberAttributeValue()}
-
-			case *types.DefaultMintValue_BooleanAttributeValue:
-				attribute.Value = &types.NftAttributeValue_BooleanAttributeValue{BooleanAttributeValue: schemaUpdated.GetBooleanAttributeValue()}
-
-			case *types.DefaultMintValue_FloatAttributeValue:
-				attribute.Value = &types.NftAttributeValue_FloatAttributeValue{FloatAttributeValue: schemaUpdated.GetFloatAttributeValue()}
-
-			case *types.DefaultMintValue_StringAttributeValue:
-				attribute.Value = &types.NftAttributeValue_StringAttributeValue{StringAttributeValue: schemaUpdated.GetStringAttributeValue()}
-			}
+	for _, schemaAttribute := range listOfAllschemaAttributeValue {
+		if schemaAttribute.NftSchemaCode == dataOnToken.NftSchemaCode {
+			scheamAttributeValues := ConverSchemaAttributeToNFTAttributeValue(&schemaAttribute)
+			dataOnToken.OnchainAttributes = append(dataOnToken.OnchainAttributes, scheamAttributeValues)
 		}
+
 	}
 
 	return dataOnToken

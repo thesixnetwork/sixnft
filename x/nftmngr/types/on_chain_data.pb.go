@@ -75,13 +75,9 @@ func (m *FlagStatus) GetStatusValue() bool {
 }
 
 type OnChainData struct {
-	RevealRequired     bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
-	RevealSecret       []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
-	NftAttributes      []*AttributeDefinition `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
-	TokenAttributes    []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions            []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
-	Status             []*FlagStatus          `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
-	NftAttributesValue []*NftAttributeValue   `protobuf:"bytes,8,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
+	TokenAttributes []*AttributeDefinition `protobuf:"bytes,1,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions         []*Action              `protobuf:"bytes,2,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status          []*FlagStatus          `protobuf:"bytes,3,rep,name=status,proto3" json:"status,omitempty"`
 }
 
 func (m *OnChainData) Reset()         { *m = OnChainData{} }
@@ -117,27 +113,6 @@ func (m *OnChainData) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_OnChainData proto.InternalMessageInfo
 
-func (m *OnChainData) GetRevealRequired() bool {
-	if m != nil {
-		return m.RevealRequired
-	}
-	return false
-}
-
-func (m *OnChainData) GetRevealSecret() []byte {
-	if m != nil {
-		return m.RevealSecret
-	}
-	return nil
-}
-
-func (m *OnChainData) GetNftAttributes() []*AttributeDefinition {
-	if m != nil {
-		return m.NftAttributes
-	}
-	return nil
-}
-
 func (m *OnChainData) GetTokenAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.TokenAttributes
@@ -159,35 +134,27 @@ func (m *OnChainData) GetStatus() []*FlagStatus {
 	return nil
 }
 
-func (m *OnChainData) GetNftAttributesValue() []*NftAttributeValue {
-	if m != nil {
-		return m.NftAttributesValue
-	}
-	return nil
+type OnChainDataInput struct {
+	RevealRequired   bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
+	RevealSecret     []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
+	SchemaAttributes []*AttributeDefinition `protobuf:"bytes,3,rep,name=schema_attributes,json=schemaAttributes,proto3" json:"schema_attributes,omitempty"`
+	TokenAttributes  []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
+	Actions          []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
+	Status           []*FlagStatus          `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
 }
 
-type OnChainDataV072 struct {
-	RevealRequired     bool                       `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
-	RevealSecret       []byte                     `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
-	NftAttributes      []*AttributeDefinitionV072 `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
-	TokenAttributes    []*AttributeDefinitionV072 `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions            []*Action                  `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
-	Status             []*FlagStatus              `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
-	NftAttributesValue []*NftAttributeValue       `protobuf:"bytes,8,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
-}
-
-func (m *OnChainDataV072) Reset()         { *m = OnChainDataV072{} }
-func (m *OnChainDataV072) String() string { return proto.CompactTextString(m) }
-func (*OnChainDataV072) ProtoMessage()    {}
-func (*OnChainDataV072) Descriptor() ([]byte, []int) {
+func (m *OnChainDataInput) Reset()         { *m = OnChainDataInput{} }
+func (m *OnChainDataInput) String() string { return proto.CompactTextString(m) }
+func (*OnChainDataInput) ProtoMessage()    {}
+func (*OnChainDataInput) Descriptor() ([]byte, []int) {
 	return fileDescriptor_35d167410338c830, []int{2}
 }
-func (m *OnChainDataV072) XXX_Unmarshal(b []byte) error {
+func (m *OnChainDataInput) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *OnChainDataV072) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *OnChainDataInput) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_OnChainDataV072.Marshal(b, m, deterministic)
+		return xxx_messageInfo_OnChainDataInput.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -197,90 +164,82 @@ func (m *OnChainDataV072) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return b[:n], nil
 	}
 }
-func (m *OnChainDataV072) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OnChainDataV072.Merge(m, src)
+func (m *OnChainDataInput) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OnChainDataInput.Merge(m, src)
 }
-func (m *OnChainDataV072) XXX_Size() int {
+func (m *OnChainDataInput) XXX_Size() int {
 	return m.Size()
 }
-func (m *OnChainDataV072) XXX_DiscardUnknown() {
-	xxx_messageInfo_OnChainDataV072.DiscardUnknown(m)
+func (m *OnChainDataInput) XXX_DiscardUnknown() {
+	xxx_messageInfo_OnChainDataInput.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_OnChainDataV072 proto.InternalMessageInfo
+var xxx_messageInfo_OnChainDataInput proto.InternalMessageInfo
 
-func (m *OnChainDataV072) GetRevealRequired() bool {
+func (m *OnChainDataInput) GetRevealRequired() bool {
 	if m != nil {
 		return m.RevealRequired
 	}
 	return false
 }
 
-func (m *OnChainDataV072) GetRevealSecret() []byte {
+func (m *OnChainDataInput) GetRevealSecret() []byte {
 	if m != nil {
 		return m.RevealSecret
 	}
 	return nil
 }
 
-func (m *OnChainDataV072) GetNftAttributes() []*AttributeDefinitionV072 {
+func (m *OnChainDataInput) GetSchemaAttributes() []*AttributeDefinition {
 	if m != nil {
-		return m.NftAttributes
+		return m.SchemaAttributes
 	}
 	return nil
 }
 
-func (m *OnChainDataV072) GetTokenAttributes() []*AttributeDefinitionV072 {
+func (m *OnChainDataInput) GetTokenAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.TokenAttributes
 	}
 	return nil
 }
 
-func (m *OnChainDataV072) GetActions() []*Action {
+func (m *OnChainDataInput) GetActions() []*Action {
 	if m != nil {
 		return m.Actions
 	}
 	return nil
 }
 
-func (m *OnChainDataV072) GetStatus() []*FlagStatus {
+func (m *OnChainDataInput) GetStatus() []*FlagStatus {
 	if m != nil {
 		return m.Status
 	}
 	return nil
 }
 
-func (m *OnChainDataV072) GetNftAttributesValue() []*NftAttributeValue {
-	if m != nil {
-		return m.NftAttributesValue
-	}
-	return nil
-}
-
-// will be deprecated next version (074)
-type OnChainDataV063 struct {
+type OnChainDataV1 struct {
 	RevealRequired     bool                   `protobuf:"varint,1,opt,name=reveal_required,json=revealRequired,proto3" json:"reveal_required,omitempty"`
 	RevealSecret       []byte                 `protobuf:"bytes,2,opt,name=reveal_secret,json=revealSecret,proto3" json:"reveal_secret,omitempty"`
 	NftAttributes      []*AttributeDefinition `protobuf:"bytes,3,rep,name=nft_attributes,json=nftAttributes,proto3" json:"nft_attributes,omitempty"`
 	TokenAttributes    []*AttributeDefinition `protobuf:"bytes,4,rep,name=token_attributes,json=tokenAttributes,proto3" json:"token_attributes,omitempty"`
-	Actions            []*ActionV063          `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
+	Actions            []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
 	Status             []*FlagStatus          `protobuf:"bytes,6,rep,name=status,proto3" json:"status,omitempty"`
-	NftAttributesValue []*NftAttributeValue   `protobuf:"bytes,8,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
+	NftAttributesValue []*NftAttributeValue   `protobuf:"bytes,7,rep,name=nft_attributes_value,json=nftAttributesValue,proto3" json:"nft_attributes_value,omitempty"`
 }
 
-func (m *OnChainDataV063) Reset()         { *m = OnChainDataV063{} }
-func (m *OnChainDataV063) String() string { return proto.CompactTextString(m) }
-func (*OnChainDataV063) ProtoMessage()    {}
-func (*OnChainDataV063) Descriptor() ([]byte, []int) {
+func (m *OnChainDataV1) Reset()         { *m = OnChainDataV1{} }
+func (m *OnChainDataV1) String() string { return proto.CompactTextString(m) }
+func (*OnChainDataV1) ProtoMessage()    {}
+func (*OnChainDataV1) Descriptor() ([]byte, []int) {
 	return fileDescriptor_35d167410338c830, []int{3}
 }
-func (m *OnChainDataV063) XXX_Unmarshal(b []byte) error {
+func (m *OnChainDataV1) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *OnChainDataV063) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *OnChainDataV1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_OnChainDataV063.Marshal(b, m, deterministic)
+		return xxx_messageInfo_OnChainDataV1.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -290,61 +249,61 @@ func (m *OnChainDataV063) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return b[:n], nil
 	}
 }
-func (m *OnChainDataV063) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OnChainDataV063.Merge(m, src)
+func (m *OnChainDataV1) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OnChainDataV1.Merge(m, src)
 }
-func (m *OnChainDataV063) XXX_Size() int {
+func (m *OnChainDataV1) XXX_Size() int {
 	return m.Size()
 }
-func (m *OnChainDataV063) XXX_DiscardUnknown() {
-	xxx_messageInfo_OnChainDataV063.DiscardUnknown(m)
+func (m *OnChainDataV1) XXX_DiscardUnknown() {
+	xxx_messageInfo_OnChainDataV1.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_OnChainDataV063 proto.InternalMessageInfo
+var xxx_messageInfo_OnChainDataV1 proto.InternalMessageInfo
 
-func (m *OnChainDataV063) GetRevealRequired() bool {
+func (m *OnChainDataV1) GetRevealRequired() bool {
 	if m != nil {
 		return m.RevealRequired
 	}
 	return false
 }
 
-func (m *OnChainDataV063) GetRevealSecret() []byte {
+func (m *OnChainDataV1) GetRevealSecret() []byte {
 	if m != nil {
 		return m.RevealSecret
 	}
 	return nil
 }
 
-func (m *OnChainDataV063) GetNftAttributes() []*AttributeDefinition {
+func (m *OnChainDataV1) GetNftAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.NftAttributes
 	}
 	return nil
 }
 
-func (m *OnChainDataV063) GetTokenAttributes() []*AttributeDefinition {
+func (m *OnChainDataV1) GetTokenAttributes() []*AttributeDefinition {
 	if m != nil {
 		return m.TokenAttributes
 	}
 	return nil
 }
 
-func (m *OnChainDataV063) GetActions() []*ActionV063 {
+func (m *OnChainDataV1) GetActions() []*Action {
 	if m != nil {
 		return m.Actions
 	}
 	return nil
 }
 
-func (m *OnChainDataV063) GetStatus() []*FlagStatus {
+func (m *OnChainDataV1) GetStatus() []*FlagStatus {
 	if m != nil {
 		return m.Status
 	}
 	return nil
 }
 
-func (m *OnChainDataV063) GetNftAttributesValue() []*NftAttributeValue {
+func (m *OnChainDataV1) GetNftAttributesValue() []*NftAttributeValue {
 	if m != nil {
 		return m.NftAttributesValue
 	}
@@ -354,45 +313,44 @@ func (m *OnChainDataV063) GetNftAttributesValue() []*NftAttributeValue {
 func init() {
 	proto.RegisterType((*FlagStatus)(nil), "thesixnetwork.sixnft.nftmngr.FlagStatus")
 	proto.RegisterType((*OnChainData)(nil), "thesixnetwork.sixnft.nftmngr.OnChainData")
-	proto.RegisterType((*OnChainDataV072)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV072")
-	proto.RegisterType((*OnChainDataV063)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV063")
+	proto.RegisterType((*OnChainDataInput)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataInput")
+	proto.RegisterType((*OnChainDataV1)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV1")
 }
 
 func init() { proto.RegisterFile("nftmngr/on_chain_data.proto", fileDescriptor_35d167410338c830) }
 
 var fileDescriptor_35d167410338c830 = []byte{
-	// 483 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x95, 0x41, 0x6f, 0xd3, 0x30,
-	0x1c, 0xc5, 0x1b, 0x3a, 0x4a, 0x71, 0xbb, 0x15, 0x59, 0x3b, 0x44, 0x03, 0x85, 0xae, 0x20, 0x91,
-	0x53, 0x02, 0x9b, 0x80, 0x1b, 0x82, 0x31, 0x21, 0x71, 0x19, 0xc8, 0x93, 0x26, 0x84, 0x26, 0x05,
-	0x37, 0x75, 0x5a, 0x6b, 0x8d, 0x33, 0xec, 0x7f, 0xc6, 0xb8, 0x71, 0xe0, 0x03, 0xf0, 0xb1, 0x38,
-	0xee, 0xc8, 0x11, 0xb5, 0x5f, 0x82, 0x23, 0x8a, 0x9d, 0x74, 0x49, 0xa5, 0x15, 0xa8, 0xb8, 0x20,
-	0x76, 0x8b, 0x9e, 0xfe, 0xef, 0xe7, 0xfa, 0xbd, 0xbf, 0x6a, 0x74, 0x53, 0x44, 0x10, 0x8b, 0xa1,
-	0xf4, 0x13, 0x11, 0x84, 0x23, 0xca, 0x45, 0x30, 0xa0, 0x40, 0xbd, 0x63, 0x99, 0x40, 0x82, 0x6f,
-	0xc1, 0x88, 0x29, 0x7e, 0x2a, 0x18, 0x7c, 0x48, 0xe4, 0x91, 0x97, 0x7d, 0x46, 0xe0, 0xe5, 0x8e,
-	0x8d, 0x5e, 0x61, 0xa5, 0x00, 0x92, 0xf7, 0x53, 0x60, 0xc1, 0x80, 0x45, 0x5c, 0x70, 0xe0, 0x89,
-	0x30, 0x84, 0x8d, 0xf5, 0xd9, 0x4c, 0x58, 0x52, 0x37, 0x0b, 0x55, 0x44, 0x10, 0x9c, 0xbb, 0x4f,
-	0xe8, 0x38, 0x65, 0x66, 0xa4, 0xf7, 0x1a, 0xa1, 0x17, 0x63, 0x3a, 0xdc, 0x07, 0x0a, 0xa9, 0xc2,
-	0xb7, 0x51, 0x4b, 0xe9, 0xaf, 0x40, 0xd0, 0x98, 0xd9, 0x56, 0xd7, 0x72, 0xaf, 0x13, 0x64, 0xa4,
-	0x3d, 0x1a, 0x33, 0xbc, 0x89, 0xda, 0xf9, 0x80, 0x86, 0xd8, 0x57, 0xba, 0x96, 0xdb, 0x24, 0xb9,
-	0xe9, 0x20, 0x93, 0x7a, 0x3f, 0xea, 0xa8, 0xf5, 0x4a, 0x3c, 0xcf, 0xee, 0xb8, 0x4b, 0x81, 0xe2,
-	0x7b, 0xa8, 0x23, 0xd9, 0x09, 0xa3, 0xe3, 0x40, 0xb2, 0xf7, 0x29, 0x97, 0x6c, 0xa0, 0xb9, 0x4d,
-	0xb2, 0x66, 0x64, 0x92, 0xab, 0xf8, 0x0e, 0x5a, 0xcd, 0x07, 0x15, 0x0b, 0x25, 0x03, 0x0d, 0x6f,
-	0x93, 0xb6, 0x11, 0xf7, 0xb5, 0x86, 0xdf, 0xa0, 0xb5, 0xca, 0x65, 0x94, 0x5d, 0xef, 0xd6, 0xdd,
-	0xd6, 0xd6, 0x03, 0x6f, 0x51, 0x86, 0xde, 0xb3, 0x62, 0x7e, 0x77, 0x96, 0x1c, 0x59, 0x15, 0x11,
-	0xcc, 0x74, 0x85, 0x0f, 0xd1, 0x0d, 0x48, 0x8e, 0x98, 0x28, 0xb3, 0x57, 0x96, 0x65, 0x77, 0x34,
-	0xaa, 0x44, 0x7f, 0x82, 0xae, 0x99, 0x6a, 0x94, 0x7d, 0x55, 0x43, 0xef, 0xfe, 0x02, 0xaa, 0x87,
-	0x49, 0x61, 0xc2, 0x4f, 0x51, 0xc3, 0x84, 0x6c, 0x37, 0xb4, 0xdd, 0x5d, 0x6c, 0x3f, 0xef, 0x94,
-	0xe4, 0x3e, 0x4c, 0xd1, 0x7a, 0x35, 0xb9, 0xbc, 0xc2, 0xa6, 0xe6, 0xf9, 0x8b, 0x79, 0x7b, 0xa5,
-	0xa8, 0x74, 0xcd, 0x04, 0x57, 0xd2, 0x33, 0xd5, 0x7f, 0x5e, 0x41, 0x9d, 0x52, 0xf5, 0x07, 0xf7,
-	0x1f, 0x6f, 0xfd, 0xe5, 0xfa, 0x0f, 0x2f, 0xa8, 0xff, 0xe1, 0x1f, 0x57, 0x94, 0xfd, 0xb8, 0xf9,
-	0x15, 0x78, 0x77, 0xe1, 0x0a, 0x2c, 0xc9, 0xff, 0x3f, 0xd7, 0xe0, 0xd3, 0xfc, 0x1a, 0x3c, 0xda,
-	0xbe, 0xfc, 0x17, 0xd0, 0xf4, 0x9d, 0xf9, 0xfa, 0xdd, 0xdf, 0xa9, 0x3f, 0x0b, 0xf0, 0xdf, 0x5a,
-	0x81, 0x9d, 0x97, 0x5f, 0x27, 0x8e, 0x75, 0x36, 0x71, 0xac, 0xef, 0x13, 0xc7, 0xfa, 0x32, 0x75,
-	0x6a, 0x67, 0x53, 0xa7, 0xf6, 0x6d, 0xea, 0xd4, 0xde, 0xfa, 0x43, 0x0e, 0xa3, 0xb4, 0xef, 0x85,
-	0x49, 0xec, 0x57, 0x0e, 0xf2, 0xcd, 0x41, 0xfe, 0xa9, 0x5f, 0xbc, 0x5a, 0xf0, 0xf1, 0x98, 0xa9,
-	0x7e, 0x43, 0x3f, 0x54, 0xdb, 0x3f, 0x03, 0x00, 0x00, 0xff, 0xff, 0x8a, 0x90, 0xd8, 0xde, 0x42,
-	0x07, 0x00, 0x00,
+	// 478 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe4, 0x54, 0x4d, 0x6f, 0xd3, 0x40,
+	0x14, 0x8c, 0x6b, 0x48, 0xcb, 0x4b, 0xd2, 0x86, 0x55, 0x0f, 0x56, 0x41, 0x26, 0x0d, 0x48, 0xe4,
+	0x64, 0xab, 0x70, 0x47, 0x7c, 0x54, 0x48, 0xbd, 0x14, 0xb4, 0x95, 0x2a, 0x84, 0x10, 0xd6, 0xc6,
+	0x79, 0x4e, 0xac, 0xc6, 0xeb, 0xe0, 0x7d, 0x2e, 0xe5, 0x5f, 0xf0, 0x13, 0xf8, 0x39, 0x1c, 0x7b,
+	0xe4, 0x88, 0x92, 0x33, 0x7f, 0x80, 0x13, 0xca, 0xae, 0x9d, 0x38, 0x12, 0x0a, 0x52, 0x0b, 0x27,
+	0x6e, 0xab, 0xf1, 0xcc, 0xec, 0xbe, 0x19, 0xf9, 0xc1, 0x1d, 0x19, 0x51, 0x22, 0x87, 0x99, 0x9f,
+	0xca, 0x20, 0x1c, 0x89, 0x58, 0x06, 0x03, 0x41, 0xc2, 0x9b, 0x64, 0x29, 0xa5, 0xec, 0x2e, 0x8d,
+	0x50, 0xc5, 0x17, 0x12, 0xe9, 0x63, 0x9a, 0x9d, 0x79, 0xf3, 0x63, 0x44, 0x5e, 0xa1, 0xd8, 0xeb,
+	0x96, 0x52, 0x41, 0x94, 0xc5, 0xfd, 0x9c, 0x30, 0x18, 0x60, 0x14, 0xcb, 0x98, 0xe2, 0x54, 0x1a,
+	0x87, 0xbd, 0xdd, 0x05, 0x27, 0xac, 0xa0, 0xfb, 0x25, 0x2a, 0x23, 0x0a, 0x96, 0xea, 0x73, 0x31,
+	0xce, 0xd1, 0x50, 0xba, 0xaf, 0x01, 0x5e, 0x8e, 0xc5, 0xf0, 0x84, 0x04, 0xe5, 0x8a, 0xdd, 0x83,
+	0x86, 0xd2, 0xa7, 0x40, 0x8a, 0x04, 0x1d, 0xab, 0x63, 0xf5, 0x6e, 0x71, 0x30, 0xd0, 0xb1, 0x48,
+	0x90, 0xed, 0x43, 0xb3, 0x20, 0x68, 0x13, 0x67, 0xa3, 0x63, 0xf5, 0xb6, 0x78, 0x21, 0x3a, 0x9d,
+	0x43, 0xdd, 0x1f, 0x16, 0x34, 0x5e, 0xc9, 0x17, 0xf3, 0x19, 0x0f, 0x05, 0x09, 0xf6, 0x0e, 0xda,
+	0x94, 0x9e, 0xa1, 0x5c, 0x3e, 0x40, 0x39, 0x56, 0xc7, 0xee, 0x35, 0x1e, 0x1d, 0x78, 0xeb, 0xe6,
+	0xf6, 0x9e, 0x95, 0xfc, 0xc3, 0xc5, 0xb4, 0x7c, 0x47, 0x5b, 0x2d, 0xbe, 0x28, 0xf6, 0x04, 0x36,
+	0xcd, 0xc8, 0xca, 0xd9, 0xd0, 0xa6, 0x0f, 0xfe, 0x60, 0xaa, 0xc9, 0xbc, 0x14, 0xb1, 0xa7, 0x50,
+	0x37, 0x8f, 0x77, 0x6c, 0x2d, 0xef, 0xad, 0x97, 0x2f, 0xb3, 0xe2, 0x85, 0xae, 0xfb, 0xc5, 0x86,
+	0x76, 0x65, 0xde, 0x23, 0x39, 0xc9, 0x89, 0x3d, 0x84, 0x9d, 0x0c, 0xcf, 0x51, 0x8c, 0x83, 0x0c,
+	0x3f, 0xe4, 0x71, 0x86, 0x03, 0x1d, 0xe6, 0x16, 0xdf, 0x36, 0x30, 0x2f, 0x50, 0x76, 0x1f, 0x5a,
+	0x05, 0x51, 0x61, 0x98, 0x21, 0xe9, 0x44, 0x9b, 0xbc, 0x69, 0xc0, 0x13, 0x8d, 0xb1, 0xf7, 0x70,
+	0x5b, 0x85, 0x23, 0x4c, 0x44, 0x35, 0x43, 0xfb, 0xaa, 0x19, 0xb6, 0x8d, 0x57, 0x25, 0xc4, 0xdf,
+	0x55, 0x74, 0xe3, 0x5f, 0x54, 0x74, 0xf3, 0x7a, 0x15, 0xd5, 0xaf, 0x58, 0xd1, 0x4f, 0x1b, 0x5a,
+	0x95, 0x8a, 0x4e, 0x0f, 0xfe, 0x72, 0x3f, 0x6f, 0x60, 0x7b, 0xe5, 0x0f, 0xbb, 0x46, 0x39, 0x2d,
+	0x19, 0xd1, 0xff, 0xd3, 0x0c, 0x13, 0xb0, 0xbb, 0x9a, 0x5c, 0xb1, 0x57, 0x36, 0xb5, 0x9f, 0xbf,
+	0xde, 0xef, 0xb8, 0x12, 0x95, 0xde, 0x3d, 0x9c, 0xad, 0xa4, 0xa7, 0xb1, 0xe7, 0x47, 0x5f, 0xa7,
+	0xae, 0x75, 0x39, 0x75, 0xad, 0xef, 0x53, 0xd7, 0xfa, 0x3c, 0x73, 0x6b, 0x97, 0x33, 0xb7, 0xf6,
+	0x6d, 0xe6, 0xd6, 0xde, 0xfa, 0xc3, 0x98, 0x46, 0x79, 0xdf, 0x0b, 0xd3, 0xc4, 0x5f, 0xb9, 0xc8,
+	0x37, 0x17, 0xf9, 0x17, 0x7e, 0xb9, 0x40, 0xe9, 0xd3, 0x04, 0x55, 0xbf, 0xae, 0x77, 0xe6, 0xe3,
+	0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x5c, 0x7a, 0x15, 0xb4, 0xcd, 0x05, 0x00, 0x00,
 }
 
 func (m *FlagStatus) Marshal() (dAtA []byte, err error) {
@@ -455,10 +413,10 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.NftAttributesValue) > 0 {
-		for iNdEx := len(m.NftAttributesValue) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.Status) > 0 {
+		for iNdEx := len(m.Status) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.NftAttributesValue[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.Status[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -466,9 +424,60 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x42
+			dAtA[i] = 0x1a
 		}
 	}
+	if len(m.Actions) > 0 {
+		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Actions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x12
+		}
+	}
+	if len(m.TokenAttributes) > 0 {
+		for iNdEx := len(m.TokenAttributes) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.TokenAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintOnChainData(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *OnChainDataInput) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *OnChainDataInput) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *OnChainDataInput) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
 	if len(m.Status) > 0 {
 		for iNdEx := len(m.Status) - 1; iNdEx >= 0; iNdEx-- {
 			{
@@ -511,10 +520,10 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA[i] = 0x22
 		}
 	}
-	if len(m.NftAttributes) > 0 {
-		for iNdEx := len(m.NftAttributes) - 1; iNdEx >= 0; iNdEx-- {
+	if len(m.SchemaAttributes) > 0 {
+		for iNdEx := len(m.SchemaAttributes) - 1; iNdEx >= 0; iNdEx-- {
 			{
-				size, err := m.NftAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				size, err := m.SchemaAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
 				if err != nil {
 					return 0, err
 				}
@@ -545,7 +554,7 @@ func (m *OnChainData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *OnChainDataV072) Marshal() (dAtA []byte, err error) {
+func (m *OnChainDataV1) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -555,12 +564,12 @@ func (m *OnChainDataV072) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *OnChainDataV072) MarshalTo(dAtA []byte) (int, error) {
+func (m *OnChainDataV1) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *OnChainDataV072) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *OnChainDataV1) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -576,117 +585,7 @@ func (m *OnChainDataV072) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 				i = encodeVarintOnChainData(dAtA, i, uint64(size))
 			}
 			i--
-			dAtA[i] = 0x42
-		}
-	}
-	if len(m.Status) > 0 {
-		for iNdEx := len(m.Status) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Status[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintOnChainData(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x32
-		}
-	}
-	if len(m.Actions) > 0 {
-		for iNdEx := len(m.Actions) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Actions[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintOnChainData(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x2a
-		}
-	}
-	if len(m.TokenAttributes) > 0 {
-		for iNdEx := len(m.TokenAttributes) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.TokenAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintOnChainData(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x22
-		}
-	}
-	if len(m.NftAttributes) > 0 {
-		for iNdEx := len(m.NftAttributes) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.NftAttributes[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintOnChainData(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x1a
-		}
-	}
-	if len(m.RevealSecret) > 0 {
-		i -= len(m.RevealSecret)
-		copy(dAtA[i:], m.RevealSecret)
-		i = encodeVarintOnChainData(dAtA, i, uint64(len(m.RevealSecret)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if m.RevealRequired {
-		i--
-		if m.RevealRequired {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *OnChainDataV063) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *OnChainDataV063) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *OnChainDataV063) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if len(m.NftAttributesValue) > 0 {
-		for iNdEx := len(m.NftAttributesValue) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.NftAttributesValue[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintOnChainData(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x42
+			dAtA[i] = 0x3a
 		}
 	}
 	if len(m.Status) > 0 {
@@ -798,19 +697,6 @@ func (m *OnChainData) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.RevealRequired {
-		n += 2
-	}
-	l = len(m.RevealSecret)
-	if l > 0 {
-		n += 1 + l + sovOnChainData(uint64(l))
-	}
-	if len(m.NftAttributes) > 0 {
-		for _, e := range m.NftAttributes {
-			l = e.Size()
-			n += 1 + l + sovOnChainData(uint64(l))
-		}
-	}
 	if len(m.TokenAttributes) > 0 {
 		for _, e := range m.TokenAttributes {
 			l = e.Size()
@@ -829,16 +715,10 @@ func (m *OnChainData) Size() (n int) {
 			n += 1 + l + sovOnChainData(uint64(l))
 		}
 	}
-	if len(m.NftAttributesValue) > 0 {
-		for _, e := range m.NftAttributesValue {
-			l = e.Size()
-			n += 1 + l + sovOnChainData(uint64(l))
-		}
-	}
 	return n
 }
 
-func (m *OnChainDataV072) Size() (n int) {
+func (m *OnChainDataInput) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -851,8 +731,8 @@ func (m *OnChainDataV072) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovOnChainData(uint64(l))
 	}
-	if len(m.NftAttributes) > 0 {
-		for _, e := range m.NftAttributes {
+	if len(m.SchemaAttributes) > 0 {
+		for _, e := range m.SchemaAttributes {
 			l = e.Size()
 			n += 1 + l + sovOnChainData(uint64(l))
 		}
@@ -875,16 +755,10 @@ func (m *OnChainDataV072) Size() (n int) {
 			n += 1 + l + sovOnChainData(uint64(l))
 		}
 	}
-	if len(m.NftAttributesValue) > 0 {
-		for _, e := range m.NftAttributesValue {
-			l = e.Size()
-			n += 1 + l + sovOnChainData(uint64(l))
-		}
-	}
 	return n
 }
 
-func (m *OnChainDataV063) Size() (n int) {
+func (m *OnChainDataV1) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1068,6 +942,398 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenAttributes = append(m.TokenAttributes, &AttributeDefinition{})
+			if err := m.TokenAttributes[len(m.TokenAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Actions = append(m.Actions, &Action{})
+			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Status = append(m.Status, &FlagStatus{})
+			if err := m.Status[len(m.Status)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOnChainData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *OnChainDataInput) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOnChainData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OnChainDataInput: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OnChainDataInput: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.RevealRequired = bool(v != 0)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RevealSecret", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RevealSecret = append(m.RevealSecret[:0], dAtA[iNdEx:postIndex]...)
+			if m.RevealSecret == nil {
+				m.RevealSecret = []byte{}
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SchemaAttributes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SchemaAttributes = append(m.SchemaAttributes, &AttributeDefinition{})
+			if err := m.SchemaAttributes[len(m.SchemaAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.TokenAttributes = append(m.TokenAttributes, &AttributeDefinition{})
+			if err := m.TokenAttributes[len(m.TokenAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Actions = append(m.Actions, &Action{})
+			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowOnChainData
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Status = append(m.Status, &FlagStatus{})
+			if err := m.Status[len(m.Status)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipOnChainData(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthOnChainData
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *OnChainDataV1) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowOnChainData
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: OnChainDataV1: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: OnChainDataV1: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
 			}
@@ -1257,555 +1523,7 @@ func (m *OnChainData) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
-		case 8:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributesValue", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftAttributesValue = append(m.NftAttributesValue, &NftAttributeValue{})
-			if err := m.NftAttributesValue[len(m.NftAttributesValue)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipOnChainData(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *OnChainDataV072) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowOnChainData
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: OnChainDataV072: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: OnChainDataV072: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.RevealRequired = bool(v != 0)
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RevealSecret", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RevealSecret = append(m.RevealSecret[:0], dAtA[iNdEx:postIndex]...)
-			if m.RevealSecret == nil {
-				m.RevealSecret = []byte{}
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributes", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftAttributes = append(m.NftAttributes, &AttributeDefinitionV072{})
-			if err := m.NftAttributes[len(m.NftAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TokenAttributes = append(m.TokenAttributes, &AttributeDefinitionV072{})
-			if err := m.TokenAttributes[len(m.TokenAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Actions = append(m.Actions, &Action{})
-			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Status = append(m.Status, &FlagStatus{})
-			if err := m.Status[len(m.Status)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 8:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributesValue", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftAttributesValue = append(m.NftAttributesValue, &NftAttributeValue{})
-			if err := m.NftAttributesValue[len(m.NftAttributesValue)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipOnChainData(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *OnChainDataV063) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowOnChainData
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: OnChainDataV063: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: OnChainDataV063: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RevealRequired", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.RevealRequired = bool(v != 0)
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RevealSecret", wireType)
-			}
-			var byteLen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				byteLen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if byteLen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + byteLen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.RevealSecret = append(m.RevealSecret[:0], dAtA[iNdEx:postIndex]...)
-			if m.RevealSecret == nil {
-				m.RevealSecret = []byte{}
-			}
-			iNdEx = postIndex
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributes", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.NftAttributes = append(m.NftAttributes, &AttributeDefinition{})
-			if err := m.NftAttributes[len(m.NftAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TokenAttributes", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.TokenAttributes = append(m.TokenAttributes, &AttributeDefinition{})
-			if err := m.TokenAttributes[len(m.TokenAttributes)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 5:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Actions", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Actions = append(m.Actions, &ActionV063{})
-			if err := m.Actions[len(m.Actions)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 6:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowOnChainData
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthOnChainData
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Status = append(m.Status, &FlagStatus{})
-			if err := m.Status[len(m.Status)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		case 8:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field NftAttributesValue", wireType)
 			}

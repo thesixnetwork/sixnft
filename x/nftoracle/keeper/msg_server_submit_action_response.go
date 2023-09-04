@@ -176,15 +176,32 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 	}
 
 	mapAction := nftmngrtypes.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == actionRequest.Action && action.Disable {
-			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, action.Name)
+	// Check if action is disabled
+	action_, found := k.nftmngrKeeper.GetActionOfSchema(ctx, actionRequest.NftSchemaCode, actionRequest.Action)
+	if found {
+		action := schema.OnchainData.Actions[action_.Index]
+		if action.Disable {
+			return sdkerrors.Wrap(nftmngrtypes.ErrActionIsDisabled, actionRequest.Action)
 		}
-		if action.Name == actionRequest.Action {
-			mapAction = *action
-			break
-		}
+		mapAction = *action
+	} else {
+		return sdkerrors.Wrap(nftmngrtypes.ErrActionDoesNotExists, actionRequest.Action)
 	}
+
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == msg.Action && action.Disable {
+	// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == msg.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// // Check if action exists
+	// if mapAction.Name == "" {
+	// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	// }
 
 	// Check if AllowedAction is for user
 	if mapAction.GetAllowedActioner() == nftmngrtypes.AllowedActioner_ALLOWED_ACTIONER_SYSTEM_ONLY {
@@ -222,8 +239,33 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 		})
 	}
 
-	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding)
+	var list_schema_attributes_ []*nftmngrtypes.SchemaAttribute
+	var map_converted_schema_attributes []*nftmngrtypes.NftAttributeValue
 
+	// get schema attributes and convert to NFtAttributeValue
+	all_schema_attributes := k.nftmngrKeeper.GetAllSchemaAttribute(ctx)
+
+	attributeMap := make(map[string]bool)
+
+	for _, schema_attribute := range all_schema_attributes {
+		if schema_attribute.NftSchemaCode != actionRequest.NftSchemaCode {
+			continue
+		}
+		// Check if the attribute has already been added
+		if attributeMap[schema_attribute.Name] {
+			continue
+		}
+		// Add the attribute to the list of schema attributes
+		list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
+
+		// Add the attribute to the map
+		attributeMap[schema_attribute.Name] = true
+
+		nftAttributeValue_ := nftmngrkeeper.ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
+		map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
+	}
+
+	meta := nftmngrtypes.NewMetadata(&schema, tokenData, schema.OriginData.AttributeOverriding, map_converted_schema_attributes)
 	meta.SetGetNFTFunction(func(tokenId string) (*nftmngrtypes.NftData, error) {
 		tokenData, found := k.nftmngrKeeper.GetNftData(ctx, schema.Code, tokenId)
 		if !found {
@@ -257,6 +299,54 @@ func (k msgServer) PerformAction(ctx sdk.Context, actionRequest *types.ActionOra
 	// loop over meta.OtherUpdatedTokenDatas
 	for _, otherTokenData := range meta.OtherUpdatedTokenDatas {
 		k.nftmngrKeeper.SetNftData(ctx, *otherTokenData)
+	}
+
+	for _, change := range meta.ChangeList {
+		val, found := k.nftmngrKeeper.GetSchemaAttribute(ctx, actionRequest.NftSchemaCode, change.Key)
+		if found {
+			switch val.DataType {
+			case "string":
+				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_StringAttributeValue{
+					StringAttributeValue: &nftmngrtypes.StringAttributeValue{
+						Value: change.NewValue,
+					},
+				}
+			case "boolean":
+				boolValue, err := strconv.ParseBool(change.NewValue)
+				if err != nil {
+					return err
+				}
+				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_BooleanAttributeValue{
+					BooleanAttributeValue: &nftmngrtypes.BooleanAttributeValue{
+						Value: boolValue,
+					},
+				}
+			case "number":
+				uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+				if err != nil {
+					return err
+				}
+				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_NumberAttributeValue{
+					NumberAttributeValue: &nftmngrtypes.NumberAttributeValue{
+						Value: uintValue,
+					},
+				}
+			case "float":
+				floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+				if err != nil {
+					return err
+				}
+				val.CurrentValue.Value = &nftmngrtypes.SchemaAttributeValue_FloatAttributeValue{
+					FloatAttributeValue: &nftmngrtypes.FloatAttributeValue{
+						Value: floatValue,
+					},
+				}
+			default:
+				return sdkerrors.Wrap(nftmngrtypes.ErrParsingAttributeValue, val.DataType)
+			}
+
+			k.nftmngrKeeper.SetSchemaAttribute(ctx, val)
+		}
 	}
 
 	// Check action with reference exists

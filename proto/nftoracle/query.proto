@@ -38,19 +38,10 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request/{id}";
 	}
 
-	// Queries a ActionRequest by id.
-	rpc ActionOracleRequestV063(QueryGetActionRequestRequest) returns (QueryGetActionRequestResponseV063) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request_063/{id}";
-	}
 
 	// Queries a list of ActionRequest items.
 	rpc ActionRequestAll(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request";
-	}
-
-	// Queries a list of ActionRequest items.
-	rpc ActionRequestAllV063(QueryAllActionRequestRequest) returns (QueryAllActionRequestResponseV063) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftoracle/action_request_063";
 	}
 
 	// Queries a CollectionOwnerRequest by id.
@@ -139,9 +130,6 @@ message QueryGetActionRequestResponse {
 	ActionOracleRequest ActionOracleRequest = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryGetActionRequestResponseV063 {
-	ActionRequestV063 ActionRequestV063 = 1 [(gogoproto.nullable) = false];
-}
 
 message QueryAllActionRequestRequest {
 	cosmos.base.query.v1beta1.PageRequest pagination = 1;
@@ -152,10 +140,6 @@ message QueryAllActionRequestResponse {
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
-message QueryAllActionRequestResponseV063 {
-	repeated ActionRequestV063 ActionRequestV063 = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
 
 message QueryGetCollectionOwnerRequestRequest {
 	uint64 id = 1;

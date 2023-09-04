@@ -3,8 +3,9 @@ package keeper
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"strconv"
+
+	// "strconv"
 	"time"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -28,33 +29,53 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		return nil, sdkerrors.Wrap(types.ErrMetadataDoesNotExists, "Schema: "+msg.NftSchemaCode+" TokenID: "+msg.TokenId)
 	}
 
-	// Map system actioners
-	mapSystemActioners := make(map[string]bool)
-	for _, systemActioner := range schema.SystemActioners {
-		mapSystemActioners[systemActioner] = true
+	// check if executor is authorized to perform action
+	var isOwner bool
+	if msg.Creator == schema.Owner {
+		isOwner = true
 	}
 
-	// Check if Creator is one of system actioners
-	if _, ok := mapSystemActioners[msg.Creator]; !ok {
-		if msg.Creator != schema.Owner {
+	// if not owner, check if executor is authorized to perform action
+	if !isOwner {
+
+		_, isFound := k.GetActionExecutor(
+			ctx,
+			msg.NftSchemaCode,
+			msg.Creator,
+		)
+
+		if !isFound {
 			return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
 		}
 	}
-	mapAction := types.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable {
-			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
-		}
-		if action.Name == msg.Action {
-			mapAction = *action
-			break
-		}
-	}
 
-	// Check if action exists
-	if mapAction.Name == "" {
+	mapAction := types.Action{}
+	// Check if action is disabled
+	action_, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, msg.Action)
+	if found {
+		action := schema.OnchainData.Actions[action_.Index]
+		if action.Disable {
+			return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, msg.Action)
+		}
+		mapAction = *action
+	} else {
 		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
 	}
+
+	// for _, action := range schema.OnchainData.Actions {
+	// 	if action.Name == msg.Action && action.Disable {
+	// 		return nil, sdkerrors.Wrap(types.ErrActionIsDisabled, action.Name)
+	// 	}
+	// 	if action.Name == msg.Action {
+	// 		mapAction = *action
+	// 		break
+	// 	}
+	// }
+
+	// // Check if action exists
+	// if mapAction.Name == "" {
+	// 	return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, msg.Action)
+	// }
 
 	// Check if AllowedAction is for system // if yes whick means only oracle request can perform this action
 	if mapAction.GetAllowedActioner() == types.AllowedActioner_ALLOWED_ACTIONER_USER_ONLY {
@@ -103,8 +124,34 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		}
 	}
 
+	var list_schema_attributes_ []*types.SchemaAttribute
+	var map_converted_schema_attributes []*types.NftAttributeValue
+
+	// get schema attributes and convert to NFtAttributeValue
+	all_schema_attributes := k.GetAllSchemaAttribute(ctx)
+
+	attributeMap := make(map[string]bool)
+
+	for _, schema_attribute := range all_schema_attributes {
+		if schema_attribute.NftSchemaCode != msg.NftSchemaCode {
+			continue
+		}
+		// Check if the attribute has already been added
+		if attributeMap[schema_attribute.Name] {
+			continue
+		}
+		// Add the attribute to the list of schema attributes
+		list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
+
+		// Add the attribute to the map
+		attributeMap[schema_attribute.Name] = true
+
+		nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
+		map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
+	}
+
 	// ** META path ../types/meta.go **
-	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding)
+	meta := types.NewMetadata(&schema, &tokenData, schema.OriginData.AttributeOverriding, map_converted_schema_attributes)
 	meta.SetGetNFTFunction(func(tokenId string) (*types.NftData, error) {
 		tokenData, found := k.Keeper.GetNftData(ctx, msg.NftSchemaCode, tokenId)
 		if !found {
@@ -140,57 +187,54 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		k.Keeper.SetNftData(ctx, *otherTokenData)
 	}
 
-	// get schema index from change list
 	for _, change := range meta.ChangeList {
-		// append key to list_of_keychang when name is match
-		for _, attribute := range schema.OnchainData.NftAttributes {
-			if attribute.Name == change.Key {
-				switch attribute.DataType {
-				case "string":
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
-						StringAttributeValue: &types.StringAttributeValue{
-							Value: change.NewValue,
-						},
-					}
-				case "boolean":
-					boolValue, err := strconv.ParseBool(change.NewValue)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
-						BooleanAttributeValue: &types.BooleanAttributeValue{
-							Value: boolValue,
-						},
-					}
-				case "number":
-					fmt.Println("#################number", "number")
-					uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
-						NumberAttributeValue: &types.NumberAttributeValue{
-							Value: uintValue,
-						},
-					}
-				case "float":
-					floatValue, err := strconv.ParseFloat(change.NewValue, 64)
-					if err != nil {
-						return nil, err
-					}
-					attribute.DefaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
-						FloatAttributeValue: &types.FloatAttributeValue{
-							Value: floatValue,
-						},
-					}
-				default:
-					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, attribute.DataType)
+		val, found := k.Keeper.GetSchemaAttribute(ctx, msg.NftSchemaCode, change.Key)
+		if found {
+			switch val.DataType {
+			case "string":
+				val.CurrentValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+					StringAttributeValue: &types.StringAttributeValue{
+						Value: change.NewValue,
+					},
 				}
+			case "boolean":
+				boolValue, err := strconv.ParseBool(change.NewValue)
+				if err != nil {
+					return nil, err
+				}
+				val.CurrentValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+					BooleanAttributeValue: &types.BooleanAttributeValue{
+						Value: boolValue,
+					},
+				}
+			case "number":
+				uintValue, err := strconv.ParseUint(change.NewValue, 10, 64)
+				if err != nil {
+					return nil, err
+				}
+				val.CurrentValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+					NumberAttributeValue: &types.NumberAttributeValue{
+						Value: uintValue,
+					},
+				}
+			case "float":
+				floatValue, err := strconv.ParseFloat(change.NewValue, 64)
+				if err != nil {
+					return nil, err
+				}
+				val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+					FloatAttributeValue: &types.FloatAttributeValue{
+						Value: floatValue,
+					},
+				}
+			default:
+				return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
 			}
+
+			k.SetSchemaAttribute(ctx, val)
 		}
 	}
-	// Update schema
-	k.Keeper.SetNFTSchema(ctx, schema)
+
 	// Check action with reference exists
 	if msg.RefId != "" {
 
