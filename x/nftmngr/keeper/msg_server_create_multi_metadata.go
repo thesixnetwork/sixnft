@@ -48,7 +48,7 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 	}
 
 	// Validate Schema Message and return error if not valid
-	valid, err := k.ValidateNFTData(&data, &schema)
+	valid, err := ValidateNFTData(&data, &schema)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
@@ -69,10 +69,11 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 		}
 	}
 
-	// Add attributes from schema to metadata onchain attributes
-	for _, attribute := range schema.OnchainData.NftAttributesValue {
-		data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
-	}
+	// TODO:: RECHCK THIS
+	// // Add attributes from schema to metadata onchain attributes
+	// for _, attribute := range schema.OnchainData.NftAttributesValue {
+	// 	data.OnchainAttributes = append(append(data.OnchainAttributes, attribute), data.OnchainAttributes...)
+	// }
 
 	// validate flag of data.TokenID
 	if data.TokenId != "MULTIMINT" {

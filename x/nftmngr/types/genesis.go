@@ -19,6 +19,9 @@ func DefaultGenesis() *GenesisState {
 		NFTFeeBalance:           nil,
 		MetadataCreatorList:     []MetadataCreator{},
 		NftCollectionList:       []NftCollection{},
+		ActionExecutorList:      []ActionExecutor{},
+		SchemaAttributeList:     []SchemaAttribute{},
+		ActionOfSchemaList:      []ActionOfSchema{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -96,6 +99,36 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for nftCollection")
 		}
 		nftCollectionIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in actionExecutor
+	actionExecutorIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.ActionExecutorList {
+		index := string(ActionExecutorKey(elem.NftSchemaCode, elem.ExecutorAddress))
+		if _, ok := actionExecutorIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for actionExecutor")
+		}
+		actionExecutorIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in schemaAttribute
+	schemaAttributeIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.SchemaAttributeList {
+		index := string(SchemaAttributeKey(elem.NftSchemaCode, elem.Name))
+		if _, ok := schemaAttributeIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for schemaAttribute")
+		}
+		schemaAttributeIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in actionOfSchema
+	actionOfSchemaIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.ActionOfSchemaList {
+		index := string(ActionOfSchemaKey(elem.NftSchemaCode, elem.Name))
+		if _, ok := actionOfSchemaIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for actionOfSchema")
+		}
+		actionOfSchemaIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

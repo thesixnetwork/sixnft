@@ -1,10 +1,12 @@
 package keeper
 
 import (
-	// "fmt"
+	"fmt"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
+
+// **** VALIDATION OF NFT METADATA ****
 
 func CreateAttrDefMap(attrDefs []*types.AttributeDefinition) map[string]*types.AttributeDefinition {
 	attrDefMap := make(map[string]*types.AttributeDefinition)
@@ -64,6 +66,34 @@ func HasDuplicateNftAttributesValue(attributes []*types.NftAttributeValue) (bool
 	return false, ""
 }
 
+func HasDuplicateOnchainAttributes(schemaAttributes []*types.AttributeDefinition, tokenAttributes []*types.AttributeDefinition) (bool, string) {
+	mapAttributes := map[string]*types.AttributeDefinition{}
+	for _, attriDef := range schemaAttributes {
+		if _, ok := mapAttributes[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapAttributes[attriDef.Name] = &types.AttributeDefinition{
+			Name:                attriDef.Name,
+			DataType:            attriDef.DataType,
+			Required:            attriDef.Required,
+			DisplayValueField:   attriDef.DisplayValueField,
+			DisplayOption:       attriDef.DisplayOption,
+			DefaultMintValue:    attriDef.DefaultMintValue,
+			HiddenOveride:       attriDef.HiddenOveride,
+			HiddenToMarketplace: attriDef.HiddenToMarketplace,
+		}
+	}
+
+	for _, attriDef := range tokenAttributes {
+		if _, ok := mapAttributes[attriDef.Name]; ok {
+			return true, attriDef.Name
+		}
+		mapAttributes[attriDef.Name] = attriDef
+	}
+
+	return false, ""
+}
+
 func HasSameType(mapOriginAttributes map[string]*types.AttributeDefinition, onchainAttributes []*types.AttributeDefinition) (bool, string) {
 	for _, attriVal := range onchainAttributes {
 		attrDef := mapOriginAttributes[attriVal.Name]
@@ -83,6 +113,14 @@ func MergeNFTDataAttributes(originAttributes []*types.AttributeDefinition, oncha
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
 	for _, originAttribute := range originAttributes {
 		mergedAttributes = append(append(mergedAttributes, originAttribute), onchainAttributes...)
+
+		// ** What is is actually doing is:
+		// ** mergedAttributes = append(mergedAttributes, originAttribute)
+		// ** for _, attr := range onchainAttributes {
+		// ** mergedAttributes = append(mergedAttributes, attr)
+		// ** }
+		// ** It is better performance to use append(append(mergedAttributes, originAttribute), onchainAttributes...) instead of the above
+		// ** Just in case I forget, I will leave this comment here
 	}
 	for _, onchainAttribute := range onchainAttributes {
 		mergedAttributes = append(append(mergedAttributes, onchainAttribute), originAttributes...)
@@ -140,6 +178,122 @@ func HasDefaultMintValue(attribute types.AttributeDefinition) (bool, string) {
 		return ok, "float"
 	}
 	return false, "default"
+}
+
+func ConvertDefaultMintValueToSchemaAttributeValue(defaultMintValue *types.DefaultMintValue) (*types.SchemaAttributeValue, error) {
+	schemaAttributeValue := &types.SchemaAttributeValue{}
+
+	switch value := defaultMintValue.Value.(type) {
+	case *types.DefaultMintValue_NumberAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.DefaultMintValue_StringAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.DefaultMintValue_BooleanAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.DefaultMintValue_FloatAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil, fmt.Errorf("unknown value type: %T", value)
+	}
+
+	return schemaAttributeValue, nil
+}
+
+func ConvertSchemaAttributeValueToDefaultMintValue(schemaAttributeValue *types.SchemaAttributeValue) (*types.DefaultMintValue, error) {
+	defaultMintValue := &types.DefaultMintValue{}
+
+	switch value := schemaAttributeValue.Value.(type) {
+	case *types.SchemaAttributeValue_NumberAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.SchemaAttributeValue_StringAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.SchemaAttributeValue_BooleanAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.SchemaAttributeValue_FloatAttributeValue:
+		defaultMintValue.Value = &types.DefaultMintValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil, fmt.Errorf("unknown value type: %T", value)
+	}
+
+	return defaultMintValue, nil
+}
+
+func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttribute) *types.NftAttributeValue {
+	nftAttributeValue := &types.NftAttributeValue{}
+
+	switch value := schemaAttributes.CurrentValue.Value.(type) {
+	case *types.SchemaAttributeValue_NumberAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.SchemaAttributeValue_StringAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.SchemaAttributeValue_BooleanAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.SchemaAttributeValue_FloatAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil
+	}
+
+	return &types.NftAttributeValue{
+		Name:                schemaAttributes.Name,
+		Value:               nftAttributeValue.Value,
+		HiddenToMarketplace: schemaAttributes.HiddenToMarketplace,
+	}
+}
+
+func ConverAttributeDefinitionToNFTAttributeValue(attributeDefinition *types.AttributeDefinition) *types.NftAttributeValue {
+	nftAttributeValue := &types.NftAttributeValue{}
+
+	switch value := attributeDefinition.DefaultMintValue.Value.(type) {
+	case *types.DefaultMintValue_NumberAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{
+			NumberAttributeValue: value.NumberAttributeValue,
+		}
+	case *types.DefaultMintValue_StringAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{
+			StringAttributeValue: value.StringAttributeValue,
+		}
+	case *types.DefaultMintValue_BooleanAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{
+			BooleanAttributeValue: value.BooleanAttributeValue,
+		}
+	case *types.DefaultMintValue_FloatAttributeValue:
+		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{
+			FloatAttributeValue: value.FloatAttributeValue,
+		}
+	default:
+		return nil
+	}
+
+	return &types.NftAttributeValue{
+		Name:                attributeDefinition.Name,
+		Value:               nftAttributeValue.Value,
+		HiddenToMarketplace: attributeDefinition.HiddenToMarketplace,
+	}
 }
 
 // Check if NFT data attributes exists in schema

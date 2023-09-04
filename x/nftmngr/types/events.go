@@ -12,6 +12,8 @@ const (
 	AttributeKeyAddActionResult = "add_action_result"
 
 	EventTypeAddAttribute            = "add_attribute"
+	EventTypeUpdateAttribute         = "update_attribute"
+	EventTypeRemoveAttribute         = "remove_attribute"
 	AttributeKeyAddAttributeName     = "add_attribute_name"
 	AttributeKeyAddAttributeLocation = "add_attribute_location"
 	AttributeKeyAddAttributeResult   = "add_attribute_result"
@@ -20,6 +22,7 @@ const (
 	AttributeKeyNftSchemaCode   = "nft_schema_code"
 	AttributeKeyNewOwner        = "new_owner"
 
+	// @deprecated
 	EventTypeAddSystemActioner    = "add_system_actioner"
 	EventTypeRemoveSystemActioner = "remove_system_actioner"
 	AttributeKeyActioner          = "actioner"
@@ -61,7 +64,6 @@ const (
 	EventTypeSetMetadataFormat          = "set_metadata_format"
 	AttributeKeySetMetadataFormat       = "metadata_format"
 	AttributeKeySetMetadataFormatResult = "set_metadata_format_result"
-	
 
 	//set nft schema value
 	EventTypeSetNFTSchemaValue          = "set_nft_schema_value"
@@ -94,4 +96,12 @@ const (
 	EventTypeChangeOrgOwner = "change_org_owner"
 	AttributeKeyOrgName     = "org_name"
 	AttributeKeyOldOwner    = "old_owner"
+
+	EventTypeAddActionExecutor    = "add_action_executor"
+	EventTypeUpdateActionExecutor = "update_action_executor"
+	EventTypeRemoveActionExecutor = "remove_action_executor"
+	AttributeKeyActionExecutor    = "executor_address"
+
+	EventTypeUpdateAction        = "update_action"
+	AttributeKeyUpdateActionName = "update_action_name"
 )
