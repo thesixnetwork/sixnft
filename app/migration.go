@@ -21,6 +21,22 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 				ExecutorAddress: systemActioner,
 				Creator:         nftSchemaV1.Owner,
 			})
+
+			val, found := app.NftmngrKeeper.GetExecutorOfSchema(ctx, nftSchemaV1.Code)
+			if !found {
+				val = nftmngrtypes.ExecutorOfSchema{
+					NftSchemaCode:   nftSchemaV1.Code,
+					ExecutorAddress: []string{},
+				}
+			}
+
+			// set executorOfSchema
+			val.ExecutorAddress = append(val.ExecutorAddress, systemActioner)
+
+			app.NftmngrKeeper.SetExecutorOfSchema(ctx, nftmngrtypes.ExecutorOfSchema{
+				NftSchemaCode:   nftSchemaV1.Code,
+				ExecutorAddress: val.ExecutorAddress,
+			})
 		}
 
 		// migrate schema to new schema

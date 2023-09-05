@@ -142,6 +142,22 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 			continue
 		}
 
+		val, found := k.GetExecutorOfSchema(ctx, schema_input.Code)
+		if !found {
+			val = types.ExecutorOfSchema{
+				NftSchemaCode: schema_input.Code,
+				ExecutorAddress: []string{},
+			}
+		}
+
+		// set executorOfSchema
+		val.ExecutorAddress = append(val.ExecutorAddress, actionExecutor)
+		
+		k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+			NftSchemaCode: schema_input.Code,
+			ExecutorAddress: val.ExecutorAddress,
+		})
+
 		// set actionExecutor
 		k.SetActionExecutor(ctx, types.ActionExecutor{
 			Creator:         msg.Creator,

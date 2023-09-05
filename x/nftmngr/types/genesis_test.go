@@ -112,6 +112,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						Name:          "1",
 					},
 				},
+				ExecutorOfSchemaList: []types.ExecutorOfSchema{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -259,6 +267,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						NftSchemaCode: "0",
 						Name:          "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated executorOfSchema",
+			genState: &types.GenesisState{
+				ExecutorOfSchemaList: []types.ExecutorOfSchema{
+					{
+						NftSchemaCode: "0",
+					},
+					{
+						NftSchemaCode: "0",
 					},
 				},
 			},
