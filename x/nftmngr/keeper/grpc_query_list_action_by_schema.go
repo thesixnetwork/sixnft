@@ -3,9 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -16,29 +14,27 @@ func (k Keeper) ListActionBySchema(goCtx context.Context, req *types.QueryListAc
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	ctx := sdk.UnwrapSDKContext(goCtx)
 	var actionOfSchemas []*types.ActionOfSchema
 
-	store := ctx.KVStore(k.storeKey)
-	actionOfSchemaStore := prefix.NewStore(store, types.KeyPrefix(types.ActionOfSchemaKeyPrefix))
-
-	pagination, err := query.Paginate(actionOfSchemaStore, req.Pagination, func(key []byte, value []byte) error {
-		var actionSchema types.ActionOfSchema
-		if err := k.cdc.Unmarshal(value, &actionSchema); err != nil {
-			return err
-		}
-		if actionSchema.NftSchemaCode == req.NftSchemaCode {
-			actionOfSchemas = append(actionOfSchemas, &actionSchema)
-		}
-		return nil
-	})
-
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+	ctx := sdk.UnwrapSDKContext(goCtx)
+	_, found := k.GetNFTSchema(ctx, req.NftSchemaCode)
+	if !found {
+		return nil, status.Error(codes.NotFound, "Schema Not Found")
 	}
 
-	pagination.Total = uint64(len(actionOfSchemas))
+	store := ctx.KVStore(k.storeKey)
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
 
-	return &types.QueryListActionBySchemaResponse{NftSchemaCode: req.GetNftSchemaCode(), ActionOfSchema: actionOfSchemas, Pagination: pagination}, nil
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var actionOfSchema types.ActionOfSchema
+		k.cdc.MustUnmarshal(iterator.Value(), &actionOfSchema)
+		if actionOfSchema.NftSchemaCode == req.NftSchemaCode {
+			actionOfSchemas = append(actionOfSchemas, &actionOfSchema)
+		}
+	}
+
+	return &types.QueryListActionBySchemaResponse{NftSchemaCode: req.GetNftSchemaCode(), ActionOfSchema: actionOfSchemas}, nil
 
 }

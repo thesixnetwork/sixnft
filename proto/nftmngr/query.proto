@@ -308,13 +308,11 @@ message QueryAllActionExecutorResponse {
 
 message QueryActionExecutorbySchemaRequest {
   string nftSchemaCode = 1;
-  cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryActionExecutorbySchemaResponse {
   string nftSchemaCode = 1;
   repeated string executorAddress = 2;
-  cosmos.base.query.v1beta1.PageRequest pagination = 3;
 }
 
 message QueryGetSchemaAttributeRequest {
@@ -337,12 +335,10 @@ message QueryAllSchemaAttributeResponse {
 
 message QueryListAttributeBySchemaRequest {
 	string nftSchemaCode = 1;
-	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryListAttributeBySchemaResponse {
 	repeated SchemaAttribute schemaAttribute = 1 [(gogoproto.nullable) = false];
-	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 message QueryGetActionOfSchemaRequest {
@@ -366,13 +362,11 @@ message QueryAllActionOfSchemaResponse {
 
 message QueryListActionBySchemaRequest {
   	string nftSchemaCode = 1;
-	cosmos.base.query.v1beta1.PageRequest pagination = 2;
 }
 
 message QueryListActionBySchemaResponse {
   string nftSchemaCode = 1;
   repeated ActionOfSchema actionOfSchema  = 2;
-  cosmos.base.query.v1beta1.PageResponse pagination = 3;
 }
 
 // this line is used by starport scaffolding # 3

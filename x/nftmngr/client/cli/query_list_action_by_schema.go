@@ -31,12 +31,6 @@ func CmdListActionBySchema() *cobra.Command {
 				NftSchemaCode: reqNftSchemaCode,
 			}
 
-			pageReq, err := client.ReadPageRequest(cmd.Flags())
-			if err != nil {
-				return err
-			}
-			params.Pagination = pageReq
-
 			res, err := queryClient.ListActionBySchema(cmd.Context(), params)
 			if err != nil {
 				return err

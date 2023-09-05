@@ -3,9 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -16,33 +14,26 @@ func (k Keeper) ActionExecutorbySchema(c context.Context, req *types.QueryAction
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var actionExecutors []types.ActionExecutor
+	var actionExecutors []string
 	ctx := sdk.UnwrapSDKContext(c)
 
+	_, found := k.GetNFTSchema(ctx, req.NftSchemaCode)
+	if !found {
+		return nil, status.Error(codes.NotFound, "Schema Not Found")
+	}
+	
 	store := ctx.KVStore(k.storeKey)
-	actionExecutorStore := prefix.NewStore(store, types.KeyPrefix(types.ActionExecutorKeyPrefix))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
 
-	_, err := query.Paginate(actionExecutorStore, req.Pagination, func(key []byte, value []byte) error {
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
 		var actionExecutor types.ActionExecutor
-		if err := k.cdc.Unmarshal(value, &actionExecutor); err != nil {
-			return err
-		}
-
-		actionExecutors = append(actionExecutors, actionExecutor)
-		return nil
-	})
-
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	var executorAddresses []string
-	// find all actionExecutors by schema
-	for _, actionExecutor := range actionExecutors {
+		k.cdc.MustUnmarshal(iterator.Value(), &actionExecutor)
 		if actionExecutor.NftSchemaCode == req.NftSchemaCode {
-			executorAddresses = append(executorAddresses, actionExecutor.ExecutorAddress)
+			actionExecutors = append(actionExecutors, actionExecutor.ExecutorAddress)
 		}
 	}
 
-	return &types.QueryActionExecutorbySchemaResponse{NftSchemaCode: req.NftSchemaCode, ExecutorAddress: executorAddresses}, nil
+	return &types.QueryActionExecutorbySchemaResponse{NftSchemaCode: req.NftSchemaCode, ExecutorAddress: actionExecutors}, nil
 }
