@@ -139,11 +139,6 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_of_schema";
 	}
 
-	// Queries a list of ListActionBySchema items.
-	rpc ListActionBySchema(QueryListActionBySchemaRequest) returns (QueryListActionBySchemaResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/list_action_by_schema/{nftSchemaCode}";
-	}
-
 	// Queries a ExecutorOfSchema by index.
 	rpc ExecutorOfSchema(QueryGetExecutorOfSchemaRequest) returns (QueryGetExecutorOfSchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/executor_of_schema/{nftSchemaCode}";
@@ -362,15 +357,6 @@ message QueryAllActionOfSchemaRequest {
 message QueryAllActionOfSchemaResponse {
 	repeated ActionOfSchema actionOfSchema = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-message QueryListActionBySchemaRequest {
-  	string nftSchemaCode = 1;
-}
-
-message QueryListActionBySchemaResponse {
-  string nftSchemaCode = 1;
-  repeated ActionOfSchema actionOfSchema  = 2;
 }
 
 message QueryGetExecutorOfSchemaRequest {
