@@ -22,6 +22,8 @@ func DefaultGenesis() *GenesisState {
 		ActionExecutorList:      []ActionExecutor{},
 		SchemaAttributeList:     []SchemaAttribute{},
 		ActionOfSchemaList:      []ActionOfSchema{},
+		ExecutorOfSchemaList:    []ExecutorOfSchema{},
+		AttributeOfSchemaList:   []AttributeOfSchema{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -129,6 +131,26 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("duplicated index for actionOfSchema")
 		}
 		actionOfSchemaIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in executorOfSchema
+	executorOfSchemaIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.ExecutorOfSchemaList {
+		index := string(ExecutorOfSchemaKey(elem.NftSchemaCode))
+		if _, ok := executorOfSchemaIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for executorOfSchema")
+		}
+		executorOfSchemaIndexMap[index] = struct{}{}
+	}
+	// Check for duplicated index in attributeOfSchema
+	attributeOfSchemaIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.AttributeOfSchemaList {
+		index := string(AttributeOfSchemaKey(elem.NftSchemaCode))
+		if _, ok := attributeOfSchemaIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for attributeOfSchema")
+		}
+		attributeOfSchemaIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

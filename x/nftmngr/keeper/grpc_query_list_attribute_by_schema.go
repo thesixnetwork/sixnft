@@ -3,9 +3,7 @@ package keeper
 import (
 	"context"
 
-	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,33 +18,19 @@ func (k Keeper) ListAttributeBySchema(goCtx context.Context, req *types.QueryLis
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	store := ctx.KVStore(k.storeKey)
-	schemaAttributesStore := prefix.NewStore(store, types.KeyPrefix(types.SchemaAttributeKeyPrefix))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
 
-	pagination, err := query.Paginate(schemaAttributesStore, req.Pagination, func(key []byte, value []byte) error {
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
 		var schemaAttribute types.SchemaAttribute
-		if err := k.cdc.Unmarshal(value, &schemaAttribute); err != nil {
-			return err
-		}
-
-		schemaAttributes = append(schemaAttributes, schemaAttribute)
-		return nil
-	})
-
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	var listOfSchemaAttibutes []types.SchemaAttribute
-	// find all actionExecutors by schema
-	for _, attribute := range schemaAttributes {
-		if attribute.NftSchemaCode == req.NftSchemaCode {
-			listOfSchemaAttibutes = append(listOfSchemaAttibutes, attribute)
+		k.cdc.MustUnmarshal(iterator.Value(), &schemaAttribute)
+		if schemaAttribute.NftSchemaCode == req.NftSchemaCode {
+			schemaAttributes = append(schemaAttributes, schemaAttribute)
 		}
 	}
 
-	pagination.Total = uint64(len(listOfSchemaAttibutes))
-
-	return &types.QueryListAttributeBySchemaResponse{SchemaAttribute: listOfSchemaAttibutes, Pagination: pagination}, nil
+	return &types.QueryListAttributeBySchemaResponse{SchemaAttribute: schemaAttributes}, nil
 }
 
 // func (k Keeper) ListAttributeBySchemaUsingCtx(ctx sdk.Context, req Pagination *query.PageRequest) ([]*types.SchemaAttribute, error) {
