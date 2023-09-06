@@ -105,6 +105,22 @@ func TestGenesis(t *testing.T) {
 				Name:          "1",
 			},
 		},
+		ExecutorOfSchemaList: []types.ExecutorOfSchema{
+			{
+				NftSchemaCode: "0",
+			},
+			{
+				NftSchemaCode: "1",
+			},
+		},
+		AttributeOfSchemaList: []types.AttributeOfSchema{
+			{
+				NftSchemaCode: "0",
+			},
+			{
+				NftSchemaCode: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -128,5 +144,7 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.ActionExecutorList, got.ActionExecutorList)
 	require.ElementsMatch(t, genesisState.SchemaAttributeList, got.SchemaAttributeList)
 	require.ElementsMatch(t, genesisState.ActionOfSchemaList, got.ActionOfSchemaList)
+	require.ElementsMatch(t, genesisState.ExecutorOfSchemaList, got.ExecutorOfSchemaList)
+	require.ElementsMatch(t, genesisState.AttributeOfSchemaList, got.AttributeOfSchemaList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

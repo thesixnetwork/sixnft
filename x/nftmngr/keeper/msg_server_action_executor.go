@@ -45,6 +45,22 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 		ExecutorAddress: msg.ExecutorAddress,
 	}
 
+	val, found := k.GetExecutorOfSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		val = types.ExecutorOfSchema{
+			NftSchemaCode:   msg.NftSchemaCode,
+			ExecutorAddress: []string{},
+		}
+	}
+
+	// set executorOfSchema
+	val.ExecutorAddress = append(val.ExecutorAddress, msg.ExecutorAddress)
+
+	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+		NftSchemaCode:   msg.NftSchemaCode,
+		ExecutorAddress: val.ExecutorAddress,
+	})
+
 	k.SetActionExecutor(
 		ctx,
 		actionExecutor,
@@ -100,6 +116,22 @@ func (k msgServer) UpdateActionExecutor(goCtx context.Context, msg *types.MsgUpd
 		ExecutorAddress: msg.ExecutorAddress,
 	}
 
+	val, found := k.GetExecutorOfSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		val = types.ExecutorOfSchema{
+			NftSchemaCode:   msg.NftSchemaCode,
+			ExecutorAddress: []string{},
+		}
+	}
+
+	// set executorOfSchema
+	val.ExecutorAddress = append(val.ExecutorAddress, msg.ExecutorAddress)
+
+	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+		NftSchemaCode:   msg.NftSchemaCode,
+		ExecutorAddress: val.ExecutorAddress,
+	})
+
 	k.SetActionExecutor(ctx, actionExecutor)
 
 	// emit events
@@ -141,6 +173,27 @@ func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDel
 		msg.NftSchemaCode,
 		msg.ExecutorAddress,
 	)
+
+	val, found := k.GetExecutorOfSchema(ctx, msg.NftSchemaCode)
+	if !found {
+		val = types.ExecutorOfSchema{
+			NftSchemaCode:   msg.NftSchemaCode,
+			ExecutorAddress: []string{},
+		}
+	}
+
+	// remove executorOfSchema
+	for i, executor := range val.ExecutorAddress {
+		if executor == msg.ExecutorAddress {
+			val.ExecutorAddress = append(val.ExecutorAddress[:i], val.ExecutorAddress[i+1:]...)
+			break
+		}
+	}
+
+	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+		NftSchemaCode:   msg.NftSchemaCode,
+		ExecutorAddress: val.ExecutorAddress,
+	})
 
 	// emit events
 	ctx.EventManager().EmitEvent(

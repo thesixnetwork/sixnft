@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"strconv"
+	"context"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -9,29 +9,23 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-var _ = strconv.Itoa(0)
-
-func CmdActionExecutorbySchema() *cobra.Command {
+func CmdShowAttributeOfSchema() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "action-executorby-schema [nft-schema-code]",
-		Short: "Query actionExecutorbySchema",
+		Use:   "show-attribute-of-schema [nft-schema-code]",
+		Short: "shows a attribute_of_schema",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			reqNftSchemaCode := args[0]
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
+			clientCtx := client.GetClientContextFromCmd(cmd)
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryActionExecutorbySchemaRequest{
+			argNftSchemaCode := args[0]
 
-				NftSchemaCode: reqNftSchemaCode,
+			params := &types.QueryGetAttributeOfSchemaRequest{
+				NftSchemaCode: argNftSchemaCode,
 			}
 
-			res, err := queryClient.ActionExecutorbySchema(cmd.Context(), params)
+			res, err := queryClient.AttributeOfSchema(context.Background(), params)
 			if err != nil {
 				return err
 			}
