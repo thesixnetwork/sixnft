@@ -17,6 +17,7 @@ import "nftmngr/action_executor.proto";
 import "nftmngr/schema_attribute.proto";
 import "nftmngr/action_of_schema.proto";
 import "nftmngr/executor_of_schema.proto";
+import "nftmngr/attribute_of_schema.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -59,7 +60,7 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_by_ref_id";
 	}
 
-// Queries a Organization by index.
+	// Queries a Organization by index.
 	rpc Organization(QueryGetOrganizationRequest) returns (QueryGetOrganizationResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/organization/{name}";
 	}
@@ -69,12 +70,12 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/organization";
 	}
 
-// Queries a NftCollection by index.
+	// Queries a NftCollection by index.
 	rpc NftCollection(QueryGetNftCollectionRequest) returns (QueryGetNftCollectionResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_collection/{nftSchemaCode}";
 	}
 
-// Queries a NFTSchemaByContract by index.
+	// Queries a NFTSchemaByContract by index.
 	rpc NFTSchemaByContract(QueryGetNFTSchemaByContractRequest) returns (QueryGetNFTSchemaByContractResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract/{originContractAddress}";
 	}
@@ -84,15 +85,15 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_schema_by_contract";
 	}
 
-// Queries a NFTFeeConfig by index.
+	// Queries a NFTFeeConfig by index.
 	rpc NFTFeeConfig(QueryGetNFTFeeConfigRequest) returns (QueryGetNFTFeeConfigResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_config";
 	}
-// Queries a NFTFeeBalance by index.
+	// Queries a NFTFeeBalance by index.
 	rpc NFTFeeBalance(QueryGetNFTFeeBalanceRequest) returns (QueryGetNFTFeeBalanceResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/nft_fee_balance";
 	}
-// Queries a MetadataCreator by index.
+	// Queries a MetadataCreator by index.
 	rpc MetadataCreator(QueryGetMetadataCreatorRequest) returns (QueryGetMetadataCreatorResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator/{nftSchemaCode}";
 	}
@@ -102,7 +103,7 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/metadata_creator";
 	}
 
-// Queries a ActionExecutor by index.
+	// Queries a ActionExecutor by index.
 	rpc ActionExecutor(QueryGetActionExecutorRequest) returns (QueryGetActionExecutorResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_executor/{nftSchemaCode}/{executorAddress}";
 	}
@@ -113,7 +114,7 @@ service Query {
 	}
 
 
-// Queries a SchemaAttribute by index.
+	// Queries a SchemaAttribute by index.
 	rpc SchemaAttribute(QueryGetSchemaAttributeRequest) returns (QueryGetSchemaAttributeResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/schema_attribute/{nftSchemaCode}/{name}";
 	}
@@ -123,12 +124,12 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/schema_attribute";
 	}
 
-// Queries a list of ListAttributeBySchema items.
+	// Queries a list of ListAttributeBySchema items.
 	rpc ListAttributeBySchema(QueryListAttributeBySchemaRequest) returns (QueryListAttributeBySchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/list_attribute_by_schema/{nftSchemaCode}";
 	}
 
-// Queries a ActionOfSchema by index.
+	// Queries a ActionOfSchema by index.
 	rpc ActionOfSchema(QueryGetActionOfSchemaRequest) returns (QueryGetActionOfSchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_of_schema/{nftSchemaCode}/{name}";
 	}
@@ -138,12 +139,12 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/action_of_schema";
 	}
 
-// Queries a list of ListActionBySchema items.
+	// Queries a list of ListActionBySchema items.
 	rpc ListActionBySchema(QueryListActionBySchemaRequest) returns (QueryListActionBySchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/list_action_by_schema/{nftSchemaCode}";
 	}
 
-// Queries a ExecutorOfSchema by index.
+	// Queries a ExecutorOfSchema by index.
 	rpc ExecutorOfSchema(QueryGetExecutorOfSchemaRequest) returns (QueryGetExecutorOfSchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/executor_of_schema/{nftSchemaCode}";
 	}
@@ -153,7 +154,12 @@ service Query {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/executor_of_schema";
 	}
 
-// this line is used by starport scaffolding # 2
+	// Queries a AttributeOfSchema by index.
+	rpc AttributeOfSchema(QueryGetAttributeOfSchemaRequest) returns (QueryGetAttributeOfSchemaResponse) {
+		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/attribute_of_schema/{nftSchemaCode}";
+	}
+
+	// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -384,5 +390,16 @@ message QueryAllExecutorOfSchemaResponse {
 	repeated ExecutorOfSchema executorOfSchema = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
+
+message QueryGetAttributeOfSchemaRequest {
+	string nftSchemaCode = 1;
+
+}
+
+message QueryGetAttributeOfSchemaResponse {
+	string nftSchemaCode = 1;
+	repeated SchemaAttribute schemaAttribute = 2 [(gogoproto.nullable) = false];
+}
+
 
 // this line is used by starport scaffolding # 3
