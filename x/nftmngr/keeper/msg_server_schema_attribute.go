@@ -43,7 +43,6 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-
 	err = ValidateAttributeNames([]*types.AttributeDefinition{&update_attribute})
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())

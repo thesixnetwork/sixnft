@@ -87,6 +87,8 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		MintAuthorization: schema_input.MintAuthorization,
 	}
 
+	var schemaAttributes []*types.SchemaAttribute
+
 	// loop over SchemaAttribute and add to nftmngr/code/name
 	for _, scheamDefaultMintAttribute := range schema_input.OnchainData.SchemaAttributes {
 		// parse DefaultMintValue to SchemaAttributeValue
@@ -107,7 +109,25 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 			HiddenToMarketplace: scheamDefaultMintAttribute.HiddenToMarketplace,
 			Creator:             msg.Creator,
 		})
+
+		schemaAttributes = append(schemaAttributes, &types.SchemaAttribute{
+			NftSchemaCode:       schema_input.Code,
+			Name:                scheamDefaultMintAttribute.Name,
+			DataType:            scheamDefaultMintAttribute.DataType,
+			Required:            scheamDefaultMintAttribute.Required,
+			DisplayValueField:   scheamDefaultMintAttribute.DisplayValueField,
+			DisplayOption:       scheamDefaultMintAttribute.DisplayOption,
+			CurrentValue:        schmaAttributeValue,
+			HiddenOveride:       scheamDefaultMintAttribute.HiddenOveride,
+			HiddenToMarketplace: scheamDefaultMintAttribute.HiddenToMarketplace,
+			Creator:             msg.Creator,
+		})
 	}
+
+	k.SetAttributeOfSchema(ctx, types.AttributeOfSchema{
+		NftSchemaCode:     schema_input.Code,
+		SchemaAttributes:  schemaAttributes,
+	})
 
 	// Add the schema_input to the store
 	k.Keeper.SetNFTSchema(ctx, schema)
@@ -141,6 +161,22 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		if isFound {
 			continue
 		}
+
+		val, found := k.GetExecutorOfSchema(ctx, schema_input.Code)
+		if !found {
+			val = types.ExecutorOfSchema{
+				NftSchemaCode:   schema_input.Code,
+				ExecutorAddress: []string{},
+			}
+		}
+
+		// set executorOfSchema
+		val.ExecutorAddress = append(val.ExecutorAddress, actionExecutor)
+
+		k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+			NftSchemaCode:   schema_input.Code,
+			ExecutorAddress: val.ExecutorAddress,
+		})
 
 		// set actionExecutor
 		k.SetActionExecutor(ctx, types.ActionExecutor{
