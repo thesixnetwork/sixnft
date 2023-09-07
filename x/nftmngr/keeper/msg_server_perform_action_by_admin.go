@@ -127,27 +127,30 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 	var list_schema_attributes_ []*types.SchemaAttribute
 	var map_converted_schema_attributes []*types.NftAttributeValue
 
+	//TODO:: THIS SHOULD BE THE PROBLEM GAS CONSUMPTION TOO HIGH >> from 0.2 to 0.3
 	// get schema attributes and convert to NFtAttributeValue
-	all_schema_attributes := k.GetAllSchemaAttribute(ctx)
+	val, found := k.GetAttributeOfSchema(ctx, msg.NftSchemaCode)
 
 	attributeMap := make(map[string]bool)
 
-	for _, schema_attribute := range all_schema_attributes {
-		if schema_attribute.NftSchemaCode != msg.NftSchemaCode {
-			continue
-		}
-		// Check if the attribute has already been added
-		if attributeMap[schema_attribute.Name] {
-			continue
-		}
-		// Add the attribute to the list of schema attributes
-		list_schema_attributes_ = append(list_schema_attributes_, &schema_attribute)
+	if found {
+		for _, schema_attribute := range val.SchemaAttributes {
+			if schema_attribute.NftSchemaCode != msg.NftSchemaCode {
+				continue
+			}
+			// Check if the attribute has already been added
+			if attributeMap[schema_attribute.Name] {
+				continue
+			}
+			// Add the attribute to the list of schema attributes
+			list_schema_attributes_ = append(list_schema_attributes_, schema_attribute)
 
-		// Add the attribute to the map
-		attributeMap[schema_attribute.Name] = true
+			// Add the attribute to the map
+			attributeMap[schema_attribute.Name] = true
 
-		nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(&schema_attribute)
-		map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
+			nftAttributeValue_ := ConverSchemaAttributeToNFTAttributeValue(schema_attribute)
+			map_converted_schema_attributes = append(map_converted_schema_attributes, nftAttributeValue_)
+		}
 	}
 
 	// ** META path ../types/meta.go **
