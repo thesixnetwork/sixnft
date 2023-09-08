@@ -9,13 +9,8 @@ message SchemaAttribute {
   string nftSchemaCode = 1; 
   string name = 2; 
   string data_type = 3; 
-  bool required = 4;
-  string display_value_field = 5; 
-  DisplayOption display_option = 6; 
-  SchemaAttributeValue current_value = 7;
-  bool hidden_overide = 8; // flag that allows action to override hidden
-  bool hidden_to_marketplace = 9;
-  string creator = 10;
+  SchemaAttributeValue current_value = 4;
+  string creator = 5;
 }
 
 

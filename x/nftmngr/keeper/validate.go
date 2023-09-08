@@ -261,7 +261,6 @@ func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttr
 	return &types.NftAttributeValue{
 		Name:                schemaAttributes.Name,
 		Value:               nftAttributeValue.Value,
-		HiddenToMarketplace: schemaAttributes.HiddenToMarketplace,
 	}
 }
 

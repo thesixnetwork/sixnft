@@ -1,7 +1,6 @@
 syntax = "proto3";
 package thesixnetwork.sixnft.nftmngr;
 
-
 import "nftmngr/on_chain_data.proto";
 import "nftmngr/origin_data.proto";
 
@@ -25,7 +24,7 @@ message NFTSchemaINPUT {
   string description = 4;
   repeated string system_actioners = 5;
   OriginData origin_data = 6;
-  OnChainDataInput onchain_data = 7;
+  OnChainData onchain_data = 7;
   bool isVerified = 8;
   string mint_authorization = 9;
 }

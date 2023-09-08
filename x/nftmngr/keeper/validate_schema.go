@@ -25,7 +25,7 @@ func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 		mapAttributeOriginDefinition[attriDef.Name] = attriDef
 	}
 
-	mapAttributeSchemaDefinition := CreateAttrDefMap(schema.OnchainData.SchemaAttributes)
+	mapAttributeSchemaDefinition := CreateAttrDefMap(schema.OnchainData.NftAttributes)
 
 	// Check for duplicate origin attributes
 	duplicated, errString := HasDuplicateAttributes(schema.OriginData.OriginAttributes)
@@ -44,7 +44,7 @@ func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 	}
 
 	// Validate Onchain Data Onchain Attributes
-	err = ValidateAttributeNames(schema.OnchainData.SchemaAttributes)
+	err = ValidateAttributeNames(schema.OnchainData.NftAttributes)
 	if err != nil {
 		return false, err
 	}
@@ -74,13 +74,13 @@ func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 	}
 
 	// Validate for duplicate of onchain attributes (schema attributes and token attributes)
-	duplicated, errString = HasDuplicateOnchainAttributes(schema.OnchainData.SchemaAttributes, schema.OnchainData.TokenAttributes)
+	duplicated, errString = HasDuplicateOnchainAttributes(schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainNFTAttributes, fmt.Sprintf("Duplicate attribute name: %s", errString))
 	}
 
 	// Validate if attributes have the same type
-	hasSameType, errString := HasSameType(mapAttributeSchemaDefinition, schema.OnchainData.SchemaAttributes)
+	hasSameType, errString := HasSameType(mapAttributeSchemaDefinition, schema.OnchainData.NftAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrSameTypeNFTAttributes, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}
@@ -91,7 +91,7 @@ func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 	}
 
 	// Validate if default mint value has the same type
-	hasSameType, errString = DefaultMintValueHasSameType(schema.OnchainData.SchemaAttributes)
+	hasSameType, errString = DefaultMintValueHasSameType(schema.OnchainData.NftAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrNotSameTypeDefaultMintValue, fmt.Sprintf("Attribute type not the same: %s", errString))
 	}

@@ -59,12 +59,7 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		NftSchemaCode:       valFound.NftSchemaCode,
 		Name:                valFound.Name,
 		DataType:            update_attribute.DataType,
-		Required:            update_attribute.Required,
-		DisplayValueField:   update_attribute.DisplayValueField,
-		DisplayOption:       update_attribute.DisplayOption,
 		CurrentValue:        schmaAttributeValue,
-		HiddenOveride:       update_attribute.HiddenOveride,
-		HiddenToMarketplace: update_attribute.HiddenToMarketplace,
 	}
 
 	k.SetSchemaAttribute(ctx, schemaAttribute)

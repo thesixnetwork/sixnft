@@ -80,6 +80,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		OriginData:  schema_input.OriginData,
 		OnchainData: &types.OnChainData{
 			TokenAttributes: schema_input.OnchainData.TokenAttributes,
+			NftAttributes:   schema_input.OnchainData.NftAttributes,
 			Actions:         schema_input.OnchainData.Actions,
 			Status:          schema_input.OnchainData.Status,
 		},
@@ -87,10 +88,8 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		MintAuthorization: schema_input.MintAuthorization,
 	}
 
-	var schemaAttributes []*types.SchemaAttribute
-
 	// loop over SchemaAttribute and add to nftmngr/code/name
-	for _, scheamDefaultMintAttribute := range schema_input.OnchainData.SchemaAttributes {
+	for _, scheamDefaultMintAttribute := range schema_input.OnchainData.NftAttributes {
 		// parse DefaultMintValue to SchemaAttributeValue
 		schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(scheamDefaultMintAttribute.DefaultMintValue)
 		if err != nil {
@@ -100,34 +99,11 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
 			NftSchemaCode:       schema_input.Code,
 			Name:                scheamDefaultMintAttribute.Name,
-			DataType:            scheamDefaultMintAttribute.DataType,
-			Required:            scheamDefaultMintAttribute.Required,
-			DisplayValueField:   scheamDefaultMintAttribute.DisplayValueField,
-			DisplayOption:       scheamDefaultMintAttribute.DisplayOption,
+			DataType: 		  	scheamDefaultMintAttribute.DataType,
 			CurrentValue:        schmaAttributeValue,
-			HiddenOveride:       scheamDefaultMintAttribute.HiddenOveride,
-			HiddenToMarketplace: scheamDefaultMintAttribute.HiddenToMarketplace,
-			Creator:             msg.Creator,
-		})
-
-		schemaAttributes = append(schemaAttributes, &types.SchemaAttribute{
-			NftSchemaCode:       schema_input.Code,
-			Name:                scheamDefaultMintAttribute.Name,
-			DataType:            scheamDefaultMintAttribute.DataType,
-			Required:            scheamDefaultMintAttribute.Required,
-			DisplayValueField:   scheamDefaultMintAttribute.DisplayValueField,
-			DisplayOption:       scheamDefaultMintAttribute.DisplayOption,
-			CurrentValue:        schmaAttributeValue,
-			HiddenOveride:       scheamDefaultMintAttribute.HiddenOveride,
-			HiddenToMarketplace: scheamDefaultMintAttribute.HiddenToMarketplace,
 			Creator:             msg.Creator,
 		})
 	}
-
-	k.SetAttributeOfSchema(ctx, types.AttributeOfSchema{
-		NftSchemaCode:     schema_input.Code,
-		SchemaAttributes:  schemaAttributes,
-	})
 
 	// Add the schema_input to the store
 	k.Keeper.SetNFTSchema(ctx, schema)

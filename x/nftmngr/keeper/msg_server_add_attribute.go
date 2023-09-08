@@ -48,8 +48,8 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 
 	// Swith location of attribute
 	switch msg.Location {
-	case types.AttributeLocation_ATTRIBUTE_OF_SCHEMA:
-		schemaAttibuteConverted, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
+	case types.AttributeLocation_NFT_ATTRIBUTE:
+		_defaultMintValue, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
 		if err != nil {
 			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 		}
@@ -57,26 +57,23 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
 			NftSchemaCode:       msg.Code,
 			Name:                new_add_attribute.Name,
+			CurrentValue:        _defaultMintValue,
 			DataType:            new_add_attribute.DataType,
-			Required:            new_add_attribute.Required,
-			DisplayOption:       new_add_attribute.DisplayOption,
-			CurrentValue:        schemaAttibuteConverted,
-			HiddenToMarketplace: new_add_attribute.HiddenToMarketplace,
-			DisplayValueField:   new_add_attribute.DisplayValueField,
-			HiddenOveride:       new_add_attribute.HiddenOveride,
 			Creator:             msg.Creator,
 		})
-	case types.AttributeLocation_ATTRIBUTE_OF_TOKEN:
+		schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
+	case types.AttributeLocation_TOKEN_ATTRIBUTE:
 		// append new token_attributes to array of OnchainData.TokenAttributes
 		schema.OnchainData.TokenAttributes = append(schema.OnchainData.TokenAttributes, &new_add_attribute)
 		// end the case
-		// count the index of new attribute
-		count := MergeAndCountTokenAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-		// set new index to new attribute
-		new_add_attribute.Index = uint64(count - 1)
-		// set schema
-		k.Keeper.SetNFTSchema(ctx, schema)
 	}
+	// count the index of new attribute
+	count := MergeAndCountAllAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.NftAttributes, schema.OnchainData.TokenAttributes)
+	// set new index to new attribute
+	new_add_attribute.Index = uint64(count - 1)
+
+	// set schema
+	k.Keeper.SetNFTSchema(ctx, schema)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -150,13 +147,16 @@ func (k msgServer) ValidateAttributeDefinition(ctx sdk.Context, attribute *types
 }
 
 // merge all attributes and count the index
-func MergeAndCountTokenAttributes(originAttributes []*types.AttributeDefinition, tokenAttributes []*types.AttributeDefinition) int {
+func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) int {
 	// length or originAttributes
 	length_originAttributes := len(originAttributes)
+	// length or onchainNFTAttributes
+	length_onchainNFTAttributes := len(onchainNFTAttributes)
 	// length or onchainTokenAttribute
-	length_onchainTokenAttribute := len(tokenAttributes)
+	length_onchainTokenAttribute := len(onchainTokenAttribute)
 
 	// length of all attributes
-	length_allAttributes := length_originAttributes + length_onchainTokenAttribute
+	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
 	return length_allAttributes
 }
+
