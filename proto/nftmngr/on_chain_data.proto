@@ -17,6 +17,11 @@ message OnChainData {
   repeated FlagStatus status = 4;
 }
 
+message OnChainDataV2 {
+  repeated AttributeDefinition token_attributes = 1; 
+  repeated Action actions = 2; 
+  repeated FlagStatus status = 3;
+}
 
 message OnChainDataV1 {
   bool reveal_required = 1;

@@ -142,14 +142,33 @@ func GetOrganizationFromSchemaCode(nftSchemaCode string) (bool, string) {
 	return true, organizationName
 }
 
-func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
+func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, nftAttribute []*types.AttributeDefinition, tokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
 	mergedAttributes := make([]*types.AttributeDefinition, 0)
+	// var index uint64 = 0
+	// for _, attribute := range append(originAttributes, onchainTokenAttribute...) {
+	// 	attribute.Index = index
+	// 	mergedAttributes = append(mergedAttributes, attribute)
+	// 	index++
+	// }
+
 	var index uint64 = 0
-	for _, attribute := range append(originAttributes, onchainTokenAttribute...) {
+	for _, attribute := range originAttributes {
 		attribute.Index = index
 		mergedAttributes = append(mergedAttributes, attribute)
 		index++
 	}
+	for _, attribute := range nftAttribute {
+		attribute.Index = index
+		mergedAttributes = append(mergedAttributes, attribute)
+		index++
+	}
+
+	for _, attribute := range tokenAttribute {
+		attribute.Index = index
+		mergedAttributes = append(mergedAttributes, attribute)
+		index++
+	}
+	
 
 	return mergedAttributes
 }

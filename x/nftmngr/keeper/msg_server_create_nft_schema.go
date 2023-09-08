@@ -69,7 +69,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 
 	}
-	_ = MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.TokenAttributes)
+	_ = MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.NftAttributes, schema_input.OnchainData.TokenAttributes)
 
 	// parse schema_input to NFTSchema
 	schema := types.NFTSchema{
@@ -89,19 +89,19 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	}
 
 	// loop over SchemaAttribute and add to nftmngr/code/name
-	for _, scheamDefaultMintAttribute := range schema_input.OnchainData.NftAttributes {
+	for _, schemaDefaultMintAttribute := range schema_input.OnchainData.NftAttributes {
 		// parse DefaultMintValue to SchemaAttributeValue
-		schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(scheamDefaultMintAttribute.DefaultMintValue)
+		schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(schemaDefaultMintAttribute.DefaultMintValue)
 		if err != nil {
 			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 		}
 
 		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
-			NftSchemaCode:       schema_input.Code,
-			Name:                scheamDefaultMintAttribute.Name,
-			DataType: 		  	scheamDefaultMintAttribute.DataType,
-			CurrentValue:        schmaAttributeValue,
-			Creator:             msg.Creator,
+			NftSchemaCode: schema_input.Code,
+			Name:          schemaDefaultMintAttribute.Name,
+			DataType:      schemaDefaultMintAttribute.DataType,
+			CurrentValue:  schmaAttributeValue,
+			Creator:       msg.Creator,
 		})
 	}
 
