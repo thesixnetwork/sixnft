@@ -11,18 +11,16 @@ message FlagStatus {
 }
 
 message OnChainData {
+  repeated AttributeDefinition nft_attributes = 1; 
+  repeated AttributeDefinition token_attributes = 2; 
+  repeated Action actions = 3; 
+  repeated FlagStatus status = 4;
+}
+
+message OnChainDataV2 {
   repeated AttributeDefinition token_attributes = 1; 
   repeated Action actions = 2; 
   repeated FlagStatus status = 3;
-}
-
-message OnChainDataInput {
-  bool reveal_required = 1;
-  bytes reveal_secret = 2;
-  repeated AttributeDefinition schema_attributes = 3; 
-  repeated AttributeDefinition token_attributes = 4; 
-  repeated Action actions = 5; 
-  repeated FlagStatus status = 6;
 }
 
 message OnChainDataV1 {

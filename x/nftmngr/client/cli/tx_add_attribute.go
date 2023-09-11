@@ -33,10 +33,10 @@ func CmdAddAttribute() *cobra.Command {
 				return err
 			}
 
-			attributeLo := types.AttributeLocation_ATTRIBUTE_OF_SCHEMA // 0
+			attributeLo := types.AttributeLocation_NFT_ATTRIBUTE // 0
 
 			if attributeLocationInt == 1 {
-				attributeLo = types.AttributeLocation_ATTRIBUTE_OF_TOKEN
+				attributeLo = types.AttributeLocation_TOKEN_ATTRIBUTE
 			}
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {

@@ -234,6 +234,52 @@ func ConvertSchemaAttributeValueToDefaultMintValue(schemaAttributeValue *types.S
 	return defaultMintValue, nil
 }
 
+// function to convert SchemaAttribute to NftAttributeDefinition
+func ConvertSchemaAttributeToNftAttributeDefinition(schemaAttributes *types.SchemaAttributeV1, index int) (*types.AttributeDefinition, error) {
+	attributeDef := &types.AttributeDefinition{}
+
+	switch value := schemaAttributes.CurrentValue.Value.(type) {
+	case *types.SchemaAttributeValue_NumberAttributeValue:
+		attributeDef.DefaultMintValue = &types.DefaultMintValue{
+			Value: &types.DefaultMintValue_NumberAttributeValue{
+				NumberAttributeValue: value.NumberAttributeValue,
+			},
+		}
+	case *types.SchemaAttributeValue_StringAttributeValue:
+		attributeDef.DefaultMintValue = &types.DefaultMintValue{
+			Value: &types.DefaultMintValue_StringAttributeValue{
+				StringAttributeValue: value.StringAttributeValue,
+			},
+		}
+	case *types.SchemaAttributeValue_BooleanAttributeValue:
+		attributeDef.DefaultMintValue = &types.DefaultMintValue{
+			Value: &types.DefaultMintValue_BooleanAttributeValue{
+				BooleanAttributeValue: value.BooleanAttributeValue,
+			},
+		}
+	case *types.SchemaAttributeValue_FloatAttributeValue:
+		attributeDef.DefaultMintValue = &types.DefaultMintValue{
+			Value: &types.DefaultMintValue_FloatAttributeValue{
+				FloatAttributeValue: value.FloatAttributeValue,
+			},
+		}
+	default:
+		return nil, fmt.Errorf("unknown value type: %T", value)
+	}
+
+	return &types.AttributeDefinition{
+		Name:                schemaAttributes.Name,
+		DataType:            schemaAttributes.DataType,
+		Required:            schemaAttributes.Required,
+		DisplayValueField:   schemaAttributes.DisplayValueField,
+		DisplayOption:       schemaAttributes.DisplayOption,
+		DefaultMintValue:    attributeDef.DefaultMintValue,
+		HiddenOveride:       schemaAttributes.HiddenOveride,
+		HiddenToMarketplace: schemaAttributes.HiddenToMarketplace,
+		Index:               uint64(index),
+	}, nil
+}
+
 func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttribute) *types.NftAttributeValue {
 	nftAttributeValue := &types.NftAttributeValue{}
 
@@ -259,9 +305,8 @@ func ConverSchemaAttributeToNFTAttributeValue(schemaAttributes *types.SchemaAttr
 	}
 
 	return &types.NftAttributeValue{
-		Name:                schemaAttributes.Name,
-		Value:               nftAttributeValue.Value,
-		HiddenToMarketplace: schemaAttributes.HiddenToMarketplace,
+		Name:  schemaAttributes.Name,
+		Value: nftAttributeValue.Value,
 	}
 }
 

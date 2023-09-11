@@ -62,6 +62,22 @@ func (k Keeper) GetAllNFTSchema(ctx sdk.Context) (list []types.NFTSchema) {
 	return
 }
 
+// GetAllNFTSchema returns all nFTSchema
+func (k Keeper) GetAllNFTSchemaV2(ctx sdk.Context) (list []types.NFTSchemaV2) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.NFTSchemaKeyPrefix))
+	iterator := sdk.KVStorePrefixIterator(store, []byte{})
+
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var val types.NFTSchemaV2
+		k.cdc.MustUnmarshal(iterator.Value(), &val)
+		list = append(list, val)
+	}
+
+	return
+}
+
 // V1 of the NFT Schema
 
 // SetNFTSchema set a specific nFTSchema in the store from its index

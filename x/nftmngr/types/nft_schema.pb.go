@@ -122,23 +122,123 @@ func (m *NFTSchema) GetMintAuthorization() string {
 	return ""
 }
 
+type NFTSchemaV2 struct {
+	Code              string         `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name              string         `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Owner             string         `protobuf:"bytes,3,opt,name=owner,proto3" json:"owner,omitempty"`
+	Description       string         `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	OriginData        *OriginData    `protobuf:"bytes,5,opt,name=origin_data,json=originData,proto3" json:"origin_data,omitempty"`
+	OnchainData       *OnChainDataV2 `protobuf:"bytes,6,opt,name=onchain_data,json=onchainData,proto3" json:"onchain_data,omitempty"`
+	IsVerified        bool           `protobuf:"varint,7,opt,name=isVerified,proto3" json:"isVerified,omitempty"`
+	MintAuthorization string         `protobuf:"bytes,8,opt,name=mint_authorization,json=mintAuthorization,proto3" json:"mint_authorization,omitempty"`
+}
+
+func (m *NFTSchemaV2) Reset()         { *m = NFTSchemaV2{} }
+func (m *NFTSchemaV2) String() string { return proto.CompactTextString(m) }
+func (*NFTSchemaV2) ProtoMessage()    {}
+func (*NFTSchemaV2) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f35d7a245dabb499, []int{1}
+}
+func (m *NFTSchemaV2) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *NFTSchemaV2) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_NFTSchemaV2.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *NFTSchemaV2) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NFTSchemaV2.Merge(m, src)
+}
+func (m *NFTSchemaV2) XXX_Size() int {
+	return m.Size()
+}
+func (m *NFTSchemaV2) XXX_DiscardUnknown() {
+	xxx_messageInfo_NFTSchemaV2.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_NFTSchemaV2 proto.InternalMessageInfo
+
+func (m *NFTSchemaV2) GetCode() string {
+	if m != nil {
+		return m.Code
+	}
+	return ""
+}
+
+func (m *NFTSchemaV2) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *NFTSchemaV2) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *NFTSchemaV2) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *NFTSchemaV2) GetOriginData() *OriginData {
+	if m != nil {
+		return m.OriginData
+	}
+	return nil
+}
+
+func (m *NFTSchemaV2) GetOnchainData() *OnChainDataV2 {
+	if m != nil {
+		return m.OnchainData
+	}
+	return nil
+}
+
+func (m *NFTSchemaV2) GetIsVerified() bool {
+	if m != nil {
+		return m.IsVerified
+	}
+	return false
+}
+
+func (m *NFTSchemaV2) GetMintAuthorization() string {
+	if m != nil {
+		return m.MintAuthorization
+	}
+	return ""
+}
+
 type NFTSchemaINPUT struct {
-	Code              string            `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Name              string            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Owner             string            `protobuf:"bytes,3,opt,name=owner,proto3" json:"owner,omitempty"`
-	Description       string            `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	SystemActioners   []string          `protobuf:"bytes,5,rep,name=system_actioners,json=systemActioners,proto3" json:"system_actioners,omitempty"`
-	OriginData        *OriginData       `protobuf:"bytes,6,opt,name=origin_data,json=originData,proto3" json:"origin_data,omitempty"`
-	OnchainData       *OnChainDataInput `protobuf:"bytes,7,opt,name=onchain_data,json=onchainData,proto3" json:"onchain_data,omitempty"`
-	IsVerified        bool              `protobuf:"varint,8,opt,name=isVerified,proto3" json:"isVerified,omitempty"`
-	MintAuthorization string            `protobuf:"bytes,9,opt,name=mint_authorization,json=mintAuthorization,proto3" json:"mint_authorization,omitempty"`
+	Code              string       `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	Name              string       `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Owner             string       `protobuf:"bytes,3,opt,name=owner,proto3" json:"owner,omitempty"`
+	Description       string       `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	SystemActioners   []string     `protobuf:"bytes,5,rep,name=system_actioners,json=systemActioners,proto3" json:"system_actioners,omitempty"`
+	OriginData        *OriginData  `protobuf:"bytes,6,opt,name=origin_data,json=originData,proto3" json:"origin_data,omitempty"`
+	OnchainData       *OnChainData `protobuf:"bytes,7,opt,name=onchain_data,json=onchainData,proto3" json:"onchain_data,omitempty"`
+	IsVerified        bool         `protobuf:"varint,8,opt,name=isVerified,proto3" json:"isVerified,omitempty"`
+	MintAuthorization string       `protobuf:"bytes,9,opt,name=mint_authorization,json=mintAuthorization,proto3" json:"mint_authorization,omitempty"`
 }
 
 func (m *NFTSchemaINPUT) Reset()         { *m = NFTSchemaINPUT{} }
 func (m *NFTSchemaINPUT) String() string { return proto.CompactTextString(m) }
 func (*NFTSchemaINPUT) ProtoMessage()    {}
 func (*NFTSchemaINPUT) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f35d7a245dabb499, []int{1}
+	return fileDescriptor_f35d7a245dabb499, []int{2}
 }
 func (m *NFTSchemaINPUT) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -209,7 +309,7 @@ func (m *NFTSchemaINPUT) GetOriginData() *OriginData {
 	return nil
 }
 
-func (m *NFTSchemaINPUT) GetOnchainData() *OnChainDataInput {
+func (m *NFTSchemaINPUT) GetOnchainData() *OnChainData {
 	if m != nil {
 		return m.OnchainData
 	}
@@ -245,7 +345,7 @@ func (m *NFTSchemaV1) Reset()         { *m = NFTSchemaV1{} }
 func (m *NFTSchemaV1) String() string { return proto.CompactTextString(m) }
 func (*NFTSchemaV1) ProtoMessage()    {}
 func (*NFTSchemaV1) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f35d7a245dabb499, []int{2}
+	return fileDescriptor_f35d7a245dabb499, []int{3}
 }
 func (m *NFTSchemaV1) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -332,6 +432,7 @@ func (m *NFTSchemaV1) GetMintAuthorization() string {
 
 func init() {
 	proto.RegisterType((*NFTSchema)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchema")
+	proto.RegisterType((*NFTSchemaV2)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV2")
 	proto.RegisterType((*NFTSchemaINPUT)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaINPUT")
 	proto.RegisterType((*NFTSchemaV1)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV1")
 }
@@ -339,35 +440,35 @@ func init() {
 func init() { proto.RegisterFile("nftmngr/nft_schema.proto", fileDescriptor_f35d7a245dabb499) }
 
 var fileDescriptor_f35d7a245dabb499 = []byte{
-	// 446 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xcb, 0x6e, 0xd3, 0x40,
-	0x14, 0x8d, 0xf3, 0x6a, 0x3c, 0x46, 0x3c, 0x46, 0x2c, 0x86, 0x82, 0x2c, 0xab, 0x2b, 0x57, 0x08,
-	0x5b, 0x85, 0x2f, 0x28, 0x20, 0x24, 0x4b, 0x28, 0x80, 0x29, 0x59, 0xb0, 0xb1, 0xa6, 0xf6, 0x38,
-	0x1e, 0x21, 0xcf, 0x58, 0x33, 0x13, 0xb5, 0xe5, 0x0b, 0x58, 0xf2, 0x59, 0x2c, 0x2b, 0xb1, 0x61,
-	0x59, 0x25, 0x3f, 0x82, 0x3c, 0x4e, 0x8c, 0x1b, 0x85, 0xd4, 0x52, 0x94, 0xdd, 0xcd, 0xb9, 0x39,
-	0xc7, 0xf7, 0x9e, 0x73, 0x35, 0x00, 0xb1, 0x54, 0xe5, 0x6c, 0x2a, 0x7c, 0x96, 0xaa, 0x48, 0xc6,
-	0x19, 0xc9, 0xb1, 0x57, 0x08, 0xae, 0x38, 0x7c, 0xa6, 0x32, 0x22, 0xe9, 0x25, 0x23, 0xea, 0x82,
-	0x8b, 0x6f, 0x5e, 0x59, 0xa6, 0xca, 0x5b, 0xfe, 0xfd, 0xf0, 0xe9, 0x8a, 0xc7, 0x59, 0x14, 0x67,
-	0x98, 0xb2, 0x28, 0xc1, 0x6a, 0x49, 0x3d, 0x7c, 0x52, 0x37, 0x05, 0x9d, 0xde, 0x6a, 0x1d, 0xfd,
-	0xee, 0x02, 0x73, 0xfc, 0xee, 0xec, 0xb3, 0xfe, 0x12, 0x84, 0xa0, 0x1f, 0xf3, 0x84, 0x20, 0xc3,
-	0x31, 0x5c, 0x33, 0xd4, 0x75, 0x89, 0x31, 0x9c, 0x13, 0xd4, 0xad, 0xb0, 0xb2, 0x86, 0x8f, 0xc1,
-	0x80, 0x5f, 0x30, 0x22, 0x50, 0x4f, 0x83, 0xd5, 0x0f, 0xe8, 0x00, 0x2b, 0x21, 0x32, 0x16, 0xb4,
-	0x50, 0x94, 0x33, 0xd4, 0xd7, 0xbd, 0x26, 0x04, 0x03, 0x60, 0x35, 0x46, 0x40, 0x03, 0xc7, 0x70,
-	0xad, 0x97, 0xae, 0xb7, 0x6d, 0x33, 0xef, 0x83, 0x26, 0xbc, 0xc5, 0x0a, 0x87, 0x80, 0xd7, 0x35,
-	0x7c, 0x0f, 0xee, 0x71, 0xf6, 0x6f, 0x53, 0x34, 0xd4, 0x5a, 0xc7, 0x77, 0x68, 0xb1, 0x37, 0x25,
-	0x43, 0x8b, 0x59, 0x4b, 0xba, 0x56, 0xb3, 0x01, 0xa0, 0x72, 0x42, 0x04, 0x4d, 0x29, 0x49, 0xd0,
-	0x81, 0x63, 0xb8, 0xa3, 0xb0, 0x81, 0xc0, 0x17, 0x00, 0xe6, 0x94, 0xa9, 0x08, 0xcf, 0x54, 0xc6,
-	0x05, 0xfd, 0x8e, 0xf5, 0x86, 0x23, 0xbd, 0xe1, 0xa3, 0xb2, 0x73, 0xda, 0x6c, 0x1c, 0xfd, 0xe8,
-	0x81, 0xfb, 0xb5, 0xab, 0xc1, 0xf8, 0xe3, 0x97, 0xb3, 0xbd, 0x5b, 0x7b, 0x0c, 0x1e, 0xca, 0x2b,
-	0xa9, 0x48, 0x1e, 0xe1, 0xb8, 0x04, 0x88, 0x90, 0x68, 0xe0, 0xf4, 0x5c, 0x33, 0x7c, 0x50, 0xe1,
-	0xa7, 0x2b, 0x78, 0x3d, 0x85, 0xe1, 0x0e, 0x29, 0x7c, 0x5a, 0x4b, 0xe1, 0x40, 0x6b, 0x79, 0xad,
-	0x53, 0x08, 0x58, 0x31, 0x53, 0xdb, 0xa2, 0x18, 0xb5, 0x8c, 0xc2, 0xfc, 0x5f, 0x14, 0x37, 0x5d,
-	0x60, 0xd5, 0x51, 0x4c, 0x4e, 0x76, 0xcc, 0x61, 0x93, 0xcb, 0xfd, 0x56, 0x2e, 0xef, 0x72, 0xeb,
-	0xe3, 0x8d, 0xb7, 0xfe, 0xbc, 0xb5, 0xcb, 0x93, 0x93, 0x7d, 0x5e, 0xfb, 0xeb, 0xe0, 0xd7, 0xdc,
-	0x36, 0xae, 0xe7, 0xb6, 0x71, 0x33, 0xb7, 0x8d, 0x9f, 0x0b, 0xbb, 0x73, 0xbd, 0xb0, 0x3b, 0x7f,
-	0x16, 0x76, 0xe7, 0xab, 0x3f, 0xa5, 0x2a, 0x9b, 0x9d, 0x7b, 0x31, 0xcf, 0xfd, 0x5b, 0xc3, 0xfa,
-	0xd5, 0xb0, 0xfe, 0xa5, 0xbf, 0x7a, 0x9a, 0xd4, 0x55, 0x41, 0xe4, 0xf9, 0x50, 0xbf, 0x4a, 0xaf,
-	0xfe, 0x06, 0x00, 0x00, 0xff, 0xff, 0x78, 0x22, 0xb4, 0x77, 0x07, 0x05, 0x00, 0x00,
+	// 447 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x54, 0x4d, 0xab, 0xd3, 0x40,
+	0x14, 0x6d, 0xfa, 0xf5, 0x9a, 0x89, 0xf8, 0x31, 0xb8, 0x18, 0x9f, 0x12, 0xc2, 0x5b, 0xe5, 0x21,
+	0x26, 0xbc, 0xfa, 0x0b, 0x9e, 0x8a, 0x50, 0x90, 0x2a, 0xf1, 0xd9, 0x85, 0x9b, 0x30, 0x2f, 0x99,
+	0x34, 0x83, 0x64, 0xa6, 0xcc, 0x4c, 0x69, 0xeb, 0xd6, 0x3f, 0xe0, 0xcf, 0x72, 0x59, 0x70, 0xa1,
+	0xcb, 0xd2, 0xfe, 0x11, 0xc9, 0xa4, 0x8d, 0xa9, 0x54, 0x2d, 0xd8, 0x22, 0x6f, 0x77, 0x7b, 0x4e,
+	0xcf, 0xcd, 0xbd, 0xe7, 0x1e, 0x06, 0x20, 0x96, 0xa8, 0x8c, 0x0d, 0x85, 0xcf, 0x12, 0x15, 0xca,
+	0x28, 0x25, 0x19, 0xf6, 0x46, 0x82, 0x2b, 0x0e, 0x1f, 0xa9, 0x94, 0x48, 0x3a, 0x65, 0x44, 0x4d,
+	0xb8, 0xf8, 0xe0, 0xe5, 0x65, 0xa2, 0xbc, 0xf5, 0xdf, 0x4f, 0x1f, 0x6e, 0x74, 0x9c, 0x85, 0x51,
+	0x8a, 0x29, 0x0b, 0x63, 0xac, 0xd6, 0xd2, 0xd3, 0x07, 0x25, 0x29, 0xe8, 0x70, 0x8b, 0x3a, 0xfb,
+	0x5a, 0x07, 0x66, 0xff, 0xe5, 0xd5, 0x5b, 0xfd, 0x25, 0x08, 0x41, 0x33, 0xe2, 0x31, 0x41, 0x86,
+	0x63, 0xb8, 0x66, 0xa0, 0xeb, 0x1c, 0x63, 0x38, 0x23, 0xa8, 0x5e, 0x60, 0x79, 0x0d, 0xef, 0x83,
+	0x16, 0x9f, 0x30, 0x22, 0x50, 0x43, 0x83, 0xc5, 0x0f, 0xe8, 0x00, 0x2b, 0x26, 0x32, 0x12, 0x74,
+	0xa4, 0x28, 0x67, 0xa8, 0xa9, 0xb9, 0x2a, 0x04, 0x7b, 0xc0, 0xaa, 0x8c, 0x80, 0x5a, 0x8e, 0xe1,
+	0x5a, 0x5d, 0xd7, 0xfb, 0xd3, 0x66, 0xde, 0x6b, 0x2d, 0x78, 0x81, 0x15, 0x0e, 0x00, 0x2f, 0x6b,
+	0xf8, 0x0a, 0xdc, 0xe2, 0xec, 0xe7, 0xa6, 0xa8, 0xad, 0x7b, 0x9d, 0xff, 0xa5, 0x17, 0x7b, 0x9e,
+	0x2b, 0x74, 0x33, 0x6b, 0x2d, 0xd7, 0xdd, 0x6c, 0x00, 0xa8, 0x1c, 0x10, 0x41, 0x13, 0x4a, 0x62,
+	0x74, 0xe2, 0x18, 0x6e, 0x27, 0xa8, 0x20, 0xf0, 0x09, 0x80, 0x19, 0x65, 0x2a, 0xc4, 0x63, 0x95,
+	0x72, 0x41, 0x3f, 0x62, 0xbd, 0x61, 0x47, 0x6f, 0x78, 0x2f, 0x67, 0x2e, 0xab, 0xc4, 0xd9, 0xb7,
+	0x3a, 0xb0, 0x4a, 0x57, 0x07, 0xdd, 0x9b, 0xe4, 0x6b, 0x7f, 0xa7, 0xaf, 0x8f, 0xf7, 0xf6, 0x75,
+	0xd0, 0x3d, 0xaa, 0xb3, 0x9f, 0x1a, 0xe0, 0x76, 0xe9, 0x6c, 0xaf, 0xff, 0xe6, 0xdd, 0xd5, 0xd1,
+	0xcd, 0x3d, 0x07, 0x77, 0xe5, 0x4c, 0x2a, 0x92, 0x85, 0x38, 0xca, 0x01, 0x22, 0x24, 0x6a, 0x39,
+	0x0d, 0xd7, 0x0c, 0xee, 0x14, 0xf8, 0xe5, 0x06, 0xfe, 0xf5, 0x0e, 0xed, 0x03, 0xe6, 0xfb, 0xe4,
+	0x80, 0xf9, 0xee, 0xec, 0x79, 0x05, 0xf3, 0x77, 0x57, 0x58, 0x6c, 0xe5, 0xfb, 0xe2, 0x1f, 0x4f,
+	0xb0, 0xcb, 0xe0, 0xe6, 0x5e, 0x06, 0xff, 0xd7, 0xa0, 0x5f, 0x1c, 0x33, 0xe8, 0xcf, 0x7a, 0x5f,
+	0x96, 0xb6, 0x31, 0x5f, 0xda, 0xc6, 0x62, 0x69, 0x1b, 0x9f, 0x57, 0x76, 0x6d, 0xbe, 0xb2, 0x6b,
+	0xdf, 0x57, 0x76, 0xed, 0xbd, 0x3f, 0xa4, 0x2a, 0x1d, 0x5f, 0x7b, 0x11, 0xcf, 0xfc, 0xad, 0x61,
+	0xfd, 0x62, 0x58, 0x7f, 0xea, 0x6f, 0xde, 0x7b, 0x35, 0x1b, 0x11, 0x79, 0xdd, 0xd6, 0x4f, 0xfd,
+	0xd3, 0x1f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xfa, 0x9e, 0xe0, 0xa8, 0x5c, 0x06, 0x00, 0x00,
 }
 
 func (m *NFTSchema) Marshal() (dAtA []byte, err error) {
@@ -386,6 +487,98 @@ func (m *NFTSchema) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *NFTSchema) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.MintAuthorization) > 0 {
+		i -= len(m.MintAuthorization)
+		copy(dAtA[i:], m.MintAuthorization)
+		i = encodeVarintNftSchema(dAtA, i, uint64(len(m.MintAuthorization)))
+		i--
+		dAtA[i] = 0x42
+	}
+	if m.IsVerified {
+		i--
+		if m.IsVerified {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x38
+	}
+	if m.OnchainData != nil {
+		{
+			size, err := m.OnchainData.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNftSchema(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x32
+	}
+	if m.OriginData != nil {
+		{
+			size, err := m.OriginData.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintNftSchema(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintNftSchema(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Owner) > 0 {
+		i -= len(m.Owner)
+		copy(dAtA[i:], m.Owner)
+		i = encodeVarintNftSchema(dAtA, i, uint64(len(m.Owner)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintNftSchema(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Code) > 0 {
+		i -= len(m.Code)
+		copy(dAtA[i:], m.Code)
+		i = encodeVarintNftSchema(dAtA, i, uint64(len(m.Code)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *NFTSchemaV2) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *NFTSchemaV2) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NFTSchemaV2) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -669,6 +862,46 @@ func encodeVarintNftSchema(dAtA []byte, offset int, v uint64) int {
 	return base
 }
 func (m *NFTSchema) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Code)
+	if l > 0 {
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	l = len(m.Owner)
+	if l > 0 {
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	if m.OriginData != nil {
+		l = m.OriginData.Size()
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	if m.OnchainData != nil {
+		l = m.OnchainData.Size()
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	if m.IsVerified {
+		n += 2
+	}
+	l = len(m.MintAuthorization)
+	if l > 0 {
+		n += 1 + l + sovNftSchema(uint64(l))
+	}
+	return n
+}
+
+func (m *NFTSchemaV2) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1104,6 +1337,308 @@ func (m *NFTSchema) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *NFTSchemaV2) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNftSchema
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: NFTSchemaV2: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: NFTSchemaV2: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Code = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Owner", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Owner = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OriginData", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OriginData == nil {
+				m.OriginData = &OriginData{}
+			}
+			if err := m.OriginData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OnchainData", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OnchainData == nil {
+				m.OnchainData = &OnChainDataV2{}
+			}
+			if err := m.OnchainData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsVerified", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsVerified = bool(v != 0)
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MintAuthorization", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNftSchema
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.MintAuthorization = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNftSchema(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthNftSchema
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *NFTSchemaINPUT) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1359,7 +1894,7 @@ func (m *NFTSchemaINPUT) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if m.OnchainData == nil {
-				m.OnchainData = &OnChainDataInput{}
+				m.OnchainData = &OnChainData{}
 			}
 			if err := m.OnchainData.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err

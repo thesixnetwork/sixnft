@@ -6,15 +6,6 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-// SetAttributeOfSchema set a specific attributeOfSchema in the store from its index
-func (k Keeper) SetAttributeOfSchema(ctx sdk.Context, attributeOfSchema types.AttributeOfSchema) {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.AttributeOfSchemaKeyPrefix))
-	b := k.cdc.MustMarshal(&attributeOfSchema)
-	store.Set(types.AttributeOfSchemaKey(
-		attributeOfSchema.NftSchemaCode,
-	), b)
-}
-
 // GetAttributeOfSchema returns a attributeOfSchema from its index
 func (k Keeper) GetAttributeOfSchema(
 	ctx sdk.Context,
