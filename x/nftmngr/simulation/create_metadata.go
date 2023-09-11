@@ -24,7 +24,7 @@ func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.Nf
 		MintAuthorization: schemaInput.MintAuthorization,
 	}
 	var listOfGlobalAttributeValue []*types.NftAttributeValue
-	for _, schemaAttribute := range schemaInput.OnchainData.SchemaAttributes {
+	for _, schemaAttribute := range schemaInput.OnchainData.NftAttributes {
 		schemaAttribute_ := keeper.ConverAttributeDefinitionToNFTAttributeValue(schemaAttribute)
 		listOfGlobalAttributeValue = append(listOfGlobalAttributeValue, schemaAttribute_)
 	}
@@ -51,7 +51,7 @@ func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.Nf
 	}
 
 	globalAttributeValues := []*types.NftAttributeValue{}
-	for _, attr := range schemaInput.OnchainData.SchemaAttributes {
+	for _, attr := range schemaInput.OnchainData.NftAttributes {
 		if attr.Required {
 			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
 				if attr.DefaultMintValue != nil {

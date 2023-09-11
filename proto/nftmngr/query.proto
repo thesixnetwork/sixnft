@@ -17,7 +17,6 @@ import "nftmngr/action_executor.proto";
 import "nftmngr/schema_attribute.proto";
 import "nftmngr/action_of_schema.proto";
 import "nftmngr/executor_of_schema.proto";
-import "nftmngr/attribute_of_schema.proto";
 // this line is used by starport scaffolding # 1
 import "nftmngr/nft_data.proto";
 
@@ -147,11 +146,6 @@ service Query {
 	// Queries a list of ExecutorOfSchema items.
 	rpc ExecutorOfSchemaAll(QueryAllExecutorOfSchemaRequest) returns (QueryAllExecutorOfSchemaResponse) {
 		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/executor_of_schema";
-	}
-
-	// Queries a AttributeOfSchema by index.
-	rpc AttributeOfSchema(QueryGetAttributeOfSchemaRequest) returns (QueryGetAttributeOfSchemaResponse) {
-		option (google.api.http).get = "/thesixnetwork/sixnft/nftmngr/attribute_of_schema/{nftSchemaCode}";
 	}
 
 	// this line is used by starport scaffolding # 2
@@ -375,16 +369,6 @@ message QueryAllExecutorOfSchemaRequest {
 message QueryAllExecutorOfSchemaResponse {
 	repeated ExecutorOfSchema executorOfSchema = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
-}
-
-message QueryGetAttributeOfSchemaRequest {
-	string nftSchemaCode = 1;
-
-}
-
-message QueryGetAttributeOfSchemaResponse {
-	string nftSchemaCode = 1;
-	repeated SchemaAttribute schemaAttribute = 2 [(gogoproto.nullable) = false];
 }
 
 
