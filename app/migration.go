@@ -7,6 +7,7 @@ import (
 	nftmngrtypes "github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
+// for proposal v3.1.1 to v3.1.3
 func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 
 	// get all NFTSchema
@@ -47,6 +48,7 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 			Description: nftSchemaV1.Name,
 			OriginData:  nftSchemaV1.OriginData,
 			OnchainData: &nftmngrtypes.OnChainData{
+				NftAttributes:  nftSchemaV1.OnchainData.NftAttributes,
 				TokenAttributes: nftSchemaV1.OnchainData.TokenAttributes,
 				Actions:         nftSchemaV1.OnchainData.Actions,
 				Status:          nftSchemaV1.OnchainData.Status,
@@ -80,6 +82,7 @@ func (app *App) MigrationFromV1ToV2Handlers(ctx sdk.Context) {
 
 }
 
+// for proposal v3.1.2-b to v3.1.2-c
 func (app *App) RollbackFromV2toV1(ctx sdk.Context) {
 
 	// get all NFTSchema
@@ -101,7 +104,7 @@ func (app *App) RollbackFromV2toV1(ctx sdk.Context) {
 
 		originOutput, nftOutput, tokenOutput := MergeAllAttributesAndAlterOrderIndex(nftSchemaV2.OriginData.OriginAttributes, nft_attributes_from_schema_attribute ,nftSchemaV2.OnchainData.TokenAttributes)
 
-
+		// migrate schema to new schema
 		// parse schema_input to NFTSchema
 		schema := nftmngrtypes.NFTSchema{
 			Code:        nftSchemaV2.Code,
