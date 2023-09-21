@@ -32,7 +32,6 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgUpdateActionExecutor{}, "nftmngr/UpdateActionExecutor", nil)
 	cdc.RegisterConcrete(&MsgDeleteActionExecutor{}, "nftmngr/DeleteActionExecutor", nil)
 	cdc.RegisterConcrete(&MsgUpdateSchemaAttribute{}, "nftmngr/UpdateSchemaAttribute", nil)
-	cdc.RegisterConcrete(&MsgDeleteSchemaAttribute{}, "nftmngr/DeleteSchemaAttribute", nil)
 	cdc.RegisterConcrete(&MsgUpdateAction{}, "nftmngr/UpdateAction", nil)
 	// this line is used by starport scaffolding # 2
 }
@@ -105,7 +104,6 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgUpdateSchemaAttribute{},
-		&MsgDeleteSchemaAttribute{},
 	)
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgUpdateAction{},

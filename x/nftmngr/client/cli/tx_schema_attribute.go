@@ -39,34 +39,3 @@ func CmdUpdateSchemaAttribute() *cobra.Command {
 
 	return cmd
 }
-
-func CmdDeleteSchemaAttribute() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "delete-schema-attribute [nft-schema-code] [name]",
-		Short: "Delete a schema_attribute",
-		Args:  cobra.ExactArgs(2),
-		RunE: func(cmd *cobra.Command, args []string) (err error) {
-			indexNftSchemaCode := args[0]
-			indexName := args[1]
-
-			clientCtx, err := client.GetClientTxContext(cmd)
-			if err != nil {
-				return err
-			}
-
-			msg := types.NewMsgDeleteSchemaAttribute(
-				clientCtx.GetFromAddress().String(),
-				indexNftSchemaCode,
-				indexName,
-			)
-			if err := msg.ValidateBasic(); err != nil {
-				return err
-			}
-			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
-		},
-	}
-
-	flags.AddTxFlagsToCmd(cmd)
-
-	return cmd
-}
