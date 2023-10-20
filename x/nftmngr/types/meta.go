@@ -108,6 +108,10 @@ func (m *Metadata) GetTokenURI() string {
 	return m.nftData.TokenUri
 }
 
+func (m *Metadata) GetTokenID() string {
+	return m.nftData.TokenId
+}
+
 func (m *Metadata) SetTokenURI(uri string) {
 	m.ChangeList = append(m.ChangeList, &MetadataChange{
 		Key:           "tokenURI",
