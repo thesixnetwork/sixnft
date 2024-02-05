@@ -17,17 +17,6 @@ message NFTSchema {
   string mint_authorization = 8;
 }
 
-message NFTSchemaV2 {
-  string code = 1; 
-  string name = 2; 
-  string owner = 3; 
-  string description = 4;
-  OriginData origin_data = 5;
-  OnChainDataV2 onchain_data = 6;
-  bool isVerified = 7;
-  string mint_authorization = 8;
-}
-
 message NFTSchemaINPUT {
   string code = 1; 
   string name = 2; 
@@ -38,16 +27,4 @@ message NFTSchemaINPUT {
   OnChainData onchain_data = 7;
   bool isVerified = 8;
   string mint_authorization = 9;
-}
-
-
-message NFTSchemaV1 {
-  string code = 1; 
-  string name = 2; 
-  string owner = 3; 
-  repeated string system_actioners = 4;
-  OriginData origin_data = 5;
-  OnChainDataV1 onchain_data = 6;
-  bool isVerified = 7;
-  string mint_authorization = 8;
 }

@@ -10,7 +10,7 @@ enum AllowedActioner {
   ALLOWED_ACTIONER_USER_ONLY = 2;
 }
 
-message action_params {
+message ActionParams {
   string name = 1;
   string desc = 2;
   string data_type = 3;
@@ -25,6 +25,6 @@ message Action {
   string when = 4; 
   repeated string then = 5; 
   AllowedActioner allowed_actioner = 6 [(gogoproto.nullable) = true];
-  repeated action_params params = 7 [(gogoproto.nullable) = true];
+  repeated ActionParams params = 7 [(gogoproto.nullable) = true];
 }
 

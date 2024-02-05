@@ -263,6 +263,7 @@ message MsgResyncAttributes {
 enum FeeSubject {
   CREATE_NFT_SCHEMA = 0;
 }
+
 message MsgSetFeeConfig {
   string creator = 1;
   string newFeeConfigBase64 = 2;
