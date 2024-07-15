@@ -1,7 +1,6 @@
 package simulation
 
 import (
-	fmt "fmt"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
@@ -32,7 +31,7 @@ func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.Nf
 	_, err := keeper.ValidateNFTData(&metaInput, &_schema)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	// Append Attribute with default value to NFT Data if not exist in NFT Data yet
