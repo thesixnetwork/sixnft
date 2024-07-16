@@ -431,10 +431,10 @@ func (m *NFTSchemaV1) GetMintAuthorization() string {
 }
 
 func init() {
-	proto.RegisterType((*NFTSchema)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchema")
-	proto.RegisterType((*NFTSchemaV2)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV2")
-	proto.RegisterType((*NFTSchemaINPUT)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaINPUT")
-	proto.RegisterType((*NFTSchemaV1)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV1")
+	// proto.RegisterType((*NFTSchema)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchema")
+	// proto.RegisterType((*NFTSchemaV2)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV2")
+	// proto.RegisterType((*NFTSchemaINPUT)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaINPUT")
+	// proto.RegisterType((*NFTSchemaV1)(nil), "thesixnetwork.sixnft.nftmngr.NFTSchemaV1")
 }
 
 func init() { proto.RegisterFile("nftmngr/nft_schema.proto", fileDescriptor_f35d7a245dabb499) }

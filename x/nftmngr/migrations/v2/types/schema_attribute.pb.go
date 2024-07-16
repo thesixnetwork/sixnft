@@ -326,9 +326,9 @@ func (*SchemaAttributeValue) XXX_OneofWrappers() []interface{} {
 }
 
 func init() {
-	proto.RegisterType((*SchemaAttribute)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttribute")
-	proto.RegisterType((*SchemaAttributeV1)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttributeV1")
-	proto.RegisterType((*SchemaAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttributeValue")
+	// proto.RegisterType((*SchemaAttribute)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttribute")
+	// proto.RegisterType((*SchemaAttributeV1)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttributeV1")
+	// proto.RegisterType((*SchemaAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.SchemaAttributeValue")
 }
 
 func init() { proto.RegisterFile("nftmngr/schema_attribute.proto", fileDescriptor_8228233d6832e497) }

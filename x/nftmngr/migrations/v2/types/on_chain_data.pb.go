@@ -295,10 +295,10 @@ func (m *OnChainDataV1) GetNftAttributesValue() []*NftAttributeValue {
 }
 
 func init() {
-	proto.RegisterType((*FlagStatus)(nil), "thesixnetwork.sixnft.nftmngr.FlagStatus")
-	proto.RegisterType((*OnChainData)(nil), "thesixnetwork.sixnft.nftmngr.OnChainData")
-	proto.RegisterType((*OnChainDataV2)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV2")
-	proto.RegisterType((*OnChainDataV1)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV1")
+	// proto.RegisterType((*FlagStatus)(nil), "thesixnetwork.sixnft.nftmngr.FlagStatus")
+	// proto.RegisterType((*OnChainData)(nil), "thesixnetwork.sixnft.nftmngr.OnChainData")
+	// proto.RegisterType((*OnChainDataV2)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV2")
+	// proto.RegisterType((*OnChainDataV1)(nil), "thesixnetwork.sixnft.nftmngr.OnChainDataV1")
 }
 
 func init() { proto.RegisterFile("nftmngr/on_chain_data.proto", fileDescriptor_35d167410338c830) }

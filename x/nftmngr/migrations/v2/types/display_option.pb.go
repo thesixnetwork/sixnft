@@ -83,7 +83,7 @@ func (m *DisplayOption) GetOpensea() *OpenseaDisplayOption {
 }
 
 func init() {
-	proto.RegisterType((*DisplayOption)(nil), "thesixnetwork.sixnft.nftmngr.DisplayOption")
+	// proto.RegisterType((*DisplayOption)(nil), "thesixnetwork.sixnft.nftmngr.DisplayOption")
 }
 
 func init() { proto.RegisterFile("nftmngr/display_option.proto", fileDescriptor_38983a60548f9882) }

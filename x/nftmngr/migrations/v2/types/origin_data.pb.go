@@ -165,9 +165,9 @@ func (m *OriginData) GetUriRetrievalMethod() URIRetrievalMethod {
 }
 
 func init() {
-	proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AttributeOverriding", AttributeOverriding_name, AttributeOverriding_value)
-	proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.URIRetrievalMethod", URIRetrievalMethod_name, URIRetrievalMethod_value)
-	proto.RegisterType((*OriginData)(nil), "thesixnetwork.sixnft.nftmngr.OriginData")
+	// proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AttributeOverriding", AttributeOverriding_name, AttributeOverriding_value)
+	// proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.URIRetrievalMethod", URIRetrievalMethod_name, URIRetrievalMethod_value)
+	// proto.RegisterType((*OriginData)(nil), "thesixnetwork.sixnft.nftmngr.OriginData")
 }
 
 func init() { proto.RegisterFile("nftmngr/origin_data.proto", fileDescriptor_02bc4c05ee0c6896) }

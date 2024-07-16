@@ -328,11 +328,11 @@ func (m *FloatAttributeValue) GetValue() float64 {
 }
 
 func init() {
-	proto.RegisterType((*NftAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.NftAttributeValue")
-	proto.RegisterType((*NumberAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.NumberAttributeValue")
-	proto.RegisterType((*StringAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.StringAttributeValue")
-	proto.RegisterType((*BooleanAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.BooleanAttributeValue")
-	proto.RegisterType((*FloatAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.FloatAttributeValue")
+	// proto.RegisterType((*NftAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.NftAttributeValue")
+	// proto.RegisterType((*NumberAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.NumberAttributeValue")
+	// proto.RegisterType((*StringAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.StringAttributeValue")
+	// proto.RegisterType((*BooleanAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.BooleanAttributeValue")
+	// proto.RegisterType((*FloatAttributeValue)(nil), "thesixnetwork.sixnft.nftmngr.FloatAttributeValue")
 }
 
 func init() { proto.RegisterFile("nftmngr/nft_attribute_value.proto", fileDescriptor_8e19febe892d5c1e) }

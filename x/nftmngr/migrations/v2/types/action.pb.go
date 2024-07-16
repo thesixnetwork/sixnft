@@ -220,9 +220,9 @@ func (m *Action) GetParams() []*ActionParams {
 }
 
 func init() {
-	proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AllowedActioner", AllowedActioner_name, AllowedActioner_value)
+	// proto.RegisterEnum("thesixnetwork.sixnft.nftmngr.AllowedActioner", AllowedActioner_name, AllowedActioner_value)
 	proto.RegisterType((*ActionParams)(nil), "thesixnetwork.sixnft.nftmngr.action_params")
-	proto.RegisterType((*Action)(nil), "thesixnetwork.sixnft.nftmngr.Action")
+	// proto.RegisterType((*Action)(nil), "thesixnetwork.sixnft.nftmngr.Action")
 }
 
 func init() { proto.RegisterFile("nftmngr/action.proto", fileDescriptor_4895bbc0baa3e92e) }

@@ -242,8 +242,8 @@ func (m *AttributeDefinition) GetIndex() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*DefaultMintValue)(nil), "thesixnetwork.sixnft.nftmngr.DefaultMintValue")
-	proto.RegisterType((*AttributeDefinition)(nil), "thesixnetwork.sixnft.nftmngr.AttributeDefinition")
+	// proto.RegisterType((*DefaultMintValue)(nil), "thesixnetwork.sixnft.nftmngr.DefaultMintValue")
+	// proto.RegisterType((*AttributeDefinition)(nil), "thesixnetwork.sixnft.nftmngr.AttributeDefinition")
 }
 
 func init() {

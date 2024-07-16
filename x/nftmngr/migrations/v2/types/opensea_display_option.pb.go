@@ -83,7 +83,7 @@ func (m *OpenseaDisplayOption) GetMaxValue() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*OpenseaDisplayOption)(nil), "thesixnetwork.sixnft.nftmngr.OpenseaDisplayOption")
+	// proto.RegisterType((*OpenseaDisplayOption)(nil), "thesixnetwork.sixnft.nftmngr.OpenseaDisplayOption")
 }
 
 func init() {
