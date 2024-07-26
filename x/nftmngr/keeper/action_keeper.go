@@ -26,7 +26,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, schema.Owner)
 	}
 
-	if creator != schema.Owner {
+	if creator == schema.Owner {
 		isOwner = true
 	}
 
