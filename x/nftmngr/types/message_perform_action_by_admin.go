@@ -63,5 +63,5 @@ func (msg *MsgPerformActionByAdmin) GetTxSigner() sdk.AccAddress {
 	if err != nil {
 		panic(err)
 	}
-	return sdk.AccAddress(creator.String())
+	return creator
 }
