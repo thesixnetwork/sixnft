@@ -120,7 +120,7 @@ func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 }
 
 // RemoveActionExecutor removes a actionExecutor from the store
-func (k Keeper) DeleteActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
+func (k Keeper) DelActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
 	creator := signer.String()
 	toremoveExecutorAddress := executorAddress.String()
 

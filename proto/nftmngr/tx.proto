@@ -34,7 +34,7 @@ service Msg {
   rpc SetAttributeOveriding(MsgSetAttributeOveriding) returns (MsgSetAttributeOveridingResponse);
   rpc SetMetadataFormat(MsgSetMetadataFormat) returns (MsgSetMetadataFormatResponse);
   rpc CreateActionExecutor(MsgCreateActionExecutor) returns (MsgCreateActionExecutorResponse);
-  rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
+  //rpc UpdateActionExecutor(MsgUpdateActionExecutor) returns (MsgUpdateActionExecutorResponse);
   rpc DeleteActionExecutor(MsgDeleteActionExecutor) returns (MsgDeleteActionExecutorResponse);
   rpc UpdateSchemaAttribute(MsgUpdateSchemaAttribute) returns (MsgUpdateSchemaAttributeResponse);
   // rpc DeleteSchemaAttribute(MsgDeleteSchemaAttribute) returns (MsgDeleteSchemaAttributeResponse);
