@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) SetOriginContract(goCtx context.Context, msg *types.MsgSetOriginContract) (*types.MsgSetOriginContractResponse, error) {
+func (k msg_server) SetOriginContract(goCtx context.Context, msg *types.MsgSetOriginContract) (*types.MsgSetOriginContractResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)

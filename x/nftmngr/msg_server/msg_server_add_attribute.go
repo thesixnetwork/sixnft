@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -6,6 +6,7 @@ import (
 
 	// "strconv"
 
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -13,7 +14,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
+func (k msg_server) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var new_add_attribute types.AttributeDefinition
@@ -41,7 +42,7 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
-	err = ValidateAttributeNames([]*types.AttributeDefinition{&new_add_attribute})
+	err = keeper.ValidateAttributeNames([]*types.AttributeDefinition{&new_add_attribute})
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -49,17 +50,17 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 	// Swith location of attribute
 	switch msg.Location {
 	case types.AttributeLocation_NFT_ATTRIBUTE:
-		_defaultMintValue, err := ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
+		_defaultMintValue, err := keeper.ConvertDefaultMintValueToSchemaAttributeValue(new_add_attribute.DefaultMintValue)
 		if err != nil {
 			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 		}
 		// this case will use Msg.CreateSchemaAtribute
 		k.SetSchemaAttribute(ctx, types.SchemaAttribute{
-			NftSchemaCode:       msg.Code,
-			Name:                new_add_attribute.Name,
-			CurrentValue:        _defaultMintValue,
-			DataType:            new_add_attribute.DataType,
-			Creator:             msg.Creator,
+			NftSchemaCode: msg.Code,
+			Name:          new_add_attribute.Name,
+			CurrentValue:  _defaultMintValue,
+			DataType:      new_add_attribute.DataType,
+			Creator:       msg.Creator,
 		})
 		schema.OnchainData.NftAttributes = append(schema.OnchainData.NftAttributes, &new_add_attribute)
 	case types.AttributeLocation_TOKEN_ATTRIBUTE:
@@ -95,15 +96,15 @@ func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribut
 }
 
 // validate AttributeDefinition data
-func (k msgServer) ValidateAttributeDefinition(ctx sdk.Context, attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+func (k msg_server) ValidateAttributeDefinition(ctx sdk.Context, attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
 
 	valFound, found := k.GetSchemaAttribute(ctx, schema.Code, attribute.Name)
 	if found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, valFound.Name)
 	}
 	// Onchain Data Nft Attributes Map
-	mapOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
-	mapTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
+	mapOriginAttributes := keeper.CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapTokenAttributes := keeper.CreateAttrDefMap(schema.OnchainData.TokenAttributes)
 	// check if attribute name is unique
 	if _, found := mapOriginAttributes[attribute.Name]; found {
 		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
@@ -159,4 +160,3 @@ func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, o
 	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
 	return length_allAttributes
 }
-

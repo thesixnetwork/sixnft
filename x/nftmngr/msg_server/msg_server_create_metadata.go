@@ -1,10 +1,11 @@
-package keeper
+package msg_server
 
 import (
 	"context"
 	"encoding/base64"
 	"fmt"
 
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -12,7 +13,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMetadata) (*types.MsgCreateMetadataResponse, error) {
+func (k msg_server) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMetadata) (*types.MsgCreateMetadataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 	metadata, err := base64.StdEncoding.DecodeString(msg.Base64NFTData)
 	if err != nil {
@@ -73,7 +74,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		if attr.Required {
 			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
 				if attr.DefaultMintValue != nil {
-					data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+					data.OnchainAttributes = append(data.OnchainAttributes, keeper.NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
 				}
 			}
 		}
@@ -118,73 +119,54 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 // Validate NFT Data
 func ValidateNFTData(data *types.NftData, schema *types.NFTSchema) (bool, error) {
 	// Origin Data Origin Attributes Map
-	mapAttributeDefinition := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapAttributeDefinition := keeper.CreateAttrDefMap(schema.OriginData.OriginAttributes)
 
 	// Merge Origin Attributes and Onchain Token Attributes together
 	// NOTE: No need to merge schema attributes because we will retrieve the attributes value from its directly
 	// WE WILL NOT CHANGE SCHEMA VALUE IN THIS FUNCTION
-	mergedAttributes := MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
-	mergedMap := CreateAttrDefMap(mergedAttributes)
+	mergedAttributes := keeper.MergeNFTDataAttributes(schema.OriginData.OriginAttributes, schema.OnchainData.TokenAttributes)
+	mergedMap := keeper.CreateAttrDefMap(mergedAttributes)
 
 	// Check if attributes exist in schema
-	attributesExistsInSchema, err := NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)
+	attributesExistsInSchema, err := keeper.NFTDataAttributesExistInSchema(mergedMap, data.OnchainAttributes)
 	if !attributesExistsInSchema {
 		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
 	}
 
 	// Check if origin attributes exist in schema
-	attributesOriginExistsInSchema, err := NFTDataAttributesExistInSchema(mapAttributeDefinition, data.OriginAttributes)
+	attributesOriginExistsInSchema, err := keeper.NFTDataAttributesExistInSchema(mapAttributeDefinition, data.OriginAttributes)
 	if !attributesOriginExistsInSchema {
 		return false, sdkerrors.Wrap(types.ErrOnchainAttributesNotExistsInSchema, fmt.Sprintf("Attribute does not exist in schema: %s", err))
 	}
 
 	// Validate required attributes
-	validated, requiredAttributeName := ValidateRequiredAttributes(schema.OnchainData.TokenAttributes, CreateNftAttrValueMap(data.OnchainAttributes))
+	validated, requiredAttributeName := keeper.ValidateRequiredAttributes(schema.OnchainData.TokenAttributes, keeper.CreateNftAttrValueMap(data.OnchainAttributes))
 	if !validated {
 		return false, sdkerrors.Wrap(types.ErrRequiredAttributeMissing, requiredAttributeName)
 	}
 
 	// Validate Onchain Attributes Value
-	duplicated, err := HasDuplicateNftAttributesValue(data.OnchainAttributes)
+	duplicated, err := keeper.HasDuplicateNftAttributesValue(data.OnchainAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOnchainAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 
 	// Validate Origin Attributes Value
-	duplicated, err = HasDuplicateNftAttributesValue(data.OriginAttributes)
+	duplicated, err = keeper.HasDuplicateNftAttributesValue(data.OriginAttributes)
 	if duplicated {
 		return false, sdkerrors.Wrap(types.ErrDuplicateOriginAttributesValue, fmt.Sprintf("Duplicate attribute name: %s", err))
 	}
 
 	// Validate Origin Attributes Exist in Schema
-	hasSameType, err := HasSameTypeAsSchema(mapAttributeDefinition, data.OriginAttributes)
+	hasSameType, err := keeper.HasSameTypeAsSchema(mapAttributeDefinition, data.OriginAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOriginAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s", err))
 	}
 
 	// Validate Onchain Attributes Exist in Schema
-	hasSameType, err = HasSameTypeAsSchema(mergedMap, data.OnchainAttributes)
+	hasSameType, err = keeper.HasSameTypeAsSchema(mergedMap, data.OnchainAttributes)
 	if !hasSameType {
 		return false, sdkerrors.Wrap(types.ErrOnchainTokenAttributesNotSameTypeAsSchema, fmt.Sprintf("Does not have same type as schema: %s", err))
 	}
 	return true, nil
-}
-
-func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.DefaultMintValue) *types.NftAttributeValue {
-	nftAttributeValue := &types.NftAttributeValue{
-		Name: name,
-	}
-	switch defaultValue.Value.(type) {
-	case *types.DefaultMintValue_NumberAttributeValue:
-		nftAttributeValue.Value = &types.NftAttributeValue_NumberAttributeValue{NumberAttributeValue: defaultValue.GetNumberAttributeValue()}
-	case *types.DefaultMintValue_StringAttributeValue:
-		nftAttributeValue.Value = &types.NftAttributeValue_StringAttributeValue{StringAttributeValue: defaultValue.GetStringAttributeValue()}
-	case *types.DefaultMintValue_BooleanAttributeValue:
-		nftAttributeValue.Value = &types.NftAttributeValue_BooleanAttributeValue{BooleanAttributeValue: defaultValue.GetBooleanAttributeValue()}
-	case *types.DefaultMintValue_FloatAttributeValue:
-		nftAttributeValue.Value = &types.NftAttributeValue_FloatAttributeValue{FloatAttributeValue: defaultValue.GetFloatAttributeValue()}
-	default:
-		return nil
-	}
-	return nftAttributeValue
 }

@@ -1,10 +1,11 @@
-package keeper
+package msg_server
 
 import (
 	"context"
 	"encoding/base64"
 	"strconv"
 
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -19,7 +20,7 @@ import (
 // 	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
 // )
 
-func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
+func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	jsonSchema, err := base64.StdEncoding.DecodeString(msg.NftSchemaBase64)
@@ -37,7 +38,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		return nil, err
 	}
 	// Validate Schema Message and return error if not valid
-	valid, err := ValidateNFTSchema(&schema_input)
+	valid, err := keeper.ValidateNFTSchema(&schema_input)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingNFTSchema, err.Error())
@@ -51,7 +52,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	if found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaAlreadyExists, schema_input.Code)
 	}
-	foundOrganization, organizationName := GetOrganizationFromSchemaCode(schema_input.Code)
+	foundOrganization, organizationName := keeper.GetOrganizationFromSchemaCode(schema_input.Code)
 	// If there is organization in schema_input code, check if the organization exists
 	if foundOrganization {
 		storedOrganization, found := k.GetOrganization(ctx, organizationName)
@@ -69,7 +70,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		}
 
 	}
-	_ = MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.NftAttributes, schema_input.OnchainData.TokenAttributes)
+	_ = keeper.MergeAllAttributesAndAlterOrderIndex(schema_input.OriginData.OriginAttributes, schema_input.OnchainData.NftAttributes, schema_input.OnchainData.TokenAttributes)
 
 	// parse schema_input to NFTSchema
 	schema := types.NFTSchema{
@@ -91,7 +92,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 	// loop over SchemaAttribute and add to nftmngr/code/name
 	for _, schemaDefaultMintAttribute := range schema_input.OnchainData.NftAttributes {
 		// parse DefaultMintValue to SchemaAttributeValue
-		schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(schemaDefaultMintAttribute.DefaultMintValue)
+		schmaAttributeValue, err := keeper.ConvertDefaultMintValueToSchemaAttributeValue(schemaDefaultMintAttribute.DefaultMintValue)
 		if err != nil {
 			return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 		}
@@ -222,7 +223,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 }
 
 // Total amount of fee collected from schema_input for each block then distribute to validators // ** In the begin block it will set to 0 again
-func (k msgServer) processFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBalances *types.NFTFeeBalance, feeSubject types.FeeSubject, source sdk.AccAddress) error {
+func (k msg_server) processFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBalances *types.NFTFeeBalance, feeSubject types.FeeSubject, source sdk.AccAddress) error {
 	currentFeeBalance, _ := sdk.ParseCoinNormalized(feeBalances.FeeBalances[int32(feeSubject)])
 	feeAmount, _ := sdk.ParseCoinNormalized(feeConfig.SchemaFee.FeeAmount)
 	// Plus fee amount to fee balance

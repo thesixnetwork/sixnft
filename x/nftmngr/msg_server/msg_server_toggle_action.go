@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
+func (k msg_server) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	schema, found := k.Keeper.GetNFTSchema(ctx, msg.Code)

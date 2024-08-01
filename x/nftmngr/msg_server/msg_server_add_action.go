@@ -1,9 +1,10 @@
-package keeper
+package msg_server
 
 import (
 	"context"
 	"encoding/base64"
 
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -11,7 +12,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
+func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// structure for new action
@@ -40,7 +41,7 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 	}
 
 	//validate Action data
-	err = k.ValidateAction(&new_action, &schema)
+	err = keeper.ValidateAction(&new_action, &schema)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
@@ -72,30 +73,4 @@ func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*t
 		Name:        schema.Name,
 		OnchainData: schema.OnchainData,
 	}, nil
-}
-
-// validate Action data
-func (k Keeper) ValidateAction(action *types.Action, schema *types.NFTSchema) error {
-	// Onchain Data Nft Actions Map
-	mapNftActions := CreateActionMap(schema.OnchainData.Actions)
-	// check if action name is unique
-	if _, found := mapNftActions[action.Name]; found {
-		return sdkerrors.Wrap(types.ErrActionAlreadyExists, action.Name)
-	}
-
-	//validate action struct
-	if action.Name == "" || action.Name == " " {
-		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action name is empty")
-	}
-	if action.Desc == "" || action.Desc == " " {
-		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action description is empty")
-	}
-	if action.When == "" || action.When == " " {
-		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action type is empty")
-	}
-	//validate array of action.Then is not empty
-	if len(action.Then) == 0 {
-		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action.Then is empty")
-	}
-	return nil
 }

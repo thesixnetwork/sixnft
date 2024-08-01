@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
+func (k msg_server) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	schema, found := k.Keeper.GetNFTSchema(ctx, msg.Code)

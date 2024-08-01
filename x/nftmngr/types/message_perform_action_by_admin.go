@@ -57,11 +57,3 @@ func (msg *MsgPerformActionByAdmin) ValidateBasic() error {
 	}
 	return nil
 }
-
-func (msg *MsgPerformActionByAdmin) GetTxSigner() sdk.AccAddress {
-	creator, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		panic(err)
-	}
-	return creator
-}

@@ -3,6 +3,7 @@ package keeper
 import (
 	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
@@ -21,7 +22,6 @@ func (k Keeper) GetActionExecutor(
 	ctx sdk.Context,
 	nftSchemaCode string,
 	executorAddress string,
-
 ) (val types.ActionExecutor, found bool) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionExecutorKeyPrefix))
 
@@ -42,7 +42,6 @@ func (k Keeper) RemoveActionExecutor(
 	ctx sdk.Context,
 	nftSchemaCode string,
 	executorAddress string,
-
 ) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.ActionExecutorKeyPrefix))
 	store.Delete(types.ActionExecutorKey(
@@ -65,4 +64,113 @@ func (k Keeper) GetAllActionExecutor(ctx sdk.Context) (list []types.ActionExecut
 	}
 
 	return
+}
+
+func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
+	creator := signer.String()
+	newExecutorAddress := executorAddress.String()
+
+	// Retrieve the schema
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	// Check if the creator is the owner of the schema
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	}
+
+	// Check if the value already exists
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		nftSchemaName,
+		newExecutorAddress,
+	)
+
+	if isFound {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Action Executor already exists")
+	}
+
+	actionExecutor := types.ActionExecutor{
+		Creator:         creator,
+		NftSchemaCode:   nftSchemaName,
+		ExecutorAddress: newExecutorAddress,
+	}
+
+	val, found := k.GetExecutorOfSchema(ctx, nftSchemaName)
+	if !found {
+		val = types.ExecutorOfSchema{
+			NftSchemaCode:   nftSchemaName,
+			ExecutorAddress: []string{},
+		}
+	}
+
+	// set executorOfSchema
+	val.ExecutorAddress = append(val.ExecutorAddress, newExecutorAddress)
+
+	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+		NftSchemaCode:   val.NftSchemaCode,
+		ExecutorAddress: val.ExecutorAddress,
+	})
+
+	k.SetActionExecutor(ctx, actionExecutor)
+
+	return nil
+}
+
+// RemoveActionExecutor removes a actionExecutor from the store
+func (k Keeper) DeleteActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
+	creator := signer.String()
+	toremoveExecutorAddress := executorAddress.String()
+
+	// Retrieve the schema
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	// Check if the creator is the owner of the schema
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
+	}
+
+	// Check if the value exists
+	_, isFound := k.GetActionExecutor(
+		ctx,
+		nftSchemaName,
+		toremoveExecutorAddress,
+	)
+	if !isFound {
+		return sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
+	}
+
+	k.RemoveActionExecutor(
+		ctx,
+		nftSchemaName,
+		toremoveExecutorAddress,
+	)
+
+	val, found := k.GetExecutorOfSchema(ctx, nftSchemaName)
+	if !found {
+		val = types.ExecutorOfSchema{
+			NftSchemaCode:   nftSchemaName,
+			ExecutorAddress: []string{},
+		}
+	}
+
+	// remove executorOfSchema
+	for i, executor := range val.ExecutorAddress {
+		if executor == toremoveExecutorAddress {
+			val.ExecutorAddress = append(val.ExecutorAddress[:i], val.ExecutorAddress[i+1:]...)
+			break
+		}
+	}
+
+	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
+		NftSchemaCode:   val.NftSchemaCode,
+		ExecutorAddress: val.ExecutorAddress,
+	})
+
+	return nil
 }

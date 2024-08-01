@@ -1,14 +1,15 @@
-package keeper
+package msg_server
 
 import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncAttributes) (*types.MsgResyncAttributesResponse, error) {
+func (k msg_server) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncAttributes) (*types.MsgResyncAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Retreive schema
@@ -41,7 +42,7 @@ func (k msgServer) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncA
 			}
 			// Add attribute to nftdata with default value
 			nftData.OnchainAttributes = append(nftData.OnchainAttributes,
-				NewNFTAttributeValueFromDefaultValue(attribute.Name, attribute.DefaultMintValue))
+				keeper.NewNFTAttributeValueFromDefaultValue(attribute.Name, attribute.DefaultMintValue))
 		}
 	}
 

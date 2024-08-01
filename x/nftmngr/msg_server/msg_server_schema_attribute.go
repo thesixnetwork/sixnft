@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -7,10 +7,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUpdateSchemaAttribute) (*types.MsgUpdateSchemaAttributeResponse, error) {
+func (k msg_server) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUpdateSchemaAttribute) (*types.MsgUpdateSchemaAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	var update_attribute types.AttributeDefinition
@@ -43,23 +44,23 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-	err = ValidateAttributeNames([]*types.AttributeDefinition{&update_attribute})
+	err = keeper.ValidateAttributeNames([]*types.AttributeDefinition{&update_attribute})
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
 	// parse DefaultMintValue to SchemaAttributeValue
-	schmaAttributeValue, err := ConvertDefaultMintValueToSchemaAttributeValue(update_attribute.DefaultMintValue)
+	schmaAttributeValue, err := keeper.ConvertDefaultMintValueToSchemaAttributeValue(update_attribute.DefaultMintValue)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
 	var schemaAttribute = types.SchemaAttribute{
-		Creator:             msg.Creator,
-		NftSchemaCode:       valFound.NftSchemaCode,
-		Name:                valFound.Name,
-		DataType:            update_attribute.DataType,
-		CurrentValue:        schmaAttributeValue,
+		Creator:       msg.Creator,
+		NftSchemaCode: valFound.NftSchemaCode,
+		Name:          valFound.Name,
+		DataType:      update_attribute.DataType,
+		CurrentValue:  schmaAttributeValue,
 	}
 
 	k.SetSchemaAttribute(ctx, schemaAttribute)
@@ -79,4 +80,3 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		NewAttribute:  &schemaAttribute,
 	}, nil
 }
-

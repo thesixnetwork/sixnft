@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -15,7 +15,7 @@ type ReadAttribute struct {
 	AttrributeIndex     int
 }
 
-func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
+func (k msg_server) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Retreive schema

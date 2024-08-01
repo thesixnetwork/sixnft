@@ -1,4 +1,4 @@
-package keeper
+package msg_server
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msgServer) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMetadataFormat) (*types.MsgSetMetadataFormatResponse, error) {
+func (k msg_server) SetUriRetrievalMethod(goCtx context.Context, msg *types.MsgSetUriRetrievalMethod) (*types.MsgSetUriRetrievalMethodResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
@@ -20,22 +20,26 @@ func (k msgServer) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMet
 		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
 	}
 
-	schema.OriginData.MetadataFormat = msg.NewFormat
+	if msg.NewMethod == 0 {
+		schema.OriginData.UriRetrievalMethod = types.URIRetrievalMethod_BASE
+	} else if msg.NewMethod == 1 {
+		schema.OriginData.UriRetrievalMethod = types.URIRetrievalMethod_TOKEN
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
-			types.EventTypeSetMetadataFormat,
-			sdk.NewAttribute(types.EventTypeSetMetadataFormat, msg.SchemaCode),
-			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NewFormat),
+			types.EventTypeSetBaseURI,
+			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.SchemaCode),
+			sdk.NewAttribute(types.AttributeKeySetRetrievalMethod, schema.OriginData.UriRetrievalMethod.String()),
 			sdk.NewAttribute(types.AttributeKeySetRetrivalResult, "success"),
 		),
 	})
 
 	k.Keeper.SetNFTSchema(ctx, schema)
 
-	return &types.MsgSetMetadataFormatResponse{
+	return &types.MsgSetUriRetrievalMethodResponse{
 		SchemaCode: msg.SchemaCode,
-		NewFormat:  msg.NewFormat,
+		NewMethod:  schema.OriginData.UriRetrievalMethod.String(),
 	}, nil
 }
