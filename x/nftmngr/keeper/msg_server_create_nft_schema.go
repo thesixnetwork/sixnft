@@ -47,14 +47,14 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		schema_input.MintAuthorization = types.KeyMintPermissionOnlySystem
 	}
 	// Check if the schema_input already exists
-	_, found := k.Keeper.GetNFTSchema(ctx, schema_input.Code)
+	_, found := k.GetNFTSchema(ctx, schema_input.Code)
 	if found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaAlreadyExists, schema_input.Code)
 	}
 	foundOrganization, organizationName := GetOrganizationFromSchemaCode(schema_input.Code)
 	// If there is organization in schema_input code, check if the organization exists
 	if foundOrganization {
-		storedOrganization, found := k.Keeper.GetOrganization(ctx, organizationName)
+		storedOrganization, found := k.GetOrganization(ctx, organizationName)
 		if found {
 			// Check owner of organization
 			if storedOrganization.Owner != msg.Creator {
@@ -62,7 +62,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 			}
 		} else {
 			// Store organization
-			k.Keeper.SetOrganization(ctx, types.Organization{
+			k.SetOrganization(ctx, types.Organization{
 				Owner: msg.Creator,
 				Name:  organizationName,
 			})
