@@ -189,7 +189,6 @@ message MsgAddAttribute {
 message MsgAddAttributeResponse {
   string code = 1;
   string name = 2;
-  OnChainData onchainData = 3;
 }
 
 message MsgAddAction {
@@ -201,9 +200,7 @@ message MsgAddAction {
 message MsgAddActionResponse {
   string code = 1;
   string name = 2;
-  OnChainData onchainData = 3;
 }
-
 
 message MsgSetBaseUri {
   string creator = 1;
@@ -220,13 +217,13 @@ message MsgToggleAction {
   string creator = 1;
   string code = 2;
   string action = 3;
-  bool disable = 4;
+  bool status = 4;
 }
 
 message MsgToggleActionResponse {
   string code = 1;
   string name = 2;
-  OnChainData onchainDataAction = 3;
+  bool status = 3;
 }
 
 message MsgChangeSchemaOwner {

@@ -1,88 +1,44 @@
 package keeper
 
 import (
-	"bytes"
-	"encoding/json"
-	"errors"
 
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
-
-	"github.com/hyperjumptech/grule-rule-engine/ast"
-	"github.com/hyperjumptech/grule-rule-engine/builder"
-	"github.com/hyperjumptech/grule-rule-engine/engine"
-	"github.com/hyperjumptech/grule-rule-engine/pkg"
 )
 
-type RuleAction struct {
-	Name     string   `json:"name"`
-	Desc     string   `json:"desc"`
-	Salience int      `json:"salience"`
-	When     string   `json:"when"`
-	Then     []string `json:"then"`
-}
+func (k Keeper) AddAction(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, newAction types.Action) error {
+	creator := signer.String()
 
-func ProcessAction(meta *types.Metadata, action *types.Action, params []*types.ActionParameter) (err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			switch x := r.(type) {
-			case string:
-				err = errors.New(x)
-			case error:
-				err = x
-			default:
-				err = errors.New("unknown panic")
-			}
-		}
-	}()
-	// Create params map from types.ActionParameter
-	paramsMap := make(map[string]*types.ActionParameter)
-	for _, param := range params {
-		paramsMap[param.Name] = param
+	// get existing action in schema
+	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
+	if !schemaFound {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
 	}
 
-	dataContext := ast.NewDataContext()
-	err = dataContext.Add("meta", meta)
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, creator)
+	}
+
+
+	// validate Action data
+  err := ValidateAction(&newAction, &schema)
 	if err != nil {
-		return err
-	}
-	err = dataContext.Add("params", paramsMap)
-	if err != nil {
-		return err
+		return sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
 	}
 
-	lib := ast.NewKnowledgeLibrary()
-	ruleBuilder := builder.NewRuleBuilder(lib)
-	ruleAction := &RuleAction{
-		Name:     action.Name,
-		Desc:     action.Desc,
-		Salience: 10,
-		When:     action.When,
-		Then:     action.Then,
-	}
+	// append new action
+	schema.OnchainData.Actions = append(schema.OnchainData.Actions, &newAction)
 
-	ruleAction.Then = append(ruleAction.Then, "Retract('"+action.Name+"');")
-	ruleBytes, _ := JSONMarshal(ruleAction)
+	// save index of action
+	k.SetActionOfSchema(ctx, types.ActionOfSchema{
+		Name:          newAction.Name,
+		NftSchemaCode: schema.Code,
+		Index:         uint64(len(schema.OnchainData.Actions) - 1),
+	})
 
-	ruleResouce := pkg.NewBytesResource(ruleBytes)
-	resource := pkg.NewJSONResourceFromResource(ruleResouce)
+	// save schema
+	k.SetNFTSchema(ctx, schema)
 
-	err = ruleBuilder.BuildRuleFromResource(action.Name, "0.1.1", resource)
-	if err != nil {
-		return err
-	}
-	kb := lib.NewKnowledgeBaseInstance(action.Name, "0.1.1")
-	eng1 := &engine.GruleEngine{MaxCycle: 100}
-	err = eng1.Execute(dataContext, kb)
-	if err != nil {
-		return err
-	}
 	return nil
-}
-
-func JSONMarshal(t interface{}) ([]byte, error) {
-	buffer := &bytes.Buffer{}
-	encoder := json.NewEncoder(buffer)
-	encoder.SetEscapeHTML(false)
-	err := encoder.Encode(t)
-	return buffer.Bytes(), err
 }

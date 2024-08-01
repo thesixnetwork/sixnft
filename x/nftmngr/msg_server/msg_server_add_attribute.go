@@ -89,8 +89,7 @@ func (k msg_server) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribu
 
 	return &types.MsgAddAttributeResponse{
 		Code:        msg.GetCode(),
-		Name:        schema.Name,
-		OnchainData: schema.OnchainData,
+		Name:        new_add_attribute.Name,
 	}, nil
 
 }

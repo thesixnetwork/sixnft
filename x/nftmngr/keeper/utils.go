@@ -1,6 +1,9 @@
 package keeper
 
 import (
+	"bytes"
+	"encoding/json"
+
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
@@ -14,7 +17,7 @@ func ValidateAction(action *types.Action, schema *types.NFTSchema) error {
 		return sdkerrors.Wrap(types.ErrActionAlreadyExists, action.Name)
 	}
 
-	//validate action struct
+	// validate action struct
 	if action.Name == "" || action.Name == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action name is empty")
 	}
@@ -24,7 +27,7 @@ func ValidateAction(action *types.Action, schema *types.NFTSchema) error {
 	if action.When == "" || action.When == " " {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action type is empty")
 	}
-	//validate array of action.Then is not empty
+	// validate array of action.Then is not empty
 	if len(action.Then) == 0 {
 		return sdkerrors.Wrap(types.ErrInvalidActionAttribute, "action.Then is empty")
 	}
@@ -50,6 +53,13 @@ func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.Defau
 	return nftAttributeValue
 }
 
+func JSONMarshal(t interface{}) ([]byte, error) {
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
+	err := encoder.Encode(t)
+	return buffer.Bytes(), err
+}
 
 // stringfy tokenId list to string token_id1,token_id2,token_id3
 func StringfyTokenIdList(list []string) string {
