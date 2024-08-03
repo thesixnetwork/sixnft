@@ -14,6 +14,11 @@ import (
 func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
+
 	// structure for new action
 	var new_action types.Action
 
@@ -28,6 +33,9 @@ func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
+
+	k.Keeper.AddAction(ctx, from, msg.Code, new_action)
+
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeAddAction,
@@ -38,7 +46,7 @@ func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*
 	})
 
 	return &types.MsgAddActionResponse{
-		Code:        msg.GetCode(),
-		Name:        new_action.Name,
+		Code: msg.GetCode(),
+		Name: new_action.Name,
 	}, nil
 }

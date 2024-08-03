@@ -2,7 +2,6 @@ package simulation
 
 import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/msg_server"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
@@ -28,7 +27,7 @@ func SimulateCreateMetadata(schemaInput types.NFTSchemaINPUT, metaInput types.Nf
 		listOfGlobalAttributeValue = append(listOfGlobalAttributeValue, schemaAttribute_)
 	}
 
-	_, err := msg_server.ValidateNFTData(&metaInput, &_schema)
+	_, err := keeper.ValidateNFTData(&metaInput, &_schema)
 
 	if err != nil {
 		panic(err)

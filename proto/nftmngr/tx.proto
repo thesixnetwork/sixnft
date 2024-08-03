@@ -239,6 +239,7 @@ message MsgChangeSchemaOwnerResponse {
 
 message MsgResyncAttributesResponse {
   string nftSchemaCode = 1;
+  string tokenId = 2;
 }
 
 message MsgShowAttributes {
@@ -388,7 +389,6 @@ message MsgUpdateSchemaAttribute {
 message MsgUpdateSchemaAttributeResponse {
   string nftSchemaCode = 1;
   string name = 2;
-  SchemaAttribute new_attribute = 3;
 }
 
 // message MsgDeleteSchemaAttribute {

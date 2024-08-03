@@ -26,7 +26,7 @@ func (m Migrator) Migrate2toV3(ctx sdk.Context) error {
 	for _, eachSchema := range allSchemas {
 
 		v2OriginAttribute := make([]*types.AttributeDefinition, 0)
-		v2OnchainDataAttribute := make([]*types.AttributeDefinition, 0)
+		// v2OnchainDataAttribute := make([]*types.AttributeDefinition, 0)
 		v2TokenAttribute := make([]*types.AttributeDefinition, 0)
 		v2flagStatus := make([]*types.FlagStatus,0)
 
@@ -56,26 +56,18 @@ func (m Migrator) Migrate2toV3(ctx sdk.Context) error {
 		}
 
 		for _ , ocAttribute := range eachSchema.OnchainData.NftAttributes {
-			convertedDefaultMintValue, err := ConvertDefaultMintValueFromV2ToV3(ocAttribute.DefaultMintValue)
+			convertedDefaultMintValue, err := ConvertDefaultMintValueV2ToSchemaAttributeValue(ocAttribute.DefaultMintValue)
 			if err != nil {
 				// Handle the error appropriately
 				return fmt.Errorf("failed to convert DefaultMintValue for attribute '%s': %w", ocAttribute.Name, err)
 			}
 
-			v2OnchainDataAttribute = append(v2OnchainDataAttribute, &types.AttributeDefinition{
-				Name:              ocAttribute.Name,
-				DataType:          ocAttribute.DataType,
-				Required:          ocAttribute.Required,
-				DisplayValueField: ocAttribute.DisplayValueField,
-				DisplayOption: &types.DisplayOption{
-					BoolTrueValue:  ocAttribute.DisplayOption.BoolTrueValue,
-					BoolFalseValue: ocAttribute.DisplayOption.BoolFalseValue,
-					Opensea:        (*types.OpenseaDisplayOption)(ocAttribute.DisplayOption.Opensea),
-				},
-				DefaultMintValue:    convertedDefaultMintValue,
-				HiddenOveride:       ocAttribute.HiddenOveride,
-				HiddenToMarketplace: ocAttribute.HiddenOveride,
-				Index:               ocAttribute.Index,
+			m.keeper.SetSchemaAttribute(ctx, types.SchemaAttribute{
+				NftSchemaCode: eachSchema.Code,
+				Name:          ocAttribute.Name,
+				DataType:      ocAttribute.DataType,
+				CurrentValue:  convertedDefaultMintValue,
+				Creator:       eachSchema.Owner,
 			})
 		}
 
@@ -201,4 +193,39 @@ func ConvertDefaultMintValueFromV2ToV3(defaultMintValue *v2types.DefaultMintValu
 	}
 
 	return attributeValue, nil
+}
+
+func ConvertDefaultMintValueV2ToSchemaAttributeValue(defaultMintValue *v2types.DefaultMintValue) (*types.SchemaAttributeValue, error) {
+	schemaAttributeValue := &types.SchemaAttributeValue{}
+
+	switch value := defaultMintValue.Value.(type) {
+	case *v2types.DefaultMintValue_NumberAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_NumberAttributeValue{
+			NumberAttributeValue: &types.NumberAttributeValue{
+				Value: value.NumberAttributeValue.Value,
+			},
+		}
+	case *v2types.DefaultMintValue_StringAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_StringAttributeValue{
+			StringAttributeValue: &types.StringAttributeValue{
+				Value: value.StringAttributeValue.Value,
+			},
+		}
+	case *v2types.DefaultMintValue_BooleanAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_BooleanAttributeValue{
+			BooleanAttributeValue: &types.BooleanAttributeValue{
+				Value: value.BooleanAttributeValue.Value,
+			},
+		}
+	case *v2types.DefaultMintValue_FloatAttributeValue:
+		schemaAttributeValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
+			FloatAttributeValue: &types.FloatAttributeValue{
+				Value: value.FloatAttributeValue.Value,
+			},
+		}
+	default:
+		return nil, fmt.Errorf("unknown value type: %T", value)
+	}
+
+	return schemaAttributeValue, nil
 }

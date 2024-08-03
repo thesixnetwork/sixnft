@@ -206,7 +206,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 			case "float":
 				floatValue, err := strconv.ParseFloat(change.NewValue, 64)
 				if err != nil {
-					return nil,err
+					return nil, err
 				}
 				val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
 					FloatAttributeValue: &types.FloatAttributeValue{
@@ -241,4 +241,39 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 	changeList, _ := json.Marshal(meta.ChangeList)
 
 	return changeList, nil
+}
+
+func (k Keeper) AddAction(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, newAction types.Action) error {
+	creator := signer.String()
+
+	// get existing action in schema
+	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
+	if !schemaFound {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, creator)
+	}
+
+	// validate Action data
+	err := ValidateAction(&newAction, &schema)
+	if err != nil {
+		return sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
+
+	// append new action
+	schema.OnchainData.Actions = append(schema.OnchainData.Actions, &newAction)
+
+	// save index of action
+	k.SetActionOfSchema(ctx, types.ActionOfSchema{
+		Name:          newAction.Name,
+		NftSchemaCode: schema.Code,
+		Index:         uint64(len(schema.OnchainData.Actions) - 1),
+	})
+
+	// save schema
+	k.SetNFTSchema(ctx, schema)
+
+	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
@@ -51,6 +52,40 @@ func NewNFTAttributeValueFromDefaultValue(name string, defaultValue *types.Defau
 		return nil
 	}
 	return nftAttributeValue
+}
+
+// validate AttributeDefinition data
+func (k Keeper) ValidateAttributeDefinition(ctx sdk.Context, attribute *types.AttributeDefinition, schema *types.NFTSchema) error {
+	valFound, found := k.GetSchemaAttribute(ctx, schema.Code, attribute.Name)
+	if found {
+		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, valFound.Name)
+	}
+	// Onchain Data Nft Attributes Map
+	mapOriginAttributes := CreateAttrDefMap(schema.OriginData.OriginAttributes)
+	mapTokenAttributes := CreateAttrDefMap(schema.OnchainData.TokenAttributes)
+	// check if attribute name is unique
+	if _, found := mapOriginAttributes[attribute.Name]; found {
+		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
+	}
+	if _, found := mapTokenAttributes[attribute.Name]; found {
+		return sdkerrors.Wrap(types.ErrAttributeAlreadyExists, attribute.Name)
+	}
+
+	return nil
+}
+
+// merge all attributes and count the index
+func MergeAndCountAllAttributes(originAttributes []*types.AttributeDefinition, onchainNFTAttributes []*types.AttributeDefinition, onchainTokenAttribute []*types.AttributeDefinition) int {
+	// length or originAttributes
+	length_originAttributes := len(originAttributes)
+	// length or onchainNFTAttributes
+	length_onchainNFTAttributes := len(onchainNFTAttributes)
+	// length or onchainTokenAttribute
+	length_onchainTokenAttribute := len(onchainTokenAttribute)
+
+	// length of all attributes
+	length_allAttributes := length_originAttributes + length_onchainNFTAttributes + length_onchainTokenAttribute
+	return length_allAttributes
 }
 
 func JSONMarshal(t interface{}) ([]byte, error) {

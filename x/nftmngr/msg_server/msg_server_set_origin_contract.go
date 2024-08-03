@@ -11,16 +11,15 @@ import (
 func (k msg_server) SetOriginContract(goCtx context.Context, msg *types.MsgSetOriginContract) (*types.MsgSetOriginContractResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.SchemaCode)
+	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
-	}
-
-	schema.OriginData.OriginContractAddress = msg.NewContractAddress
+	err = k.SetOriginContractKeeper(ctx, from, msg.SchemaCode, msg.NewContractAddress)
+  if err != nil {
+    return nil, err
+  }
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -32,7 +31,6 @@ func (k msg_server) SetOriginContract(goCtx context.Context, msg *types.MsgSetOr
 		),
 	})
 
-	k.Keeper.SetNFTSchema(ctx, schema)
 	return &types.MsgSetOriginContractResponse{
 		SchemaCode:         msg.SchemaCode,
 		NewContractAddress: msg.NewContractAddress,

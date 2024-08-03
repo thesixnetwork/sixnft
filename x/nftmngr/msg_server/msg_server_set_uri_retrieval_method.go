@@ -2,6 +2,7 @@ package msg_server
 
 import (
 	"context"
+	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -10,36 +11,25 @@ import (
 
 func (k msg_server) SetUriRetrievalMethod(goCtx context.Context, msg *types.MsgSetUriRetrievalMethod) (*types.MsgSetUriRetrievalMethodResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.SchemaCode)
+	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
-	}
-
-	if msg.NewMethod == 0 {
-		schema.OriginData.UriRetrievalMethod = types.URIRetrievalMethod_BASE
-	} else if msg.NewMethod == 1 {
-		schema.OriginData.UriRetrievalMethod = types.URIRetrievalMethod_TOKEN
-	}
-
+	k.SetURIRetrievalKeeper(ctx, from, msg.SchemaCode, msg.NewMethod)
+	strMethod := strconv.FormatInt(int64(msg.NewMethod), 10)
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(
 			types.EventTypeSetBaseURI,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.SchemaCode),
-			sdk.NewAttribute(types.AttributeKeySetRetrievalMethod, schema.OriginData.UriRetrievalMethod.String()),
+			sdk.NewAttribute(types.AttributeKeySetRetrievalMethod, strMethod),
 			sdk.NewAttribute(types.AttributeKeySetRetrivalResult, "success"),
 		),
 	})
 
-	k.Keeper.SetNFTSchema(ctx, schema)
-
 	return &types.MsgSetUriRetrievalMethodResponse{
 		SchemaCode: msg.SchemaCode,
-		NewMethod:  schema.OriginData.UriRetrievalMethod.String(),
+		NewMethod:  strMethod,
 	}, nil
 }

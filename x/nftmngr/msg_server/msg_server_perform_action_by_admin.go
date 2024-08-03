@@ -18,7 +18,6 @@ func (k msg_server) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPe
 
 	// Emit events on metadata change
 	changeList, err := k.ActionByAdmin(ctx, from, msg.NftSchemaCode, msg.TokenId, msg.Action, msg.RefId, msg.Parameters)
-
 	if err != nil {
 		return nil, err
 	}

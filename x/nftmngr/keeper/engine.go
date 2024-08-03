@@ -14,9 +14,9 @@ import (
 type RuleAction struct {
 	Name     string   `json:"name"`
 	Desc     string   `json:"desc"`
-	Salience int      `json:"salience"`
 	When     string   `json:"when"`
 	Then     []string `json:"then"`
+	Salience int      `json:"salience"`
 }
 
 func ProcessAction(meta *types.Metadata, action *types.Action, params []*types.ActionParameter) (err error) {

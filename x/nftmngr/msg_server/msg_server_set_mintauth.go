@@ -11,25 +11,22 @@ import (
 func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth) (*types.MsgSetMintauthResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
+	}
+
 	// Get nft schema from store
-	schema, schemaFound := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	schema, schemaFound := k.GetNFTSchema(ctx, msg.NftSchemaCode)
 	// Check if the schema already exists
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
 
-	// Swith location of attribute
-	switch msg.AuthorizeTo {
-	case types.AuthorizeTo_SYSTEM:
-		// append new nft_attributes to array of OnchainData.NftAttributes
-		schema.MintAuthorization = types.KeyMintPermissionOnlySystem
-	case types.AuthorizeTo_ALL:
-		// append new token_attributes to array of OnchainData.TokenAttributes
-		schema.MintAuthorization = types.KeyMintPermissionAll
-		// end the case
-	}
-
-	k.Keeper.SetNFTSchema(ctx, schema)
+  err = k.SetMintAuthKeeper(ctx, from, msg.NftSchemaCode, msg.AuthorizeTo)
+  if err != nil {
+    return nil, err
+  }
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -41,5 +38,7 @@ func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth
 		),
 	})
 
-	return &types.MsgSetMintauthResponse{}, nil
+	return &types.MsgSetMintauthResponse{
+    NftSchemaCode: msg.NftSchemaCode,
+  }, nil
 }

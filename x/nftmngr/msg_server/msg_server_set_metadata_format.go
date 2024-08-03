@@ -11,16 +11,12 @@ import (
 func (k msg_server) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMetadataFormat) (*types.MsgSetMetadataFormatResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.SchemaCode)
+	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
-	}
-
-	schema.OriginData.MetadataFormat = msg.NewFormat
+	k.SetMetadataFormatKeeper(ctx, from, msg.SchemaCode, msg.NewFormat)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -28,11 +24,8 @@ func (k msg_server) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMe
 			types.EventTypeSetMetadataFormat,
 			sdk.NewAttribute(types.EventTypeSetMetadataFormat, msg.SchemaCode),
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NewFormat),
-			sdk.NewAttribute(types.AttributeKeySetRetrivalResult, "success"),
 		),
 	})
-
-	k.Keeper.SetNFTSchema(ctx, schema)
 
 	return &types.MsgSetMetadataFormatResponse{
 		SchemaCode: msg.SchemaCode,
