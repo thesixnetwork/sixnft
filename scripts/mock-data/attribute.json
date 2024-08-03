@@ -1,6 +1,0 @@
-{
-    "name": "#ATTRIBUTE_NAME#",
-    "#ATTRIBUTE_VALUE_TYPE#attribute_value": {
-        "value": "#ATTRIBUTE_VALUE_TYPE_VALUE#"
-    }
-}
