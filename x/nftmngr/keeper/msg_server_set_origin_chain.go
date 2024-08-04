@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetOriginChain(goCtx context.Context, msg *types.MsgSetOriginChain) (*types.MsgSetOriginChainResponse, error) {
+func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOriginChain) (*types.MsgSetOriginChainResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,7 +16,7 @@ func (k msg_server) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigi
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
+	err = k.Keeper.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
 	if err != nil {
 		return nil, err
 	}

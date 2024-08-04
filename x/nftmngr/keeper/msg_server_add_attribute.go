@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msg_server) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
+func (k msgServer) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)

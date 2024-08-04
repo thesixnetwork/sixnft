@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,8 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-
-func (k msg_server) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
+func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -17,10 +16,10 @@ func (k msg_server) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttr
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-  err = k.ShowAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
-  if err != nil {
-    return nil, err
-  }
+	err = k.Keeper.ShowAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvent(

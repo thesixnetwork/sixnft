@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) ChangeSchemaOwner(goCtx context.Context, msg *types.MsgChangeSchemaOwner) (*types.MsgChangeSchemaOwnerResponse, error) {
+func (k msgServer) ChangeSchemaOwner(goCtx context.Context, msg *types.MsgChangeSchemaOwner) (*types.MsgChangeSchemaOwnerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -21,10 +21,10 @@ func (k msg_server) ChangeSchemaOwner(goCtx context.Context, msg *types.MsgChang
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.NewOwner)
 	}
 
-  err = k.Keeper.ChangeSchemaOwner(ctx, msg.Creator, msg.NewOwner, msg.NftSchemaCode)
-  if err != nil {
-    return nil, err
-  }
+	err = k.Keeper.ChangeSchemaOwner(ctx, msg.Creator, msg.NewOwner, msg.NftSchemaCode)
+	if err != nil {
+		return nil, err
+	}
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

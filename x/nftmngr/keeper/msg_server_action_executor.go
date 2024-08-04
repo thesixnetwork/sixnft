@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) CreateActionExecutor(goCtx context.Context, msg *types.MsgCreateActionExecutor) (*types.MsgCreateActionExecutorResponse, error) {
+func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCreateActionExecutor) (*types.MsgCreateActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -20,7 +20,7 @@ func (k msg_server) CreateActionExecutor(goCtx context.Context, msg *types.MsgCr
 		return nil, err
 	}
 
-	err = k.AddActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
+	err = k.Keeper.AddActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +40,7 @@ func (k msg_server) CreateActionExecutor(goCtx context.Context, msg *types.MsgCr
 	}, nil
 }
 
-func (k msg_server) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDeleteActionExecutor) (*types.MsgDeleteActionExecutorResponse, error) {
+func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDeleteActionExecutor) (*types.MsgDeleteActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	from, err := sdk.AccAddressFromBech32(msg.Creator)

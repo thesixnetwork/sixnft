@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMetadataFormat) (*types.MsgSetMetadataFormatResponse, error) {
+func (k msgServer) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMetadataFormat) (*types.MsgSetMetadataFormatResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,7 +16,7 @@ func (k msg_server) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMe
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.SetMetadataFormatKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewFormat)
+	k.Keeper.SetMetadataFormatKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewFormat)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

@@ -1,10 +1,9 @@
-package msg_server
+package keeper
 
 import (
 	"context"
 	"encoding/base64"
 
-	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -12,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msg_server) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCreateMultiMetadata) (*types.MsgCreateMultiMetadataResponse, error) {
+func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCreateMultiMetadata) (*types.MsgCreateMultiMetadataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	//limit size token_id <= 1000
@@ -49,7 +48,7 @@ func (k msg_server) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCre
 	}
 
 	// Validate Schema Message and return error if not valid
-	valid, err := keeper.ValidateNFTData(&data, &schema)
+	valid, err := ValidateNFTData(&data, &schema)
 	_ = valid
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
@@ -64,7 +63,7 @@ func (k msg_server) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCre
 		if attr.Required {
 			if _, ok := mapOfTokenAttributeValues[attr.Name]; !ok {
 				if attr.DefaultMintValue != nil {
-					data.OnchainAttributes = append(data.OnchainAttributes, keeper.NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
+					data.OnchainAttributes = append(data.OnchainAttributes, NewNFTAttributeValueFromDefaultValue(attr.Name, attr.DefaultMintValue))
 				}
 			}
 		}
@@ -136,7 +135,7 @@ func (k msg_server) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCre
 	}
 
 	// stringfy tokenId list to string token_id1,token_id2,token_id3
-	tokenIdList := keeper.StringfyTokenIdList(msg.TokenId)
+	tokenIdList := StringfyTokenIdList(msg.TokenId)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

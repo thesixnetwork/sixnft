@@ -236,7 +236,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, creator string, nftSchemaName str
 	return changeList, nil
 }
 
-func (k Keeper) AddAction(ctx sdk.Context, creator string, nftSchemaName string, newAction types.Action) error {
+func (k Keeper) AddActionKeeper(ctx sdk.Context, creator string, nftSchemaName string, newAction types.Action) error {
 	// get existing action in schema
 	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
 	if !schemaFound {

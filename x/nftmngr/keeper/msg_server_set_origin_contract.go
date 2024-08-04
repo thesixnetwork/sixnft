@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetOriginContract(goCtx context.Context, msg *types.MsgSetOriginContract) (*types.MsgSetOriginContractResponse, error) {
+func (k msgServer) SetOriginContract(goCtx context.Context, msg *types.MsgSetOriginContract) (*types.MsgSetOriginContractResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,10 +16,10 @@ func (k msg_server) SetOriginContract(goCtx context.Context, msg *types.MsgSetOr
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.SetOriginContractKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewContractAddress)
-  if err != nil {
-    return nil, err
-  }
+	err = k.Keeper.SetOriginContractKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewContractAddress)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

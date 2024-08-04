@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth) (*types.MsgSetMintauthResponse, error) {
+func (k msgServer) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth) (*types.MsgSetMintauthResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -17,16 +17,16 @@ func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth
 	}
 
 	// Get nft schema from store
-	schema, schemaFound := k.GetNFTSchema(ctx, msg.NftSchemaCode)
+	schema, schemaFound := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
 	// Check if the schema already exists
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
 
-  err = k.SetMintAuthKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.AuthorizeTo)
-  if err != nil {
-    return nil, err
-  }
+	err = k.Keeper.SetMintAuthKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.AuthorizeTo)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -39,6 +39,6 @@ func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth
 	})
 
 	return &types.MsgSetMintauthResponse{
-    NftSchemaCode: msg.NftSchemaCode,
-  }, nil
+		NftSchemaCode: msg.NftSchemaCode,
+	}, nil
 }

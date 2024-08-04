@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
+func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -23,14 +23,14 @@ func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateN
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
-  
+
 	schema_input := types.NFTSchemaINPUT{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(jsonSchema, &schema_input)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
 
-	err = k.CreateNftSchemaKeeper(ctx, msg.Creator, schema_input)
+	err = k.Keeper.CreateNftSchemaKeeper(ctx, msg.Creator, schema_input)
 	if err != nil {
 		return nil, err
 	}

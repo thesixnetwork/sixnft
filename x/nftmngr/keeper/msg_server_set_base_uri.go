@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
+func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,7 +16,7 @@ func (k msg_server) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) 
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
+	k.Keeper.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

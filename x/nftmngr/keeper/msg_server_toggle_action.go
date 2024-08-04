@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
+func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -17,7 +17,7 @@ func (k msg_server) ToggleAction(goCtx context.Context, msg *types.MsgToggleActi
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
+	err = k.Keeper.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
 	if err != nil {
 		return nil, err
 	}

@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetFeeConfig(goCtx context.Context, msg *types.MsgSetFeeConfig) (*types.MsgSetFeeConfigResponse, error) {
+func (k msgServer) SetFeeConfig(goCtx context.Context, msg *types.MsgSetFeeConfig) (*types.MsgSetFeeConfigResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Validate if creator has permission to set fee config
@@ -37,7 +37,7 @@ func (k msg_server) SetFeeConfig(goCtx context.Context, msg *types.MsgSetFeeConf
 			return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 		}
 
-		err = k.ValidateFeeConfig(&feeConfig)
+		err = k.Keeper.ValidateFeeConfig(&feeConfig)
 		if err != nil {
 			return nil, err
 		}

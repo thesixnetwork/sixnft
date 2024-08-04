@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUpdateSchemaAttribute) (*types.MsgUpdateSchemaAttributeResponse, error) {
+func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUpdateSchemaAttribute) (*types.MsgUpdateSchemaAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -29,7 +29,7 @@ func (k msg_server) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgU
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.UpdateAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, update_attribute)
+	err = k.Keeper.UpdateAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, update_attribute)
 	if err != nil {
 		return nil, err
 	}

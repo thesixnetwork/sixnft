@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	keepertest "github.com/thesixnetwork/sixnft/testutil/keeper"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/msg_server"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
@@ -18,7 +18,7 @@ var _ = strconv.IntSize
 
 func TestActionExecutorMsgServerCreate(t *testing.T) {
 	k, ctx := keepertest.NftmngrKeeper(t)
-	srv := msg_server.NewMsgServerImpl(*k)
+	srv := keeper.NewMsgServerImpl(*k)
 	wctx := sdk.WrapSDKContext(ctx)
 	creator := "A"
 	for i := 0; i < 5; i++ {
@@ -71,7 +71,7 @@ func TestActionExecutorMsgServerUpdate(t *testing.T) {
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
 			k, ctx := keepertest.NftmngrKeeper(t)
-			srv := msg_server.NewMsgServerImpl(*k)
+			srv := keeper.NewMsgServerImpl(*k)
 			wctx := sdk.WrapSDKContext(ctx)
 			expected := &types.MsgCreateActionExecutor{Creator: creator,
 				NftSchemaCode:   strconv.Itoa(0),
@@ -128,7 +128,7 @@ func TestActionExecutorMsgServerDelete(t *testing.T) {
 	} {
 		t.Run(tc.desc, func(t *testing.T) {
 			k, ctx := keepertest.NftmngrKeeper(t)
-			srv := msg_server.NewMsgServerImpl(*k)
+			srv := keeper.NewMsgServerImpl(*k)
 			wctx := sdk.WrapSDKContext(ctx)
 
 			_, err := srv.CreateActionExecutor(wctx, &types.MsgCreateActionExecutor{Creator: creator,

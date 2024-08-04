@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func (k msg_server) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPerformActionByAdmin) (*types.MsgPerformActionByAdminResponse, error) {
+func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPerformActionByAdmin) (*types.MsgPerformActionByAdminResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -17,7 +17,7 @@ func (k msg_server) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPe
 	}
 
 	// Emit events on metadata change
-	changeList, err := k.ActionByAdmin(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, msg.Action, msg.RefId, msg.Parameters)
+	changeList, err := k.Keeper.ActionByAdmin(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, msg.Action, msg.RefId, msg.Parameters)
 	if err != nil {
 		return nil, err
 	}

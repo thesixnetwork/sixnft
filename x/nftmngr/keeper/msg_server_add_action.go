@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
+func (k msgServer) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -34,7 +34,7 @@ func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	k.Keeper.AddAction(ctx, msg.Creator, msg.Code, new_action)
+	k.AddActionKeeper(ctx, msg.Creator, msg.Code, new_action)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

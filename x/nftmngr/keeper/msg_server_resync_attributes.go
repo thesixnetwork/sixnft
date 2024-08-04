@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncAttributes) (*types.MsgResyncAttributesResponse, error) {
+func (k msgServer) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncAttributes) (*types.MsgResyncAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,7 +16,7 @@ func (k msg_server) ResyncAttributes(goCtx context.Context, msg *types.MsgResync
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.ResyncAttibutesKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId)
+	err = k.Keeper.ResyncAttibutesKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId)
 	if err != nil {
 		return nil, err
 	}

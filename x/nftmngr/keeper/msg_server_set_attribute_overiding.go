@@ -1,4 +1,4 @@
-package msg_server
+package keeper
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k msg_server) SetAttributeOveriding(goCtx context.Context, msg *types.MsgSetAttributeOveriding) (*types.MsgSetAttributeOveridingResponse, error) {
+func (k msgServer) SetAttributeOveriding(goCtx context.Context, msg *types.MsgSetAttributeOveriding) (*types.MsgSetAttributeOveridingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	_, err := sdk.AccAddressFromBech32(msg.Creator)
@@ -16,7 +16,7 @@ func (k msg_server) SetAttributeOveriding(goCtx context.Context, msg *types.MsgS
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.SetAttributeOveridingKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOveridingType)
+	err = k.Keeper.SetAttributeOveridingKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOveridingType)
 	if err != nil {
 		return nil, err
 	}
