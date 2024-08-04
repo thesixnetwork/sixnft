@@ -12,15 +12,15 @@ import (
 func (k msg_server) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-  err = k.ToggleActionKeeper(ctx, from, msg.Code, msg.Action, msg.Status)
-  if err != nil {
-    return nil, err
-  }
+	err = k.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

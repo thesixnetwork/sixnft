@@ -11,12 +11,12 @@ import (
 func (k msg_server) SetOriginChain(goCtx context.Context, msg *types.MsgSetOriginChain) (*types.MsgSetOriginChainResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.SetOriginChainKeeper(ctx, from, msg.SchemaCode, msg.NewOriginChain)
+	err = k.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
 	if err != nil {
 		return nil, err
 	}

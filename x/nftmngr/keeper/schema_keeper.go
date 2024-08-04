@@ -10,10 +10,13 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) CreateNftSchemaKeeper(ctx sdk.Context, signer sdk.AccAddress, schemaInput types.NFTSchemaINPUT) error {
-	creator := signer.String()
-
+func (k Keeper) CreateNftSchemaKeeper(ctx sdk.Context, creator string, schemaInput types.NFTSchemaINPUT) error {
 	schemaInput.Owner = creator
+
+	creatorAddress, err := sdk.AccAddressFromBech32(creator)
+	if err != nil {
+		return err
+	}
 
 	// Validate Schema Message and return error if not valid
 	valid, err := ValidateNFTSchema(&schemaInput)
@@ -198,7 +201,7 @@ func (k Keeper) CreateNftSchemaKeeper(ctx sdk.Context, signer sdk.AccAddress, sc
 		if len(feeBalances.FeeBalances) > 0 {
 			feeBalances.FeeBalances[types.FeeSubject_CREATE_NFT_SCHEMA] = "0" + amount.Denom
 		}
-		err = k.ProcessFee(ctx, &feeConfig, &feeBalances, types.FeeSubject_CREATE_NFT_SCHEMA, signer)
+		err = k.ProcessFee(ctx, &feeConfig, &feeBalances, types.FeeSubject_CREATE_NFT_SCHEMA, creatorAddress)
 		if err != nil {
 			return sdkerrors.Wrap(types.ErrProcessingFee, err.Error())
 		}
@@ -227,8 +230,7 @@ func (k Keeper) ProcessFee(ctx sdk.Context, feeConfig *types.NFTFeeConfig, feeBa
 	return nil
 }
 
-func (k Keeper) SetBaseURIKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, baseURI string) error {
-	creator := signer.String()
+func (k Keeper) SetBaseURIKeeper(ctx sdk.Context, creator, nftSchemaName, baseURI string) error {
 
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -245,8 +247,7 @@ func (k Keeper) SetBaseURIKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSche
 	return nil
 }
 
-func (k Keeper) SetMetadataFormatKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, format string) error {
-	creator := signer.String()
+func (k Keeper) SetMetadataFormatKeeper(ctx sdk.Context, creator, nftSchemaName, format string) error {
 
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -264,8 +265,7 @@ func (k Keeper) SetMetadataFormatKeeper(ctx sdk.Context, signer sdk.AccAddress, 
 	return nil
 }
 
-func (k Keeper) SetMintAuthKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, authTo types.AuthorizeTo) error {
-	creator := signer.String()
+func (k Keeper) SetMintAuthKeeper(ctx sdk.Context, creator, nftSchemaName string, authTo types.AuthorizeTo) error {
 
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -292,8 +292,7 @@ func (k Keeper) SetMintAuthKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	return nil
 }
 
-func (k Keeper) SetOriginChainKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, originChain string) error {
-	creator := signer.String()
+func (k Keeper) SetOriginChainKeeper(ctx sdk.Context, creator, nftSchemaName, originChain string) error {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
@@ -312,8 +311,7 @@ func (k Keeper) SetOriginChainKeeper(ctx sdk.Context, signer sdk.AccAddress, nft
 	return nil
 }
 
-func (k Keeper) SetOriginContractKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, contract string) error {
-	creator := signer.String()
+func (k Keeper) SetOriginContractKeeper(ctx sdk.Context, creator, nftSchemaName, contract string) error {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
@@ -329,8 +327,7 @@ func (k Keeper) SetOriginContractKeeper(ctx sdk.Context, signer sdk.AccAddress, 
 	return nil
 }
 
-func (k Keeper) SetURIRetrievalKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, method int32) error {
-	creator := signer.String()
+func (k Keeper) SetURIRetrievalKeeper(ctx sdk.Context, creator, nftSchemaName string, method int32) error {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)

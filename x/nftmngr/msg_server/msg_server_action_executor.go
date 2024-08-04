@@ -10,16 +10,17 @@ import (
 func (k msg_server) CreateActionExecutor(goCtx context.Context, msg *types.MsgCreateActionExecutor) (*types.MsgCreateActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
-	if err != nil {
-		return nil, err
-	}
-	executorAddress, err := sdk.AccAddressFromBech32(msg.ExecutorAddress)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
 	}
 
-	err = k.AddActionExecutor(ctx, from, msg.NftSchemaCode, executorAddress)
+	_, err = sdk.AccAddressFromBech32(msg.ExecutorAddress)
+	if err != nil {
+		return nil, err
+	}
+
+	err = k.AddActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
 	if err != nil {
 		return nil, err
 	}

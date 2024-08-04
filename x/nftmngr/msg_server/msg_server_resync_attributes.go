@@ -11,12 +11,12 @@ import (
 func (k msg_server) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncAttributes) (*types.MsgResyncAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.ResyncAttibutesKeeper(ctx, from, msg.NftSchemaCode, msg.TokenId)
+	err = k.ResyncAttibutesKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId)
 	if err != nil {
 		return nil, err
 	}

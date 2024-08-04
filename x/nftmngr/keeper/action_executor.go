@@ -66,10 +66,7 @@ func (k Keeper) GetAllActionExecutor(ctx sdk.Context) (list []types.ActionExecut
 	return
 }
 
-func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
-	creator := signer.String()
-	newExecutorAddress := executorAddress.String()
-
+func (k Keeper) AddActionExecutor(ctx sdk.Context, creator string, nftSchemaName string, executorAddress string) error {
 	// Retrieve the schema
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -85,7 +82,7 @@ func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	_, isFound := k.GetActionExecutor(
 		ctx,
 		nftSchemaName,
-		newExecutorAddress,
+		executorAddress,
 	)
 
 	if isFound {
@@ -95,7 +92,7 @@ func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	actionExecutor := types.ActionExecutor{
 		Creator:         creator,
 		NftSchemaCode:   nftSchemaName,
-		ExecutorAddress: newExecutorAddress,
+		ExecutorAddress: executorAddress,
 	}
 
 	val, found := k.GetExecutorOfSchema(ctx, nftSchemaName)
@@ -107,7 +104,7 @@ func (k Keeper) AddActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	}
 
 	// set executorOfSchema
-	val.ExecutorAddress = append(val.ExecutorAddress, newExecutorAddress)
+	val.ExecutorAddress = append(val.ExecutorAddress, executorAddress)
 
 	k.SetExecutorOfSchema(ctx, types.ExecutorOfSchema{
 		NftSchemaCode:   val.NftSchemaCode,

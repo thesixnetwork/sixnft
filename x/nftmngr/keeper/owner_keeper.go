@@ -7,9 +7,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) ChangeOrgOwner(ctx sdk.Context, signer, newOwner sdk.AccAddress, orgName string) error {
-	creator := signer.String()
-	newOwnerStr := newOwner.String()
+func (k Keeper) ChangeOrgOwner(ctx sdk.Context, creator, newOwner, orgName string) error {
 
 	// get the organization
 	organization, found := k.GetOrganization(ctx, orgName)
@@ -22,17 +20,14 @@ func (k Keeper) ChangeOrgOwner(ctx sdk.Context, signer, newOwner sdk.AccAddress,
 	}
 
 	// change the owner
-	organization.Owner = newOwnerStr
+	organization.Owner = newOwner
 
 	// save the organization
 	k.SetOrganization(ctx, organization)
 	return nil
 }
 
-func (k Keeper) ChangeSchemaOwner(ctx sdk.Context, signer, newOwner sdk.AccAddress, nftSchemaName string) error {
-
-	creator := signer.String()
-	newOwnerStr := newOwner.String()
+func (k Keeper) ChangeSchemaOwner(ctx sdk.Context, creator, newOwner, nftSchemaName string) error {
 
 	// Retreive schema data
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
@@ -46,7 +41,7 @@ func (k Keeper) ChangeSchemaOwner(ctx sdk.Context, signer, newOwner sdk.AccAddre
 	}
 
 	// Change the owner
-	schema.Owner = newOwnerStr
+	schema.Owner = newOwner
 
 	// Save the schema
 	k.SetNFTSchema(ctx, schema)

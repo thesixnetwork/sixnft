@@ -14,7 +14,7 @@ import (
 func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNFTSchema) (*types.MsgCreateNFTSchemaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
@@ -29,7 +29,7 @@ func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateN
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
 
-	err = k.CreateNftSchemaKeeper(ctx, from, schema_input)
+	err = k.CreateNftSchemaKeeper(ctx, msg.Creator, schema_input)
 	if err != nil {
 		return nil, err
 	}

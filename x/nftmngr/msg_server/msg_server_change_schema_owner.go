@@ -11,17 +11,17 @@ import (
 func (k msg_server) ChangeSchemaOwner(goCtx context.Context, msg *types.MsgChangeSchemaOwner) (*types.MsgChangeSchemaOwnerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	to, err := sdk.AccAddressFromBech32(msg.NewOwner)
+	_, err = sdk.AccAddressFromBech32(msg.NewOwner)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.NewOwner)
 	}
 
-  err = k.Keeper.ChangeSchemaOwner(ctx, from, to, msg.NftSchemaCode)
+  err = k.Keeper.ChangeSchemaOwner(ctx, msg.Creator, msg.NewOwner, msg.NftSchemaCode)
   if err != nil {
     return nil, err
   }

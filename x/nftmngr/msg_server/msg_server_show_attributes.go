@@ -12,12 +12,12 @@ import (
 func (k msg_server) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttributes) (*types.MsgShowAttributesResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-  err = k.ShowAttributeKeeper(ctx, from, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
+  err = k.ShowAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
   if err != nil {
     return nil, err
   }

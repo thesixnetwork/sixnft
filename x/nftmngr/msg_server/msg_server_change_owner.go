@@ -11,17 +11,17 @@ import (
 func (k msg_server) ChangeOrgOwner(goCtx context.Context, msg *types.MsgChangeOrgOwner) (*types.MsgChangeOrgOwnerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	to, err := sdk.AccAddressFromBech32(msg.ToNewOwner)
+	_, err = sdk.AccAddressFromBech32(msg.ToNewOwner)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ToNewOwner)
 	}
 
-	err = k.Keeper.ChangeOrgOwner(ctx, from, to, msg.OrgName)
+	err = k.Keeper.ChangeOrgOwner(ctx, msg.Creator, msg.ToNewOwner, msg.OrgName)
 	if err != nil {
 		return nil, err
 	}

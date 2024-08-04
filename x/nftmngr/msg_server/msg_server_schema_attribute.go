@@ -13,7 +13,7 @@ import (
 func (k msg_server) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUpdateSchemaAttribute) (*types.MsgUpdateSchemaAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
@@ -29,7 +29,7 @@ func (k msg_server) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgU
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.UpdateAttributeKeeper(ctx, from, msg.NftSchemaCode, update_attribute)
+	err = k.UpdateAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, update_attribute)
 	if err != nil {
 		return nil, err
 	}

@@ -9,8 +9,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) AddAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, new_add_attribute types.AttributeDefinition, location types.AttributeLocation) error {
-	creator := signer.String()
+func (k Keeper) AddAttributeKeeper(ctx sdk.Context, creator string, nftSchemaName string, new_add_attribute types.AttributeDefinition, location types.AttributeLocation) error {
 	// get existing nft schema
 	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
 	if !schemaFound {
@@ -67,8 +66,7 @@ func (k Keeper) AddAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSc
 	return nil
 }
 
-func (k Keeper) UpdateAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, update_attribute types.AttributeDefinition) error {
-	creator := signer.String()
+func (k Keeper) UpdateAttributeKeeper(ctx sdk.Context, creator, nftSchemaName string, update_attribute types.AttributeDefinition) error {
 
 	// Check if the value exists
 	valFound, isFound := k.GetSchemaAttribute(ctx, nftSchemaName, update_attribute.Name)
@@ -110,9 +108,7 @@ func (k Keeper) UpdateAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nf
 	return nil
 }
 
-func (k Keeper) ResyncAttibutesKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, tokenId string) error {
-	creator := signer.String()
-
+func (k Keeper) ResyncAttibutesKeeper(ctx sdk.Context, creator, nftSchemaName, tokenId string) error {
 	// Retreive schema
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -154,8 +150,7 @@ func (k Keeper) ResyncAttibutesKeeper(ctx sdk.Context, signer sdk.AccAddress, nf
 	return nil
 }
 
-func (k Keeper) SetAttributeOveridingKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, newOveridingType int32) error {
-	creator := signer.String()
+func (k Keeper) SetAttributeOveridingKeeper(ctx sdk.Context, creator, nftSchemaName string, newOveridingType int32) error {
 
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -180,8 +175,7 @@ func (k Keeper) SetAttributeOveridingKeeper(ctx sdk.Context, signer sdk.AccAddre
 	return nil
 }
 
-func (k Keeper) ShowAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, status bool, attributesName []string) error {
-	creator := signer.String()
+func (k Keeper) ShowAttributeKeeper(ctx sdk.Context, creator, nftSchemaName string, status bool, attributesName []string) error {
 
 	// Retreive schema
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
@@ -239,8 +233,7 @@ func (k Keeper) ShowAttributeKeeper(ctx sdk.Context, signer sdk.AccAddress, nftS
 	return nil
 }
 
-func (k Keeper) ToggleActionKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, actionName string, status bool) error {
-	creator := signer.String()
+func (k Keeper) ToggleActionKeeper(ctx sdk.Context, creator, nftSchemaName, actionName string, status bool) error {
 
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -263,8 +256,7 @@ func (k Keeper) ToggleActionKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSc
 	return nil
 }
 
-func (k Keeper) UpdateActionKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, updateAction types.Action) error {
-	creator := signer.String()
+func (k Keeper) UpdateActionKeeper(ctx sdk.Context, creator, nftSchemaName string, updateAction types.Action) error {
 
 	// get existing action
 	actionOfSchema, found := k.GetActionOfSchema(ctx, nftSchemaName, updateAction.Name)

@@ -11,12 +11,12 @@ import (
 func (k msg_server) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.SetBaseURIKeeper(ctx, from, msg.Code, msg.NewBaseUri)
+	k.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

@@ -11,12 +11,12 @@ import (
 
 func (k msg_server) SetUriRetrievalMethod(goCtx context.Context, msg *types.MsgSetUriRetrievalMethod) (*types.MsgSetUriRetrievalMethodResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.SetURIRetrievalKeeper(ctx, from, msg.SchemaCode, msg.NewMethod)
+	k.SetURIRetrievalKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewMethod)
 	strMethod := strconv.FormatInt(int64(msg.NewMethod), 10)
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

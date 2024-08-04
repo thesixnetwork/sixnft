@@ -11,7 +11,7 @@ import (
 func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth) (*types.MsgSetMintauthResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
@@ -23,7 +23,7 @@ func (k msg_server) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
 
-  err = k.SetMintAuthKeeper(ctx, from, msg.NftSchemaCode, msg.AuthorizeTo)
+  err = k.SetMintAuthKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.AuthorizeTo)
   if err != nil {
     return nil, err
   }

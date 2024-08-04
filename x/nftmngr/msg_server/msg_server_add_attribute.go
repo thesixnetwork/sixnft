@@ -14,7 +14,7 @@ import (
 func (k msg_server) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribute) (*types.MsgAddAttributeResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
@@ -31,7 +31,7 @@ func (k msg_server) AddAttribute(goCtx context.Context, msg *types.MsgAddAttribu
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.AddAttributeKeeper(ctx, from, msg.Code, new_add_attribute, msg.Location)
+	err = k.AddAttributeKeeper(ctx, msg.Creator, msg.Code, new_add_attribute, msg.Location)
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@ import (
 func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*types.MsgAddActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func (k msg_server) AddAction(goCtx context.Context, msg *types.MsgAddAction) (*
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	k.Keeper.AddAction(ctx, from, msg.Code, new_action)
+	k.Keeper.AddAction(ctx, msg.Creator, msg.Code, new_action)
 
 	ctx.EventManager().EmitEvents(sdk.Events{
 		sdk.NewEvent(

@@ -14,7 +14,7 @@ import (
 func (k msg_server) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMetadata) (*types.MsgCreateMetadataResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
@@ -30,7 +30,10 @@ func (k msg_server) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMe
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.Keeper.CreateNewMetadataKeeper(ctx, from, msg.NftSchemaCode, msg.TokenId, metadata)
+	err = k.Keeper.CreateNewMetadataKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, metadata)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

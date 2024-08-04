@@ -8,9 +8,7 @@ import (
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
-func (k Keeper) CreateNewMetadataKeeper(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName, tokenId string, metadata types.NftData) error {
-	creator := signer.String()
-
+func (k Keeper) CreateNewMetadataKeeper(ctx sdk.Context, creator, nftSchemaName, tokenId string, metadata types.NftData) error {
 	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
 	if !schemaFound {
 		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)

@@ -11,12 +11,12 @@ import (
 func (k msg_server) SetAttributeOveriding(goCtx context.Context, msg *types.MsgSetAttributeOveriding) (*types.MsgSetAttributeOveridingResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.SetAttributeOveridingKeeper(ctx, from, msg.SchemaCode, msg.NewOveridingType)
+	err = k.SetAttributeOveridingKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOveridingType)
 	if err != nil {
 		return nil, err
 	}
