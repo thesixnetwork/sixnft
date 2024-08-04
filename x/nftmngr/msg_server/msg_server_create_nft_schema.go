@@ -23,6 +23,7 @@ func (k msg_server) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateN
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
+  
 	schema_input := types.NFTSchemaINPUT{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(jsonSchema, &schema_input)
 	if err != nil {

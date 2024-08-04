@@ -10,6 +10,7 @@ type msg_server struct {
 	keeper.Keeper
 	cdc            codec.BinaryCodec
 	nftadminKeeper types.NftadminKeeper
+	bankKeeper     types.BankKeeper
 }
 
 // NewMsgServerImpl returns an implementation of the MsgServer interface
