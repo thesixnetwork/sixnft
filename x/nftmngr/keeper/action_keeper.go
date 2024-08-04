@@ -11,20 +11,14 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaName string, tokenId string, actionName string, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
-	creator := addr.String()
+func (k Keeper) ActionByAdmin(ctx sdk.Context, creator, nftSchemaName string, tokenId string, actionName string, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
 	}
 
-	schemaOwner := sdk.AccAddress(schema.Owner)
-
 	var isOwner bool
 
-	if schemaOwner.Empty() || addr.Empty() {
-		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, schema.Owner)
-	}
 
 	if creator == schema.Owner {
 		isOwner = true
@@ -36,7 +30,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 		_, isFound := k.GetActionExecutor(
 			ctx,
 			nftSchemaName,
-			addr.String(),
+			creator,
 		)
 
 		if !isFound {
