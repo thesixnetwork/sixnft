@@ -11,7 +11,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) ActionByAdmin(ctx sdk.Context, creator string, nftSchemaName string, tokenId string, actionName string, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
+func (k Keeper) ActionByAdmin(ctx sdk.Context, creator, nftSchemaName, tokenId, actionName, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
