@@ -16,7 +16,7 @@ func (k msgServer) SetOriginContract(goCtx context.Context, msg *types.MsgSetOri
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.Keeper.SetOriginContractKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewContractAddress)
+	err = k.SetOriginContractKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewContractAddress)
 	if err != nil {
 		return nil, err
 	}

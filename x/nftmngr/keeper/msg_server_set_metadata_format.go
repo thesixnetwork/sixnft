@@ -16,7 +16,7 @@ func (k msgServer) SetMetadataFormat(goCtx context.Context, msg *types.MsgSetMet
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.Keeper.SetMetadataFormatKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewFormat)
+	k.SetMetadataFormatKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewFormat)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

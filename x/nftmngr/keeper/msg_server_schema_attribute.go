@@ -29,7 +29,7 @@ func (k msgServer) UpdateSchemaAttribute(goCtx context.Context, msg *types.MsgUp
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.Keeper.UpdateAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, update_attribute)
+	err = k.UpdateAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, update_attribute)
 	if err != nil {
 		return nil, err
 	}

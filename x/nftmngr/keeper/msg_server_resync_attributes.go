@@ -16,7 +16,7 @@ func (k msgServer) ResyncAttributes(goCtx context.Context, msg *types.MsgResyncA
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.Keeper.ResyncAttibutesKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId)
+	err = k.ResyncAttibutesKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId)
 	if err != nil {
 		return nil, err
 	}

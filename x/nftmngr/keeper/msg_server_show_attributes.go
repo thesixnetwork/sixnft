@@ -16,7 +16,7 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.Keeper.ShowAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
+	err = k.ShowAttributeKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.Show, msg.AttributeNames)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,6 @@ func (k msgServer) ShowAttributes(goCtx context.Context, msg *types.MsgShowAttri
 		sdk.NewEvent(
 			types.EventTypeShowAttribute,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.NftSchemaCode),
-			sdk.NewAttribute(types.AttributeKeyShowAttributeResult, "success"),
 		),
 	)
 

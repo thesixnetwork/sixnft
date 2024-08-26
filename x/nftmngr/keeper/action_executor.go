@@ -66,7 +66,7 @@ func (k Keeper) GetAllActionExecutor(ctx sdk.Context) (list []types.ActionExecut
 	return
 }
 
-func (k Keeper) AddActionExecutor(ctx sdk.Context, creator string, nftSchemaName string, executorAddress string) error {
+func (k Keeper) AddActionExecutor(ctx sdk.Context, creator, nftSchemaName , executorAddress string) error {
 	// Retrieve the schema
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -117,10 +117,7 @@ func (k Keeper) AddActionExecutor(ctx sdk.Context, creator string, nftSchemaName
 }
 
 // RemoveActionExecutor removes a actionExecutor from the store
-func (k Keeper) DelActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSchemaName string, executorAddress sdk.AccAddress) error {
-	creator := signer.String()
-	toremoveExecutorAddress := executorAddress.String()
-
+func (k Keeper) DelActionExecutor(ctx sdk.Context, creator, nftSchemaName , executorAddress string) error {
 	// Retrieve the schema
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
@@ -136,7 +133,7 @@ func (k Keeper) DelActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	_, isFound := k.GetActionExecutor(
 		ctx,
 		nftSchemaName,
-		toremoveExecutorAddress,
+		executorAddress,
 	)
 	if !isFound {
 		return sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
@@ -145,7 +142,7 @@ func (k Keeper) DelActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 	k.RemoveActionExecutor(
 		ctx,
 		nftSchemaName,
-		toremoveExecutorAddress,
+		executorAddress,
 	)
 
 	val, found := k.GetExecutorOfSchema(ctx, nftSchemaName)
@@ -158,7 +155,7 @@ func (k Keeper) DelActionExecutor(ctx sdk.Context, signer sdk.AccAddress, nftSch
 
 	// remove executorOfSchema
 	for i, executor := range val.ExecutorAddress {
-		if executor == toremoveExecutorAddress {
+		if executor == executorAddress {
 			val.ExecutorAddress = append(val.ExecutorAddress[:i], val.ExecutorAddress[i+1:]...)
 			break
 		}

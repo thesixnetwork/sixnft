@@ -30,7 +30,7 @@ func (k msgServer) CreateMetadata(goCtx context.Context, msg *types.MsgCreateMet
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	err = k.Keeper.CreateNewMetadataKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, metadata)
+	err = k.CreateNewMetadataKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, metadata)
 	if err != nil {
 		return nil, err
 	}

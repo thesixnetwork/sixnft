@@ -268,3 +268,51 @@ func (k Keeper) AddActionKeeper(ctx sdk.Context, creator string, nftSchemaName s
 
 	return nil
 }
+
+func (k Keeper) UpdateActionKeeper(ctx sdk.Context, creator, nftSchemaName string, updateAction types.Action) error {
+	// get existing action
+	actionOfSchema, found := k.GetActionOfSchema(ctx, nftSchemaName, updateAction.Name)
+	if !found {
+		return sdkerrors.Wrap(types.ErrActionDoesNotExists, updateAction.Name)
+	}
+
+	// get existing nft schema
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	// updator is valid
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrUnauthorized, creator)
+	}
+
+	// update action by its index
+	schema.OnchainData.Actions[actionOfSchema.Index] = &updateAction
+
+	// update schema
+	k.SetNFTSchema(ctx, schema)
+	return nil
+}
+
+func (k Keeper) ToggleActionKeeper(ctx sdk.Context, creator, nftSchemaName, actionName string, status bool) error {
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+	// Check if creator is owner of schema
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, creator)
+	}
+
+	// Update is_active in schema
+	for i, action := range schema.OnchainData.Actions {
+		if action.Name == actionName {
+			schema.OnchainData.Actions[i].Disable = status
+		}
+	}
+
+	k.SetNFTSchema(ctx, schema)
+
+	return nil
+}

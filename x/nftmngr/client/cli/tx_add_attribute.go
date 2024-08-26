@@ -22,10 +22,6 @@ func CmdAddAttribute() *cobra.Command {
 			argCode := args[0]
 			attributeLocation := args[1]
 			argNewAttibute := args[2]
-			// err = json.Unmarshal([]byte(args[1]), argNewAttibute)
-			// if err != nil {
-			// 	return err
-			// }
 
 			// convert attributeLocation to number
 			attributeLocationInt, err := strconv.Atoi(attributeLocation)

@@ -17,7 +17,7 @@ func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleActio
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.Keeper.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
+	err = k.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
 	if err != nil {
 		return nil, err
 	}

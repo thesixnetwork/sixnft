@@ -16,7 +16,7 @@ func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigin
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	err = k.Keeper.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
+	err = k.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
 	if err != nil {
 		return nil, err
 	}

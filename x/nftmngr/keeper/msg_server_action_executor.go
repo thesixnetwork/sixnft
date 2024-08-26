@@ -20,7 +20,7 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 		return nil, err
 	}
 
-	err = k.Keeper.AddActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
+	err = k.AddActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -43,17 +43,17 @@ func (k msgServer) CreateActionExecutor(goCtx context.Context, msg *types.MsgCre
 func (k msgServer) DeleteActionExecutor(goCtx context.Context, msg *types.MsgDeleteActionExecutor) (*types.MsgDeleteActionExecutorResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	from, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
 	}
 
-	executorAddress, err := sdk.AccAddressFromBech32(msg.ExecutorAddress)
+	_, err = sdk.AccAddressFromBech32(msg.ExecutorAddress)
 	if err != nil {
 		return nil, err
 	}
 
-	err = k.DelActionExecutor(ctx, from, msg.NftSchemaCode, executorAddress)
+	err = k.DelActionExecutor(ctx, msg.Creator, msg.NftSchemaCode, msg.ExecutorAddress)
 	if err != nil {
 		return nil, err
 	}

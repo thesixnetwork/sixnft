@@ -30,7 +30,7 @@ func (k msgServer) CreateNFTSchema(goCtx context.Context, msg *types.MsgCreateNF
 		return nil, sdkerrors.Wrap(types.ErrParsingSchemaMessage, err.Error())
 	}
 
-	err = k.Keeper.CreateNftSchemaKeeper(ctx, msg.Creator, schema_input)
+	err = k.CreateNftSchemaKeeper(ctx, msg.Creator, schema_input)
 	if err != nil {
 		return nil, err
 	}

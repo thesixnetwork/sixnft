@@ -17,13 +17,13 @@ func (k msgServer) SetMintauth(goCtx context.Context, msg *types.MsgSetMintauth)
 	}
 
 	// Get nft schema from store
-	schema, schemaFound := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
+	schema, schemaFound := k.GetNFTSchema(ctx, msg.NftSchemaCode)
 	// Check if the schema already exists
 	if !schemaFound {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
 	}
 
-	err = k.Keeper.SetMintAuthKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.AuthorizeTo)
+	err = k.SetMintAuthKeeper(ctx, msg.Creator, msg.NftSchemaCode, msg.AuthorizeTo)
 	if err != nil {
 		return nil, err
 	}

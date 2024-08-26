@@ -16,7 +16,7 @@ func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.Keeper.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
+	k.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
