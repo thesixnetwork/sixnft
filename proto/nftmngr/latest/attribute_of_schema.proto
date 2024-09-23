@@ -1,0 +1,11 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.nftmngr.v092;
+import "nftmngr/latest/schema_attribute.proto";
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types";
+
+message AttributeOfSchema {
+  string nftSchemaCode = 1; 
+  repeated SchemaAttribute schemaAttributes = 2;
+  
+}
+
