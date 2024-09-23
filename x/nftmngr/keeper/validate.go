@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
+	types092 "github.com/thesixnetwork/sixnft/x/nftmngr/types/v092"
 )
 
 // **** VALIDATION OF NFT METADATA ****
@@ -235,31 +236,31 @@ func ConvertSchemaAttributeValueToDefaultMintValue(schemaAttributeValue *types.S
 }
 
 // function to convert SchemaAttribute to NftAttributeDefinition
-func ConvertSchemaAttributeToNftAttributeDefinition(schemaAttributes *types.SchemaAttributeV1, index int) (*types.AttributeDefinition, error) {
-	attributeDef := &types.AttributeDefinition{}
+func ConvertSchemaAttributeToNftAttributeDefinition(schemaAttributes *types092.SchemaAttribute, index int) (*types092.AttributeDefinition, error) {
+	attributeDef := &types092.AttributeDefinition{}
 
 	switch value := schemaAttributes.CurrentValue.Value.(type) {
-	case *types.SchemaAttributeValue_NumberAttributeValue:
-		attributeDef.DefaultMintValue = &types.DefaultMintValue{
-			Value: &types.DefaultMintValue_NumberAttributeValue{
+	case *types092.SchemaAttributeValue_NumberAttributeValue:
+		attributeDef.DefaultMintValue = &types092.DefaultMintValue{
+			Value: &types092.DefaultMintValue_NumberAttributeValue{
 				NumberAttributeValue: value.NumberAttributeValue,
 			},
 		}
-	case *types.SchemaAttributeValue_StringAttributeValue:
-		attributeDef.DefaultMintValue = &types.DefaultMintValue{
-			Value: &types.DefaultMintValue_StringAttributeValue{
+	case *types092.SchemaAttributeValue_StringAttributeValue:
+		attributeDef.DefaultMintValue = &types092.DefaultMintValue{
+			Value: &types092.DefaultMintValue_StringAttributeValue{
 				StringAttributeValue: value.StringAttributeValue,
 			},
 		}
-	case *types.SchemaAttributeValue_BooleanAttributeValue:
-		attributeDef.DefaultMintValue = &types.DefaultMintValue{
-			Value: &types.DefaultMintValue_BooleanAttributeValue{
+	case *types092.SchemaAttributeValue_BooleanAttributeValue:
+		attributeDef.DefaultMintValue = &types092.DefaultMintValue{
+			Value: &types092.DefaultMintValue_BooleanAttributeValue{
 				BooleanAttributeValue: value.BooleanAttributeValue,
 			},
 		}
-	case *types.SchemaAttributeValue_FloatAttributeValue:
-		attributeDef.DefaultMintValue = &types.DefaultMintValue{
-			Value: &types.DefaultMintValue_FloatAttributeValue{
+	case *types092.SchemaAttributeValue_FloatAttributeValue:
+		attributeDef.DefaultMintValue = &types092.DefaultMintValue{
+			Value: &types092.DefaultMintValue_FloatAttributeValue{
 				FloatAttributeValue: value.FloatAttributeValue,
 			},
 		}
@@ -267,7 +268,7 @@ func ConvertSchemaAttributeToNftAttributeDefinition(schemaAttributes *types.Sche
 		return nil, fmt.Errorf("unknown value type: %T", value)
 	}
 
-	return &types.AttributeDefinition{
+	return &types092.AttributeDefinition{
 		Name:                schemaAttributes.Name,
 		DataType:            schemaAttributes.DataType,
 		Required:            schemaAttributes.Required,
