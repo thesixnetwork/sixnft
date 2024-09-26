@@ -160,6 +160,12 @@ func (m Migrator) Migrate2toV3(ctx sdk.Context) error {
 	return nil
 }
 
+// NoOpStoreMigrate means no migration is needed
+func (m Migrator) NoOpStoreMigrate(ctx sdk.Context) error {
+	return nil
+}
+
+
 func ConvertDefaultMintValueFromV2ToV3(defaultMintValue *v2types.DefaultMintValue) (*types.DefaultMintValue, error) {
 	attributeValue := &types.DefaultMintValue{}
 
