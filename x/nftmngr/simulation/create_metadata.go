@@ -1,7 +1,6 @@
 package simulation
 
 import (
-
 	"github.com/thesixnetwork/sixnft/x/nftmngr/keeper"
 	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )

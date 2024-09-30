@@ -2,7 +2,6 @@ package keeper
 
 import (
 	"context"
-	"strings"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -12,18 +11,15 @@ import (
 func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOriginChain) (*types.MsgSetOriginChainResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.SchemaCode)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.SchemaCode)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
+	err = k.SetOriginChainKeeper(ctx, msg.Creator, msg.SchemaCode, msg.NewOriginChain)
+	if err != nil {
+		return nil, err
 	}
-
-	// to uppercase
-	chainUpperCase := strings.ToUpper(msg.NewOriginChain)
-	schema.OriginData.OriginChain = chainUpperCase
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -34,8 +30,6 @@ func (k msgServer) SetOriginChain(goCtx context.Context, msg *types.MsgSetOrigin
 			sdk.NewAttribute(types.AttributeKeySetOriginChainResult, "success"),
 		),
 	})
-
-	k.Keeper.SetNFTSchema(ctx, schema)
 
 	return &types.MsgSetOriginChainResponse{
 		SchemaCode:     msg.SchemaCode,

@@ -34,6 +34,7 @@ func TestNewMetadata(t *testing.T) {
 		fmt.Println(err)
 	}
 
+
 	schema_, data_, globalAttributeSchema_ := sim.SimulateCreateMetadata(schemaInput, metaInput)
 	meta := types.NewMetadata(&schema_, &data_, types.AttributeOverriding_CHAIN, globalAttributeSchema_)
 

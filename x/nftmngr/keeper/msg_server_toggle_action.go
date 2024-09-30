@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"strconv"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -11,31 +12,15 @@ import (
 func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleAction) (*types.MsgToggleActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.Code)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.Code)
-	}
-	// Check if creator is owner of schema
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
-	}
-	mapAction := types.Action{}
-	for _, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action {
-			mapAction = *action
-			break
-		}
-	}
-	// Update is_active in schema
-	for i, action := range schema.OnchainData.Actions {
-		if action.Name == msg.Action && action.Disable != msg.Disable {
-			schema.OnchainData.Actions[i].Disable = msg.Disable
-		} else if action.Name == msg.Action && action.Disable == msg.Disable {
-			return nil, sdkerrors.Wrap(types.ErrActionAlreadySetAsInput, msg.Action)
-		}
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	k.Keeper.SetNFTSchema(ctx, schema)
+	err = k.ToggleActionKeeper(ctx, msg.Creator, msg.Code, msg.Action, msg.Status)
+	if err != nil {
+		return nil, err
+	}
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -43,13 +28,13 @@ func (k msgServer) ToggleAction(goCtx context.Context, msg *types.MsgToggleActio
 			types.EventTypeToggleNFTAction,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
 			sdk.NewAttribute(types.AttributeKeyToggleNFTAction, msg.Action),
-			sdk.NewAttribute(types.AttributeKeyToggleNFTActionResult, "success"),
+			sdk.NewAttribute(types.AttributeKeyToggleNFTActionResult, strconv.FormatBool(msg.Status)),
 		),
 	})
 
 	return &types.MsgToggleActionResponse{
-		Code:              msg.Code,
-		Name:              mapAction.Name,
-		OnchainDataAction: schema.OnchainData,
+		Code:   msg.Code,
+		Name:   msg.Action,
+		Status: msg.Status,
 	}, nil
 }

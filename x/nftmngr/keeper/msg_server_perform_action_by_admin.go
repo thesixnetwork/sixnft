@@ -10,9 +10,14 @@ import (
 
 func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPerformActionByAdmin) (*types.MsgPerformActionByAdminResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-	// Emit events on metadata change
-	changeList, err := k.ActionByAdmin(ctx, msg.GetTxSigner(), msg.NftSchemaCode, msg.TokenId, msg.Action, msg.RefId, msg.Parameters)
 
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, err
+	}
+
+	// Emit events on metadata change
+	changeList, err := k.ActionByAdmin(ctx, msg.Creator, msg.NftSchemaCode, msg.TokenId, msg.Action, msg.RefId, msg.Parameters)
 	if err != nil {
 		return nil, err
 	}
@@ -21,8 +26,6 @@ func (k msgServer) PerformActionByAdmin(goCtx context.Context, msg *types.MsgPer
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
 			sdk.NewAttribute(types.EventMessage, types.EventTypeRunAction),
-			sdk.NewAttribute(types.AttributeKeyRunActionResult, "success"),
-			// Emit change list attributes
 			sdk.NewAttribute(types.AttributeKeyRunActionChangeList, string(changeList)),
 		),
 	)

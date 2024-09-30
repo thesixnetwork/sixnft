@@ -12,39 +12,26 @@ import (
 
 func (k msgServer) UpdateAction(goCtx context.Context, msg *types.MsgUpdateAction) (*types.MsgUpdateActionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
+	}
 
 	_updateAction, err := base64.StdEncoding.DecodeString(msg.Base64UpdateAction)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingBase64, err.Error())
 	}
+
 	updateAction := types.Action{}
 	err = k.cdc.(*codec.ProtoCodec).UnmarshalJSON(_updateAction, &updateAction)
 	if err != nil {
 		return nil, sdkerrors.Wrap(types.ErrParsingMetadataMessage, err.Error())
 	}
 
-	// get existing action
-	actionOfSchema, found := k.Keeper.GetActionOfSchema(ctx, msg.NftSchemaCode, updateAction.Name)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrActionDoesNotExists, updateAction.Name)
+	err = k.Keeper.UpdateActionKeeper(ctx, msg.Creator, msg.NftSchemaCode, updateAction)
+	if err != nil {
+		return nil, err
 	}
-
-	//get existing nft schema
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.NftSchemaCode)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.NftSchemaCode)
-	}
-
-	// updator is valid
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrUnauthorized, msg.Creator)
-	}
-
-	// update action by its index
-	schema.OnchainData.Actions[actionOfSchema.Index] = &updateAction
-
-	// update schema
-	k.Keeper.SetNFTSchema(ctx, schema)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{

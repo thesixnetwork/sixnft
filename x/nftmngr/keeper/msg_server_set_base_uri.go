@@ -11,18 +11,12 @@ import (
 func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (*types.MsgSetBaseUriResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	schema, found := k.Keeper.GetNFTSchema(ctx, msg.Code)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, msg.Code)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if msg.Creator != schema.Owner {
-		return nil, sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, msg.Creator)
-	}
-
-	schema.OriginData.OriginBaseUri = msg.NewBaseUri
-
-	k.Keeper.SetNFTSchema(ctx, schema)
+	k.SetBaseURIKeeper(ctx, msg.Creator, msg.Code, msg.NewBaseUri)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -30,7 +24,6 @@ func (k msgServer) SetBaseUri(goCtx context.Context, msg *types.MsgSetBaseUri) (
 			types.EventTypeSetBaseURI,
 			sdk.NewAttribute(types.AttributeKeyNftSchemaCode, msg.Code),
 			sdk.NewAttribute(types.AttributeKeySetBaseURI, msg.NewBaseUri),
-			sdk.NewAttribute(types.AttributeKeySetBaseURIResult, "success"),
 		),
 	})
 

@@ -11,20 +11,13 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
-func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaName string, tokenId string, actionName string, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
-	creator := addr.String()
+func (k Keeper) ActionByAdmin(ctx sdk.Context, creator, nftSchemaName, tokenId, actionName, refId string, parameters []*types.ActionParameter) (changelist []byte, err error) {
 	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
 	if !found {
 		return nil, sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
 	}
 
-	schemaOwner := sdk.AccAddress(schema.Owner)
-
 	var isOwner bool
-
-	if schemaOwner.Empty() || addr.Empty() {
-		return nil, sdkerrors.Wrap(types.ErrInvalidAddress, schema.Owner)
-	}
 
 	if creator == schema.Owner {
 		isOwner = true
@@ -36,7 +29,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 		_, isFound := k.GetActionExecutor(
 			ctx,
 			nftSchemaName,
-			addr.String(),
+			creator,
 		)
 
 		if !isFound {
@@ -206,7 +199,7 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 			case "float":
 				floatValue, err := strconv.ParseFloat(change.NewValue, 64)
 				if err != nil {
-					return nil,err
+					return nil, err
 				}
 				val.CurrentValue.Value = &types.SchemaAttributeValue_FloatAttributeValue{
 					FloatAttributeValue: &types.FloatAttributeValue{
@@ -241,4 +234,85 @@ func (k Keeper) ActionByAdmin(ctx sdk.Context, addr sdk.AccAddress, nftSchemaNam
 	changeList, _ := json.Marshal(meta.ChangeList)
 
 	return changeList, nil
+}
+
+func (k Keeper) AddActionKeeper(ctx sdk.Context, creator string, nftSchemaName string, newAction types.Action) error {
+	// get existing action in schema
+	schema, schemaFound := k.GetNFTSchema(ctx, nftSchemaName)
+	if !schemaFound {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, creator)
+	}
+
+	// validate Action data
+	err := ValidateAction(&newAction, &schema)
+	if err != nil {
+		return sdkerrors.Wrap(types.ErrValidatingMetadata, err.Error())
+	}
+
+	// append new action
+	schema.OnchainData.Actions = append(schema.OnchainData.Actions, &newAction)
+
+	// save index of action
+	k.SetActionOfSchema(ctx, types.ActionOfSchema{
+		Name:          newAction.Name,
+		NftSchemaCode: schema.Code,
+		Index:         uint64(len(schema.OnchainData.Actions) - 1),
+	})
+
+	// save schema
+	k.SetNFTSchema(ctx, schema)
+
+	return nil
+}
+
+func (k Keeper) UpdateActionKeeper(ctx sdk.Context, creator, nftSchemaName string, updateAction types.Action) error {
+	// get existing action
+	actionOfSchema, found := k.GetActionOfSchema(ctx, nftSchemaName, updateAction.Name)
+	if !found {
+		return sdkerrors.Wrap(types.ErrActionDoesNotExists, updateAction.Name)
+	}
+
+	// get existing nft schema
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+
+	// updator is valid
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrUnauthorized, creator)
+	}
+
+	// update action by its index
+	schema.OnchainData.Actions[actionOfSchema.Index] = &updateAction
+
+	// update schema
+	k.SetNFTSchema(ctx, schema)
+	return nil
+}
+
+func (k Keeper) ToggleActionKeeper(ctx sdk.Context, creator, nftSchemaName, actionName string, status bool) error {
+	schema, found := k.GetNFTSchema(ctx, nftSchemaName)
+	if !found {
+		return sdkerrors.Wrap(types.ErrSchemaDoesNotExists, nftSchemaName)
+	}
+	// Check if creator is owner of schema
+	if creator != schema.Owner {
+		return sdkerrors.Wrap(types.ErrCreatorDoesNotMatch, creator)
+	}
+
+	// Update is_active in schema
+	for i, action := range schema.OnchainData.Actions {
+		if action.Name == actionName {
+			schema.OnchainData.Actions[i].Disable = status
+		}
+	}
+
+	k.SetNFTSchema(ctx, schema)
+
+	return nil
 }

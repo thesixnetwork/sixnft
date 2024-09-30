@@ -9,12 +9,12 @@ const TypeMsgToggleAction = "toggle_action"
 
 var _ sdk.Msg = &MsgToggleAction{}
 
-func NewMsgToggleAction(creator string, code string, action string, disable bool) *MsgToggleAction {
+func NewMsgToggleAction(creator string, code string, action string, status bool) *MsgToggleAction {
 	return &MsgToggleAction{
 		Creator: creator,
 		Code:    code,
 		Action:  action,
-		Disable: disable,
+		Status:  status,
 	}
 }
 

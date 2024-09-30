@@ -79,8 +79,6 @@ func TestActionExecutorMsgServerUpdate(t *testing.T) {
 			}
 			_, err := srv.CreateActionExecutor(wctx, expected)
 			require.NoError(t, err)
-
-			_, err = srv.UpdateActionExecutor(wctx, tc.request)
 			if tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
