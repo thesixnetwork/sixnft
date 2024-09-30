@@ -44,9 +44,9 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgToggleAction int = 100
 
-	opWeightMsgSetSchemaOwner = "op_weight_msg_set_schema_owner"
+	_ = "op_weight_msg_set_schema_owner"
 	// TODO: Determine the simulation weight value
-	defaultWeightMsgSetSchemaOwner int = 100
+	_ int = 100
 
 	// this line is used by starport scaffolding # simapp/module/const
 )

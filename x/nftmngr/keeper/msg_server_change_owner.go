@@ -11,29 +11,22 @@ import (
 func (k msgServer) ChangeOrgOwner(goCtx context.Context, msg *types.MsgChangeOrgOwner) (*types.MsgChangeOrgOwnerResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	//get the organization
-	organization, found := k.GetOrganization(ctx, msg.OrgName)
-	if !found {
-		return nil, sdkerrors.Wrap(types.ErrOrganizationNotFound, msg.OrgName)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
+	if err != nil {
+		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.Creator)
 	}
 
-	if organization.Owner != msg.Creator {
-		return nil, sdkerrors.Wrap(types.ErrOrganizationOwner, msg.Creator)
-	}
-
-	// validate newOwner address
-	_, err := sdk.AccAddressFromBech32(msg.ToNewOwner)
+	_, err = sdk.AccAddressFromBech32(msg.ToNewOwner)
 	if err != nil {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidAddress, msg.ToNewOwner)
 	}
 
-	//change the owner
-	organization.Owner = msg.ToNewOwner
+	err = k.Keeper.ChangeOrgOwner(ctx, msg.Creator, msg.ToNewOwner, msg.OrgName)
+	if err != nil {
+		return nil, err
+	}
 
-	//save the organization
-	k.SetOrganization(ctx, organization)
-
-	//emit event
+	// emit event
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(
 			types.EventTypeChangeOrgOwner,

@@ -2,7 +2,6 @@ package types
 
 import (
 	"encoding/json"
-	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -17,7 +16,7 @@ func NewMsgPerformActionByAdmin(creator string, nftSchemaCode string, tokenId st
 	var actionPrams_ []*ActionParameter
 	err := json.Unmarshal([]byte(actionPrams), &actionPrams_)
 	if err != nil {
-		fmt.Println("Error in NewMsgPerformActionByAdmin: ", err)
+		panic(err)
 	}
 
 	return &MsgPerformActionByAdmin{

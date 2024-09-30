@@ -108,6 +108,10 @@ func (m *Metadata) GetTokenURI() string {
 	return m.nftData.TokenUri
 }
 
+func (m *Metadata) GetTokenID() string {
+	return m.nftData.TokenId
+}
+
 func (m *Metadata) SetTokenURI(uri string) {
 	m.ChangeList = append(m.ChangeList, &MetadataChange{
 		Key:           "tokenURI",
@@ -475,6 +479,38 @@ func (p *ActionParameter) GetNumber() uint64 {
 	return v
 }
 
+func (p *ActionParameter) MustGetFloat(key string) (float64, error) {
+	v, err := strconv.ParseFloat(p.Value, 64)
+	if err != nil {
+		return 0, sdkerrors.Wrap(ErrAttributeTypeNotMatch, key)
+	}
+	return v, nil
+}
+
+func (p *ActionParameter) GetFloat() float64 {
+	v, err := p.MustGetFloat(p.Name)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
+func (p *ActionParameter) MustGetBool(key string) (bool, error) {
+	v, err := strconv.ParseBool(p.Value)
+	if err != nil {
+		return false, sdkerrors.Wrap(ErrAttributeTypeNotMatch, key)
+	}
+	return v, nil
+}
+
+func (p *ActionParameter) GetBoolean() bool {
+	v, err := p.MustGetBool(p.Name)
+	if err != nil {
+		panic(err)
+	}
+	return v
+}
+
 func (p *ActionParameter) GetString() string {
 	return p.Value
 }
@@ -506,6 +542,6 @@ func (p *ActionParameter) ToLowerCase() string {
 }
 
 // return UpperCase of parameter
-func (p *ActionParameter) TtUpperCase() string {
+func (p *ActionParameter) ToUpperCase() string {
 	return strings.ToUpper(p.Value)
 }

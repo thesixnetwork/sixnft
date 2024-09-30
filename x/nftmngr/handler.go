@@ -80,9 +80,6 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgCreateActionExecutor:
 			res, err := msgServer.CreateActionExecutor(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
-		case *types.MsgUpdateActionExecutor:
-			res, err := msgServer.UpdateActionExecutor(sdk.WrapSDKContext(ctx), msg)
-			return sdk.WrapServiceResult(ctx, res, err)
 		case *types.MsgDeleteActionExecutor:
 			res, err := msgServer.DeleteActionExecutor(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)

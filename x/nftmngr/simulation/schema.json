@@ -33,9 +33,7 @@
       ]
     },
     "onchain_data": {
-      "reveal_required": true,
-      "reveal_secret": "",
-      "schema_attributes": [
+      "nft_attributes": [
         {
           "name": "tumbler_stock",
           "default_mint_value": {

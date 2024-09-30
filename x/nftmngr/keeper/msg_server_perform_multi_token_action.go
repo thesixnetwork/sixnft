@@ -61,7 +61,7 @@ func (k msgServer) PerformMultiTokenAction(goCtx context.Context, msg *types.Msg
 	// if not owner, check if executor is authorized to perform action
 	if !isOwner {
 
-		_, isFound := k.GetActionExecutor(
+		_, isFound := k.Keeper.GetActionExecutor(
 			ctx,
 			msg.NftSchemaCode,
 			msg.Creator,
@@ -197,7 +197,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 	// if not owner, check if executor is authorized to perform action
 	if !isOwner {
 
-		_, isFound := k.GetActionExecutor(
+		_, isFound := k.Keeper.GetActionExecutor(
 			ctx,
 			msg.NftSchemaCode,
 			msg.Creator,
@@ -294,7 +294,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 		var map_converted_schema_attributes []*types.NftAttributeValue
 
 		// get schema attributes and convert to NFtAttributeValue
-		all_schema_attributes := k.GetAllSchemaAttribute(ctx)
+		all_schema_attributes := k.Keeper.GetAllSchemaAttribute(ctx)
 		attributeMap := make(map[string]bool)
 
 		for _, schema_attribute := range all_schema_attributes {
@@ -396,7 +396,7 @@ func (k msgServer) PerformMultiTokenOneAction(goCtx context.Context, msg *types.
 					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
 				}
 
-				k.SetSchemaAttribute(ctx, val)
+				k.Keeper.SetSchemaAttribute(ctx, val)
 			}
 		}
 
@@ -474,7 +474,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 	// if not owner, check if executor is authorized to perform action
 	if !isOwner {
 
-		_, isFound := k.GetActionExecutor(
+		_, isFound := k.Keeper.GetActionExecutor(
 			ctx,
 			msg.NftSchemaCode,
 			msg.Creator,
@@ -589,7 +589,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 		var map_converted_schema_attributes []*types.NftAttributeValue
 
 		// get schema attributes and convert to NFtAttributeValue
-		all_schema_attributes := k.GetAllSchemaAttribute(ctx)
+		all_schema_attributes := k.Keeper.GetAllSchemaAttribute(ctx)
 		attributeMap := make(map[string]bool)
 
 		for _, schema_attribute := range all_schema_attributes {
@@ -691,7 +691,7 @@ func (k msgServer) PerformMultiTokenMultiAction(goCtx context.Context, msg *type
 					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
 				}
 
-				k.SetSchemaAttribute(ctx, val)
+				k.Keeper.SetSchemaAttribute(ctx, val)
 			}
 		}
 
@@ -767,7 +767,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 	// if not owner, check if executor is authorized to perform action
 	if !isOwner {
 
-		_, isFound := k.GetActionExecutor(
+		_, isFound := k.Keeper.GetActionExecutor(
 			ctx,
 			msg.NftSchemaCode,
 			msg.Creator,
@@ -879,7 +879,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 		var map_converted_schema_attributes []*types.NftAttributeValue
 
 		// get schema attributes and convert to NFtAttributeValue
-		all_schema_attributes := k.GetAllSchemaAttribute(ctx)
+		all_schema_attributes := k.Keeper.GetAllSchemaAttribute(ctx)
 		attributeMap := make(map[string]bool)
 
 		for _, schema_attribute := range all_schema_attributes {
@@ -981,7 +981,7 @@ func (k msgServer) PerformOneTokenMultiAction(goCtx context.Context, msg *types.
 					return nil, sdkerrors.Wrap(types.ErrParsingAttributeValue, val.DataType)
 				}
 
-				k.SetSchemaAttribute(ctx, val)
+				k.Keeper.SetSchemaAttribute(ctx, val)
 			}
 		}
 

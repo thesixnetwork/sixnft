@@ -20,14 +20,14 @@ func CmdToggleAction() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argCode := args[0]
 			argAction := args[1]
-			argDisable := args[2]
+			argStatus := args[2]
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
 			}
 			// string to bool
-			disableBool, err := strconv.ParseBool(argDisable)
+			statusBool, err := strconv.ParseBool(argStatus)
 			if err != nil {
 				return err
 			}
@@ -36,11 +36,13 @@ func CmdToggleAction() *cobra.Command {
 				clientCtx.GetFromAddress().String(),
 				argCode,
 				argAction,
-				disableBool,
+				statusBool,
 			)
+
 			if err := msg.ValidateBasic(); err != nil {
 				return err
 			}
+
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

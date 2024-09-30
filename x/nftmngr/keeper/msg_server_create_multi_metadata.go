@@ -135,7 +135,7 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 	}
 
 	// stringfy tokenId list to string token_id1,token_id2,token_id3
-	tokenIdList := k.Keeper.StringfyTokenIdList(msg.TokenId)
+	tokenIdList := StringfyTokenIdList(msg.TokenId)
 
 	// emit events
 	ctx.EventManager().EmitEvents(sdk.Events{
@@ -151,17 +151,4 @@ func (k msgServer) CreateMultiMetadata(goCtx context.Context, msg *types.MsgCrea
 		NftSchemaCode: msg.NftSchemaCode,
 		TokenId:       msg.TokenId,
 	}, nil
-}
-
-// stringfy tokenId list to string token_id1,token_id2,token_id3
-func (k Keeper) StringfyTokenIdList(list []string) string {
-	var result string
-	for i, item := range list {
-		if i == 0 {
-			result = item
-		} else {
-			result = result + "," + item
-		}
-	}
-	return result
 }

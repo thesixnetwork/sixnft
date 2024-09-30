@@ -1,0 +1,8 @@
+syntax = "proto3";
+package thesixnetwork.sixnft.nftmngr.v062;
+
+option go_package = "github.com/thesixnetwork/sixnft/x/nftmngr/types/v062";
+
+message NFTFeeBalance {
+    map<int32, string> fee_balances = 1;
+}

@@ -2,10 +2,11 @@ package keeper
 
 import (
 	"fmt"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 	"regexp"
 	"strings"
+
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/thesixnetwork/sixnft/x/nftmngr/types"
 )
 
 // **** VALIDATION OF NFT SCHEMA ****
@@ -14,7 +15,7 @@ const (
 	// AttributeName regular expression
 	RegxAttributeName = `^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`
 	RegxActionName    = `^[A-Za-z]{1}[A-Za-z0-9_]*[A-Za-z0-9]{1}$`
-	//regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
+	// regexp.MatchString(`^[a-z]{1}[a-z0-9_]*[a-z0-9]{1}$`, "user_name9")
 )
 
 // Validate NFT Schema
@@ -107,11 +108,16 @@ func ValidateNFTSchema(schema *types.NFTSchemaINPUT) (bool, error) {
 }
 
 func ValidateAttributeNames(attributeDefinitions []*types.AttributeDefinition) error {
+	// Compile the regex once
+	regex, err := regexp.Compile(RegxAttributeName)
+	if err != nil {
+		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "invalid regex pattern")
+	}
+
 	// Loop over definitions and validate
 	for _, attrDef := range attributeDefinitions {
-		// Check if attribute name is snake case
-		matched, _ := regexp.MatchString(RegxAttributeName, attrDef.Name)
-		if !matched {
+		// Check if attribute name matches the compiled regex
+		if !regex.MatchString(attrDef.Name) {
 			return sdkerrors.Wrap(types.ErrInvalidAttributeName, attrDef.Name)
 		}
 	}
@@ -142,33 +148,21 @@ func GetOrganizationFromSchemaCode(nftSchemaCode string) (bool, string) {
 	return true, organizationName
 }
 
-func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, nftAttribute []*types.AttributeDefinition, tokenAttribute []*types.AttributeDefinition) []*types.AttributeDefinition {
-	mergedAttributes := make([]*types.AttributeDefinition, 0)
-	// var index uint64 = 0
-	// for _, attribute := range append(originAttributes, onchainTokenAttribute...) {
-	// 	attribute.Index = index
-	// 	mergedAttributes = append(mergedAttributes, attribute)
-	// 	index++
-	// }
+func MergeAllAttributesAndAlterOrderIndex(originAttributes []*types.AttributeDefinition, nftAttribute []*types.AttributeDefinition, tokenAttribute []*types.AttributeDefinition) {
 
 	var index uint64 = 0
 	for _, attribute := range originAttributes {
 		attribute.Index = index
-		mergedAttributes = append(mergedAttributes, attribute)
 		index++
 	}
+
 	for _, attribute := range nftAttribute {
 		attribute.Index = index
-		mergedAttributes = append(mergedAttributes, attribute)
 		index++
 	}
 
 	for _, attribute := range tokenAttribute {
 		attribute.Index = index
-		mergedAttributes = append(mergedAttributes, attribute)
 		index++
 	}
-	
-
-	return mergedAttributes
 }
